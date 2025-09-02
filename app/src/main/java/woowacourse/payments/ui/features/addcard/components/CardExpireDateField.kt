@@ -15,7 +15,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardNumberField(
+fun CardExpireDateField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -24,18 +24,18 @@ fun CardNumberField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
-        labelText = "카드 번호",
-        placeholderText = "0000 - 0000 - 0000 - 0000",
+        labelText = "만료일",
+        placeholderText = "MM / YY",
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberFieldPreview() {
+fun CardExpireDateFieldPreview() {
     var text by remember { mutableStateOf("") }
     AndroidpaymentsTheme(dynamicColor = false) {
-        CardNumberField(
+        CardExpireDateField(
             value = text,
             onValueChange = {
                 text = it
