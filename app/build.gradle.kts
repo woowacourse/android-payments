@@ -54,6 +54,7 @@ dependencies {
     androidTestImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.mannodermaus.junit5.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
