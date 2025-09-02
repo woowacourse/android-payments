@@ -15,6 +15,7 @@ class MainActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 AddCardScreen(
                     onNavigateBack = { /* Todo: 뒤로가기 로직 */ },
+                    onNavigateSave = { /* Todo: 카드 저장 로직 */ },
                 )
             }
         }
