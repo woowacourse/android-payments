@@ -5,32 +5,27 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun PaymentTextField(
+    text: String,
+    onValueChanged: (newText: String) -> Unit,
     label: String,
     hint: String,
     maxLength: Int,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    isTextHide: Boolean = false,
     hasSupportingText: Boolean = false,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     modifier: Modifier = Modifier,
 ) {
-    var text by remember { mutableStateOf("") }
-
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
             if (newText.length <= maxLength) {
-                text = newText
+                onValueChanged.invoke(newText)
             }
         },
         label = { Text(text = label) },
@@ -47,7 +42,7 @@ fun PaymentTextField(
                 )
             } else Text(text = "")
         },
-        visualTransformation = if (isTextHide) PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation = visualTransformation,
         modifier = modifier,
     )
 }
