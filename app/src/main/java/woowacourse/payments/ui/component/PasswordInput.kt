@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -46,8 +47,13 @@ fun PasswordInput(
                     onPasswordChange(Password.create(newValue.text))
                 }
             },
-            label = { Text(text = "비밀번호") },
-            placeholder = { Text("0000", color = Color.LightGray) },
+            label = { Text(text = stringResource(R.string.password_label)) },
+            placeholder = {
+                Text(
+                    text = stringResource(R.string.password_placeholder),
+                    color = Color.LightGray,
+                )
+            },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             trailingIcon = {
                 if (isFocused) {

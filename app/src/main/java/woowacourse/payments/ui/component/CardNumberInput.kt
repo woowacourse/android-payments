@@ -10,9 +10,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 
 @Composable
@@ -39,8 +41,13 @@ fun CardNumberInput(
             onCardNumberChange(CardNumber.create(digits))
         },
         modifier = modifier,
-        label = { Text(text = "카드 번호") },
-        placeholder = { Text(text = "0000 - 0000 - 0000 - 0000", color = Color.LightGray) },
+        label = { Text(text = stringResource(R.string.card_number_label)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.card_number_placeholder),
+                color = Color.LightGray,
+            )
+        },
         isError = showValidationError && (cardNumber?.isValid != true),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )

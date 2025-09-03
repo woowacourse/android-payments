@@ -11,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -22,7 +24,7 @@ fun NewCardTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text("카드 추가") },
+        title = { Text(stringResource(R.string.top_bar_title)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
