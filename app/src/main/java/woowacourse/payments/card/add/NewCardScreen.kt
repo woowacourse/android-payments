@@ -35,28 +35,23 @@ fun NewCardScreen(
         },
     ) { innerPadding: PaddingValues ->
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding())
+                    .padding(horizontal = 24.dp, vertical = 20.dp),
         ) {
             PaymentCard(
                 modifier =
                     Modifier
-                        .padding(top = innerPadding.calculateTopPadding() + 20.dp),
+                        .align(Alignment.CenterHorizontally)
+                        .padding(bottom = 20.dp),
             )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(20.dp),
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp, vertical = 20.dp)
-                        .verticalScroll(rememberScrollState()),
-            ) {
-                CardNumberTextField(modifier = Modifier.fillMaxWidth())
-                CardExpirationDateTextField(modifier = Modifier.fillMaxWidth(0.5f))
-                CardHolderNameTextField(modifier = Modifier.fillMaxWidth())
-                CardPasswordTextField(modifier = Modifier.fillMaxWidth(0.5f))
-            }
+            CardNumberTextField(modifier = Modifier.fillMaxWidth())
+            CardExpirationDateTextField(modifier = Modifier.fillMaxWidth(0.5f))
+            CardHolderNameTextField(modifier = Modifier.fillMaxWidth())
+            CardPasswordTextField(modifier = Modifier.fillMaxWidth(0.5f))
         }
     }
 }
