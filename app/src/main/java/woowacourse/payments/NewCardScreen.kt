@@ -11,6 +11,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.component.CardNumberTextField
@@ -27,6 +30,7 @@ fun NewCardScreen(
     var expireDate by remember { mutableStateOf("") }
     var cardOwner by remember { mutableStateOf("") }
     var cardPassword by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = modifier
@@ -42,6 +46,9 @@ fun NewCardScreen(
         CardNumberTextField(
             cardNumber = cardNumber,
             onCardNumberChange = { cardNumber = it },
+            onComplete = {
+                focusManager.moveFocus(FocusDirection.Next)
+            },
             maxLength = 16,
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,6 +58,9 @@ fun NewCardScreen(
         ExpireDateTextField(
             expireDate = expireDate,
             onExpireDateChange = { expireDate = it },
+            onComplete = {
+                focusManager.moveFocus(FocusDirection.Next)
+            },
             maxLength = 4,
             modifier = Modifier
                 .padding(top = 18.dp)

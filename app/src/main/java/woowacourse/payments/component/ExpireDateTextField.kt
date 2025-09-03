@@ -22,6 +22,7 @@ fun ExpireDateTextField(
     maxLength: Int,
     expireDate: String,
     onExpireDateChange: (String) -> Unit,
+    onComplete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val expireDateVisualTransformation = ExpireDateVisualTransformation()
@@ -31,6 +32,9 @@ fun ExpireDateTextField(
         onValueChange = { newText ->
             if (newText.length <= maxLength) {
                 onExpireDateChange(newText)
+            }
+            if (newText.length == maxLength) {
+                onComplete()
             }
         },
         keyboardOptions = KeyboardOptions(
@@ -57,6 +61,7 @@ fun ExpireDateTextFieldPreview() {
     ExpireDateTextField(
         maxLength = 4,
         expireDate = "",
-        onExpireDateChange = {}
+        onComplete = {},
+        onExpireDateChange = {},
     )
 }

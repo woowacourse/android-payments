@@ -20,6 +20,7 @@ fun CardNumberTextField(
     maxLength: Int,
     cardNumber: String,
     onCardNumberChange: (String) -> Unit,
+    onComplete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val cardVisualTransformation = CardNumberVisualTransformation(maxLength)
@@ -29,6 +30,9 @@ fun CardNumberTextField(
         onValueChange = { newText ->
             if (newText.length <= maxLength) {
                 onCardNumberChange(newText)
+            }
+            if (newText.length == maxLength) {
+                onComplete()
             }
         },
         keyboardOptions = KeyboardOptions(
@@ -57,6 +61,7 @@ fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         cardNumber = "",
         onCardNumberChange = {},
+        onComplete = {},
         maxLength = 16
     )
 }
