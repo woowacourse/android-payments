@@ -79,6 +79,7 @@ fun MainScreen() {
                 CardNumberInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
                 ExpiredInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
                 CardOwnerInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
+                PasswordInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
             }
         }
     }
@@ -183,6 +184,43 @@ fun CardOwnerInput(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun PasswordInput(modifier: Modifier = Modifier) {
+    var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
+
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = password,
+            onValueChange = { newValue -> password = newValue },
+            label = { Text(text = "비밀번호") },
+            placeholder = { Text("0000", color = Color.LightGray) },
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                if (isFocused) {
+                    val painter =
+                        if (passwordVisible) {
+                            painterResource(id = R.drawable.ic_visible)
+                        } else {
+                            painterResource(id = R.drawable.ic_not_visible)
+                        }
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            painter = painter,
+                            contentDescription = if (passwordVisible) "숨기기" else "보이기",
+                        )
+                    }
+                }
+            },
+            interactionSource = interactionSource,
+            modifier = Modifier.fillMaxWidth(0.5f),
+        )
+    }
+}
 
 // ---------- Preview ----------
 
