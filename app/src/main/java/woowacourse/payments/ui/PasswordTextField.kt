@@ -19,7 +19,7 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue
+            password = newValue.substring(0, newValue.length.coerceAtMost(4))
         },
         modifier = modifier,
         label = {
@@ -28,7 +28,7 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(text = "0000", color = Color.Gray)
         },
-        visualTransformation = PasswordVisualTransformation()
+        visualTransformation = PasswordVisualTransformation(),
     )
 }
 
