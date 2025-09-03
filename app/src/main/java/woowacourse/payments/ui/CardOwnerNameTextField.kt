@@ -10,8 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @Composable
 fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
@@ -20,18 +22,22 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = name,
         onValueChange = { newName: String ->
-            name = newName.substring(0, newName.length.coerceAtMost(30))
+            name = newName.substring(0, newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
         },
         modifier = modifier,
         label = {
-            Text(text = "카드 소유자 이름(선택)")
+            Text(text = stringResource(R.string.card_owner_name_label))
         },
         placeholder = {
-            Text(text = "카드에 표시된 이름을 입력하세요.", color = Color.Gray)
+            Text(text = stringResource(R.string.card_owner_name_placeholder), color = Color.Gray)
         },
         supportingText = {
             Text(
-                text = "${name.length}/30",
+                text = stringResource(
+                    R.string.card_owner_name_supporting_text,
+                    name.length,
+                    CARD_OWNER_NAME_LENGTH_MAX
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
@@ -44,3 +50,5 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
 private fun CardOwnerNameTextFieldPreview() {
     CardOwnerNameTextField()
 }
+
+private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
