@@ -190,14 +190,7 @@ fun CardNumberField(
         modifier = modifier,
         value = value,
         onValueChange = { input ->
-            val digits = input.text.filter(Char::isDigit).take(16)
-            val formatted = digits.chunked(4).joinToString(" - ")
-            onValueChange(
-                TextFieldValue(
-                    text = formatted,
-                    selection = TextRange(formatted.length),
-                ),
-            )
+            onValueChange(formatCardNumber(input))
         },
         label = { Text("카드 번호") },
         placeholder = {
@@ -224,14 +217,7 @@ fun ExpirationDateField(
         modifier = modifier,
         value = value,
         onValueChange = { input ->
-            val digits = input.text.filter(Char::isDigit).take(4)
-            val formatted = digits.chunked(2).joinToString(" / ")
-            onValueChange(
-                TextFieldValue(
-                    text = formatted,
-                    selection = TextRange(formatted.length),
-                ),
-            )
+            onValueChange(formatExpirationDate(input))
         },
         label = { Text(text = "만료일") },
         placeholder = {
@@ -298,5 +284,23 @@ fun PasswordField(
             )
         },
         singleLine = true,
+    )
+}
+
+private fun formatCardNumber(input: TextFieldValue): TextFieldValue {
+    val digits = input.text.filter(Char::isDigit).take(16)
+    val formatted = digits.chunked(4).joinToString(" - ")
+    return TextFieldValue(
+        text = formatted,
+        selection = TextRange(formatted.length),
+    )
+}
+
+private fun formatExpirationDate(input: TextFieldValue): TextFieldValue {
+    val digits = input.text.filter(Char::isDigit).take(4)
+    val formatted = digits.chunked(2).joinToString(" / ")
+    return TextFieldValue(
+        text = formatted,
+        selection = TextRange(formatted.length),
     )
 }
