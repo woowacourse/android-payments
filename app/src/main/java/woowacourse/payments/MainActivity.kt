@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -65,6 +67,7 @@ class MainActivity : ComponentActivity() {
                         CardNumber()
                         CardExpirationDate()
                         CardName()
+                        CardPassword()
                     }
                 }
             }
@@ -169,6 +172,22 @@ fun CardName(modifier: Modifier = Modifier) {
             modifier = modifier.fillMaxWidth(),
             textAlign = TextAlign.End,
             ) }
+    )
+}
+
+@Composable
+fun CardPassword(modifier: Modifier = Modifier,
+                 isHide: Boolean = false) {
+    var text by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = "비밀번호") },
+        placeholder = { Text(text = "0000") },
+        modifier = modifier
+            .fillMaxWidth(0.5f)
+            .padding(horizontal = 24.dp, vertical = 10.dp),
+        visualTransformation = if (isHide) VisualTransformation.None else PasswordVisualTransformation()
     )
 }
 
