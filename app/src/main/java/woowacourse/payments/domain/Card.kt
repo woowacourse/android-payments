@@ -6,6 +6,13 @@ data class Card(
     val ownerName: String = "",
     val password: String = "",
 ) {
+    val isValidExpireDate: Boolean
+        get() {
+            if (expireDate.length != MAX_LENGTH_EXPIRE_DATE) return false
+            val month = expireDate.substring(0, 2).toIntOrNull() ?: return false
+            return month in 1..12
+        }
+
     fun withCardNumber(newNumber: String): Card {
         if (newNumber.length <= MAX_LENGTH_CARD_NUMBER && newNumber.all { it.isDigit() }) {
             return this.copy(cardNumber = newNumber)
@@ -36,7 +43,7 @@ data class Card(
 
     companion object {
         private const val MAX_LENGTH_CARD_NUMBER = 16
-        private const val MAX_LENGTH_EXPIRE_DATE = 4
+        const val MAX_LENGTH_EXPIRE_DATE = 4
         const val MAX_LENGTH_OWNER_NAME = 30
         private const val MAX_LENGTH_PASSWORD = 4
     }

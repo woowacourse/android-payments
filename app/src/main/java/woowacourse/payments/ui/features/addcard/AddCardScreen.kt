@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.features.addcard
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,12 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -32,12 +35,25 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
 
+private fun shouldShowExpireDateError(card: Card): Boolean {
+    return card.expireDate.length == Card.MAX_LENGTH_EXPIRE_DATE && !card.isValidExpireDate
+}
+
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateSave: () -> Unit,
 ) {
     var card by remember { mutableStateOf(Card()) }
+    var toastMessage by remember { mutableStateOf<String?>(null) }
+    val context = LocalContext.current
+
+    LaunchedEffect(toastMessage) {
+        toastMessage?.let { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            toastMessage = null
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -66,11 +82,18 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(FormFieldSpacing))
             CardExpireDateField(
                 value = card.expireDate,
-                onValueChange = { card = card.withExpireDate(it) },
+                onValueChange = {
+                    card = card.withExpireDate(it)
+                    val isErrorAfterUpdate = shouldShowExpireDateError(card)
+                    if (isErrorAfterUpdate) {
+                        toastMessage = "유효하지 않은 날짜입니다"
+                    }
+                },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f)
                         .align(Alignment.Start),
+                isError = shouldShowExpireDateError(card),
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing))
             CardOwnerNameField(

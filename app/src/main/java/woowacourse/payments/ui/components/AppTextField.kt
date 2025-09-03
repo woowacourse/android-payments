@@ -21,6 +21,7 @@ fun AppTextField(
     labelText: String,
     placeholderText: String,
     supportingText: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
@@ -29,6 +30,7 @@ fun AppTextField(
         onValueChange = onValueChange,
         modifier = modifier.fillMaxWidth(),
         enabled = true,
+        isError = isError,
         textStyle =
             TextStyle(
                 fontSize = 16.sp,

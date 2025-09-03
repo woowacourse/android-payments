@@ -19,6 +19,7 @@ fun CardExpireDateField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
 ) {
     AppTextField(
         value = value,
@@ -26,6 +27,7 @@ fun CardExpireDateField(
         modifier = modifier,
         labelText = "만료일",
         placeholderText = "MM / YY",
+        isError = isError,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )
 }
