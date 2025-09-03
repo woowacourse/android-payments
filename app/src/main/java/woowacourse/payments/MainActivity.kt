@@ -64,6 +64,7 @@ class MainActivity : ComponentActivity() {
                         )
                         CardNumber()
                         CardExpirationDate()
+                        CardName()
                     }
                 }
             }
@@ -149,6 +150,25 @@ fun CardExpirationDate(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth(0.5f)
             .padding(horizontal = 24.dp, vertical = 15.dp)
+    )
+}
+
+@Composable
+fun CardName(modifier: Modifier = Modifier) {
+    var text by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = "카드 소유자 이름(선택)") },
+        placeholder = { Text(text = "카드에 표시된 이름을 입력하세요.") },
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 15.dp),
+        supportingText = { Text(
+            text = "${text.length}/30",
+            modifier = modifier.fillMaxWidth(),
+            textAlign = TextAlign.End,
+            ) }
     )
 }
 
