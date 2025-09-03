@@ -171,7 +171,7 @@ fun CardNumberInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue(cardNumber?.formatted ?: "")) }
+    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = modifier) {
         OutlinedTextField(
@@ -204,7 +204,7 @@ fun ExpiredInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue(expired?.value ?: "")) }
+    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = modifier) {
         OutlinedTextField(

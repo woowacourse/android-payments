@@ -4,9 +4,6 @@ package woowacourse.payments.domain
 value class CardNumber private constructor(
     val value: String,
 ) {
-    val formatted: String
-        get() = value.chunked(4).joinToString("-")
-
     val isValid: Boolean
         get() = value.length == 16
 

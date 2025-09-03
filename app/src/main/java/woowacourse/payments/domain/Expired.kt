@@ -4,9 +4,6 @@ package woowacourse.payments.domain
 value class Expired private constructor(
     val value: String,
 ) {
-    val formatted: String
-        get() = value.chunked(2).joinToString("/")
-
     val isValid: Boolean
         get() {
             val (mm, yy) = value.split("/")
