@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.component
+package woowacourse.payments.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.domain.ExpiredDate
-import woowacourse.payments.presentation.newcard.transformation.expiredDateVisualTransformation
+import woowacourse.payments.newcard.transformation.expiredDateVisualTransformation
 
 @Composable
 fun ExpiredDateTextField(modifier: Modifier = Modifier) {
@@ -35,7 +35,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = "MM/YY",
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = expiredDateVisualTransformation,
@@ -45,7 +45,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
             if (isError) {
                 Text(
                     text = "유효하지 않은 만료일자 형식입니다.",
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
                 )
             }
         },
@@ -54,20 +54,18 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
                 Icon(
                     imageVector = Icons.Filled.Info,
                     contentDescription = "error",
-                    tint = MaterialTheme.colorScheme.error
+                    tint = MaterialTheme.colorScheme.error,
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
-private fun isValidInput(date: String): Boolean {
-    return date.all { it.isDigit() } && date.length <= 4
-}
+private fun isValidInput(date: String): Boolean = date.all { it.isDigit() } && date.length <= 4
 
-private fun isValidExpiredDate(date: String): Boolean {
-    return try {
+private fun isValidExpiredDate(date: String): Boolean =
+    try {
         val month = date.substring(0, 2).toInt()
         val year = date.substring(2, 4).toInt()
         val result = ExpiredDate.of(month, year) != null
@@ -75,4 +73,3 @@ private fun isValidExpiredDate(date: String): Boolean {
     } catch (e: NumberFormatException) {
         false
     }
-}

@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard
+package woowacourse.payments
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,14 +9,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.presentation.newcard.component.CardNumberTextField
-import woowacourse.payments.presentation.newcard.component.ExpiredDateTextField
-import woowacourse.payments.presentation.newcard.component.NewCardTopBar
-import woowacourse.payments.presentation.newcard.component.OwnerNameTextField
-import woowacourse.payments.presentation.newcard.component.PasswordTextField
-import woowacourse.payments.presentation.newcard.component.PaymentCard
+import woowacourse.payments.newcard.component.CardNumberTextField
+import woowacourse.payments.newcard.component.ExpiredDateTextField
+import woowacourse.payments.newcard.component.NewCardTopBar
+import woowacourse.payments.newcard.component.OwnerNameTextField
+import woowacourse.payments.newcard.component.PasswordTextField
+import woowacourse.payments.newcard.component.PaymentCard
 
+@Preview
 @Composable
 fun NewCardScreen(
     onBackClick: () -> Unit = {},

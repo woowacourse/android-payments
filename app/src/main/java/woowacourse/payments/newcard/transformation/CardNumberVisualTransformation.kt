@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.transformation
+package woowacourse.payments.newcard.transformation
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

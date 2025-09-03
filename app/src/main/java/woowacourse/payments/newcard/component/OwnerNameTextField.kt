@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.component
+package woowacourse.payments.newcard.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -29,24 +29,22 @@ fun OwnerNameTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = "카드에 표시된 이름을 입력하세요.",
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         singleLine = true,
         supportingText = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
             ) {
                 Text(
                     text = "${ownerName.length}/${OwnerName.MAX_LENGTH}",
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
-private fun isValidInput(ownerName: String): Boolean {
-    return ownerName.length <= OwnerName.MAX_LENGTH
-}
+private fun isValidInput(ownerName: String): Boolean = ownerName.length <= OwnerName.MAX_LENGTH

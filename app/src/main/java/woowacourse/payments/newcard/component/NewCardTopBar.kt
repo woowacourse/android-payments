@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.component
+package woowacourse.payments.newcard.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -36,6 +36,6 @@ fun NewCardTopBar(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

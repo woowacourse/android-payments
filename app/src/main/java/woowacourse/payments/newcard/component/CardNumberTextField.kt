@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.component
+package woowacourse.payments.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.presentation.newcard.transformation.cardNumberVisualTransformation
+import woowacourse.payments.newcard.transformation.cardNumberVisualTransformation
 
 @Preview
 @Composable
@@ -30,15 +30,13 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = "0000-0000-0000-0000",
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = cardNumberVisualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
-private fun isValidInput(numbers: String): Boolean {
-    return numbers.all { it.isDigit() } && numbers.length <= 16
-}
+private fun isValidInput(numbers: String): Boolean = numbers.all { it.isDigit() } && numbers.length <= 16

@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard.component
+package woowacourse.payments.newcard.component
 
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -26,14 +26,12 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = "0000",
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = PasswordVisualTransformation(),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
-private fun isValidInput(password: String): Boolean {
-    return password.all { it.isDigit() } && password.length <= 4
-}
+private fun isValidInput(password: String): Boolean = password.all { it.isDigit() } && password.length <= 4

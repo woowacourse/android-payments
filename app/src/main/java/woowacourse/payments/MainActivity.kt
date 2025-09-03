@@ -1,4 +1,4 @@
-package woowacourse.payments.presentation.newcard
+package woowacourse.payments
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
