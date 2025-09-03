@@ -27,7 +27,6 @@ fun DigitFieldText(
     mask: InputMask = InputMask.None,
 ) {
     var number by remember { mutableStateOf("") }
-    val visualTransformation = if (mask is InputMask.None) VisualTransformation.None else VisualTransformation { mask.apply(it) }
     OutlinedTextField(
         value = number,
         onValueChange = { newText ->
@@ -44,7 +43,7 @@ fun DigitFieldText(
             .padding(horizontal = 24.dp, vertical = 15.dp),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = visualTransformation
+        visualTransformation = VisualTransformation { mask.apply(it) }
     )
 }
 
