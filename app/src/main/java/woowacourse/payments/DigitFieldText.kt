@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,20 +27,7 @@ fun DigitFieldText(
     mask: InputMask = InputMask.None,
 ) {
     var number by remember { mutableStateOf("") }
-    val visualTransformation = when(mask) {
-        is InputMask.Password -> PasswordVisualTransformation()
-        is InputMask.CardNumber -> {
-            VisualTransformation { text ->
-                creditCardFilter(text)
-            }
-        }
-        is InputMask.Expiry -> {
-            VisualTransformation { text ->
-                expiryFilter(text)
-            }
-        }
-        is InputMask.None -> VisualTransformation.None
-    }
+    val visualTransformation = if (mask is InputMask.None) VisualTransformation.None else VisualTransformation { mask.apply(it) }
     OutlinedTextField(
         value = number,
         onValueChange = { newText ->

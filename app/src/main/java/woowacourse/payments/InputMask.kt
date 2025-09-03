@@ -2,13 +2,27 @@ package woowacourse.payments
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TransformedText
 
 sealed class InputMask {
-    data object None: InputMask()
-    data object CardNumber: InputMask()
-    data object Password: InputMask()
-    data object Expiry: InputMask()
+    abstract fun apply(text: AnnotatedString): TransformedText
+
+    data object None : InputMask() {
+        override fun apply(text: AnnotatedString) = TransformedText(text, OffsetMapping.Identity)
+    }
+
+    data object CardNumber : InputMask() {
+        override fun apply(text: AnnotatedString) = creditCardFilter(text)
+    }
+
+    data object Expiry : InputMask() {
+        override fun apply(text: AnnotatedString) = expiryFilter(text)
+    }
+
+    data object Password : InputMask() {
+        override fun apply(text: AnnotatedString) = PasswordVisualTransformation().filter(text)
+    }
 }
 
 fun creditCardFilter(text: AnnotatedString): TransformedText {
