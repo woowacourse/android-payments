@@ -54,14 +54,23 @@ private fun NewCardScreen() {
             )
         },
     ) { innerPadding ->
-        Box(
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .fillMaxSize(),
-            contentAlignment = Alignment.TopCenter,
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
         ) {
             PaymentCard(modifier = Modifier.padding(top = 14.dp))
+            PaymentCard(
+                modifier = Modifier
+                    .padding(top = 14.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+
+            CardNumberTextField(
+                modifier = Modifier
+                    .padding(top = 40.dp)
+            )
         }
     }
 }
@@ -120,4 +129,28 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                     ),
         )
     }
+}
+
+@Preview
+@Composable
+fun CardNumberTextField(modifier: Modifier = Modifier) {
+    var cardNumber by remember { mutableStateOf("") }
+    val numericRegex = Regex("[^0-9]")
+
+    OutlinedTextField(
+        value = cardNumber,
+        onValueChange = {
+            val stripped = numericRegex.replace(it, "")
+            cardNumber = if (stripped.length <= 16) {
+                stripped
+            } else {
+                stripped.substring(0, 16)
+            }
+        },
+        label = { Text("카드 번호") },
+        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        singleLine = true,
+        modifier = modifier,
+    )
 }
