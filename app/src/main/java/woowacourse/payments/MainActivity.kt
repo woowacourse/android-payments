@@ -126,7 +126,7 @@ fun NewCardContents(context: Context) {
                         val numbers: String = newValue.filter(Char::isDigit)
                         cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
                         isCardNumberError.value =
-                            cardNumber.value.isNotEmpty() && runCatching { CardNumber(cardNumber.value) }.isFailure
+                            runCatching { CardNumber(cardNumber.value) }.isFailure
                     }
 
                     CardInfoTextFields(
@@ -192,8 +192,7 @@ fun NewCardContents(context: Context) {
                     ) { newValue: String ->
                         val numbers: String = newValue.filter(Char::isDigit)
                         passcode.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
-                        isPasscodeError.value =
-                            passcode.value.isNotEmpty() && runCatching { Passcode(passcode.value) }.isFailure
+                        isPasscodeError.value = runCatching { Passcode(passcode.value) }.isFailure
                     }
                 }
             }
