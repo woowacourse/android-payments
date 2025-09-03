@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,7 +68,7 @@ fun NewCardScreen(
         CardOwnerTextField(
             maxLength = 30,
             ownerName = cardOwner,
-            onChangeOwerName = { cardOwner = it },
+            onChangeOwnerName = { cardOwner = it },
             modifier = Modifier
                 .padding(top = 18.dp)
         )

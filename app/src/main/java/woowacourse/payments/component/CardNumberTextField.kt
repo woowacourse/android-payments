@@ -42,7 +42,7 @@ fun CardNumberTextField(
         ),
         visualTransformation = cardVisualTransformation,
         placeholder = {
-            TextFieldPlaceHolder(textResourceId = R.string.credit_card_place_hodler)
+            TextFieldPlaceHolder(textResourceId = R.string.credit_card_place_holder)
         },
         label = {
             Text(

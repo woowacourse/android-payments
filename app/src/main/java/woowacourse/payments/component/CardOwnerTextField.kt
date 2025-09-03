@@ -1,7 +1,6 @@
 package woowacourse.payments.component
 
 import woowacourse.payments.R
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,13 +16,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.Black49
-import woowacourse.payments.ui.theme.GrayAA
 
 @Composable
 fun CardOwnerTextField(
     maxLength: Int,
     ownerName: String,
-    onChangeOwerName: (String) -> Unit,
+    onChangeOwnerName: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column {
@@ -31,7 +29,7 @@ fun CardOwnerTextField(
             value = ownerName,
             onValueChange = { newText ->
                 if (newText.length <= maxLength) {
-                    onChangeOwerName(newText)
+                    onChangeOwnerName(newText)
                 }
             },
             keyboardOptions = KeyboardOptions(
@@ -66,6 +64,6 @@ fun CardOwnerTextFieldPreview() {
     CardOwnerTextField(
         ownerName = "페토",
         maxLength = 10,
-        onChangeOwerName = {}
+        onChangeOwnerName = {}
     )
 }
