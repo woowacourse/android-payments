@@ -1,6 +1,5 @@
 package woowacourse.payments.ui
 
-import android.util.Log
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,13 +21,13 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = expiredDate,
         onValueChange = { newValue: String ->
-            expiredDate = newValue.substring(0, newValue.length.coerceAtMost(4))
+            val newDate = newValue.filter { it.isDigit() }
+            expiredDate = newDate.substring(0, newDate.length.coerceAtMost(4))
         },
         modifier = modifier,
         label = { Text(text = "만료일") },
         placeholder = { Text(text = "MM/YY", color = Color.Gray) },
-        visualTransformation =
-            { text ->
+        visualTransformation = { text ->
             val trimmed = text.substring(0, text.length.coerceAtMost(4))
             var out = ""
             trimmed.forEachIndexed { index, ch ->
