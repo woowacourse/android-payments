@@ -54,21 +54,18 @@ fun AddCardScreen(modifier: Modifier) {
 
 @Composable
 fun AddCardContent(modifier: Modifier) {
-    var cardNumber: String by remember { mutableStateOf("") }
-    var expireDate: String by remember { mutableStateOf("") }
-    var ownerName: String by remember { mutableStateOf("") }
-    var password: String by remember { mutableStateOf("") }
+    var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
 
     Column {
         OutlinedTextField(
             modifier = modifier
                 .padding(top = 40.dp)
                 .fillMaxWidth(),
-            value = cardNumber,
-            onValueChange = { cardNumber = it },
+            value = cardInfo.cardNumber,
+            onValueChange = { cardInfo = cardInfo.onValueChanged(cardNumber = it) },
             singleLine = true,
             label = { Text(stringResource(R.string.addcard_card_number_label)) },
-            visualTransformation = if (cardNumber.isEmpty()) PlaceholderTransformation(
+            visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_card_number_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
             ) else VisualTransformation.None,
@@ -79,10 +76,10 @@ fun AddCardContent(modifier: Modifier) {
                 .padding(top = 18.dp)
                 .fillMaxWidth(0.47f),
             singleLine = true,
-            value = expireDate,
-            onValueChange = { expireDate = it },
+            value = cardInfo.expireDate,
+            onValueChange = { cardInfo = cardInfo.onValueChanged(expireDate = it) },
             label = { Text(stringResource(R.string.addcard_expire_date_label)) },
-            visualTransformation = if (expireDate.isEmpty()) PlaceholderTransformation(
+            visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_expire_date_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
             ) else VisualTransformation.None,
@@ -92,11 +89,18 @@ fun AddCardContent(modifier: Modifier) {
             modifier = modifier
                 .padding(top = 18.dp)
                 .fillMaxWidth(),
-            value = ownerName,
-            onValueChange = { ownerName = it },
+            value = cardInfo.ownerName,
+            onValueChange = { cardInfo = cardInfo.onValueChanged(ownerName = it) },
             singleLine = true,
             label = { Text(stringResource(R.string.addcard_owner_name_label)) },
-            visualTransformation = if (ownerName.isEmpty()) PlaceholderTransformation(
+            supportingText = {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                    text = "${cardInfo.ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
+                )
+            },
+            visualTransformation = if (cardInfo.ownerName.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_owner_name_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
             ) else VisualTransformation.None
@@ -104,13 +108,12 @@ fun AddCardContent(modifier: Modifier) {
 
         OutlinedTextField(
             modifier = modifier
-                .padding(top = 18.dp)
                 .fillMaxWidth(0.47f),
             singleLine = true,
-            value = password,
-            onValueChange = { password = it },
+            value = cardInfo.password,
+            onValueChange = { cardInfo = cardInfo.onValueChanged(password = it) },
             label = { Text(stringResource(R.string.addcard_password_label)) },
-            visualTransformation = if (password.isEmpty()) PlaceholderTransformation(
+            visualTransformation = if (cardInfo.password.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_password_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
             ) else PasswordVisualTransformation()
