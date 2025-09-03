@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -44,6 +45,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -61,6 +63,7 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
     var cardNumber by remember { mutableStateOf<CardNumber?>(null) }
     var expired by remember { mutableStateOf<Expired?>(null) }
+    var cardOwner by remember { mutableStateOf<CardOwner?>(CardOwner("")) }
     var showValidationError by remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
@@ -75,7 +78,8 @@ fun MainScreen() {
                     onBackClick = {},
                     onSaveClick = {
                         showValidationError = true
-                        val isValid = cardNumber?.isValid == true && expired?.isValid == true
+                        val isValid =
+                            cardNumber?.isValid == true && expired?.isValid == true && cardOwner?.isValid == true
 
                         if (isValid) showValidationError = false
                     },
@@ -93,17 +97,22 @@ fun MainScreen() {
                 CardNumberInput(
                     cardNumber = cardNumber,
                     onCardNumberChange = { cardNumber = it },
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
                     showValidationError = showValidationError,
                 )
                 ExpiredInput(
                     expired = expired,
                     onExpiredChange = { expired = it },
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
                     showValidationError = showValidationError,
                 )
-                CardOwnerInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
-                PasswordInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
+                CardOwnerInput(
+                    cardOwner = cardOwner,
+                    onOwnerChange = { cardOwner = it },
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
+                    showValidationError = showValidationError,
+                )
+                PasswordInput(modifier = Modifier.padding(horizontal = 24.dp))
             }
         }
     }
@@ -231,15 +240,36 @@ fun ExpiredInput(
 }
 
 @Composable
-fun CardOwnerInput(modifier: Modifier = Modifier) {
-    var owner by remember { mutableStateOf("") }
+fun CardOwnerInput(
+    cardOwner: CardOwner?,
+    onOwnerChange: (CardOwner?) -> Unit,
+    modifier: Modifier = Modifier,
+    showValidationError: Boolean = false,
+) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = owner,
-            onValueChange = { newValue -> owner = newValue },
+            value = textFieldValue,
+            onValueChange = { newValue ->
+                if (newValue.text.length <= 30) {
+                    textFieldValue = newValue
+                    onOwnerChange(CardOwner.create(newValue.text))
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
             placeholder = { Text("카드에 표시된 이름을 입력하세요.", color = Color.LightGray) },
             label = { Text(text = "카드 소유자 이름(선택)") },
+            isError = showValidationError && (cardOwner?.isValid != true),
+        )
+        Text(
+            text = "${textFieldValue.text.length} / 30",
+            modifier =
+                Modifier
+                    .align(Alignment.End)
+                    .padding(top = 4.dp, end = 4.dp),
+            color = Color.Gray,
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
 }
@@ -278,7 +308,7 @@ fun PasswordInput(modifier: Modifier = Modifier) {
             },
             interactionSource = interactionSource,
             modifier = Modifier.fillMaxWidth(0.5f),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         )
     }
 }
