@@ -24,9 +24,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
@@ -35,6 +33,10 @@ private const val CARD_NUMBER_MAX_LENGTH = 16
 private const val EXPIRY_MAX_LENGTH = 4
 private const val HOLDER_MAX_LENGTH = 30
 private const val PIN_MAX_LENGTH = 4
+
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val EXPIRY_GROUP_SIZE = 2
+
 private const val SEPARATOR_GROUP = " - "
 private const val SEPARATOR_EXPIRY = " / "
 
@@ -43,12 +45,12 @@ fun NewCardScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     onSaved: () -> Unit = {},
 ) {
-    val focus = LocalFocusManager.current
-    val scroll = rememberScrollState()
+    val focusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
     var cardNumber by remember { mutableStateOf("") }
     var expiry by remember { mutableStateOf("") }
-    var holder by remember { mutableStateOf("") }
+    var cardholder by remember { mutableStateOf("") }
     var pin by remember { mutableStateOf("") }
 
     Column(
@@ -57,7 +59,7 @@ fun NewCardScreen(
                 .padding(contentPadding)
                 .padding(horizontal = 24.dp)
                 .fillMaxSize()
-                .verticalScroll(scroll),
+                .verticalScroll(scrollState),
     ) {
         Spacer(Modifier.height(14.dp))
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -71,13 +73,14 @@ fun NewCardScreen(
             label = "카드 번호",
             placeholder = "0000 - 0000 - 0000 - 0000",
             maxLength = CARD_NUMBER_MAX_LENGTH,
-            format = ::formatCardNumber,
+            grouping = IntArray(4) { CARD_NUMBER_GROUP_SIZE },
+            separator = SEPARATOR_GROUP,
             keyboardOptions =
                 KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
-            onImeAction = { focus.moveFocus(FocusDirection.Next) },
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(30.dp))
@@ -88,26 +91,26 @@ fun NewCardScreen(
             label = "만료일",
             placeholder = "MM / YY",
             maxLength = EXPIRY_MAX_LENGTH,
-            format = ::formatExpiry,
+            grouping = IntArray(2) { EXPIRY_GROUP_SIZE },
+            separator = SEPARATOR_EXPIRY,
             keyboardOptions =
                 KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
-            onImeAction = { focus.moveFocus(FocusDirection.Next) },
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.width(160.dp),
         )
         Spacer(Modifier.height(30.dp))
 
         CounterTextField(
-            value = holder,
-            onValueChange = { holder = it },
+            value = cardholder,
+            onValueChange = { cardholder = it },
             label = "카드 소유자 이름(선택)",
             placeholder = "카드에 표시된 이름을 입력하세요.",
             maxLength = HOLDER_MAX_LENGTH,
-            showCounter = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
-            onImeAction = { focus.moveFocus(FocusDirection.Next) },
+            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(10.dp))
@@ -118,7 +121,7 @@ fun NewCardScreen(
             label = "비밀번호",
             placeholder = "0000",
             maxLength = PIN_MAX_LENGTH,
-            format = { it },
+            separator = "",
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions =
                 KeyboardOptions(
@@ -126,35 +129,11 @@ fun NewCardScreen(
                     imeAction = ImeAction.Done,
                 ),
             onImeAction = {
-                focus.clearFocus()
+                focusManager.clearFocus()
                 onSaved()
             },
             modifier = Modifier.width(160.dp),
         )
         Spacer(Modifier.height(24.dp))
-    }
-}
-
-private fun formatCardNumber(rawDigits: String): String {
-    if (rawDigits.isEmpty()) return ""
-    val chunks = rawDigits.chunked(4).take(4)
-    return chunks.joinToString(SEPARATOR_GROUP)
-}
-
-private fun formatExpiry(rawDigits: String): String {
-    if (rawDigits.isEmpty()) return ""
-    val mm = rawDigits.take(2)
-    val yy = rawDigits.drop(2)
-    return if (yy.isEmpty()) mm else "$mm$SEPARATOR_EXPIRY$yy"
-}
-
-@Preview(showBackground = true)
-@Composable
-fun NewCardScreenPreview() {
-    AndroidpaymentsTheme {
-        NewCardScreen(
-            contentPadding = PaddingValues(0.dp),
-            onSaved = {},
-        )
     }
 }
