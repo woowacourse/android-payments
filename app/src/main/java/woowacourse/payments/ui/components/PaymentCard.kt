@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCard(modifier: Modifier = Modifier) {
@@ -34,6 +36,16 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                         color = Color(0xFFCBBA64),
                         shape = RoundedCornerShape(4.dp),
                     ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaymentCardPreview() {
+    AndroidpaymentsTheme {
+        PaymentCard(
+            modifier = Modifier,
         )
     }
 }

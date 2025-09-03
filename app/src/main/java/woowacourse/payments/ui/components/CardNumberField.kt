@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -8,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
 @Composable
@@ -44,4 +47,16 @@ private fun formatCardNumber(input: TextFieldValue): TextFieldValue {
         text = formatted,
         selection = TextRange(formatted.length),
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardNumberFieldPreview() {
+    AndroidpaymentsTheme {
+        CardNumberField(
+            value = TextFieldValue("1234-5678-9012-3456"),
+            onValueChange = {},
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
 }

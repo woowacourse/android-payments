@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,4 +40,16 @@ fun NewCardTopBar(
         },
         modifier = modifier,
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun NewCardTopBarPreview() {
+    AndroidpaymentsTheme {
+        NewCardTopBar(
+            onBackClick = {},
+            onSaveClick = {},
+            modifier = Modifier,
+        )
+    }
 }
