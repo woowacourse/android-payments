@@ -28,7 +28,7 @@ fun CardHolderNameTextField(modifier: Modifier = Modifier) {
         placeholder = { Text(stringResource(R.string.input_card_holder_name)) },
         supportingText = {
             Text(
-                "0/30",
+                "${cardHolderName.length}/${CardHolderName.MAX_NAME_LENGTH}",
                 modifier = modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
