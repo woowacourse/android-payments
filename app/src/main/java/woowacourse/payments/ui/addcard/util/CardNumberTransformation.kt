@@ -11,19 +11,13 @@ class CardNumberTransformation : VisualTransformation {
         return TransformedText(
             AnnotatedString(
                 text = cardNumberWithHyphens,
-            ), CardNumberOffsetMapping(text.text)
+            ), CardNumberOffsetMapping()
         )
     }
 }
 
-private class CardNumberOffsetMapping(
-    private val cardNumber: String
-) : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        return cardNumber.chunked(4).joinToString("-").length
-    }
+private class CardNumberOffsetMapping : OffsetMapping {
+    override fun originalToTransformed(offset: Int): Int = offset + ((offset - 1) / 4)
 
-    override fun transformedToOriginal(offset: Int): Int {
-        return cardNumber.length
-    }
+    override fun transformedToOriginal(offset: Int): Int = offset - (offset / 5)
 }

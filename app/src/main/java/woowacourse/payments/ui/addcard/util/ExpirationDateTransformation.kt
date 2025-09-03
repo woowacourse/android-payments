@@ -11,19 +11,13 @@ class ExpirationDateTransformation : VisualTransformation {
         return TransformedText(
             AnnotatedString(
                 text = cardNumberWithHyphens,
-            ), ExpirationDateOffset(text.text)
+            ), ExpirationDateOffset()
         )
     }
 }
 
-private class ExpirationDateOffset(
-    private val expirationDate: String
-) : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        return expirationDate.chunked(2).joinToString("/").length
-    }
+private class ExpirationDateOffset : OffsetMapping {
+    override fun originalToTransformed(offset: Int): Int = offset + ((offset - 1) / 2)
 
-    override fun transformedToOriginal(offset: Int): Int {
-        return expirationDate.length
-    }
+    override fun transformedToOriginal(offset: Int): Int = offset - (offset / 3)
 }
