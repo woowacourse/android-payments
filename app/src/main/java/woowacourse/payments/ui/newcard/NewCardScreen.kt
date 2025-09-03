@@ -15,7 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,10 +52,10 @@ fun NewCardScreen(
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
 
-    var cardNumber by remember { mutableStateOf("") }
-    var expiry by remember { mutableStateOf("") }
-    var cardholder by remember { mutableStateOf("") }
-    var pin by remember { mutableStateOf("") }
+    var cardNumber by rememberSaveable { mutableStateOf("") }
+    var expiry by rememberSaveable { mutableStateOf("") }
+    var cardholder by rememberSaveable { mutableStateOf("") }
+    var pin by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier =
