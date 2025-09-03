@@ -1,8 +1,11 @@
 package woowacourse.payments
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -18,13 +21,70 @@ class NewCardScreenTest {
         }
     }
 
-    @Test fun 카드번호_입력필드의_레이블과_플레이스홀더가_보인다() {
-        composeTestRule
-            .onNodeWithText("카드 번호")
-            .assertIsDisplayed()
+    @Test
+    fun 카드번호를_입력하면_구분자에_따라_자동으로_분리된다() {
+        // given
+        val cardNumber = "1234123412341234"
 
+        // when
+        composeTestRule.onNode(hasText("카드 번호"))
+            .performTextInput(cardNumber)
+
+        // then
         composeTestRule
-            .onNodeWithText("0000 – 0000 – 0000 – 0000")
+            .onNodeWithText("1234 - 1234 - 1234 - 1234")
             .assertIsDisplayed()
     }
+
+    @Test
+    fun 만료일을_입력하면_구분자로_분리된다() {
+        // given
+        val expireDate = "0908"
+
+        // when
+        composeTestRule
+            .onNode(
+                hasText("만료일")
+            ).performTextInput(expireDate)
+
+        // then
+        composeTestRule
+            .onNodeWithText("09 / 08")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_소유자의_이름_길이가_출력된다() {
+        // given
+        val name = "peto"
+
+        // when
+        composeTestRule
+            .onNode(
+                hasText("카드 소유자 이름(선택)") and hasSetTextAction()
+            ).performTextInput(name)
+
+        // then
+        composeTestRule
+            .onNodeWithText("4 / 30")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 비밀번호는_암호화된다() {
+        // given
+        val password = "0908"
+
+        // when
+        composeTestRule
+            .onNode(
+                hasText("비밀번호")
+            ).performTextInput(password)
+
+        // then
+        composeTestRule
+            .onNodeWithText("••••")
+            .assertIsDisplayed()
+    }
+
 }

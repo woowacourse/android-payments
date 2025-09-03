@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.theme.Black49
-import woowacourse.payments.ui.theme.GrayAA
 
 @Composable
 fun CardNumberTextField(
