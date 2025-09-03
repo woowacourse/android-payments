@@ -1,5 +1,6 @@
 package woowacourse.payments.card.add
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,17 +36,20 @@ fun NewCardScreen(
     ) { innerPadding: PaddingValues ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = 14.dp),
+            modifier = Modifier.fillMaxSize(),
         ) {
-            PaymentCard(modifier = Modifier.padding(top = innerPadding.calculateTopPadding()))
-
-            Column(
+            PaymentCard(
                 modifier =
                     Modifier
-                        .padding(horizontal = 24.dp)
+                        .padding(top = innerPadding.calculateTopPadding() + 20.dp),
+            )
+
+            Column(
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp, vertical = 20.dp)
                         .verticalScroll(rememberScrollState()),
             ) {
                 CardNumberTextField(modifier = Modifier.fillMaxWidth())
