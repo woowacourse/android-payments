@@ -9,8 +9,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @Composable
 fun PasswordTextField(modifier: Modifier = Modifier) {
@@ -19,14 +21,14 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue.substring(0, newValue.length.coerceAtMost(4))
+            password = newValue.substring(0, newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
         },
         modifier = modifier,
         label = {
-            Text(text = "비밀번호")
+            Text(text = stringResource(R.string.password_label))
         },
         placeholder = {
-            Text(text = "0000", color = Color.Gray)
+            Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
         },
         visualTransformation = PasswordVisualTransformation(),
     )
@@ -37,3 +39,5 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
 private fun PasswordTextFieldPreview() {
     PasswordTextField()
 }
+
+private const val PASSWORD_LENGTH_MAX: Int = 4
