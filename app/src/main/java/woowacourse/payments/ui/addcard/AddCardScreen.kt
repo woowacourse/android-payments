@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.model.CardInfo
 import woowacourse.payments.ui.addcard.util.CardNumberTransformation
 import woowacourse.payments.ui.addcard.util.ExpirationDateTransformation
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
@@ -35,6 +36,7 @@ fun AddCardScreen(modifier: Modifier) {
             AddCardTopbar()
         }
     ) { padding ->
+        var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
         Column(
             modifier = modifier
                 .padding(padding)
@@ -45,79 +47,128 @@ fun AddCardScreen(modifier: Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Card(modifier)
-            AddCardContent(modifier)
+            AddCardContent(modifier, cardInfo)
         }
     }
 }
 
 @Composable
-fun AddCardContent(modifier: Modifier) {
-    var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
-
+fun AddCardContent(
+    modifier: Modifier,
+    cardInfo: CardInfoUiState,
+) {
     Column {
-        OutlinedTextField(
-            modifier = modifier
-                .padding(top = 40.dp)
-                .fillMaxWidth(),
-            value = cardInfo.cardNumber,
-            onValueChange = { cardInfo = cardInfo.onValueChanged(cardNumber = it) },
-            singleLine = true,
-            label = { Text(stringResource(R.string.addcard_card_number_label)) },
-            visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
-                placeholder = stringResource(R.string.addcard_card_number_placeholder),
-                textColor = colorResource(R.color.payments_placeholder_color)
-            ) else CardNumberTransformation(),
-        )
-
-        OutlinedTextField(
-            modifier = modifier
-                .padding(top = 18.dp)
-                .fillMaxWidth(0.47f),
-            singleLine = true,
-            value = cardInfo.expireDate,
-            onValueChange = { cardInfo = cardInfo.onValueChanged(expireDate = it) },
-            label = { Text(stringResource(R.string.addcard_expire_date_label)) },
-            visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
-                placeholder = stringResource(R.string.addcard_expire_date_placeholder),
-                textColor = colorResource(R.color.payments_placeholder_color)
-            ) else ExpirationDateTransformation(),
-        )
-
-        OutlinedTextField(
-            modifier = modifier
-                .padding(top = 18.dp)
-                .fillMaxWidth(),
-            value = cardInfo.ownerName,
-            onValueChange = { cardInfo = cardInfo.onValueChanged(ownerName = it) },
-            singleLine = true,
-            label = { Text(stringResource(R.string.addcard_owner_name_label)) },
-            supportingText = {
-                Text(
-                    modifier = modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                    text = "${cardInfo.ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
-                )
-            },
-            visualTransformation = if (cardInfo.ownerName.isEmpty()) PlaceholderTransformation(
-                placeholder = stringResource(R.string.addcard_owner_name_placeholder),
-                textColor = colorResource(R.color.payments_placeholder_color)
-            ) else VisualTransformation.None
-        )
-
-        OutlinedTextField(
-            modifier = modifier
-                .fillMaxWidth(0.47f),
-            singleLine = true,
-            value = cardInfo.password,
-            onValueChange = { cardInfo = cardInfo.onValueChanged(password = it) },
-            label = { Text(stringResource(R.string.addcard_password_label)) },
-            visualTransformation = if (cardInfo.password.isEmpty()) PlaceholderTransformation(
-                placeholder = stringResource(R.string.addcard_password_placeholder),
-                textColor = colorResource(R.color.payments_placeholder_color)
-            ) else PasswordVisualTransformation()
-        )
+        CardNumberTextField(modifier, cardInfo.cardNumber) {
+            cardInfo.onValueChanged(cardNumber = it)
+        }
+        ExpireDateTextField(modifier, cardInfo) {
+            cardInfo.onValueChanged(expireDate = it)
+        }
+        OwnerNameTextField(modifier, cardInfo.ownerName) {
+            cardInfo.onValueChanged(ownerName = it)
+        }
+        PasswordTextField(modifier, cardInfo.password) {
+            cardInfo.onValueChanged(password = it)
+        }
     }
 }
+
+@Composable
+private fun CardNumberTextField(
+    modifier: Modifier,
+    cardNumber: String,
+    onValueChange: (String) -> Unit
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .padding(top = 40.dp)
+            .fillMaxWidth(),
+        value = cardNumber,
+        onValueChange = onValueChange,
+        singleLine = true,
+        label = { Text(stringResource(R.string.addcard_card_number_label)) },
+        visualTransformation = if (cardNumber.isEmpty()) PlaceholderTransformation(
+            placeholder = stringResource(R.string.addcard_card_number_placeholder),
+            textColor = colorResource(R.color.payments_placeholder_color)
+        ) else CardNumberTransformation(),
+    )
+}
+
+@Composable
+private fun ExpireDateTextField(
+    modifier: Modifier,
+    cardInfo: CardInfoUiState,
+    onValueChange: (String) -> Unit
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .padding(top = 18.dp)
+            .fillMaxWidth(0.47f),
+        singleLine = true,
+        value = cardInfo.expireDate,
+        onValueChange = onValueChange,
+        isError = !cardInfo.isExpirationDateValid,
+        label = { Text(stringResource(R.string.addcard_expire_date_label)) },
+        supportingText = {
+            if (!cardInfo.isExpirationDateValid) {
+                Text("유효하지 않은 날짜입니다")
+            }
+        },
+        visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
+            placeholder = stringResource(R.string.addcard_expire_date_placeholder),
+            textColor = colorResource(R.color.payments_placeholder_color)
+        ) else ExpirationDateTransformation(),
+    )
+}
+
+@Composable
+private fun OwnerNameTextField(
+    modifier: Modifier,
+    ownerName: String,
+    onValueChange: (String) -> Unit
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .padding(top = 18.dp)
+            .fillMaxWidth(),
+        value = ownerName,
+        onValueChange = onValueChange,
+        singleLine = true,
+        label = { Text(stringResource(R.string.addcard_owner_name_label)) },
+        supportingText = {
+            Text(
+                modifier = modifier.fillMaxWidth(),
+                textAlign = TextAlign.End,
+                text = "${ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
+            )
+        },
+        visualTransformation = if (ownerName.isEmpty()) PlaceholderTransformation(
+            placeholder = stringResource(R.string.addcard_owner_name_placeholder),
+            textColor = colorResource(R.color.payments_placeholder_color)
+        ) else VisualTransformation.None
+    )
+}
+
+@Composable
+private fun PasswordTextField(
+    modifier: Modifier,
+    password: String,
+    onValueChange: (String) -> Unit
+) {
+    OutlinedTextField(
+        modifier = modifier
+            .fillMaxWidth(0.47f),
+        singleLine = true,
+        value = password,
+        onValueChange = onValueChange,
+        label = { Text(stringResource(R.string.addcard_password_label)) },
+        visualTransformation = if (password.isEmpty()) PlaceholderTransformation(
+            placeholder = stringResource(R.string.addcard_password_placeholder),
+            textColor = colorResource(R.color.payments_placeholder_color)
+        ) else PasswordVisualTransformation()
+    )
+}
+
 
 @Preview(showBackground = true)
 @Composable
