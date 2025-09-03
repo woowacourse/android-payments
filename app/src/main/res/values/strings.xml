@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">android-payments</string>
+
+    <!-- card_number_text_field -->
+    <string name="card_number_text_field_label">카드 번호</string>
+    <string name="card_number_text_field_placeholder">0000 – 0000 – 0000 – 0000</string>
 </resources>
