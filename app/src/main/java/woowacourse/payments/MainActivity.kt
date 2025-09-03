@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NewCardContents(context: Context) {
     val cardNumber: MutableState<String> = remember { mutableStateOf("") }
+    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val expirationDate: MutableState<String> = remember { mutableStateOf("") }
     val cardholderName: MutableState<String> = remember { mutableStateOf("") }
     val passcode: MutableState<String> = remember { mutableStateOf("") }
@@ -106,10 +108,23 @@ fun NewCardContents(context: Context) {
                                 color = Color(0xFFAAAAAA),
                             )
                         },
+                        isError = isCardNumberError.value,
+                        supportingText = {
+                            Text(
+                                text =
+                                    if (isCardNumberError.value) {
+                                        "카드 번호는 숫자 16자입니다."
+                                    } else {
+                                        ""
+                                    },
+                            )
+                        },
                         visualTransformation = CardNumberTransformation(),
                     ) { newValue: String ->
                         val numbers: String = newValue.filter(Char::isDigit)
                         cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
+                        isCardNumberError.value =
+                            cardNumber.value.isNotEmpty() && runCatching { CardNumber(cardNumber.value) }.isFailure
                     }
 
                     CardInfoTextFields(
@@ -236,6 +251,7 @@ fun CardInfoTextFields(
     label: @Composable () -> Unit,
     placeholder: @Composable () -> Unit,
     supportingText: @Composable () -> Unit = {},
+    isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onValueChange: (String) -> Unit,
 ) {
@@ -246,6 +262,7 @@ fun CardInfoTextFields(
         placeholder = placeholder,
         singleLine = true,
         supportingText = supportingText,
+        isError = isError,
         visualTransformation = visualTransformation,
         onValueChange = onValueChange,
     )
