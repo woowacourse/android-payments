@@ -7,4 +7,6 @@
     <string name="expire_date_place_holder">MM / YY</string>
     <string name="card_owner">카드 소유자 이름(선택)</string>
     <string name="card_owner_place_holder">카드에 표시된 이름을 입력하세요.</string>"
+    <string name="card_password">비밀번호</string>
+    <string name="card_password_place_hodler">0000</string>
 </resources>
