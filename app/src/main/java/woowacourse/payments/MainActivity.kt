@@ -32,12 +32,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
@@ -53,19 +55,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AddCardScreen() {
     AndroidpaymentsTheme {
+        var number by remember { mutableStateOf(TextFieldValue("")) }
+        var expiration by remember { mutableStateOf(TextFieldValue("")) }
+        var userName by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                NewCardTopBar(onBackClick = {}, onSaveClick = {})
+                NewCardTopBar(
+                    onBackClick = {},
+                    onSaveClick = {},
+                )
             },
         ) { innerPadding ->
             val fieldMax =
                 Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 15.dp)
-            val fieldHalf =
-                Modifier
-                    .fillMaxWidth(0.5f)
                     .padding(vertical = 15.dp)
 
             Column(
@@ -83,19 +89,32 @@ fun AddCardScreen() {
                 )
 
                 CardNumberField(
+                    value = number,
+                    onValueChange = { number = it },
                     modifier = fieldMax.then(Modifier.padding(top = 11.dp)),
                 )
 
                 ExpirationDateField(
-                    modifier = fieldHalf,
+                    value = expiration,
+                    onValueChange = { expiration = it },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(0.5f)
+                            .padding(vertical = 15.dp),
                 )
 
                 UserNameField(
+                    value = userName,
+                    onValueChange = { userName = it },
                     modifier = fieldMax,
                 )
 
                 PasswordField(
-                    modifier = fieldHalf,
+                    value = password,
+                    onValueChange = { password = it },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(0.5f),
                 )
             }
         }
@@ -158,17 +177,28 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CardNumberField(modifier: Modifier = Modifier) {
-    var number by remember { mutableStateOf(TextFieldValue("")) }
-
+fun CardNumberField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Number,
             ),
         modifier = modifier,
-        value = number,
-        onValueChange = { number = it },
+        value = value,
+        onValueChange = { input ->
+            val digits = input.text.filter(Char::isDigit).take(16)
+            val formatted = digits.chunked(4).joinToString(" - ")
+            onValueChange(
+                TextFieldValue(
+                    text = formatted,
+                    selection = TextRange(formatted.length),
+                ),
+            )
+        },
         label = { Text("카드 번호") },
         placeholder = {
             Text(
@@ -181,17 +211,28 @@ fun CardNumberField(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ExpirationDateField(modifier: Modifier = Modifier) {
-    var expiration by remember { mutableStateOf(TextFieldValue("")) }
-
+fun ExpirationDateField(
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Number,
             ),
         modifier = modifier,
-        value = expiration,
-        onValueChange = { expiration = it },
+        value = value,
+        onValueChange = { input ->
+            val digits = input.text.filter(Char::isDigit).take(4)
+            val formatted = digits.chunked(2).joinToString(" / ")
+            onValueChange(
+                TextFieldValue(
+                    text = formatted,
+                    selection = TextRange(formatted.length),
+                ),
+            )
+        },
         label = { Text(text = "만료일") },
         placeholder = {
             Text(
@@ -204,18 +245,27 @@ fun ExpirationDateField(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun UserNameField(modifier: Modifier = Modifier) {
-    var userName by remember { mutableStateOf("") }
+fun UserNameField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val max = 30
 
     OutlinedTextField(
         modifier = modifier,
-        value = userName,
-        onValueChange = { userName = it },
+        value = value,
+        onValueChange = { input ->
+            if (input.length <= max) onValueChange(input)
+        },
         label = { Text("카드 소유자 이름(선택)") },
-        placeholder = {
+        placeholder = { Text("카드에 표시된 이름을 입력하세요.", color = Grey40) },
+        supportingText = {
             Text(
-                text = "카드에 표시된 이름을 입력하세요.",
-                color = Grey40,
+                text = "${value.length} / $max",
+                modifier = Modifier.fillMaxWidth(),
+                fontSize = 12.sp,
+                textAlign = TextAlign.End,
             )
         },
         singleLine = true,
@@ -223,19 +273,23 @@ fun UserNameField(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PasswordField(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf(TextFieldValue("")) }
-    var hidden by remember { mutableStateOf(true) }
-
+fun PasswordField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
         keyboardOptions =
             KeyboardOptions(
-                keyboardType = KeyboardType.NumberPassword,
+                keyboardType = KeyboardType.Number,
             ),
         modifier = modifier,
-        value = password,
-        visualTransformation = if (hidden) PasswordVisualTransformation() else VisualTransformation.None,
-        onValueChange = { password = it },
+        value = value,
+        visualTransformation = PasswordVisualTransformation(),
+        onValueChange = { input ->
+            val formatted = input.filter(Char::isDigit).take(4)
+            onValueChange(formatted)
+        },
         label = { Text("비밀번호") },
         placeholder = {
             Text(
