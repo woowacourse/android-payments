@@ -19,6 +19,7 @@ fun DigitsTextField(
     maxLength: Int,
     colors: TextFieldColors = formTextFieldColors(),
     format: (String) -> String = { it },
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onImeAction: () -> Unit = {},
     modifier: Modifier = Modifier,
@@ -33,7 +34,7 @@ fun DigitsTextField(
         },
         label = { Text(label) },
         placeholder = { Text(placeholder) },
-        visualTransformation = VisualTransformation.None,
+        visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         keyboardActions =
             KeyboardActions(
