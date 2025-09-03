@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField
 import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
@@ -27,18 +29,15 @@ import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.features.addcard.components.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
+
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateSave: () -> Unit,
 ) {
-    var cardNumber by remember { mutableStateOf("") }
-    var expireDate by remember { mutableStateOf("") }
-    var ownerName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var card by remember { mutableStateOf(Card()) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -61,38 +60,40 @@ fun AddCardScreen(
             PaymentCard()
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
-                value = cardNumber,
-                onValueChange = { cardNumber = it },
+                value = card.cardNumber,
+                onValueChange = { card = card.withCardNumber(it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing))
             CardExpireDateField(
-                value = expireDate,
-                onValueChange = { expireDate = it },
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .align(Alignment.Start)
+                value = card.expireDate,
+                onValueChange = { card = card.withExpireDate(it) },
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.5f)
+                        .align(Alignment.Start),
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing))
             CardOwnerNameField(
-                value = ownerName,
-                onValueChange = { ownerName = it },
+                value = card.ownerName,
+                onValueChange = { card = card.withOwnerName(it) },
                 supportingText = {
                     Box(modifier = Modifier.height(SupportingTextHeight)) {
                         Text(
-                            text = "${ownerName.length}/30",
+                            text = "${card.ownerName.length}/${MAX_LENGTH_OWNER_NAME}",
                             modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End
+                            textAlign = TextAlign.End,
                         )
                     }
-                }
+                },
             )
-            Spacer(modifier = Modifier.height(FormFieldSpacing-SupportingTextHeight))
+            Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardPasswordField(
-                value = password,
-                onValueChange = { password = it },
-                modifier = Modifier
-                    .fillMaxWidth(0.5f)
-                    .align(Alignment.Start)
+                value = card.password,
+                onValueChange = { card = card.withPassword(it) },
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.5f)
+                        .align(Alignment.Start),
             )
         }
     }
