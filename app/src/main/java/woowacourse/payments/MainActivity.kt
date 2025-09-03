@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity() {
                                 .align(Alignment.CenterHorizontally)
                         )
                         CardNumber()
+                        CardExpirationDate()
                     }
                 }
             }
@@ -133,6 +134,20 @@ fun CardNumber(modifier: Modifier = Modifier) {
         placeholder = { Text(text = "0000 - 0000 - 0000 - 0000") },
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 15.dp)
+    )
+}
+
+@Composable
+fun CardExpirationDate(modifier: Modifier = Modifier) {
+    var text by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = text,
+        onValueChange = { text = it },
+        label = { Text(text = "만료일") },
+        placeholder = { Text(text = "MM / YY") },
+        modifier = modifier
+            .fillMaxWidth(0.5f)
             .padding(horizontal = 24.dp, vertical = 15.dp)
     )
 }
