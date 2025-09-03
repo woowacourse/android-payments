@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.CardNumber
@@ -28,7 +29,12 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
             }
         },
         label = { Text("카드 번호") },
-        placeholder = { Text("0000-0000-0000-0000") },
+        placeholder = {
+            Text(
+                text = "0000-0000-0000-0000",
+                color = Color.Gray
+            )
+        },
         visualTransformation = cardNumberVisualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         modifier = modifier
