@@ -1,13 +1,13 @@
 [versions]
-agp = "8.11.1"
-kotlin = "2.1.0"
+agp = "8.12.1"
+kotlin = "2.2.0"
 coreKtx = "1.17.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
 composeBom = "2025.08.01"
 junit-jupiter = "5.13.4"
-android-junit5 = "1.12.0.0"
+android-junit5 = "1.13.1.0"
 kotest-runner-junit5 = "6.0.1"
 mannodermaus-junit5 = "1.8.0"
 
