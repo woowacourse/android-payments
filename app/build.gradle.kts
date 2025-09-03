@@ -9,6 +9,13 @@ android {
     namespace = "woowacourse.payments"
     compileSdk = 36
 
+    packaging {
+        resources {
+            excludes += "/META-INF/LGPL2.1"
+            excludes += "/META-INF/AL2.0"
+        }
+    }
+
     defaultConfig {
         applicationId = "woowacourse.payments"
         minSdk = 26
