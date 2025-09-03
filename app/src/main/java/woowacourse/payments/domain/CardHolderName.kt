@@ -9,7 +9,7 @@ value class CardHolderName(
     }
 
     companion object {
-        private const val MAX_NAME_LENGTH = 30
+        const val MAX_NAME_LENGTH = 30
         private const val ERROR_INVALID_NAME_LENGTH = "카드 소유자 이름은 30자 이하여야 합니다."
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardHolderName
 
 @Composable
 fun CardHolderNameTextField(modifier: Modifier = Modifier) {
@@ -20,7 +21,9 @@ fun CardHolderNameTextField(modifier: Modifier = Modifier) {
 
     OutlinedTextField(
         value = cardHolderName,
-        onValueChange = { cardHolderName = it },
+        onValueChange = { text: String ->
+            if (text.length <= CardHolderName.MAX_NAME_LENGTH) cardHolderName = text
+        },
         label = { Text(stringResource(R.string.card_holder_name)) },
         placeholder = { Text(stringResource(R.string.input_card_holder_name)) },
         supportingText = {
