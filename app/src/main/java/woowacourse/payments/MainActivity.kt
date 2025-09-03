@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -64,6 +65,7 @@ fun MainScreen() {
     var cardNumber by remember { mutableStateOf<CardNumber?>(null) }
     var expired by remember { mutableStateOf<Expired?>(null) }
     var cardOwner by remember { mutableStateOf<CardOwner?>(CardOwner("")) }
+    var password by remember { mutableStateOf<Password?>(null) }
     var showValidationError by remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
@@ -79,7 +81,8 @@ fun MainScreen() {
                     onSaveClick = {
                         showValidationError = true
                         val isValid =
-                            cardNumber?.isValid == true && expired?.isValid == true && cardOwner?.isValid == true
+                            cardNumber?.isValid == true && expired?.isValid == true &&
+                                cardOwner?.isValid == true && password?.isValid == true
 
                         if (isValid) showValidationError = false
                     },
@@ -112,7 +115,12 @@ fun MainScreen() {
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
                     showValidationError = showValidationError,
                 )
-                PasswordInput(modifier = Modifier.padding(horizontal = 24.dp))
+                PasswordInput(
+                    password = password,
+                    onPasswordChange = { password = it },
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    showValidationError = showValidationError,
+                )
             }
         }
     }
@@ -275,8 +283,13 @@ fun CardOwnerInput(
 }
 
 @Composable
-fun PasswordInput(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf("") }
+fun PasswordInput(
+    password: Password?,
+    onPasswordChange: (Password?) -> (Unit),
+    modifier: Modifier = Modifier,
+    showValidationError: Boolean = false,
+) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -284,8 +297,13 @@ fun PasswordInput(modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = password,
-            onValueChange = { newValue -> password = newValue },
+            value = textFieldValue,
+            onValueChange = { newValue ->
+                if (newValue.text.length <= 4) {
+                    textFieldValue = newValue
+                    onPasswordChange(Password.create(newValue.text))
+                }
+            },
             label = { Text(text = "비밀번호") },
             placeholder = { Text("0000", color = Color.LightGray) },
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -308,7 +326,8 @@ fun PasswordInput(modifier: Modifier = Modifier) {
             },
             interactionSource = interactionSource,
             modifier = Modifier.fillMaxWidth(0.5f),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+            isError = showValidationError && (password?.isValid != true),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
     }
 }
