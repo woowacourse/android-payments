@@ -23,6 +23,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.components.CreditCardVisualTransformation
+import woowacourse.payments.ui.components.DateVisualTransformation
 import woowacourse.payments.ui.components.NewCardTopBar
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.PaymentTextField
@@ -82,6 +83,7 @@ class MainActivity : ComponentActivity() {
                             hint = "MM / YY",
                             maxLength = 4,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            visualTransformation = DateVisualTransformation(AnnotatedString(expiredDate)),
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
                                 .padding(top = 30.dp)
