@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.component.CardNumberTextField
+import woowacourse.payments.component.CardOwnerTextField
 import woowacourse.payments.component.ExpireDateTextField
 import woowacourse.payments.component.PaymentCard
 
@@ -25,6 +26,7 @@ fun NewCardScreen(
 ) {
     var cardNumber by remember { mutableStateOf("") }
     var expireDate by remember { mutableStateOf("") }
+    var cardOwner by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -49,8 +51,16 @@ fun NewCardScreen(
 
         ExpireDateTextField(
             expireDate = expireDate,
-            onExpireDateChange = { expireDate = it},
+            onExpireDateChange = { expireDate = it },
             maxLength = 4,
+            modifier = Modifier
+                .padding(top = 18.dp)
+        )
+
+        CardOwnerTextField(
+            maxLength = 30,
+            ownerName = cardOwner,
+            onChangeOwerName = { cardOwner = it },
             modifier = Modifier
                 .padding(top = 18.dp)
         )
