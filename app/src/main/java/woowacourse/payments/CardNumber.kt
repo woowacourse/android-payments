@@ -16,6 +16,7 @@ fun CardNumber() {
         onValueChange = { },
         label = { Text("카드 번호") },
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+        singleLine = true,
         modifier = Modifier
             .padding(top = 40.dp)
             .padding(horizontal = 24.dp)
