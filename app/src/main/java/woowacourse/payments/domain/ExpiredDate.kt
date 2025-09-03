@@ -1,24 +1,17 @@
 package woowacourse.payments.domain
 
 class ExpiredDate(
-    val monthYear: String
+    val month: Int,
+    val year: Int
 ) {
     init {
-        requireAllDigit()
-        requireValidLength()
-        requireValidMonth()
+        require(month in MIN_MONTH..MAX_MONTH) { "카드 유효기간은 1~12월 사이여야 합니다." }
+        require(year >= THIS_YEAR) { "카드 유효기간은 ${THIS_YEAR}년도 이상이어야 합니다." }
     }
 
-    private fun requireAllDigit() = require(monthYear.all { it.isDigit() })
-
-    private fun requireValidLength() = require(monthYear.length <= 4)
-
-    private fun requireValidMonth() {
-        if (monthYear.isNotEmpty()) {
-            require(monthYear.startsWith("0") || monthYear.startsWith("1"))
-        }
-        if (monthYear.length >= 2) {
-            require(monthYear.substring(0, 2).toInt() in 1..12)
-        }
+    companion object {
+        private const val MIN_MONTH = 1
+        private const val MAX_MONTH = 12
+        private const val THIS_YEAR = 25
     }
 }
