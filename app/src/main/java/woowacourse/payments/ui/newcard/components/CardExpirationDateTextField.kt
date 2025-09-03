@@ -18,7 +18,9 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
 
     OutlinedTextField(
         value = cardExpirationDate,
-        onValueChange = { cardExpirationDate = it },
+        onValueChange = { text: String ->
+            if (text.length <= 4) cardExpirationDate = text
+        },
         label = { Text("만료일") },
         placeholder = { Text("MM/YY") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
