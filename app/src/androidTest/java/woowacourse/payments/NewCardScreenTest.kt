@@ -27,7 +27,7 @@ class NewCardScreenTest {
         val cardNumber = "1234123412341234"
 
         // when
-        composeTestRule.onNode(hasText("카드 번호"))
+        composeTestRule.onNode(hasText("카드 번호") and hasSetTextAction())
             .performTextInput(cardNumber)
 
         // then
@@ -44,7 +44,7 @@ class NewCardScreenTest {
         // when
         composeTestRule
             .onNode(
-                hasText("만료일")
+                hasText("만료일") and hasSetTextAction()
             ).performTextInput(expireDate)
 
         // then
