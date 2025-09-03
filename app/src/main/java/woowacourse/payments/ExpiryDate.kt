@@ -16,6 +16,7 @@ fun ExpiryDate() {
         onValueChange = { },
         label = { Text("만료일") },
         placeholder = { Text("MM / YY") },
+        singleLine = true,
         modifier = Modifier.padding(top = 30.dp).padding(horizontal = 24.dp).fillMaxWidth(0.6f)
         )
 }
