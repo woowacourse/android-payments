@@ -17,11 +17,11 @@ fun DigitsTextField(
     label: String,
     placeholder: String,
     maxLength: Int,
-    modifier: Modifier = Modifier,
+    colors: TextFieldColors = FormTextFieldColors(),
     format: (String) -> String = { it },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onImeAction: () -> Unit = {},
-    colors: TextFieldColors = FormTextFieldColors(),
+    modifier: Modifier = Modifier,
 ) {
     val displayed = format(value)
     OutlinedTextField(
