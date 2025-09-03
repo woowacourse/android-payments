@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.domain.CardPassword
 
 @Composable
 fun CardPasswordTextField(modifier: Modifier = Modifier) {
@@ -19,7 +20,9 @@ fun CardPasswordTextField(modifier: Modifier = Modifier) {
 
     OutlinedTextField(
         value = cardPassword,
-        onValueChange = { cardPassword = it },
+        onValueChange = { text: String ->
+            if (text.length <= CardPassword.CARD_PASSWORD_LENGTH) cardPassword = text
+        },
         label = { Text("비밀번호") },
         placeholder = { Text("0000") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),

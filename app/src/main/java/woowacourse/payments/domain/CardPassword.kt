@@ -8,7 +8,7 @@ class CardPassword(
     }
 
     companion object {
-        private const val CARD_PASSWORD_LENGTH = 4
+        const val CARD_PASSWORD_LENGTH = 4
         private const val ERROR_INVALID_CARD_PASSWORD_LENGTH = "카드 비밀번호는 4자리여야 합니다."
     }
 }
