@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.transformation.CardNumberVisualTransformation
+import woowacourse.payments.transformation.ExpirationDateVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -167,7 +168,7 @@ fun CardNumber(
         value = text,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            text = newValue
+            if (newValue.length <= 16) text = newValue
         },
         placeholder = { Text(placeholder) },
         visualTransformation = CardNumberVisualTransformation()
@@ -184,12 +185,14 @@ fun ExpirationDate(
 
     OutlinedTextField(
         modifier = modifier,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = text,
         label = { Text(text = label) },
-        onValueChange = {
-            text = it
+        onValueChange = { newValue ->
+            if (newValue.length <= 4) text = newValue
         },
-        placeholder = { Text(placeholder) }
+        placeholder = { Text(placeholder) },
+        visualTransformation = ExpirationDateVisualTransformation()
     )
 }
 
