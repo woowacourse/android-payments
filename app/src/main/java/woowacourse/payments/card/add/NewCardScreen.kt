@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.card.add.components.CardExpirationDateTextField
 import woowacourse.payments.card.add.components.CardHolderNameTextField
 import woowacourse.payments.card.add.components.CardNumberTextField
+import woowacourse.payments.card.add.components.CardPasswordTextField
 import woowacourse.payments.card.add.components.NewCardTopBar
 import woowacourse.payments.card.add.components.PaymentCard
 
@@ -50,6 +51,7 @@ fun NewCardScreen(
                 CardNumberTextField(modifier = Modifier.fillMaxWidth())
                 CardExpirationDateTextField(modifier = Modifier.fillMaxWidth(0.5f))
                 CardHolderNameTextField(modifier = Modifier.fillMaxWidth())
+                CardPasswordTextField(modifier = Modifier.fillMaxWidth(0.5f))
             }
         }
     }
