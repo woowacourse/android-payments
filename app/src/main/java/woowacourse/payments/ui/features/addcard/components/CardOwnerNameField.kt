@@ -10,9 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -28,8 +30,8 @@ fun CardOwnerNameField(
         value = value,
         onValueChange = onValueChange,
         modifier = modifier,
-        labelText = "카드 소유자 이름(선택)",
-        placeholderText = "카드에 표시된 이름을 입력하세요.",
+        labelText = stringResource(R.string.add_card_owner_name_field_title),
+        placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
         supportingText = supportingText,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     )
@@ -48,9 +50,9 @@ fun CardOwnerNameFieldPreview() {
                 Text(
                     text = "${text.length}/30",
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
-            }
+            },
         )
     }
 }
