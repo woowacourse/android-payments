@@ -2,7 +2,6 @@ package woowacourse.payments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,12 +36,9 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -134,22 +130,16 @@ fun NewCardTopBar(
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardInfoFields(context: Context) {
-    val cardNumber: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
+    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
     OutlinedTextField(
         value = cardNumber.value,
         label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
-        onValueChange = { newValue: TextFieldValue ->
-            val numbers: String = newValue.text.filter(Char::isDigit)
-            if (numbers.length <= 16) {
-                val text = numbers.chunked(4).joinToString(context.getString(R.string.card_number_separator))
-                cardNumber.value =
-                    TextFieldValue(
-                        text = text,
-                        selection = TextRange(text.length),
-                    )
-            }
+        onValueChange = { newValue: String ->
+            val numbers: String = newValue.filter(Char::isDigit)
+            cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
         },
+        visualTransformation = CardNumberTransformation(),
         modifier = Modifier.fillMaxWidth(),
     )
 
@@ -161,7 +151,10 @@ fun NewCardInfoFields(context: Context) {
         onValueChange = { newValue: TextFieldValue ->
             val numbers: String = newValue.text.filter(Char::isDigit)
             if (numbers.length <= 4) {
-                val text = numbers.chunked(2).joinToString(context.getString(R.string.expiration_date_separator))
+                val text =
+                    numbers
+                        .chunked(2)
+                        .joinToString(context.getString(R.string.expiration_date_separator))
                 expirationDate.value =
                     TextFieldValue(
                         text = text,
