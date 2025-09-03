@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -13,31 +14,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.Black49
 
 @Composable
 fun CardPasswordTextField(
-    maxLength: Int,
-    password: String,
-    onPasswordChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(modifier = modifier) {
-        CardPasswordEditText(
-            maxLength = maxLength,
-            password = password,
-            onPasswordChange = {
-                onPasswordChange(it)
-            },
-            modifier = Modifier
-                .padding(top = 14.dp)
-                .fillMaxWidth(0.5f)
-        )
-        TextFieldLabel(text = stringResource(R.string.card_password))
-    }
-}
-
-@Composable
-fun CardPasswordEditText(
     maxLength: Int,
     password: String,
     onPasswordChange: (String) -> Unit,
@@ -53,11 +33,18 @@ fun CardPasswordEditText(
         placeholder = {
             TextFieldPlaceHolder(textResourceId = R.string.card_password_place_hodler)
         },
+        label = {
+            Text(
+                text = stringResource(R.string.card_password),
+                color = Black49
+            )
+        },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.NumberPassword
         ),
         visualTransformation = PasswordVisualTransformation(),
         modifier = modifier
+            .fillMaxWidth(0.5f)
     )
 }
 

@@ -15,6 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.theme.Black49
+import woowacourse.payments.ui.theme.GrayAA
 
 @Composable
 fun CardOwnerTextField(
@@ -23,52 +25,36 @@ fun CardOwnerTextField(
     onChangeOwerName: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Box(
-        modifier = modifier
-    ) {
-        Column {
-            CardOwnerEditText(
-                maxLength = maxLength,
-                ownerName = ownerName,
-                onChangeOwerName = { onChangeOwerName(it) }
-            )
+    Column {
+        OutlinedTextField(
+            value = ownerName,
+            onValueChange = { newText ->
+                if (newText.length <= maxLength) {
+                    onChangeOwerName(newText)
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text
+            ),
+            placeholder = {
+                TextFieldPlaceHolder(textResourceId = R.string.card_owner_place_holder)
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.card_owner),
+                    color = Black49
+                )
+            },
+            modifier = modifier.fillMaxWidth()
+        )
 
-            Text(
-                text = "${ownerName.length} / $maxLength",
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .align(Alignment.End)
-            )
-        }
-
-        TextFieldLabel(stringResource(R.string.card_owner))
+        Text(
+            text = "${ownerName.length} / $maxLength",
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .align(Alignment.End)
+        )
     }
-}
-
-@Composable
-fun CardOwnerEditText(
-    maxLength: Int,
-    ownerName: String,
-    onChangeOwerName: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    OutlinedTextField(
-        value = ownerName,
-        onValueChange = { newText ->
-            if (newText.length <= maxLength) {
-                onChangeOwerName(newText)
-            }
-        },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Text
-        ),
-        placeholder = {
-            TextFieldPlaceHolder(textResourceId = R.string.card_owner_place_holder)
-        },
-        modifier = modifier
-            .padding(top = 14.dp)
-            .fillMaxWidth()
-    )
 }
 
 @Preview(showBackground = true)

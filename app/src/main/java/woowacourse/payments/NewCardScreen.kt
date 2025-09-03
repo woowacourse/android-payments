@@ -1,6 +1,5 @@
 package woowacourse.payments
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.component.CardNumberTextField
@@ -33,7 +31,6 @@ fun NewCardScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = Color.White)
             .padding(horizontal = 24.dp),
     ) {
         PaymentCard(

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,32 +15,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.core.ExpireDateVisualTransformation
+import woowacourse.payments.ui.theme.Black49
 
 @Composable
 fun ExpireDateTextField(
-    maxLength: Int,
-    expireDate: String,
-    onExpireDateChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth(0.5f)
-    ) {
-        ExpireDateEditText(
-            maxLength = maxLength,
-            expireDate = expireDate,
-            onExpireDateChange = onExpireDateChange,
-            modifier = Modifier
-                .padding(top = 14.dp)
-                .wrapContentSize()
-        )
-        TextFieldLabel(stringResource(R.string.expire_date))
-    }
-}
-
-@Composable
-fun ExpireDateEditText(
     maxLength: Int,
     expireDate: String,
     onExpireDateChange: (String) -> Unit,
@@ -59,6 +38,12 @@ fun ExpireDateEditText(
         ),
         placeholder = {
             TextFieldPlaceHolder(textResourceId = R.string.expire_date_place_holder)
+        },
+        label = {
+            Text(
+                text = stringResource(R.string.expire_date),
+                color = Black49
+            )
         },
         visualTransformation = expireDateVisualTransformation,
         modifier = modifier
