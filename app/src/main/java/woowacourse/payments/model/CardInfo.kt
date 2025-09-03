@@ -8,16 +8,16 @@ class CardInfo(
     password: String = ""
 ) {
     val cardNumber: String = cardNumber
+        .filter { it.isDigit() }
         .take(CARD_NUMBER_MAX_SIZE)
-        .filter { it.isDigit() }
     val expireDate: String = expireDate
-        .take(EXPIRE_DATE_MAX_SIZE)
         .filter { it.isDigit() }
+        .take(EXPIRE_DATE_MAX_SIZE)
     val ownerName: String = ownerName
         .take(OWNER_NAME_MAX_SIZE)
     val password: String = password
-        .take(PASSWORD_MAX_SIZE)
         .filter { it.isDigit() }
+        .take(PASSWORD_MAX_SIZE)
 
     fun isExpirationDateValid(): Boolean {
         if (expireDate.length < 2) {
