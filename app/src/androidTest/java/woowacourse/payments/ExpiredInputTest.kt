@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
@@ -29,6 +30,25 @@ class ExpiredInputTest {
         // then
         composeTestRule
             .onNodeWithText("만료일")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
+        // given
+
+        // when
+        composeTestRule
+            .onNodeWithText("만료일")
+            .performClick()
+
+        // then
+        composeTestRule
+            .onNodeWithText("만료일")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText("MM / YY")
             .assertIsDisplayed()
     }
 
