@@ -1,4 +1,4 @@
-package woowacourse.ui
+package woowacourse.payments.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -7,38 +7,41 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.CardNumberTextField
 
-class CardNumberTextFieldTest {
+class CardOwnerNameTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardNumberTextField()
+            CardOwnerNameTextField()
         }
     }
 
     @Test
-    fun `숫자가_아닌_값을_입력할_수_없다`() {
+    fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
         // when
         composeRule.onNodeWithText("")
-            .performTextInput("123NaN")
+            .performTextInput("모".repeat(30))
+
+        composeRule.onNodeWithText("모".repeat(30))
+            .performTextInput("모찌")
+
 
         // then
-        composeRule.onNodeWithText("123")
+        composeRule.onNodeWithText("모".repeat(30))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `숫자_4자리마다_구분자가_들어간다`() {
+    fun `입력된_이름의_길이가_출력된다`() {
         // when
         composeRule.onNodeWithText("")
-            .performTextInput("1234567812345678")
+            .performTextInput("모찌")
 
         // then
-        composeRule.onNodeWithText("1234-5678-1234-5678")
+        composeRule.onNodeWithText("2/30")
             .assertIsDisplayed()
     }
 }
