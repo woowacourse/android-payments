@@ -208,8 +208,8 @@ fun Name(
         modifier = modifier,
         value = text,
         label = { Text(text = label) },
-        onValueChange = {
-            text = it
+        onValueChange = { newValue ->
+            if (newValue.length <= 30) text = newValue
         },
         placeholder = { Text(placeholder) }
     )
