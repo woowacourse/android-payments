@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.component
 
 import androidx.compose.ui.text.AnnotatedString
 import org.junit.jupiter.api.Assertions
@@ -17,7 +17,7 @@ class CardNumberVisualTransformationTest {
         val transformed = transformation.filter(input)
 
         // when
-        val excepted = AnnotatedString("1234 - 1234 - 1234 - 1234").text
+        val excepted = androidx.compose.ui.text.AnnotatedString("1234 - 1234 - 1234 - 1234").text
 
         // then
         Assertions.assertEquals(excepted, transformed.text.text)

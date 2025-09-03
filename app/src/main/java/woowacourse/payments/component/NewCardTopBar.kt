@@ -22,7 +22,7 @@ fun NewCardTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.text_add_card)) },
+        title = { Text(stringResource(R.string.card_add)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
