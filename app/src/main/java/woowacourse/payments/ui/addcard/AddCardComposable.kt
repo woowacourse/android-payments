@@ -1,9 +1,7 @@
-package woowacourse.payments.ui.view
+package woowacourse.payments.ui.addcard
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +21,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,20 +35,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.domain.CardExpirationDateVisualTransformation
+import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardNumberVisualTransformation
+import woowacourse.payments.ui.component.CardNumberVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-
-class AddCardActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            GenerateCardView()
-        }
-    }
-}
 
 @Composable
 fun GenerateCardView() {
