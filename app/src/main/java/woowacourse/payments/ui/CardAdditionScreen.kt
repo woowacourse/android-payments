@@ -13,9 +13,11 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         topBar = {
             CardAdditionTopBar(
-                onBackClick = {}, onSaveClick = {}
+                onBackClick = {},
+                onSaveClick = {},
             )
-        }) { paddingValues: PaddingValues ->
+        },
+    ) { paddingValues: PaddingValues ->
         CardAdditionColumn(modifier = Modifier.padding(paddingValues))
     }
 }

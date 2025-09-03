@@ -14,27 +14,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PaymentCard(
-    modifier: Modifier = Modifier,
-) {
+fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
-            .shadow(8.dp)
-            .size(width = 208.dp, height = 124.dp)
-            .background(
-                color = Color(0xFF333333),
-                shape = RoundedCornerShape(5.dp),
-            )
+        modifier =
+            modifier
+                .shadow(8.dp)
+                .size(width = 208.dp, height = 124.dp)
+                .background(
+                    color = Color(0xFF333333),
+                    shape = RoundedCornerShape(5.dp),
+                ),
     ) {
         Box(
-            modifier = Modifier
-                .padding(start = 14.dp, bottom = 10.dp)
-                .size(width = 40.dp, height = 26.dp)
-                .background(
-                    color = Color(0xFFCBBA64),
-                    shape = RoundedCornerShape(4.dp),
-                )
+            modifier =
+                Modifier
+                    .padding(start = 14.dp, bottom = 10.dp)
+                    .size(width = 40.dp, height = 26.dp)
+                    .background(
+                        color = Color(0xFFCBBA64),
+                        shape = RoundedCornerShape(4.dp),
+                    ),
         )
     }
 }

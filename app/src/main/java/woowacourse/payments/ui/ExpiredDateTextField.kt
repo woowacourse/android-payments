@@ -31,7 +31,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.expired_date_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

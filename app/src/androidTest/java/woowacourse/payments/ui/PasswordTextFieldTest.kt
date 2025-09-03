@@ -22,22 +22,26 @@ class PasswordTextFieldTest {
     @Test
     fun 입력한_비밀번호는_가려진다() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("1234")
 
         // then
-        composeRule.onNodeWithText("\u2022".repeat(4))
+        composeRule
+            .onNodeWithText("\u2022".repeat(4))
             .assertIsDisplayed()
     }
 
     @Test
     fun 비밀번호는_4글자이다() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("12345678")
 
         // then
-        composeRule.onNodeWithText("\u2022".repeat(4))
+        composeRule
+            .onNodeWithText("\u2022".repeat(4))
             .assertIsDisplayed()
     }
 }

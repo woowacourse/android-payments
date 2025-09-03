@@ -22,12 +22,13 @@ class ExpiredDateTextFieldTest {
     @Test
     fun `만료일의_달과_년도는_구분자로_구분된다`() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("1225")
 
         // then
-        composeRule.onNodeWithText("12 / 25")
+        composeRule
+            .onNodeWithText("12 / 25")
             .assertIsDisplayed()
-
     }
 }

@@ -12,27 +12,31 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CardAdditionColumn(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.padding(horizontal = 24.dp)
+        modifier = modifier.padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 14.dp, bottom = 28.dp)
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 14.dp, bottom = 28.dp),
         )
         CardNumberTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
         )
         ExpiredDateTextField(
-            modifier = Modifier
-                .padding(top = 18.dp)
+            modifier =
+                Modifier
+                    .padding(top = 18.dp),
         )
         CardOwnerNameTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 18.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 18.dp),
         )
         PasswordTextField()
     }

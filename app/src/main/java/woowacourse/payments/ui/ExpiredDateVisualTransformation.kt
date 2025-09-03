@@ -9,26 +9,28 @@ class ExpiredDateVisualTransformation(
     private val maxInputLength: Int,
     private val delimiter: String = EXPIRED_DATE_DELIMITER,
 ) : VisualTransformation {
-    private val offsetMapping = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int {
-            if (offset <= 1) return offset
-            return offset + delimiter.length
-        }
+    private val offsetMapping =
+        object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                if (offset <= 1) return offset
+                return offset + delimiter.length
+            }
 
-        override fun transformedToOriginal(offset: Int): Int {
-            if (offset <= 2) return offset
-            return offset - delimiter.length
+            override fun transformedToOriginal(offset: Int): Int {
+                if (offset <= 2) return offset
+                return offset - delimiter.length
+            }
         }
-    }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val rawInput = text.text.take(maxInputLength)
-        val formattedText = buildString {
-            rawInput.forEachIndexed { index: Int, char: Char ->
-                append(char)
-                if (index == 1) append(delimiter)
+        val formattedText =
+            buildString {
+                rawInput.forEachIndexed { index: Int, char: Char ->
+                    append(char)
+                    if (index == 1) append(delimiter)
+                }
             }
-        }
         return TransformedText(AnnotatedString(formattedText), offsetMapping)
     }
 
