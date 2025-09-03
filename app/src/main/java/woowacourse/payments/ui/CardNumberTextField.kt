@@ -58,7 +58,7 @@ private fun creditCardFilter(text: AnnotatedString): TransformedText {
     var out = ""
     trimmed.forEachIndexed { index: Int, char: Char ->
         out += char
-        if (index % 4 == 3 && index != trimmed.lastIndex) out += CARD_NUMBER_DELIMITER
+        if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) out += CARD_NUMBER_DELIMITER
     }
 
     val creditCardOffsetTranslator =
