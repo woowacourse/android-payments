@@ -62,7 +62,26 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxWidth()
                                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
                             label = "카드 번호",
-                            placeHolder = "0000 - 0000 - 0000 - 0000"
+                            placeholder = "0000 - 0000 - 0000 - 0000"
+                        )
+                        ExpirationDate(
+                            modifier = Modifier
+                                .padding(start = 24.dp, top = 30.dp),
+                            label = "만료일",
+                            placeholder = "MM / YY"
+                        )
+                        Name(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 24.dp, top = 30.dp, end = 24.dp),
+                            label = "카드 소유자 이름 (선택)",
+                            placeholder = "카드에 표시된 이름을 입력하세요."
+                        )
+                        Password(
+                            modifier = Modifier
+                                .padding(start = 24.dp, top = 30.dp),
+                            label = "비밀번호",
+                            placeholder = "0000"
                         )
                     }
                 }
@@ -131,7 +150,7 @@ fun PaymentCard(
 fun CardNumber(
     modifier: Modifier,
     label: String,
-    placeHolder: String,
+    placeholder: String,
 ) {
     var text: String by remember { mutableStateOf("") }
 
@@ -142,7 +161,64 @@ fun CardNumber(
         onValueChange = {
             text = it
         },
-        placeholder = { Text(placeHolder) }
+        placeholder = { Text(placeholder) }
+    )
+}
+
+@Composable
+fun ExpirationDate(
+    modifier: Modifier,
+    label: String,
+    placeholder: String,
+) {
+    var text: String by remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        label = { Text(text = label) },
+        onValueChange = {
+            text = it
+        },
+        placeholder = { Text(placeholder) }
+    )
+}
+
+@Composable
+fun Name(
+    modifier: Modifier,
+    label: String,
+    placeholder: String,
+) {
+    var text: String by remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        label = { Text(text = label) },
+        onValueChange = {
+            text = it
+        },
+        placeholder = { Text(placeholder) }
+    )
+}
+
+@Composable
+fun Password(
+    modifier: Modifier,
+    label: String,
+    placeholder: String,
+) {
+    var text: String by remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        label = { Text(text = label) },
+        onValueChange = {
+            text = it
+        },
+        placeholder = { Text(placeholder) }
     )
 }
 
@@ -171,7 +247,26 @@ fun GreetingPreview() {
                         .fillMaxWidth()
                         .padding(top = 40.dp, start = 24.dp, end = 24.dp),
                     label = "카드 번호",
-                    placeHolder = "0000 - 0000 - 0000 - 0000"
+                    placeholder = "0000 - 0000 - 0000 - 0000"
+                )
+                ExpirationDate(
+                    modifier = Modifier
+                        .padding(start = 24.dp, top = 30.dp),
+                    label = "만료일",
+                    placeholder = "MM / YY"
+                )
+                Name(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 24.dp, top = 30.dp, end = 24.dp),
+                    label = "카드 소유자 이름 (선택)",
+                    placeholder = "카드에 표시된 이름을 입력하세요."
+                )
+                Password(
+                    modifier = Modifier
+                        .padding(start = 24.dp, top = 30.dp),
+                    label = "비밀번호",
+                    placeholder = "0000"
                 )
             }
         }
