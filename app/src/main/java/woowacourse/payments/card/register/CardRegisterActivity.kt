@@ -32,10 +32,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.card.register.component.CardExpirationDateTextField
+import woowacourse.payments.card.register.component.CardHolderNameTextField
+import woowacourse.payments.card.register.component.CardNumberTextField
+import woowacourse.payments.card.register.component.CardPasswordTextField
+import woowacourse.payments.card.register.component.NewCardTopBar
+import woowacourse.payments.card.register.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardRegisterActivity : ComponentActivity() {
@@ -91,140 +102,11 @@ private fun NewCardScreen() {
                     .padding(top = 30.dp)
                     .fillMaxWidth()
             )
+            CardPasswordTextField(
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .fillMaxWidth(0.5f)
+            )
         }
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun NewCardTopBar(
-    onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    TopAppBar(
-        title = { Text("카드 추가") },
-        navigationIcon = {
-            IconButton(onClick = { onBackClick() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로 가기",
-                )
-            }
-        },
-        actions = {
-            IconButton(onClick = { onSaveClick() }) {
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = "완료",
-                )
-            }
-        },
-        modifier = modifier,
-    )
-}
-
-@Preview
-@Composable
-fun PaymentCard(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.CenterStart,
-        modifier =
-            modifier
-                .shadow(8.dp)
-                .size(width = 208.dp, height = 124.dp)
-                .background(
-                    color = Color(0xFF333333),
-                    shape = RoundedCornerShape(5.dp),
-                ),
-    ) {
-        Box(
-            modifier =
-                Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = Color(0xFFCBBA64),
-                        shape = RoundedCornerShape(4.dp),
-                    ),
-        )
-    }
-}
-
-@Preview
-@Composable
-fun CardNumberTextField(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
-    val numericRegex = Regex("[^0-9]")
-
-    OutlinedTextField(
-        value = cardNumber,
-        onValueChange = {
-            val stripped = numericRegex.replace(it, "")
-            cardNumber = if (stripped.length <= 16) {
-                stripped
-            } else {
-                stripped.substring(0, 16)
-            }
-        },
-        label = { Text("카드 번호") },
-        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        singleLine = true,
-        modifier = modifier,
-    )
-}
-
-@Preview
-@Composable
-fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
-    var expirationDate by remember { mutableStateOf("") }
-    val numericRegex = Regex("[^0-9]")
-
-    OutlinedTextField(
-        value = expirationDate,
-        onValueChange = {
-            val stripped = numericRegex.replace(it, "")
-            expirationDate = if (stripped.length <= 4) {
-                stripped
-            } else {
-                stripped.substring(0, 4)
-            }
-        },
-        label = { Text("만료일") },
-        placeholder = { Text("MM / YY") },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        singleLine = true,
-        modifier = modifier,
-    )
-}
-
-@Preview
-@Composable
-fun CardHolderNameTextField(modifier: Modifier = Modifier) {
-    var cardHolderName by remember { mutableStateOf("") }
-
-    OutlinedTextField(
-        value = cardHolderName,
-        onValueChange = {input ->
-            val stripped = input.filter { it.isLetter() }
-            val uppercased = stripped.uppercase()
-
-            if (uppercased.length <= 30) {
-                cardHolderName = uppercased
-            }
-        },
-        label = { Text("카드 소유자 이름(선택)") },
-        placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
-        singleLine = true,
-        modifier = modifier,
-        supportingText = {
-            Text(
-                text = "${cardHolderName.length} / 30",
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End,
-            )
-        },
-    )
-}
-
