@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -33,9 +33,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardExpirationDate
+import woowacourse.payments.domain.CardExpirationDateVisualTransformation
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardNumberVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
@@ -43,45 +49,81 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AndroidpaymentsTheme {
-                Scaffold(
-                    topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
-                    modifier = Modifier.fillMaxSize(),
-                ) { innerPadding ->
-                    Column(
-                        horizontalAlignment = Alignment.Start,
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(20.dp),
-                    ) {
-                        PaymentCard(
-                            modifier =
-                                Modifier
-                                    .padding(
-                                        innerPadding,
-                                    ).align(Alignment.CenterHorizontally),
-                        )
-                        CardNumber(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth(),
-                        )
-                        EndDate(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth(0.5f),
-                        )
-                        CardOwner(
-                            Modifier
-                                .fillMaxWidth(),
-                        )
-                        PassWord(
-                            Modifier
-                                .fillMaxWidth(0.5f),
-                        )
-                    }
-                }
+            GenerateCardView()
+        }
+    }
+}
+
+@Composable
+fun GenerateCardView(modifier: Modifier = Modifier) {
+    var cardDetails by remember { mutableStateOf(Card()) }
+
+    AndroidpaymentsTheme {
+        Scaffold(
+            topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
+            modifier = Modifier.fillMaxSize(),
+        ) { innerPadding ->
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(20.dp),
+            ) {
+                PaymentCard(
+                    modifier =
+                        Modifier
+                            .padding(
+                                innerPadding,
+                            ).align(Alignment.CenterHorizontally),
+                )
+                CardNumber(
+                    cardDetails.number,
+                    onValueChange = { input ->
+                        val newText = input.filter { it.isDigit() }
+                        if (newText.length <= 16) {
+                            cardDetails =
+                                cardDetails.copy(number = cardDetails.number.onValueChange(newText))
+                        }
+                    },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
+                )
+                EndDate(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(0.5f),
+                    onValueChange = { input ->
+                        val newText = input.filter { it.isDigit() }
+                        cardDetails =
+                            cardDetails.copy(
+                                expirationDate = cardDetails.expirationDate.onValueChange(newText),
+                            )
+                    },
+                    endDate = cardDetails.expirationDate,
+                )
+                CardOwner(
+                    cardOwner = cardDetails.ownerName,
+                    Modifier
+                        .fillMaxWidth(),
+                    onValueChange = { input ->
+                        if (input.length <= 30) {
+                            cardDetails = cardDetails.copy(ownerName = input)
+                        }
+                    },
+                )
+                Password(
+                    password = cardDetails.password,
+                    onValueChange = { input ->
+                        if (input.length <= 4) {
+                            cardDetails = cardDetails.copy(password = input)
+                        }
+                    },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(0.5f),
+                )
             }
         }
     }
@@ -90,11 +132,7 @@ class AddCardActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    AndroidpaymentsTheme {
-        NewCardTopBar(onBackClick = {}, onSaveClick = {})
-        PaymentCard()
-        CardNumber()
-    }
+    GenerateCardView()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -153,50 +191,57 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CardNumber(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
-
+fun CardNumber(
+    cardNumber: CardNumber,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {},
+) {
     OutlinedTextField(
-        value = cardNumber,
-        onValueChange = { cardNumber = it },
+        value = cardNumber.toString(),
+        onValueChange = { onValueChange(it) },
         modifier = modifier,
         placeholder = { Text("0000-0000-0000-0000") },
         label = { Text("카드 번호") },
         supportingText = {
-            // 빈 Text를 넣어주면 supportingText 공간만 차지하고 내용은 보이지 않습니다.
             Text(" ")
         },
+        visualTransformation = CardNumberVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
     )
 }
 
 @Composable
-fun EndDate(modifier: Modifier = Modifier) {
-    var endDate by remember { mutableStateOf("") }
-
+fun EndDate(
+    endDate: CardExpirationDate,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit,
+) {
     OutlinedTextField(
-        value = endDate,
-        onValueChange = { endDate = it },
+        value = endDate.toString(),
+        onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text("MM / YY") },
         label = { Text("만료일") },
+        isError = endDate.isValid().not(),
         supportingText = {
-            // 빈 Text를 넣어주면 supportingText 공간만 차지하고 내용은 보이지 않습니다.
             Text(" ")
         },
+        visualTransformation = CardExpirationDateVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
     )
 }
 
 @Composable
-fun CardOwner(modifier: Modifier = Modifier) {
-    var cardOwner by remember { mutableStateOf("") }
-
+fun CardOwner(
+    cardOwner: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {},
+) {
     OutlinedTextField(
         value = cardOwner,
-        onValueChange = { cardOwner = it },
+        onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
         label = { Text("카드 소유자 이름(선택)") },
@@ -212,16 +257,19 @@ fun CardOwner(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PassWord(modifier: Modifier = Modifier) {
-    var passWord by remember { mutableStateOf("") }
-
+fun Password(
+    password: String,
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {},
+) {
     OutlinedTextField(
-        value = passWord,
-        onValueChange = { passWord = it },
+        value = password,
+        onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text("0000") },
         label = { Text("비밀번호") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
     )
 }
