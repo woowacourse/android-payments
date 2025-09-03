@@ -227,27 +227,6 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 }
 
 @Suppress("ktlint:standard:function-naming")
-@Composable
-fun TextField(
-    placeholder: String,
-    label: String,
-    modifier: Modifier = Modifier,
-    applyMasking: Boolean = false,
-    condition: (String) -> Boolean = { true },
-) {
-    val text: MutableState<String> = remember { mutableStateOf("") }
-
-    OutlinedTextField(
-        value = text.value,
-        label = { Text(label) },
-        placeholder = { Text(placeholder) },
-        onValueChange = { newValue: String -> if (condition(newValue)) text.value = newValue },
-        visualTransformation = if (applyMasking) PasswordVisualTransformation() else VisualTransformation.None,
-        modifier = modifier,
-    )
-}
-
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun Preview() {
