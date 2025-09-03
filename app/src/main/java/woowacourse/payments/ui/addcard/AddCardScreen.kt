@@ -58,36 +58,29 @@ fun AddCardContent(
     cardInfo: CardInfoUiState,
 ) {
     Column {
-        CardNumberTextField(modifier, cardInfo.cardNumber) {
-            cardInfo.onValueChanged(cardNumber = it)
-        }
-        ExpireDateTextField(modifier, cardInfo) {
-            cardInfo.onValueChanged(expireDate = it)
-        }
-        OwnerNameTextField(modifier, cardInfo.ownerName) {
-            cardInfo.onValueChanged(ownerName = it)
-        }
-        PasswordTextField(modifier, cardInfo.password) {
-            cardInfo.onValueChanged(password = it)
-        }
+        CardNumberTextField(modifier, cardInfo)
+        ExpireDateTextField(modifier, cardInfo)
+        OwnerNameTextField(modifier, cardInfo)
+        PasswordTextField(modifier, cardInfo)
     }
 }
 
 @Composable
-private fun CardNumberTextField(
+fun CardNumberTextField(
     modifier: Modifier,
-    cardNumber: String,
-    onValueChange: (String) -> Unit
+    cardInfo: CardInfoUiState,
 ) {
     OutlinedTextField(
         modifier = modifier
             .padding(top = 40.dp)
             .fillMaxWidth(),
-        value = cardNumber,
-        onValueChange = onValueChange,
+        value = cardInfo.cardNumber,
+        onValueChange = {
+            cardInfo.onValueChanged(cardNumber = it)
+        },
         singleLine = true,
         label = { Text(stringResource(R.string.addcard_card_number_label)) },
-        visualTransformation = if (cardNumber.isEmpty()) PlaceholderTransformation(
+        visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
             placeholder = stringResource(R.string.addcard_card_number_placeholder),
             textColor = colorResource(R.color.payments_placeholder_color)
         ) else CardNumberTransformation(),
@@ -95,10 +88,9 @@ private fun CardNumberTextField(
 }
 
 @Composable
-private fun ExpireDateTextField(
+fun ExpireDateTextField(
     modifier: Modifier,
     cardInfo: CardInfoUiState,
-    onValueChange: (String) -> Unit
 ) {
     OutlinedTextField(
         modifier = modifier
@@ -106,7 +98,9 @@ private fun ExpireDateTextField(
             .fillMaxWidth(0.47f),
         singleLine = true,
         value = cardInfo.expireDate,
-        onValueChange = onValueChange,
+        onValueChange = {
+            cardInfo.onValueChanged(expireDate = it)
+        },
         isError = !cardInfo.isExpirationDateValid,
         label = { Text(stringResource(R.string.addcard_expire_date_label)) },
         supportingText = {
@@ -122,27 +116,28 @@ private fun ExpireDateTextField(
 }
 
 @Composable
-private fun OwnerNameTextField(
+fun OwnerNameTextField(
     modifier: Modifier,
-    ownerName: String,
-    onValueChange: (String) -> Unit
+    cardInfo: CardInfoUiState,
 ) {
     OutlinedTextField(
         modifier = modifier
             .padding(top = 18.dp)
             .fillMaxWidth(),
-        value = ownerName,
-        onValueChange = onValueChange,
+        value = cardInfo.ownerName,
+        onValueChange = {
+            cardInfo.onValueChanged(ownerName = it)
+        },
         singleLine = true,
         label = { Text(stringResource(R.string.addcard_owner_name_label)) },
         supportingText = {
             Text(
                 modifier = modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
-                text = "${ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
+                text = "${cardInfo.ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
             )
         },
-        visualTransformation = if (ownerName.isEmpty()) PlaceholderTransformation(
+        visualTransformation = if (cardInfo.ownerName.isEmpty()) PlaceholderTransformation(
             placeholder = stringResource(R.string.addcard_owner_name_placeholder),
             textColor = colorResource(R.color.payments_placeholder_color)
         ) else VisualTransformation.None
@@ -150,19 +145,20 @@ private fun OwnerNameTextField(
 }
 
 @Composable
-private fun PasswordTextField(
+fun PasswordTextField(
     modifier: Modifier,
-    password: String,
-    onValueChange: (String) -> Unit
+    cardInfo: CardInfoUiState,
 ) {
     OutlinedTextField(
         modifier = modifier
             .fillMaxWidth(0.47f),
         singleLine = true,
-        value = password,
-        onValueChange = onValueChange,
+        value = cardInfo.password,
+        onValueChange = {
+            cardInfo.onValueChanged(password = it)
+        },
         label = { Text(stringResource(R.string.addcard_password_label)) },
-        visualTransformation = if (password.isEmpty()) PlaceholderTransformation(
+        visualTransformation = if (cardInfo.password.isEmpty()) PlaceholderTransformation(
             placeholder = stringResource(R.string.addcard_password_placeholder),
             textColor = colorResource(R.color.payments_placeholder_color)
         ) else PasswordVisualTransformation()
