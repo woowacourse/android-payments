@@ -16,19 +16,22 @@ import woowacourse.payments.R
 
 @Composable
 fun PasswordTextField(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf("") }
+    var password: String by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue.substring(0, newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
+            password = newValue.take(PASSWORD_LENGTH_MAX)
         },
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.password_label))
         },
         placeholder = {
-            Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
+            Text(
+                text = stringResource(R.string.password_placeholder),
+                color = Color.Gray
+            )
         },
         visualTransformation = PasswordVisualTransformation(),
     )

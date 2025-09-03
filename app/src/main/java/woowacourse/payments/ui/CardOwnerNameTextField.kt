@@ -17,19 +17,22 @@ import woowacourse.payments.R
 
 @Composable
 fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
-    var name by remember { mutableStateOf("") }
+    var name: String by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = name,
         onValueChange = { newName: String ->
-            name = newName.substring(0, newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
+            name = newName.take(CARD_OWNER_NAME_LENGTH_MAX)
         },
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_owner_name_label))
         },
         placeholder = {
-            Text(text = stringResource(R.string.card_owner_name_placeholder), color = Color.Gray)
+            Text(
+                text = stringResource(R.string.card_owner_name_placeholder),
+                color = Color.Gray
+            )
         },
         supportingText = {
             Text(

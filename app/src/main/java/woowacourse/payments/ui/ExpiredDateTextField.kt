@@ -19,43 +19,25 @@ import java.lang.Character.isDigit
 
 @Composable
 fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate by remember { mutableStateOf("") }
+    var expiredDate: String by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = expiredDate,
         onValueChange = { newValue: String ->
-            val newDate = newValue.filter(::isDigit)
-            expiredDate = newDate.substring(0, newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
+            val newDate: String = newValue.filter(::isDigit)
+            expiredDate = newDate.take(EXPIRED_DATE_LENGTH_MAX)
         },
         modifier = modifier,
-        label = { Text(text = stringResource(R.string.expired_date_label)) },
+        label = {
+            Text(text = stringResource(R.string.expired_date_label))
+        },
         placeholder = {
             Text(
                 text = stringResource(R.string.expired_date_placeholder),
                 color = Color.Gray
             )
         },
-        visualTransformation = { text: AnnotatedString ->
-            val trimmed = text.substring(0, text.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
-            var out = ""
-            trimmed.forEachIndexed { index: Int, char: Char ->
-                out += char
-                if (index == 1) out += EXPIRED_DATE_DELIMITER
-            }
-            val dateOffsetTranslator = object : OffsetMapping {
-                override fun originalToTransformed(offset: Int): Int {
-                    if (offset <= 1) return offset
-                    return offset + EXPIRED_DATE_DELIMITER.length
-                }
-
-                override fun transformedToOriginal(offset: Int): Int {
-                    if (offset <= 2) return offset
-                    return offset - EXPIRED_DATE_DELIMITER.length
-                }
-
-            }
-            TransformedText(AnnotatedString(out), dateOffsetTranslator)
-        }
+        visualTransformation = ::filteredExpiredDate
     )
 }
 
@@ -63,6 +45,29 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
 @Composable
 private fun ExpiredDateTextFieldPreview() {
     ExpiredDateTextField()
+}
+
+private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
+    val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH_MAX)
+
+    val transformedText: String = trimmedText.mapIndexed { index: Int, char: Char ->
+        if (index == 1) char + EXPIRED_DATE_DELIMITER
+        else char
+    }.joinToString(separator = "")
+
+    return TransformedText(AnnotatedString(transformedText), dateOffsetTranslator)
+}
+
+private val dateOffsetTranslator = object : OffsetMapping {
+    override fun originalToTransformed(offset: Int): Int {
+        if (offset < 2) return offset
+        return offset + EXPIRED_DATE_DELIMITER.length
+    }
+
+    override fun transformedToOriginal(offset: Int): Int {
+        if (offset < 3) return offset
+        return offset - EXPIRED_DATE_DELIMITER.length
+    }
 }
 
 private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
