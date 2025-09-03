@@ -7,7 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,14 +19,20 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -35,14 +43,26 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = {
                         NewCardTopBar(
                             onBackClick = { },
                             onSaveClick = {},
                         )
-                        PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally)
-                            .padding(top = 10.dp))
+                    }
+                ) { innerPadding ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                    ) {
+                        PaymentCard(
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .align(Alignment.CenterHorizontally)
+                        )
+                        CardNumber()
                     }
                 }
             }
@@ -60,7 +80,7 @@ fun NewCardTopBar(
     TopAppBar(
         title = { Text(text = "카드 추가") },
         navigationIcon = {
-            IconButton(onClick = {onBackClick()}) {
+            IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "뒤로 가기"
@@ -68,7 +88,7 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = {onSaveClick()}) {
+            IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = "완료"
@@ -91,14 +111,30 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                 shape = RoundedCornerShape(5.dp),
             )
     ) {
-        Box(modifier = modifier
-            .padding(start = 14.dp, bottom = 10.dp)
-            .size(40.dp, 28.dp)
-            .background(
-                color = Color(0xFFCBBA64),
-                shape = RoundedCornerShape(5.dp)
-            ))
+        Box(
+            modifier = modifier
+                .padding(start = 14.dp, bottom = 10.dp)
+                .size(40.dp, 28.dp)
+                .background(
+                    color = Color(0xFFCBBA64),
+                    shape = RoundedCornerShape(5.dp)
+                )
+        )
     }
+}
+
+@Composable
+fun CardNumber(modifier: Modifier = Modifier) {
+    var number by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = number,
+        onValueChange = { number = it },
+        label = { Text(text = "카드 번호") },
+        placeholder = { Text(text = "0000 - 0000 - 0000 - 0000") },
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 15.dp)
+    )
 }
 
 @Preview(showBackground = true)
