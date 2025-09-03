@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.presentation.newcard.transformation.cardNumberVisualTransformation
 
 @Preview
@@ -23,9 +22,8 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = cardNumber,
         onValueChange = { value: String ->
-            runCatching {
-                val newCardNumber = CardNumber(value)
-                cardNumber = newCardNumber.numbers
+            if (isValidInput(value)) {
+                cardNumber = value
             }
         },
         label = { Text("카드 번호") },
@@ -39,4 +37,8 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
         modifier = modifier
     )
+}
+
+private fun isValidInput(numbers: String): Boolean {
+    return numbers.all { it.isDigit() } && numbers.length <= 16
 }
