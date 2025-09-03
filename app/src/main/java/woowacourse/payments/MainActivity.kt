@@ -34,7 +34,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -122,13 +124,24 @@ fun NewCardTopBar(
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardInfoFields() {
-    TextField(
-        placeholder = "0000 - 0000 - 0000 - 0000",
-        label = "카드 번호",
-        modifier = Modifier.fillMaxWidth(),
-    ) { text: String ->
-        text.isDigitsOnly()
-    }
+    val cardNumber: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
+
+    OutlinedTextField(
+        value = cardNumber.value,
+        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+        label = { Text("카드 번호") },
+        onValueChange = { newValue: TextFieldValue ->
+            val numbers: String = newValue.text.filter(Char::isDigit)
+            if (numbers.length <= 16) {
+                val text = numbers.chunked(4).joinToString(" - ")
+                cardNumber.value =
+                    TextFieldValue(
+                        text = text,
+                        selection = TextRange(text.length),
+                    )
+            }
+        },
+    )
 
     TextField(
         placeholder = "MM / YY",
