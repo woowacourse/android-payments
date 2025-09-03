@@ -2,6 +2,7 @@ package woowacourse.payments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -70,7 +71,7 @@ fun NewCardContents(context: Context) {
                             .show()
                     },
                 )
-            }
+            },
         ) { innerPadding: PaddingValues ->
             Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                 PaymentCard(
@@ -128,7 +129,6 @@ fun NewCardTopBar(
 @Composable
 fun NewCardInfoFields() {
     val cardNumber: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
-
     OutlinedTextField(
         value = cardNumber.value,
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
@@ -144,6 +144,25 @@ fun NewCardInfoFields() {
                     )
             }
         },
+    )
+
+    val expirationDate: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
+    OutlinedTextField(
+        value = expirationDate.value,
+        placeholder = { Text("MM / YY") },
+        label = { Text("만료일") },
+        onValueChange = { newValue: TextFieldValue ->
+            val numbers: String = newValue.text.filter(Char::isDigit)
+            if (numbers.length <= 4) {
+                val text = numbers.chunked(2).joinToString(" / ")
+                expirationDate.value =
+                    TextFieldValue(
+                        text = text,
+                        selection = TextRange(text.length),
+                    )
+            }
+        },
+        modifier = Modifier.fillMaxWidth(0.5F),
     )
 
     TextField(
