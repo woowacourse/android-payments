@@ -22,7 +22,7 @@ fun CounterTextField(
     maxLength: Int,
     showCounter: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    colors: TextFieldColors = FormTextFieldColors(),
+    colors: TextFieldColors = formTextFieldColors(),
     onImeAction: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {

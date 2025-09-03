@@ -31,7 +31,7 @@ fun PaymentCard(
             modifier = modifier.size(width = 208.dp, height = 124.dp),
         )
     } else {
-        EmptyCard(modifier)
+        EmptyCard(modifier = modifier)
     }
 }
 

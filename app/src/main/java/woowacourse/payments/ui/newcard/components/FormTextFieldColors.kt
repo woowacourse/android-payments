@@ -10,7 +10,7 @@ import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
 
 @Composable
-internal fun FormTextFieldColors(
+fun formTextFieldColors(
     border: Color = GrayOutline,
     label: Color = GrayText,
     hint: Color = GrayHint,

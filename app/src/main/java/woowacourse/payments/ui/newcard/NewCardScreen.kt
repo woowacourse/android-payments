@@ -30,10 +30,10 @@ import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
 
-private const val CARD_NUMBER_MAX = 16
-private const val EXPIRY_MAX = 4
-private const val HOLDER_MAX = 30
-private const val PIN_MAX = 4
+private const val CARD_NUMBER_MAX_LENGTH = 16
+private const val EXPIRY_MAX_LENGTH = 4
+private const val HOLDER_MAX_LENGTH = 30
+private const val PIN_MAX_LENGTH = 4
 private const val SEPARATOR_GROUP = " - "
 private const val SEPARATOR_EXPIRY = " / "
 
@@ -69,7 +69,7 @@ fun NewCardScreen(
             onValueChange = { cardNumber = it },
             label = "카드 번호",
             placeholder = "0000 - 0000 - 0000 - 0000",
-            maxLength = CARD_NUMBER_MAX,
+            maxLength = CARD_NUMBER_MAX_LENGTH,
             format = ::formatCardNumber,
             keyboardOptions =
                 KeyboardOptions(
@@ -86,7 +86,7 @@ fun NewCardScreen(
             onValueChange = { expiry = it },
             label = "만료일",
             placeholder = "MM / YY",
-            maxLength = EXPIRY_MAX,
+            maxLength = EXPIRY_MAX_LENGTH,
             format = ::formatExpiry,
             keyboardOptions =
                 KeyboardOptions(
@@ -103,7 +103,7 @@ fun NewCardScreen(
             onValueChange = { holder = it },
             label = "카드 소유자 이름(선택)",
             placeholder = "카드에 표시된 이름을 입력하세요.",
-            maxLength = HOLDER_MAX,
+            maxLength = HOLDER_MAX_LENGTH,
             showCounter = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             onImeAction = { focus.moveFocus(FocusDirection.Next) },
@@ -116,7 +116,7 @@ fun NewCardScreen(
             onValueChange = { pin = it },
             label = "비밀번호",
             placeholder = "0000",
-            maxLength = PIN_MAX,
+            maxLength = PIN_MAX_LENGTH,
             format = { it },
             keyboardOptions =
                 KeyboardOptions(

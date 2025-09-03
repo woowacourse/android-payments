@@ -26,12 +26,20 @@ fun NewCardTopBar(
         title = { Text(title, color = Black) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "뒤로 가기", tint = Black)
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "뒤로 가기",
+                    tint = Black,
+                )
             }
         },
         actions = {
             IconButton(onClick = onSaveClick) {
-                Icon(Icons.Filled.Check, contentDescription = "완료", tint = Black)
+                Icon(
+                    imageVector = Icons.Filled.Check,
+                    contentDescription = "완료",
+                    tint = Black,
+                )
             }
         },
         colors =
