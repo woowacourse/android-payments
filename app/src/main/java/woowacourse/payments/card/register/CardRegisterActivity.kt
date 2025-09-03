@@ -60,7 +60,6 @@ private fun NewCardScreen() {
                 .fillMaxSize()
                 .padding(horizontal = 24.dp),
         ) {
-            PaymentCard(modifier = Modifier.padding(top = 14.dp))
             PaymentCard(
                 modifier = Modifier
                     .padding(top = 14.dp)
@@ -70,6 +69,9 @@ private fun NewCardScreen() {
             CardNumberTextField(
                 modifier = Modifier
                     .padding(top = 40.dp)
+            )
+            CardExpirationDateTextField(
+                modifier = Modifier.padding(top = 30.dp)
             )
         }
     }
