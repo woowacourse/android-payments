@@ -92,10 +92,10 @@ fun NewCardContents(context: Context) {
                     modifier =
                         Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 30.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                            .padding(horizontal = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    NewCardInfoFields(context)
+                    NewCardInfoFields()
                 }
             }
         }
@@ -134,7 +134,7 @@ fun NewCardTopBar(
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NewCardInfoFields(context: Context) {
+fun NewCardInfoFields() {
     val cardNumber: MutableState<String> = remember { mutableStateOf("") }
     OutlinedTextField(
         value = cardNumber.value,
@@ -145,6 +145,7 @@ fun NewCardInfoFields(context: Context) {
             cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
         },
         visualTransformation = CardNumberTransformation(),
+        supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(),
     )
 
@@ -158,6 +159,7 @@ fun NewCardInfoFields(context: Context) {
             expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
         },
         visualTransformation = ExpirationDateTransformation(),
+        supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(0.5F),
     )
 
@@ -193,6 +195,7 @@ fun NewCardInfoFields(context: Context) {
             }
         },
         visualTransformation = PasswordVisualTransformation(),
+        supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(0.5F),
     )
 }
