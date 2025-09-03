@@ -36,6 +36,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,6 +53,11 @@ class MainActivity : ComponentActivity() {
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(context: Context) {
+    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
+    val expirationDate: MutableState<String> = remember { mutableStateOf("") }
+    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
+    val passcode: MutableState<String> = remember { mutableStateOf("") }
+
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -90,7 +96,75 @@ fun NewCardContents(context: Context) {
                             .padding(horizontal = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    NewCardInfoFields()
+                    CardInfoTextFields(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = cardNumber.value,
+                        label = { Text(stringResource(R.string.card_number_label)) },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.card_number_placeholder),
+                                color = Color(0xFFAAAAAA),
+                            )
+                        },
+                        visualTransformation = CardNumberTransformation(),
+                    ) { newValue: String ->
+                        val numbers: String = newValue.filter(Char::isDigit)
+                        cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
+                    }
+
+                    CardInfoTextFields(
+                        modifier = Modifier.fillMaxWidth(0.5F),
+                        value = expirationDate.value,
+                        label = { Text(stringResource(R.string.expiration_date_label)) },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.expiration_date_placeholder),
+                                color = Color(0xFFAAAAAA),
+                            )
+                        },
+                        visualTransformation = ExpirationDateTransformation(),
+                    ) { newValue: String ->
+                        val numbers: String = newValue.filter(Char::isDigit)
+                        expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
+                    }
+
+                    CardInfoTextFields(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = cardholderName.value,
+                        label = { Text(stringResource(R.string.cardholder_name_label)) },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.cardholder_name_placeholder),
+                                color = Color(0xFFAAAAAA),
+                            )
+                        },
+                        supportingText = {
+                            Text(
+                                text = "${cardholderName.value.length} / 30",
+                                textAlign = TextAlign.End,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        },
+                    ) { newValue: String ->
+                        cardholderName.value =
+                            newValue.substring(0..<newValue.length.coerceAtMost(30))
+                    }
+
+                    CardInfoTextFields(
+                        modifier = Modifier.fillMaxWidth(0.5F),
+                        value = passcode.value,
+                        label = { Text(stringResource(R.string.passcode_label)) },
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.passcode_placeholder),
+                                color = Color(0xFFAAAAAA),
+                            )
+                        },
+                        visualTransformation = PasswordVisualTransformation(),
+                    ) { newValue: String ->
+                        val numbers: String = newValue.filter(Char::isDigit)
+                        passcode.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
+                    }
                 }
             }
         }
@@ -129,98 +203,6 @@ fun NewCardTopBar(
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NewCardInfoFields() {
-    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = cardNumber.value,
-        label = { Text(stringResource(R.string.card_number_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.card_number_placeholder),
-                color = Color(0xFFAAAAAA),
-            )
-        },
-        onValueChange = { newValue: String ->
-            val numbers: String = newValue.filter(Char::isDigit)
-            cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
-        },
-        singleLine = true,
-        visualTransformation = CardNumberTransformation(),
-        supportingText = { Text("") },
-        modifier = Modifier.fillMaxWidth(),
-    )
-
-    val expirationDate: MutableState<String> = remember { mutableStateOf(String()) }
-    OutlinedTextField(
-        value = expirationDate.value,
-        label = { Text(stringResource(R.string.expiration_date_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.expiration_date_placeholder),
-                color = Color(0xFFAAAAAA),
-            )
-        },
-        onValueChange = { newValue: String ->
-            val numbers: String = newValue.filter(Char::isDigit)
-            expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
-        },
-        singleLine = true,
-        visualTransformation = ExpirationDateTransformation(),
-        supportingText = { Text("") },
-        modifier = Modifier.fillMaxWidth(0.5F),
-    )
-
-    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = cardholderName.value,
-        label = { Text(stringResource(R.string.cardholder_name_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.cardholder_name_placeholder),
-                color = Color(0xFFAAAAAA),
-            )
-        },
-        onValueChange = { newValue: String ->
-            if (newValue.length <= 30) {
-                cardholderName.value = newValue
-            }
-        },
-        singleLine = true,
-        supportingText = {
-            Text(
-                text = "${cardholderName.value.length} / 30",
-                textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        },
-        modifier = Modifier.fillMaxWidth(),
-    )
-
-    val passcode: MutableState<String> = remember { mutableStateOf("") }
-    OutlinedTextField(
-        value = passcode.value,
-        label = { Text(stringResource(R.string.passcode_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.passcode_placeholder),
-                color = Color(0xFFAAAAAA),
-            )
-        },
-        onValueChange = { newValue: String ->
-            val numbers: String = newValue.filter(Char::isDigit)
-            if (numbers.length <= 4) {
-                passcode.value = numbers
-            }
-        },
-        singleLine = true,
-        visualTransformation = PasswordVisualTransformation(),
-        supportingText = { Text("") },
-        modifier = Modifier.fillMaxWidth(0.5F),
-    )
-}
-
-@Suppress("ktlint:standard:function-naming")
-@Composable
 fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -244,6 +226,29 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                     ),
         )
     }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Composable
+fun CardInfoTextFields(
+    modifier: Modifier = Modifier,
+    value: String = "",
+    label: @Composable () -> Unit,
+    placeholder: @Composable () -> Unit,
+    supportingText: @Composable () -> Unit = {},
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    onValueChange: (String) -> Unit,
+) {
+    OutlinedTextField(
+        modifier = modifier,
+        value = value,
+        label = label,
+        placeholder = placeholder,
+        singleLine = true,
+        supportingText = supportingText,
+        visualTransformation = visualTransformation,
+        onValueChange = onValueChange,
+    )
 }
 
 @Suppress("ktlint:standard:function-naming")
