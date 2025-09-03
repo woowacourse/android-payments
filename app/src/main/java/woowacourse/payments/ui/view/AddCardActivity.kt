@@ -55,7 +55,7 @@ class AddCardActivity : ComponentActivity() {
 }
 
 @Composable
-fun GenerateCardView(modifier: Modifier = Modifier) {
+fun GenerateCardView() {
     var cardDetails by remember { mutableStateOf(Card()) }
 
     AndroidpaymentsTheme {
