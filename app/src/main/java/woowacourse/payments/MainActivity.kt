@@ -144,6 +144,7 @@ fun NewCardInfoFields() {
             val numbers: String = newValue.filter(Char::isDigit)
             cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
         },
+        singleLine = true,
         visualTransformation = CardNumberTransformation(),
         supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(),
@@ -163,6 +164,7 @@ fun NewCardInfoFields() {
             val numbers: String = newValue.filter(Char::isDigit)
             expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
         },
+        singleLine = true,
         visualTransformation = ExpirationDateTransformation(),
         supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(0.5F),
@@ -183,6 +185,7 @@ fun NewCardInfoFields() {
                 cardholderName.value = newValue
             }
         },
+        singleLine = true,
         supportingText = {
             Text(
                 text = "${cardholderName.value.length} / 30",
@@ -209,6 +212,7 @@ fun NewCardInfoFields() {
                 passcode.value = numbers
             }
         },
+        singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         supportingText = { Text("") },
         modifier = Modifier.fillMaxWidth(0.5F),
