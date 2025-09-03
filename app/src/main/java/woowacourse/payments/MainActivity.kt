@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
@@ -93,7 +94,7 @@ fun NewCardContents(context: Context) {
                             .padding(horizontal = 30.dp),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    NewCardInfoFields()
+                    NewCardInfoFields(context)
                 }
             }
         }
@@ -109,12 +110,12 @@ fun NewCardTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text("카드 추가") },
+        title = { Text(stringResource(R.string.new_card_title)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로 가기",
+                    contentDescription = stringResource(R.string.new_card_back_icon_description),
                 )
             }
         },
@@ -122,7 +123,7 @@ fun NewCardTopBar(
             IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "완료",
+                    contentDescription = stringResource(R.string.new_card_save_icon_description),
                 )
             }
         },
@@ -132,16 +133,16 @@ fun NewCardTopBar(
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NewCardInfoFields() {
+fun NewCardInfoFields(context: Context) {
     val cardNumber: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
     OutlinedTextField(
         value = cardNumber.value,
-        label = { Text("카드 번호") },
-        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+        label = { Text(stringResource(R.string.card_number_label)) },
+        placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
         onValueChange = { newValue: TextFieldValue ->
             val numbers: String = newValue.text.filter(Char::isDigit)
             if (numbers.length <= 16) {
-                val text = numbers.chunked(4).joinToString(" - ")
+                val text = numbers.chunked(4).joinToString(context.getString(R.string.card_number_separator))
                 cardNumber.value =
                     TextFieldValue(
                         text = text,
@@ -155,12 +156,12 @@ fun NewCardInfoFields() {
     val expirationDate: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
     OutlinedTextField(
         value = expirationDate.value,
-        label = { Text("만료일") },
-        placeholder = { Text("MM / YY") },
+        label = { Text(stringResource(R.string.expiration_date_label)) },
+        placeholder = { Text(stringResource(R.string.expiration_date_placeholder)) },
         onValueChange = { newValue: TextFieldValue ->
             val numbers: String = newValue.text.filter(Char::isDigit)
             if (numbers.length <= 4) {
-                val text = numbers.chunked(2).joinToString(" / ")
+                val text = numbers.chunked(2).joinToString(context.getString(R.string.expiration_date_separator))
                 expirationDate.value =
                     TextFieldValue(
                         text = text,
@@ -174,8 +175,8 @@ fun NewCardInfoFields() {
     val cardholderName: MutableState<String> = remember { mutableStateOf("") }
     OutlinedTextField(
         value = cardholderName.value,
-        label = { Text("카드 소유자 이름(선택)") },
-        placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
+        label = { Text(stringResource(R.string.cardholder_name_label)) },
+        placeholder = { Text(stringResource(R.string.cardholder_name_placeholder)) },
         onValueChange = { newValue: String ->
             if (newValue.length <= 30) {
                 cardholderName.value = newValue
@@ -187,8 +188,8 @@ fun NewCardInfoFields() {
     val passcode: MutableState<String> = remember { mutableStateOf("") }
     OutlinedTextField(
         value = passcode.value,
-        label = { Text("비밀번호") },
-        placeholder = { Text("0000") },
+        label = { Text(stringResource(R.string.passcode_label)) },
+        placeholder = { Text(stringResource(R.string.passcode_placeholder)) },
         onValueChange = { newValue: String ->
             val numbers: String = newValue.filter(Char::isDigit)
             if (numbers.length <= 4) {
@@ -252,7 +253,6 @@ fun Preview() {
                             .padding(horizontal = 30.dp),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    NewCardInfoFields()
                 }
             }
         }
