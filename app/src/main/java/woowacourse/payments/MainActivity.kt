@@ -55,8 +55,9 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NewCardContents(context: Context) {
     AndroidpaymentsTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding: PaddingValues ->
-            Column(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
                 NewCardTopBar(
                     onBackClick = {
                         Toast
@@ -69,7 +70,9 @@ fun NewCardContents(context: Context) {
                             .show()
                     },
                 )
-
+            }
+        ) { innerPadding: PaddingValues ->
+            Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                 PaymentCard(
                     modifier =
                         Modifier
