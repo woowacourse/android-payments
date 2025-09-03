@@ -29,7 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,32 +58,43 @@ fun AddPaymentCardScreen() {
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        TextField(R.string.label_card_number, R.string.placeholder_card_number, 24)
-        TextField(R.string.label_expiry, R.string.placeholder_expiry, 190)
-        TextField(R.string.label_owner, R.string.placeholder_owner, 24)
-        TextField(R.string.label_pin, R.string.placeholder_pin, 190, true)
+        TextField(modifier = Modifier.fillMaxWidth(), R.string.label_card_number, R.string.placeholder_card_number, isCardNumber = true)
+        TextField(modifier = Modifier.fillMaxWidth(0.6f), R.string.label_expiry, R.string.placeholder_expiry)
+        TextField(modifier = Modifier.fillMaxWidth(), R.string.label_owner, R.string.placeholder_owner)
+        TextField(modifier = Modifier.fillMaxWidth(0.6f), R.string.label_pin, R.string.placeholder_pin, isPassword = true)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun TextField(
+    modifier: Modifier = Modifier,
     label: Int = 0,
     placeholder: Int = 0,
-    paddingEnd: Int = 0,
     isPassword: Boolean = false,
+    isCardNumber: Boolean = false,
 ) {
-    var text by remember { mutableStateOf("") }
+    var value by remember { mutableStateOf(TextFieldValue("")) }
 
     OutlinedTextField(
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = { input ->
+            if (isCardNumber) {
+                val formatted = formatCardNumber(input.text)
+                value = TextFieldValue(
+                    text = formatted,
+                    selection = TextRange(formatted.length)
+                )
+            } else {
+                value = input
+            }
+        },
         label = { Text(stringResource(label), color = Gray200) },
         placeholder = { Text(stringResource(placeholder), color = Gray100) },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = 24.dp, end = paddingEnd.dp, bottom = 18.dp),
+        modifier = modifier.then(
+            Modifier.padding(start = 24.dp, end = 24.dp, bottom = 18.dp)
+        ),
     )
 }
 
@@ -139,4 +152,9 @@ private fun NewCardTopBar(
         },
         modifier = modifier
     )
+}
+
+private fun formatCardNumber(input: String): String {
+    val digits = input.filter { it.isDigit() }.take(16)
+    return digits.chunked(4).joinToString(" - ")
 }
