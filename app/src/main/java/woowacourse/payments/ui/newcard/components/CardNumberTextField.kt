@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.domain.CardNumber
 
 @Composable
 fun CardNumberTextField(modifier: Modifier = Modifier) {
@@ -18,7 +19,9 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
 
     OutlinedTextField(
         value = cardNumber,
-        onValueChange = { cardNumber = it },
+        onValueChange = { text: String ->
+            if (text.length <= CardNumber.CARD_NUMBER_LENGTH) cardNumber = text
+        },
         label = { Text("카드 번호") },
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),

@@ -9,7 +9,7 @@ value class CardNumber(
     }
 
     companion object {
-        private const val CARD_NUMBER_LENGTH = 16
+        const val CARD_NUMBER_LENGTH = 16
         private const val ERROR_INVALID_CARD_NUMBER_LENGTH = "카드 번호는 16자리여야 합니다."
     }
 }
