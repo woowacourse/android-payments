@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.presentation.newcard.component.CardNumberTextField
 import woowacourse.payments.presentation.newcard.component.ExpiredDateTextField
 import woowacourse.payments.presentation.newcard.component.NewCardTopBar
+import woowacourse.payments.presentation.newcard.component.OwnerNameTextField
+import woowacourse.payments.presentation.newcard.component.PasswordTextField
 import woowacourse.payments.presentation.newcard.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -49,6 +51,8 @@ class NewCardActivity : ComponentActivity() {
                         ) {
                             CardNumberTextField(modifier = Modifier.fillMaxWidth())
                             ExpiredDateTextField()
+                            OwnerNameTextField(modifier = Modifier.fillMaxWidth())
+                            PasswordTextField()
                         }
                     }
                 }
