@@ -42,6 +42,7 @@ fun CardPasswordTextField(
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.NumberPassword
         ),
+        singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         modifier = modifier
             .fillMaxWidth(0.5f)

@@ -45,6 +45,7 @@ fun ExpireDateTextField(
                 color = Black49
             )
         },
+        singleLine = true,
         visualTransformation = expireDateVisualTransformation,
         modifier = modifier
     )

@@ -44,6 +44,7 @@ fun CardNumberTextField(
                 color = Black49
             )
         },
+        singleLine = true,
         modifier = modifier
             .padding(top = 14.dp)
             .fillMaxWidth()

@@ -45,6 +45,7 @@ fun CardOwnerTextField(
                     color = Black49
                 )
             },
+            singleLine = true,
             modifier = modifier.fillMaxWidth()
         )
 
