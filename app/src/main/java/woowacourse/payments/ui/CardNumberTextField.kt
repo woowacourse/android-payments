@@ -29,8 +29,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         value = cardNumber,
         onValueChange = { newValue: String ->
             val newNumbers = newValue.filter(::isDigit)
-            cardNumber =
-                newNumbers.substring(0, newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
+            cardNumber = newNumbers.take(CARD_NUMBER_LENGTH_MAX)
         },
         modifier = modifier,
         label = {
@@ -43,7 +42,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = ::creditCardFilter
+        visualTransformation = CardNumberVisualTransformation(maxInputLength = CARD_NUMBER_LENGTH_MAX)
     )
 }
 
@@ -53,33 +52,4 @@ private fun CardNumberTextFieldPreview() {
     CardNumberTextField(modifier = Modifier.fillMaxWidth())
 }
 
-private fun creditCardFilter(text: AnnotatedString): TransformedText {
-    val trimmed = text.substring(0, text.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
-    var out = ""
-    trimmed.forEachIndexed { index: Int, char: Char ->
-        out += char
-        if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) out += CARD_NUMBER_DELIMITER
-    }
-
-    val creditCardOffsetTranslator =
-        object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int {
-                if (offset <= 3) return offset
-                if (offset <= 7) return offset + CARD_NUMBER_DELIMITER.length * 1
-                if (offset <= 11) return offset + CARD_NUMBER_DELIMITER.length * 2
-                return offset + CARD_NUMBER_DELIMITER.length * 3
-            }
-
-            override fun transformedToOriginal(offset: Int): Int {
-                if (offset <= 4) return offset
-                if (offset <= 9) return offset - CARD_NUMBER_DELIMITER.length * 1
-                if (offset <= 14) return offset - CARD_NUMBER_DELIMITER.length * 2
-                return offset - CARD_NUMBER_DELIMITER.length * 3
-            }
-        }
-
-    return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
-}
-
-private const val CARD_NUMBER_DELIMITER: String = " - "
 private const val CARD_NUMBER_LENGTH_MAX: Int = 16
