@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -15,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 
 @Composable
 fun DigitsTextField(
     value: String,
-    onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
@@ -28,6 +30,7 @@ fun DigitsTextField(
     colors: TextFieldColors = formTextFieldColors(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    onValueChange: (String) -> Unit,
     onImeAction: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -158,4 +161,19 @@ private fun rawIndexToFormattedIndex(
         consumed = boundary
     }
     return formattedIndex
+}
+
+@Preview
+@Composable
+private fun DigitsTextFieldPreview() {
+    AndroidpaymentsTheme {
+        DigitsTextField(
+            value = "1234567890123456",
+            onValueChange = {},
+            label = "카드 번호",
+            placeholder = "0000 - 0000 - 0000 - 0000",
+            maxLength = 16,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
 }

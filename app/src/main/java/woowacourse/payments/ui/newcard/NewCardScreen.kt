@@ -21,10 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
@@ -69,9 +73,8 @@ fun NewCardScreen(
 
         DigitsTextField(
             value = cardNumber,
-            onValueChange = { cardNumber = it },
-            label = "카드 번호",
-            placeholder = "0000 - 0000 - 0000 - 0000",
+            label = stringResource(R.string.new_card_number_label),
+            placeholder = stringResource(R.string.new_card_number_hint),
             maxLength = CARD_NUMBER_MAX_LENGTH,
             grouping = IntArray(4) { CARD_NUMBER_GROUP_SIZE },
             separator = SEPARATOR_GROUP,
@@ -80,6 +83,7 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
+            onValueChange = { cardNumber = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.fillMaxWidth(),
         )
@@ -87,8 +91,7 @@ fun NewCardScreen(
 
         DigitsTextField(
             value = expiry,
-            onValueChange = { expiry = it },
-            label = "만료일",
+            label = stringResource(R.string.new_card_expiry_label),
             placeholder = "MM / YY",
             maxLength = EXPIRY_MAX_LENGTH,
             grouping = IntArray(2) { EXPIRY_GROUP_SIZE },
@@ -98,6 +101,7 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
+            onValueChange = { expiry = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.width(160.dp),
         )
@@ -105,11 +109,11 @@ fun NewCardScreen(
 
         CounterTextField(
             value = cardholder,
-            onValueChange = { cardholder = it },
-            label = "카드 소유자 이름(선택)",
-            placeholder = "카드에 표시된 이름을 입력하세요.",
+            label = stringResource(R.string.new_card_holder_name_label),
+            placeholder = stringResource(R.string.new_card_holder_name_hint),
             maxLength = HOLDER_MAX_LENGTH,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            onValueChange = { cardholder = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
             modifier = Modifier.fillMaxWidth(),
         )
@@ -117,9 +121,8 @@ fun NewCardScreen(
 
         DigitsTextField(
             value = pin,
-            onValueChange = { pin = it },
-            label = "비밀번호",
-            placeholder = "0000",
+            label = stringResource(R.string.new_card_pin_label),
+            placeholder = stringResource(R.string.new_card_pin_hint),
             maxLength = PIN_MAX_LENGTH,
             separator = "",
             visualTransformation = PasswordVisualTransformation(),
@@ -128,6 +131,7 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done,
                 ),
+            onValueChange = { pin = it },
             onImeAction = {
                 focusManager.clearFocus()
                 onSaved()
@@ -135,5 +139,13 @@ fun NewCardScreen(
             modifier = Modifier.width(160.dp),
         )
         Spacer(Modifier.height(24.dp))
+    }
+}
+
+@Preview
+@Composable
+private fun NewCardScreenPreview() {
+    AndroidpaymentsTheme {
+        NewCardScreen()
     }
 }

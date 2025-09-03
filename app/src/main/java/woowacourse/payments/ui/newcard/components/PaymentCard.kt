@@ -15,6 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.designsystem.theme.Yellow
 
@@ -63,6 +64,8 @@ private fun EmptyCard(modifier: Modifier) {
 
 @Preview
 @Composable
-fun PaymentCardPreview() {
-    PaymentCard()
+private fun PaymentCardPreview() {
+    AndroidpaymentsTheme {
+        PaymentCard()
+    }
 }

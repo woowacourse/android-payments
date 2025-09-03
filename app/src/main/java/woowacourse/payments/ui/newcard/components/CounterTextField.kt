@@ -11,6 +11,7 @@ import androidx.compose.material3.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayText
 
 @Composable
@@ -59,11 +60,13 @@ fun CounterTextField(
 @Preview
 @Composable
 private fun CounterTextFieldPreview() {
-    CounterTextField(
-        value = "1234",
-        onValueChange = {},
-        label = "카드 번호",
-        placeholder = "0000 - 0000 - 0000 - 0000",
-        maxLength = 16,
-    )
+    AndroidpaymentsTheme {
+        CounterTextField(
+            value = "공백",
+            onValueChange = {},
+            label = "이름",
+            placeholder = "카드에 표시된 이름을 입력하세요.",
+            maxLength = 16,
+        )
+    }
 }
