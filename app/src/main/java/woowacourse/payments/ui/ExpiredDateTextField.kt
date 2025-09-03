@@ -28,7 +28,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
             }
         },
         modifier = modifier,
-        label = { Text(text = "만료일", color = Color.Gray) },
+        label = { Text(text = "만료일") },
         placeholder = { Text(text = "MM/YY", color = Color.Gray) },
     )
 }
