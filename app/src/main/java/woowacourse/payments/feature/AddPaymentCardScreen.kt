@@ -59,7 +59,7 @@ fun AddPaymentCardScreen() {
         Spacer(modifier = Modifier.height(28.dp))
 
         TextField(modifier = Modifier.fillMaxWidth(), R.string.label_card_number, R.string.placeholder_card_number, isCardNumber = true)
-        TextField(modifier = Modifier.fillMaxWidth(0.6f), R.string.label_expiry, R.string.placeholder_expiry)
+        TextField(modifier = Modifier.fillMaxWidth(0.6f), R.string.label_expiry, R.string.placeholder_expiry, isExpiryDate = true)
         TextField(modifier = Modifier.fillMaxWidth(), R.string.label_owner, R.string.placeholder_owner)
         TextField(modifier = Modifier.fillMaxWidth(0.6f), R.string.label_pin, R.string.placeholder_pin, isPassword = true)
     }
@@ -73,6 +73,7 @@ private fun TextField(
     placeholder: Int = 0,
     isPassword: Boolean = false,
     isCardNumber: Boolean = false,
+    isExpiryDate: Boolean = false,
 ) {
     var value by remember { mutableStateOf(TextFieldValue("")) }
 
@@ -81,6 +82,12 @@ private fun TextField(
         onValueChange = { input ->
             if (isCardNumber) {
                 val formatted = formatCardNumber(input.text)
+                value = TextFieldValue(
+                    text = formatted,
+                    selection = TextRange(formatted.length)
+                )
+            } else if (isExpiryDate) {
+                val formatted = formatExpiryDate(input.text)
                 value = TextFieldValue(
                     text = formatted,
                     selection = TextRange(formatted.length)
@@ -157,4 +164,9 @@ private fun NewCardTopBar(
 private fun formatCardNumber(input: String): String {
     val digits = input.filter { it.isDigit() }.take(16)
     return digits.chunked(4).joinToString(" - ")
+}
+
+private fun formatExpiryDate(input: String): String {
+    val digits = input.filter { it.isDigit() }.take(4)
+    return digits.chunked(2).joinToString(" / ")
 }
