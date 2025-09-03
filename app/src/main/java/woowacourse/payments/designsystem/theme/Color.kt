@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.theme
+package woowacourse.payments.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
