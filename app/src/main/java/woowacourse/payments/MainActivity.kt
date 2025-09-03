@@ -166,14 +166,6 @@ fun NewCardInfoFields() {
     )
 
     TextField(
-        placeholder = "MM / YY",
-        label = "만료일",
-        modifier = Modifier.fillMaxWidth(0.5F),
-    ) { text: String ->
-        text.isDigitsOnly() && text.length <= 4
-    }
-
-    TextField(
         placeholder = "카드에 표시된 이름을 입력하세요.",
         label = "카드 소유자 이름(선택)",
         modifier = Modifier.fillMaxWidth(),
