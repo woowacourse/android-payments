@@ -41,6 +41,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +60,7 @@ fun NewCardContents(context: Context) {
     val expirationDate: MutableState<String> = remember { mutableStateOf("") }
     val cardholderName: MutableState<String> = remember { mutableStateOf("") }
     val passcode: MutableState<String> = remember { mutableStateOf("") }
+    val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
         Scaffold(
@@ -175,10 +177,23 @@ fun NewCardContents(context: Context) {
                                 color = Color(0xFFAAAAAA),
                             )
                         },
+                        isError = isPasscodeError.value,
+                        supportingText = {
+                            Text(
+                                text =
+                                    if (isPasscodeError.value) {
+                                        "비밀번호는 숫자 4자입니다."
+                                    } else {
+                                        ""
+                                    },
+                            )
+                        },
                         visualTransformation = PasswordVisualTransformation(),
                     ) { newValue: String ->
                         val numbers: String = newValue.filter(Char::isDigit)
                         passcode.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
+                        isPasscodeError.value =
+                            passcode.value.isNotEmpty() && runCatching { Passcode(passcode.value) }.isFailure
                     }
                 }
             }
