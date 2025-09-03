@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -35,10 +36,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.Expired
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -54,6 +60,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     var cardNumber by remember { mutableStateOf<CardNumber?>(null) }
+    var expired by remember { mutableStateOf<Expired?>(null) }
     var showValidationError by remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
@@ -83,11 +90,15 @@ fun MainScreen() {
                     )
                 }
 
-                CardNumberInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
-                ExpiredInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
                 CardNumberInput(
                     cardNumber = cardNumber,
                     onCardNumberChange = { cardNumber = it },
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    showValidationError = showValidationError,
+                )
+                ExpiredInput(
+                    expired = expired,
+                    onExpiredChange = { expired = it },
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
                     showValidationError = showValidationError,
                 )
@@ -187,16 +198,34 @@ fun CardNumberInput(
 }
 
 @Composable
-fun ExpiredInput(modifier: Modifier = Modifier) {
-    var expired by remember { mutableStateOf("") }
+fun ExpiredInput(
+    expired: Expired?,
+    onExpiredChange: (Expired?) -> Unit,
+    modifier: Modifier = Modifier,
+    showValidationError: Boolean = false,
+) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue(expired?.value ?: "")) }
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = expired,
-            onValueChange = { newValue -> expired = newValue },
-            label = { Text(text = "만료일") },
-            placeholder = { Text("MM / YY", color = Color.LightGray) },
+            value = textFieldValue,
+            onValueChange = { newValue ->
+                val digits = newValue.text.filter { it.isDigit() }.take(4)
+                val formatted = digits.chunked(2).joinToString("/")
+                val cursorPosition = formatted.length
+
+                textFieldValue =
+                    TextFieldValue(
+                        text = formatted,
+                        selection = TextRange(cursorPosition),
+                    )
+                onExpiredChange(Expired.create(formatted))
+            },
             modifier = Modifier.fillMaxWidth(0.5f),
+            label = { Text(text = "만료일") },
+            placeholder = { Text(text = "MM / YY", color = Color.LightGray) },
+            isError = showValidationError && (expired?.isValid != true),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
     }
 }
@@ -249,6 +278,7 @@ fun PasswordInput(modifier: Modifier = Modifier) {
             },
             interactionSource = interactionSource,
             modifier = Modifier.fillMaxWidth(0.5f),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
     }
 }
@@ -287,6 +317,6 @@ fun PaymentPreview() {
 @Preview(showBackground = true)
 fun CardNumberInputPreview() {
     AndroidpaymentsTheme {
-        CardNumberInput()
+//        CardNumberInput()
     }
 }
