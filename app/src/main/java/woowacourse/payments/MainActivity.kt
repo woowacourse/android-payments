@@ -56,10 +56,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun NewCardContents(context: Context) {
     val cardNumber: MutableState<String> = remember { mutableStateOf("") }
-    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val expirationDate: MutableState<String> = remember { mutableStateOf("") }
     val cardholderName: MutableState<String> = remember { mutableStateOf("") }
     val passcode: MutableState<String> = remember { mutableStateOf("") }
+
+    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
@@ -73,9 +74,22 @@ fun NewCardContents(context: Context) {
                             .show()
                     },
                     onSaveClick = {
-                        Toast
-                            .makeText(context, "onSaveClick", Toast.LENGTH_SHORT)
-                            .show()
+                        if (cardNumber.value.isEmpty()) isCardNumberError.value = true
+                        if (passcode.value.isEmpty()) isPasscodeError.value = true
+
+                        if (isCardNumberError.value || isPasscodeError.value) {
+                            Toast
+                                .makeText(context, "카드 정보를 다시 확인해주세요.", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            cardNumber.value = ""
+                            expirationDate.value = ""
+                            cardholderName.value = ""
+                            passcode.value = ""
+                            Toast
+                                .makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     },
                 )
             },
