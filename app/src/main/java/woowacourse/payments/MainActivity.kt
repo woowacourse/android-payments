@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,10 +18,15 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -41,7 +47,7 @@ class MainActivity : ComponentActivity() {
                         NewCardTopBar(onBackClick = {}, onSaveClick = {})
                     },
                 ) { innerPadding ->
-                    Column (
+                    Column(
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize(),
@@ -50,6 +56,13 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .align(Alignment.CenterHorizontally)
                                 .padding(top = 14.dp)
+                        )
+                        CardNumber(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 40.dp, start = 24.dp, end = 24.dp),
+                            label = "카드 번호",
+                            placeHolder = "0000 - 0000 - 0000 - 0000"
                         )
                     }
                 }
@@ -114,12 +127,53 @@ fun PaymentCard(
     }
 }
 
+@Composable
+fun CardNumber(
+    modifier: Modifier,
+    label: String,
+    placeHolder: String,
+) {
+    var text: String by remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        label = { Text(text = label) },
+        onValueChange = {
+            text = it
+        },
+        placeholder = { Text(placeHolder) }
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AndroidpaymentsTheme {
-        NewCardTopBar(onBackClick = {}, onSaveClick = {})
-        PaymentCard()
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                NewCardTopBar(onBackClick = {}, onSaveClick = {})
+            },
+        ) { innerPadding ->
+            Column(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
+            ) {
+                PaymentCard(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 14.dp)
+                )
+                CardNumber(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 40.dp, start = 24.dp, end = 24.dp),
+                    label = "카드 번호",
+                    placeHolder = "0000 - 0000 - 0000 - 0000"
+                )
+            }
+        }
     }
 }
