@@ -1,5 +1,6 @@
 package woowacourse.payments
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -44,66 +45,44 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            AndroidpaymentsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding: PaddingValues ->
-                    Column(modifier = Modifier.fillMaxSize()) {
-                        NewCardTopBar(
-                            onBackClick = {
-                                Toast
-                                    .makeText(this@MainActivity, "onBackClick", Toast.LENGTH_SHORT)
-                                    .show()
-                            },
-                            onSaveClick = {
-                                Toast
-                                    .makeText(this@MainActivity, "onSaveClick", Toast.LENGTH_SHORT)
-                                    .show()
-                            },
-                        )
-                        PaymentCard(
-                            modifier =
-                                Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(vertical = 30.dp),
-                        )
-                        Column(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 30.dp),
-                            verticalArrangement = Arrangement.spacedBy(20.dp),
-                        ) {
-                            OutlinedTextField(
-                                placeholder = "0000 - 0000 - 0000 - 0000",
-                                label = "카드 번호",
-                                modifier = Modifier.fillMaxWidth(),
-                            ) { text: String ->
-                                text.isDigitsOnly()
-                            }
-                            OutlinedTextField(
-                                placeholder = "MM / YY",
-                                label = "만료일",
-                                modifier = Modifier.fillMaxWidth(0.5F),
-                            ) { text: String ->
-                                text.isDigitsOnly() && text.length <= 4
-                            }
-                            OutlinedTextField(
-                                placeholder = "카드에 표시된 이름을 입력하세요.",
-                                label = "카드 소유자 이름(선택)",
-                                modifier = Modifier.fillMaxWidth(),
-                            ) { text: String ->
-                                text.length <= 30
-                            }
-                            OutlinedTextField(
-                                placeholder = "0000",
-                                label = "비밀번호",
-                                applyMasking = true,
-                                modifier = Modifier.fillMaxWidth(0.5F),
-                            ) { text: String ->
-                                text.isDigitsOnly() && text.length <= 4
-                            }
-                        }
-                    }
+        setContent { NewCardContents(this) }
+    }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Composable
+fun NewCardContents(context: Context) {
+    AndroidpaymentsTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding: PaddingValues ->
+            Column(modifier = Modifier.fillMaxSize()) {
+                NewCardTopBar(
+                    onBackClick = {
+                        Toast
+                            .makeText(context, "onBackClick", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    onSaveClick = {
+                        Toast
+                            .makeText(context, "onSaveClick", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                )
+
+                PaymentCard(
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 30.dp),
+                )
+
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 30.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                ) {
+                    NewCardInfoFields()
                 }
             }
         }
@@ -142,6 +121,43 @@ fun NewCardTopBar(
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
+fun NewCardInfoFields() {
+    TextField(
+        placeholder = "0000 - 0000 - 0000 - 0000",
+        label = "카드 번호",
+        modifier = Modifier.fillMaxWidth(),
+    ) { text: String ->
+        text.isDigitsOnly()
+    }
+
+    TextField(
+        placeholder = "MM / YY",
+        label = "만료일",
+        modifier = Modifier.fillMaxWidth(0.5F),
+    ) { text: String ->
+        text.isDigitsOnly() && text.length <= 4
+    }
+
+    TextField(
+        placeholder = "카드에 표시된 이름을 입력하세요.",
+        label = "카드 소유자 이름(선택)",
+        modifier = Modifier.fillMaxWidth(),
+    ) { text: String ->
+        text.length <= 30
+    }
+
+    TextField(
+        placeholder = "0000",
+        label = "비밀번호",
+        applyMasking = true,
+        modifier = Modifier.fillMaxWidth(0.5F),
+    ) { text: String ->
+        text.isDigitsOnly() && text.length <= 4
+    }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Composable
 fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -169,7 +185,7 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun OutlinedTextField(
+fun TextField(
     placeholder: String,
     label: String,
     modifier: Modifier = Modifier,
@@ -191,20 +207,22 @@ fun OutlinedTextField(
 @Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun Preview() {
     AndroidpaymentsTheme {
-        Scaffold { innerPadding: PaddingValues ->
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding: PaddingValues ->
             Column(modifier = Modifier.fillMaxSize()) {
                 NewCardTopBar(
                     onBackClick = {},
                     onSaveClick = {},
                 )
+
                 PaymentCard(
                     modifier =
                         Modifier
                             .align(Alignment.CenterHorizontally)
                             .padding(vertical = 30.dp),
                 )
+
                 Column(
                     modifier =
                         Modifier
@@ -212,14 +230,7 @@ fun GreetingPreview() {
                             .padding(horizontal = 30.dp),
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-                    OutlinedTextField("0000 - 0000 - 0000 - 0000", "카드 번호", Modifier.fillMaxWidth())
-                    OutlinedTextField("MM / YY", "만료일")
-                    OutlinedTextField(
-                        "카드에 표시된 이름을 입력하세요.",
-                        "카드 소유자 이름(선택)",
-                        Modifier.fillMaxWidth(),
-                    )
-                    OutlinedTextField("0000", "비밀번호")
+                    NewCardInfoFields()
                 }
             }
         }
