@@ -36,34 +36,37 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
-        visualTransformation = VisualTransformation { text ->
-            var out = ""
-            for (i in text.indices) {
-                out += text[i]
-                if (i % 4 == 3 && i != 15) out += "-"
+        visualTransformation = cardNumberVisualTransformation(),
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun cardNumberVisualTransformation() = VisualTransformation { text ->
+    var out = ""
+    for (i in text.indices) {
+        out += text[i]
+        if (i % 4 == 3 && i != 15) out += "-"
+    }
+
+    TransformedText(
+        text = AnnotatedString(out),
+        offsetMapping = object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                if (offset <= 3) return offset
+                if (offset <= 7) return offset + 1
+                if (offset <= 11) return offset + 2
+                if (offset <= 16) return offset + 3
+                return 19
             }
 
-            TransformedText(
-                text = AnnotatedString(out),
-                offsetMapping = object : OffsetMapping {
-                    override fun originalToTransformed(offset: Int): Int {
-                        if (offset <= 3) return offset
-                        if (offset <= 7) return offset + 1
-                        if (offset <= 11) return offset + 2
-                        if (offset <= 16) return offset + 3
-                        return 19
-                    }
-
-                    override fun transformedToOriginal(offset: Int): Int {
-                        if (offset <= 4) return offset
-                        if (offset <= 9) return offset - 1
-                        if (offset <= 14) return offset - 2
-                        if (offset <= 19) return offset - 3
-                        return 16
-                    }
-                }
-            )
-        },
-        modifier = modifier,
+            override fun transformedToOriginal(offset: Int): Int {
+                if (offset <= 4) return offset
+                if (offset <= 9) return offset - 1
+                if (offset <= 14) return offset - 2
+                if (offset <= 19) return offset - 3
+                return 16
+            }
+        }
     )
 }
