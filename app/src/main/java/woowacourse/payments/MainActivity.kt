@@ -60,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             fraction = 0.5f,
                             maxLength = 4,
                             mask = InputMask.Password,
+                            height = 10.dp
                             )
                     }
                 }

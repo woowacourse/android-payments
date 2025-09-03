@@ -34,7 +34,8 @@ fun LimitedTextField(
         placeholder = { Text(text = hint) },
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 24.dp, vertical = 15.dp),
+            .padding(horizontal = 24.dp)
+            .padding(top = 30.dp),
         supportingText = {
             Text(
                 text = "${text.length}/${maxLength}",
