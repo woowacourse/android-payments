@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.card.add.components.CardExpirationDateTextField
 import woowacourse.payments.card.add.components.CardNumberTextField
 import woowacourse.payments.card.add.components.NewCardTopBar
 import woowacourse.payments.card.add.components.PaymentCard
@@ -40,9 +41,13 @@ fun NewCardScreen(
             PaymentCard(modifier = Modifier.padding(top = innerPadding.calculateTopPadding()))
 
             Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 24.dp)
+                        .verticalScroll(rememberScrollState()),
             ) {
                 CardNumberTextField(modifier = Modifier.fillMaxWidth())
+                CardExpirationDateTextField(modifier = Modifier.fillMaxWidth(0.5f))
             }
         }
     }
