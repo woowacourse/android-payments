@@ -6,10 +6,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
@@ -29,10 +31,10 @@ fun CardNumberField(
         onValueChange = { input ->
             onValueChange(formatCardNumber(input))
         },
-        label = { Text("카드 번호") },
+        label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
-                text = "0000 - 0000 - 0000 - 0000",
+                text = stringResource(R.string.card_number_placeholder),
                 color = Grey40,
             )
         },
@@ -41,8 +43,8 @@ fun CardNumberField(
 }
 
 private fun formatCardNumber(input: TextFieldValue): TextFieldValue {
-    val digits = input.text.filter(Char::isDigit).take(16)
-    val formatted = digits.chunked(4).joinToString(" - ")
+    val digits = input.text.filter(Char::isDigit).take(CARD_NUMBER_MAX_LENGTH)
+    val formatted = digits.chunked(CARD_NUMBER_CHUNK_SIZE).joinToString(CARD_NUMBER_SEPARATOR)
     return TextFieldValue(
         text = formatted,
         selection = TextRange(formatted.length),
@@ -60,3 +62,7 @@ private fun CardNumberFieldPreview() {
         )
     }
 }
+
+private const val CARD_NUMBER_MAX_LENGTH = 16
+private const val CARD_NUMBER_CHUNK_SIZE = 4
+private const val CARD_NUMBER_SEPARATOR = " - "

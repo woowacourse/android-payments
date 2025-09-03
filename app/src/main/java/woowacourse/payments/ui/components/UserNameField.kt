@@ -5,8 +5,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
@@ -20,13 +22,23 @@ fun UserNameField(
         modifier = modifier,
         value = value,
         onValueChange = { input ->
-            if (input.length <= MAX_LENGTH) onValueChange(input)
+            if (input.length <= USER_NAME_MAX_LENGTH) onValueChange(input)
         },
-        label = { Text("카드 소유자 이름(선택)") },
-        placeholder = { Text("카드에 표시된 이름을 입력하세요.", color = Grey40) },
+        label = { Text(stringResource(R.string.user_name_label)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.user_name_placeholder),
+                color = Grey40,
+            )
+        },
         supportingText = {
             Text(
-                text = "${value.length} / $MAX_LENGTH",
+                text =
+                    stringResource(
+                        R.string.user_name_counter,
+                        value.length,
+                        USER_NAME_MAX_LENGTH,
+                    ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
@@ -47,4 +59,4 @@ private fun UserNameFieldPreview() {
     }
 }
 
-private const val MAX_LENGTH = 30
+private const val USER_NAME_MAX_LENGTH = 30

@@ -6,10 +6,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
@@ -29,10 +31,10 @@ fun ExpirationDateField(
         onValueChange = { input ->
             onValueChange(formatExpirationDate(input))
         },
-        label = { Text(text = "만료일") },
+        label = { Text(stringResource(R.string.expiration_date_label)) },
         placeholder = {
             Text(
-                text = "MM / YY",
+                text = stringResource(R.string.expiration_date_placeholder),
                 color = Grey40,
             )
         },
@@ -41,8 +43,9 @@ fun ExpirationDateField(
 }
 
 private fun formatExpirationDate(input: TextFieldValue): TextFieldValue {
-    val digits = input.text.filter(Char::isDigit).take(4)
-    val formatted = digits.chunked(2).joinToString(" / ")
+    val digits = input.text.filter(Char::isDigit).take(EXPIRATION_DATE_MAX_LENGTH)
+    val formatted =
+        digits.chunked(EXPIRATION_DATE_CHUNK_SIZE).joinToString(EXPIRATION_DATE_SEPARATOR)
     return TextFieldValue(
         text = formatted,
         selection = TextRange(formatted.length),
@@ -60,3 +63,7 @@ private fun ExpirationDateFieldPreview() {
         )
     }
 }
+
+private const val EXPIRATION_DATE_MAX_LENGTH = 4
+private const val EXPIRATION_DATE_CHUNK_SIZE = 2
+private const val EXPIRATION_DATE_SEPARATOR = " / "
