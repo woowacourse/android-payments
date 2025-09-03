@@ -61,7 +61,8 @@ fun GenerateCardView() {
                         Modifier
                             .padding(
                                 innerPadding,
-                            ).align(Alignment.CenterHorizontally),
+                            )
+                            .align(Alignment.CenterHorizontally),
                 )
                 CardNumber(
                     cardDetails.number,
@@ -102,6 +103,7 @@ fun GenerateCardView() {
                 Password(
                     password = cardDetails.password,
                     onValueChange = { input ->
+                        val newPassword = input.filter { it.isDigit() }
                         if (input.length <= 4) {
                             cardDetails = cardDetails.copy(password = input)
                         }

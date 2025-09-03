@@ -12,12 +12,21 @@ data class CardNumber(
     }
 
     fun onValueChange(number: String): CardNumber {
-        val pureNumbers = number.chunked(4)
+        val pureNumbers = number.chunked(CARD_NUMBER_PART_LENGTH)
         return copy(
-            firstNumber = pureNumbers.getOrNull(0) ?: "",
-            secondNumber = pureNumbers.getOrNull(1) ?: "",
-            thirdNumber = pureNumbers.getOrNull(2) ?: "",
-            fourthNumber = pureNumbers.getOrNull(3) ?: "",
+            firstNumber = pureNumbers.getOrNull(FIRST_NUMBER_INDEX) ?: "",
+            secondNumber = pureNumbers.getOrNull(SECOND_NUMBER_INDEX) ?: "",
+            thirdNumber = pureNumbers.getOrNull(THIRD_NUMBER_INDEX) ?: "",
+            fourthNumber = pureNumbers.getOrNull(FORTH_NUMBER_INDEX) ?: "",
         )
+    }
+
+    companion object{
+        const val CARD_NUMBER_PART_LENGTH = 4
+        const val FIRST_NUMBER_INDEX = 0
+        const val SECOND_NUMBER_INDEX = 1
+        const val THIRD_NUMBER_INDEX = 2
+        const val FORTH_NUMBER_INDEX = 3
+
     }
 }

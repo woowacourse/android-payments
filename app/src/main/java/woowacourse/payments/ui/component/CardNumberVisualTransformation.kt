@@ -7,31 +7,35 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 class CardNumberVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
-        var out = ""
+        val trimmed =
+            if (text.text.length >= CARD_NUMBER_MAX_LENGTH) {
+                text.text.substring(0, CARD_NUMBER_MAX_LENGTH)
+            } else {
+                text.text
+            }
+
+        var out = DEFAULT_OUT
         for (i in trimmed.indices) {
             out += trimmed[i]
-            if (i % 4 == 3 && i < 15) out += "-"
-        }
-
-        val offsetMapping = object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int {
-                if (offset <= 3) return offset
-                if (offset <= 7) return offset + 1
-                if (offset <= 11) return offset + 2
-                if (offset <= 16) return offset + 3
-                return 19
-            }
-
-            override fun transformedToOriginal(offset: Int): Int {
-                if (offset <= 4) return offset
-                if (offset <= 9) return offset - 1
-                if (offset <= 14) return offset - 2
-                if (offset <= 19) return offset - 3
-                return 16
+            if (i % CARD_GROUP_SIZE == CARD_GROUP_SIZE - 1 && i < CARD_NUMBER_MAX_LENGTH - 1) {
+                out += HYPHEN
             }
         }
 
-        return TransformedText(androidx.compose.ui.text.AnnotatedString(out), offsetMapping)
+        val offsetMapping =
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int): Int = offset + (offset / CARD_GROUP_SIZE)
+
+                override fun transformedToOriginal(offset: Int): Int = offset - (offset / (CARD_GROUP_SIZE + 1))
+            }
+
+        return TransformedText(AnnotatedString(out), offsetMapping)
+    }
+
+    companion object {
+        private const val CARD_NUMBER_MAX_LENGTH = 16
+        private const val CARD_GROUP_SIZE = 4
+        private const val DEFAULT_OUT = ""
+        private const val HYPHEN = "-"
     }
 }
