@@ -73,7 +73,12 @@ fun NewCardContents(context: Context) {
                 )
             },
         ) { innerPadding: PaddingValues ->
-            Column(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+            ) {
                 PaymentCard(
                     modifier =
                         Modifier
@@ -131,8 +136,8 @@ fun NewCardInfoFields() {
     val cardNumber: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
     OutlinedTextField(
         value = cardNumber.value,
-        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         label = { Text("카드 번호") },
+        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         onValueChange = { newValue: TextFieldValue ->
             val numbers: String = newValue.text.filter(Char::isDigit)
             if (numbers.length <= 16) {
@@ -149,8 +154,8 @@ fun NewCardInfoFields() {
     val expirationDate: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
     OutlinedTextField(
         value = expirationDate.value,
-        placeholder = { Text("MM / YY") },
         label = { Text("만료일") },
+        placeholder = { Text("MM / YY") },
         onValueChange = { newValue: TextFieldValue ->
             val numbers: String = newValue.text.filter(Char::isDigit)
             if (numbers.length <= 4) {
@@ -165,13 +170,17 @@ fun NewCardInfoFields() {
         modifier = Modifier.fillMaxWidth(0.5F),
     )
 
-    TextField(
-        placeholder = "카드에 표시된 이름을 입력하세요.",
-        label = "카드 소유자 이름(선택)",
-        modifier = Modifier.fillMaxWidth(),
-    ) { text: String ->
-        text.length <= 30
-    }
+    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = cardholderName.value,
+        label = { Text("카드 소유자 이름(선택)") },
+        placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
+        onValueChange = { newValue: String ->
+            if (newValue.length <= 30) {
+                cardholderName.value = newValue
+            }
+        },
+    )
 
     TextField(
         placeholder = "0000",
