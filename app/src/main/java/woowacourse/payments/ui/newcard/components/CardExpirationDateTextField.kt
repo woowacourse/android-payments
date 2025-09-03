@@ -9,8 +9,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @Composable
 fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
@@ -21,8 +23,8 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
         onValueChange = { text: String ->
             if (text.length <= 4) cardExpirationDate = text
         },
-        label = { Text("만료일") },
-        placeholder = { Text("MM/YY") },
+        label = { Text(stringResource(R.string.card_expiration_date)) },
+        placeholder = { Text("MM / YY") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         modifier = modifier,
     )

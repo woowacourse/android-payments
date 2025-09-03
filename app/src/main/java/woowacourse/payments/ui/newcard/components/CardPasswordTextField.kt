@@ -9,9 +9,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.domain.CardPassword
 
 @Composable
@@ -23,7 +25,7 @@ fun CardPasswordTextField(modifier: Modifier = Modifier) {
         onValueChange = { text: String ->
             if (text.length <= CardPassword.CARD_PASSWORD_LENGTH) cardPassword = text
         },
-        label = { Text("비밀번호") },
+        label = { Text(stringResource(R.string.card_password)) },
         placeholder = { Text("0000") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = PasswordVisualTransformation(),
