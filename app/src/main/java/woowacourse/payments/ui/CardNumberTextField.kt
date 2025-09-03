@@ -25,9 +25,8 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = cardNumber,
         onValueChange = { newValue: String ->
-            cardNumber = newValue
-                .filter { it.isDigit() }
-                .substring(0, newValue.length.coerceAtMost(16))
+            val newNumbers = newValue.filter { it.isDigit() }
+            cardNumber = newNumbers.substring(0, newNumbers.length.coerceAtMost(16))
         },
         modifier = modifier.semantics {
             contentType = ContentType.CreditCardNumber
