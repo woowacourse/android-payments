@@ -1,4 +1,4 @@
-package woowacourse.payments.card.add.components
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField

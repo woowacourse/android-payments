@@ -1,4 +1,4 @@
-package woowacourse.payments.card.add.components
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -13,14 +13,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
-    var cardExpirationDate: String by remember { mutableStateOf("") }
+fun CardNumberTextField(modifier: Modifier = Modifier) {
+    var cardNumber: String by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        value = cardExpirationDate,
-        onValueChange = { cardExpirationDate = it },
-        label = { Text("만료일") },
-        placeholder = { Text("MM/YY") },
+        value = cardNumber,
+        onValueChange = { cardNumber = it },
+        label = { Text("카드 번호") },
+        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         modifier = modifier,
     )
@@ -28,6 +28,6 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
-    CardExpirationDateTextField()
+fun CardNumberTextFieldPreview() {
+    CardNumberTextField()
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.card.add.components
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -10,26 +10,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CardPasswordTextField(modifier: Modifier = Modifier) {
-    var cardPassword: String by remember { mutableStateOf("") }
+fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
+    var cardExpirationDate: String by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        value = cardPassword,
-        onValueChange = { cardPassword = it },
-        label = { Text("비밀번호") },
-        placeholder = { Text("0000") },
+        value = cardExpirationDate,
+        onValueChange = { cardExpirationDate = it },
+        label = { Text("만료일") },
+        placeholder = { Text("MM/YY") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-        visualTransformation = PasswordVisualTransformation(),
         modifier = modifier,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CardPasswordTextFieldPreview() {
-    CardPasswordTextField()
+fun CardExpirationDateTextFieldPreview() {
+    CardExpirationDateTextField()
 }
