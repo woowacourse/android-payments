@@ -14,10 +14,10 @@ fun PaymentTextField(
     label: String,
     hint: String,
     maxLength: Int,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    supportingText: @Composable (() -> Unit)? = null,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
     modifier: Modifier = Modifier,
+    supportingText: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     OutlinedTextField(
         value = text,
