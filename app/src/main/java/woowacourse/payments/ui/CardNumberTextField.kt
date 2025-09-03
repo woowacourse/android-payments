@@ -37,7 +37,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         },
         placeholder = {
             Text(
-                text = "0000-0000-0000-0000",
+                text = "0000 - 0000 - 0000 - 0000",
                 color = Color.Gray,
             )
         },
@@ -56,25 +56,23 @@ private fun creditCardFilter(text: AnnotatedString): TransformedText {
     var out = ""
     for (i in trimmed.indices) {
         out += trimmed[i]
-        if (i % 4 == 3 && i != 15) out += "-"
+        if (i % 4 == 3 && i != 15) out += " - "
     }
 
     val creditCardOffsetTranslator =
         object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
                 if (offset <= 3) return offset
-                if (offset <= 7) return offset + 1
-                if (offset <= 11) return offset + 2
-                if (offset <= 16) return offset + 3
-                return 19
+                if (offset <= 7) return offset + 3
+                if (offset <= 11) return offset + 6
+                return offset + 9
             }
 
             override fun transformedToOriginal(offset: Int): Int {
                 if (offset <= 4) return offset
-                if (offset <= 9) return offset - 1
-                if (offset <= 14) return offset - 2
-                if (offset <= 19) return offset - 3
-                return 16
+                if (offset <= 9) return offset - 3
+                if (offset <= 14) return offset - 6
+                return offset - 9
             }
         }
 
