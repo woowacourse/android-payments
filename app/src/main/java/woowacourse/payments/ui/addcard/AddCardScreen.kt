@@ -20,6 +20,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -112,7 +113,8 @@ fun AddCardContent(modifier: Modifier) {
             visualTransformation = if (password.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_password_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
-            ) else VisualTransformation.None)
+            ) else PasswordVisualTransformation()
+        )
     }
 }
 
