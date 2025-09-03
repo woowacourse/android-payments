@@ -9,14 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.contentType
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
+import java.lang.Character.isDigit
 
 @Composable
 fun CardNumberTextField(modifier: Modifier = Modifier) {
@@ -25,18 +25,17 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = cardNumber,
         onValueChange = { newValue: String ->
-            val newNumbers = newValue.filter { it.isDigit() }
-            cardNumber = newNumbers.substring(0, newNumbers.length.coerceAtMost(16))
+            val newNumbers = newValue.filter(::isDigit)
+            cardNumber =
+                newNumbers.substring(0, newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
         },
-        modifier = modifier.semantics {
-            contentType = ContentType.CreditCardNumber
-        },
+        modifier = modifier,
         label = {
-            Text(text = "카드 번호")
+            Text(text = stringResource(R.string.card_number_label))
         },
         placeholder = {
             Text(
-                text = "0000 - 0000 - 0000 - 0000",
+                text = stringResource(R.string.card_number_placeholder),
                 color = Color.Gray,
             )
         },
@@ -51,29 +50,32 @@ private fun CardNumberTextFieldPreview() {
 }
 
 private fun creditCardFilter(text: AnnotatedString): TransformedText {
-    val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
+    val trimmed = text.substring(0, text.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
     var out = ""
-    for (i in trimmed.indices) {
-        out += trimmed[i]
-        if (i % 4 == 3 && i != 15) out += " - "
+    trimmed.forEachIndexed { index, ch ->
+        out += ch
+        if (index % 4 == 3 && index != trimmed.lastIndex) out += CARD_NUMBER_DELIMITER
     }
 
     val creditCardOffsetTranslator =
         object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
                 if (offset <= 3) return offset
-                if (offset <= 7) return offset + 3
-                if (offset <= 11) return offset + 6
-                return offset + 9
+                if (offset <= 7) return offset + CARD_NUMBER_DELIMITER.length * 1
+                if (offset <= 11) return offset + CARD_NUMBER_DELIMITER.length * 2
+                return offset + CARD_NUMBER_DELIMITER.length * 3
             }
 
             override fun transformedToOriginal(offset: Int): Int {
                 if (offset <= 4) return offset
-                if (offset <= 9) return offset - 3
-                if (offset <= 14) return offset - 6
-                return offset - 9
+                if (offset <= 9) return offset - CARD_NUMBER_DELIMITER.length * 1
+                if (offset <= 14) return offset - CARD_NUMBER_DELIMITER.length * 2
+                return offset - CARD_NUMBER_DELIMITER.length * 3
             }
         }
 
     return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
 }
+
+private const val CARD_NUMBER_DELIMITER: String = " - "
+private const val CARD_NUMBER_LENGTH_MAX: Int = 16
