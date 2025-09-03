@@ -17,9 +17,17 @@ fun CardHolderName() {
         onValueChange = { },
         label = { Text("카드 소유자 이름(선택)") },
         placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
-        supportingText = { Text("0/30", textAlign = TextAlign.End, modifier = Modifier.fillMaxWidth()) },
-        modifier = Modifier.padding(top = 30.dp).padding(horizontal = 24.dp),
-        )
+        supportingText = {
+            Text(
+                "0/30",
+                textAlign = TextAlign.End,
+                modifier = Modifier.fillMaxWidth()
+            )
+        },
+        modifier = Modifier
+            .padding(top = 30.dp)
+            .padding(horizontal = 24.dp),
+    )
 
 }
 
