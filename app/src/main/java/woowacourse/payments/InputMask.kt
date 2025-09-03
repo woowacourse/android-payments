@@ -25,7 +25,7 @@ sealed class InputMask {
     }
 }
 
-fun creditCardFilter(text: AnnotatedString): TransformedText {
+private fun creditCardFilter(text: AnnotatedString): TransformedText {
     val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
     var out = ""
     for (i in trimmed.indices) {
@@ -54,7 +54,7 @@ fun creditCardFilter(text: AnnotatedString): TransformedText {
     return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
 }
 
-fun expiryFilter(text: AnnotatedString): TransformedText {
+private fun expiryFilter(text: AnnotatedString): TransformedText {
     val trimmed = if (text.text.length >= 4) text.text.substring(0..3) else text.text
     var out = ""
     for (i in trimmed.indices) {
