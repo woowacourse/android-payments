@@ -21,7 +21,6 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
         value = name,
         onValueChange = { newName: String ->
             name = newName.substring(0, newName.length.coerceAtMost(30))
-
         },
         modifier = modifier,
         label = {

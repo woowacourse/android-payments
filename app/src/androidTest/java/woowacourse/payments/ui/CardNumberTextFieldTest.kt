@@ -37,7 +37,7 @@ class CardNumberTextFieldTest {
             .performTextInput("1234567812345678")
 
         // then
-        composeRule.onNodeWithText("1234-5678-1234-5678")
+        composeRule.onNodeWithText("1234 - 5678 - 1234 - 5678")
             .assertIsDisplayed()
     }
 }
