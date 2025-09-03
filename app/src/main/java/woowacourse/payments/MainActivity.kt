@@ -53,9 +53,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
+    var cardNumber by remember { mutableStateOf<CardNumber?>(null) }
+    var showValidationError by remember { mutableStateOf(false) }
+
     AndroidpaymentsTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
             Column(
                 modifier =
                     Modifier
@@ -64,7 +66,12 @@ fun MainScreen() {
             ) {
                 NewCardTopBar(
                     onBackClick = {},
-                    onSaveClick = {},
+                    onSaveClick = {
+                        showValidationError = true
+                        val isValid = cardNumber?.isValid == true && expired?.isValid == true
+
+                        if (isValid) showValidationError = false
+                    },
                 )
 
                 Box(
@@ -78,6 +85,12 @@ fun MainScreen() {
 
                 CardNumberInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
                 ExpiredInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
+                CardNumberInput(
+                    cardNumber = cardNumber,
+                    onCardNumberChange = { cardNumber = it },
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp),
+                    showValidationError = showValidationError,
+                )
                 CardOwnerInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
                 PasswordInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
             }
@@ -141,16 +154,34 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CardNumberInput(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
+fun CardNumberInput(
+    cardNumber: CardNumber?,
+    onCardNumberChange: (CardNumber?) -> Unit,
+    modifier: Modifier = Modifier,
+    showValidationError: Boolean = false,
+) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue(cardNumber?.formatted ?: "")) }
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = cardNumber,
-            onValueChange = { newValue -> cardNumber = newValue },
-            label = { Text(text = "카드 번호") },
-            placeholder = { Text("0000 - 0000 - 0000 - 0000", color = Color.LightGray) },
+            value = textFieldValue,
+            onValueChange = { newValue ->
+                val digits = newValue.text.filter { it.isDigit() }.take(16)
+                val formatted = digits.chunked(4).joinToString("-")
+                val cursorPosition = formatted.length
+
+                textFieldValue =
+                    TextFieldValue(
+                        text = formatted,
+                        selection = TextRange(cursorPosition),
+                    )
+                onCardNumberChange(CardNumber.create(digits))
+            },
             modifier = Modifier.fillMaxWidth(),
+            label = { Text(text = "카드 번호") },
+            placeholder = { Text(text = "0000 - 0000 - 0000 - 0000", color = Color.LightGray) },
+            isError = showValidationError && (cardNumber?.isValid != true),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
     }
 }
