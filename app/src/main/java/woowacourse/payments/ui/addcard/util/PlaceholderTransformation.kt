@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.addcard.util
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
@@ -10,7 +10,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 class PlaceholderTransformation(
     private val placeholder: String,
     private val textColor: Color
-) : VisualTransformation {
+) :
+    VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         return TransformedText(
             AnnotatedString(

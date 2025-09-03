@@ -14,19 +14,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.addcard.util.CardNumberTransformation
+import woowacourse.payments.ui.addcard.util.ExpirationDateTransformation
+import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -68,7 +66,7 @@ fun AddCardContent(modifier: Modifier) {
             visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_card_number_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
-            ) else VisualTransformation.None,
+            ) else CardNumberTransformation(),
         )
 
         OutlinedTextField(
@@ -82,7 +80,7 @@ fun AddCardContent(modifier: Modifier) {
             visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
                 placeholder = stringResource(R.string.addcard_expire_date_placeholder),
                 textColor = colorResource(R.color.payments_placeholder_color)
-            ) else VisualTransformation.None,
+            ) else ExpirationDateTransformation(),
         )
 
         OutlinedTextField(
