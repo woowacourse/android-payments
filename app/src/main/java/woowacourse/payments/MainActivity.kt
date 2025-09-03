@@ -6,6 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +34,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -71,6 +75,10 @@ fun MainScreen() {
                         modifier = Modifier.padding(vertical = 20.dp),
                     )
                 }
+
+                CardNumberInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
+                ExpiredInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
+                CardOwnerInput(modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp))
             }
         }
     }
@@ -131,6 +139,50 @@ fun PaymentCard(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun CardNumberInput(modifier: Modifier = Modifier) {
+    var cardNumber by remember { mutableStateOf("") }
+
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = cardNumber,
+            onValueChange = { newValue -> cardNumber = newValue },
+            label = { Text(text = "카드 번호") },
+            placeholder = { Text("0000 - 0000 - 0000 - 0000", color = Color.LightGray) },
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
+@Composable
+fun ExpiredInput(modifier: Modifier = Modifier) {
+    var expired by remember { mutableStateOf("") }
+
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = expired,
+            onValueChange = { newValue -> expired = newValue },
+            label = { Text(text = "만료일") },
+            placeholder = { Text("MM / YY", color = Color.LightGray) },
+            modifier = Modifier.fillMaxWidth(0.5f),
+        )
+    }
+}
+
+@Composable
+fun CardOwnerInput(modifier: Modifier = Modifier) {
+    var owner by remember { mutableStateOf("") }
+
+    Column(modifier = modifier) {
+        OutlinedTextField(
+            value = owner,
+            onValueChange = { newValue -> owner = newValue },
+            placeholder = { Text("카드에 표시된 이름을 입력하세요.", color = Color.LightGray) },
+            label = { Text(text = "카드 소유자 이름(선택)") },
+        )
+    }
+}
+
 
 // ---------- Preview ----------
 
@@ -147,7 +199,6 @@ fun MainScreenPreview() {
 @Preview(name = "다크 모드", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 fun CardTopBarPreview() {
     AndroidpaymentsTheme {
-        Greeting("Android")
         NewCardTopBar(
             onBackClick = {},
             onSaveClick = {},
@@ -162,5 +213,11 @@ fun PaymentPreview() {
         PaymentCard()
     }
 }
+
+@Composable
+@Preview(showBackground = true)
+fun CardNumberInputPreview() {
+    AndroidpaymentsTheme {
+        CardNumberInput()
     }
 }
