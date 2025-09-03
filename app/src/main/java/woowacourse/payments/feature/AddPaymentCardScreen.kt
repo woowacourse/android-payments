@@ -28,10 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Gray100
 import woowacourse.payments.ui.theme.Gray200
 
@@ -54,18 +56,18 @@ fun AddPaymentCardScreen() {
 
         Spacer(modifier = Modifier.height(28.dp))
 
-        TextField("카드 번호", "0000 - 0000 - 0000 - 0000", 24)
-        TextField("만료일", "MM / YY", 190)
-        TextField("카드 소유자 이름(선택)", "카드에 표시된 이름을 입력하세요.", 24)
-        TextField("비밀번호", "0000", 190, true)
+        TextField(R.string.label_card_number, R.string.placeholder_card_number, 24)
+        TextField(R.string.label_expiry, R.string.placeholder_expiry, 190)
+        TextField(R.string.label_owner, R.string.placeholder_owner, 24)
+        TextField(R.string.label_pin, R.string.placeholder_pin, 190, true)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun TextField(
-    label: String = "",
-    placeholder: String = "",
+    label: Int = 0,
+    placeholder: Int = 0,
     paddingEnd: Int = 0,
     isPassword: Boolean = false,
 ) {
@@ -74,8 +76,8 @@ private fun TextField(
     OutlinedTextField(
         value = text,
         onValueChange = { text = it },
-        label = { Text(label, color = Gray200) },
-        placeholder = { Text(placeholder, color = Gray100) },
+        label = { Text(stringResource(label), color = Gray200) },
+        placeholder = { Text(stringResource(placeholder), color = Gray100) },
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
         modifier = Modifier
             .fillMaxWidth()
@@ -118,12 +120,12 @@ private fun NewCardTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text("카드 추가") },
+        title = { Text(stringResource(R.string.title_add_card)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로 가기",
+                    contentDescription = stringResource(R.string.desc_back),
                 )
             }
         },
@@ -131,7 +133,7 @@ private fun NewCardTopBar(
             IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "완료",
+                    contentDescription = stringResource(R.string.desc_done),
                 )
             }
         },
