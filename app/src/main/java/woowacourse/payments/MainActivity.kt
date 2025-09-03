@@ -149,6 +149,7 @@ fun NewCardInfoFields() {
                     )
             }
         },
+        modifier = Modifier.fillMaxWidth(),
     )
 
     val expirationDate: MutableState<TextFieldValue> = remember { mutableStateOf(TextFieldValue()) }
@@ -180,16 +181,22 @@ fun NewCardInfoFields() {
                 cardholderName.value = newValue
             }
         },
+        modifier = Modifier.fillMaxWidth(),
     )
 
-    TextField(
-        placeholder = "0000",
-        label = "비밀번호",
-        applyMasking = true,
+    val passcode: MutableState<String> = remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = passcode.value,
+        label = { Text("비밀번호") },
+        placeholder = { Text("0000") },
+        onValueChange = { newValue: String ->
+            val numbers: String = newValue.filter(Char::isDigit)
+            if (numbers.length <= 4) {
+                passcode.value = numbers
+            }
+        },
         modifier = Modifier.fillMaxWidth(0.5F),
-    ) { text: String ->
-        text.isDigitsOnly() && text.length <= 4
-    }
+    )
 }
 
 @Suppress("ktlint:standard:function-naming")
