@@ -92,7 +92,7 @@ fun NewCardScreen(
         DigitsTextField(
             value = expiry,
             label = stringResource(R.string.new_card_expiry_label),
-            placeholder = "MM / YY",
+            placeholder = stringResource(R.string.new_card_expiry_hint),
             maxLength = EXPIRY_MAX_LENGTH,
             grouping = IntArray(2) { EXPIRY_GROUP_SIZE },
             separator = SEPARATOR_EXPIRY,
