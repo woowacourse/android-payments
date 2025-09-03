@@ -4,4 +4,8 @@
     <!-- card_number_text_field -->
     <string name="card_number_text_field_label">카드 번호</string>
     <string name="card_number_text_field_placeholder">0000 – 0000 – 0000 – 0000</string>
+
+    <!-- card_password_text_field -->
+    <string name="card_password_text_field_label">비밀번호</string>
+    <string name="card_password_text_field_placeholder">0000</string>
 </resources>
