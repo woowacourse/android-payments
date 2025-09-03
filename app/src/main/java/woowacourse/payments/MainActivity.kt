@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,7 +25,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -37,10 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -139,7 +134,12 @@ fun NewCardInfoFields() {
     OutlinedTextField(
         value = cardNumber.value,
         label = { Text(stringResource(R.string.card_number_label)) },
-        placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.card_number_placeholder),
+                color = Color(0xFFAAAAAA),
+            )
+        },
         onValueChange = { newValue: String ->
             val numbers: String = newValue.filter(Char::isDigit)
             cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
@@ -153,7 +153,12 @@ fun NewCardInfoFields() {
     OutlinedTextField(
         value = expirationDate.value,
         label = { Text(stringResource(R.string.expiration_date_label)) },
-        placeholder = { Text(stringResource(R.string.expiration_date_placeholder)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.expiration_date_placeholder),
+                color = Color(0xFFAAAAAA),
+            )
+        },
         onValueChange = { newValue: String ->
             val numbers: String = newValue.filter(Char::isDigit)
             expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
@@ -167,7 +172,12 @@ fun NewCardInfoFields() {
     OutlinedTextField(
         value = cardholderName.value,
         label = { Text(stringResource(R.string.cardholder_name_label)) },
-        placeholder = { Text(stringResource(R.string.cardholder_name_placeholder)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.cardholder_name_placeholder),
+                color = Color(0xFFAAAAAA),
+            )
+        },
         onValueChange = { newValue: String ->
             if (newValue.length <= 30) {
                 cardholderName.value = newValue
@@ -187,7 +197,12 @@ fun NewCardInfoFields() {
     OutlinedTextField(
         value = passcode.value,
         label = { Text(stringResource(R.string.passcode_label)) },
-        placeholder = { Text(stringResource(R.string.passcode_placeholder)) },
+        placeholder = {
+            Text(
+                text = stringResource(R.string.passcode_placeholder),
+                color = Color(0xFFAAAAAA),
+            )
+        },
         onValueChange = { newValue: String ->
             val numbers: String = newValue.filter(Char::isDigit)
             if (numbers.length <= 4) {
