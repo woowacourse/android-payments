@@ -1,0 +1,5 @@
+root = true
+
+[*.{kt,kts}]
+# 함수명 규칙 예외: @Composable 함수 허용
+ktlint_function_naming_ignore_when_annotated_with=Composable

@@ -5,17 +5,18 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-val cardNumberVisualTransformation = object : VisualTransformation {
-    override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
-        var out = ""
-        for (i in trimmed.indices) {
-            out += trimmed[i]
-            if (i % 4 == 3 && i != 15) out += "-"
+val cardNumberVisualTransformation =
+    object : VisualTransformation {
+        override fun filter(text: AnnotatedString): TransformedText {
+            val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
+            var out = ""
+            for (i in trimmed.indices) {
+                out += trimmed[i]
+                if (i % 4 == 3 && i != 15) out += "-"
+            }
+            return TransformedText(AnnotatedString(out), cardOffsetTranslator)
         }
-        return TransformedText(AnnotatedString(out), cardOffsetTranslator)
     }
-}
 
 val cardOffsetTranslator =
     object : OffsetMapping {

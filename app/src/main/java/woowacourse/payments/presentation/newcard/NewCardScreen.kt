@@ -29,20 +29,23 @@ fun NewCardScreen(
                 onBackClick = onBackClick,
                 onSaveClick = onSaveClick,
             )
-        }) { innerPadding ->
+        },
+    ) { innerPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
         ) {
             PaymentCard(modifier = Modifier.padding(top = 14.dp))
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(30.dp),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(vertical = 24.dp, horizontal = 40.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(vertical = 24.dp, horizontal = 40.dp),
             ) {
                 CardNumberTextField(modifier = Modifier.fillMaxWidth())
                 ExpiredDateTextField()
@@ -51,5 +54,4 @@ fun NewCardScreen(
             }
         }
     }
-
 }
