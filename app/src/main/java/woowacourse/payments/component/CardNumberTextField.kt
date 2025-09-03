@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.core.CardNumberVisualTransformation
-import woowacourse.payments.ui.theme.GrayAA
 
 @Composable
 fun CardNumberTextField(
@@ -57,10 +55,7 @@ fun CardNumberEditText(
         ),
         visualTransformation = cardVisualTransformation,
         placeholder = {
-            Text(
-                color = GrayAA,
-                text = stringResource(R.string.credit_card_place_hodler)
-            )
+            TextFieldPlaceHolder(textResourceId = R.string.credit_card_place_hodler)
         },
         modifier = modifier
     )
