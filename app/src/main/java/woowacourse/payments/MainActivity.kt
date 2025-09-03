@@ -66,27 +66,27 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
-                            label = "카드 번호",
-                            placeholder = "0000 - 0000 - 0000 - 0000"
+                            label = getString(R.string.main_card_number_label),
+                            placeholder = getString(R.string.main_card_number_placeholder)
                         )
                         ExpirationDate(
                             modifier = Modifier
                                 .padding(start = 24.dp, top = 30.dp),
-                            label = "만료일",
-                            placeholder = "MM / YY"
+                            label = getString(R.string.main_expiration_date_label),
+                            placeholder = getString(R.string.main_expiration_date_placeholder)
                         )
                         Name(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 24.dp, top = 30.dp, end = 24.dp),
-                            label = "카드 소유자 이름 (선택)",
-                            placeholder = "카드에 표시된 이름을 입력하세요."
+                            label = getString(R.string.main_name_label),
+                            placeholder = getString(R.string.main_name_placeholder)
                         )
                         Password(
                             modifier = Modifier
                                 .padding(start = 24.dp, top = 30.dp),
-                            label = "비밀번호",
-                            placeholder = "0000"
+                            label = getString(R.string.main_password_label),
+                            placeholder =getString(R.string.main_password_placeholder)
                         )
                     }
                 }
