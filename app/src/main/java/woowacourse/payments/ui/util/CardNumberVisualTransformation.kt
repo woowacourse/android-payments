@@ -22,7 +22,7 @@ class CardNumberVisualTransformation : VisualTransformation {
                     // 1번 덩어리 내부 (0~4)
                     if (offset <= CHUNK_SIZE) return offset
                     // 1번 구분자 내부 (5~7) -> 4로 스냅
-                    if (offset <= CHUNK_SIZE + SEPARATOR.length) return CHUNK_SIZE
+                    if (offset < CHUNK_SIZE + SEPARATOR.length) return CHUNK_SIZE
                     // 2번 덩어리 내부 (8~11) -> 구분자 1개만큼 빼줌
                     if (offset <= CHUNK_SIZE * 2 + SEPARATOR.length) return offset - SEPARATOR.length
                     // 2번 구분자 내부 (12~14) -> 11로 스냅

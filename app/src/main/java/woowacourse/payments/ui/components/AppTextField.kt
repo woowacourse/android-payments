@@ -22,6 +22,7 @@ fun AppTextField(
     placeholderText: String,
     supportingText: @Composable (() -> Unit)? = null,
     isError: Boolean = false,
+    trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
@@ -45,6 +46,7 @@ fun AppTextField(
         },
         placeholder = { Text(placeholderText, fontSize = 16.sp, color = inputHintColor) },
         supportingText = supportingText,
+        trailingIcon = trailingIcon,
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
         colors =
