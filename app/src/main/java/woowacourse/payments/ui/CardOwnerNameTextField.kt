@@ -33,21 +33,22 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.card_owner_name_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         supportingText = {
             Text(
-                text = stringResource(
-                    R.string.card_owner_name_supporting_text,
-                    name.length,
-                    CARD_OWNER_NAME_LENGTH_MAX
-                ),
+                text =
+                    stringResource(
+                        R.string.card_owner_name_supporting_text,
+                        name.length,
+                        CARD_OWNER_NAME_LENGTH_MAX,
+                    ),
                 modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     )
 }
 

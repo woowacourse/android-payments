@@ -36,11 +36,11 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.expired_date_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = ::filteredExpiredDate,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     )
 }
 
@@ -53,25 +53,31 @@ private fun ExpiredDateTextFieldPreview() {
 private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
     val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH_MAX)
 
-    val transformedText: String = trimmedText.mapIndexed { index: Int, char: Char ->
-        if (index == 1) char + EXPIRED_DATE_DELIMITER
-        else char
-    }.joinToString(separator = "")
+    val transformedText: String =
+        trimmedText
+            .mapIndexed { index: Int, char: Char ->
+                if (index == 1) {
+                    char + EXPIRED_DATE_DELIMITER
+                } else {
+                    char
+                }
+            }.joinToString(separator = "")
 
     return TransformedText(AnnotatedString(transformedText), dateOffsetTranslator)
 }
 
-private val dateOffsetTranslator = object : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        if (offset < 2) return offset
-        return offset + EXPIRED_DATE_DELIMITER.length
-    }
+private val dateOffsetTranslator =
+    object : OffsetMapping {
+        override fun originalToTransformed(offset: Int): Int {
+            if (offset < 2) return offset
+            return offset + EXPIRED_DATE_DELIMITER.length
+        }
 
-    override fun transformedToOriginal(offset: Int): Int {
-        if (offset < 3) return offset
-        return offset - EXPIRED_DATE_DELIMITER.length
+        override fun transformedToOriginal(offset: Int): Int {
+            if (offset < 3) return offset
+            return offset - EXPIRED_DATE_DELIMITER.length
+        }
     }
-}
 
 private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
 private const val EXPIRED_DATE_DELIMITER: String = " / "

@@ -37,11 +37,11 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.card_number_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = ::filteredCardNumber,
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
     )
 }
 
@@ -57,8 +57,11 @@ private fun filteredCardNumber(text: AnnotatedString): TransformedText {
     val transformedText: String =
         trimmedText
             .mapIndexed { index: Int, char: Char ->
-                if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) char + DELIMITER
-                else char
+                if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) {
+                    char + DELIMITER
+                } else {
+                    char
+                }
             }.joinToString(separator = "")
 
     return TransformedText(AnnotatedString(transformedText), creditCardOffsetTranslator)

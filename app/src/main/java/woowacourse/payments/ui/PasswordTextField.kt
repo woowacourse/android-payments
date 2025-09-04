@@ -34,11 +34,11 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.password_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         visualTransformation = PasswordVisualTransformation(),
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
     )
 }
 
