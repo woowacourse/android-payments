@@ -23,11 +23,7 @@ class PlaceholderTransformation(
 }
 
 private object AddCardOffsetMapping : OffsetMapping {
-    override fun originalToTransformed(offset: Int): Int {
-        return 0
-    }
+    override fun originalToTransformed(offset: Int): Int = 0
 
-    override fun transformedToOriginal(offset: Int): Int {
-        return 0
-    }
+    override fun transformedToOriginal(offset: Int): Int = 0
 }
