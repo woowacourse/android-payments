@@ -8,10 +8,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -24,6 +29,8 @@ fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: () -> Unit = {},
 ) {
+    var cardNumber: String by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             NewCardTopBar(
@@ -46,7 +53,12 @@ fun NewCardScreen(
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 20.dp),
             )
-            CardNumberTextField(modifier = Modifier.fillMaxWidth())
+            CardNumberTextField(
+                cardNumber = cardNumber,
+                maxLength = CardNumber.CARD_NUMBER_LENGTH,
+                onValueChange = { cardNumber = it },
+                modifier = Modifier.fillMaxWidth(),
+            )
             CardExpirationDateTextField(modifier = Modifier.fillMaxWidth(0.5f))
             CardHolderNameTextField(modifier = Modifier.fillMaxWidth())
             CardPasswordTextField(modifier = Modifier.fillMaxWidth(0.5f))
