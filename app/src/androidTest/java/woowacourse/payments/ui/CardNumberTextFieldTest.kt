@@ -33,7 +33,7 @@ class CardNumberTextFieldTest {
     }
 
     @Test
-    fun `숫자_4자리마다_구분자가_들어간다`() {
+    fun `카드_번호의_경우_입력할_때_자동으로_기호가_삽입된다`() {
         // when
         composeRule
             .onNodeWithText("")

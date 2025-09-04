@@ -20,7 +20,7 @@ class CardOwnerNameTextFieldTest {
     }
 
     @Test
-    fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
+    fun `카드_소유자_이름의_경우_입력_글자_제한이_30자이다`() {
         // given
         composeRule
             .onNodeWithText("")

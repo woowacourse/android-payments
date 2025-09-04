@@ -20,7 +20,7 @@ class PasswordTextFieldTest {
     }
 
     @Test
-    fun `입력한_비밀번호는_가려진다`() {
+    fun `비밀번호는_노출되어서는_안_된다`() {
         // when
         composeRule
             .onNodeWithText("")
