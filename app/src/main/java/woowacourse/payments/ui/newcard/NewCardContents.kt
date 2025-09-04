@@ -31,7 +31,10 @@ import java.time.format.DateTimeFormatter
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NewCardContents(context: Context) {
+fun NewCardContents(
+    context: Context,
+    now: YearMonth = YearMonth.now(),
+) {
     var cardNumber: String by remember { mutableStateOf("") }
     var expirationDate: String by remember { mutableStateOf("") }
     var cardholderName: String by remember { mutableStateOf("") }
@@ -66,7 +69,7 @@ fun NewCardContents(context: Context) {
                         filteredValue,
                         DateTimeFormatter.ofPattern("MMyy"),
                     ),
-                    YearMonth.now(),
+                    now,
                 )
             }.isFailure
     }
