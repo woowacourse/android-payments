@@ -60,7 +60,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 카드_번호를_입력하면_4자리마다_하이픈이_생성된다() {
+    fun 카드_번호를_입력하면_4자리마다_하이픈이_출력된다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
@@ -83,9 +83,13 @@ class AddCardScreenTest {
     fun 카드_번호_필드에서_문자를_지우면_하이픈이_함께_제거된다() {
         //given
         composeTestRule.setContent {
-            var state by remember { mutableStateOf(CardInfoUiState(
-                cardNumber = "12341"
-            )) }
+            var state by remember {
+                mutableStateOf(
+                    CardInfoUiState(
+                        cardNumber = "12341"
+                    )
+                )
+            }
             CardNumberTextField(Modifier, state)
         }
 
@@ -144,7 +148,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 만료일의_월은_01부터_12까지의_값이_아니면_오류를_표시한다() {
+    fun 만료일의_월은_01부터_12까지의_값이_아니면_오류를_출력한다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
@@ -164,7 +168,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 만료일_필드에서_월_두_자리를_입력하면_슬래시가_생성된다() {
+    fun 만료일_필드에서_월_두_자리를_입력하면_슬래시가_출력된다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
@@ -264,7 +268,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 비밀번호는_마스킹_처리되어_보여진다() {
+    fun 비밀번호는_마스킹_처리되어_출력한다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
