@@ -64,6 +64,7 @@ class MainActivity : ComponentActivity() {
                             label = "카드 번호",
                             hint = "0000-0000-0000-0000",
                             maxLength = 16,
+                            onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = CreditCardVisualTransformation(),
                             modifier = Modifier
@@ -77,6 +78,7 @@ class MainActivity : ComponentActivity() {
                             label = "만료일",
                             hint = "MM / YY",
                             maxLength = 4,
+                            onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = DateVisualTransformation(),
                             modifier = Modifier
@@ -108,6 +110,7 @@ class MainActivity : ComponentActivity() {
                             label = "비밀번호",
                             hint = "0000",
                             maxLength = 4,
+                            onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = PasswordVisualTransformation(),
                             modifier = Modifier
