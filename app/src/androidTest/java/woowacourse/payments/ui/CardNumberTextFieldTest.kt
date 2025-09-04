@@ -46,7 +46,8 @@ class CardNumberTextFieldTest {
     @Test
     fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
         // when
-        composeTestRule.onNodeWithTag("CardNumberTextField")
+        composeTestRule
+            .onNodeWithTag("CardNumberTextField")
             .performTextInput("1".repeat(17))
 
         // then
@@ -57,27 +58,31 @@ class CardNumberTextFieldTest {
 
     @Test
     fun `카드_번호는_4자리가_될_때_마다_대시_기호가_붙는다`() {
-        val csvSource = arrayOf(
-            "1111,1111",
-            "11111,1111 - 1",
-            "123456789,1234 - 5678 - 9",
-            "1234567890123,1234 - 5678 - 9012 - 3",
-            "1234567890123456,1234 - 5678 - 9012 - 3456"
-        )
+        val csvSource =
+            arrayOf(
+                "1111,1111",
+                "11111,1111 - 1",
+                "123456789,1234 - 5678 - 9",
+                "1234567890123,1234 - 5678 - 9012 - 3",
+                "1234567890123456,1234 - 5678 - 9012 - 3456",
+            )
 
         csvSource.forEach { csv ->
             val (input, expected) = csv.split(",")
             Log.e("TAG", "$input, $expected")
 
             // when
-            composeTestRule.onNodeWithTag("CardNumberTextField")
+            composeTestRule
+                .onNodeWithTag("CardNumberTextField")
                 .performTextInput(input)
 
             // then
-            composeTestRule.onNodeWithTag("CardNumberTextField", useUnmergedTree = true)
+            composeTestRule
+                .onNodeWithTag("CardNumberTextField", useUnmergedTree = true)
                 .assertTextEquals(expected)
 
-            composeTestRule.onNodeWithTag("CardNumberTextField")
+            composeTestRule
+                .onNodeWithTag("CardNumberTextField")
                 .performTextClearance()
         }
     }

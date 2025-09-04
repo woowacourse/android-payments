@@ -17,7 +17,7 @@ import org.junit.Test
 import woowacourse.payments.ui.payments.CardPasswordTextField
 
 class CardPasswordTextFieldTest {
-    @get: Rule
+    @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
@@ -47,18 +47,21 @@ class CardPasswordTextFieldTest {
     @Test
     fun `비밀번호_입력_값이_없는_경우_Placeholder가_보여진다`() {
         // when
-        composeTestRule.onNodeWithTag("CardPasswordTextField", useUnmergedTree = true)
+        composeTestRule
+            .onNodeWithTag("CardPasswordTextField", useUnmergedTree = true)
             .performClick()
 
         // then
-        composeTestRule.onNodeWithText("0000")
+        composeTestRule
+            .onNodeWithText("0000")
             .assertIsDisplayed()
     }
 
     @Test
     fun `비밀번호는_길이가_4자를_넘어갈_수_없다`() {
         // when
-        composeTestRule.onNodeWithTag("CardPasswordTextField")
+        composeTestRule
+            .onNodeWithTag("CardPasswordTextField")
             .performTextInput("12345")
 
         // then

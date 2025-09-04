@@ -40,18 +40,19 @@ fun CardPasswordTextField(
         placeholder = {
             Text(
                 text = stringResource(R.string.card_password_text_field_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         value = cardPassword,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_PASSWORD_LENGTH)
+            if (newValue.length > CARD_PASSWORD_LENGTH) {
                 return@OutlinedTextField onCardPasswordChanged(newValue.take(CARD_PASSWORD_LENGTH))
+            }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardPasswordChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
     )
 }
 
@@ -63,7 +64,7 @@ fun CardPasswordTextFieldPreview() {
     Box(modifier = Modifier.padding(12.dp)) {
         CardPasswordTextField(
             cardPassword = cardPassword,
-            onCardPasswordChanged = { newValue -> cardPassword = newValue }
+            onCardPasswordChanged = { newValue -> cardPassword = newValue },
         )
     }
 }

@@ -34,18 +34,19 @@ fun CardNumberTextField(
         placeholder = {
             Text(
                 text = stringResource(R.string.card_number_text_field_placeholder),
-                color = Color.Gray
+                color = Color.Gray,
             )
         },
         value = cardNumber,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_NUMBER_LENGTH)
+            if (newValue.length > CARD_NUMBER_LENGTH) {
                 return@OutlinedTextField onCardNumberChanged(newValue.take(CARD_NUMBER_LENGTH))
+            }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CreditCardVisualTransformation
+        visualTransformation = CreditCardVisualTransformation,
     )
 }
 
