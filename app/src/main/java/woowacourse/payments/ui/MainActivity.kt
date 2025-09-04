@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import android.content.Context
 import android.os.Bundle
@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme

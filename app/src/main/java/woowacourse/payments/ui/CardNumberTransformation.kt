@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -8,7 +8,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 class CardNumberTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText =
         TransformedText(
-            AnnotatedString(text.text.chunked(CARD_NUMBER_CHUNK_SIZE).joinToString(CARD_NUMBER_DELIMITER)),
+            AnnotatedString(
+                text.text.chunked(CARD_NUMBER_CHUNK_SIZE).joinToString(CARD_NUMBER_DELIMITER),
+            ),
             translator,
         )
 
@@ -24,8 +26,11 @@ class CardNumberTransformation : VisualTransformation {
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {
-                    val multiplier = ((offset - 1)).coerceAtLeast(0) / (CARD_NUMBER_CHUNK_SIZE + CARD_NUMBER_DELIMITER.length)
-                    return (offset - (CARD_NUMBER_DELIMITER.length * multiplier)).coerceAtMost(CARD_NUMBER_CHUNK_SIZE * (multiplier + 1))
+                    val multiplier =
+                        ((offset - 1)).coerceAtLeast(0) / (CARD_NUMBER_CHUNK_SIZE + CARD_NUMBER_DELIMITER.length)
+                    return (offset - (CARD_NUMBER_DELIMITER.length * multiplier)).coerceAtMost(
+                        CARD_NUMBER_CHUNK_SIZE * (multiplier + 1),
+                    )
                 }
             }
     }

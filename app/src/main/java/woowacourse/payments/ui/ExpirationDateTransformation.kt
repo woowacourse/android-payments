@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -8,7 +8,11 @@ import androidx.compose.ui.text.input.VisualTransformation
 class ExpirationDateTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText =
         TransformedText(
-            AnnotatedString(text.text.chunked(EXPIRATION_DATE_CHUNK_SIZE).joinToString(EXPIRATION_DATE_DELIMITER)),
+            AnnotatedString(
+                text.text
+                    .chunked(EXPIRATION_DATE_CHUNK_SIZE)
+                    .joinToString(EXPIRATION_DATE_DELIMITER),
+            ),
             translator,
         )
 
@@ -24,7 +28,8 @@ class ExpirationDateTransformation : VisualTransformation {
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {
-                    val multiplier = ((offset - 1)).coerceAtLeast(0) / (EXPIRATION_DATE_CHUNK_SIZE + EXPIRATION_DATE_DELIMITER.length)
+                    val multiplier =
+                        ((offset - 1)).coerceAtLeast(0) / (EXPIRATION_DATE_CHUNK_SIZE + EXPIRATION_DATE_DELIMITER.length)
                     return (offset - (EXPIRATION_DATE_DELIMITER.length * multiplier)).coerceAtMost(
                         EXPIRATION_DATE_CHUNK_SIZE * (multiplier + 1),
                     )
