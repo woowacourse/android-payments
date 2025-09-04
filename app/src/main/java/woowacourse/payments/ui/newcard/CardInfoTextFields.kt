@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ fun CardInfoTextFields(
     supportingText: @Composable () -> Unit = {},
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -28,6 +30,7 @@ fun CardInfoTextFields(
         supportingText = supportingText,
         isError = isError,
         visualTransformation = visualTransformation,
+        keyboardOptions = keyboardOptions,
         onValueChange = onValueChange,
     )
 }
