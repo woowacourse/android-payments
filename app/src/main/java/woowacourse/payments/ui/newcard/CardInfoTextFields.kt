@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Suppress("ktlint:standard:function-naming")
@@ -24,7 +23,6 @@ fun CardInfoTextFields(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     onValueChange: (String) -> Unit,
 ) {
-    LocalFocusManager.current
     OutlinedTextField(
         modifier = modifier,
         value = value,
