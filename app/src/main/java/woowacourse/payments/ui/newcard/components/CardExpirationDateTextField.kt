@@ -15,13 +15,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
-fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
-    var cardExpirationDate: String by remember { mutableStateOf("") }
-
+fun CardExpirationDateTextField(
+    cardExpirationDate: String,
+    maxLength: Int,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
         value = cardExpirationDate,
         onValueChange = { text: String ->
-            if (text.length <= 4) cardExpirationDate = text
+            if (text.length <= maxLength) {
+                onValueChange(text)
+            }
         },
         label = { Text(stringResource(R.string.card_expiration_date)) },
         placeholder = { Text("MM / YY") },
@@ -33,5 +38,10 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun CardExpirationDateTextFieldPreview() {
-    CardExpirationDateTextField()
+    CardExpirationDateTextField(
+        cardExpirationDate = "0925",
+        maxLength = 4,
+        onValueChange = {},
+        modifier = Modifier,
+    )
 }
