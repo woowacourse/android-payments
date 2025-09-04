@@ -21,11 +21,12 @@ class CardOwnerNameTextFieldTest {
 
     @Test
     fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
-        // when
+        // given
         composeRule
             .onNodeWithText("")
             .performTextInput("모".repeat(30))
 
+        // when
         composeRule
             .onNodeWithText("모".repeat(30))
             .performTextInput("모찌")
