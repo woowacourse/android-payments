@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
 
-private const val CARDHOLDER_NAME_MAXIMUM_LENGTH = 30
+private const val CARDHOLDER_NAME_MAX_LENGTH = 30
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -26,13 +26,18 @@ fun CardHolderNameTextField(text: MutableState<String>) {
         placeholder = stringResource(R.string.cardholder_name_placeholder),
         supportingText = {
             Text(
-                text = "${text.value.length} / 30",
+                text =
+                    stringResource(
+                        R.string.cardholder_name_entry_length,
+                        text.value.length,
+                        CARDHOLDER_NAME_MAX_LENGTH,
+                    ),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
         },
         keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     ) { newValue: String ->
-        text.value = newValue.take(CARDHOLDER_NAME_MAXIMUM_LENGTH)
+        text.value = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
     }
 }
