@@ -32,6 +32,7 @@ fun NewCardScreen(
     var cardNumber: String by remember { mutableStateOf("") }
     var cardExpirationDate: String by remember { mutableStateOf("") }
     var cardHolderName: String by remember { mutableStateOf("") }
+    var cardPassword: String by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -73,7 +74,12 @@ fun NewCardScreen(
                 onValueChange = { cardHolderName = it },
                 modifier = Modifier.fillMaxWidth(),
             )
-            CardPasswordTextField(modifier = Modifier.fillMaxWidth(0.5f))
+            CardPasswordTextField(
+                cardPassword = cardPassword,
+                maxLength = 4,
+                onValueChange = { cardPassword = it },
+                modifier = Modifier.fillMaxWidth(0.5f),
+            )
         }
     }
 }
