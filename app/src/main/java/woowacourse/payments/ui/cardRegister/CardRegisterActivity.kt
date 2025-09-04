@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.cardRegister
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -22,14 +22,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
+import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
+import woowacourse.payments.ui.cardRegister.components.PaymentCard
+import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
-import woowacourse.payments.ui.components.NewCardTopBar
-import woowacourse.payments.ui.components.PaymentCard
-import woowacourse.payments.ui.components.PaymentTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class MainActivity : ComponentActivity() {
+class CardRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,24 +43,24 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(
                     topBar = {
-                        NewCardTopBar(
+                        CardRegisterTopBar(
                             onBackClick = { }, // TODO: 뒤로가기 이동
                             onSaveClick = { }, // TODO: 카드 저장
                         )
                     },
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.Companion.fillMaxSize(),
                 ) { innerPadding ->
                     Column(
                         modifier =
-                            Modifier
+                            Modifier.Companion
                                 .fillMaxWidth()
                                 .padding(innerPadding),
                     ) {
                         PaymentCard(
                             modifier =
-                                Modifier
+                                Modifier.Companion
                                     .padding(top = 14.dp)
-                                    .align(Alignment.CenterHorizontally),
+                                    .align(Alignment.Companion.CenterHorizontally),
                         )
                         PaymentTextField(
                             text = cardNumber,
@@ -68,10 +69,10 @@ class MainActivity : ComponentActivity() {
                             hint = stringResource(R.string.card_number_place_holder),
                             maxLength = 16,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
                             visualTransformation = CreditCardVisualTransformation(),
                             modifier =
-                                Modifier
+                                Modifier.Companion
                                     .fillMaxWidth()
                                     .padding(top = 40.dp)
                                     .padding(horizontal = 24.dp),
@@ -83,10 +84,10 @@ class MainActivity : ComponentActivity() {
                             hint = stringResource(R.string.expired_date_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
                             visualTransformation = DateVisualTransformation(),
                             modifier =
-                                Modifier
+                                Modifier.Companion
                                     .fillMaxWidth(0.5f)
                                     .padding(top = 30.dp)
                                     .padding(horizontal = 24.dp),
@@ -103,13 +104,13 @@ class MainActivity : ComponentActivity() {
                                             R.string.card_owner_supporting_text,
                                             ownerName.length,
                                         ),
-                                    textAlign = TextAlign.End,
-                                    modifier = Modifier.fillMaxWidth(),
+                                    textAlign = TextAlign.Companion.End,
+                                    modifier = Modifier.Companion.fillMaxWidth(),
                                 )
                             },
                             maxLength = 30,
                             modifier =
-                                Modifier
+                                Modifier.Companion
                                     .fillMaxWidth()
                                     .padding(top = 30.dp)
                                     .padding(horizontal = 24.dp),
@@ -121,10 +122,10 @@ class MainActivity : ComponentActivity() {
                             hint = stringResource(R.string.card_password_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
                             visualTransformation = PasswordVisualTransformation(),
                             modifier =
-                                Modifier
+                                Modifier.Companion
                                     .fillMaxWidth(0.5f)
                                     .padding(top = 10.dp)
                                     .padding(horizontal = 24.dp),

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.components
+package woowacourse.payments.ui.cardRegister.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -17,7 +17,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardTopBar(
+fun CardRegisterTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -46,8 +46,8 @@ fun NewCardTopBar(
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardTopBarPreview() {
+fun CardRegisterTopBarPreview() {
     AndroidpaymentsTheme {
-        NewCardTopBar({}, {})
+        CardRegisterTopBar({}, {})
     }
 }
