@@ -22,6 +22,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun DigitFieldText(
     label: String,
     hint: String,
+    errorMessage: String,
     modifier: Modifier = Modifier,
     fraction: Float = 1f,
     maxLength: Int = Int.MAX_VALUE,
@@ -29,14 +30,14 @@ fun DigitFieldText(
     height: Dp = 30.dp
 ) {
     var number by remember { mutableStateOf("") }
+    var isError by remember { mutableStateOf(false) }
     OutlinedTextField(
         value = number,
         onValueChange = { newText ->
             val filtered = newText.filter { it.isDigit() }
-            if (filtered.length <= maxLength) {
-                number = filtered
-            }
-
+            val newNumber = filtered.take(maxLength)
+            number = newNumber
+            isError = newNumber.length < maxLength
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
@@ -46,7 +47,9 @@ fun DigitFieldText(
             .padding(top = height),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = VisualTransformation { mask.apply(it) }
+        isError = isError,
+        supportingText = { if (isError) Text(text = errorMessage) },
+        visualTransformation = VisualTransformation { mask.apply(it) },
     )
 }
 
@@ -59,6 +62,7 @@ private fun PaymentCardPreview() {
             hint = "0000 - 0000 - 0000 - 0000",
             maxLength = 16,
             mask = InputMask.CardNumber,
+            errorMessage = "카드 번호는 16자입니다."
         )
     }
 }

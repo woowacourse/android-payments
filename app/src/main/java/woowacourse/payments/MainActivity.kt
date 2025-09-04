@@ -43,12 +43,14 @@ class MainActivity : ComponentActivity() {
                             hint = "0000 - 0000 - 0000 - 0000",
                             maxLength = 16,
                             mask = InputMask.CardNumber,
+                            errorMessage = "카드 번호는 16자입니다."
                             )
                         DigitFieldText(label = "만료일",
                             hint = "MM / YY",
                             fraction = 0.5f,
                             maxLength = 4,
                             mask = InputMask.Expiry,
+                            errorMessage = "유효하지 않은 만료일입니다."
                             )
                         LimitedTextField(
                             label = "카드 소유자 이름(선택)",
@@ -60,7 +62,8 @@ class MainActivity : ComponentActivity() {
                             fraction = 0.5f,
                             maxLength = 4,
                             mask = InputMask.Password,
-                            height = 10.dp
+                            height = 10.dp,
+                            errorMessage = "비밀번호는 4자입니다."
                             )
                     }
                 }
