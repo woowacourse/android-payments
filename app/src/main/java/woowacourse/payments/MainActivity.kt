@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -63,8 +64,8 @@ class MainActivity : ComponentActivity() {
                         PaymentTextField(
                             text = cardNumber,
                             onValueChanged = { cardNumber = it },
-                            label = "카드 번호",
-                            hint = "0000-0000-0000-0000",
+                            label = stringResource(R.string.card_number_label),
+                            hint = stringResource(R.string.card_number_place_holder),
                             maxLength = 16,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -78,8 +79,8 @@ class MainActivity : ComponentActivity() {
                         PaymentTextField(
                             text = expiredDate,
                             onValueChanged = { expiredDate = it },
-                            label = "만료일",
-                            hint = "MM / YY",
+                            label = stringResource(R.string.expired_date_label),
+                            hint = stringResource(R.string.expired_date_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -93,11 +94,15 @@ class MainActivity : ComponentActivity() {
                         PaymentTextField(
                             text = ownerName,
                             onValueChanged = { ownerName = it },
-                            label = "카드 소유자 이름(선택)",
-                            hint = "카드에 표시된 이름을 입력하세요.",
+                            label = stringResource(R.string.card_owner_label),
+                            hint = stringResource(R.string.card_owner_place_holder),
                             supportingText = {
                                 Text(
-                                    text = "${ownerName.length}/30",
+                                    text =
+                                        stringResource(
+                                            R.string.card_owner_supporting_text,
+                                            ownerName.length,
+                                        ),
                                     textAlign = TextAlign.End,
                                     modifier = Modifier.fillMaxWidth(),
                                 )
@@ -112,8 +117,8 @@ class MainActivity : ComponentActivity() {
                         PaymentTextField(
                             text = password,
                             onValueChanged = { password = it },
-                            label = "비밀번호",
-                            hint = "0000",
+                            label = stringResource(R.string.card_password_label),
+                            hint = stringResource(R.string.card_password_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
