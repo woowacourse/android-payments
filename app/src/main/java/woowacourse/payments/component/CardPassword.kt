@@ -16,21 +16,25 @@ import androidx.compose.ui.unit.dp
 fun CardPassword(
     value: String = "",
     onValueChange: (String) -> Unit = {},
+    modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = { if (it.length <= 4) onValueChange(it) },
+        modifier = modifier,
         label = { Text("비밀번호") },
         placeholder = { Text("0000") },
         visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-        modifier = Modifier.padding(top = 10.dp).padding(horizontal = 24.dp).fillMaxWidth(0.5f)
         )
 }
 
 @Composable
 @Preview
 fun CardPasswordPreview() {
-    CardPassword()
+    CardPassword(
+        value = "",
+        onValueChange = {}
+    )
 }

@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CardExpiryDate(
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     OutlinedTextField(
@@ -23,14 +24,11 @@ fun CardExpiryDate(
             if (it.length <= 4)
                 onValueChange(it)
         },
+        modifier = modifier,
         label = { Text("만료일") },
         placeholder = { Text("MM / YY") },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        modifier = Modifier
-            .padding(top = 30.dp)
-            .padding(horizontal = 24.dp)
-            .fillMaxWidth(0.5f)
     )
 }
 
