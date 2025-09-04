@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import java.lang.Character.isDigit
 
 @Composable
 fun PasswordTextField(modifier: Modifier = Modifier) {
@@ -23,7 +24,8 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue.take(PASSWORD_LENGTH_MAX)
+            val newPassword: String = newValue.filter(::isDigit)
+            password = newPassword.take(PASSWORD_LENGTH_MAX)
         },
         modifier = modifier,
         label = {
