@@ -42,7 +42,8 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
     val registerCardMessage =
         stringResource(R.string.card_registration_screen_registration_card_success)
 
-    uiState = uiState.copy(isRegistrableCard = isRegistrableCard(uiState, paymentCardValidator))
+    uiState = uiState.copy(isRegistrableCard = uiState.isRegistrable(paymentCardValidator))
+
     LaunchedEffect(uiState.snackbarMessage) {
         if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
         scope.launch {
@@ -55,9 +56,7 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
         snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = {
-                    uiState = uiState.copy(snackbarMessage = navigatePreviousMessage)
-                },
+                onBackClick = { uiState = uiState.copy(snackbarMessage = navigatePreviousMessage) },
                 onSaveClick = {
                     focusManager.clearFocus()
                     uiState = uiState.copy(snackbarMessage = registerCardMessage)
@@ -69,31 +68,9 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
         CardRegistrationScreenContent(
             modifier = Modifier.padding(innerPadding),
             uiState = uiState,
-            onCardNumberChanged = { newCardNumber ->
-                uiState = uiState.copy(cardNumber = newCardNumber)
-            },
-            onCardExpirationDateChanged = { newCardExpirationDate ->
-                val isCardExpirationDateValid =
-                    if (newCardExpirationDate.length == 4) {
-                        paymentCardValidator.validateCardExpirationDate(newCardExpirationDate)
-                    } else {
-                        true
-                    }
-                uiState =
-                    uiState.copy(
-                        cardExpirationDate = newCardExpirationDate,
-                        cardExpirationDateErrorMessage = if (!isCardExpirationDateValid) expiredCardMessage else null,
-                    )
-            },
-            onCardExpirationDateErrorMessageChanged = { errorMessage ->
-                uiState = uiState.copy(cardExpirationDateErrorMessage = errorMessage)
-            },
-            onCardholderNameChanged = { newCardholderName ->
-                uiState = uiState.copy(cardholderName = newCardholderName)
-            },
-            onCardPasswordChanged = { newCardPassword ->
-                uiState = uiState.copy(cardPassword = newCardPassword)
-            },
+            onUiStateChanged = { newUiState -> uiState = newUiState },
+            paymentCardValidator = paymentCardValidator,
+            expiredCardMessage = expiredCardMessage,
         )
     }
 }
@@ -102,11 +79,9 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
 private fun CardRegistrationScreenContent(
     modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
-    onCardNumberChanged: (String) -> Unit,
-    onCardExpirationDateChanged: (String) -> Unit,
-    onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
-    onCardholderNameChanged: (String) -> Unit,
-    onCardPasswordChanged: (String) -> Unit,
+    onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
+    paymentCardValidator: PaymentCardValidator,
+    expiredCardMessage: String,
 ) {
     Column(
         modifier =
@@ -124,16 +99,28 @@ private fun CardRegistrationScreenContent(
         CardNumberTextField(
             modifier = Modifier.fillMaxWidth(),
             cardNumber = uiState.cardNumber,
-            onCardNumberChanged = onCardNumberChanged,
+            onCardNumberChanged = { newValue -> onUiStateChanged(uiState.copy(cardNumber = newValue)) },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         CardExpirationDateTextField(
             cardExpirationDate = uiState.cardExpirationDate,
-            onCardExpirationDateChanged = onCardExpirationDateChanged,
+            onCardExpirationDateChanged = { newValue ->
+                val isValid =
+                    newValue.length != 4 || paymentCardValidator.validateCardExpirationDate(newValue)
+                onUiStateChanged(
+                    uiState.copy(
+                        cardExpirationDate = newValue,
+                        cardExpirationDateErrorMessage = if (!isValid) expiredCardMessage else null,
+                    ),
+                )
+            },
             errorMessage = uiState.cardExpirationDateErrorMessage,
-            onErrorMessageChanged = onCardExpirationDateErrorMessageChanged,
+            onErrorMessageChanged = { errorMsg ->
+                val newUiState = uiState.copy(cardExpirationDateErrorMessage = errorMsg)
+                onUiStateChanged(newUiState)
+            },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -141,26 +128,23 @@ private fun CardRegistrationScreenContent(
         CardholderNameTextField(
             modifier = Modifier.fillMaxWidth(),
             cardholderName = uiState.cardholderName,
-            onCardholderNameChanged = onCardholderNameChanged,
+            onCardholderNameChanged = { newValue -> onUiStateChanged(uiState.copy(cardholderName = newValue)) },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         CardPasswordTextField(
             cardPassword = uiState.cardPassword,
-            onCardPasswordChanged = onCardPasswordChanged,
+            onCardPasswordChanged = { newValue -> onUiStateChanged(uiState.copy(cardPassword = newValue)) },
         )
     }
 }
 
-private fun isRegistrableCard(
-    uiState: CardRegistrationScreenUiState,
-    paymentCardValidator: PaymentCardValidator,
-): Boolean =
-    paymentCardValidator.validateCardNumber(uiState.cardNumber) &&
-        paymentCardValidator.validateCardExpirationDate(uiState.cardExpirationDate) &&
-        paymentCardValidator.validateCardholderName(uiState.cardholderName) &&
-        paymentCardValidator.validateCardPassword(uiState.cardPassword)
+private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: PaymentCardValidator): Boolean =
+    paymentCardValidator.validateCardNumber(cardNumber) &&
+        paymentCardValidator.validateCardExpirationDate(cardExpirationDate) &&
+        paymentCardValidator.validateCardholderName(cardholderName) &&
+        paymentCardValidator.validateCardPassword(cardPassword)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
