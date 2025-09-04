@@ -15,16 +15,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
+private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
+
 @Composable
 fun CardOwnerNameTextField(
     value: String,
-    onValueChange: (String) -> Unit,
-    maxLength: Int,
+    onNameChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue: String ->
+            val newName = newValue.take(CARD_OWNER_NAME_LENGTH_MAX)
+            onNameChange(newName)
+        },
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_owner_name_label))
@@ -37,7 +41,7 @@ fun CardOwnerNameTextField(
                 text = stringResource(
                     R.string.card_owner_name_supporting_text,
                     value.length,
-                    maxLength,
+                    CARD_OWNER_NAME_LENGTH_MAX,
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
@@ -50,5 +54,5 @@ fun CardOwnerNameTextField(
 @Composable
 private fun CardOwnerNameTextFieldPreview() {
     var text by remember { mutableStateOf("") }
-    CardOwnerNameTextField(value = text, onValueChange = { text = it }, maxLength = 30)
+    CardOwnerNameTextField(value = text, onNameChange = { text = it })
 }

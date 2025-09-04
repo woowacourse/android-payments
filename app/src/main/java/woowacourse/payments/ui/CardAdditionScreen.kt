@@ -15,12 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import java.lang.Character.isDigit
-
-private const val CARD_NUMBER_LENGTH_MAX: Int = 16
-private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
-private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
-private const val PASSWORD_LENGTH_MAX: Int = 4
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
@@ -52,10 +46,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             )
             CardNumberTextField(
                 value = cardNumber,
-                onValueChange = { newValue ->
-                    cardNumber = newValue.filter(::isDigit).take(CARD_NUMBER_LENGTH_MAX)
-                },
-                maxLength = CARD_NUMBER_LENGTH_MAX,
+                onCardNumberChange = { newCardNumber: String -> cardNumber = newCardNumber },
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -63,20 +54,14 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             )
             ExpiredDateTextField(
                 value = expiredDate,
-                onValueChange = { newValue ->
-                    expiredDate = newValue.filter(::isDigit).take(EXPIRED_DATE_LENGTH_MAX)
-                },
-                maxLength = EXPIRED_DATE_LENGTH_MAX,
+                onDateChange = { newDate: String -> expiredDate = newDate },
                 modifier =
                     Modifier
                         .padding(top = 18.dp),
             )
             CardOwnerNameTextField(
                 value = ownerName,
-                onValueChange = { newValue ->
-                    ownerName = newValue.take(CARD_OWNER_NAME_LENGTH_MAX)
-                },
-                maxLength = CARD_OWNER_NAME_LENGTH_MAX,
+                onNameChange = { newName: String -> ownerName = newName },
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -85,9 +70,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             )
             PasswordTextField(
                 value = password,
-                onValueChange = { newValue ->
-                    password = newValue.take(PASSWORD_LENGTH_MAX)
-                },
+                onPasswordChange = { newPassword: String -> password = newPassword },
             )
         }
     }
