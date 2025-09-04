@@ -1,5 +1,9 @@
 package woowacourse.payments.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -15,12 +19,16 @@ class PasswordTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            PasswordTextField()
+            var value by remember { mutableStateOf("") }
+            PasswordTextField(value = value, onPasswordChange = { value = it })
         }
     }
 
     @Test
-    fun 입력한_비밀번호는_가려진다() {
+    fun `입력한_비밀번호는_가려진다`() {
+        // given
+        val expected = "\u2022".repeat(4)
+
         // when
         composeRule
             .onNodeWithText("")
@@ -28,7 +36,7 @@ class PasswordTextFieldTest {
 
         // then
         composeRule
-            .onNodeWithText("\u2022".repeat(4))
+            .onNodeWithText(expected)
             .assertIsDisplayed()
     }
 
