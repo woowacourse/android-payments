@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.features.addcard
 
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.features.addcard.components.ExpireDateStatus
 import java.time.YearMonth
 
 data class CardUiState(
@@ -13,14 +14,17 @@ data class CardUiState(
         get() = cardNumber.length == MAX_LENGTH_CARD_NUMBER && cardNumber.all { it.isDigit() }
 
     val isValidExpireDate: Boolean
+        get() = expireDateStatus == ExpireDateStatus.Valid
+
+    val expireDateStatus: ExpireDateStatus
         get() {
-            if (expireDate.length != MAX_LENGTH_EXPIRE_DATE) return false
-            val mm = expireDate.substring(0, 2).toIntOrNull() ?: return false
-            val yy = expireDate.substring(2, 4).toIntOrNull() ?: return false
-            if (mm !in 1..12) return false
+            if (expireDate.length != MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
+            val mm = expireDate.substring(0, 2).toIntOrNull() ?: return ExpireDateStatus.Invalid
+            val yy = expireDate.substring(2, 4).toIntOrNull() ?: return ExpireDateStatus.Invalid
+            if (mm !in 1..12) return ExpireDateStatus.InvalidMonth
             val year = 2000 + yy
             val ym = YearMonth.of(year, mm)
-            return ym >= YearMonth.now()
+            return if (ym >= YearMonth.now()) ExpireDateStatus.Valid else ExpireDateStatus.Expired
         }
 
     val isValidPassword: Boolean

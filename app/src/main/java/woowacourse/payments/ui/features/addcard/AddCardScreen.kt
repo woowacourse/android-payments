@@ -31,9 +31,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
 
-private fun shouldShowExpireDateError(cardUiState: CardUiState): Boolean =
-    cardUiState.expireDate.length == CardUiState.MAX_LENGTH_EXPIRE_DATE && !cardUiState.isValidExpireDate
-
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
@@ -73,7 +70,7 @@ fun AddCardScreen(
                     Modifier
                         .fillMaxWidth(0.5f)
                         .align(Alignment.Start),
-                isError = shouldShowExpireDateError(cardUiState),
+                expireDateStatus = cardUiState.expireDateStatus,
                 supportingTextHeight = SupportingTextHeight,
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))

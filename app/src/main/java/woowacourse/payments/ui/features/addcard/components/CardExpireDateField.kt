@@ -31,9 +31,11 @@ fun CardExpireDateField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isError: Boolean = false,
+    expireDateStatus: ExpireDateStatus = ExpireDateStatus.Valid,
     supportingTextHeight: Dp = 20.dp,
 ) {
+    val isError = expireDateStatus != ExpireDateStatus.Valid && expireDateStatus != ExpireDateStatus.Typing
+
     AppTextField(
         value = value,
         onValueChange = onValueChange,
@@ -43,11 +45,26 @@ fun CardExpireDateField(
         isError = isError,
         supportingText = {
             Box(modifier = Modifier.height(supportingTextHeight)) {
-                if (isError) {
-                    Text(
-                        text = stringResource(R.string.add_card_expire_date_error_message),
-                        color = MaterialTheme.colorScheme.error,
-                    )
+                when (expireDateStatus) {
+                    ExpireDateStatus.Expired ->
+                        Text(
+                            text = stringResource(R.string.add_card_expire_date_past_error_message),
+                            color = MaterialTheme.colorScheme.error,
+                        )
+
+                    ExpireDateStatus.InvalidMonth ->
+                        Text(
+                            text = stringResource(R.string.add_card_expire_date_month_error_message),
+                            color = MaterialTheme.colorScheme.error,
+                        )
+
+                    ExpireDateStatus.Valid -> return@Box
+                    ExpireDateStatus.Typing -> return@Box
+                    ExpireDateStatus.Invalid ->
+                        Text(
+                            text = stringResource(R.string.add_card_expire_date_etc_error_message),
+                            color = MaterialTheme.colorScheme.error,
+                        )
                 }
             }
         },
