@@ -1,7 +1,5 @@
 package woowacourse.payments.domain
 
-import androidx.core.text.isDigitsOnly
-
 data class CardNumber(
     val value: String,
 ) {
