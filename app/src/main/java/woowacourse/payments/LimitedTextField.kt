@@ -1,5 +1,6 @@
 package woowacourse.payments
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
@@ -26,9 +27,8 @@ fun LimitedTextField(
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
-            if (newText.length <= maxLength) {
-                text = newText
-            }
+            val maxText = newText.take(maxLength)
+            text = maxText
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
