@@ -64,7 +64,13 @@ private fun ExpiredDateTextFieldPreview() {
     ExpiredDateTextField()
 }
 
-private val String.isInvalidExpiredDate: Boolean get() = isNotEmpty() && length != EXPIRED_DATE_LENGTH
+private val String.isInvalidExpiredDate: Boolean
+    get() {
+        if (isEmpty()) return false
+
+        val month: Int = take(2).toInt()
+        return length != EXPIRED_DATE_LENGTH || month !in 1..12
+    }
 
 private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
     val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH)
