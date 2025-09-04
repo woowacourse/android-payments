@@ -22,7 +22,7 @@ fun OwnerNameTextField(
         modifier = modifier,
         value = cardInfo.ownerName,
         onValueChange = {
-            cardInfo.onValueChanged(ownerName = it)
+            cardInfo.updateCardInfo(ownerName = it)
         },
         singleLine = true,
         label = { Text(stringResource(R.string.addcard_owner_name_label)) },

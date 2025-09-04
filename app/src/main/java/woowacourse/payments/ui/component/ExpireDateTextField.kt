@@ -24,7 +24,7 @@ fun ExpireDateTextField(
         value = cardInfo.expireDate,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onValueChange = {
-            cardInfo.onValueChanged(expireDate = it)
+            cardInfo.updateCardInfo(expireDate = it)
         },
         isError = !cardInfo.isExpirationDateValid,
         label = { Text(stringResource(R.string.addcard_expire_date_label)) },

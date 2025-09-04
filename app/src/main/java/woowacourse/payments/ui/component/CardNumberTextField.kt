@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.component
 
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,7 +23,7 @@ fun CardNumberTextField(
         value = cardInfo.cardNumber,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onValueChange = {
-            cardInfo.onValueChanged(cardNumber = it)
+            cardInfo.updateCardInfo(cardNumber = it)
         },
         singleLine = true,
         label = { Text(stringResource(R.string.addcard_card_number_label)) },

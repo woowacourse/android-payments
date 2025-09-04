@@ -24,7 +24,7 @@ fun PasswordTextField(
         value = cardInfo.password,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onValueChange = {
-            cardInfo.onValueChanged(password = it)
+            cardInfo.updateCardInfo(password = it)
         },
         label = { Text(stringResource(R.string.addcard_password_label)) },
         visualTransformation = if (cardInfo.password.isEmpty()) PlaceholderTransformation(

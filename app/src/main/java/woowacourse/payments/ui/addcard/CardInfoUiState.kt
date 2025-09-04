@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.model.CardInfo
 
@@ -26,7 +25,7 @@ data class CardInfoUiState(
     var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
         private set
 
-    fun onValueChanged(
+    fun updateCardInfo(
         cardNumber: String = this.cardNumber,
         expireDate: String = this.expireDate,
         ownerName: String = this.ownerName,
