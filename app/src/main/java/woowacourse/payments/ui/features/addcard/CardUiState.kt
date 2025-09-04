@@ -12,14 +12,14 @@ data class CardUiState(
     val password: String = "",
 ) {
     fun withCardNumber(newNumber: String): CardUiState {
-        if (newNumber.length <= MAX_LENGTH_CARD_NUMBER && newNumber.all { it.isDigit() }) {
+        if (newNumber.length <= MAX_LENGTH_CARD_NUMBER && newNumber.all(Char::isDigit)) {
             return this.copy(cardNumber = newNumber)
         }
         return this
     }
 
     fun withExpireDate(newDate: String): CardUiState {
-        if (newDate.length <= MAX_LENGTH_EXPIRE_DATE && newDate.all { it.isDigit() }) {
+        if (newDate.length <= MAX_LENGTH_EXPIRE_DATE && newDate.all(Char::isDigit)) {
             return this.copy(expireDate = newDate)
         }
         return this
@@ -33,7 +33,7 @@ data class CardUiState(
     }
 
     fun withPassword(newPassword: String): CardUiState {
-        if (newPassword.length <= MAX_LENGTH_PASSWORD && newPassword.all { it.isDigit() }) {
+        if (newPassword.length <= MAX_LENGTH_PASSWORD && newPassword.all(Char::isDigit)) {
             return this.copy(password = newPassword)
         }
         return this
