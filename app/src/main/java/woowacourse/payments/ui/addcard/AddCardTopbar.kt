@@ -29,7 +29,7 @@ fun AddCardTopbar() {
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로가기"
+                    contentDescription = stringResource(id = R.string.payments_topbar_back_icon_description)
                 )
             }
         },
@@ -37,7 +37,7 @@ fun AddCardTopbar() {
             IconButton(onClick = {  }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "확인"
+                    contentDescription = stringResource(id = R.string.payments_topbar_checked_icon_description)
                 )
             }
         }

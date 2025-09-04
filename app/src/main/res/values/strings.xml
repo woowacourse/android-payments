@@ -3,7 +3,7 @@
     <string name="payments_topbar_add_card">카드 추가</string>
 
     <!--addcard -->
-    <string name="addcard_card_number_label">카드 번호</string>"
+    <string name="addcard_card_number_label">카드 번호</string>
     <string name="addcard_card_number_placeholder">0000-0000-0000-0000</string>
     <string name="addcard_expire_date_label">만료일</string>
     <string name="addcard_expire_date_placeholder">MM / YY</string>
