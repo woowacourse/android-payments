@@ -41,7 +41,7 @@ fun ExpirationDateTextField(
                 },
             )
         },
-        visualTransformation = ExpirationDateTransformation(),
+        visualTransformation = ExpirationDateTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     ) { newValue: String ->

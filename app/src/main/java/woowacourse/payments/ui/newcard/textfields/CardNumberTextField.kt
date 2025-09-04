@@ -39,7 +39,7 @@ fun CardNumberTextField(
                 },
             )
         },
-        visualTransformation = CardNumberTransformation(),
+        visualTransformation = CardNumberTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     ) { newValue: String ->
