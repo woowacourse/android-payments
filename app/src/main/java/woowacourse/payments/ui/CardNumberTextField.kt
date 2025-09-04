@@ -29,7 +29,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         value = cardNumber,
         onValueChange = { newValue: String ->
             val newCardNumber: String = newValue.filter(::isDigit)
-            cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH_MAX)
+            cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH)
         },
         modifier = modifier,
         label = {
@@ -41,6 +41,15 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
                 color = Color.Gray,
             )
         },
+        supportingText = {
+            if (cardNumber.isInvalidCardNumber) {
+                Text(
+                    text = stringResource(R.string.text_field_invalid_format_message),
+                    color = Color.Red,
+                )
+            }
+        },
+        isError = cardNumber.isInvalidCardNumber,
         visualTransformation = ::filteredCardNumber,
         keyboardOptions =
             KeyboardOptions(
@@ -56,13 +65,15 @@ private fun CardNumberTextFieldPreview() {
     CardNumberTextField(modifier = Modifier.fillMaxWidth())
 }
 
+private val String.isInvalidCardNumber: Boolean get() = isNotEmpty() && length != CARD_NUMBER_LENGTH
+
 private fun filteredCardNumber(text: AnnotatedString): TransformedText {
-    val trimmedText: String = text.take(CARD_NUMBER_LENGTH_MAX).toString()
+    val trimmedText: String = text.take(CARD_NUMBER_LENGTH).toString()
 
     val transformedText: String =
         trimmedText
             .mapIndexed { index: Int, char: Char ->
-                if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) {
+                if (index % 4 == 3 && index != CARD_NUMBER_LENGTH - 1) {
                     char + DELIMITER
                 } else {
                     char
@@ -85,6 +96,6 @@ private val creditCardOffsetTranslator =
         }
     }
 
-private const val CARD_NUMBER_LENGTH_MAX: Int = 16
+private const val CARD_NUMBER_LENGTH: Int = 16
 private const val DELIMITER: String = " - "
 private const val DELIMITER_COUNT_MAX: Int = 3

@@ -28,7 +28,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         value = expiredDate,
         onValueChange = { newValue: String ->
             val newDate: String = newValue.filter(::isDigit)
-            expiredDate = newDate.take(EXPIRED_DATE_LENGTH_MAX)
+            expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
         },
         modifier = modifier,
         label = {
@@ -40,6 +40,15 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
                 color = Color.Gray,
             )
         },
+        supportingText = {
+            if (expiredDate.isInvalidExpiredDate) {
+                Text(
+                    text = stringResource(R.string.text_field_invalid_format_message),
+                    color = Color.Red,
+                )
+            }
+        },
+        isError = expiredDate.isInvalidExpiredDate,
         visualTransformation = ::filteredExpiredDate,
         keyboardOptions =
             KeyboardOptions(
@@ -55,8 +64,10 @@ private fun ExpiredDateTextFieldPreview() {
     ExpiredDateTextField()
 }
 
+private val String.isInvalidExpiredDate: Boolean get() = isNotEmpty() && length != EXPIRED_DATE_LENGTH
+
 private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
-    val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH_MAX)
+    val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH)
 
     val transformedText: String =
         trimmedText
@@ -84,5 +95,5 @@ private val dateOffsetTranslator =
         }
     }
 
-private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
+private const val EXPIRED_DATE_LENGTH: Int = 4
 private const val EXPIRED_DATE_DELIMITER: String = " / "

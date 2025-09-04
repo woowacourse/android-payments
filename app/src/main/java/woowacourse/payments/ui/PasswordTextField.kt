@@ -26,7 +26,7 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
         value = password,
         onValueChange = { newValue: String ->
             val newPassword: String = newValue.filter(::isDigit)
-            password = newPassword.take(PASSWORD_LENGTH_MAX)
+            password = newPassword.take(PASSWORD_LENGTH)
         },
         modifier = modifier,
         label = {
@@ -38,6 +38,15 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
                 color = Color.Gray,
             )
         },
+        supportingText = {
+            if (password.isInvalidPassword) {
+                Text(
+                    text = stringResource(R.string.text_field_invalid_format_message),
+                    color = Color.Red,
+                )
+            }
+        },
+        isError = password.isInvalidPassword,
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions =
             KeyboardOptions(
@@ -53,4 +62,6 @@ private fun PasswordTextFieldPreview() {
     PasswordTextField()
 }
 
-private const val PASSWORD_LENGTH_MAX: Int = 4
+private val String.isInvalidPassword: Boolean get() = isNotEmpty() && length != PASSWORD_LENGTH
+
+private const val PASSWORD_LENGTH: Int = 4
