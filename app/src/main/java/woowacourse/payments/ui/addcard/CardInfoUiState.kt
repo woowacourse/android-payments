@@ -1,23 +1,27 @@
 package woowacourse.payments.ui.addcard
 
+import android.os.Parcelable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.model.CardInfo
 
-class CardInfoUiState(
-    cardNumber: String = "",
-    expireDate: String = "",
-    ownerName: String = "",
-    password: String = "",
-) {
-    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(cardNumber))
+@Parcelize
+data class CardInfoUiState(
+    private var _cardNumber: String = "",
+    private var _expireDate: String = "",
+    private var _ownerName: String = "",
+    private var _password: String = "",
+) : Parcelable {
+    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(_cardNumber))
         private set
-    var expireDate by mutableStateOf(CardInfo.formatExpireDate(expireDate))
+    var expireDate by mutableStateOf(CardInfo.formatExpireDate(_expireDate))
         private set
-    var ownerName by mutableStateOf(CardInfo.formatOwnerName(ownerName))
+    var ownerName by mutableStateOf(CardInfo.formatOwnerName(_ownerName))
         private set
-    var password by mutableStateOf(CardInfo.formatPassword(password))
+    var password by mutableStateOf(CardInfo.formatPassword(_password))
         private set
     var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
         private set
@@ -36,8 +40,8 @@ class CardInfoUiState(
     }
 
     private fun checkIfMonthCompleted(): Boolean {
-        return if (password.length >= 2) {
-            CardInfo.checkIsValidMonth(password)
+        return if (expireDate.length >= 2) {
+            CardInfo.checkIsValidMonth(expireDate)
         } else true
     }
     companion object {

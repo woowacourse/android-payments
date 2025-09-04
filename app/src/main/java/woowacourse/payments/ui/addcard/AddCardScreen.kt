@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +37,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddCardScreen(innerPadding: PaddingValues) {
-    var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
+    var cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
     Column(
         modifier = Modifier
             .padding(innerPadding)
