@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.CardNumberVisualTransformation
+import woowacourse.payments.ui.theme.Grey10
 
 @Composable
 fun CardNumber(
@@ -20,7 +21,12 @@ fun CardNumber(
         onValueChange = { if (it.length <= 16 && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
         label = { Text("카드 번호") },
-        placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+        placeholder = {
+            Text(
+                text = "0000 - 0000 - 0000 - 0000",
+                color = Grey10,
+            )
+        },
         singleLine = true,
         visualTransformation = CardNumberVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

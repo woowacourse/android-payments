@@ -11,6 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.CardExpiryDateVisualTransformation
+import woowacourse.payments.ui.theme.Grey10
 
 @Composable
 fun CardExpiryDate(
@@ -27,7 +28,12 @@ fun CardExpiryDate(
         },
         modifier = modifier,
         label = { Text("만료일") },
-        placeholder = { Text("MM / YY") },
+        placeholder = {
+            Text(
+                text = "MM / YY",
+                color = Grey10,
+            )
+        },
         visualTransformation = CardExpiryDateVisualTransformation(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
