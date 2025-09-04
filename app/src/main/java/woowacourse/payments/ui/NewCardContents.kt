@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +47,37 @@ fun NewCardContents(context: Context) {
         expirationDate.value = ""
         cardholderName.value = ""
         passcode.value = ""
+    }
+
+    fun updateCardNumber(newValue: String) {
+        val filteredValue: String = newValue.filter(Char::isDigit).take(16)
+        cardNumber.value = filteredValue
+        isCardNumberError.value = runCatching { CardNumber(cardNumber.value) }.isFailure
+    }
+
+    fun updateExpirationDate(newValue: String) {
+        val filteredValue: String = newValue.filter(Char::isDigit).take(4)
+        expirationDate.value = filteredValue
+        isExpirationDateError.value =
+            runCatching {
+                ExpirationDate(
+                    YearMonth.parse(
+                        filteredValue,
+                        DateTimeFormatter.ofPattern("MMyy"),
+                    ),
+                    YearMonth.now(),
+                )
+            }.isFailure
+    }
+
+    fun updateCardholderName(newValue: String) {
+        cardholderName.value = newValue.take(30)
+    }
+
+    fun updatePasscode(newValue: String) {
+        val filteredValue: String = newValue.filter(Char::isDigit).take(4)
+        passcode.value = filteredValue
+        isPasscodeError.value = runCatching { Passcode(passcode.value) }.isFailure
     }
 
     AndroidpaymentsTheme {
@@ -105,13 +135,8 @@ fun NewCardContents(context: Context) {
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(),
                         value = cardNumber.value,
-                        label = { Text(stringResource(R.string.card_number_label)) },
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.card_number_placeholder),
-                                color = Color(0xFFAAAAAA),
-                            )
-                        },
+                        label = stringResource(R.string.card_number_label),
+                        placeholder = stringResource(R.string.card_number_placeholder),
                         isError = isCardNumberError.value,
                         supportingText = {
                             Text(
@@ -123,23 +148,13 @@ fun NewCardContents(context: Context) {
                             )
                         },
                         visualTransformation = CardNumberTransformation(),
-                    ) { newValue: String ->
-                        val numbers: String = newValue.filter(Char::isDigit)
-                        cardNumber.value = numbers.substring(0..<numbers.length.coerceAtMost(16))
-                        isCardNumberError.value =
-                            runCatching { CardNumber(cardNumber.value) }.isFailure
-                    }
+                    ) { newValue: String -> updateCardNumber(newValue) }
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(0.5F),
                         value = expirationDate.value,
-                        label = { Text(stringResource(R.string.expiration_date_label)) },
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.expiration_date_placeholder),
-                                color = Color(0xFFAAAAAA),
-                            )
-                        },
+                        label = stringResource(R.string.expiration_date_label),
+                        placeholder = stringResource(R.string.expiration_date_placeholder),
                         isError = isExpirationDateError.value,
                         supportingText = {
                             Text(
@@ -152,32 +167,13 @@ fun NewCardContents(context: Context) {
                             )
                         },
                         visualTransformation = ExpirationDateTransformation(),
-                    ) { newValue: String ->
-                        val filteredValue: String =
-                            newValue.filter(Char::isDigit).take(4)
-                        expirationDate.value = filteredValue
-                        isExpirationDateError.value =
-                            runCatching {
-                                ExpirationDate(
-                                    YearMonth.parse(
-                                        filteredValue,
-                                        DateTimeFormatter.ofPattern("MMyy"),
-                                    ),
-                                    YearMonth.now(),
-                                )
-                            }.isFailure
-                    }
+                    ) { newValue: String -> updateExpirationDate(newValue) }
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(),
                         value = cardholderName.value,
-                        label = { Text(stringResource(R.string.cardholder_name_label)) },
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.cardholder_name_placeholder),
-                                color = Color(0xFFAAAAAA),
-                            )
-                        },
+                        label = stringResource(R.string.cardholder_name_label),
+                        placeholder = stringResource(R.string.cardholder_name_placeholder),
                         supportingText = {
                             Text(
                                 text = "${cardholderName.value.length} / 30",
@@ -185,21 +181,13 @@ fun NewCardContents(context: Context) {
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         },
-                    ) { newValue: String ->
-                        cardholderName.value =
-                            newValue.substring(0..<newValue.length.coerceAtMost(30))
-                    }
+                    ) { newValue: String -> updateCardholderName(newValue) }
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(0.5F),
                         value = passcode.value,
-                        label = { Text(stringResource(R.string.passcode_label)) },
-                        placeholder = {
-                            Text(
-                                text = stringResource(R.string.passcode_placeholder),
-                                color = Color(0xFFAAAAAA),
-                            )
-                        },
+                        label = stringResource(R.string.passcode_label),
+                        placeholder = stringResource(R.string.passcode_placeholder),
                         isError = isPasscodeError.value,
                         supportingText = {
                             Text(
@@ -211,11 +199,7 @@ fun NewCardContents(context: Context) {
                             )
                         },
                         visualTransformation = PasswordVisualTransformation(),
-                    ) { newValue: String ->
-                        val numbers: String = newValue.filter(Char::isDigit)
-                        passcode.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
-                        isPasscodeError.value = runCatching { Passcode(passcode.value) }.isFailure
-                    }
+                    ) { newValue: String -> updatePasscode(newValue) }
                 }
             }
         }

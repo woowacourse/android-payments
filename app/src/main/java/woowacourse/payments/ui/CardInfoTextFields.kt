@@ -1,8 +1,10 @@
 package woowacourse.payments.ui
 
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Suppress("ktlint:standard:function-naming")
@@ -10,8 +12,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 fun CardInfoTextFields(
     modifier: Modifier = Modifier,
     value: String = "",
-    label: @Composable () -> Unit,
-    placeholder: @Composable () -> Unit,
+    label: String = "",
+    placeholder: String = "",
     supportingText: @Composable () -> Unit = {},
     isError: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -20,8 +22,8 @@ fun CardInfoTextFields(
     OutlinedTextField(
         modifier = modifier,
         value = value,
-        label = label,
-        placeholder = placeholder,
+        label = { Text(label) },
+        placeholder = { Text(text = placeholder, color = Color(0xFFAAAAAA)) },
         singleLine = true,
         supportingText = supportingText,
         isError = isError,
