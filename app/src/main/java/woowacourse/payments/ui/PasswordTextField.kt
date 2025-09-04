@@ -1,5 +1,6 @@
 package woowacourse.payments.ui
 
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
@@ -34,6 +36,7 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
             )
         },
         visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done)
     )
 }
 

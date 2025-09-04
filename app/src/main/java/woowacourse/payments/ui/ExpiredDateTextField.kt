@@ -1,5 +1,6 @@
 package woowacourse.payments.ui
 
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +39,8 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
                 color = Color.Gray
             )
         },
-        visualTransformation = ::filteredExpiredDate
+        visualTransformation = ::filteredExpiredDate,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
     )
 }
 
