@@ -11,9 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -31,34 +32,34 @@ import java.time.format.DateTimeFormatter
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(context: Context) {
-    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
-    val expirationDate: MutableState<String> = remember { mutableStateOf("") }
-    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
-    val passcode: MutableState<String> = remember { mutableStateOf("") }
+    var cardNumber: String by remember { mutableStateOf("") }
+    var expirationDate: String by remember { mutableStateOf("") }
+    var cardholderName: String by remember { mutableStateOf("") }
+    var passcode: String by remember { mutableStateOf("") }
 
-    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
+    var isCardNumberError: Boolean by remember { mutableStateOf(false) }
+    var isExpirationDateError: Boolean by remember { mutableStateOf(false) }
+    var isPasscodeError: Boolean by remember { mutableStateOf(false) }
 
-    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
+    fun isError(): Boolean = isCardNumberError || isExpirationDateError || isPasscodeError
 
     fun resetFields() {
-        cardNumber.value = ""
-        expirationDate.value = ""
-        cardholderName.value = ""
-        passcode.value = ""
+        cardNumber = ""
+        expirationDate = ""
+        cardholderName = ""
+        passcode = ""
     }
 
     fun updateCardNumber(newValue: String) {
         val filteredValue: String = newValue.filter(Char::isDigit).take(16)
-        cardNumber.value = filteredValue
-        isCardNumberError.value = runCatching { CardNumber(cardNumber.value) }.isFailure
+        cardNumber = filteredValue
+        isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
     }
 
     fun updateExpirationDate(newValue: String) {
         val filteredValue: String = newValue.filter(Char::isDigit).take(4)
-        expirationDate.value = filteredValue
-        isExpirationDateError.value =
+        expirationDate = filteredValue
+        isExpirationDateError =
             runCatching {
                 ExpirationDate(
                     YearMonth.parse(
@@ -71,13 +72,13 @@ fun NewCardContents(context: Context) {
     }
 
     fun updateCardholderName(newValue: String) {
-        cardholderName.value = newValue.take(30)
+        cardholderName = newValue.take(30)
     }
 
     fun updatePasscode(newValue: String) {
         val filteredValue: String = newValue.filter(Char::isDigit).take(4)
-        passcode.value = filteredValue
-        isPasscodeError.value = runCatching { Passcode(passcode.value) }.isFailure
+        passcode = filteredValue
+        isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
     AndroidpaymentsTheme {
@@ -91,9 +92,9 @@ fun NewCardContents(context: Context) {
                             .show()
                     },
                     onSaveClick = {
-                        if (cardNumber.value.isEmpty()) isCardNumberError.value = true
-                        if (expirationDate.value.isEmpty()) isCardNumberError.value = true
-                        if (passcode.value.isEmpty()) isPasscodeError.value = true
+                        if (cardNumber.isEmpty()) isCardNumberError = true
+                        if (expirationDate.isEmpty()) isCardNumberError = true
+                        if (passcode.isEmpty()) isPasscodeError = true
                         if (isError()) {
                             Toast
                                 .makeText(
@@ -134,13 +135,13 @@ fun NewCardContents(context: Context) {
                 ) {
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(),
-                        value = cardNumber.value,
+                        value = cardNumber,
                         label = stringResource(R.string.card_number_label),
                         placeholder = stringResource(R.string.card_number_placeholder),
-                        isError = isCardNumberError.value,
+                        isError = isCardNumberError,
                         supportingText = {
                             Text(
-                                if (isCardNumberError.value) {
+                                if (isCardNumberError) {
                                     stringResource(R.string.card_number_error_message)
                                 } else {
                                     ""
@@ -152,14 +153,14 @@ fun NewCardContents(context: Context) {
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(0.5F),
-                        value = expirationDate.value,
+                        value = expirationDate,
                         label = stringResource(R.string.expiration_date_label),
                         placeholder = stringResource(R.string.expiration_date_placeholder),
-                        isError = isExpirationDateError.value,
+                        isError = isExpirationDateError,
                         supportingText = {
                             Text(
                                 text =
-                                    if (isExpirationDateError.value) {
+                                    if (isExpirationDateError) {
                                         stringResource(R.string.expiration_date_error_message)
                                     } else {
                                         ""
@@ -171,12 +172,12 @@ fun NewCardContents(context: Context) {
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(),
-                        value = cardholderName.value,
+                        value = cardholderName,
                         label = stringResource(R.string.cardholder_name_label),
                         placeholder = stringResource(R.string.cardholder_name_placeholder),
                         supportingText = {
                             Text(
-                                text = "${cardholderName.value.length} / 30",
+                                text = "${cardholderName.length} / 30",
                                 textAlign = TextAlign.End,
                                 modifier = Modifier.fillMaxWidth(),
                             )
@@ -185,13 +186,13 @@ fun NewCardContents(context: Context) {
 
                     CardInfoTextFields(
                         modifier = Modifier.fillMaxWidth(0.5F),
-                        value = passcode.value,
+                        value = passcode,
                         label = stringResource(R.string.passcode_label),
                         placeholder = stringResource(R.string.passcode_placeholder),
-                        isError = isPasscodeError.value,
+                        isError = isPasscodeError,
                         supportingText = {
                             Text(
-                                if (isPasscodeError.value) {
+                                if (isPasscodeError) {
                                     stringResource(R.string.passcode_error_message)
                                 } else {
                                     ""
