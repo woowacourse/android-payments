@@ -38,7 +38,7 @@ fun Password(
 
 @Preview(showBackground = true)
 @Composable
-fun PasswordPreview() {
+private fun PasswordPreview() {
     Password(
         modifier =
             Modifier

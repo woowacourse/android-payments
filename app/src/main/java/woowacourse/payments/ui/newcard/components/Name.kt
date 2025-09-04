@@ -47,7 +47,7 @@ fun Name(
 
 @Preview(showBackground = true)
 @Composable
-fun NamePreview() {
+private fun NamePreview() {
     Name(
         modifier =
             Modifier

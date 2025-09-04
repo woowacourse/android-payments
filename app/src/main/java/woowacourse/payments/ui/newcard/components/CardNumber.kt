@@ -42,7 +42,7 @@ fun CardNumber(
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberPreview() {
+private fun CardNumberPreview() {
     CardNumber(
         modifier =
             Modifier

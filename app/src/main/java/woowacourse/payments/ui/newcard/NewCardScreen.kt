@@ -89,6 +89,6 @@ fun NewCardScreen(innerPadding: PaddingValues) {
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardScreenPreview() {
+private fun NewCardScreenPreview() {
     NewCardScreen(innerPadding = PaddingValues())
 }

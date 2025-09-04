@@ -41,7 +41,7 @@ fun ExpirationDate(
 
 @Preview(showBackground = true)
 @Composable
-fun ExpirationDatePreview() {
+private fun ExpirationDatePreview() {
     ExpirationDate(
         modifier =
             Modifier
