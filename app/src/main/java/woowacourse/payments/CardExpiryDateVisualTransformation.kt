@@ -8,26 +8,50 @@ import androidx.compose.ui.text.input.VisualTransformation
 class CardExpiryDateVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val originalText = text.text
-        val trimmed = if (originalText.length >= 4) originalText.substring(0..3) else originalText
+        val trimmedOriginal = if (originalText.length >= CARD_EXPIRY_DATE_MAX_LENGTH) {
+            originalText.substring(0 until CARD_EXPIRY_DATE_MAX_LENGTH)
+        } else {
+            originalText
+        }
 
         val formatted = StringBuilder()
-        trimmed.forEachIndexed { index, char ->
+        trimmedOriginal.forEachIndexed { index, char ->
             formatted.append(char)
-            if (index == 1 && trimmed.length > 2) {
-                formatted.append('/')
+            if (index == CARD_EXPIRY_DATE_FIRST_GROUP_SIZE - 1 && trimmedOriginal.length > CARD_EXPIRY_DATE_FIRST_GROUP_SIZE) {
+                formatted.append(CARD_EXPIRY_DATE_GROUP_SEPARATOR)
             }
         }
+        val finalFormattedString = formatted.toString()
 
         val dateOffsetTranslator = object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
-                return if (offset <= 1) offset else offset + 1
+                val separatorsAdded = if (offset >= CARD_EXPIRY_DATE_FIRST_GROUP_SIZE) {
+                    CARD_EXPIRY_DATE_GROUP_SEPARATOR.length
+                } else {
+                    0
+                }
+
+                val transformedOffset = offset + separatorsAdded
+                return transformedOffset.coerceAtMost(finalFormattedString.length)
             }
 
             override fun transformedToOriginal(offset: Int): Int {
-                return if (offset <= 2) offset else offset - 1
+                val separatorsRemoved =
+                    if (offset >= CARD_EXPIRY_DATE_FIRST_GROUP_SIZE + CARD_EXPIRY_DATE_GROUP_SEPARATOR.length) {
+                        CARD_EXPIRY_DATE_GROUP_SEPARATOR.length
+                    } else {
+                        0
+                    }
+
+                val originalOffset = offset - separatorsRemoved
+                return originalOffset.coerceAtMost(trimmedOriginal.length)
             }
         }
 
-        return TransformedText(AnnotatedString(formatted.toString()), dateOffsetTranslator)
+        return TransformedText(AnnotatedString(finalFormattedString), dateOffsetTranslator)
     }
 }
+
+private const val CARD_EXPIRY_DATE_MAX_LENGTH = 4
+private const val CARD_EXPIRY_DATE_GROUP_SEPARATOR = "/"
+private const val CARD_EXPIRY_DATE_FIRST_GROUP_SIZE = 2
