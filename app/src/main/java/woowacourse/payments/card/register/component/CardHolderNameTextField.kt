@@ -23,9 +23,12 @@ fun CardHolderNameTextField(modifier: Modifier = Modifier) {
             val stripped = input.filter { it.isLetter() }
             val uppercased = stripped.uppercase()
 
-            if (uppercased.length <= 30) {
-                cardHolderName = uppercased
-            }
+            cardHolderName =
+                if (uppercased.length <= 30) {
+                    uppercased
+                } else {
+                    uppercased.substring(0, 30)
+                }
         },
         label = { Text("카드 소유자 이름(선택)") },
         placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
