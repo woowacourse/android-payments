@@ -1,53 +1,42 @@
 package woowacourse.payments.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.theme.Gray100
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Gray200
 
 @Composable
 fun StringTextField(
     modifier: Modifier = Modifier,
-    label: Int = 0,
-    placeholder: Int = 0,
+    value: String,
+    onValueChange: (String) -> Unit,
     maxLength: Int = 30,
 ) {
-    var value by remember { mutableStateOf(TextFieldValue("")) }
+    val textFieldValue = TextFieldValue(text = value, selection = TextRange(value.length))
 
     OutlinedTextField(
-        value = value,
+        value = textFieldValue,
         onValueChange = { input ->
-            val newText = input.text.take(maxLength)
-            value = TextFieldValue(
-                text = newText,
-                selection = TextRange(newText.length)
-            )
+            onValueChange(input.text.take(maxLength))
         },
-        label = { Text(stringResource(label), color = Gray200) },
-        placeholder = { Text(stringResource(placeholder), color = Gray100) },
+        label = { Text(stringResource(R.string.label_owner), color = Gray200) },
+        placeholder = { Text(stringResource(R.string.placeholder_owner)) },
         supportingText = {
             Text(
-                text = "${value.text.length} / $maxLength",
+                text = "${value.length} / $maxLength",
                 color = Gray200,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier,
                 textAlign = TextAlign.End
             )
         },
-        modifier = modifier.then(
-            Modifier.padding(start = 24.dp, end = 24.dp, bottom = 10.dp)
-        ),
+        modifier = modifier.then(Modifier.padding(start = 24.dp, end = 24.dp, bottom = 18.dp)),
     )
 }

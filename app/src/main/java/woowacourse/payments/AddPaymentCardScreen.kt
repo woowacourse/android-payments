@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,10 +20,15 @@ import woowacourse.payments.component.NewCardTopBar
 import woowacourse.payments.component.NumberTextField
 import woowacourse.payments.component.PaymentCard
 import woowacourse.payments.component.StringTextField
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-@Preview(showBackground = true)
 @Composable
 fun AddPaymentCardScreen() {
+    var cardNumber by remember { mutableStateOf("") }
+    var expiry by remember { mutableStateOf("") }
+    var owner by remember { mutableStateOf("") }
+    var pin by remember { mutableStateOf("") }
+
     Scaffold(
         topBar = {
             NewCardTopBar(
@@ -34,35 +43,48 @@ fun AddPaymentCardScreen() {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            PaymentCard(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
 
             Spacer(modifier = Modifier.height(28.dp))
 
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(),
-                R.string.label_card_number,
-                R.string.placeholder_card_number,
-                InputType.CardNumber
+                label = R.string.label_card_number,
+                placeholder = R.string.placeholder_card_number,
+                inputType = InputType.CardNumber,
+                value = cardNumber,
+                onValueChange = { cardNumber = it }
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
-                R.string.label_expiry,
-                R.string.placeholder_expiry,
-                InputType.ExpiryDate
+                label = R.string.label_expiry,
+                placeholder = R.string.placeholder_expiry,
+                inputType = InputType.ExpiryDate,
+                value = expiry,
+                onValueChange = { expiry = it }
             )
             StringTextField(
                 modifier = Modifier.fillMaxWidth(),
-                R.string.label_owner,
-                R.string.placeholder_owner,
+                value = owner,
+                onValueChange = { owner = it },
+                maxLength = 30
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
-                R.string.label_pin,
-                R.string.placeholder_pin,
-                InputType.Password
+                label = R.string.label_pin,
+                placeholder = R.string.placeholder_pin,
+                inputType = InputType.Password,
+                value = pin,
+                onValueChange = { pin = it }
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AddPaymentCardScreenPreview() {
+    AndroidpaymentsTheme {
+        AddPaymentCardScreen()
     }
 }

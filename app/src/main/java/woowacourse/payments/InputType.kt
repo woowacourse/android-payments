@@ -1,7 +1,6 @@
 package woowacourse.payments
 
 sealed class InputType {
-    data object Normal : InputType()
     data object Password : InputType()
     data object CardNumber : InputType()
     data object ExpiryDate : InputType()
@@ -21,8 +20,6 @@ sealed class InputType {
         is Password -> {
             raw.filter { it.isDigit() }.take(PASSWORD_MAX_LENGTH)
         }
-
-        else -> raw
     }
 
     companion object {
