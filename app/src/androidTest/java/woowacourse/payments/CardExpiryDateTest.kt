@@ -15,7 +15,7 @@ class CardExpiryDateTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            DigitFieldText(label = "만료일",
+            DigitTextField(label = "만료일",
                 hint = "MM / YY",
                 fraction = 0.5f,
                 maxLength = 4,

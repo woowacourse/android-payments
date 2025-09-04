@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                                 .align(Alignment.CenterHorizontally)
                         )
                         Spacer(modifier = Modifier.height(30.dp))
-                        DigitFieldText(
+                        DigitTextField(
                             label = "카드 번호",
                             hint = "0000 - 0000 - 0000 - 0000",
                             maxLength = 16,
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity() {
                             errorMessage = "카드 번호는 16자입니다."
                             )
                         Spacer(modifier = Modifier.height(30.dp))
-                        DigitFieldText(label = "만료일",
+                        DigitTextField(label = "만료일",
                             hint = "MM / YY",
                             fraction = 0.5f,
                             maxLength = 4,
@@ -63,7 +63,7 @@ class MainActivity : ComponentActivity() {
                             maxLength = 30,
                         )
                         Spacer(modifier = Modifier.height(15.dp))
-                        DigitFieldText(label = "비밀번호",
+                        DigitTextField(label = "비밀번호",
                             hint = "0000",
                             fraction = 0.5f,
                             maxLength = 4,

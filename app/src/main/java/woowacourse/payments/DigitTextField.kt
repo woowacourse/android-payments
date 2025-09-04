@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun DigitFieldText(
+fun DigitTextField(
     label: String,
     hint: String,
     errorMessage: String,
@@ -54,7 +54,7 @@ fun DigitFieldText(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        DigitFieldText(
+        DigitTextField(
             label = "카드 번호",
             hint = "0000 - 0000 - 0000 - 0000",
             maxLength = 16,

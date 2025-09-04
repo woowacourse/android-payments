@@ -17,7 +17,7 @@ class CardPasswordTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            DigitFieldText(label = "비밀번호",
+            DigitTextField(label = "비밀번호",
                 hint = "0000",
                 fraction = 0.5f,
                 maxLength = 4,

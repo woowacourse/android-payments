@@ -16,7 +16,7 @@ class CardNumberTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            DigitFieldText(
+            DigitTextField(
                 label = "카드 번호",
                 hint = "0000 - 0000 - 0000 - 0000",
                 mask = InputMask.CardNumber,
