@@ -50,7 +50,7 @@ fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
             onBackClick = {},
-            onSaveClick = {}
+            onSaveClick = {},
         )
     }
 }
