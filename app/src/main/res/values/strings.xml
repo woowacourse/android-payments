@@ -13,4 +13,8 @@
     <string name="card_expiration_date_text_field_label">만료일</string>
     <string name="card_expiration_date_text_field_placeholder">MM / YY</string>
     <string name="card_expiration_date_text_field_invalid_format">유효하지 않은 만료일 입니다.</string>
+
+    <!-- cardholder_name_text_field -->
+    <string name="cardholder_name_text_field_label">카드 소유자 이름(선택)</string>
+    <string name="cardholder_name_text_field_placeholder">카드에 표시된 이름을 입력하세요.</string>
 </resources>
