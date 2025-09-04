@@ -33,16 +33,19 @@ import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
 
-private const val CARD_NUMBER_MAX_LENGTH = 16
-private const val EXPIRY_MAX_LENGTH = 4
-private const val HOLDER_MAX_LENGTH = 30
-private const val PIN_MAX_LENGTH = 4
+private const val CARD_NUMBER_MAX_LENGTH: Int = 16
+private const val EXPIRY_MAX_LENGTH: Int = 4
+private const val HOLDER_MAX_LENGTH: Int = 30
+private const val PIN_MAX_LENGTH: Int = 4
 
-private const val CARD_NUMBER_GROUP_SIZE = 4
-private const val EXPIRY_GROUP_SIZE = 2
+private const val CARD_NUMBER_GROUP_COUNT: Int = 4
+private const val CARD_NUMBER_GROUP_SIZE: Int = 4
 
-private const val SEPARATOR_GROUP = " - "
-private const val SEPARATOR_EXPIRY = " / "
+private const val EXPIRY_GROUP_COUNT: Int = 2
+private const val EXPIRY_GROUP_SIZE: Int = 2
+
+private const val SEPARATOR_GROUP: String = " - "
+private const val SEPARATOR_EXPIRY: String = " / "
 
 @Composable
 fun NewCardScreen(
@@ -76,7 +79,7 @@ fun NewCardScreen(
             label = stringResource(R.string.new_card_number_label),
             placeholder = stringResource(R.string.new_card_number_hint),
             maxLength = CARD_NUMBER_MAX_LENGTH,
-            grouping = IntArray(4) { CARD_NUMBER_GROUP_SIZE },
+            grouping = IntArray(CARD_NUMBER_GROUP_COUNT) { CARD_NUMBER_GROUP_SIZE },
             separator = SEPARATOR_GROUP,
             keyboardOptions =
                 KeyboardOptions(
@@ -94,7 +97,7 @@ fun NewCardScreen(
             label = stringResource(R.string.new_card_expiry_label),
             placeholder = stringResource(R.string.new_card_expiry_hint),
             maxLength = EXPIRY_MAX_LENGTH,
-            grouping = IntArray(2) { EXPIRY_GROUP_SIZE },
+            grouping = IntArray(EXPIRY_GROUP_COUNT) { EXPIRY_GROUP_SIZE },
             separator = SEPARATOR_EXPIRY,
             keyboardOptions =
                 KeyboardOptions(
