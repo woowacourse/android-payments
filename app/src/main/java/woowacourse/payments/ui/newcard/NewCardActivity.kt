@@ -10,7 +10,10 @@ class NewCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NewCardContents(this)
+            NewCardContents(
+                context = this,
+                onBackClick = { finish() },
+            )
         }
     }
 }

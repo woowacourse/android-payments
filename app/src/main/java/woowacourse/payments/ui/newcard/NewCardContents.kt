@@ -44,6 +44,7 @@ private const val PASSCODE_REQUIRED_LENGTH = 4
 fun NewCardContents(
     context: Context,
     now: YearMonth = YearMonth.now(),
+    onBackClick: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -111,11 +112,7 @@ fun NewCardContents(
             modifier = Modifier.fillMaxSize(),
             topBar = {
                 NewCardTopBar(
-                    onBackClick = {
-                        Toast
-                            .makeText(context, "onBackClick", Toast.LENGTH_SHORT)
-                            .show()
-                    },
+                    onBackClick = onBackClick,
                     onSaveClick = {
                         if (cardNumber.isEmpty()) isCardNumberError = true
                         if (expirationDate.isEmpty()) isExpirationDateError = true
