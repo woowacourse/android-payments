@@ -2,7 +2,7 @@ package woowacourse.payments.domain
 
 @JvmInline
 value class CardNumber(
-    val numbers: List<Int>,
+    val numbers: List<CardDigit>,
 ) {
     init {
         require(numbers.size == CARD_NUMBER_LENGTH) { ERROR_INVALID_CARD_NUMBER_LENGTH }
