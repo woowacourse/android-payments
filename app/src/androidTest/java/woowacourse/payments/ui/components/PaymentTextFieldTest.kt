@@ -14,7 +14,6 @@ class PaymentTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-
     @Test
     fun `매개변수onlyDigits를_true_값으로_전달하면_숫자만_입력이_된다`() {
         // given:
@@ -28,7 +27,7 @@ class PaymentTextFieldTest {
                 maxLength = 4,
                 text = text,
                 onlyDigits = true,
-                onValueChanged = { "" }
+                onValueChanged = { "" },
             )
         }
 
@@ -48,7 +47,7 @@ class PaymentTextFieldTest {
                 hint = "뭉치즈~",
                 maxLength = maxLength,
                 text = "123456789",
-                onValueChanged = { "" }
+                onValueChanged = { "" },
             )
         }
 
@@ -71,7 +70,7 @@ class PaymentTextFieldTest {
                 onValueChanged = {},
                 supportingText = {
                     Text(text = supportingTextValue)
-                }
+                },
             )
         }
 
@@ -90,7 +89,7 @@ class PaymentTextFieldTest {
                 maxLength = 10,
                 text = "123456789",
                 onValueChanged = {},
-                visualTransformation = PasswordVisualTransformation()
+                visualTransformation = PasswordVisualTransformation(),
             )
         }
 
@@ -109,7 +108,7 @@ class PaymentTextFieldTest {
                 maxLength = 10,
                 text = "123456789",
                 onValueChanged = {},
-                visualTransformation = CreditCardVisualTransformation()
+                visualTransformation = CreditCardVisualTransformation(),
             )
         }
 
@@ -128,7 +127,7 @@ class PaymentTextFieldTest {
                 maxLength = 4,
                 text = "0130",
                 onValueChanged = {},
-                visualTransformation = DateVisualTransformation()
+                visualTransformation = DateVisualTransformation(),
             )
         }
 

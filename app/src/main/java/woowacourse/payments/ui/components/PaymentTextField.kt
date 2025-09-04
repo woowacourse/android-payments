@@ -60,10 +60,10 @@ fun PaymentTextFieldPreview() {
                 Text(
                     text = "3/30",
                     textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             },
-            onValueChanged = { "뭉치즈에요 " }
+            onValueChanged = { "뭉치즈에요 " },
         )
     }
 }

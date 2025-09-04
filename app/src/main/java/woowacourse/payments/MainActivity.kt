@@ -49,14 +49,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(innerPadding),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(innerPadding),
                     ) {
                         PaymentCard(
-                            modifier = Modifier
-                                .padding(top = 14.dp)
-                                .align(Alignment.CenterHorizontally)
+                            modifier =
+                                Modifier
+                                    .padding(top = 14.dp)
+                                    .align(Alignment.CenterHorizontally),
                         )
                         PaymentTextField(
                             text = cardNumber,
@@ -67,10 +69,11 @@ class MainActivity : ComponentActivity() {
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = CreditCardVisualTransformation(),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 40.dp)
-                                .padding(horizontal = 24.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 40.dp)
+                                    .padding(horizontal = 24.dp),
                         )
                         PaymentTextField(
                             text = expiredDate,
@@ -81,10 +84,11 @@ class MainActivity : ComponentActivity() {
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = DateVisualTransformation(),
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(top = 30.dp)
-                                .padding(horizontal = 24.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(top = 30.dp)
+                                    .padding(horizontal = 24.dp),
                         )
                         PaymentTextField(
                             text = ownerName,
@@ -95,14 +99,15 @@ class MainActivity : ComponentActivity() {
                                 Text(
                                     text = "${ownerName.length}/30",
                                     textAlign = TextAlign.End,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             },
                             maxLength = 30,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 30.dp)
-                                .padding(horizontal = 24.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 30.dp)
+                                    .padding(horizontal = 24.dp),
                         )
                         PaymentTextField(
                             text = password,
@@ -113,10 +118,11 @@ class MainActivity : ComponentActivity() {
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = PasswordVisualTransformation(),
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(top = 10.dp)
-                                .padding(horizontal = 24.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(top = 10.dp)
+                                    .padding(horizontal = 24.dp),
                         )
                     }
                 }

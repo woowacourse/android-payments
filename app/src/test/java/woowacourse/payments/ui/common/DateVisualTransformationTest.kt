@@ -26,7 +26,7 @@ class DateVisualTransformationTest {
     }
 
     @Test
-    fun `4자리 초과 입력 시 잘린 후 슬래시 삽입`() {
+    fun `4자리 초과 입력 시 잘린 후 슬래시가 삽입된다`() {
         // given:
         val input = AnnotatedString("020123")
 

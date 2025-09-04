@@ -28,7 +28,9 @@ class CreditCardVisualTransformationTest {
     @Test
     fun `16자리가_넘으면_16자리까지만_표시한다`() {
         // given:
-        val input = androidx.compose.ui.text.AnnotatedString("12345678123456789000")
+        val input =
+            androidx.compose.ui.text
+                .AnnotatedString("12345678123456789000")
 
         // when:
         val result = creditCardVisualTransformation.filter(input)
@@ -40,7 +42,9 @@ class CreditCardVisualTransformationTest {
     @Test
     fun `4자리마다_하이픈이_추가된다`() {
         // given:
-        val input = androidx.compose.ui.text.AnnotatedString("123456")
+        val input =
+            androidx.compose.ui.text
+                .AnnotatedString("123456")
 
         // when:
         val result = creditCardVisualTransformation.filter(input)
