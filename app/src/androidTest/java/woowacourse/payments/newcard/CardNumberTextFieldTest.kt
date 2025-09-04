@@ -7,8 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -66,11 +66,12 @@ class CardNumberTextFieldTest {
                 onValueChange = { value = it },
             )
         }
+        val textFieldNode = composeTestRule.onNode(hasSetTextAction(), useUnmergedTree = true)
 
         // when
-        composeTestRule.onNodeWithTag("카드 번호 TextField").performTextInput("크림")
+        textFieldNode.performTextInput("크림")
 
         // then
-        composeTestRule.onNodeWithText("카드 번호 TextField").assertTextEquals("")
+        textFieldNode.assertTextEquals("")
     }
 }
