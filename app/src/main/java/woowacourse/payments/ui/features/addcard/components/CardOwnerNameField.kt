@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -17,19 +18,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.AppTestTags.CARD_OWNER_NAME_FIELD
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardOwnerNameField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     supportingText: @Composable (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
 ) {
     AppTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier,
+        modifier = modifier.testTag(CARD_OWNER_NAME_FIELD),
         labelText = stringResource(R.string.add_card_owner_name_field_title),
         placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
         supportingText = supportingText,
