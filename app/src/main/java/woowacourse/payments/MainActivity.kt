@@ -28,17 +28,19 @@ class MainActivity : ComponentActivity() {
                             onBackClick = { },
                             onSaveClick = {},
                         )
-                    }
+                    },
                 ) { innerPadding ->
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
                     ) {
                         Spacer(modifier = Modifier.height(14.dp))
                         PaymentCard(
-                            modifier = Modifier
-                                .align(Alignment.CenterHorizontally)
+                            modifier =
+                                Modifier
+                                    .align(Alignment.CenterHorizontally),
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
@@ -46,8 +48,8 @@ class MainActivity : ComponentActivity() {
                             hint = "0000 - 0000 - 0000 - 0000",
                             maxLength = 16,
                             mask = InputMask.CardNumber,
-                            errorMessage = getString(R.string.CardNumberErrorMessage)
-                            )
+                            errorMessage = getString(R.string.CardNumberErrorMessage),
+                        )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
                             label = getString(R.string.CardExpiryLabel),
@@ -56,7 +58,7 @@ class MainActivity : ComponentActivity() {
                             maxLength = 4,
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.CardExpiryErrorMessage),
-                            )
+                        )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedTextField(
                             label = getString(R.string.CardOwnerLabel),
@@ -71,7 +73,7 @@ class MainActivity : ComponentActivity() {
                             maxLength = 4,
                             mask = InputMask.Password,
                             errorMessage = getString(R.string.CardPasswordErrorMessage),
-                            )
+                        )
                     }
                 }
             }

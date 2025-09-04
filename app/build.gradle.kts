@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
 }
 
 android {
@@ -43,7 +44,6 @@ android {
             excludes += "/META-INF/LGPL2.1"
         }
     }
-
 }
 
 dependencies {

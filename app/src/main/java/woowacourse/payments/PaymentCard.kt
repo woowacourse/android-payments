@@ -18,22 +18,24 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
-            .size(208.dp, 124.dp)
-            .shadow(8.dp)
-            .background(
-                color = Color(0xFF333333),
-                shape = RoundedCornerShape(5.dp),
-            )
+        modifier =
+            modifier
+                .size(208.dp, 124.dp)
+                .shadow(8.dp)
+                .background(
+                    color = Color(0xFF333333),
+                    shape = RoundedCornerShape(5.dp),
+                ),
     ) {
         Box(
-            modifier = modifier
-                .padding(start = 14.dp, bottom = 10.dp)
-                .size(40.dp, 28.dp)
-                .background(
-                    color = Color(0xFFCBBA64),
-                    shape = RoundedCornerShape(5.dp)
-                )
+            modifier =
+                modifier
+                    .padding(start = 14.dp, bottom = 10.dp)
+                    .size(40.dp, 28.dp)
+                    .background(
+                        color = Color(0xFFCBBA64),
+                        shape = RoundedCornerShape(5.dp),
+                    ),
         )
     }
 }

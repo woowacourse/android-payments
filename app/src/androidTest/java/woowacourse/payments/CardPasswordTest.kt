@@ -23,7 +23,7 @@ class CardPasswordTest {
                 fraction = 0.5f,
                 maxLength = 4,
                 mask = InputMask.Password,
-                errorMessage = "비밀번호는 4자입니다."
+                errorMessage = "비밀번호는 4자입니다.",
             )
         }
     }

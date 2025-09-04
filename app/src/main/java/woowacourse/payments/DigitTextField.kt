@@ -39,9 +39,10 @@ fun DigitTextField(
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
-        modifier = modifier
-            .fillMaxWidth(fraction)
-            .padding(horizontal = 24.dp),
+        modifier =
+            modifier
+                .fillMaxWidth(fraction)
+                .padding(horizontal = 24.dp),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = isError,
@@ -59,7 +60,7 @@ private fun PaymentCardPreview() {
             hint = "0000 - 0000 - 0000 - 0000",
             maxLength = 16,
             mask = InputMask.CardNumber,
-            errorMessage = "카드 번호는 16자입니다."
+            errorMessage = "카드 번호는 16자입니다.",
         )
     }
 }

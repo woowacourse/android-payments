@@ -9,7 +9,6 @@ import org.junit.Rule
 import org.junit.Test
 
 class CardNumberTest {
-
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -20,7 +19,7 @@ class CardNumberTest {
                 label = "카드 번호",
                 hint = "0000 - 0000 - 0000 - 0000",
                 mask = InputMask.CardNumber,
-                errorMessage = "카드 번호는 16자여야 합니다."
+                errorMessage = "카드 번호는 16자여야 합니다.",
             )
         }
     }
