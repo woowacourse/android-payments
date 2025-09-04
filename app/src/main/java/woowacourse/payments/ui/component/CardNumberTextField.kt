@@ -1,11 +1,14 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.util.CardNumberTransformation
@@ -19,6 +22,7 @@ fun CardNumberTextField(
     OutlinedTextField(
         modifier = modifier,
         value = cardInfo.cardNumber,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onValueChange = {
             cardInfo.onValueChanged(cardNumber = it)
         },
