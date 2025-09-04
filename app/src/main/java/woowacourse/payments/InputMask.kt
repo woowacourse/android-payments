@@ -61,18 +61,18 @@ private fun expiryFilter(text: AnnotatedString): TransformedText {
         out += text[i]
         if (i % 2 == 1 && i != 3) out += "/"
     }
-    val creditCardOffsetTranslator =
+    val expiryOffsetTranslator =
         object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
-                if (offset <= 2) return offset
+                if (offset <= 1) return offset
                 return offset + 1
             }
 
             override fun transformedToOriginal(offset: Int): Int {
-                if (offset <= 2) return offset
+                if (offset <= 1) return offset
                 return offset - 1
             }
         }
 
-    return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
+    return TransformedText(AnnotatedString(out), expiryOffsetTranslator)
 }
