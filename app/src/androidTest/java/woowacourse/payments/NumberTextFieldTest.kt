@@ -1,34 +1,43 @@
 package woowacourse.payments
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import woowacourse.payments.component.NumberTextField
 
 @RunWith(AndroidJUnit4::class)
 class NumberTextFieldTest {
+
     @get:Rule
     val composeRule = createComposeRule()
 
     // -------------------------
-    // Card Number
+    // 카드번호
     // -------------------------
     @Test
-    fun 카드번호는_16자리_숫자까지만_입력이_가능하다() {
+    fun 카드번호는_16자리_숫자까지만_입력이_가능하고_4자리마다_구분된다() {
         composeRule.setContent {
+            var cardNumber by remember { mutableStateOf("") }
             NumberTextField(
                 modifier = Modifier.testTag("card_number"),
                 label = R.string.label_card_number,
                 placeholder = R.string.placeholder_card_number,
-                inputType = InputType.CardNumber
+                inputType = InputType.CardNumber,
+                value = cardNumber,
+                onValueChange = { cardNumber = it }
             )
         }
 
@@ -41,37 +50,20 @@ class NumberTextFieldTest {
             .assertIsDisplayed()
     }
 
-    @Test
-    fun 카드번호를_입력하면_구분자로_구분된다() {
-        composeRule.setContent {
-            NumberTextField(
-                modifier = Modifier.testTag("card_number"),
-                label = R.string.label_card_number,
-                placeholder = R.string.placeholder_card_number,
-                inputType = InputType.CardNumber
-            )
-        }
-
-        // when
-        composeRule.onNodeWithTag("card_number")
-            .performTextInput("2001092819990511")
-
-        // then
-        composeRule.onNodeWithText("2001 - 0928 - 1999 - 0511")
-            .assertIsDisplayed()
-    }
-
     // -------------------------
-    // Expiry Date
+    // 만료일
     // -------------------------
     @Test
-    fun 만료일을_입력하면_구분자로_구분된다() {
+    fun 만료일은_MM_슬래시_YY_형태로_자동_구분된다() {
         composeRule.setContent {
+            var expiry by remember { mutableStateOf("") }
             NumberTextField(
                 modifier = Modifier.testTag("expiry"),
                 label = R.string.label_expiry,
                 placeholder = R.string.placeholder_expiry,
-                inputType = InputType.ExpiryDate
+                inputType = InputType.ExpiryDate,
+                value = expiry,
+                onValueChange = { expiry = it }
             )
         }
 
@@ -85,36 +77,19 @@ class NumberTextFieldTest {
     }
 
     // -------------------------
-    // Password
+    // 비밀번호
     // -------------------------
     @Test
-    fun 입력된_비밀번호는_노출되지_않는다() {
+    fun 비밀번호는_4글자까지만_입력되고_시각적으로_가려진다() {
         composeRule.setContent {
+            var pin by remember { mutableStateOf("") }
             NumberTextField(
                 modifier = Modifier.testTag("password"),
                 label = R.string.label_pin,
                 placeholder = R.string.placeholder_pin,
-                inputType = InputType.Password
-            )
-        }
-
-        // when
-        composeRule.onNodeWithTag("password")
-            .performTextInput("12")
-
-        // then (보이는 텍스트 기준)
-        composeRule.onNodeWithText("••")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun 비밀번호는_4글자까지만_입력된다() {
-        composeRule.setContent {
-            NumberTextField(
-                modifier = Modifier.testTag("password"),
-                label = R.string.label_pin,
-                placeholder = R.string.placeholder_pin,
-                inputType = InputType.Password
+                inputType = InputType.Password,
+                value = pin,
+                onValueChange = { pin = it }
             )
         }
 
@@ -123,7 +98,6 @@ class NumberTextFieldTest {
             .performTextInput("19990511")
 
         // then
-        composeRule.onNodeWithText("••••")
-            .assertIsDisplayed()
+        composeRule.onNodeWithTag("password").assertTextEquals("••••")
     }
 }
