@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.unit.dp
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +22,6 @@ class CardPasswordTest {
                 fraction = 0.5f,
                 maxLength = 4,
                 mask = InputMask.Password,
-                height = 10.dp,
                 errorMessage = "비밀번호는 4자입니다."
             )
         }

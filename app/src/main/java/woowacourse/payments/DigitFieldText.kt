@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -27,7 +26,6 @@ fun DigitFieldText(
     fraction: Float = 1f,
     maxLength: Int = Int.MAX_VALUE,
     mask: InputMask = InputMask.None,
-    height: Dp = 30.dp
 ) {
     var number by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
@@ -43,8 +41,7 @@ fun DigitFieldText(
         placeholder = { Text(text = hint) },
         modifier = modifier
             .fillMaxWidth(fraction)
-            .padding(horizontal = 24.dp)
-            .padding(top = height),
+            .padding(horizontal = 24.dp),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = isError,
