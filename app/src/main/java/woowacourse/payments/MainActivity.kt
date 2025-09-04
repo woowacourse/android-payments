@@ -21,8 +21,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.components.CreditCardVisualTransformation
-import woowacourse.payments.ui.components.DateVisualTransformation
+import woowacourse.payments.ui.common.CreditCardVisualTransformation
+import woowacourse.payments.ui.common.DateVisualTransformation
 import woowacourse.payments.ui.components.NewCardTopBar
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.PaymentTextField

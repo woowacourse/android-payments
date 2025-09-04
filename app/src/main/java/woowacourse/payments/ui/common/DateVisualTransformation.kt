@@ -1,14 +1,12 @@
-package woowacourse.payments.ui.components
+package woowacourse.payments.ui.common
 
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-@Composable
-fun DateVisualTransformation(): VisualTransformation {
-    return VisualTransformation { text ->
+class DateVisualTransformation : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText {
         val trimmed = if (text.text.length > 4) text.text.substring(0..3) else text.text
 
         val out = buildString {
@@ -40,7 +38,7 @@ fun DateVisualTransformation(): VisualTransformation {
             }
         }
 
-        TransformedText(
+        return TransformedText(
             AnnotatedString(out),
             dateOffsetTranslator
         )
