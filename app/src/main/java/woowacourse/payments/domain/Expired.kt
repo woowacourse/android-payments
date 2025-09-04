@@ -9,9 +9,7 @@ value class Expired(
             if (value.length != 4) {
                 return false
             }
-
             val mm = value.substring(0, 2)
-
             return mm.matches(Regex("(0[1-9]|1[0-2])"))
         }
 }

@@ -36,13 +36,9 @@ fun AddCardScreen() {
     var showValidationError by remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Column(
-                modifier =
-                    Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize(),
-            ) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
                 NewCardTopBar(
                     onBackClick = {},
                     onSaveClick = {
@@ -54,9 +50,19 @@ fun AddCardScreen() {
                         if (isValid) showValidationError = false
                     },
                 )
-
+            },
+        ) { innerPadding ->
+            Column(
+                modifier =
+                    Modifier
+                        .padding(innerPadding)
+                        .fillMaxSize(),
+            ) {
                 Box(
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 12.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     PaymentCard()
