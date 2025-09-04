@@ -1,0 +1,75 @@
+package woowacourse.payments.ui.newcard.componenets
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import woowacourse.payments.ui.newcard.components.Name
+
+class NameTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            var text: String by remember { mutableStateOf("") }
+
+            Name(
+                modifier = Modifier,
+                value = text,
+                onValueChange = { text = it },
+                label = "카드 소유자 이름 (선택)",
+                placeholder = "카드에 표시된 이름을 입력하세요.",
+                maxLength = 30,
+            )
+        }
+    }
+
+    @Test
+    fun `카드_소유자가_라벨로_보인다`() {
+        // then
+        composeTestRule
+            .onNodeWithText("카드 소유자 이름 (선택)")
+            .assertExists()
+    }
+
+    @Test
+    fun `입력칸을_클릭하면_기본값이_보인다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("카드 소유자 이름 (선택)"))
+
+        // when
+        textField
+            .performClick()
+
+        // then
+        composeTestRule
+            .onNodeWithText("카드에 표시된 이름을 입력하세요.")
+            .assertExists()
+    }
+
+    @Test
+    fun `이름을_입력하면_글자수가_늘어난다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("카드 소유자 이름 (선택)"))
+
+        // when
+        textField.performTextInput("hwannow")
+
+        // then
+        composeTestRule
+            .onNodeWithText("7 / 30")
+            .assertIsDisplayed()
+    }
+}
