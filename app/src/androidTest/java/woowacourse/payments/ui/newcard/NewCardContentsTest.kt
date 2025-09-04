@@ -19,9 +19,7 @@ class NewCardContentsTest {
     @Test
     fun 카드_번호가_16자_미만이면_경고_메시지가_표시된다() {
         // given
-        composeTestRule.setContent {
-            NewCardContents(LocalContext.current)
-        }
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
         val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 번호")
 
         // when
@@ -34,9 +32,7 @@ class NewCardContentsTest {
     @Test
     fun 카드_번호를_16자_넘게_입력할_경우_첫_16자만_표시된다() {
         // given
-        composeTestRule.setContent {
-            NewCardContents(LocalContext.current)
-        }
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
         val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 번호")
 
         // when
@@ -50,9 +46,7 @@ class NewCardContentsTest {
     @Test
     fun 카드_번호에_숫자가_아닌_문자가_있으면_경고_메시지가_표시된다() {
         // given
-        composeTestRule.setContent {
-            NewCardContents(LocalContext.current)
-        }
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
         val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 번호")
 
         // when
@@ -60,5 +54,83 @@ class NewCardContentsTest {
 
         // then
         composeTestRule.onNodeWithText("카드 번호는 숫자 16자입니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_번호를_입력_시_4자_단위로_기호를_삽입한다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 번호")
+
+        // when
+        target.performTextInput("1234123412341234")
+
+        // then
+        composeTestRule.onNodeWithText("1234 - 1234 - 1234 - 1234").assertIsDisplayed()
+    }
+
+    @Test
+    fun 만료일을_4자_넘게_입력할_경우_첫_4자만_표시된다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
+
+        // when
+        target.performTextInput("01250")
+
+        // then
+        composeTestRule.onNodeWithText("0125").assertIsDisplayed()
+    }
+
+    @Test
+    fun 만료일이_MM_YY_형식이_아니면_경고_메시지가_표시된다_1() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
+
+        // when
+        target.performTextInput("abcd")
+
+        // then
+        composeTestRule.onNodeWithText("유효하지 않은 만료일입니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun 만료일이_MM_YY_형식이_아니면_경고_메시지가_표시된다_2() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
+
+        // when
+        target.performTextInput("1325")
+
+        // then
+        composeTestRule.onNodeWithText("유효하지 않은 만료일입니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun 만료일이_이미_지났으면_경고_메시지가_표시된다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current, YearMonth.of(2025, 9)) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
+
+        // when
+        target.performTextInput("0825")
+
+        // then
+        composeTestRule.onNodeWithText("유효하지 않은 만료일입니다.").assertIsDisplayed()
+    }
+
+    @Test
+    fun 만료일을_입력_시_2자_단위로_기호를_삽입한다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
+
+        // when
+        target.performTextInput("0925")
+
+        // then
+        composeTestRule.onNodeWithText("09 / 25").assertIsDisplayed()
     }
 }
