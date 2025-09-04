@@ -5,9 +5,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.CardNumberVisualTransformation
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Grey10
 
 @Composable
@@ -20,10 +22,10 @@ fun CardNumber(
         value = value,
         onValueChange = { if (it.length <= 16 && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
-        label = { Text("카드 번호") },
+        label = { Text(stringResource(R.string.card_number)) },
         placeholder = {
             Text(
-                text = "0000 - 0000 - 0000 - 0000",
+                text = stringResource(R.string.card_number_placeholder),
                 color = Grey10,
             )
         },

@@ -7,10 +7,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Grey10
 
 @Composable
@@ -24,10 +26,10 @@ fun CardHolderName(
         value = value,
         onValueChange = { if (it.length <= 30) onValueChange(it) },
         modifier = modifier,
-        label = { Text("카드 소유자 이름(선택)") },
+        label = { Text(stringResource(R.string.card_holder_name)) },
         placeholder = {
             Text(
-                text = "카드에 표시된 이름을 입력하세요.",
+                text = stringResource(R.string.card_holder_name_placeholder),
                 color = Grey10,
             )
         },

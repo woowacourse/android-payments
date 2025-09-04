@@ -7,10 +7,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Grey10
 
 @Composable
@@ -23,10 +25,10 @@ fun CardPassword(
         value = value,
         onValueChange = { if (it.length <= 4 && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
-        label = { Text("비밀번호") },
+        label = { Text(stringResource(R.string.card_password)) },
         placeholder = {
             Text(
-                text = "0000",
+                text = stringResource(R.string.card_password_placeholder),
                 color = Grey10,
             )
         },
