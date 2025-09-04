@@ -37,7 +37,7 @@ fun DigitTextField(
             val filtered = newText.filter { it.isDigit() }
             val newNumber = filtered.take(maxLength)
             number = newNumber
-            isError = newNumber.length < maxLength
+            isError = (maxLength != Int.MAX_VALUE) && (newNumber.length < maxLength)
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
