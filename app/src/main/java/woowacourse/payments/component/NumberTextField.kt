@@ -49,7 +49,12 @@ fun NumberTextField(
                 VisualTransformation.None
             },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-        modifier = modifier.then(Modifier.padding(start = 24.dp, end = 24.dp, bottom = 30.dp)),
+        modifier =
+            modifier.then(
+                Modifier
+                    .padding(bottom = 30.dp)
+                    .padding(horizontal = 24.dp),
+            ),
     )
 }
 
