@@ -133,4 +133,30 @@ class NewCardContentsTest {
         // then
         composeTestRule.onNodeWithText("09 / 25").assertIsDisplayed()
     }
+
+    @Test
+    fun 카드_소유자_이름을_30자_넘게_입력할_경우_첫_30자만_표시된다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 소유자 이름(선택)")
+
+        // when
+        target.performTextInput("0".repeat(31))
+
+        // then
+        composeTestRule.onNodeWithText("0".repeat(30)).assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_소유자_이름에_입력된_문자의_개수를_표시한다() {
+        // given
+        composeTestRule.setContent { NewCardContents(LocalContext.current) }
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("카드 소유자 이름(선택)")
+
+        // when
+        target.performTextInput("Hello World")
+
+        // then
+        composeTestRule.onNodeWithText("11 / 30").assertIsDisplayed()
+    }
 }
