@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
                             maxLength = 16,
                             mask = InputMask.CardNumber,
                             errorMessage = getString(R.string.CardNumberErrorMessage),
+                            imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
@@ -58,12 +60,14 @@ class MainActivity : ComponentActivity() {
                             maxLength = 4,
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.CardExpiryErrorMessage),
+                            imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedTextField(
                             label = getString(R.string.CardOwnerLabel),
                             hint = getString(R.string.CardOwnerHint),
                             maxLength = 30,
+                            imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(15.dp))
                         DigitTextField(
