@@ -57,4 +57,5 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    lintChecks(libs.compose.lint.checks)
 }

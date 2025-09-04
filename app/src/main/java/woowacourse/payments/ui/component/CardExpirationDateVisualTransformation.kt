@@ -24,13 +24,11 @@ class CardExpirationDateVisualTransformation : VisualTransformation {
 
         val offsetMapping =
             object : OffsetMapping {
-                override fun originalToTransformed(offset: Int): Int {
-                    return if (offset <= MONTH_PART_LENGTH - 1) offset else offset + SEPARATOR.length
-                }
+                override fun originalToTransformed(offset: Int): Int =
+                    if (offset <= MONTH_PART_LENGTH - 1) offset else offset + SEPARATOR.length
 
-                override fun transformedToOriginal(offset: Int): Int {
-                    return if (offset <= MONTH_PART_LENGTH) offset else offset - SEPARATOR.length
-                }
+                override fun transformedToOriginal(offset: Int): Int =
+                    if (offset <= MONTH_PART_LENGTH) offset else offset - SEPARATOR.length
             }
 
         return TransformedText(AnnotatedString(out), offsetMapping)

@@ -21,12 +21,11 @@ data class CardNumber(
         )
     }
 
-    companion object{
+    companion object {
         const val CARD_NUMBER_PART_LENGTH = 4
         const val FIRST_NUMBER_INDEX = 0
         const val SECOND_NUMBER_INDEX = 1
         const val THIRD_NUMBER_INDEX = 2
         const val FORTH_NUMBER_INDEX = 3
-
     }
 }

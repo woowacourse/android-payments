@@ -39,48 +39,53 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
 import woowacourse.payments.ui.component.CardNumberVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.Dimens.AddCardComposableComponentPadding
+import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
+import woowacourse.payments.ui.theme.Dimens.CARD_NUMBER_MAX_LENGTH
+import woowacourse.payments.ui.theme.Dimens.CARD_OWNER_MAX_LENGTH
+import woowacourse.payments.ui.theme.Dimens.CARD_PASSWORD_MAX_LENGTH
+import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 
 @Composable
-fun GenerateCardView() {
+fun GenerateCardView(modifier: Modifier = Modifier) {
     var cardDetails by remember { mutableStateOf(Card()) }
 
     AndroidpaymentsTheme {
         Scaffold(
             topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
         ) { innerPadding ->
             Column(
                 horizontalAlignment = Alignment.Start,
                 modifier =
                     Modifier
                         .fillMaxSize()
-                        .padding(20.dp),
+                        .padding(innerPadding)
+                        .padding(AddCardComposableScreenPadding),
             ) {
                 PaymentCard(
                     modifier =
                         Modifier
-                            .padding(
-                                innerPadding,
-                            )
                             .align(Alignment.CenterHorizontally),
                 )
                 CardNumber(
                     cardDetails.number,
                     onValueChange = { input ->
                         val newText = input.filter { it.isDigit() }
-                        if (newText.length <= 16) {
+                        if (newText.length <= CARD_NUMBER_MAX_LENGTH) {
                             cardDetails =
                                 cardDetails.copy(number = cardDetails.number.onValueChange(newText))
                         }
                     },
                     modifier =
                         Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(top = AddCardComposableComponentPadding),
                 )
                 EndDate(
                     modifier =
                         Modifier
-                            .fillMaxWidth(0.5f),
+                            .fillMaxWidth(FIELD_HALF_WIDTH),
                     onValueChange = { input ->
                         val newText = input.filter { it.isDigit() }
                         cardDetails =
@@ -95,7 +100,7 @@ fun GenerateCardView() {
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
-                        if (input.length <= 30) {
+                        if (input.length <= CARD_OWNER_MAX_LENGTH) {
                             cardDetails = cardDetails.copy(ownerName = input)
                         }
                     },
@@ -104,13 +109,13 @@ fun GenerateCardView() {
                     password = cardDetails.password,
                     onValueChange = { input ->
                         val newPassword = input.filter { it.isDigit() }
-                        if (input.length <= 4) {
-                            cardDetails = cardDetails.copy(password = input)
+                        if (newPassword.length <= CARD_PASSWORD_MAX_LENGTH) {
+                            cardDetails = cardDetails.copy(password = newPassword)
                         }
                     },
                     modifier =
                         Modifier
-                            .fillMaxWidth(0.5f),
+                            .fillMaxWidth(FIELD_HALF_WIDTH),
                 )
             }
         }
@@ -119,7 +124,7 @@ fun GenerateCardView() {
 
 @Preview(showBackground = true)
 @Composable
-fun GenerateCardPreview() {
+private fun GenerateCardPreview() {
     GenerateCardView()
 }
 
