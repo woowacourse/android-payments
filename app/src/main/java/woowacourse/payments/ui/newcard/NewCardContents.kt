@@ -1,109 +1,61 @@
 package woowacourse.payments.ui.newcard
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpirationDate
-import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-
-private const val CARD_NUMBER_REQUIRED_LENGTH = 16
-private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
-private const val CARDHOLDER_NAME_MAXIMUM_LENGTH = 30
-private const val PASSCODE_REQUIRED_LENGTH = 4
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(
-    context: Context,
     now: YearMonth = YearMonth.now(),
-    onBackClick: () -> Unit,
+    onSaveSuccess: () -> Unit = {},
+    onSaveFailure: () -> Unit = {},
+    onBackClick: () -> Unit = {},
 ) {
-    val focusManager = LocalFocusManager.current
+    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
+    val expirationDate: MutableState<String> = remember { mutableStateOf("") }
+    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
+    val passcode: MutableState<String> = remember { mutableStateOf("") }
 
-    var cardNumber: String by remember { mutableStateOf("") }
-    var expirationDate: String by remember { mutableStateOf("") }
-    var cardholderName: String by remember { mutableStateOf("") }
-    var passcode: String by remember { mutableStateOf("") }
+    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
-    var isCardNumberError: Boolean by remember { mutableStateOf(false) }
-    var isExpirationDateError: Boolean by remember { mutableStateOf(false) }
-    var isPasscodeError: Boolean by remember { mutableStateOf(false) }
+    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
-    fun isError(): Boolean = isCardNumberError || isExpirationDateError || isPasscodeError
+    fun checkEmptyFields() {
+        if (cardNumber.value.isEmpty()) isCardNumberError.value = true
+        if (expirationDate.value.isEmpty()) isExpirationDateError.value = true
+        if (passcode.value.isEmpty()) isPasscodeError.value = true
+    }
 
     fun resetFields() {
-        cardNumber = ""
-        expirationDate = ""
-        cardholderName = ""
-        passcode = ""
+        cardNumber.value = ""
+        expirationDate.value = ""
+        cardholderName.value = ""
+        passcode.value = ""
     }
 
-    fun updateCardNumber(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(CARD_NUMBER_REQUIRED_LENGTH)
-        cardNumber = filteredValue
-        isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
-        if (!isCardNumberError && filteredValue.length == CARD_NUMBER_REQUIRED_LENGTH) {
-            focusManager.moveFocus(FocusDirection.Next)
-        }
-    }
-
-    fun updateExpirationDate(newValue: String) {
-        val filteredValue: String =
-            newValue.filter(Char::isDigit).take(EXPIRATION_DATE_REQUIRED_LENGTH)
-        expirationDate = filteredValue
-        isExpirationDateError =
-            runCatching {
-                ExpirationDate(
-                    YearMonth.parse(
-                        filteredValue,
-                        DateTimeFormatter.ofPattern("MMyy"),
-                    ),
-                    now,
-                )
-            }.isFailure
-        if (!isExpirationDateError && filteredValue.length == EXPIRATION_DATE_REQUIRED_LENGTH) {
-            focusManager.moveFocus(FocusDirection.Next)
-        }
-    }
-
-    fun updateCardholderName(newValue: String) {
-        cardholderName = newValue.take(CARDHOLDER_NAME_MAXIMUM_LENGTH)
-    }
-
-    fun updatePasscode(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
-        passcode = filteredValue
-        isPasscodeError = runCatching { Passcode(passcode) }.isFailure
-        if (!isPasscodeError && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
-            focusManager.clearFocus()
+    fun saveNewCard() {
+        checkEmptyFields()
+        if (isError()) {
+            onSaveFailure()
+        } else {
+            resetFields()
+            onSaveSuccess()
         }
     }
 
@@ -113,131 +65,24 @@ fun NewCardContents(
             topBar = {
                 NewCardTopBar(
                     onBackClick = onBackClick,
-                    onSaveClick = {
-                        if (cardNumber.isEmpty()) isCardNumberError = true
-                        if (expirationDate.isEmpty()) isExpirationDateError = true
-                        if (passcode.isEmpty()) isPasscodeError = true
-                        if (isError()) {
-                            Toast
-                                .makeText(
-                                    context,
-                                    context.getString(R.string.new_card_failure_message),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                        } else {
-                            resetFields()
-                            Toast
-                                .makeText(
-                                    context,
-                                    context.getString(R.string.new_card_success_message),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                        }
-                    },
+                    onSaveClick = { saveNewCard() },
                 )
             },
         ) { innerPadding: PaddingValues ->
-            Column(
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            ) {
-                PaymentCard(
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 30.dp),
-                )
+            Column(Modifier.fillMaxSize().padding(innerPadding)) {
+                PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
 
                 Column(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    CardInfoTextFields(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = cardNumber,
-                        label = stringResource(R.string.card_number_label),
-                        placeholder = stringResource(R.string.card_number_placeholder),
-                        isError = isCardNumberError,
-                        supportingText = {
-                            Text(
-                                if (isCardNumberError) {
-                                    stringResource(R.string.card_number_error_message)
-                                } else {
-                                    ""
-                                },
-                            )
-                        },
-                        visualTransformation = CardNumberTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        keyboardActions =
-                            KeyboardActions(onDone = {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }),
-                    ) { newValue: String -> updateCardNumber(newValue) }
+                    CardNumberTextField(cardNumber, isCardNumberError)
 
-                    CardInfoTextFields(
-                        modifier = Modifier.fillMaxWidth(0.5F),
-                        value = expirationDate,
-                        label = stringResource(R.string.expiration_date_label),
-                        placeholder = stringResource(R.string.expiration_date_placeholder),
-                        isError = isExpirationDateError,
-                        supportingText = {
-                            Text(
-                                text =
-                                    if (isExpirationDateError) {
-                                        stringResource(R.string.expiration_date_error_message)
-                                    } else {
-                                        ""
-                                    },
-                            )
-                        },
-                        visualTransformation = ExpirationDateTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        keyboardActions =
-                            KeyboardActions(onDone = {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }),
-                    ) { newValue: String -> updateExpirationDate(newValue) }
+                    ExpirationDateTextField(expirationDate, isExpirationDateError, now)
 
-                    CardInfoTextFields(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = cardholderName,
-                        label = stringResource(R.string.cardholder_name_label),
-                        placeholder = stringResource(R.string.cardholder_name_placeholder),
-                        supportingText = {
-                            Text(
-                                text = "${cardholderName.length} / 30",
-                                textAlign = TextAlign.End,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        },
-                        keyboardActions =
-                            KeyboardActions(onDone = {
-                                focusManager.moveFocus(FocusDirection.Next)
-                            }),
-                    ) { newValue: String -> updateCardholderName(newValue) }
+                    CardHolderNameTextField(cardholderName)
 
-                    CardInfoTextFields(
-                        modifier = Modifier.fillMaxWidth(0.5F),
-                        value = passcode,
-                        label = stringResource(R.string.passcode_label),
-                        placeholder = stringResource(R.string.passcode_placeholder),
-                        isError = isPasscodeError,
-                        supportingText = {
-                            Text(
-                                if (isPasscodeError) {
-                                    stringResource(R.string.passcode_error_message)
-                                } else {
-                                    ""
-                                },
-                            )
-                        },
-                        visualTransformation = PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                    ) { newValue: String -> updatePasscode(newValue) }
+                    PasscodeTextField(passcode, isPasscodeError)
                 }
             }
         }
