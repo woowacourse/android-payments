@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -6,9 +6,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -16,12 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CardPassword() {
-val cardPassword: MutableState<String> = remember { mutableStateOf("") }
-
+fun CardPassword(
+    value: String = "",
+    onValueChange: (String) -> Unit = {},
+) {
     OutlinedTextField(
-        value = cardPassword.value,
-        onValueChange = { if (it.length <= 4) cardPassword.value = it },
+        value = value,
+        onValueChange = { if (it.length <= 4) onValueChange(it) },
         label = { Text("비밀번호") },
         placeholder = { Text("0000") },
         visualTransformation = PasswordVisualTransformation(),

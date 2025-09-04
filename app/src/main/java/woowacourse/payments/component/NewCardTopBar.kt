@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
