@@ -7,22 +7,23 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-fun CreditCardVisualTransformation(text: AnnotatedString): VisualTransformation {
-    val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
-    var out = ""
-    for (i in trimmed.indices) {
-        out += trimmed[i]
-        if (i % 4 == 3 && i != 15) out += "-"
-    }
+fun CreditCardVisualTransformation(): VisualTransformation {
+    return VisualTransformation { text ->
+        val trimmed = if (text.text.length >= 16) text.text.substring(0..15) else text.text
+        val out = buildString {
+            for (i in trimmed.indices) {
+                append(trimmed[i])
+                if (i % 4 == 3 && i != 15) append("-")
+            }
+        }
 
-    val creditCardOffsetTranslator =
-        object : OffsetMapping {
+        val creditCardOffsetTranslator = object : OffsetMapping {
             override fun originalToTransformed(offset: Int): Int {
                 if (offset <= 3) return offset
                 if (offset <= 7) return offset + 1
                 if (offset <= 11) return offset + 2
                 if (offset <= 16) return offset + 3
-                return 19
+                return out.length
             }
 
             override fun transformedToOriginal(offset: Int): Int {
@@ -30,14 +31,10 @@ fun CreditCardVisualTransformation(text: AnnotatedString): VisualTransformation 
                 if (offset <= 9) return offset - 1
                 if (offset <= 14) return offset - 2
                 if (offset <= 19) return offset - 3
-                return 16
+                return trimmed.length
             }
         }
 
-    return VisualTransformation {
-        TransformedText(
-            AnnotatedString(out),
-            creditCardOffsetTranslator
-        )
+        TransformedText(AnnotatedString(out), creditCardOffsetTranslator)
     }
 }

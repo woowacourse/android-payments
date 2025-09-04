@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -66,11 +65,7 @@ class MainActivity : ComponentActivity() {
                             hint = "0000-0000-0000-0000",
                             maxLength = 16,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            visualTransformation = CreditCardVisualTransformation(
-                                AnnotatedString(
-                                    cardNumber
-                                )
-                            ),
+                            visualTransformation = CreditCardVisualTransformation(),
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 40.dp)
@@ -83,7 +78,7 @@ class MainActivity : ComponentActivity() {
                             hint = "MM / YY",
                             maxLength = 4,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                            visualTransformation = DateVisualTransformation(AnnotatedString(expiredDate)),
+                            visualTransformation = DateVisualTransformation(),
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
                                 .padding(top = 30.dp)
