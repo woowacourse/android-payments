@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,6 +39,9 @@ fun AddCardScreen(
     onNavigateSave: () -> Unit,
 ) {
     var cardUiState by remember { mutableStateOf(CardUiState()) }
+    val expireDateStatus by remember(cardUiState.expireDate) {
+        derivedStateOf { getExpireDateStatus(cardUiState.expireDate) }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +75,7 @@ fun AddCardScreen(
                     Modifier
                         .fillMaxWidth(0.5f)
                         .align(Alignment.Start),
-                expireDateStatus = getExpireDateStatus(cardUiState.expireDate),
+                expireDateStatus = expireDateStatus,
                 supportingTextHeight = SupportingTextHeight,
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
