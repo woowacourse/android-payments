@@ -20,7 +20,7 @@ fun CardPassword(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= 4 && it.all { it.isDigit() }) onValueChange(it) },
+        onValueChange = { if (it.length <= CARD_PASSWORD_LENGTH && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_password)) },
         placeholder = {
@@ -43,3 +43,5 @@ fun CardPasswordPreview() {
         onValueChange = {}
     )
 }
+
+private const val CARD_PASSWORD_LENGTH = 4

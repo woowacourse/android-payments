@@ -20,7 +20,7 @@ fun CardNumber(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= 16 && it.all { it.isDigit() }) onValueChange(it) },
+        onValueChange = { if (it.length <= CARD_NUMBER_MAX_LENGTH && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_number)) },
         placeholder = {
@@ -44,3 +44,5 @@ fun CardNumberPreview() {
         onValueChange = {}
     )
 }
+
+private const val CARD_NUMBER_MAX_LENGTH = 16

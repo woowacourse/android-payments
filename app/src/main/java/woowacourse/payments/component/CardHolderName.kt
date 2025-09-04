@@ -22,7 +22,7 @@ fun CardHolderName(
 
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= 30) onValueChange(it) },
+        onValueChange = { if (it.length <= CARD_HOLDER_NAME_MAX_LENGTH) onValueChange(it) },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_holder_name)) },
         placeholder = {
@@ -35,7 +35,7 @@ fun CardHolderName(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         supportingText = {
             Text(
-                "${value.length}/30",
+                "${value.length}/CARD_HOLDER_NAME_MAX_LENGTH",
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -52,3 +52,5 @@ fun CardHolderNamePreview() {
         onValueChange = {}
     )
 }
+
+private const val CARD_HOLDER_NAME_MAX_LENGTH = 30

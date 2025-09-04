@@ -22,7 +22,7 @@ fun CardExpiryDate(
     OutlinedTextField(
         value = value,
         onValueChange = {
-            if (it.length <= 4 && it.all { it.isDigit() })
+            if (it.length <= CARD_EXPIRY_DATE_MAX_LENGTH && it.all { it.isDigit() })
                 onValueChange(it)
         },
         modifier = modifier,
@@ -47,3 +47,5 @@ fun CardExpiryDatePreview() {
         onValueChange = {}
     )
 }
+
+private const val CARD_EXPIRY_DATE_MAX_LENGTH = 4
