@@ -37,7 +37,7 @@ class ExpirationDateTextFieldTest {
         target.performTextInput("01250")
 
         // then
-        composeTestRule.onNodeWithText("0125").assertIsDisplayed()
+        composeTestRule.onNodeWithText("01 / 25").assertIsDisplayed()
     }
 
     @Test

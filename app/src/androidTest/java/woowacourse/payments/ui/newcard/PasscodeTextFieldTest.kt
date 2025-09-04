@@ -61,4 +61,16 @@ class PasscodeTextFieldTest {
         // then
         composeTestRule.onNodeWithText("비밀번호는 숫자 4자입니다.").assertIsDisplayed()
     }
+
+    @Test
+    fun 비밀번호는_마스킹_처리된다() {
+        // given
+        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("비밀번호")
+
+        // when
+        target.performTextInput("0123")
+
+        // then
+        composeTestRule.onNodeWithText("••••").assertIsDisplayed()
+    }
 }
