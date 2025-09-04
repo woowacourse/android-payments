@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,10 +25,10 @@ import woowacourse.payments.ui.newcard.components.PaymentCard
 
 @Composable
 fun NewCardScreen(innerPadding: PaddingValues) {
-    var cardNumber: String by remember { mutableStateOf("") }
-    var expirationDate: String by remember { mutableStateOf("") }
-    var name: String by remember { mutableStateOf("") }
-    var password: String by remember { mutableStateOf("") }
+    var cardNumber: String by rememberSaveable { mutableStateOf("") }
+    var expirationDate: String by rememberSaveable { mutableStateOf("") }
+    var name: String by rememberSaveable { mutableStateOf("") }
+    var password: String by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier =
