@@ -16,8 +16,12 @@ data class CardUiState(
     val isValidExpireDate: Boolean
         get() {
             if (expireDate.length != MAX_LENGTH_EXPIRE_DATE) return false
-            val month = expireDate.substring(0, 2).toIntOrNull() ?: return false
-            return month in 1..12
+            val mm = expireDate.substring(0, 2).toIntOrNull() ?: return false
+            val yy = expireDate.substring(2, 4).toIntOrNull() ?: return false
+            if (mm !in 1..12) return false
+            val year = 2000 + yy
+            val ym = YearMonth.of(year, mm)
+            return ym >= YearMonth.now()
         }
 
     val isValidPassword: Boolean
