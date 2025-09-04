@@ -41,6 +41,15 @@ fun NewCardContents(context: Context) {
     val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
+    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
+
+    fun resetFields() {
+        cardNumber.value = ""
+        expirationDate.value = ""
+        cardholderName.value = ""
+        passcode.value = ""
+    }
+
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -53,20 +62,23 @@ fun NewCardContents(context: Context) {
                     },
                     onSaveClick = {
                         if (cardNumber.value.isEmpty()) isCardNumberError.value = true
+                        if (expirationDate.value.isEmpty()) isCardNumberError.value = true
                         if (passcode.value.isEmpty()) isPasscodeError.value = true
-
-                        if (isCardNumberError.value || isPasscodeError.value) {
+                        if (isError()) {
                             Toast
-                                .makeText(context, "카드 정보를 다시 확인해주세요.", Toast.LENGTH_SHORT)
-                                .show()
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.new_card_failure_message),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         } else {
-                            cardNumber.value = ""
-                            expirationDate.value = ""
-                            cardholderName.value = ""
-                            passcode.value = ""
+                            resetFields()
                             Toast
-                                .makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT)
-                                .show()
+                                .makeText(
+                                    context,
+                                    context.getString(R.string.new_card_success_message),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
                     },
                 )
@@ -104,7 +116,7 @@ fun NewCardContents(context: Context) {
                         supportingText = {
                             Text(
                                 if (isCardNumberError.value) {
-                                    "카드 번호는 숫자 16자입니다."
+                                    stringResource(R.string.card_number_error_message)
                                 } else {
                                     ""
                                 },
@@ -133,7 +145,7 @@ fun NewCardContents(context: Context) {
                             Text(
                                 text =
                                     if (isExpirationDateError.value) {
-                                        "유효하지 않은 만료일입니다."
+                                        stringResource(R.string.expiration_date_error_message)
                                     } else {
                                         ""
                                     },
@@ -192,7 +204,7 @@ fun NewCardContents(context: Context) {
                         supportingText = {
                             Text(
                                 if (isPasscodeError.value) {
-                                    "비밀번호는 숫자 4자입니다."
+                                    stringResource(R.string.passcode_error_message)
                                 } else {
                                     ""
                                 },
