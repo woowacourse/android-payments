@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.newcard.textfields.ExpirationDateTextField
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 class ExpirationDateTextFieldTest {
@@ -23,7 +22,6 @@ class ExpirationDateTextFieldTest {
             ExpirationDateTextField(
                 mutableStateOf(""),
                 mutableStateOf(false),
-                YearMonth.of(2025, 9),
             )
         }
     }
@@ -59,18 +57,6 @@ class ExpirationDateTextFieldTest {
 
         // when
         target.performTextInput("1325")
-
-        // then
-        composeTestRule.onNodeWithText("유효하지 않은 만료일입니다.").assertIsDisplayed()
-    }
-
-    @Test
-    fun 만료일이_이미_지났으면_경고_메시지가_표시된다() {
-        // given
-        val target: SemanticsNodeInteraction = composeTestRule.onNodeWithText("만료일")
-
-        // when
-        target.performTextInput("0825")
 
         // then
         composeTestRule.onNodeWithText("유효하지 않은 만료일입니다.").assertIsDisplayed()

@@ -23,7 +23,6 @@ private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
 fun ExpirationDateTextField(
     text: MutableState<String>,
     isError: MutableState<Boolean>,
-    now: YearMonth = YearMonth.now(),
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -57,7 +56,6 @@ fun ExpirationDateTextField(
                         filteredValue,
                         DateTimeFormatter.ofPattern("MMyy"),
                     ),
-                    now,
                 )
             }.isFailure
 
