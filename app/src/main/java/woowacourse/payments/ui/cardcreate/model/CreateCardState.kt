@@ -8,7 +8,7 @@ data class CreateCardState(
     val cardNumber: String = "",
     val expiryDate: String = "",
     val ownerName: String = "",
-    val password: String = ""
+    val password: String = "",
 ) : Parcelable
 
 @Parcelize

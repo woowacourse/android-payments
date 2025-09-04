@@ -31,21 +31,20 @@ private const val SEP_EXPIRY = "/"
 private val KO_NUMBER = KeyboardOptions(keyboardType = KeyboardType.Number)
 private val KO_PIN = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
 
-
 @Composable
 fun CreateCardInputSection(
     createCardState: CreateCardState,
     createCardErrorState: CreateCardErrorState,
     onCardChange: (CreateCardState) -> Unit,
     onErrorChange: (CreateCardErrorState) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     val cardVt = remember { GroupedSeparatorVisualTransformation(CARD_GROUPS, SEP_CARD) }
     val expiryVt = remember { GroupedSeparatorVisualTransformation(EXPIRY_GROUPS, SEP_EXPIRY) }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(PaymentSectionSpacing),
-        modifier = modifier
+        modifier = modifier,
     ) {
         CreateCardNumbersInput(
             value = createCardState.cardNumber,
@@ -56,7 +55,7 @@ fun CreateCardInputSection(
             },
             visualTransformation = cardVt,
             keyboardOptions = KO_NUMBER,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         CreateCardExpiryDateInput(
@@ -77,7 +76,7 @@ fun CreateCardInputSection(
                 val msg = expiryDate.formatExpiryException()?.toErrorMessage()
                 onErrorChange(createCardErrorState.copy(expiryDateMessage = msg))
             },
-            modifier = Modifier.width(FieldCompactWidth)
+            modifier = Modifier.width(FieldCompactWidth),
         )
 
         CreateCardOwnerNameInput(
@@ -88,7 +87,7 @@ fun CreateCardInputSection(
             onValueChange = { name ->
                 onCardChange(createCardState.copy(ownerName = name.take(OWNER_NAME_MAX)))
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
 
         CreateCardPasswordInput(
@@ -99,7 +98,7 @@ fun CreateCardInputSection(
                 onCardChange(createCardState.copy(password = password.take(PASSWORD_MAX)))
             },
             keyboardOptions = KO_PIN,
-            modifier = Modifier.width(FieldCompactWidth)
+            modifier = Modifier.width(FieldCompactWidth),
         )
     }
 }

@@ -25,7 +25,7 @@ fun CreateCardNumbersInput(
     onValueChange: (String) -> Unit,
     visualTransformation: VisualTransformation,
     keyboardOptions: KeyboardOptions,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PaymentsOutlinedTextField(
         value = value,
@@ -34,7 +34,7 @@ fun CreateCardNumbersInput(
         visualTransformation = visualTransformation,
         label = labelText,
         modifier = modifier,
-        keyboardOptions = keyboardOptions
+        keyboardOptions = keyboardOptions,
     )
 }
 
@@ -48,7 +48,7 @@ fun CreateCardExpiryDateInput(
     visualTransformation: VisualTransformation,
     onValidate: (String) -> Unit,
     keyboardOptions: KeyboardOptions,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     PaymentsOutlinedTextField(
@@ -63,11 +63,12 @@ fun CreateCardExpiryDateInput(
         keyboardOptions = keyboardOptions,
         keyboardActions = KeyboardActions(onDone = { onValidate(value) }),
         label = labelText,
-        modifier = modifier.onFocusChanged {
-            val now = it.isFocused
-            if (isFocused && !now) onValidate(value)
-            isFocused = now
-        },
+        modifier =
+            modifier.onFocusChanged {
+                val now = it.isFocused
+                if (isFocused && !now) onValidate(value)
+                isFocused = now
+            },
     )
 }
 
@@ -78,7 +79,7 @@ fun CreateCardOwnerNameInput(
     labelText: String,
     placeholderText: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PaymentsOutlinedTextField(
         value = value,
@@ -89,12 +90,11 @@ fun CreateCardOwnerNameInput(
         supportingText = {
             Box(
                 modifier.fillMaxWidth(),
-                contentAlignment = Alignment.CenterEnd
-            ) { Text("${value.length}/${maxLength}") }
-        }
+                contentAlignment = Alignment.CenterEnd,
+            ) { Text("${value.length}/$maxLength") }
+        },
     )
 }
-
 
 @Composable
 fun CreateCardPasswordInput(
@@ -103,7 +103,7 @@ fun CreateCardPasswordInput(
     placeholderText: String,
     onValueChange: (String) -> Unit,
     keyboardOptions: KeyboardOptions,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     PaymentsOutlinedTextField(
         value = value,

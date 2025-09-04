@@ -59,14 +59,15 @@ fun CreateCardScreen(
     var cardErrorState by rememberSaveable { mutableStateOf(CreateCardErrorState()) }
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding()
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(),
     ) {
         NewCardTopBar(
             onBackClick = onBackClick,
             onSaveClick = onSaveClick,
-            Modifier.fillMaxWidth()
+            Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
         PaymentCard(Modifier.align(Alignment.CenterHorizontally))
@@ -76,35 +77,36 @@ fun CreateCardScreen(
             createCardErrorState = cardErrorState,
             onCardChange = { cardCreateState = it },
             onErrorChange = { cardErrorState = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = ScreenSidePadding)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = ScreenSidePadding),
         )
     }
 }
 
 @Composable
-fun PaymentCard(
-    modifier: Modifier = Modifier,
-) {
+fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
-            .shadow(CardShadowElevation)
-            .size(width = CardWidth, height = CardHeight)
-            .background(
-                color = colorResource(id = R.color.gray_33),
-                shape = RoundedCornerShape(CardCornerRadius),
-            )
+        modifier =
+            modifier
+                .shadow(CardShadowElevation)
+                .size(width = CardWidth, height = CardHeight)
+                .background(
+                    color = colorResource(id = R.color.gray_33),
+                    shape = RoundedCornerShape(CardCornerRadius),
+                ),
     ) {
         Box(
-            modifier = Modifier
-                .padding(start = ChipPaddingStart, bottom = ChipPaddingBottom)
-                .size(width = ChipWidth, height = ChipHeight)
-                .background(
-                    color = colorResource(id = R.color.yellow_CB),
-                    shape = RoundedCornerShape(ChipCornerRadius),
-                )
+            modifier =
+                Modifier
+                    .padding(start = ChipPaddingStart, bottom = ChipPaddingBottom)
+                    .size(width = ChipWidth, height = ChipHeight)
+                    .background(
+                        color = colorResource(id = R.color.yellow_CB),
+                        shape = RoundedCornerShape(ChipCornerRadius),
+                    ),
         )
     }
 }
@@ -134,7 +136,7 @@ private fun NewCardTopBar(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 

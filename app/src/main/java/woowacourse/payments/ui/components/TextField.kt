@@ -33,6 +33,6 @@ fun PaymentsOutlinedTextField(
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
-        supportingText = supportingText
+        supportingText = supportingText,
     )
 }
