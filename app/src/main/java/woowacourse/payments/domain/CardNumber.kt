@@ -12,7 +12,7 @@ data class CardNumber(
     }
 
     fun onValueChange(number: String): CardNumber {
-        val pureNumbers = number.chunked(CARD_NUMBER_PART_LENGTH)
+        val pureNumbers = number.filter{ it.isDigit() }.take(16).chunked(CARD_NUMBER_PART_LENGTH)
         return copy(
             firstNumber = pureNumbers.getOrNull(FIRST_NUMBER_INDEX) ?: "",
             secondNumber = pureNumbers.getOrNull(SECOND_NUMBER_INDEX) ?: "",

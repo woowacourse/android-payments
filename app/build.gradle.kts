@@ -36,6 +36,9 @@ android {
     buildFeatures {
         compose = true
     }
+    packaging {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -58,4 +61,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     lintChecks(libs.compose.lint.checks)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    testImplementation(libs.androidx.ui.test.junit4)
+
 }

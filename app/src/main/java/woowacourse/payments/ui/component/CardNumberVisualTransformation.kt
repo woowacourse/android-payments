@@ -4,6 +4,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import kotlin.math.min
 
 class CardNumberVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
@@ -24,9 +25,11 @@ class CardNumberVisualTransformation : VisualTransformation {
 
         val offsetMapping =
             object : OffsetMapping {
-                override fun originalToTransformed(offset: Int): Int = offset + (offset / CARD_GROUP_SIZE)
+                override fun originalToTransformed(offset: Int): Int =
+                    min(offset + (offset / CARD_GROUP_SIZE), CARD_NUMBER_INCLUDE_HYPHEN_MAX_LENGTH)
 
-                override fun transformedToOriginal(offset: Int): Int = offset - (offset / (CARD_GROUP_SIZE + 1))
+                override fun transformedToOriginal(offset: Int): Int =
+                    offset - (offset / (CARD_GROUP_SIZE + 1))
             }
 
         return TransformedText(AnnotatedString(out), offsetMapping)
@@ -35,6 +38,10 @@ class CardNumberVisualTransformation : VisualTransformation {
     companion object {
         private const val CARD_NUMBER_MAX_LENGTH = 16
         private const val CARD_GROUP_SIZE = 4
+
+        private const val CARD_NUMBER_INCLUDE_HYPHEN_MAX_LENGTH =
+            CARD_NUMBER_MAX_LENGTH + (CARD_NUMBER_MAX_LENGTH / CARD_GROUP_SIZE - 1)
+
         private const val DEFAULT_OUT = ""
         private const val HYPHEN = "-"
     }

@@ -36,14 +36,13 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
 import woowacourse.payments.ui.component.CardNumberVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableComponentPadding
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
-import woowacourse.payments.ui.theme.Dimens.CARD_NUMBER_MAX_LENGTH
-import woowacourse.payments.ui.theme.Dimens.CARD_OWNER_MAX_LENGTH
-import woowacourse.payments.ui.theme.Dimens.CARD_PASSWORD_MAX_LENGTH
 import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 
 @Composable
@@ -71,11 +70,9 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                 CardNumber(
                     cardDetails.number,
                     onValueChange = { input ->
-                        val newText = input.filter { it.isDigit() }
-                        if (newText.length <= CARD_NUMBER_MAX_LENGTH) {
-                            cardDetails =
-                                cardDetails.copy(number = cardDetails.number.onValueChange(newText))
-                        }
+                        cardDetails =
+                            cardDetails.copy(number = cardDetails.number.onValueChange(input))
+
                     },
                     modifier =
                         Modifier
@@ -87,10 +84,9 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                         Modifier
                             .fillMaxWidth(FIELD_HALF_WIDTH),
                     onValueChange = { input ->
-                        val newText = input.filter { it.isDigit() }
                         cardDetails =
                             cardDetails.copy(
-                                expirationDate = cardDetails.expirationDate.onValueChange(newText),
+                                expirationDate = cardDetails.expirationDate.onValueChange(input),
                             )
                     },
                     endDate = cardDetails.expirationDate,
@@ -100,18 +96,14 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
-                        if (input.length <= CARD_OWNER_MAX_LENGTH) {
-                            cardDetails = cardDetails.copy(ownerName = input)
-                        }
+                         cardDetails = cardDetails.copy(ownerName = cardDetails.ownerName.onValueChange(input))
+
                     },
                 )
                 Password(
                     password = cardDetails.password,
                     onValueChange = { input ->
-                        val newPassword = input.filter { it.isDigit() }
-                        if (newPassword.length <= CARD_PASSWORD_MAX_LENGTH) {
-                            cardDetails = cardDetails.copy(password = newPassword)
-                        }
+                        cardDetails = cardDetails.copy(password = cardDetails.password.onValueChange(input))
                     },
                     modifier =
                         Modifier
@@ -228,12 +220,12 @@ fun EndDate(
 
 @Composable
 fun CardOwner(
-    cardOwner: String,
+    cardOwner: OwnerName,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = cardOwner,
+        value = cardOwner.toString(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
@@ -241,7 +233,7 @@ fun CardOwner(
         singleLine = true,
         supportingText = {
             Text(
-                "${cardOwner.length}/30",
+                "${cardOwner.toString().length}/30",
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
@@ -251,12 +243,12 @@ fun CardOwner(
 
 @Composable
 fun Password(
-    password: String,
+    password: Password,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = password,
+        value = password.toString(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text("0000") },

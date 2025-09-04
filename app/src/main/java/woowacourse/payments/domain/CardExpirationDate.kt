@@ -10,7 +10,7 @@ data class CardExpirationDate(
     override fun toString(): String = month + year
 
     fun onValueChange(date: String): CardExpirationDate {
-        val parts = date.chunked(DATE_LENGTH)
+        val parts = date.filter { it.isDigit() }.take(4).chunked(DATE_LENGTH)
         return copy(
             month = parts.getOrNull(MONTH_INDEX) ?: "",
             year = parts.getOrNull(YEAR_INDEX) ?: "",
@@ -24,7 +24,7 @@ data class CardExpirationDate(
         val numberMonth = month.toInt()
         val expirationMonth =
             runCatching {
-                YearMonth.of(YEAR_CENTURY_BASE + numberYear, numberMonth)
+                YearMonth.of(numberYear, numberMonth)
             }.getOrNull() ?: return false
         val expirationEndDate = expirationMonth.atEndOfMonth()
         val today = LocalDate.now()
