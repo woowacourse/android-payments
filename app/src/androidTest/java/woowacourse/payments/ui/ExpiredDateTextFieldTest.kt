@@ -22,12 +22,26 @@ class ExpiredDateTextFieldTest {
     @Test
     fun `만료일의_달과_년도는_구분자로_구분된다`() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("1225")
 
         // then
-        composeRule.onNodeWithText("12 / 25")
+        composeRule
+            .onNodeWithText("12 / 25")
             .assertIsDisplayed()
+    }
 
+    @Test
+    fun `형식이_올바르지_않을_경우_에러_메시지를_출력한다`() {
+        // when
+        composeRule
+            .onNodeWithText("")
+            .performTextInput("12")
+
+        // then
+        composeRule
+            .onNodeWithText("올바른 형식이 아닙니다.")
+            .assertIsDisplayed()
     }
 }

@@ -22,22 +22,39 @@ class CardNumberTextFieldTest {
     @Test
     fun `숫자가_아닌_값을_입력할_수_없다`() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("123NaN")
 
         // then
-        composeRule.onNodeWithText("123")
+        composeRule
+            .onNodeWithText("123")
             .assertIsDisplayed()
     }
 
     @Test
     fun `숫자_4자리마다_구분자가_들어간다`() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule
+            .onNodeWithText("")
             .performTextInput("1234567812345678")
 
         // then
-        composeRule.onNodeWithText("1234 - 5678 - 1234 - 5678")
+        composeRule
+            .onNodeWithText("1234 - 5678 - 1234 - 5678")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `형식이_올바르지_않을_경우_에러_메시지를_출력한다`() {
+        // when
+        composeRule
+            .onNodeWithText("")
+            .performTextInput("1234")
+
+        // then
+        composeRule
+            .onNodeWithText("올바른 형식이 아닙니다.")
             .assertIsDisplayed()
     }
 }
