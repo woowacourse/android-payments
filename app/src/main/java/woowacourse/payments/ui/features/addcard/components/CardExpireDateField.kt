@@ -34,8 +34,7 @@ fun CardExpireDateField(
     expireDateStatus: ExpireDateStatus = ExpireDateStatus.Valid,
     supportingTextHeight: Dp = 20.dp,
 ) {
-    val isError =
-        expireDateStatus != ExpireDateStatus.Valid && expireDateStatus != ExpireDateStatus.Typing
+    val isError = expireDateStatus is ExpireDateStatus.Invalid
 
     AppTextField(
         value = value,
