@@ -38,6 +38,6 @@ fun NewCardTopBar(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }

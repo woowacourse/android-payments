@@ -34,7 +34,7 @@ fun StringTextField(
                 text = "${value.length} / $maxLength",
                 color = Gray200,
                 modifier = Modifier,
-                textAlign = TextAlign.End
+                textAlign = TextAlign.End,
             )
         },
         modifier = modifier.then(Modifier.padding(start = 24.dp, end = 24.dp, bottom = 18.dp)),

@@ -30,7 +30,7 @@ class StringTextFieldTest {
                 modifier = Modifier.testTag("owner"),
                 value = owner,
                 onValueChange = { owner = it },
-                maxLength = 30
+                maxLength = 30,
             )
         }
 

@@ -34,14 +34,15 @@ fun AddPaymentCardScreen() {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = { },
-                onSaveClick = { }
+                onSaveClick = { },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
         ) {
             PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
 
@@ -53,7 +54,7 @@ fun AddPaymentCardScreen() {
                 placeholder = R.string.placeholder_card_number,
                 inputType = InputType.CardNumber,
                 value = cardNumber,
-                onValueChange = { cardNumber = it }
+                onValueChange = { cardNumber = it },
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
@@ -61,13 +62,13 @@ fun AddPaymentCardScreen() {
                 placeholder = R.string.placeholder_expiry,
                 inputType = InputType.ExpiryDate,
                 value = expiry,
-                onValueChange = { expiry = it }
+                onValueChange = { expiry = it },
             )
             StringTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = owner,
                 onValueChange = { owner = it },
-                maxLength = 30
+                maxLength = 30,
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
@@ -75,7 +76,7 @@ fun AddPaymentCardScreen() {
                 placeholder = R.string.placeholder_pin,
                 inputType = InputType.Password,
                 value = pin,
-                onValueChange = { pin = it }
+                onValueChange = { pin = it },
             )
         }
     }

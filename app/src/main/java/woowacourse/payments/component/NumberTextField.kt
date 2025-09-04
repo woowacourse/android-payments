@@ -27,9 +27,10 @@ fun NumberTextField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
-    val textFieldValue = remember(value) {
-        TextFieldValue(text = value, selection = TextRange(value.length))
-    }
+    val textFieldValue =
+        remember(value) {
+            TextFieldValue(text = value, selection = TextRange(value.length))
+        }
 
     OutlinedTextField(
         value = textFieldValue,
@@ -39,8 +40,12 @@ fun NumberTextField(
         },
         label = { Text(stringResource(label), color = Gray200) },
         placeholder = { Text(stringResource(placeholder), color = Gray100) },
-        visualTransformation = if (inputType is InputType.Password)
-            PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation =
+            if (inputType is InputType.Password) {
+                PasswordVisualTransformation()
+            } else {
+                VisualTransformation.None
+            },
         modifier = modifier.then(Modifier.padding(start = 24.dp, end = 24.dp, bottom = 30.dp)),
     )
 }
@@ -53,6 +58,6 @@ private fun NumberTextFieldPreview() {
         placeholder = R.string.placeholder_card_number,
         inputType = InputType.CardNumber,
         value = "2001 - 0928 - 1999 - 0511",
-        onValueChange = {}
+        onValueChange = {},
     )
 }

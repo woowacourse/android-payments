@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -20,7 +19,6 @@ import woowacourse.payments.component.NumberTextField
 
 @RunWith(AndroidJUnit4::class)
 class NumberTextFieldTest {
-
     @get:Rule
     val composeRule = createComposeRule()
 
@@ -37,16 +35,18 @@ class NumberTextFieldTest {
                 placeholder = R.string.placeholder_card_number,
                 inputType = InputType.CardNumber,
                 value = cardNumber,
-                onValueChange = { cardNumber = it }
+                onValueChange = { cardNumber = it },
             )
         }
 
         // when
-        composeRule.onNodeWithTag("card_number")
+        composeRule
+            .onNodeWithTag("card_number")
             .performTextInput("200109281999051112345678")
 
         // then
-        composeRule.onNodeWithText("2001 - 0928 - 1999 - 0511")
+        composeRule
+            .onNodeWithText("2001 - 0928 - 1999 - 0511")
             .assertIsDisplayed()
     }
 
@@ -63,16 +63,18 @@ class NumberTextFieldTest {
                 placeholder = R.string.placeholder_expiry,
                 inputType = InputType.ExpiryDate,
                 value = expiry,
-                onValueChange = { expiry = it }
+                onValueChange = { expiry = it },
             )
         }
 
         // when
-        composeRule.onNodeWithTag("expiry")
+        composeRule
+            .onNodeWithTag("expiry")
             .performTextInput("0511")
 
         // then
-        composeRule.onNodeWithText("05 / 11")
+        composeRule
+            .onNodeWithText("05 / 11")
             .assertIsDisplayed()
     }
 
@@ -89,15 +91,18 @@ class NumberTextFieldTest {
                 placeholder = R.string.placeholder_pin,
                 inputType = InputType.Password,
                 value = pin,
-                onValueChange = { pin = it }
+                onValueChange = { pin = it },
             )
         }
 
         // when
-        composeRule.onNodeWithTag("password")
+        composeRule
+            .onNodeWithTag("password")
             .performTextInput("19990511")
 
         // then
-        composeRule.onNodeWithTag("password").assertTextEquals("••••")
+        composeRule
+            .onNodeWithText("••••")
+            .assertIsDisplayed()
     }
 }
