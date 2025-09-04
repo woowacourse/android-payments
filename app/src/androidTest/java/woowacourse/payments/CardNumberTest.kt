@@ -30,7 +30,7 @@ class CardNumberTest {
 
 
         composeTestRule
-            .onNodeWithText("") // TextField 초기 상태
+            .onNodeWithText("")
             .performTextInput("1234123412341234")
 
         composeTestRule
@@ -42,10 +42,10 @@ class CardNumberTest {
     fun 카드_번호는_16자를_초과할_수_없다() {
         composeTestRule
             .onNodeWithText("")
-            .performTextInput("12341234123412341") // 17자리 입력
+            .performTextInput("12341234123412341")
 
         composeTestRule
-            .onNodeWithText("1234-1234-1234-1234") // 16자리까지만 표시
+            .onNodeWithText("1234-1234-1234-1234")
             .assertIsDisplayed()
     }
 }
