@@ -19,7 +19,7 @@ class CardInfoUiState(
         private set
     var password by mutableStateOf(CardInfo.formatPassword(password))
         private set
-    var isExpirationDateValid by mutableStateOf(CardInfo.isExpirationDateValid(expireDate))
+    var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
         private set
 
     fun onValueChanged(
@@ -32,10 +32,17 @@ class CardInfoUiState(
         this.expireDate = CardInfo.formatExpireDate(expireDate)
         this.ownerName = CardInfo.formatOwnerName(ownerName)
         this.password = CardInfo.formatPassword(password)
-        this.isExpirationDateValid = CardInfo.isExpirationDateValid(password)
+        this.isExpirationDateValid = checkIfMonthCompleted()
     }
 
+    private fun checkIfMonthCompleted(): Boolean {
+        return if (password.length >= 2) {
+            CardInfo.checkIsValidMonth(password)
+        } else true
+    }
     companion object {
         const val OWNER_NAME_MAX_SIZE = CardInfo.OWNER_NAME_MAX_SIZE
     }
 }
+
+

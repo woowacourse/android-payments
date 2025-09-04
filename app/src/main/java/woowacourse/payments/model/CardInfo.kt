@@ -1,7 +1,6 @@
 package woowacourse.payments.model
 
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 data class CardInfo(
     val cardNumber: String,
@@ -10,14 +9,9 @@ data class CardInfo(
     val password: String
 ) {
     companion object {
-        fun isExpirationDateValid(expireDate: String): Boolean {
-            if (expireDate.length < 2) {
-                return true
-            }
-            return expireDate
+        fun checkIsValidMonth(expireDate: String): Boolean = expireDate
                 .take(2)
                 .toIntOrNull() in 1..12
-        }
 
         fun formatCardNumber(cardNumber: String): String = cardNumber
                 .filter { it.isDigit() }
