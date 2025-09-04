@@ -61,7 +61,7 @@ data class CardUiState(
             cardNumber = this.cardNumber,
             expireDate = YearMonth.parse(this.expireDate, DateTimeFormatter.ofPattern("MMyy")),
             ownerName = this.ownerName.ifEmpty { null },
-            passwordFirstTwoDigits = this.password,
+            password = this.password,
         )
     }
 

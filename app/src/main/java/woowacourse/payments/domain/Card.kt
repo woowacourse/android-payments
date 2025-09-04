@@ -6,5 +6,5 @@ data class Card(
     val cardNumber: String,
     val expireDate: YearMonth,
     val ownerName: String?,
-    val passwordFirstTwoDigits: String,
+    val password: String,
 )
