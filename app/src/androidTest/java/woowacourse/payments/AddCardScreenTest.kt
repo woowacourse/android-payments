@@ -26,37 +26,40 @@ import androidx.lifecycle.viewmodel.CreationExtras.Companion.Key
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import woowacourse.payments.ui.addcard.AddCardContent
+import woowacourse.payments.model.CardInfo
 import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.CardInfoUiState
-import woowacourse.payments.ui.addcard.CardNumberTextField
-import woowacourse.payments.ui.addcard.ExpireDateTextField
-import woowacourse.payments.ui.addcard.OwnerNameTextField
-import woowacourse.payments.ui.addcard.PasswordTextField
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.ExpireDateTextField
+import woowacourse.payments.ui.component.OwnerNameTextField
+import woowacourse.payments.ui.component.PasswordTextField
 
 @OptIn(ExperimentalTestApi::class)
 class AddCardScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-
     @Test
-    fun 카드_번호는_16자리까지_입력할_수_있다() {
+    fun 카드_번호는_유효한_자리까지_입력할_수_있다() {
         //given
         composeTestRule.setContent {
-            var state by remember { mutableStateOf(CardInfoUiState()) }
+            var state by remember { mutableStateOf(CardInfoUiState(
+                _cardNumber = "1234123412341234"
+            )) }
             CardNumberTextField(Modifier, state)
         }
+        val rawCardNumber = "12341234123412345"
+        val expected = CardInfo.formatCardNumber(rawCardNumber).chunked(4).joinToString("-")
 
         //when
         composeTestRule
             .onNodeWithText("카드 번호")
-            .performTextInput("12341234123412345")
+            .performTextInput(rawCardNumber)
 
         //then
         composeTestRule
             .onNodeWithText("카드 번호")
-            .assertTextContains("1234-1234-1234-1234")
+            .assertTextContains(expected)
     }
 
     @Test
@@ -86,7 +89,7 @@ class AddCardScreenTest {
             var state by remember {
                 mutableStateOf(
                     CardInfoUiState(
-                        cardNumber = "12341"
+                         _cardNumber = "12341"
                     )
                 )
             }
@@ -108,62 +111,53 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 만료일은_4자리까지_입력할_수_있다() {
+    fun 만료일은_유효한_자리와_숫자만_입력할_수_있다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
             ExpireDateTextField(Modifier, state)
         }
+        val rawExpireDate = "12345"
+        val expected = CardInfo.formatExpireDate(rawExpireDate).chunked(2).joinToString("/")
 
         //when
         composeTestRule
             .onNodeWithText("만료일")
-            .performTextInput("12345")
+            .performTextInput(rawExpireDate)
 
         //then
         composeTestRule
             .onNodeWithText("만료일")
-            .assertTextContains("1234")
+            .assertTextContains(expected)
 
     }
 
     @Test
-    fun 만료일은_숫자만_입력할_수_있다() {
+    fun 만료일의_월은_유효한_값이_아니면_오류를_출력한다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
             ExpireDateTextField(Modifier, state)
         }
+        val rawExpireDate = "13"
+        val isValid = CardInfo.checkIsValidMonth(rawExpireDate)
 
         //when
         composeTestRule
             .onNodeWithText("만료일")
-            .performTextInput("1234a")
+            .performTextInput(rawExpireDate)
 
         //then
-        composeTestRule
-            .onNodeWithText("만료일")
-            .assertTextContains("1234")
-
-    }
-
-    @Test
-    fun 만료일의_월은_01부터_12까지의_값이_아니면_오류를_출력한다() {
-        //given
-        composeTestRule.setContent {
-            var state by remember { mutableStateOf(CardInfoUiState()) }
-            ExpireDateTextField(Modifier, state)
+        if (!isValid) {
+            composeTestRule
+                .onNodeWithText("유효하지 않은 날짜입니다")
+                .assertIsDisplayed()
+        } else {
+            composeTestRule
+                .onNodeWithText("유효하지 않은 날짜입니다")
+                .assertDoesNotExist()
         }
 
-        //when
-        composeTestRule
-            .onNodeWithText("만료일")
-            .performTextInput("13")
-
-        //then
-        composeTestRule
-            .onNodeWithText("유효하지 않은 날짜입니다")
-            .assertIsDisplayed()
 
     }
 
@@ -189,23 +183,25 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 카드_소유자_필드는_30자_까지_입력할_수_있다() {
+    fun 카드_소유자_필드는_유효한_자리까지_입력할_수_있다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
             OwnerNameTextField(Modifier, state)
         }
+        val rawOwnerName = "12345678901234567890123456789012345678901234567890"
+        val expected = CardInfo.formatOwnerName(rawOwnerName)
 
         //when
         composeTestRule
             .onNodeWithText("카드 소유자 이름(선택)")
             .performClick()
-            .performTextInput("123456789012345678901234567890123")
+            .performTextInput(rawOwnerName)
 
         //then
         composeTestRule
             .onNodeWithText("카드 소유자 이름(선택)")
-            .assertTextContains("123456789012345678901234567890")
+            .assertTextContains(expected)
     }
 
     @Test
@@ -229,42 +225,46 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 비밀번호는_숫자만_입력할_수_있다() {
+    fun 비밀번호는_유효한_글자만_입력할_수_있다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
             PasswordTextField(Modifier, state)
         }
+        val rawPassword = "1234a"
+        val expected = CardInfo.formatPassword(rawPassword)
 
         //when
         composeTestRule
             .onNodeWithText("비밀번호")
-            .performTextInput("1234a")
+            .performTextInput(rawPassword)
 
         //then
         composeTestRule
             .onNodeWithText("비밀번호")
-            .assertTextContains("1234")
+            .assertTextContains(expected)
 
     }
 
     @Test
-    fun 비밀번호는_4자리만_입력할_수_있다() {
+    fun 비밀번호는_유효한_자리만_입력할_수_있다() {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
             PasswordTextField(Modifier, state)
         }
+        val rawPassword = "1234567890"
+        val expected = CardInfo.formatPassword(rawPassword)
 
         //when
         composeTestRule
             .onNodeWithText("비밀번호")
-            .performTextInput("12345")
+            .performTextInput(rawPassword)
 
         //then
         composeTestRule
             .onNodeWithText("비밀번호")
-            .assertTextContains("1234")
+            .assertTextContains(expected)
     }
 
     @Test
