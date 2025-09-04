@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.ui.component.CardOwnerInput
 
 class CardOwnerInputTest {
@@ -17,7 +18,7 @@ class CardOwnerInputTest {
     fun setUp() {
         composeTestRule.setContent {
             CardOwnerInput(
-                cardOwner = null,
+                cardOwner = CardOwner(""),
                 onOwnerChange = { },
             )
         }

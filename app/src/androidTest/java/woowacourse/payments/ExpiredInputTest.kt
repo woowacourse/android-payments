@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Expired
 import woowacourse.payments.ui.component.ExpiredInput
 
 class ExpiredInputTest {
@@ -19,7 +20,7 @@ class ExpiredInputTest {
     fun setUp() {
         composeTestRule.setContent {
             ExpiredInput(
-                expired = null,
+                expired = Expired(""),
                 onExpiredChange = { },
             )
         }
@@ -64,7 +65,7 @@ class ExpiredInputTest {
 
         // then
         composeTestRule
-            .onNodeWithText("10/29")
+            .onNodeWithText("10 / 29")
             .assertIsDisplayed()
     }
 }

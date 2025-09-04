@@ -64,7 +64,7 @@ class CardNumberInputTest {
 
         // then
         composeTestRule
-            .onNodeWithText("1234-5678-8765-4321")
+            .onNodeWithText("1234 - 5678 - 8765 - 4321")
             .assertIsDisplayed()
     }
 }

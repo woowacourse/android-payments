@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.component.PasswordInput
 
 class PasswordInputTest {
@@ -17,7 +18,7 @@ class PasswordInputTest {
     fun setUp() {
         composeTestRule.setContent {
             PasswordInput(
-                password = null,
+                password = Password(""),
                 onPasswordChange = { },
             )
         }

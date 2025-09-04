@@ -40,7 +40,7 @@ fun CardOwnerInput(
             modifier = Modifier.fillMaxWidth(),
             placeholder = {
                 Text(
-                    text = stringResource(R.string.card_owner_label),
+                    text = stringResource(R.string.card_owner_placeholder),
                     color = Color.LightGray,
                 )
             },
@@ -53,7 +53,7 @@ fun CardOwnerInput(
                     textAlign = TextAlign.End,
                 )
             },
-            label = { Text(text = stringResource(R.string.card_owner_placeholder)) },
+            label = { Text(text = stringResource(R.string.card_owner_label)) },
             isError = showValidationError && (cardOwner?.isValid != true),
         )
     }
