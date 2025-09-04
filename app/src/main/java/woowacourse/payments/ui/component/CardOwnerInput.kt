@@ -13,7 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
@@ -27,15 +26,15 @@ fun CardOwnerInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
+    var text by remember { mutableStateOf("") }
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = textFieldValue,
-            onValueChange = { newValue ->
-                if (newValue.text.length <= 30) {
-                    textFieldValue = newValue
-                    onOwnerChange(CardOwner.create(newValue.text))
+            value = text,
+            onValueChange = { newText ->
+                if (newText.length <= 30) {
+                    text = newText
+                    onOwnerChange(CardOwner(newText))
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -47,11 +46,7 @@ fun CardOwnerInput(
             },
             supportingText = {
                 Text(
-                    text =
-                        stringResource(
-                            id = R.string.card_owner_length,
-                            textFieldValue.text.length,
-                        ),
+                    text = stringResource(id = R.string.card_owner_length, text.length),
                     modifier = Modifier.fillMaxWidth(),
                     color = Color.Gray,
                     style = MaterialTheme.typography.bodyMedium,

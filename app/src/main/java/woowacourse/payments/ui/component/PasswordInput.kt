@@ -20,10 +20,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PasswordInput(
@@ -32,7 +33,7 @@ fun PasswordInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
+    var text by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -40,12 +41,11 @@ fun PasswordInput(
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = textFieldValue,
-            onValueChange = { newValue ->
-                if (newValue.text.length <= 4) {
-                    textFieldValue = newValue
-                    onPasswordChange(Password.create(newValue.text))
-                }
+            value = text,
+            onValueChange = { newText ->
+                val filteredText = newText.filter { it.isDigit() }.take(4)
+                text = filteredText
+                onPasswordChange(Password(filteredText))
             },
             label = { Text(text = stringResource(R.string.password_label)) },
             placeholder = {
@@ -76,6 +76,17 @@ fun PasswordInput(
             modifier = Modifier.fillMaxWidth(0.5f),
             isError = showValidationError && (password?.isValid != true),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun PasswordInputPreview() {
+    AndroidpaymentsTheme {
+        PasswordInput(
+            password = null,
+            onPasswordChange = { },
         )
     }
 }

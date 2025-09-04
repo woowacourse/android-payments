@@ -11,11 +11,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardNumberInput(
@@ -24,22 +24,16 @@ fun CardNumberInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
+    var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
-        value = textFieldValue,
-        onValueChange = { newValue ->
-            val digits = newValue.text.filter { it.isDigit() }.take(16)
-            val formatted = digits.chunked(4).joinToString("-")
-            val cursorPosition = formatted.length
-
-            textFieldValue =
-                TextFieldValue(
-                    text = formatted,
-                    selection = TextRange(cursorPosition),
-                )
-            onCardNumberChange(CardNumber.create(digits))
+        value = text,
+        onValueChange = { newText ->
+            val filteredText = newText.filter { it.isDigit() }.take(16)
+            text = filteredText
+            onCardNumberChange(CardNumber(filteredText))
         },
+        visualTransformation = CardNumberVisualTransformation(groupSize = 4, delimiter = " - "),
         modifier = modifier,
         label = { Text(text = stringResource(R.string.card_number_label)) },
         placeholder = {
@@ -51,4 +45,15 @@ fun CardNumberInput(
         isError = showValidationError && (cardNumber?.isValid != true),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )
+}
+
+@Composable
+@Preview(showBackground = true)
+fun CardNumberInputPreview() {
+    AndroidpaymentsTheme {
+        CardNumberInput(
+            cardNumber = CardNumber(""),
+            onCardNumberChange = { },
+        )
+    }
 }

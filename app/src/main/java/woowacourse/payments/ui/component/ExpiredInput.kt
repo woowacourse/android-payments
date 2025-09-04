@@ -13,11 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Expired
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun ExpiredInput(
@@ -26,23 +26,17 @@ fun ExpiredInput(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var textFieldValue by remember { mutableStateOf(TextFieldValue()) }
+    var text by remember { mutableStateOf("") }
 
     Column(modifier = modifier) {
         OutlinedTextField(
-            value = textFieldValue,
-            onValueChange = { newValue ->
-                val digits = newValue.text.filter { it.isDigit() }.take(4)
-                val formatted = digits.chunked(2).joinToString("/")
-                val cursorPosition = formatted.length
-
-                textFieldValue =
-                    TextFieldValue(
-                        text = formatted,
-                        selection = TextRange(cursorPosition),
-                    )
-                onExpiredChange(Expired.create(formatted))
+            value = text,
+            onValueChange = { newText ->
+                val filteredText = newText.filter { it.isDigit() }.take(4)
+                text = filteredText
+                onExpiredChange(Expired(filteredText))
             },
+            visualTransformation = ExpiredVisualTransformation(groupSize = 2, delimiter = " / "),
             modifier = Modifier.fillMaxWidth(0.5f),
             label = { Text(text = stringResource(R.string.expired_label)) },
             placeholder = {
@@ -53,6 +47,17 @@ fun ExpiredInput(
             },
             isError = showValidationError && (expired?.isValid != true),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ExpiredInputPreview() {
+    AndroidpaymentsTheme {
+        ExpiredInput(
+            expired = null,
+            onExpiredChange = { },
         )
     }
 }
