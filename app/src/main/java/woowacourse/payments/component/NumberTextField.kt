@@ -17,7 +17,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.InputType
-import woowacourse.payments.format
 import woowacourse.payments.ui.theme.Gray100
 import woowacourse.payments.ui.theme.Gray200
 
