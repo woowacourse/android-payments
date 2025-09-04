@@ -23,6 +23,7 @@ fun CardNumber(
     modifier: Modifier,
     label: String,
     placeholder: String,
+    maxLength: Int,
 ) {
     var text by remember { mutableStateOf("") }
 
@@ -32,7 +33,7 @@ fun CardNumber(
         value = text,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= 16) text = newValue
+            if (newValue.length <= maxLength) text = newValue
         },
         placeholder = { Text(placeholder) },
         visualTransformation = CardNumberVisualTransformation(),
@@ -49,5 +50,6 @@ fun CardNumberPreview() {
                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
         label = stringResource(R.string.main_card_number_label),
         placeholder = stringResource(R.string.main_card_number_placeholder),
+        maxLength = 16,
     )
 }

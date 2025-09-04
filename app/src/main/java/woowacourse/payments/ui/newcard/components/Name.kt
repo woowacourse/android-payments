@@ -20,6 +20,7 @@ fun Name(
     modifier: Modifier,
     label: String,
     placeholder: String,
+    maxLength: Int,
 ) {
     var text: String by remember { mutableStateOf("") }
 
@@ -28,7 +29,7 @@ fun Name(
         value = text,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= 30) text = newValue
+            if (newValue.length <= maxLength) text = newValue
         },
         placeholder = { Text(placeholder) },
     )
@@ -44,5 +45,6 @@ fun NamePreview() {
                 .padding(start = 24.dp, top = 30.dp, end = 24.dp),
         label = stringResource(R.string.main_name_label),
         placeholder = stringResource(R.string.main_name_placeholder),
+        maxLength = 30,
     )
 }

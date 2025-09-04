@@ -39,6 +39,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(top = 40.dp, start = 24.dp, end = 24.dp),
             label = stringResource(R.string.main_card_number_label),
             placeholder = stringResource(R.string.main_card_number_placeholder),
+            maxLength = 16,
         )
         ExpirationDate(
             modifier =
@@ -46,6 +47,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp),
             label = stringResource(R.string.main_expiration_date_label),
             placeholder = stringResource(R.string.main_expiration_date_placeholder),
+            maxLength = 4,
         )
         Name(
             modifier =
@@ -54,6 +56,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp, end = 24.dp),
             label = stringResource(R.string.main_name_label),
             placeholder = stringResource(R.string.main_name_placeholder),
+            maxLength = 30,
         )
         Password(
             modifier =
@@ -61,6 +64,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp),
             label = stringResource(R.string.main_password_label),
             placeholder = stringResource(R.string.main_password_placeholder),
+            maxLength = 4,
         )
     }
 }

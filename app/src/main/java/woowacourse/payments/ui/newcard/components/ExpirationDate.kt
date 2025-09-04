@@ -22,6 +22,7 @@ fun ExpirationDate(
     modifier: Modifier,
     label: String,
     placeholder: String,
+    maxLength: Int,
 ) {
     var text: String by remember { mutableStateOf("") }
 
@@ -31,7 +32,7 @@ fun ExpirationDate(
         value = text,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= 4) text = newValue
+            if (newValue.length <= maxLength) text = newValue
         },
         placeholder = { Text(placeholder) },
         visualTransformation = ExpirationDateVisualTransformation(),
@@ -47,5 +48,6 @@ fun ExpirationDatePreview() {
                 .padding(start = 24.dp, top = 30.dp),
         label = stringResource(R.string.main_expiration_date_label),
         placeholder = stringResource(R.string.main_expiration_date_placeholder),
+        maxLength = 4,
     )
 }
