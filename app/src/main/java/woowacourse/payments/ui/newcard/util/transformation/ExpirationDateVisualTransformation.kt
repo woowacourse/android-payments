@@ -5,26 +5,34 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-class ExpirationDateVisualTransformation : VisualTransformation  {
+class ExpirationDateVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val formattedText =  text.filter { it.isDigit() }
-            .take(4)
-            .chunked(2)
-            .joinToString(" / ")
+        val trimmed = text.text.filter { it.isDigit() }.take(4)
 
-        val offsetTranslator = object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int {
-                return formattedText.length
-            }
+        val formattedText = trimmed.chunked(2).joinToString(" / ")
 
-            override fun transformedToOriginal(offset: Int): Int {
-                return text.length
+        val offsetTranslator =
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int): Int {
+                    if (offset <= 0) return 0
+                    if (offset >= trimmed.length) return formattedText.length
+
+                    val sepCount = if (offset > 2) 1 else 0
+                    return offset + sepCount * 3
+                }
+
+                override fun transformedToOriginal(offset: Int): Int {
+                    if (offset <= 0) return 0
+                    if (offset >= formattedText.length) return trimmed.length
+
+                    val sepCount = if (offset > 2 + 3) 1 else 0
+                    return (offset - sepCount * 3).coerceIn(0, trimmed.length)
+                }
             }
-        }
 
         return TransformedText(
-            androidx.compose.ui.text.AnnotatedString(formattedText),
-            offsetTranslator
+            AnnotatedString(formattedText),
+            offsetTranslator,
         )
     }
 }
