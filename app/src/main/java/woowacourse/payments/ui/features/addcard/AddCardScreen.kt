@@ -58,10 +58,9 @@ fun AddCardScreen(
                     .padding(innerPadding)
                     .padding(horizontal = 24.dp)
                     .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(14.dp))
-            PaymentCard()
+            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
                 value = cardUiState.cardNumber,
@@ -73,8 +72,7 @@ fun AddCardScreen(
                 onValueChange = { cardUiState = cardUiState.withExpireDate(it) },
                 modifier =
                     Modifier
-                        .fillMaxWidth(0.5f)
-                        .align(Alignment.Start),
+                        .fillMaxWidth(0.5f),
                 expireDateStatus = expireDateStatus,
                 supportingTextHeight = SupportingTextHeight,
             )
@@ -98,8 +96,7 @@ fun AddCardScreen(
                 onValueChange = { cardUiState = cardUiState.withPassword(it) },
                 modifier =
                     Modifier
-                        .fillMaxWidth(0.5f)
-                        .align(Alignment.Start),
+                        .fillMaxWidth(0.5f),
             )
         }
     }
