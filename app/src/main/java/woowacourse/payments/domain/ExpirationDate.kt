@@ -1,9 +1,12 @@
 package woowacourse.payments.domain
 
-import java.time.Month
-import java.time.Year
+import java.time.YearMonth
 
 data class ExpirationDate(
-    val month: Month,
-    val year: Year,
-)
+    val expirationYearMonth: YearMonth,
+    val currentYearMonth: YearMonth,
+) {
+    init {
+        require(expirationYearMonth > currentYearMonth) { IllegalArgumentException() }
+    }
+}
