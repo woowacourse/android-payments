@@ -94,7 +94,7 @@ class AddCardScreenTest {
         expireDateField.performTextInput("1342")
 
         // then
-        composeTestRule.onNodeWithText("유효하지 않은 만료일입니다").assertIsDisplayed()
+        composeTestRule.onNodeWithText("유효하지 않은 월입니다").assertIsDisplayed()
     }
 
     @Test

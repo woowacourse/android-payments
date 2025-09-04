@@ -1,9 +1,27 @@
 package woowacourse.payments.ui.features.addcard.components
 
-enum class ExpireDateStatus {
-    Typing,
-    Valid,
-    Expired,
-    InvalidMonth,
-    Invalid,
+import androidx.annotation.StringRes
+import woowacourse.payments.R
+
+sealed interface ExpireDateStatus {
+    data object Valid : ExpireDateStatus
+
+    data object Typing : ExpireDateStatus
+
+    sealed interface Invalid : ExpireDateStatus {
+        @get:StringRes
+        val messageResId: Int
+    }
+
+    data object InvalidFormat : Invalid {
+        override val messageResId: Int = R.string.add_card_expire_date_etc_error_message
+    }
+
+    data object Expired : Invalid {
+        override val messageResId: Int = R.string.add_card_expire_date_past_error_message
+    }
+
+    data object InvalidMonth : Invalid {
+        override val messageResId: Int = R.string.add_card_expire_date_month_error_message
+    }
 }

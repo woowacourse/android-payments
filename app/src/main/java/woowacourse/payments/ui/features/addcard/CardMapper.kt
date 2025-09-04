@@ -23,8 +23,8 @@ object CardMapper {
 
     fun getExpireDateStatus(expireDate: String): ExpireDateStatus {
         if (expireDate.length != MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
-        val mm = expireDate.substring(0, 2).toIntOrNull() ?: return ExpireDateStatus.Invalid
-        val yy = expireDate.substring(2, 4).toIntOrNull() ?: return ExpireDateStatus.Invalid
+        val mm = expireDate.substring(0, 2).toIntOrNull() ?: return ExpireDateStatus.InvalidFormat
+        val yy = expireDate.substring(2, 4).toIntOrNull() ?: return ExpireDateStatus.InvalidFormat
         if (mm !in 1..12) return ExpireDateStatus.InvalidMonth
         val year = 2000 + yy
         val ym = YearMonth.of(year, mm)

@@ -11,7 +11,7 @@
     <string name="add_card_expire_date_field_hint">MM / YY</string>
     <string name="add_card_expire_date_month_error_message">유효하지 않은 월입니다</string>
     <string name="add_card_expire_date_past_error_message">만료된 카드입니다</string>
-    <string name="add_card_expire_date_etc_error_message">유효하지 않은 만료일입니다</string>
+    <string name="add_card_expire_date_etc_error_message">MM/YY 형식이 아닙니다</string>
     <string name="add_card_expire_date_icon_description">유효하지 않은 만료일 경고 아이콘</string>
     <string name="add_card_owner_name_field_title">카드 소유자 이름(선택)</string>
     <string name="add_card_owner_name_field_hint">카드에 표시된 이름을 입력하세요.</string>
