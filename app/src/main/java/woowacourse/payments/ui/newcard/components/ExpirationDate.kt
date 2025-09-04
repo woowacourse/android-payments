@@ -44,8 +44,8 @@ private fun ExpirationDatePreview() {
                 .padding(start = 24.dp, top = 30.dp),
         value = "0611",
         onValueChange = {},
-        label = stringResource(R.string.main_expiration_date_label),
-        placeholder = stringResource(R.string.main_expiration_date_placeholder),
+        label = stringResource(R.string.new_card_expiration_date_label),
+        placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
         maxLength = 4,
     )
 }

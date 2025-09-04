@@ -46,8 +46,8 @@ private fun CardNumberPreview() {
                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
         value = "1234123412341234",
         onValueChange = {},
-        label = stringResource(R.string.main_card_number_label),
-        placeholder = stringResource(R.string.main_card_number_placeholder),
+        label = stringResource(R.string.new_card_card_number_label),
+        placeholder = stringResource(R.string.new_card_card_number_placeholder),
         maxLength = 16,
     )
 }

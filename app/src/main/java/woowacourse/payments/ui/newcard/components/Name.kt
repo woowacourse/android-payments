@@ -31,7 +31,7 @@ fun Name(
         placeholder = { Text(placeholder) },
         supportingText = {
             Text(
-                text = stringResource(R.string.main_name_length, value.length, maxLength),
+                text = stringResource(R.string.new_card_name_length, value.length, maxLength),
                 textAlign = TextAlign.End,
                 modifier =
                     Modifier
@@ -51,8 +51,8 @@ private fun NamePreview() {
                 .padding(start = 24.dp, top = 30.dp, end = 24.dp),
         value = "hwannow",
         onValueChange = {},
-        label = stringResource(R.string.main_name_label),
-        placeholder = stringResource(R.string.main_name_placeholder),
+        label = stringResource(R.string.new_card_name_label),
+        placeholder = stringResource(R.string.new_card_name_placeholder),
         maxLength = 30,
     )
 }

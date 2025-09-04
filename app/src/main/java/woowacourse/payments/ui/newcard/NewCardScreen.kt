@@ -48,8 +48,8 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(top = 40.dp, start = 24.dp, end = 24.dp),
             value = cardNumber,
             onValueChange = { cardNumber = it },
-            label = stringResource(R.string.main_card_number_label),
-            placeholder = stringResource(R.string.main_card_number_placeholder),
+            label = stringResource(R.string.new_card_card_number_label),
+            placeholder = stringResource(R.string.new_card_card_number_placeholder),
             maxLength = 16,
         )
         ExpirationDate(
@@ -58,8 +58,8 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp),
             value = expirationDate,
             onValueChange = { expirationDate = it },
-            label = stringResource(R.string.main_expiration_date_label),
-            placeholder = stringResource(R.string.main_expiration_date_placeholder),
+            label = stringResource(R.string.new_card_expiration_date_label),
+            placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
             maxLength = 4,
         )
         Name(
@@ -69,8 +69,8 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp, end = 24.dp),
             value = name,
             onValueChange = { name = it },
-            label = stringResource(R.string.main_name_label),
-            placeholder = stringResource(R.string.main_name_placeholder),
+            label = stringResource(R.string.new_card_name_label),
+            placeholder = stringResource(R.string.new_card_name_placeholder),
             maxLength = 30,
         )
         Password(
@@ -79,8 +79,8 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp),
             value = password,
             onValueChange = { password = it },
-            label = stringResource(R.string.main_password_label),
-            placeholder = stringResource(R.string.main_password_placeholder),
+            label = stringResource(R.string.new_card_password_label),
+            placeholder = stringResource(R.string.new_card_password_placeholder),
             maxLength = 4,
         )
     }
