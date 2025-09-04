@@ -35,7 +35,7 @@ fun CardHolderName(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         supportingText = {
             Text(
-                "${value.length}/CARD_HOLDER_NAME_MAX_LENGTH",
+                "${value.length}/30",
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth()
             )
