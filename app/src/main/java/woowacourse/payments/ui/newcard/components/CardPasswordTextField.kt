@@ -35,7 +35,7 @@ fun CardPasswordTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardPasswordTextFieldPreview() {
+private fun CardPasswordTextFieldPreview() {
     CardPasswordTextField(
         cardPassword = "0000",
         maxLength = 4,

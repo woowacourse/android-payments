@@ -86,6 +86,6 @@ fun NewCardScreen(
 
 @Preview
 @Composable
-fun NewCardScreenPreview() {
+private fun NewCardScreenPreview() {
     NewCardScreen()
 }

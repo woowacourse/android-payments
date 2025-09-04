@@ -41,6 +41,6 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun PaymentCardPreview() {
+private fun PaymentCardPreview() {
     PaymentCard()
 }

@@ -39,7 +39,7 @@ fun CardHolderNameTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardHolderNameTextFieldPreview() {
+private fun CardHolderNameTextFieldPreview() {
     CardHolderNameTextField(
         cardHolderName = "토바에",
         maxLength = 30,

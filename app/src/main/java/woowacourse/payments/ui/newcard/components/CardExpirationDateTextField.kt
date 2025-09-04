@@ -37,7 +37,7 @@ fun CardExpirationDateTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
+private fun CardExpirationDateTextFieldPreview() {
     CardExpirationDateTextField(
         cardExpirationDate = "0925",
         maxLength = 4,

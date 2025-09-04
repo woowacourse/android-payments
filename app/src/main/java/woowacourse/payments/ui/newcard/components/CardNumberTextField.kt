@@ -33,7 +33,7 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         cardNumber = "0",
         maxLength = 16,
