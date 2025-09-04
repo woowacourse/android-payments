@@ -17,17 +17,16 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 @Composable
-fun Card(modifier: Modifier) {
+fun Card() {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
+        modifier = Modifier
             .height(124.dp)
             .shadow(8.dp)
             .width(208.dp)
             .background(
                 color = colorResource(id = R.color.payments_card_background),
-                shape = RoundedCornerShape(5.dp),
-                )
+                shape = RoundedCornerShape(5.dp),)
 
     ) {
         Box(
@@ -46,5 +45,5 @@ fun Card(modifier: Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun CardPreview() {
-    Card(Modifier)
+    Card()
 }
