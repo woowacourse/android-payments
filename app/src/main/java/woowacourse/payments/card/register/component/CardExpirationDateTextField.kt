@@ -26,49 +26,52 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
         value = expirationDate,
         onValueChange = {
             val stripped = numericRegex.replace(it, "")
-            expirationDate = if (stripped.length <= 4) {
-                stripped
-            } else {
-                stripped.substring(0, 4)
-            }
+            expirationDate =
+                if (stripped.length <= 4) {
+                    stripped
+                } else {
+                    stripped.substring(0, 4)
+                }
         },
         label = { Text("만료일") },
         placeholder = { Text("MM / YY") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
         visualTransformation = expirationDateVisualTransformation(),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
 @Composable
-private fun expirationDateVisualTransformation() = VisualTransformation { text ->
-    var out = ""
-    for (i in text.indices) {
-        out += text[i]
-        if (i % 2 == 1 && i != 3) {
-            out += " / "
+private fun expirationDateVisualTransformation() =
+    VisualTransformation { text ->
+        var out = ""
+        for (i in text.indices) {
+            out += text[i]
+            if (i % 2 == 1 && i != 3) {
+                out += " / "
+            }
         }
+
+        val expirationDateOffsetTranslator =
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int): Int {
+                    if (offset <= 1) return offset
+                    if (offset <= 2) return offset + 3
+                    if (offset <= 4) return offset + 3
+                    return 7
+                }
+
+                override fun transformedToOriginal(offset: Int): Int {
+                    if (offset <= 2) return offset
+                    if (offset <= 5) return offset - 3
+                    if (offset <= 7) return offset - 3
+                    return 4
+                }
+            }
+
+        TransformedText(
+            text = AnnotatedString(out),
+            offsetMapping = expirationDateOffsetTranslator,
+        )
     }
-
-    val expirationDateOffsetTranslator = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int {
-            if (offset <= 1) return offset
-            if (offset <= 2) return offset + 3
-            if (offset <= 4) return offset + 3
-            return 7
-        }
-
-        override fun transformedToOriginal(offset: Int): Int {
-            if (offset <= 2) return offset
-            if (offset <= 5) return offset - 3
-            if (offset <= 7) return offset - 3
-            return 4
-        }
-    }
-
-    TransformedText(
-        text = AnnotatedString(out),
-        offsetMapping = expirationDateOffsetTranslator
-    )
-}
