@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.textfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -31,10 +31,7 @@ fun CardHolderNameTextField(text: MutableState<String>) {
                 modifier = Modifier.fillMaxWidth(),
             )
         },
-        keyboardActions =
-            KeyboardActions(onDone = {
-                focusManager.moveFocus(FocusDirection.Next)
-            }),
+        keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     ) { newValue: String ->
         text.value = newValue.take(CARDHOLDER_NAME_MAXIMUM_LENGTH)
     }

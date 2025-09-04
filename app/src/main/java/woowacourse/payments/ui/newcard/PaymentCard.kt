@@ -27,14 +27,13 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                 ),
     ) {
         Box(
-            modifier =
-                Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = Color(0xFFCBBA64),
-                        shape = RoundedCornerShape(4.dp),
-                    ),
+            Modifier
+                .padding(start = 14.dp, bottom = 10.dp)
+                .size(width = 40.dp, height = 26.dp)
+                .background(
+                    color = Color(0xFFCBBA64),
+                    shape = RoundedCornerShape(4.dp),
+                ),
         )
     }
 }

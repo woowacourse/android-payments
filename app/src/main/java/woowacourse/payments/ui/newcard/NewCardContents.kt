@@ -14,6 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.newcard.textfields.CardHolderNameTextField
+import woowacourse.payments.ui.newcard.textfields.CardNumberTextField
+import woowacourse.payments.ui.newcard.textfields.ExpirationDateTextField
+import woowacourse.payments.ui.newcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.textfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -35,24 +35,21 @@ fun ExpirationDateTextField(
         isError = isError.value,
         supportingText = {
             Text(
-                text =
-                    if (isError.value) {
-                        stringResource(R.string.expiration_date_error_message)
-                    } else {
-                        ""
-                    },
+                if (isError.value) {
+                    stringResource(R.string.expiration_date_error_message)
+                } else {
+                    ""
+                },
             )
         },
         visualTransformation = ExpirationDateTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        keyboardActions =
-            KeyboardActions(onDone = {
-                focusManager.moveFocus(FocusDirection.Next)
-            }),
+        keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     ) { newValue: String ->
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(EXPIRATION_DATE_REQUIRED_LENGTH)
         text.value = filteredValue
+
         isError.value =
             runCatching {
                 ExpirationDate(
@@ -63,6 +60,7 @@ fun ExpirationDateTextField(
                     now,
                 )
             }.isFailure
+
         if (!isError.value && filteredValue.length == EXPIRATION_DATE_REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }

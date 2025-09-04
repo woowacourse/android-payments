@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.textfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -24,15 +24,6 @@ fun CardNumberTextField(
 ) {
     val focusManager = LocalFocusManager.current
 
-    fun updateCardNumber(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(CARD_NUMBER_REQUIRED_LENGTH)
-        text.value = filteredValue
-        isError.value = runCatching { CardNumber(text.value) }.isFailure
-        if (!isError.value && filteredValue.length == CARD_NUMBER_REQUIRED_LENGTH) {
-            focusManager.moveFocus(FocusDirection.Next)
-        }
-    }
-
     CardInfoTextFields(
         modifier = Modifier.fillMaxWidth(),
         value = text.value,
@@ -50,9 +41,15 @@ fun CardNumberTextField(
         },
         visualTransformation = CardNumberTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        keyboardActions =
-            KeyboardActions(onDone = {
-                focusManager.moveFocus(FocusDirection.Next)
-            }),
-    ) { newValue: String -> updateCardNumber(newValue) }
+        keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
+    ) { newValue: String ->
+        val filteredValue: String = newValue.filter(Char::isDigit).take(CARD_NUMBER_REQUIRED_LENGTH)
+
+        text.value = filteredValue
+        isError.value = runCatching { CardNumber(text.value) }.isFailure
+
+        if (!isError.value && filteredValue.length == CARD_NUMBER_REQUIRED_LENGTH) {
+            focusManager.moveFocus(FocusDirection.Next)
+        }
+    }
 }

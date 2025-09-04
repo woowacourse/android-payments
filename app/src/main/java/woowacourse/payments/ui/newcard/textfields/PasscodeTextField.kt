@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.textfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -42,8 +42,10 @@ fun PasscodeTextField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
     ) { newValue: String ->
         val filteredValue: String = newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
+
         text.value = filteredValue
         isError.value = runCatching { Passcode(text.value) }.isFailure
+
         if (!isError.value && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
             focusManager.clearFocus()
         }
