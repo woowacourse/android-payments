@@ -17,7 +17,8 @@ class CardPasswordTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            DigitTextField(label = "비밀번호",
+            DigitTextField(
+                label = "비밀번호",
                 hint = "0000",
                 fraction = 0.5f,
                 maxLength = 4,
@@ -29,8 +30,6 @@ class CardPasswordTest {
 
     @Test
     fun 비밀번호는_4자이다() {
-
-
         composeTestRule
             .onNodeWithText("")
             .performTextInput("1234")

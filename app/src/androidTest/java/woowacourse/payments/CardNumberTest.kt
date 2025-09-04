@@ -27,8 +27,6 @@ class CardNumberTest {
 
     @Test
     fun 카드_번호는_16자이다() {
-
-
         composeTestRule
             .onNodeWithText("")
             .performTextInput("1234123412341234")
