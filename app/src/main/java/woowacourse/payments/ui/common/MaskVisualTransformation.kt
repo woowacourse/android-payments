@@ -10,22 +10,24 @@ class MaskVisualTransformation(
     private val maskingLength: Int,
     private val maskingChar: Char = DEFAULT_MASKING_CHAR,
 ) : VisualTransformation {
+    private val offsetMapping =
+        object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int = offset
 
-    private val offsetMapping = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int = offset
-        override fun transformedToOriginal(offset: Int): Int = offset
-    }
+            override fun transformedToOriginal(offset: Int): Int = offset
+        }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val trimmed = text.trim()
         val length = trimmed.length
 
-        val formatted = buildString {
-            append(trimmed.substring(0, maxOf(0, length - maskingLength)))
-            repeat(min(maskingLength, length)) {
-                append(maskingChar)
+        val formatted =
+            buildString {
+                append(trimmed.substring(0, maxOf(0, length - maskingLength)))
+                repeat(min(maskingLength, length)) {
+                    append(maskingChar)
+                }
             }
-        }
 
         return TransformedText(AnnotatedString(formatted), offsetMapping)
     }
