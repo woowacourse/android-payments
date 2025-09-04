@@ -27,7 +27,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 카드_추가_화면의_모든_입력_필드는_초기에_비어있다() {
+    fun 카드_추가_화면의_모든_입력_필드가_표시된다() {
         // then
         composeTestRule.onNodeWithText("카드 번호").assertExists()
         composeTestRule.onNodeWithText("만료일").assertExists()
@@ -36,7 +36,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 카드_번호_입력_필드에_숫자_입력값이_반영된다() {
+    fun 카드_번호_입력_필드에_입력값이_구분자를_포함하여_표한된다() {
         // given
         val cardNumberField = composeTestRule.onNodeWithText("카드 번호")
 
@@ -49,7 +49,7 @@ class AddCardScreenTest {
     }
 
     @Test
-    fun 카드_번호_입력_필드에_일부_입력시_입력값이_반영된다() {
+    fun 카드_번호_입력_필드에_값을_일부_입력시_입력값이_구분자를_포함하여_표한된다() {
         // given
         val cardNumberField = composeTestRule.onNodeWithText("카드 번호")
 
