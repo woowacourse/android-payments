@@ -20,7 +20,7 @@ fun CardPassword(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= 4) onValueChange(it) },
+        onValueChange = { if (it.length <= 4 && it.all { it.isDigit() }) onValueChange(it) },
         modifier = modifier,
         label = { Text("비밀번호") },
         placeholder = { Text("0000") },
