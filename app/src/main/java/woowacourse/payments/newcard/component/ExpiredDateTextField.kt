@@ -14,7 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import woowacourse.payments.R
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.newcard.transformation.expiredDateVisualTransformation
 
@@ -34,7 +36,7 @@ fun ExpiredDateTextField(
                 isError = value.length == 4 && !isValidExpiredDate(value)
             }
         },
-        label = { Text("만료일") },
+        label = { Text(stringResource(R.string.expired_date)) },
         placeholder = {
             Text(
                 text = "MM/YY",
@@ -47,7 +49,7 @@ fun ExpiredDateTextField(
         supportingText = {
             if (isError) {
                 Text(
-                    text = "유효하지 않은 만료일자 형식입니다.",
+                    text = stringResource(R.string.invalid_expired_date_type),
                     color = MaterialTheme.colorScheme.error,
                 )
             }

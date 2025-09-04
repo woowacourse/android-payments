@@ -5,7 +5,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import woowacourse.payments.R
 
 @Composable
 fun PasswordTextField(
@@ -20,7 +22,7 @@ fun PasswordTextField(
                 onValueChange(value)
             }
         },
-        label = { Text("비밀번호") },
+        label = { Text(stringResource(R.string.password)) },
         placeholder = {
             Text(
                 text = "0000",

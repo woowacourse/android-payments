@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import woowacourse.payments.R
 import woowacourse.payments.domain.OwnerName
 
 @Composable
@@ -23,10 +25,10 @@ fun OwnerNameTextField(
                 onValueChange(value)
             }
         },
-        label = { Text("카드 소유자 이름(선택)") },
+        label = { Text(stringResource(R.string.owner_name)) },
         placeholder = {
             Text(
-                text = "카드에 표시된 이름을 입력하세요.",
+                text = stringResource(R.string.owner_name_placeholder),
                 color = Color.Gray,
             )
         },
