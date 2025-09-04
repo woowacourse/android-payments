@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.newcard
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -36,9 +36,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.transformation.CardNumberVisualTransformation
-import woowacourse.payments.transformation.ExpirationDateVisualTransformation
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.transformation.CardNumberVisualTransformation
+import woowacourse.payments.ui.transformation.ExpirationDateVisualTransformation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .padding(start = 24.dp, top = 30.dp),
                             label = getString(R.string.main_password_label),
-                            placeholder =getString(R.string.main_password_placeholder)
+                            placeholder = getString(R.string.main_password_placeholder)
                         )
                     }
                 }
