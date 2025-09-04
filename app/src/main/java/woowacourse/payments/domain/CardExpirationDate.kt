@@ -10,7 +10,7 @@ data class CardExpirationDate(
     override fun toString(): String = month + year
 
     fun onValueChange(date: String): CardExpirationDate {
-        val parts = date.filter { it.isDigit() }.take(4).chunked(DATE_LENGTH)
+        val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)
         return copy(
             month = parts.getOrNull(MONTH_INDEX) ?: "",
             year = parts.getOrNull(YEAR_INDEX) ?: "",
@@ -32,6 +32,7 @@ data class CardExpirationDate(
     }
 
     companion object {
+        const val DATE_INPUT_MAX_LENGTH = 4
         const val DATE_LENGTH = 2
         const val MONTH_INDEX = 0
         const val YEAR_INDEX = 1

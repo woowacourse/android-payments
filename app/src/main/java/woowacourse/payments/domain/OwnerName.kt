@@ -8,7 +8,11 @@ data class OwnerName(
     }
 
     fun onValueChange(name: String): OwnerName {
-        val newName = name.take(30)
+        val newName = name.take(CARD_OWNER_MAX_LENGTH)
         return OwnerName(newName)
+    }
+
+    companion object {
+        const val CARD_OWNER_MAX_LENGTH = 30
     }
 }

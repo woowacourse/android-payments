@@ -8,7 +8,10 @@ data class Password(
     }
 
     fun onValueChange(value: String): Password {
-        val newPassword = value.filter { it.isDigit() }.take(4)
+        val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
         return Password(newPassword)
+    }
+    companion object{
+        const val CARD_PASSWORD_MAX_LENGTH = 4
     }
 }
