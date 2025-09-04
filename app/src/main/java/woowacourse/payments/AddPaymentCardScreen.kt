@@ -46,7 +46,7 @@ fun AddPaymentCardScreen() {
         ) {
             PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(),
