@@ -42,8 +42,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +65,7 @@ fun NewCardContents(context: Context) {
     val passcode: MutableState<String> = remember { mutableStateOf("") }
 
     val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
+    val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
     AndroidpaymentsTheme {
@@ -154,10 +158,32 @@ fun NewCardContents(context: Context) {
                                 color = Color(0xFFAAAAAA),
                             )
                         },
+                        isError = isExpirationDateError.value,
+                        supportingText = {
+                            Text(
+                                text =
+                                    if (isExpirationDateError.value) {
+                                        "유효하지 않은 만료일입니다."
+                                    } else {
+                                        ""
+                                    },
+                            )
+                        },
                         visualTransformation = ExpirationDateTransformation(),
                     ) { newValue: String ->
-                        val numbers: String = newValue.filter(Char::isDigit)
-                        expirationDate.value = numbers.substring(0..<numbers.length.coerceAtMost(4))
+                        val filteredValue: String =
+                            newValue.filter(Char::isDigit).take(4)
+                        expirationDate.value = filteredValue
+                        isExpirationDateError.value =
+                            runCatching {
+                                ExpirationDate(
+                                    YearMonth.parse(
+                                        filteredValue,
+                                        DateTimeFormatter.ofPattern("MMyy"),
+                                    ),
+                                    YearMonth.now(),
+                                )
+                            }.isFailure
                     }
 
                     CardInfoTextFields(
