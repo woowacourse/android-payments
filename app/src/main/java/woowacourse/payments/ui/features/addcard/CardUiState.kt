@@ -2,7 +2,6 @@ package woowacourse.payments.ui.features.addcard
 
 import woowacourse.payments.domain.Card
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 data class CardUiState(
     val cardNumber: String = "",
@@ -61,9 +60,12 @@ data class CardUiState(
     fun toDomainCard(): Card? {
         if (!isFormValid) return null
 
+        val mm = expireDate.substring(0, 2).toInt()
+        val yy = expireDate.substring(2, 4).toInt()
+
         return Card(
             cardNumber = this.cardNumber,
-            expireDate = YearMonth.parse(this.expireDate, DateTimeFormatter.ofPattern("MMyy")),
+            expireDate = YearMonth.of(2000 + yy, mm),
             ownerName = this.ownerName.ifEmpty { null },
             password = this.password,
         )
