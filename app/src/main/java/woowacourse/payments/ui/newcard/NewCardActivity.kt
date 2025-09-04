@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class MainActivity : ComponentActivity() {
+class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,27 +21,15 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        NewCardTopBar(onBackClick = {}, onSaveClick = {})
+                        NewCardTopBar(
+                            onBackClick = { finish() },
+                            onSaveClick = { },
+                        )
                     },
                 ) { innerPadding ->
                     NewCardScreen(innerPadding)
                 }
             }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NewCardTopBar(onBackClick = {}, onSaveClick = {})
-            },
-        ) { innerPadding ->
-            NewCardScreen(innerPadding)
         }
     }
 }
