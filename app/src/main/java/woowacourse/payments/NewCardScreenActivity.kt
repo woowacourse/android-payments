@@ -4,7 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -44,26 +49,53 @@ fun NewCardScreen() {
     var cardPassword by remember { mutableStateOf("") }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
                 onBackClick = { },
                 onSaveClick = { },
             )
         }
-    )
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(horizontal = 24.dp)
+                .fillMaxWidth()
+        ) {
+            Spacer(modifier = Modifier.height(14.dp))
+            PaymentCard(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
 
-    Column {
-        NewCardTopBar(
-            onBackClick = { },
-            onSaveClick = { },
-        )
-        PaymentCard(modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 14.dp))
-        CardNumber(value = cardNumber, onValueChange = { cardNumber = it })
-        CardExpiryDate(value = cardExpiryDate, onValueChange = { cardExpiryDate = it })
-        CardHolderName(value = cardHolderName, onValueChange = { cardHolderName = it })
-        CardPassword(value = cardPassword, onValueChange = { cardPassword = it })
+            Spacer(modifier = Modifier.height(40.dp))
+            CardNumber(
+                value = cardNumber,
+                onValueChange = { cardNumber = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+            CardExpiryDate(
+                value = cardExpiryDate, onValueChange = { cardExpiryDate = it },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+            CardHolderName(
+                value = cardHolderName, onValueChange = { cardHolderName = it },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+            CardPassword(
+                value = cardPassword,
+                onValueChange = { cardPassword = it },
+                modifier = Modifier.fillMaxWidth(0.5f)
+            )
+        }
     }
 }
 
