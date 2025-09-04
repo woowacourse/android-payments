@@ -16,14 +16,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
-fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
-    var name by remember { mutableStateOf("") }
-
+fun CardOwnerNameTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = name,
-        onValueChange = { newName: String ->
-            name = newName.substring(0, newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_owner_name_label))
@@ -33,12 +34,11 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
         },
         supportingText = {
             Text(
-                text =
-                    stringResource(
-                        R.string.card_owner_name_supporting_text,
-                        name.length,
-                        CARD_OWNER_NAME_LENGTH_MAX,
-                    ),
+                text = stringResource(
+                    R.string.card_owner_name_supporting_text,
+                    value.length,
+                    maxLength,
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
@@ -49,7 +49,6 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardOwnerNameTextFieldPreview() {
-    CardOwnerNameTextField()
+    var text by remember { mutableStateOf("") }
+    CardOwnerNameTextField(value = text, onValueChange = { text = it }, maxLength = 30)
 }
-
-private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30

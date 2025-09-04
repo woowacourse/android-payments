@@ -17,15 +17,15 @@ import woowacourse.payments.R
 import java.lang.Character.isDigit
 
 @Composable
-fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate by remember { mutableStateOf("") }
-
+fun ExpiredDateTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = expiredDate,
-        onValueChange = { newValue: String ->
-            val newDate = newValue.filter(::isDigit)
-            expiredDate = newDate.take(EXPIRED_DATE_LENGTH_MAX)
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(text = stringResource(R.string.expired_date_label)) },
         placeholder = {
@@ -35,14 +35,13 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = ExpiredDateVisualTransformation(maxInputLength = EXPIRED_DATE_LENGTH_MAX),
+        visualTransformation = ExpiredDateVisualTransformation(maxInputLength = maxLength),
     )
 }
 
 @Preview
 @Composable
 private fun ExpiredDateTextFieldPreview() {
-    ExpiredDateTextField()
+    var text by remember { mutableStateOf("") }
+    ExpiredDateTextField(value = text, onValueChange = { text = it }, maxLength = 4)
 }
-
-private const val EXPIRED_DATE_LENGTH_MAX: Int = 4

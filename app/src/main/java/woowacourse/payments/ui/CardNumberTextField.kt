@@ -15,18 +15,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import java.lang.Character.isDigit
 
 @Composable
-fun CardNumberTextField(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
-
+fun CardNumberTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = cardNumber,
-        onValueChange = { newValue: String ->
-            val newNumbers = newValue.filter(::isDigit)
-            cardNumber = newNumbers.take(CARD_NUMBER_LENGTH_MAX)
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_number_label))
@@ -38,14 +37,18 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CardNumberVisualTransformation(maxInputLength = CARD_NUMBER_LENGTH_MAX),
+        visualTransformation = CardNumberVisualTransformation(maxInputLength = maxLength),
     )
 }
 
 @Preview
 @Composable
 private fun CardNumberTextFieldPreview() {
-    CardNumberTextField(modifier = Modifier.fillMaxWidth())
+    var text by remember { mutableStateOf("") }
+    CardNumberTextField(
+        value = text,
+        onValueChange = { text = it },
+        maxLength = 16,
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
-
-private const val CARD_NUMBER_LENGTH_MAX: Int = 16

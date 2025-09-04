@@ -17,14 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
-fun PasswordTextField(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf("") }
-
+fun PasswordTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = password,
-        onValueChange = { newValue: String ->
-            password = newValue.substring(0, newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.password_label))
@@ -40,7 +40,6 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun PasswordTextFieldPreview() {
-    PasswordTextField()
+    var text by remember { mutableStateOf("") }
+    PasswordTextField(value = text, onValueChange = { text = it })
 }
-
-private const val PASSWORD_LENGTH_MAX: Int = 4
