@@ -1,0 +1,48 @@
+package woowacourse.payments.ui.newcard.components
+
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
+
+@Composable
+fun Name(
+    modifier: Modifier,
+    label: String,
+    placeholder: String,
+) {
+    var text: String by remember { mutableStateOf("") }
+
+    OutlinedTextField(
+        modifier = modifier,
+        value = text,
+        label = { Text(text = label) },
+        onValueChange = { newValue ->
+            if (newValue.length <= 30) text = newValue
+        },
+        placeholder = { Text(placeholder) },
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NamePreview() {
+    Name(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 24.dp, top = 30.dp, end = 24.dp),
+        label = stringResource(R.string.main_name_label),
+        placeholder = stringResource(R.string.main_name_placeholder),
+    )
+}
