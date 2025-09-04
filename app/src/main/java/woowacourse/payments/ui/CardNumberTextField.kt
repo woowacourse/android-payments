@@ -1,6 +1,7 @@
 package woowacourse.payments.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,6 +41,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
                 color = Color.Gray,
             )
         },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = ::creditCardFilter
     )
 }
@@ -54,7 +57,7 @@ private fun creditCardFilter(text: AnnotatedString): TransformedText {
     var out = ""
     trimmed.forEachIndexed { index, ch ->
         out += ch
-        if (index % 4 == 3 && index != trimmed.lastIndex) out += CARD_NUMBER_DELIMITER
+        if (index % 4 == 3 && index != CARD_NUMBER_LENGTH_MAX - 1) out += CARD_NUMBER_DELIMITER
     }
 
     val creditCardOffsetTranslator =
