@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +25,7 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = name,
         onValueChange = { newName: String ->
-            name = newName.take(CARD_OWNER_NAME_LENGTH_MAX)
+            name = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
         },
         modifier = modifier,
         label = {
