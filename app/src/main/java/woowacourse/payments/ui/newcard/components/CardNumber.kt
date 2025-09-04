@@ -21,19 +21,19 @@ import woowacourse.payments.ui.newcard.util.transformation.CardNumberVisualTrans
 @Composable
 fun CardNumber(
     modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
 ) {
-    var text by remember { mutableStateOf("") }
-
     OutlinedTextField(
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        value = text,
+        value = value,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= maxLength) text = newValue
+            if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
         visualTransformation = CardNumberVisualTransformation(),
@@ -48,6 +48,8 @@ fun CardNumberPreview() {
             Modifier
                 .fillMaxWidth()
                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
+        value = "1234123412341234",
+        onValueChange = {},
         label = stringResource(R.string.main_card_number_label),
         placeholder = stringResource(R.string.main_card_number_placeholder),
         maxLength = 16,

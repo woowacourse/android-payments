@@ -18,18 +18,18 @@ import woowacourse.payments.R
 @Composable
 fun Name(
     modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
 ) {
-    var text: String by remember { mutableStateOf("") }
-
     OutlinedTextField(
         modifier = modifier,
-        value = text,
+        value = value,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= maxLength) text = newValue
+            if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
     )
@@ -43,6 +43,8 @@ fun NamePreview() {
             Modifier
                 .fillMaxWidth()
                 .padding(start = 24.dp, top = 30.dp, end = 24.dp),
+        value = "hwannow",
+        onValueChange = {},
         label = stringResource(R.string.main_name_label),
         placeholder = stringResource(R.string.main_name_placeholder),
         maxLength = 30,

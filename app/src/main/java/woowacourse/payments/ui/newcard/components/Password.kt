@@ -18,18 +18,18 @@ import woowacourse.payments.R
 @Composable
 fun Password(
     modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
 ) {
-    var text: String by remember { mutableStateOf("") }
-
     OutlinedTextField(
         modifier = modifier,
-        value = text,
+        value = value,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= maxLength) text = newValue
+            if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
         visualTransformation = PasswordVisualTransformation(),
@@ -43,6 +43,8 @@ fun PasswordPreview() {
         modifier =
             Modifier
                 .padding(start = 24.dp, top = 30.dp),
+        value = "0611",
+        onValueChange = {},
         label = stringResource(R.string.main_password_label),
         placeholder = stringResource(R.string.main_password_placeholder),
         maxLength = 4,

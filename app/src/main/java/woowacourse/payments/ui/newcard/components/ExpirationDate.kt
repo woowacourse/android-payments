@@ -20,19 +20,19 @@ import woowacourse.payments.ui.newcard.util.transformation.ExpirationDateVisualT
 @Composable
 fun ExpirationDate(
     modifier: Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
 ) {
-    var text: String by remember { mutableStateOf("") }
-
     OutlinedTextField(
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        value = text,
+        value = value,
         label = { Text(text = label) },
         onValueChange = { newValue ->
-            if (newValue.length <= maxLength) text = newValue
+            if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
         visualTransformation = ExpirationDateVisualTransformation(),
@@ -46,6 +46,8 @@ fun ExpirationDatePreview() {
         modifier =
             Modifier
                 .padding(start = 24.dp, top = 30.dp),
+        value = "0611",
+        onValueChange = {},
         label = stringResource(R.string.main_expiration_date_label),
         placeholder = stringResource(R.string.main_expiration_date_placeholder),
         maxLength = 4,
