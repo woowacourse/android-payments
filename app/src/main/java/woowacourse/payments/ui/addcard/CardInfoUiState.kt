@@ -11,21 +11,15 @@ class CardInfoUiState(
     ownerName: String = "",
     password: String = "",
 ) {
-    private var cardInfo by mutableStateOf(CardInfo(
-        cardNumber = cardNumber,
-        expireDate = expireDate,
-        ownerName = ownerName,
-        password = password
-    ))
-    var cardNumber by mutableStateOf(cardInfo.cardNumber)
+    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(cardNumber))
         private set
-    var expireDate by mutableStateOf(cardInfo.expireDate)
+    var expireDate by mutableStateOf(CardInfo.formatExpireDate(expireDate))
         private set
-    var ownerName by mutableStateOf(cardInfo.ownerName)
+    var ownerName by mutableStateOf(CardInfo.formatOwnerName(ownerName))
         private set
-    var password by mutableStateOf(cardInfo.password)
+    var password by mutableStateOf(CardInfo.formatPassword(password))
         private set
-    var isExpirationDateValid by mutableStateOf(cardInfo.isExpirationDateValid())
+    var isExpirationDateValid by mutableStateOf(CardInfo.isExpirationDateValid(expireDate))
         private set
 
     fun onValueChanged(
@@ -34,13 +28,11 @@ class CardInfoUiState(
         ownerName: String = this.ownerName,
         password: String = this.password
     ) {
-        val newCardInfo = CardInfo(cardNumber, expireDate, ownerName, password)
-        this.cardNumber = newCardInfo.cardNumber
-        this.expireDate = newCardInfo.expireDate
-        this.ownerName = newCardInfo.ownerName
-        this.password = newCardInfo.password
-        this.isExpirationDateValid = newCardInfo.isExpirationDateValid()
-        this.cardInfo = newCardInfo
+        this.cardNumber = CardInfo.formatCardNumber(cardNumber)
+        this.expireDate = CardInfo.formatExpireDate(expireDate)
+        this.ownerName = CardInfo.formatOwnerName(ownerName)
+        this.password = CardInfo.formatPassword(password)
+        this.isExpirationDateValid = CardInfo.isExpirationDateValid(password)
     }
 
     companion object {
