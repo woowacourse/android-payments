@@ -6,8 +6,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
+import woowacourse.payments.ui.theme.Gray
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -27,7 +27,7 @@ fun CardInfoTextField(
         modifier = modifier,
         value = value,
         label = { Text(label) },
-        placeholder = { Text(text = placeholder, color = Color(0xFFAAAAAA)) },
+        placeholder = { Text(text = placeholder, color = Gray) },
         singleLine = true,
         supportingText = supportingText,
         isError = isError,
