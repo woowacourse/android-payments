@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,9 +30,11 @@ fun StringTextField(
     OutlinedTextField(
         value = value,
         onValueChange = { input ->
-            if (input.text.length <= maxLength) {
-                value = input
-            }
+            val newText = input.text.take(maxLength)
+            value = TextFieldValue(
+                text = newText,
+                selection = TextRange(newText.length)
+            )
         },
         label = { Text(stringResource(label), color = Gray200) },
         placeholder = { Text(stringResource(placeholder), color = Gray100) },
