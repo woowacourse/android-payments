@@ -29,6 +29,17 @@ class CardPasswordTest {
     }
 
     @Test
+    fun 비밀번호는_노출되지_않는다() {
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput("7641")
+
+        composeTestRule
+            .onNodeWithText(masking.repeat(4))
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun 비밀번호는_4자이다() {
         composeTestRule
             .onNodeWithText("")
@@ -43,7 +54,7 @@ class CardPasswordTest {
     fun 비밀번호는_4자를_초과할_수_없다() {
         composeTestRule
             .onNodeWithText("")
-            .performTextInput("1234")
+            .performTextInput("12345")
 
         composeTestRule
             .onNodeWithText(masking.repeat(4))
