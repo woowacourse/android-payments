@@ -20,7 +20,7 @@ class ExpirationDateTransformation : VisualTransformation {
         private const val EXPIRATION_DATE_CHUNK_SIZE = 2
         private const val EXPIRATION_DATE_DELIMITER = " / "
 
-        val translator =
+        private val translator =
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
                     val multiplier = (offset - 1).coerceAtLeast(0) / EXPIRATION_DATE_CHUNK_SIZE
