@@ -34,6 +34,11 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
+private const val CARD_NUMBER_REQUIRED_LENGTH = 16
+private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
+private const val CARDHOLDER_NAME_MAXIMUM_LENGTH = 30
+private const val PASSCODE_REQUIRED_LENGTH = 4
+
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(
@@ -61,16 +66,17 @@ fun NewCardContents(
     }
 
     fun updateCardNumber(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(16)
+        val filteredValue: String = newValue.filter(Char::isDigit).take(CARD_NUMBER_REQUIRED_LENGTH)
         cardNumber = filteredValue
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
-        if (!isCardNumberError && filteredValue.length == 16) {
+        if (!isCardNumberError && filteredValue.length == CARD_NUMBER_REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }
     }
 
     fun updateExpirationDate(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(4)
+        val filteredValue: String =
+            newValue.filter(Char::isDigit).take(EXPIRATION_DATE_REQUIRED_LENGTH)
         expirationDate = filteredValue
         isExpirationDateError =
             runCatching {
@@ -82,20 +88,20 @@ fun NewCardContents(
                     now,
                 )
             }.isFailure
-        if (!isExpirationDateError && filteredValue.length == 4) {
+        if (!isExpirationDateError && filteredValue.length == EXPIRATION_DATE_REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }
     }
 
     fun updateCardholderName(newValue: String) {
-        cardholderName = newValue.take(30)
+        cardholderName = newValue.take(CARDHOLDER_NAME_MAXIMUM_LENGTH)
     }
 
     fun updatePasscode(newValue: String) {
-        val filteredValue: String = newValue.filter(Char::isDigit).take(4)
+        val filteredValue: String = newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
         passcode = filteredValue
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
-        if (!isPasscodeError && filteredValue.length == 4) {
+        if (!isPasscodeError && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
             focusManager.clearFocus()
         }
     }
