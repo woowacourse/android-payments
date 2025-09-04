@@ -85,7 +85,6 @@ private fun NewCardScreen() {
                     .padding(top = 14.dp)
                     .align(Alignment.CenterHorizontally)
             )
-
             CardNumberTextField(
                 modifier = Modifier
                     .fillMaxWidth()
