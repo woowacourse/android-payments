@@ -42,33 +42,35 @@ class MainActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            label = "카드 번호",
+                            label = getString(R.string.CardNumberLabel),
                             hint = "0000 - 0000 - 0000 - 0000",
                             maxLength = 16,
                             mask = InputMask.CardNumber,
-                            errorMessage = "카드 번호는 16자입니다."
+                            errorMessage = getString(R.string.CardNumberErrorMessage)
                             )
                         Spacer(modifier = Modifier.height(30.dp))
-                        DigitTextField(label = "만료일",
+                        DigitTextField(
+                            label = getString(R.string.CardExpiryLabel),
                             hint = "MM / YY",
                             fraction = 0.5f,
                             maxLength = 4,
                             mask = InputMask.Expiry,
-                            errorMessage = "유효하지 않은 만료일입니다."
+                            errorMessage = getString(R.string.CardExpiryErrorMessage),
                             )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedTextField(
-                            label = "카드 소유자 이름(선택)",
-                            hint = "카드에 표시된 이름을 입력하세요.",
+                            label = getString(R.string.CardOwnerLabel),
+                            hint = getString(R.string.CardOwnerHint),
                             maxLength = 30,
                         )
                         Spacer(modifier = Modifier.height(15.dp))
-                        DigitTextField(label = "비밀번호",
+                        DigitTextField(
+                            label = getString(R.string.CardPasswordLabel),
                             hint = "0000",
                             fraction = 0.5f,
                             maxLength = 4,
                             mask = InputMask.Password,
-                            errorMessage = "비밀번호는 4자입니다."
+                            errorMessage = getString(R.string.CardPasswordErrorMessage),
                             )
                     }
                 }
