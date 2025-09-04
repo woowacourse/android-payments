@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.addcard.AddCardScreen
+import woowacourse.payments.ui.addcard.AddCardTopbar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +21,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                AddCardScreen()
+                Scaffold(
+                    topBar = {
+                        AddCardTopbar()
+                    }
+                ) { padding ->
+                    AddCardScreen(padding)
+                }
             }
         }
     }

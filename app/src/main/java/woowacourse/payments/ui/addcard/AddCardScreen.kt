@@ -2,6 +2,7 @@ package woowacourse.payments.ui.addcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
@@ -34,54 +35,55 @@ import woowacourse.payments.ui.component.PasswordTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardScreen() {
-    Scaffold(
-        topBar = {
-            AddCardTopbar()
-        }
-    ) { padding ->
-        var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
-        Column(
-            modifier = Modifier
-                .padding(padding)
-                .padding(top = 14.dp)
-                .padding(horizontal = 24.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Card()
-            Column {
-                CardNumberTextField(
-                    Modifier
-                        .padding(top = 40.dp)
-                        .fillMaxWidth(),
-                    cardInfo
-                )
-                ExpireDateTextField(
-                    Modifier
-                        .padding(top = 18.dp)
-                        .fillMaxWidth(0.47f),
-                    cardInfo
-                )
-                OwnerNameTextField(
-                    Modifier
-                        .fillMaxWidth(),
-                    cardInfo
-                )
-                PasswordTextField(
-                    Modifier.fillMaxWidth(0.47f),
-                    cardInfo
-                )
-            }
+fun AddCardScreen(innerPadding: PaddingValues) {
+    var cardInfo by remember { mutableStateOf(CardInfoUiState()) }
+    Column(
+        modifier = Modifier
+            .padding(innerPadding)
+            .padding(top = 14.dp)
+            .padding(horizontal = 24.dp)
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Card()
+        Column {
+            CardNumberTextField(
+                Modifier
+                    .padding(top = 40.dp)
+                    .fillMaxWidth(),
+                cardInfo
+            )
+            ExpireDateTextField(
+                Modifier
+                    .padding(top = 18.dp)
+                    .fillMaxWidth(0.47f),
+                cardInfo
+            )
+            OwnerNameTextField(
+                Modifier
+                    .fillMaxWidth(),
+                cardInfo
+            )
+            PasswordTextField(
+                Modifier.fillMaxWidth(0.47f),
+                cardInfo
+            )
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
 private fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardScreen()
+        Scaffold(
+            topBar = {
+                AddCardTopbar()
+            }
+        ) {
+            AddCardScreen(it)
+        }
     }
 }
