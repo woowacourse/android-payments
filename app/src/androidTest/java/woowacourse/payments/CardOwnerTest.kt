@@ -38,21 +38,6 @@ class CardOwnerTest {
     fun 카드_소유자_이름은_30자를_초과할_수_없다() {
         composeTestRule
             .onNodeWithText("")
-            .performTextInput("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
-
-        composeTestRule
-            .onNodeWithText("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
-            .performTextInput("일")
-
-        composeTestRule
-            .onNodeWithText("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun 카드_소유자_이름은_30자를_초과할_수_없다2() {
-        composeTestRule
-            .onNodeWithText("")
             .performTextInput("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일")
 
         composeTestRule
