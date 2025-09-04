@@ -3,23 +3,21 @@ package woowacourse.payments.newcard.component
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 @Composable
-fun PasswordTextField(modifier: Modifier = Modifier) {
-    var password: String by remember { mutableStateOf("") }
-
+fun PasswordTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = password,
+        value = value,
         onValueChange = { value: String ->
             if (isValidInput(value)) {
-                password = value
+                onValueChange(value)
             }
         },
         label = { Text("비밀번호") },

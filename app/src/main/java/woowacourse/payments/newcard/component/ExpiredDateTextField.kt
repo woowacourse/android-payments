@@ -19,15 +19,18 @@ import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.newcard.transformation.expiredDateVisualTransformation
 
 @Composable
-fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate: String by remember { mutableStateOf("") }
+fun ExpiredDateTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var isError: Boolean by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = expiredDate,
+        value = value,
         onValueChange = { value: String ->
             if (isValidInput(value)) {
-                expiredDate = value
+                onValueChange(value)
                 isError = value.length == 4 && !isValidExpiredDate(value)
             }
         },

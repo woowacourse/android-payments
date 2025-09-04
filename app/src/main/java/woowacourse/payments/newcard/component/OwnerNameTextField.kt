@@ -6,23 +6,21 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.domain.OwnerName
 
 @Composable
-fun OwnerNameTextField(modifier: Modifier = Modifier) {
-    var ownerName: String by remember { mutableStateOf("") }
-
+fun OwnerNameTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = ownerName,
+        value = value,
         onValueChange = { value: String ->
             if (isValidInput(value)) {
-                ownerName = value
+                onValueChange(value)
             }
         },
         label = { Text("카드 소유자 이름(선택)") },
@@ -39,7 +37,7 @@ fun OwnerNameTextField(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.End,
             ) {
                 Text(
-                    text = "${ownerName.length}/${OwnerName.MAX_LENGTH}",
+                    text = "${value.length}/${OwnerName.MAX_LENGTH}",
                 )
             }
         },
