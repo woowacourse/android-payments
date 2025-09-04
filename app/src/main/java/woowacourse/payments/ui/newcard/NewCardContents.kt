@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.newcard
 
 import android.content.Context
 import android.widget.Toast

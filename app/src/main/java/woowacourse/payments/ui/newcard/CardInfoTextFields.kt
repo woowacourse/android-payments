@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.newcard
 
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
