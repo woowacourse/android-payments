@@ -20,6 +20,7 @@ class CardNumberTest {
                 hint = "0000 - 0000 - 0000 - 0000",
                 mask = InputMask.CardNumber,
                 errorMessage = "카드 번호는 16자여야 합니다.",
+                maxLength = 16,
             )
         }
     }
