@@ -23,7 +23,7 @@ fun PasscodeTextField(
 ) {
     val focusManager = LocalFocusManager.current
 
-    CardInfoTextFields(
+    CardInfoTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
         value = text.value,
         label = stringResource(R.string.passcode_label),

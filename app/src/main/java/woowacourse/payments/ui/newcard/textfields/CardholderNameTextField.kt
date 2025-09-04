@@ -19,7 +19,7 @@ private const val CARDHOLDER_NAME_MAXIMUM_LENGTH = 30
 fun CardHolderNameTextField(text: MutableState<String>) {
     val focusManager = LocalFocusManager.current
 
-    CardInfoTextFields(
+    CardInfoTextField(
         modifier = Modifier.fillMaxWidth(),
         value = text.value,
         label = stringResource(R.string.cardholder_name_label),

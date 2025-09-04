@@ -24,7 +24,7 @@ fun CardNumberTextField(
 ) {
     val focusManager = LocalFocusManager.current
 
-    CardInfoTextFields(
+    CardInfoTextField(
         modifier = Modifier.fillMaxWidth(),
         value = text.value,
         label = stringResource(R.string.card_number_label),

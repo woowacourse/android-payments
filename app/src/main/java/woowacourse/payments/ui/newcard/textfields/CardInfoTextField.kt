@@ -11,7 +11,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun CardInfoTextFields(
+fun CardInfoTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     label: String = "",

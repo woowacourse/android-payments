@@ -27,7 +27,7 @@ fun ExpirationDateTextField(
 ) {
     val focusManager = LocalFocusManager.current
 
-    CardInfoTextFields(
+    CardInfoTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
         value = text.value,
         label = stringResource(R.string.expiration_date_label),
