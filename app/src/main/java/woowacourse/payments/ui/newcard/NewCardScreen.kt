@@ -49,8 +49,8 @@ private const val SEPARATOR_EXPIRY: String = " / "
 
 @Composable
 fun NewCardScreen(
-    contentPadding: PaddingValues = PaddingValues(0.dp),
     onSaved: () -> Unit = {},
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
@@ -62,8 +62,7 @@ fun NewCardScreen(
 
     Column(
         modifier =
-            Modifier
-                .padding(contentPadding)
+            modifier
                 .padding(horizontal = 24.dp)
                 .fillMaxSize()
                 .verticalScroll(scrollState),
