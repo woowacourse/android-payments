@@ -12,12 +12,12 @@ class CardExpireDateVisualTransformation : VisualTransformation {
         val offsetMapping =
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
-                    if (offset <= 2) return offset
+                    if (offset <= CHUNK_SIZE) return offset
                     return offset + SEPARATOR.length
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {
-                    if (offset <= 2) return offset
+                    if (offset <= CHUNK_SIZE) return offset
                     return offset - SEPARATOR.length
                 }
             }
