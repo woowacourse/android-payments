@@ -15,8 +15,6 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.theme.Gray
 
-private const val PASSCODE_REQUIRED_LENGTH = 4
-
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun PasscodeTextField(
@@ -63,3 +61,5 @@ fun PasscodeTextField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
     )
 }
+
+private const val PASSCODE_REQUIRED_LENGTH = 4
