@@ -8,4 +8,9 @@
     <!-- card_password_text_field -->
     <string name="card_password_text_field_label">비밀번호</string>
     <string name="card_password_text_field_placeholder">0000</string>
+
+    <!-- card_expiration_date_text_field -->
+    <string name="card_expiration_date_text_field_label">만료일</string>
+    <string name="card_expiration_date_text_field_placeholder">MM / YY</string>
+    <string name="card_expiration_date_text_field_invalid_format">유효하지 않은 만료일 입니다.</string>
 </resources>
