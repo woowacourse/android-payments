@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -18,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -37,6 +40,8 @@ fun NewCardContents(
     context: Context,
     now: YearMonth = YearMonth.now(),
 ) {
+    val focusManager = LocalFocusManager.current
+
     var cardNumber: String by remember { mutableStateOf("") }
     var expirationDate: String by remember { mutableStateOf("") }
     var cardholderName: String by remember { mutableStateOf("") }
@@ -59,6 +64,9 @@ fun NewCardContents(
         val filteredValue: String = newValue.filter(Char::isDigit).take(16)
         cardNumber = filteredValue
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
+        if (!isCardNumberError && filteredValue.length == 16) {
+            focusManager.moveFocus(FocusDirection.Next)
+        }
     }
 
     fun updateExpirationDate(newValue: String) {
@@ -74,6 +82,9 @@ fun NewCardContents(
                     now,
                 )
             }.isFailure
+        if (!isExpirationDateError && filteredValue.length == 4) {
+            focusManager.moveFocus(FocusDirection.Next)
+        }
     }
 
     fun updateCardholderName(newValue: String) {
@@ -84,6 +95,9 @@ fun NewCardContents(
         val filteredValue: String = newValue.filter(Char::isDigit).take(4)
         passcode = filteredValue
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
+        if (!isPasscodeError && filteredValue.length == 4) {
+            focusManager.clearFocus()
+        }
     }
 
     AndroidpaymentsTheme {
@@ -155,6 +169,10 @@ fun NewCardContents(
                         },
                         visualTransformation = CardNumberTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        keyboardActions =
+                            KeyboardActions(onDone = {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }),
                     ) { newValue: String -> updateCardNumber(newValue) }
 
                     CardInfoTextFields(
@@ -175,6 +193,10 @@ fun NewCardContents(
                         },
                         visualTransformation = ExpirationDateTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        keyboardActions =
+                            KeyboardActions(onDone = {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }),
                     ) { newValue: String -> updateExpirationDate(newValue) }
 
                     CardInfoTextFields(
@@ -189,6 +211,10 @@ fun NewCardContents(
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         },
+                        keyboardActions =
+                            KeyboardActions(onDone = {
+                                focusManager.moveFocus(FocusDirection.Next)
+                            }),
                     ) { newValue: String -> updateCardholderName(newValue) }
 
                     CardInfoTextFields(
