@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,15 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.OwnerName.Companion.CARD_OWNER_MAX_LENGTH
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
 import woowacourse.payments.ui.component.CardNumberVisualTransformation
@@ -96,14 +100,16 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
-                         cardDetails = cardDetails.copy(ownerName = cardDetails.ownerName.onValueChange(input))
+                        cardDetails =
+                            cardDetails.copy(ownerName = cardDetails.ownerName.onValueChange(input))
 
                     },
                 )
                 Password(
                     password = cardDetails.password,
                     onValueChange = { input ->
-                        cardDetails = cardDetails.copy(password = cardDetails.password.onValueChange(input))
+                        cardDetails =
+                            cardDetails.copy(password = cardDetails.password.onValueChange(input))
                     },
                     modifier =
                         Modifier
@@ -128,12 +134,12 @@ fun NewCardTopBar(
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text("카드 추가") },
+        title = { Text(stringResource(R.string.add_card_tool_bar_title)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로 가기",
+                    contentDescription = stringResource(R.string.add_card_tool_bar_back_text),
                 )
             }
         },
@@ -141,7 +147,7 @@ fun NewCardTopBar(
             IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "완료",
+                    contentDescription = stringResource(R.string.add_card_tool_bar_save_text),
                 )
             }
         },
@@ -185,8 +191,8 @@ fun CardNumber(
         value = cardNumber.toString(),
         onValueChange = { onValueChange(it) },
         modifier = modifier,
-        placeholder = { Text("0000-0000-0000-0000") },
-        label = { Text("카드 번호") },
+        placeholder = { Text(stringResource(R.string.add_card_card_number_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_card_number_label_text)) },
         supportingText = {
             Text(" ")
         },
@@ -206,8 +212,8 @@ fun EndDate(
         value = endDate.toString(),
         onValueChange = onValueChange,
         modifier = modifier,
-        placeholder = { Text("MM / YY") },
-        label = { Text("만료일") },
+        placeholder = { Text(stringResource(R.string.add_card_end_date_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_end_date_label_text)) },
         isError = endDate.isValid().not(),
         supportingText = {
             Text(" ")
@@ -228,12 +234,16 @@ fun CardOwner(
         value = cardOwner.toString(),
         onValueChange = onValueChange,
         modifier = modifier,
-        placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
-        label = { Text("카드 소유자 이름(선택)") },
+        placeholder = { Text(stringResource(R.string.add_card_card_owner_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_card_owner_label_text)) },
         singleLine = true,
         supportingText = {
             Text(
-                "${cardOwner.toString().length}/30",
+                stringResource(
+                    R.string.add_card_card_owner_supporting_text,
+                    cardOwner.toString().length,
+                    CARD_OWNER_MAX_LENGTH
+                ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
@@ -251,8 +261,8 @@ fun Password(
         value = password.toString(),
         onValueChange = onValueChange,
         modifier = modifier,
-        placeholder = { Text("0000") },
-        label = { Text("비밀번호") },
+        placeholder = { Text(stringResource(R.string.add_card_password_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_password_label_text)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
