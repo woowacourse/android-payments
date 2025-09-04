@@ -13,6 +13,7 @@
 
     <!--    카드 만료일 컴포넌트-->
     <string name="add_card_expire_date_field_title">만료일</string>
+    <string name="add_card_expire_date_field_counter_format">%1$d/%2$d</string>
     <string name="add_card_expire_date_field_hint">MM / YY</string>
     <string name="add_card_expire_date_month_error_message">유효하지 않은 월입니다</string>
     <string name="add_card_expire_date_past_error_message">만료된 카드입니다</string>

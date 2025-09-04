@@ -17,9 +17,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
@@ -83,7 +85,12 @@ fun AddCardScreen(
                 supportingText = {
                     Box(modifier = Modifier.height(SupportingTextHeight)) {
                         Text(
-                            text = "${cardUiState.ownerName.length}/${MAX_LENGTH_OWNER_NAME}",
+                            text =
+                                stringResource(
+                                    R.string.add_card_expire_date_field_counter_format,
+                                    cardUiState.ownerName.length,
+                                    MAX_LENGTH_OWNER_NAME,
+                                ),
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.End,
                         )
