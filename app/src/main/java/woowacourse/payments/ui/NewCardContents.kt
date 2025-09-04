@@ -93,7 +93,7 @@ fun NewCardContents(context: Context) {
                     },
                     onSaveClick = {
                         if (cardNumber.isEmpty()) isCardNumberError = true
-                        if (expirationDate.isEmpty()) isCardNumberError = true
+                        if (expirationDate.isEmpty()) isExpirationDateError = true
                         if (passcode.isEmpty()) isPasscodeError = true
                         if (isError()) {
                             Toast
