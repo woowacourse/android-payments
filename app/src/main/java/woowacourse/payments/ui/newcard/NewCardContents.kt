@@ -19,12 +19,10 @@ import woowacourse.payments.ui.newcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.newcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(
-    now: YearMonth = YearMonth.now(),
     onSaveSuccess: () -> Unit = {},
     onSaveFailure: () -> Unit = {},
     onBackClick: () -> Unit = {},
@@ -82,7 +80,7 @@ fun NewCardContents(
                 ) {
                     CardNumberTextField(cardNumber, isCardNumberError)
 
-                    ExpirationDateTextField(expirationDate, isExpirationDateError, now)
+                    ExpirationDateTextField(expirationDate, isExpirationDateError)
 
                     CardHolderNameTextField(cardholderName)
 
