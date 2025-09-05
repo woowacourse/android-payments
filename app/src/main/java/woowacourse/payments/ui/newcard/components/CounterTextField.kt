@@ -57,7 +57,7 @@ fun CounterTextField(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CounterTextFieldPreview() {
     AndroidpaymentsTheme {

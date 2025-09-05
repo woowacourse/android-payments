@@ -62,7 +62,7 @@ private fun EmptyCard(modifier: Modifier) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {

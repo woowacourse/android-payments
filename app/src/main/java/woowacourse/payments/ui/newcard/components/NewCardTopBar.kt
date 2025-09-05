@@ -55,7 +55,7 @@ fun NewCardTopBar(
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {

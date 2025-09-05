@@ -143,7 +143,7 @@ fun NewCardScreen(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun NewCardScreenPreview() {
     AndroidpaymentsTheme {

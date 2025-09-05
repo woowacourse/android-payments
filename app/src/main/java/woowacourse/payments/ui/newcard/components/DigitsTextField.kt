@@ -163,7 +163,7 @@ private fun rawIndexToFormattedIndex(
     return formattedIndex
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun DigitsTextFieldPreview() {
     AndroidpaymentsTheme {
