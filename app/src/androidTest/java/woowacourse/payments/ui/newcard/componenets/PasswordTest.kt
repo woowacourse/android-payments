@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -40,7 +41,7 @@ class PasswordTest {
     fun `비밀번호가_라벨로_보인다`() {
         // then
         composeTestRule
-            .onNodeWithText("비밀번호")
+            .onNode(hasText("비밀번호") and hasSetTextAction())
             .assertExists()
     }
 

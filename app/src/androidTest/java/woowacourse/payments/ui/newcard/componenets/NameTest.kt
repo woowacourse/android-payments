@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -40,7 +41,7 @@ class NameTest {
     fun `카드_소유자가_라벨로_보인다`() {
         // then
         composeTestRule
-            .onNodeWithText("카드 소유자 이름 (선택)")
+            .onNode(hasText("카드 소유자 이름 (선택)") and hasSetTextAction())
             .assertExists()
     }
 
