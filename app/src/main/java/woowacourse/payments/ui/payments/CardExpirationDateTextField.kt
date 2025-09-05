@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -15,11 +16,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.ExpirationDateVisualTransformation
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 import java.time.YearMonth
 
 private const val CARD_EXPIRATION_DATE_LENGTH = 4
 private const val CENTURY_PREFIX = "20"
+private const val CARD_EXPIRATION_DATE_GROUP_SIZE = 2
+private const val CARD_EXPIRATION_DATE_SEPARATOR = " / "
 private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDateTextField"
 
 @Composable
@@ -30,6 +33,14 @@ fun CardExpirationDateTextField(
     errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit = {},
 ) {
+    val visualTransformation =
+        remember {
+            GroupedVisualTransformation(
+                CARD_EXPIRATION_DATE_GROUP_SIZE,
+                CARD_EXPIRATION_DATE_SEPARATOR,
+            )
+        }
+
     val isError = errorMessage != null
 
     if (cardExpirationDate.length == CARD_EXPIRATION_DATE_LENGTH) {
@@ -65,7 +76,7 @@ fun CardExpirationDateTextField(
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage.orEmpty()) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = ExpirationDateVisualTransformation,
+        visualTransformation = visualTransformation,
     )
 }
 

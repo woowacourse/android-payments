@@ -6,6 +6,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -15,9 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.CreditCardVisualTransformation
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 
 private const val CARD_NUMBER_LENGTH = 16
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val CARD_NUMBER_SEPARATOR = " - "
 private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
 
 @Composable
@@ -26,6 +29,9 @@ fun CardNumberTextField(
     onCardNumberChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val visualTransformation =
+        remember { GroupedVisualTransformation(CARD_NUMBER_GROUP_SIZE, CARD_NUMBER_SEPARATOR) }
+
     OutlinedTextField(
         modifier = modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
         label = {
@@ -46,7 +52,7 @@ fun CardNumberTextField(
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CreditCardVisualTransformation,
+        visualTransformation = visualTransformation,
     )
 }
 
