@@ -11,21 +11,35 @@ class CardNumberVisualTransformation(
 ) : VisualTransformation {
     private val offsetMapping =
         object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int =
-                when {
-                    offset <= 3 -> offset
-                    offset <= 7 -> offset + delimiter.length * 1
-                    offset <= 11 -> offset + delimiter.length * 2
+            override fun originalToTransformed(offset: Int): Int {
+                val firstDelimiterOriginalIndex = CARD_NUMBER_GROUP_SIZE - 1
+                val secondDelimiterOriginalIndex =
+                    firstDelimiterOriginalIndex + CARD_NUMBER_GROUP_SIZE
+                val thirdDelimiterOriginalIndex =
+                    secondDelimiterOriginalIndex + CARD_NUMBER_GROUP_SIZE
+
+                return when {
+                    offset <= firstDelimiterOriginalIndex -> offset
+                    offset <= secondDelimiterOriginalIndex -> offset + delimiter.length * 1
+                    offset <= thirdDelimiterOriginalIndex -> offset + delimiter.length * 2
                     else -> offset + delimiter.length * 3
                 }
+            }
 
-            override fun transformedToOriginal(offset: Int): Int =
-                when {
-                    offset <= 4 -> offset
-                    offset <= 9 -> offset - delimiter.length * 1
-                    offset <= 14 -> offset - delimiter.length * 2
+            override fun transformedToOriginal(offset: Int): Int {
+                val firstDelimiterTransformedIndex = CARD_NUMBER_GROUP_SIZE
+                val secondDelimiterTransformedIndex =
+                    firstDelimiterTransformedIndex + delimiter.length + CARD_NUMBER_GROUP_SIZE
+                val thirdDelimiterTransformedIndex =
+                    secondDelimiterTransformedIndex + delimiter.length + CARD_NUMBER_GROUP_SIZE
+
+                return when {
+                    offset <= firstDelimiterTransformedIndex -> offset
+                    offset <= secondDelimiterTransformedIndex -> offset - delimiter.length * 1
+                    offset <= thirdDelimiterTransformedIndex -> offset - delimiter.length * 2
                     else -> offset - delimiter.length * 3
                 }
+            }
         }
 
     override fun filter(text: AnnotatedString): TransformedText {
@@ -34,7 +48,9 @@ class CardNumberVisualTransformation(
             buildString {
                 rawInput.forEachIndexed { index: Int, char: Char ->
                     append(char)
-                    if (index % 4 == 3 && index != maxInputLength - 1) append(delimiter)
+                    if ((index + 1) % CARD_NUMBER_GROUP_SIZE == 0 && index != maxInputLength - 1) append(
+                        delimiter
+                    )
                 }
             }
         return TransformedText(AnnotatedString(formattedText), offsetMapping)
@@ -42,5 +58,6 @@ class CardNumberVisualTransformation(
 
     companion object {
         private const val CARD_NUMBER_DELIMITER: String = " - "
+        private const val CARD_NUMBER_GROUP_SIZE: Int = 4
     }
 }
