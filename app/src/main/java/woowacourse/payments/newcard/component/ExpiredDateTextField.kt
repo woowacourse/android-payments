@@ -71,8 +71,8 @@ private fun isValidInput(date: String): Boolean = date.all { it.isDigit() } && d
 
 private fun isValidExpiredDate(date: String): Boolean =
     try {
-        val month = date.substring(0, 2).toInt()
-        val year = date.substring(2, 4).toInt()
+        val month = date.take(2).toInt()
+        val year = date.takeLast(2).toInt()
         val result = ExpiredDate.of(month, year) != null
         result
     } catch (e: NumberFormatException) {
