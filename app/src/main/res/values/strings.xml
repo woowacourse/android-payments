@@ -13,4 +13,6 @@
     <string name="placeholder_pin">0000</string>
     <string name="desc_back">뒤로 가기</string>
     <string name="desc_done">완료</string>
+    <string name="card_number_separator">&#160;-&#160;</string>
+    <string name="expiry_separator">&#160;/&#160;</string>
 </resources>

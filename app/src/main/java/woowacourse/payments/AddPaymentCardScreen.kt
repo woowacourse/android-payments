@@ -14,8 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.common.NumberVisualTransformation
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
@@ -52,17 +54,19 @@ fun AddPaymentCardScreen() {
                 modifier = Modifier.fillMaxWidth(),
                 label = R.string.label_card_number,
                 placeholder = R.string.placeholder_card_number,
-                inputType = InputType.CardNumber,
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
+                maxLength = 16,
+                visualTransformation = NumberVisualTransformation(4, " - "),
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
                 label = R.string.label_expiry,
                 placeholder = R.string.placeholder_expiry,
-                inputType = InputType.ExpiryDate,
                 value = expiry,
                 onValueChange = { expiry = it },
+                maxLength = 4,
+                visualTransformation = NumberVisualTransformation(2, " / "),
             )
             StringTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -74,9 +78,10 @@ fun AddPaymentCardScreen() {
                 modifier = Modifier.fillMaxWidth(0.6f),
                 label = R.string.label_pin,
                 placeholder = R.string.placeholder_pin,
-                inputType = InputType.Password,
                 value = pin,
                 onValueChange = { pin = it },
+                maxLength = 4,
+                visualTransformation = PasswordVisualTransformation(),
             )
         }
     }

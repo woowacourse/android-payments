@@ -11,8 +11,10 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.common.NumberVisualTransformation
 import woowacourse.payments.ui.component.NumberTextField
 
 class NumberTextFieldTest {
@@ -30,9 +32,10 @@ class NumberTextFieldTest {
                 modifier = Modifier.testTag("card_number"),
                 label = R.string.label_card_number,
                 placeholder = R.string.placeholder_card_number,
-                inputType = InputType.CardNumber,
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
+                maxLength = 16,
+                visualTransformation = NumberVisualTransformation(4, " - "),
             )
         }
 
@@ -58,9 +61,10 @@ class NumberTextFieldTest {
                 modifier = Modifier.testTag("expiry"),
                 label = R.string.label_expiry,
                 placeholder = R.string.placeholder_expiry,
-                inputType = InputType.ExpiryDate,
                 value = expiry,
                 onValueChange = { expiry = it },
+                maxLength = 4,
+                visualTransformation = NumberVisualTransformation(2, " / "),
             )
         }
 
@@ -86,9 +90,10 @@ class NumberTextFieldTest {
                 modifier = Modifier.testTag("password"),
                 label = R.string.label_pin,
                 placeholder = R.string.placeholder_pin,
-                inputType = InputType.Password,
                 value = pin,
                 onValueChange = { pin = it },
+                maxLength = 4,
+                visualTransformation = PasswordVisualTransformation(),
             )
         }
 
