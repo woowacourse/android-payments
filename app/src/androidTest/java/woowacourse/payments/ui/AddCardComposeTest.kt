@@ -65,7 +65,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일_입력_시_4글자_중간에_슬래시가_생긴다() {
+    fun 만료일_입력_시_3번쨰_자리에_슬래시가_생긴다() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -123,7 +123,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일이_현재_월_이전이면_오류로_표시된다() {
+    fun 만료일이_과거_날짜이면_오류로_표시된다() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
