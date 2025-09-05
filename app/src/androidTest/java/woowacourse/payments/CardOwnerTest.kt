@@ -24,24 +24,17 @@ class CardOwnerTest {
     }
 
     @Test
-    fun 카드_소유자_이름은_30자이다() {
-        composeTestRule
-            .onNodeWithText("")
-            .performTextInput("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
-
-        composeTestRule
-            .onNodeWithText("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun 카드_소유자_이름은_30자를_초과할_수_없다() {
-        composeTestRule
-            .onNodeWithText("")
-            .performTextInput("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십일")
+        // given
+        val input = "a".repeat(31)
+        val expected = input.take(30)
 
         composeTestRule
-            .onNodeWithText("일이삼사오육칠팔구십일이삼사오육칠팔구십일이삼사오육칠팔구십")
+            .onNodeWithText("")
+            .performTextInput(input)
+
+        composeTestRule
+            .onNodeWithText(expected)
             .assertIsDisplayed()
     }
 }
