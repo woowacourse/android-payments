@@ -15,7 +15,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.newcard.components.CardNumber
+import woowacourse.payments.ui.newcard.components.CardNumberTextField
 
 class CardNumberTest {
     @get:Rule
@@ -26,7 +26,7 @@ class CardNumberTest {
         composeTestRule.setContent {
             var text: String by remember { mutableStateOf("") }
 
-            CardNumber(
+            CardNumberTextField(
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },

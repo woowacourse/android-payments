@@ -15,7 +15,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.newcard.components.ExpirationDate
+import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 
 class ExpirationDateTest {
     @get:Rule
@@ -26,7 +26,7 @@ class ExpirationDateTest {
         composeTestRule.setContent {
             var text: String by remember { mutableStateOf("") }
 
-            ExpirationDate(
+            ExpirationDateTextField(
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },

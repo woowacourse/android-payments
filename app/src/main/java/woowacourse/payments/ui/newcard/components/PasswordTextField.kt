@@ -1,21 +1,18 @@
 package woowacourse.payments.ui.newcard.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.util.transformation.CardNumberVisualTransformation
 
 @Composable
-fun CardNumber(
+fun PasswordField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -25,29 +22,27 @@ fun CardNumber(
 ) {
     OutlinedTextField(
         modifier = modifier,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
         label = { Text(text = label) },
         onValueChange = { newValue ->
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
-        visualTransformation = CardNumberVisualTransformation(),
+        visualTransformation = PasswordVisualTransformation(),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun CardNumberPreview() {
-    CardNumber(
+private fun PasswordFieldPreview() {
+    PasswordField(
         modifier =
             Modifier
-                .fillMaxWidth()
-                .padding(top = 40.dp, start = 24.dp, end = 24.dp),
-        value = "1234123412341234",
+                .padding(start = 24.dp, top = 30.dp),
+        value = "0611",
         onValueChange = {},
-        label = stringResource(R.string.new_card_card_number_label),
-        placeholder = stringResource(R.string.new_card_card_number_placeholder),
-        maxLength = 16,
+        label = stringResource(R.string.new_card_password_label),
+        placeholder = stringResource(R.string.new_card_password_placeholder),
+        maxLength = 4,
     )
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.newcard.components.Password
+import woowacourse.payments.ui.newcard.components.PasswordField
 
 class PasswordTest {
     @get:Rule
@@ -26,7 +26,7 @@ class PasswordTest {
         composeTestRule.setContent {
             var text: String by remember { mutableStateOf("") }
 
-            Password(
+            PasswordField(
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },

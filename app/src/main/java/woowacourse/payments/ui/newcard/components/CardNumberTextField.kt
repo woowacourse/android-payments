@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -11,10 +12,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.util.transformation.ExpirationDateVisualTransformation
+import woowacourse.payments.ui.newcard.util.transformation.CardNumberVisualTransformation
 
 @Composable
-fun ExpirationDate(
+fun CardNumberTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -31,21 +32,22 @@ fun ExpirationDate(
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
         placeholder = { Text(placeholder) },
-        visualTransformation = ExpirationDateVisualTransformation(),
+        visualTransformation = CardNumberVisualTransformation(),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun ExpirationDatePreview() {
-    ExpirationDate(
+private fun CardNumberTextFieldPreview() {
+    CardNumberTextField(
         modifier =
             Modifier
-                .padding(start = 24.dp, top = 30.dp),
-        value = "0611",
+                .fillMaxWidth()
+                .padding(top = 40.dp, start = 24.dp, end = 24.dp),
+        value = "1234123412341234",
         onValueChange = {},
-        label = stringResource(R.string.new_card_expiration_date_label),
-        placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
-        maxLength = 4,
+        label = stringResource(R.string.new_card_card_number_label),
+        placeholder = stringResource(R.string.new_card_card_number_placeholder),
+        maxLength = 16,
     )
 }

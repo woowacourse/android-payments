@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 @Composable
-fun PaymentCard(modifier: Modifier = Modifier) {
+fun PaymentCardBox(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -42,8 +42,8 @@ fun PaymentCard(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentCardPreview() {
-    PaymentCard(
+private fun PaymentCardBoxPreview() {
+    PaymentCardBox(
         modifier =
             Modifier
                 .padding(top = 14.dp),

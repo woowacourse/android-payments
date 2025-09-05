@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 @Composable
-fun Name(
+fun NameTextField(
     modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -43,8 +43,8 @@ fun Name(
 
 @Preview(showBackground = true)
 @Composable
-private fun NamePreview() {
-    Name(
+private fun NameTextFieldPreview() {
+    NameTextField(
         modifier =
             Modifier
                 .fillMaxWidth()

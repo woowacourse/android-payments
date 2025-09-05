@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.components.CardNumber
-import woowacourse.payments.ui.newcard.components.ExpirationDate
-import woowacourse.payments.ui.newcard.components.Name
-import woowacourse.payments.ui.newcard.components.Password
-import woowacourse.payments.ui.newcard.components.PaymentCard
+import woowacourse.payments.ui.newcard.components.CardNumberTextField
+import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
+import woowacourse.payments.ui.newcard.components.NameTextField
+import woowacourse.payments.ui.newcard.components.PasswordField
+import woowacourse.payments.ui.newcard.components.PaymentCardBox
 
 @Composable
 fun NewCardScreen(innerPadding: PaddingValues) {
@@ -35,13 +35,13 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                 .padding(innerPadding)
                 .fillMaxSize(),
     ) {
-        PaymentCard(
+        PaymentCardBox(
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 14.dp),
         )
-        CardNumber(
+        CardNumberTextField(
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -52,7 +52,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
             placeholder = stringResource(R.string.new_card_card_number_placeholder),
             maxLength = 16,
         )
-        ExpirationDate(
+        ExpirationDateTextField(
             modifier =
                 Modifier
                     .padding(start = 24.dp, top = 30.dp),
@@ -62,7 +62,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
             placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
             maxLength = 4,
         )
-        Name(
+        NameTextField(
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -73,7 +73,7 @@ fun NewCardScreen(innerPadding: PaddingValues) {
             placeholder = stringResource(R.string.new_card_name_placeholder),
             maxLength = 30,
         )
-        Password(
+        PasswordField(
             modifier =
                 Modifier
                     .padding(start = 24.dp, top = 30.dp),
