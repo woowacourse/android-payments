@@ -62,7 +62,7 @@ fun DigitTextField(
 
 @Preview
 @Composable
-private fun PaymentCardPreview() {
+private fun DigitTextFieldPreview() {
     AndroidpaymentsTheme {
         DigitTextField(
             label = "카드 번호",

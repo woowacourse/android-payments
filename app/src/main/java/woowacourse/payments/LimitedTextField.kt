@@ -52,7 +52,7 @@ fun LimitedTextField(
 
 @Preview
 @Composable
-private fun PaymentCardPreview() {
+private fun LimitedTextFieldPreview() {
     AndroidpaymentsTheme {
         LimitedTextField(
             label = "카드 소유자 이름(선택)",

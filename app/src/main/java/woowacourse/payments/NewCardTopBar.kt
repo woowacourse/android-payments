@@ -44,7 +44,7 @@ fun NewCardTopBar(
 
 @Preview
 @Composable
-private fun PaymentCardPreview() {
+private fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
             onBackClick = { },
