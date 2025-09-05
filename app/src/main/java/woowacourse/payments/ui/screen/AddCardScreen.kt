@@ -8,18 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.domain.Expired
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
 import woowacourse.payments.ui.component.ExpiredInputField
@@ -29,13 +22,7 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardScreen() {
-    var cardNumber by remember { mutableStateOf<CardNumber?>(null) }
-    var expired by remember { mutableStateOf<Expired?>(null) }
-    var cardOwner by remember { mutableStateOf<CardOwner?>(CardOwner("")) }
-    var password by remember { mutableStateOf<Password?>(null) }
-    var showValidationError by remember { mutableStateOf(false) }
-
+fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() }) {
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -43,12 +30,7 @@ fun AddCardScreen() {
                 NewCardTopBar(
                     onBackClick = {},
                     onSaveClick = {
-                        showValidationError = true
-                        val isValid =
-                            cardNumber?.isValid == true && expired?.isValid == true &&
-                                cardOwner?.isValid == true && password?.isValid == true
-
-                        if (isValid) showValidationError = false
+                        viewModel.validateAll()
                     },
                 )
             },
@@ -71,31 +53,31 @@ fun AddCardScreen() {
                 }
 
                 CardNumberInputField(
-                    cardNumber = cardNumber,
-                    onCardNumberChange = { cardNumber = it },
+                    cardNumber = viewModel.cardNumber,
+                    onCardNumberChange = { viewModel.onCardNumberChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    showValidationError = showValidationError,
+                    showValidationError = viewModel.showValidationError,
                 )
 
                 ExpiredInputField(
-                    expired = expired,
-                    onExpiredChange = { expired = it },
+                    expired = viewModel.expired,
+                    onExpiredChange = { viewModel.onExpiredChange(it) },
                     modifier = Modifier.fillMaxWidth(0.5f),
-                    showValidationError = showValidationError,
+                    showValidationError = viewModel.showValidationError,
                 )
 
                 CardOwnerInputField(
-                    cardOwner = cardOwner,
-                    onOwnerChange = { cardOwner = it },
+                    cardOwner = viewModel.cardOwner,
+                    onOwnerChange = { viewModel.onCardOwnerChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    showValidationError = showValidationError,
+                    showValidationError = viewModel.showValidationError,
                 )
 
                 PasswordInputField(
-                    password = password,
-                    onPasswordChange = { password = it },
+                    password = viewModel.password,
+                    onPasswordChange = { viewModel.onPasswordChange(it) },
                     modifier = Modifier.fillMaxWidth(0.5f),
-                    showValidationError = showValidationError,
+                    showValidationError = viewModel.showValidationError,
                 )
             }
         }
