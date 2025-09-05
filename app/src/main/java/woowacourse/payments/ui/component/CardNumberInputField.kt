@@ -4,6 +4,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -20,6 +21,9 @@ fun CardNumberInputField(
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
+    val transformation =
+        remember { CardNumberVisualTransformation(groupSize = 4, delimiter = " - ") }
+
     OutlinedTextField(
         value = cardNumber?.value ?: "",
         onValueChange = { newText ->
@@ -28,7 +32,6 @@ fun CardNumberInputField(
             onCardNumberChange(newCardNumber)
         },
         modifier = modifier,
-        visualTransformation = CardNumberVisualTransformation(groupSize = 4, delimiter = " - "),
         label = { Text(text = stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
@@ -37,6 +40,7 @@ fun CardNumberInputField(
             )
         },
         isError = showValidationError && (cardNumber?.isValid != true),
+        visualTransformation = transformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )
 }
