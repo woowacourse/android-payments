@@ -18,7 +18,6 @@ class CardExpiryDateTest {
             DigitTextField(
                 label = "만료일",
                 hint = "MM / YY",
-                fraction = 0.5f,
                 maxLength = 4,
                 mask = InputMask.Expiry,
                 errorMessage = "유효하지 않은 만료일입니다.",

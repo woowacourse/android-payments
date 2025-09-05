@@ -20,7 +20,6 @@ class CardPasswordTest {
             DigitTextField(
                 label = "비밀번호",
                 hint = "0000",
-                fraction = 0.5f,
                 maxLength = 4,
                 mask = InputMask.Password,
                 errorMessage = "비밀번호는 4자입니다.",

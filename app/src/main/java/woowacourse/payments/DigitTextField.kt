@@ -15,7 +15,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -24,7 +23,6 @@ fun DigitTextField(
     hint: String,
     errorMessage: String,
     modifier: Modifier = Modifier,
-    fraction: Float = 1f,
     maxLength: Int = Int.MAX_VALUE,
     mask: InputMask = InputMask.None,
     imeAction: ImeAction = ImeAction.Done,
@@ -45,10 +43,7 @@ fun DigitTextField(
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
-        modifier =
-            modifier
-                .fillMaxWidth(fraction)
-                .padding(horizontal = 24.dp),
+        modifier = modifier,
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,

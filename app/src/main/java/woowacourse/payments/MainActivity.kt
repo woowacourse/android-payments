@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
                         DigitTextField(
                             label = getString(R.string.CardNumberLabel),
                             hint = "0000 - 0000 - 0000 - 0000",
+                            modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 16,
                             mask = InputMask.CardNumber,
                             errorMessage = getString(R.string.CardNumberErrorMessage),
@@ -56,7 +58,9 @@ class MainActivity : ComponentActivity() {
                         DigitTextField(
                             label = getString(R.string.CardExpiryLabel),
                             hint = "MM / YY",
-                            fraction = 0.5f,
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.CardExpiryErrorMessage),
@@ -66,6 +70,7 @@ class MainActivity : ComponentActivity() {
                         LimitedTextField(
                             label = getString(R.string.CardOwnerLabel),
                             hint = getString(R.string.CardOwnerHint),
+                            modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 30,
                             imeAction = ImeAction.Next,
                         )
@@ -73,7 +78,9 @@ class MainActivity : ComponentActivity() {
                         DigitTextField(
                             label = getString(R.string.CardPasswordLabel),
                             hint = "0000",
-                            fraction = 0.5f,
+                            modifier = Modifier
+                                .fillMaxWidth(0.5f)
+                                .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Password,
                             errorMessage = getString(R.string.CardPasswordErrorMessage),
