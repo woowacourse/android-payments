@@ -50,22 +50,22 @@ class CardholderNameTextFieldTest {
         textField.performTextInput("w")
 
         // then
-        composeTestRule
-            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("CREW")
+        textField.assertTextEquals("CREW")
     }
 
     @Test
     fun `카드_소유자_이름의_최대_글자는_30자이다`() {
+        // given
+        val textField =
+            composeTestRule
+                .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+
         // when
-        composeTestRule
-            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .performTextInput("C".repeat(31))
+        textField.performTextInput("C".repeat(30))
+        textField.performTextInput("C")
 
         // then
-        composeTestRule
-            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("C".repeat(30))
+        textField.assertTextEquals("C".repeat(30))
     }
 
     @Test

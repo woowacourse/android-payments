@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import woowacourse.payments.R
 
 private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
 private const val CARDHOLDER_NAME_DEFAULT_MAX_LENGTH = 30
+private val CARDHOLDER_NAME_VALIDATION_REGEX = Regex("^[A-Za-z]+$")
 
 @Composable
 fun CardholderNameTextField(
@@ -32,20 +34,12 @@ fun CardholderNameTextField(
 ) {
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.cardholder_name_text_field_placeholder),
-                color = Color.Gray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.cardholder_name_text_field_placeholder)) },
         value = cardholderName,
         onValueChange = { newValue ->
-            if (newValue.length > maxLength) {
-                return@OutlinedTextField onCardholderNameChanged(
-                    newValue.take(maxLength),
-                )
-            }
-            if (newValue.any { it !in 'a'..'z' && it !in 'A'..'Z' }) return@OutlinedTextField
+            if (newValue.length > maxLength) return@OutlinedTextField
+            if (CARDHOLDER_NAME_VALIDATION_REGEX.matches(newValue).not()) return@OutlinedTextField
+
             onCardholderNameChanged(newValue.uppercase())
         },
         supportingText = {
@@ -56,6 +50,11 @@ fun CardholderNameTextField(
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedPlaceholderColor = Color.Gray,
+                unfocusedPlaceholderColor = Color.Gray,
+            ),
         modifier = modifier,
     )
 }
