@@ -59,6 +59,6 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun CardAdditionScreenPreview1() {
+private fun CardAdditionScreenPreview() {
     CardAdditionScreen()
 }
