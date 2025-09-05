@@ -45,7 +45,7 @@ fun NewCardTopBar(
 
 @Preview
 @Composable
-fun NewCardTopBarPreview() {
+private fun NewCardTopBarPreview() {
     NewCardTopBar(
         onBackClick = {},
         onSaveClick = {}

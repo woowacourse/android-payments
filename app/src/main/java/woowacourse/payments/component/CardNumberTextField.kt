@@ -59,7 +59,7 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         cardNumber = "",
         onCardNumberChange = {},

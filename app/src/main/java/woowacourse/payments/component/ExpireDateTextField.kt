@@ -59,7 +59,7 @@ fun ExpireDateTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun ExpireDateTextFieldPreview() {
+private fun ExpireDateTextFieldPreview() {
     ExpireDateTextField(
         maxLength = 4,
         expireDate = "",

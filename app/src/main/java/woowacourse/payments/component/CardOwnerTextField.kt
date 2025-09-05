@@ -60,7 +60,7 @@ fun CardOwnerTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardOwnerTextFieldPreview() {
+private fun CardOwnerTextFieldPreview() {
     CardOwnerTextField(
         ownerName = "페토",
         maxLength = 10,

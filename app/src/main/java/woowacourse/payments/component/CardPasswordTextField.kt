@@ -50,7 +50,7 @@ fun CardPasswordTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardPasswordTextFieldPreview() {
+private fun CardPasswordTextFieldPreview() {
     CardPasswordTextField(
         maxLength = 4,
         password = "1234",

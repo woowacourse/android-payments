@@ -23,7 +23,7 @@ fun TextFieldPlaceHolder(
 
 @Composable
 @Preview
-fun TextFieldPlaceHolderPreview() {
+private fun TextFieldPlaceHolderPreview() {
     TextFieldPlaceHolder(
         textResourceId = R.string.card_number,
         modifier = Modifier
