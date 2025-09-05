@@ -44,7 +44,7 @@ fun ExpiredDateTextField(
             )
         },
         visualTransformation = expiredDateVisualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = isError,
         supportingText = {
             if (isError) {

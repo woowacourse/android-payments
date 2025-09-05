@@ -32,7 +32,7 @@ fun CardNumberTextField(
             )
         },
         visualTransformation = cardNumberVisualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier,
     )
 }
