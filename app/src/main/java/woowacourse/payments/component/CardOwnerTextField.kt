@@ -29,7 +29,7 @@ fun CardOwnerTextField(
     OutlinedTextField(
         value = ownerName,
         onValueChange = { newText ->
-            if (newText.length <= maxLength) {
+            if (newText.length <= maxLength && newText.all { it.isLetter() }) {
                 onChangeOwnerName(newText)
             }
         },

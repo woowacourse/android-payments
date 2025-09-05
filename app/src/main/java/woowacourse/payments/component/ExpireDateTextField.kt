@@ -31,7 +31,7 @@ fun ExpireDateTextField(
     OutlinedTextField(
         value = expireDate,
         onValueChange = { newText ->
-            if (newText.length <= maxLength) {
+            if (newText.length <= maxLength && newText.all { it.isDigit() }) {
                 onExpireDateChange(newText)
             }
             if (newText.length == maxLength) {

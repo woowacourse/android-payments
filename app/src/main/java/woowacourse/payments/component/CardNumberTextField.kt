@@ -29,7 +29,7 @@ fun CardNumberTextField(
     OutlinedTextField(
         value = cardNumber,
         onValueChange = { newText ->
-            if (newText.length <= maxLength) {
+            if (newText.length <= maxLength && newText.all { it.isDigit() }) {
                 onCardNumberChange(newText)
             }
             if (newText.length == maxLength) {
