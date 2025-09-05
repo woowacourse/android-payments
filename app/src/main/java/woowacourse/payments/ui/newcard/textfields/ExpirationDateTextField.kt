@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -29,6 +30,36 @@ fun ExpirationDateTextField(
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
+    val delimiter = LocalContext.current.getString(R.string.expiration_date_delimiter)
+
+    val offsetMapping =
+        object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int {
+                val multiplier = (offset - 1).coerceAtLeast(0) / EXPIRATION_DATE_CHUNK_SIZE
+                return offset + delimiter.length * multiplier
+            }
+
+            override fun transformedToOriginal(offset: Int): Int {
+                val multiplier =
+                    ((offset - 1)).coerceAtLeast(0) / (EXPIRATION_DATE_CHUNK_SIZE + delimiter.length)
+                return (offset - (delimiter.length * multiplier)).coerceAtMost(
+                    EXPIRATION_DATE_CHUNK_SIZE * (multiplier + 1),
+                )
+            }
+        }
+
+    val transformation =
+        object : VisualTransformation {
+            override fun filter(text: AnnotatedString): TransformedText =
+                TransformedText(
+                    AnnotatedString(
+                        text.text
+                            .chunked(EXPIRATION_DATE_CHUNK_SIZE)
+                            .joinToString(delimiter),
+                    ),
+                    offsetMapping,
+                )
+        }
 
     fun updateValue(newValue: String) {
         val filteredValue: String =
@@ -80,33 +111,3 @@ fun ExpirationDateTextField(
 
 private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
 private const val EXPIRATION_DATE_CHUNK_SIZE = 2
-private const val EXPIRATION_DATE_DELIMITER = " / "
-
-private val transformation =
-    object : VisualTransformation {
-        override fun filter(text: AnnotatedString): TransformedText =
-            TransformedText(
-                AnnotatedString(
-                    text.text
-                        .chunked(EXPIRATION_DATE_CHUNK_SIZE)
-                        .joinToString(EXPIRATION_DATE_DELIMITER),
-                ),
-                offsetMapping,
-            )
-    }
-
-private val offsetMapping =
-    object : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int {
-            val multiplier = (offset - 1).coerceAtLeast(0) / EXPIRATION_DATE_CHUNK_SIZE
-            return offset + EXPIRATION_DATE_DELIMITER.length * multiplier
-        }
-
-        override fun transformedToOriginal(offset: Int): Int {
-            val multiplier =
-                ((offset - 1)).coerceAtLeast(0) / (EXPIRATION_DATE_CHUNK_SIZE + EXPIRATION_DATE_DELIMITER.length)
-            return (offset - (EXPIRATION_DATE_DELIMITER.length * multiplier)).coerceAtMost(
-                EXPIRATION_DATE_CHUNK_SIZE * (multiplier + 1),
-            )
-        }
-    }
