@@ -13,12 +13,12 @@ import woowacourse.payments.R
 
 @Composable
 fun PasswordField(
-    modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,

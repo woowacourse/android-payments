@@ -14,12 +14,12 @@ import woowacourse.payments.R
 
 @Composable
 fun NameTextField(
-    modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,

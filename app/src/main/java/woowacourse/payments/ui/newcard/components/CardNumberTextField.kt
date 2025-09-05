@@ -16,12 +16,12 @@ import woowacourse.payments.ui.newcard.util.transformation.CardNumberVisualTrans
 
 @Composable
 fun CardNumberTextField(
-    modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,

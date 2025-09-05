@@ -16,13 +16,13 @@ import woowacourse.payments.ui.newcard.util.transformation.ExpirationDateVisualT
 
 @Composable
 fun ExpirationDateTextField(
-    modifier: Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     isValid: Boolean,
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,
