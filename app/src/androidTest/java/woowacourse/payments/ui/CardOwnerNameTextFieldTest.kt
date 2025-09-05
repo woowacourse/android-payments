@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -26,7 +27,7 @@ class CardOwnerNameTextFieldTest {
             CardOwnerNameTextField(
                 value = value,
                 onNameChange = { value = it },
-                modifier = Modifier.testTag("CardOwnerNameTextFieldTest")
+                modifier = Modifier.testTag(TEST_TAG)
             )
         }
     }
@@ -35,33 +36,36 @@ class CardOwnerNameTextFieldTest {
     fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
         // given
         composeRule
-            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .onNodeWithTag(TEST_TAG)
             .performTextInput("모".repeat(30))
 
         // when
         composeRule
-            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .onNodeWithTag(TEST_TAG)
             .performTextInput("모찌")
 
         // then
         composeRule
-            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .onNodeWithTag(TEST_TAG)
             .assert(hasText("모".repeat(30)))
+            .assertIsDisplayed()
     }
 
     @Test
     fun `입력된_이름의_길이가_출력된다`() {
-        // given
-        val name = "모찌"
-
         // when
         composeRule
-            .onNodeWithTag("CardOwnerNameTextFieldTest")
-            .performTextInput(name)
+            .onNodeWithTag(TEST_TAG)
+            .performTextInput("모찌")
 
         // then
         composeRule
-            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .onNodeWithTag(TEST_TAG)
             .assert(hasText("2/30"))
+            .assertIsDisplayed()
+    }
+
+    companion object {
+        private const val TEST_TAG = "TEST_TAG"
     }
 }
