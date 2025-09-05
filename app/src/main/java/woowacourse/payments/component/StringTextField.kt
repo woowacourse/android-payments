@@ -37,6 +37,6 @@ fun StringTextField(
                 textAlign = TextAlign.End,
             )
         },
-        modifier = modifier.then(Modifier.padding(start = 24.dp, end = 24.dp, bottom = 18.dp)),
+        modifier = modifier.padding(start = 24.dp, end = 24.dp, bottom = 18.dp),
     )
 }
