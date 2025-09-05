@@ -37,10 +37,10 @@ fun CardholderNameTextField(
         placeholder = { Text(text = stringResource(R.string.cardholder_name_text_field_placeholder)) },
         value = cardholderName,
         onValueChange = { newValue ->
-            if (newValue.length > maxLength) return@OutlinedTextField
-            if (CARDHOLDER_NAME_VALIDATION_REGEX.matches(newValue).not()) return@OutlinedTextField
+            val newName = newValue.take(maxLength)
+            if (CARDHOLDER_NAME_VALIDATION_REGEX.matches(newName).not()) return@OutlinedTextField
 
-            onCardholderNameChanged(newValue.uppercase())
+            onCardholderNameChanged(newName.uppercase())
         },
         supportingText = {
             Text(
