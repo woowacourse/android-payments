@@ -4,9 +4,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
@@ -20,7 +23,11 @@ class CardOwnerNameTextFieldTest {
     fun setUp() {
         composeRule.setContent {
             var value by remember { mutableStateOf("") }
-            CardOwnerNameTextField(value = value, onNameChange = { value = it })
+            CardOwnerNameTextField(
+                value = value,
+                onNameChange = { value = it },
+                modifier = Modifier.testTag("CardOwnerNameTextFieldTest")
+            )
         }
     }
 
@@ -28,18 +35,18 @@ class CardOwnerNameTextFieldTest {
     fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
         // given
         composeRule
-            .onNodeWithText("")
+            .onNodeWithTag("CardOwnerNameTextFieldTest")
             .performTextInput("모".repeat(30))
 
         // when
         composeRule
-            .onNodeWithText("모".repeat(30))
+            .onNodeWithTag("CardOwnerNameTextFieldTest")
             .performTextInput("모찌")
 
         // then
         composeRule
-            .onNodeWithText("모".repeat(30))
-            .assertIsDisplayed()
+            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .assert(hasText("모".repeat(30)))
     }
 
     @Test
@@ -49,12 +56,12 @@ class CardOwnerNameTextFieldTest {
 
         // when
         composeRule
-            .onNodeWithText("")
+            .onNodeWithTag("CardOwnerNameTextFieldTest")
             .performTextInput(name)
 
         // then
         composeRule
-            .onNodeWithText("2/30")
-            .assertIsDisplayed()
+            .onNodeWithTag("CardOwnerNameTextFieldTest")
+            .assert(hasText("2/30"))
     }
 }
