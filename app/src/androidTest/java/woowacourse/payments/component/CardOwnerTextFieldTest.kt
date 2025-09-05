@@ -11,7 +11,7 @@ class CardOwnerTextFieldTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `입력한_텍스트가_입력창에_보인다`() {
+    fun `텍스트를_입력하면_입력창에_입력한_텍스트가_보인다`() {
         // given
         val ownerName = "페토"
 
@@ -29,7 +29,7 @@ class CardOwnerTextFieldTest {
     }
 
     @Test
-    fun `placeHolder가_보인다`() {
+    fun `카드_소유자_입력창에_입력이_없으면_placeholder를_보여준다`() {
         // given
         composeTestRule.setContent {
             CardOwnerTextField(
@@ -41,7 +41,7 @@ class CardOwnerTextFieldTest {
 
         // then
         composeTestRule
-            .onNodeWithText("카드에 표시된 이름을 입력하세요.")
+            .onNodeWithText("카드 소유자 이름(선택)")
             .assertIsDisplayed()
     }
 }
