@@ -33,7 +33,7 @@ class PasswordTextFieldTest {
     }
 
     @Test
-    fun `비밀번호는_4글자이다`() {
+    fun `비밀번호는_4글자까지_입력할_수_있다`() {
         // when
         composeRule
             .onNodeWithText("")
