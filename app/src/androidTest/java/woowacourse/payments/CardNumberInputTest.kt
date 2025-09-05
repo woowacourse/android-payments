@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.CardNumberInput
+import woowacourse.payments.ui.component.CardNumberInputField
 
 class CardNumberInputTest {
     @get:Rule
@@ -18,7 +18,7 @@ class CardNumberInputTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardNumberInput(
+            CardNumberInputField(
                 cardNumber = null,
                 onCardNumberChange = { },
             )

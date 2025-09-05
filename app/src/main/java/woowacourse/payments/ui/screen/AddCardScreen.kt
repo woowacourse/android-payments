@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,11 +20,11 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.component.CardNumberInput
-import woowacourse.payments.ui.component.CardOwnerInput
-import woowacourse.payments.ui.component.ExpiredInput
+import woowacourse.payments.ui.component.CardNumberInputField
+import woowacourse.payments.ui.component.CardOwnerInputField
+import woowacourse.payments.ui.component.ExpiredInputField
 import woowacourse.payments.ui.component.NewCardTopBar
-import woowacourse.payments.ui.component.PasswordInput
+import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -56,7 +57,8 @@ fun AddCardScreen() {
                 modifier =
                     Modifier
                         .padding(innerPadding)
-                        .fillMaxSize(),
+                        .padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
                 Box(
                     modifier =
@@ -68,34 +70,31 @@ fun AddCardScreen() {
                     PaymentCard()
                 }
 
-                CardNumberInput(
+                CardNumberInputField(
                     cardNumber = cardNumber,
                     onCardNumberChange = { cardNumber = it },
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 24.dp, vertical = 20.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     showValidationError = showValidationError,
                 )
 
-                ExpiredInput(
+                ExpiredInputField(
                     expired = expired,
                     onExpiredChange = { expired = it },
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
+                    modifier = Modifier.fillMaxWidth(0.5f),
                     showValidationError = showValidationError,
                 )
 
-                CardOwnerInput(
+                CardOwnerInputField(
                     cardOwner = cardOwner,
                     onOwnerChange = { cardOwner = it },
-                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 20.dp),
+                    modifier = Modifier.fillMaxWidth(),
                     showValidationError = showValidationError,
                 )
 
-                PasswordInput(
+                PasswordInputField(
                     password = password,
                     onPasswordChange = { password = it },
-                    modifier = Modifier.padding(horizontal = 24.dp),
+                    modifier = Modifier.fillMaxWidth(0.5f),
                     showValidationError = showValidationError,
                 )
             }

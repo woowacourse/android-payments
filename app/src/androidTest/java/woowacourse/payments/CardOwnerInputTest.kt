@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.ui.component.CardOwnerInput
+import woowacourse.payments.ui.component.CardOwnerInputField
 
 class CardOwnerInputTest {
     @get:Rule
@@ -17,7 +17,7 @@ class CardOwnerInputTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardOwnerInput(
+            CardOwnerInputField(
                 cardOwner = CardOwner(""),
                 onOwnerChange = { },
             )

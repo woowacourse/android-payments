@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.component.PasswordInput
+import woowacourse.payments.ui.component.PasswordInputField
 
 class PasswordInputTest {
     @get:Rule
@@ -17,7 +17,7 @@ class PasswordInputTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            PasswordInput(
+            PasswordInputField(
                 password = Password(""),
                 onPasswordChange = { },
             )

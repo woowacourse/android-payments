@@ -10,7 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Expired
-import woowacourse.payments.ui.component.ExpiredInput
+import woowacourse.payments.ui.component.ExpiredInputField
 
 class ExpiredInputTest {
     @get:Rule
@@ -19,7 +19,7 @@ class ExpiredInputTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            ExpiredInput(
+            ExpiredInputField(
                 expired = Expired(""),
                 onExpiredChange = { },
             )
