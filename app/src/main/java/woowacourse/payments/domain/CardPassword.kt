@@ -1,6 +1,7 @@
 package woowacourse.payments.domain
 
-class CardPassword(
+@JvmInline
+value class CardPassword(
     val password: String,
 ) {
     init {
