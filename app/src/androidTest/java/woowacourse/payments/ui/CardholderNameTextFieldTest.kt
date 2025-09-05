@@ -4,6 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -27,6 +29,7 @@ class CardholderNameTextFieldTest {
             CardholderNameTextField(
                 cardholderName = cardholderName,
                 onCardholderNameChanged = { newValue -> cardholderName = newValue },
+                modifier = Modifier.testTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG),
             )
         }
     }
@@ -35,7 +38,10 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름은_영문만_입력할_수_있다`() {
         // when
         val textField =
-            composeTestRule.onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            composeTestRule.onNodeWithTag(
+                CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG,
+                useUnmergedTree = true,
+            )
 
         textField.performTextInput("C")
         textField.performTextInput("1")
@@ -45,7 +51,7 @@ class CardholderNameTextFieldTest {
 
         // then
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .assertTextEquals("CREW")
     }
 
@@ -53,12 +59,12 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름의_최대_글자는_30자이다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .performTextInput("C".repeat(31))
 
         // then
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .assertTextEquals("C".repeat(30))
     }
 
@@ -66,7 +72,7 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름의_길이가_표시된다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .performTextInput("ABCDE")
 
         // then
@@ -79,12 +85,16 @@ class CardholderNameTextFieldTest {
     fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .performClick()
 
         // then
         composeTestRule
             .onNodeWithText("카드에 표시된 이름을 입력하세요.")
             .assertIsDisplayed()
+    }
+
+    companion object {
+        private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField"
     }
 }

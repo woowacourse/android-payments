@@ -10,14 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
-
-private const val CARD_REGISTRATION_TOP_BAR_PREVIOUS_BUTTON_TEST_TAG =
-    "CardRegistrationTopBarPreviousButtonTestTag"
-private const val CARD_REGISTRATION_TOP_BAR_REGISTRATION_BUTTON_TEST_TAG =
-    "CardRegistrationTopBarRegistrationButtonTestTag"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +25,6 @@ fun CardRegistrationTopAppBar(
         title = { Text(stringResource(R.string.card_registration_bar_title)) },
         navigationIcon = {
             IconButton(
-                modifier = Modifier.testTag(CARD_REGISTRATION_TOP_BAR_PREVIOUS_BUTTON_TEST_TAG),
                 onClick = onBackClick,
             ) {
                 Icon(
@@ -42,7 +35,6 @@ fun CardRegistrationTopAppBar(
         },
         actions = {
             IconButton(
-                modifier = Modifier.testTag(CARD_REGISTRATION_TOP_BAR_REGISTRATION_BUTTON_TEST_TAG),
                 onClick = onSaveClick,
                 enabled = isSaveButtonEnabled,
             ) {

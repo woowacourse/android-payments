@@ -5,6 +5,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -26,6 +28,7 @@ class CardNumberTextFieldTest {
             CardNumberTextField(
                 cardNumber = state,
                 onCardNumberChanged = { newValue -> state = newValue },
+                modifier = Modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
             )
         }
     }
@@ -33,14 +36,14 @@ class CardNumberTextFieldTest {
     @Test
     fun `카드_번호는_숫자만_입력_가능해야_한다`() {
         // when
-        val textField = composeTestRule.onNodeWithTag("CardNumberTextField")
+        val textField = composeTestRule.onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
         textField.performTextInput("1")
         textField.performTextInput("a")
         textField.performTextInput("2")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardNumberTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .assertTextEquals("12")
     }
 
@@ -48,12 +51,12 @@ class CardNumberTextFieldTest {
     fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardNumberTextField")
+            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
             .performTextInput("1".repeat(17))
 
         // then
         composeTestRule
-            .onNodeWithTag("CardNumberTextField", useUnmergedTree = true)
+            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
             .assertTextEquals("1111 - 1111 - 1111 - 1111")
     }
 
@@ -74,17 +77,21 @@ class CardNumberTextFieldTest {
 
             // when
             composeTestRule
-                .onNodeWithTag("CardNumberTextField")
+                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
                 .performTextInput(input)
 
             // then
             composeTestRule
-                .onNodeWithTag("CardNumberTextField", useUnmergedTree = true)
+                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
                 .assertTextEquals(expected)
 
             composeTestRule
-                .onNodeWithTag("CardNumberTextField")
+                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
                 .performTextClearance()
         }
+    }
+
+    companion object {
+        private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
     }
 }

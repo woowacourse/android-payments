@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +22,6 @@ private const val CARD_EXPIRATION_DATE_LENGTH = 4
 private const val CENTURY_PREFIX = "20"
 private const val CARD_EXPIRATION_DATE_GROUP_SIZE = 2
 private const val CARD_EXPIRATION_DATE_SEPARATOR = " / "
-private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDateTextField"
 
 @Composable
 fun CardExpirationDateTextField(
@@ -52,10 +50,7 @@ fun CardExpirationDateTextField(
     }
 
     OutlinedTextField(
-        modifier = modifier.testTag(CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG),
-        label = {
-            Text(text = stringResource(R.string.card_expiration_date_text_field_label))
-        },
+        label = { Text(text = stringResource(R.string.card_expiration_date_text_field_label)) },
         placeholder = {
             Text(
                 text = stringResource(R.string.card_expiration_date_text_field_placeholder),
@@ -77,6 +72,7 @@ fun CardExpirationDateTextField(
         supportingText = { if (isError) Text(text = errorMessage.orEmpty()) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
+        modifier = modifier,
     )
 }
 
@@ -90,6 +86,12 @@ private fun isValidYearMonth(cardExpirationDate: String): Boolean {
 @Composable
 fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
+        CardExpirationDateTextField(
+            cardExpirationDate = "",
+            onCardExpirationDateChanged = {},
+            onErrorMessageChanged = {},
+        )
+
         CardExpirationDateTextField(
             cardExpirationDate = "1226",
             onCardExpirationDateChanged = {},

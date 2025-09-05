@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -19,7 +18,6 @@ import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 
 private const val CARD_PASSWORD_LENGTH = 4
-private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
 
 @Composable
 fun CardPasswordTextField(
@@ -30,10 +28,7 @@ fun CardPasswordTextField(
     val visualTransformation = remember { PasswordVisualTransformation() }
 
     OutlinedTextField(
-        modifier = modifier.testTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG),
-        label = {
-            Text(text = stringResource(R.string.card_password_text_field_label))
-        },
+        label = { Text(text = stringResource(R.string.card_password_text_field_label)) },
         placeholder = {
             Text(
                 text = stringResource(R.string.card_password_text_field_placeholder),
@@ -50,6 +45,7 @@ fun CardPasswordTextField(
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
+        modifier = modifier,
     )
 }
 
