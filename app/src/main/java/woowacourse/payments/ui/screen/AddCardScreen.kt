@@ -23,63 +23,61 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() }) {
-    AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                NewCardTopBar(
-                    onBackClick = {},
-                    onSaveClick = {
-                        viewModel.validateAll()
-                    },
-                )
-            },
-        ) { innerPadding ->
-            Column(
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            NewCardTopBar(
+                onBackClick = {},
+                onSaveClick = {
+                    viewModel.validateAll()
+                },
+            )
+        },
+    ) { innerPadding ->
+        Column(
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
+            Box(
                 modifier =
                     Modifier
-                        .padding(innerPadding)
-                        .padding(horizontal = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp),
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp),
+                contentAlignment = Alignment.Center,
             ) {
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 12.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    PaymentCard()
-                }
-
-                CardNumberInputField(
-                    cardNumber = viewModel.cardNumber,
-                    onCardNumberChange = { viewModel.onCardNumberChange(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    showValidationError = viewModel.showValidationError,
-                )
-
-                ExpiredInputField(
-                    expired = viewModel.expired,
-                    onExpiredChange = { viewModel.onExpiredChange(it) },
-                    modifier = Modifier.fillMaxWidth(0.5f),
-                    showValidationError = viewModel.showValidationError,
-                )
-
-                CardOwnerInputField(
-                    cardOwner = viewModel.cardOwner,
-                    onOwnerChange = { viewModel.onCardOwnerChange(it) },
-                    modifier = Modifier.fillMaxWidth(),
-                    showValidationError = viewModel.showValidationError,
-                )
-
-                PasswordInputField(
-                    password = viewModel.password,
-                    onPasswordChange = { viewModel.onPasswordChange(it) },
-                    modifier = Modifier.fillMaxWidth(0.5f),
-                    showValidationError = viewModel.showValidationError,
-                )
+                PaymentCard()
             }
+
+            CardNumberInputField(
+                cardNumber = viewModel.cardNumber,
+                onCardNumberChange = { viewModel.onCardNumberChange(it) },
+                modifier = Modifier.fillMaxWidth(),
+                showValidationError = viewModel.showValidationError,
+            )
+
+            ExpiredInputField(
+                expired = viewModel.expired,
+                onExpiredChange = { viewModel.onExpiredChange(it) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                showValidationError = viewModel.showValidationError,
+            )
+
+            CardOwnerInputField(
+                cardOwner = viewModel.cardOwner,
+                onOwnerChange = { viewModel.onCardOwnerChange(it) },
+                modifier = Modifier.fillMaxWidth(),
+                showValidationError = viewModel.showValidationError,
+            )
+
+            PasswordInputField(
+                password = viewModel.password,
+                onPasswordChange = { viewModel.onPasswordChange(it) },
+                modifier = Modifier.fillMaxWidth(0.5f),
+                showValidationError = viewModel.showValidationError,
+            )
         }
     }
 }
