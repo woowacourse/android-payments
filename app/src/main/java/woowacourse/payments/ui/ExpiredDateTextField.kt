@@ -19,6 +19,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import java.lang.Character.isDigit
+import java.time.Month
 
 @Composable
 fun ExpiredDateTextField(modifier: Modifier = Modifier) {
@@ -69,7 +70,7 @@ private val String.isInvalidExpiredDate: Boolean
         if (isEmpty()) return false
 
         val month: Int = take(2).toInt()
-        return length != EXPIRED_DATE_LENGTH || month !in 1..12
+        return length != EXPIRED_DATE_LENGTH || month !in Month.entries.map(Month::getValue)
     }
 
 private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
