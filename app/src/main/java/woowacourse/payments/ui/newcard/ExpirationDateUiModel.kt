@@ -1,8 +1,8 @@
-package woowacourse.payments.domain
+package woowacourse.payments.ui.newcard
 
 import java.time.Month
 
-class ExpirationDateUiModel(
+data class ExpirationDateUiModel(
     val value: String,
 ) {
     fun isValidMonth(): Boolean {
