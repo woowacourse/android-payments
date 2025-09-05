@@ -1,32 +1,28 @@
 package woowacourse.payments
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.compose.ui.test.performTextInput
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.component.CardNumberInputField
 
 class CardNumberInputTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setUp() {
+    @Test
+    fun 초기_화면에_카드_번호_텍스트가_표시된다() {
+        // given
         composeTestRule.setContent {
             CardNumberInputField(
                 cardNumber = null,
                 onCardNumberChange = { },
             )
         }
-    }
 
-    @Test
-    fun 초기_화면에_카드_번호_텍스트가_표시된다() {
         // then
         composeTestRule
             .onNodeWithText("카드 번호")
@@ -36,6 +32,12 @@ class CardNumberInputTest {
     @Test
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // given
+        composeTestRule.setContent {
+            CardNumberInputField(
+                cardNumber = null,
+                onCardNumberChange = { },
+            )
+        }
 
         // when
         composeTestRule
@@ -55,12 +57,12 @@ class CardNumberInputTest {
     @Test
     fun 카드_번호를_입력하면_4글자_기준으로_기호가_삽입된다() {
         // given
-        val input = "1234567887654321"
-
-        // when
-        composeTestRule
-            .onNode(hasSetTextAction())
-            .performTextInput(input)
+        composeTestRule.setContent {
+            CardNumberInputField(
+                cardNumber = CardNumber("1234567887654321"),
+                onCardNumberChange = { },
+            )
+        }
 
         // then
         composeTestRule
