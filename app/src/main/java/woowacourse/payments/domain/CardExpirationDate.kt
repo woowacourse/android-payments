@@ -4,8 +4,8 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 data class CardExpirationDate(
-    val month: String,
-    val year: String,
+    val month: String = "",
+    val year: String = "",
 ) {
     override fun toString(): String = month + year
 

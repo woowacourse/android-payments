@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
 data class OwnerName(
-    val name: String
+    val name: String = ""
 ) {
     override fun toString(): String {
         return name

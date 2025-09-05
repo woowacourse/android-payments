@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
 data class Password(
-    val password: String,
+    val password: String = "",
 ) {
     override fun toString(): String {
         return password
@@ -11,7 +11,8 @@ data class Password(
         val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
         return Password(newPassword)
     }
-    companion object{
+
+    companion object {
         const val CARD_PASSWORD_MAX_LENGTH = 4
     }
 }
