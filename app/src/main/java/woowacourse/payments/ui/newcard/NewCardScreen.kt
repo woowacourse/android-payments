@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -25,9 +26,9 @@ import woowacourse.payments.ui.newcard.components.PaymentCardBox
 @Composable
 fun NewCardScreen(innerPadding: PaddingValues) {
     var cardNumber: String by rememberSaveable { mutableStateOf("") }
-    var expirationDate: String by rememberSaveable { mutableStateOf("") }
     var name: String by rememberSaveable { mutableStateOf("") }
     var password: String by rememberSaveable { mutableStateOf("") }
+    var expirationDateUitState by remember { mutableStateOf(ExpirationDateUiState("")) }
 
     Column(
         modifier =
@@ -56,8 +57,9 @@ fun NewCardScreen(innerPadding: PaddingValues) {
             modifier =
                 Modifier
                     .padding(start = 24.dp, top = 30.dp),
-            value = expirationDate,
-            onValueChange = { expirationDate = it },
+            value = expirationDateUitState.expirationDate.value,
+            onValueChange = { expirationDateUitState.onValueChanged(it) },
+            isValid = expirationDateUitState.isError,
             label = stringResource(R.string.new_card_expiration_date_label),
             placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
             maxLength = 4,

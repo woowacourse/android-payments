@@ -30,6 +30,7 @@ class ExpirationDateTest {
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },
+                isValid = true,
                 label = "만료일",
                 placeholder = "MM / YY",
                 maxLength = 4,
