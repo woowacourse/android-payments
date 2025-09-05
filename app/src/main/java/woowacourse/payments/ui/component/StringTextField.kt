@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -31,9 +32,9 @@ fun StringTextField(
         placeholder = { Text(stringResource(R.string.placeholder_owner)) },
         supportingText = {
             Text(
-                text = "${value.length} / $maxLength",
+                text = stringResource(R.string.supporting_text_owner, value.length, maxLength),
                 color = Gray200,
-                modifier = Modifier,
+                modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )
         },
