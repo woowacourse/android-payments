@@ -20,12 +20,12 @@ import woowacourse.payments.ui.theme.Gray200
 
 @Composable
 fun NumberTextField(
-    modifier: Modifier = Modifier,
-    label: Int,
-    placeholder: Int,
     value: String,
     onValueChange: (String) -> Unit,
+    label: Int,
+    placeholder: Int,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     val textFieldValue =

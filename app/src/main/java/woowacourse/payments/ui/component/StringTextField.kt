@@ -16,9 +16,9 @@ import woowacourse.payments.ui.theme.Gray200
 
 @Composable
 fun StringTextField(
-    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     maxLength: Int = 30,
 ) {
     val textFieldValue = TextFieldValue(text = value, selection = TextRange(value.length))

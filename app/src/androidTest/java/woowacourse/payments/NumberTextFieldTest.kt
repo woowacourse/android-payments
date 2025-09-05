@@ -14,8 +14,8 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.transformation.NumberVisualTransformation
 import woowacourse.payments.ui.component.NumberTextField
+import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
 class NumberTextFieldTest {
     @get:Rule
