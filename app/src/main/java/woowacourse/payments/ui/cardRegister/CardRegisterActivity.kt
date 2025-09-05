@@ -48,19 +48,20 @@ class CardRegisterActivity : ComponentActivity() {
                             onSaveClick = { }, // TODO: 카드 저장
                         )
                     },
-                    modifier = Modifier.Companion.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
                     Column(
                         modifier =
-                            Modifier.Companion
+                            Modifier
                                 .fillMaxWidth()
-                                .padding(innerPadding),
+                                .padding(innerPadding)
+                                .padding(horizontal = 24.dp),
                     ) {
                         PaymentCard(
                             modifier =
-                                Modifier.Companion
+                                Modifier
                                     .padding(top = 14.dp)
-                                    .align(Alignment.Companion.CenterHorizontally),
+                                    .align(Alignment.CenterHorizontally),
                         )
                         PaymentTextField(
                             text = cardNumber,
@@ -69,13 +70,12 @@ class CardRegisterActivity : ComponentActivity() {
                             hint = stringResource(R.string.card_number_place_holder),
                             maxLength = 16,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = CreditCardVisualTransformation(),
                             modifier =
-                                Modifier.Companion
+                                Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 40.dp)
-                                    .padding(horizontal = 24.dp),
+                                    .padding(top = 40.dp),
                         )
                         PaymentTextField(
                             text = expiredDate,
@@ -84,13 +84,12 @@ class CardRegisterActivity : ComponentActivity() {
                             hint = stringResource(R.string.expired_date_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = DateVisualTransformation(),
                             modifier =
-                                Modifier.Companion
+                                Modifier
                                     .fillMaxWidth(0.5f)
-                                    .padding(top = 30.dp)
-                                    .padding(horizontal = 24.dp),
+                                    .padding(top = 30.dp),
                         )
                         PaymentTextField(
                             text = ownerName,
@@ -104,16 +103,15 @@ class CardRegisterActivity : ComponentActivity() {
                                             R.string.card_owner_supporting_text,
                                             ownerName.length,
                                         ),
-                                    textAlign = TextAlign.Companion.End,
-                                    modifier = Modifier.Companion.fillMaxWidth(),
+                                    textAlign = TextAlign.End,
+                                    modifier = Modifier.fillMaxWidth(),
                                 )
                             },
                             maxLength = 30,
                             modifier =
-                                Modifier.Companion
+                                Modifier
                                     .fillMaxWidth()
-                                    .padding(top = 30.dp)
-                                    .padding(horizontal = 24.dp),
+                                    .padding(top = 30.dp),
                         )
                         PaymentTextField(
                             text = password,
@@ -122,13 +120,12 @@ class CardRegisterActivity : ComponentActivity() {
                             hint = stringResource(R.string.card_password_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Companion.Number),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                             visualTransformation = PasswordVisualTransformation(),
                             modifier =
-                                Modifier.Companion
+                                Modifier
                                     .fillMaxWidth(0.5f)
-                                    .padding(top = 10.dp)
-                                    .padding(horizontal = 24.dp),
+                                    .padding(top = 10.dp),
                         )
                     }
                 }
