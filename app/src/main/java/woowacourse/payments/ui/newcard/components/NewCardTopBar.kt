@@ -21,9 +21,9 @@ import woowacourse.payments.designsystem.theme.Black
 @Composable
 fun NewCardTopBar(
     title: String = stringResource(R.string.new_card_add),
+    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(title, color = Black) },

@@ -24,8 +24,8 @@ fun CounterTextField(
     showCounter: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     colors: TextFieldColors = formTextFieldColors(),
-    onImeAction: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onImeAction: () -> Unit = {},
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),

@@ -30,9 +30,9 @@ fun DigitsTextField(
     colors: TextFieldColors = formTextFieldColors(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     onImeAction: () -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     var textValue by remember(value, grouping, separator) {
         val formattedText = formatWithGrouping(value, grouping, separator)

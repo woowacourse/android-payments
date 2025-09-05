@@ -21,8 +21,8 @@ import woowacourse.payments.designsystem.theme.Yellow
 
 @Composable
 fun PaymentCard(
-    modifier: Modifier = Modifier,
     @DrawableRes imageRes: Int? = null,
+    modifier: Modifier = Modifier,
 ) {
     if (imageRes != null) {
         Image(

@@ -2,7 +2,6 @@ package woowacourse.payments.ui.newcard
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,9 +84,9 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { cardNumber = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(30.dp))
 
@@ -103,9 +102,9 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
+            modifier = Modifier.width(160.dp),
             onValueChange = { expiry = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = Modifier.width(160.dp),
         )
         Spacer(Modifier.height(30.dp))
 
@@ -115,9 +114,9 @@ fun NewCardScreen(
             placeholder = stringResource(R.string.new_card_holder_name_hint),
             maxLength = HOLDER_MAX_LENGTH,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            modifier = Modifier.fillMaxWidth(),
             onValueChange = { cardholder = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
-            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(10.dp))
 
@@ -133,12 +132,12 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done,
                 ),
+            modifier = Modifier.width(160.dp),
             onValueChange = { pin = it },
             onImeAction = {
                 focusManager.clearFocus()
                 onSaved()
             },
-            modifier = Modifier.width(160.dp),
         )
         Spacer(Modifier.height(24.dp))
     }
