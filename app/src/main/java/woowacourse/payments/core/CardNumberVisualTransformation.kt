@@ -23,20 +23,29 @@ class CardNumberVisualTransformation(
         }
 
         val offsetTranslator = object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int = when {
-                offset <= 3 -> offset
-                offset <= 7 -> offset + 3
-                offset <= 11 -> offset + 6
-                offset <= 15 -> offset + 9
-                else -> 19 + 6
+            private val actualLength = minOf(text.length, maxLength)
+            private val separatorLength = SEPARATOR.length
+            private val separatorCount = if (actualLength == 0) 0 else (actualLength - 1) / GROUP_SIZE
+            private val transformedLength = actualLength + separatorCount * separatorLength
+
+            override fun originalToTransformed(offset: Int): Int {
+                val newOffset = offset.coerceIn(0, actualLength)
+                val separatorCount = if (newOffset == 0) 0 else (newOffset - 1) / GROUP_SIZE
+                return newOffset + separatorCount * separatorLength
             }
 
-            override fun transformedToOriginal(offset: Int): Int = when {
-                offset <= 3 -> offset
-                offset <= 10 -> offset - 3
-                offset <= 17 -> offset - 6
-                offset <= 24 -> offset - 9
-                else -> maxLength
+            override fun transformedToOriginal(offset: Int): Int {
+                val adjustedOffset = offset.coerceIn(0, transformedLength)
+                var currentOffset = adjustedOffset
+                for (k in 1..separatorCount) {
+                    val sepStart = k * GROUP_SIZE + (k - 1) * separatorLength
+                    when {
+                        adjustedOffset >= sepStart + separatorLength -> currentOffset -= separatorLength
+                        adjustedOffset >= sepStart -> return k * GROUP_SIZE
+                        else -> break
+                    }
+                }
+                return currentOffset
             }
         }
 
