@@ -2,6 +2,7 @@ package woowacourse.payments.component
 
 import woowacourse.payments.R
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.Black49
@@ -24,38 +26,39 @@ fun CardOwnerTextField(
     onChangeOwnerName: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column {
-        OutlinedTextField(
-            value = ownerName,
-            onValueChange = { newText ->
-                if (newText.length <= maxLength) {
-                    onChangeOwnerName(newText)
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Next
-            ),
-            placeholder = {
-                TextFieldPlaceHolder(textResourceId = R.string.card_owner_place_holder)
-            },
-            label = {
-                Text(
-                    text = stringResource(R.string.card_owner),
-                    color = Black49
-                )
-            },
-            singleLine = true,
-            modifier = modifier.fillMaxWidth()
-        )
-
-        Text(
-            text = "${ownerName.length} / $maxLength",
-            modifier = Modifier
-                .padding(top = 4.dp)
-                .align(Alignment.End)
-        )
-    }
+    OutlinedTextField(
+        value = ownerName,
+        onValueChange = { newText ->
+            if (newText.length <= maxLength) {
+                onChangeOwnerName(newText)
+            }
+        },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next
+        ),
+        placeholder = {
+            TextFieldPlaceHolder(textResourceId = R.string.card_owner_place_holder)
+        },
+        label = {
+            Text(
+                text = stringResource(R.string.card_owner),
+                color = Black49
+            )
+        },
+        singleLine = true,
+        supportingText = {
+            Text(
+                text = stringResource(R.string.card_owner_letter_count).format(
+                    ownerName.length,
+                    maxLength
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.End
+            )
+        },
+        modifier = modifier.fillMaxWidth()
+    )
 }
 
 @Preview(showBackground = true)
