@@ -49,11 +49,11 @@ fun CardExpirationDateTextField(
         placeholder = { Text(text = stringResource(R.string.card_expiration_date_text_field_placeholder)) },
         value = cardExpirationDate,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_EXPIRATION_DATE_LENGTH) return@OutlinedTextField
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
+            val newExpirationDate = newValue.take(CARD_EXPIRATION_DATE_LENGTH)
+            if (newExpirationDate.isDigitsOnly().not()) return@OutlinedTextField
 
-            isValidYearMonth = isValidYearMonth(newValue)
-            onCardExpirationDateChanged(newValue)
+            isValidYearMonth = isValidYearMonth(newExpirationDate)
+            onCardExpirationDateChanged(newExpirationDate)
         },
         isError = errorMessage != null,
         supportingText = {
