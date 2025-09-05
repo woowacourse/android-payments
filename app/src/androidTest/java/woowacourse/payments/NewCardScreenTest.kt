@@ -78,7 +78,7 @@ class NewCardScreenTest {
         // when
         composeTestRule
             .onNode(
-                hasText("비밀번호")
+                hasText("비밀번호") and hasSetTextAction()
             ).performTextInput(password)
 
         // then
