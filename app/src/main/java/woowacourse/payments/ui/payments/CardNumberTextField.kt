@@ -37,10 +37,10 @@ fun CardNumberTextField(
         placeholder = { Text(text = stringResource(R.string.card_number_text_field_placeholder)) },
         value = cardNumber,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_NUMBER_LENGTH) return@OutlinedTextField
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
+            val newCardNumber = newValue.take(CARD_NUMBER_LENGTH)
+            if (newCardNumber.isDigitsOnly().not()) return@OutlinedTextField
 
-            onCardNumberChanged(newValue)
+            onCardNumberChanged(newCardNumber)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
