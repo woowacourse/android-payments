@@ -7,7 +7,7 @@ data class CardExpirationDate(
     val month: String = "",
     val year: String = "",
 ) {
-    override fun toString(): String = month + year
+    fun toCombinedFormat():String = month + year
 
     fun onValueChange(date: String): CardExpirationDate {
         val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)

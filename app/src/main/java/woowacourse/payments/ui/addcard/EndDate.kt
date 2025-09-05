@@ -17,7 +17,7 @@ fun EndDate(
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
-        value = endDate.toString(),
+        value = endDate.toCombinedFormat(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_end_date_placeholder_text)) },
