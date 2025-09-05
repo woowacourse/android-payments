@@ -30,8 +30,6 @@ class CardNumberTest {
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },
-                label = "카드 번호",
-                placeholder = "0000 - 0000 - 0000 - 0000",
                 maxLength = 16,
             )
         }

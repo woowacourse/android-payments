@@ -30,8 +30,6 @@ class PasswordTest {
                 modifier = Modifier,
                 value = text,
                 onValueChange = { text = it },
-                label = "비밀번호",
-                placeholder = "0000",
                 maxLength = 4,
             )
         }

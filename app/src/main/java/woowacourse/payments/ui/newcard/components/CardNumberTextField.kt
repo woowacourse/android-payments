@@ -18,8 +18,6 @@ import woowacourse.payments.ui.newcard.util.transformation.CardNumberVisualTrans
 fun CardNumberTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
-    placeholder: String,
     maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -27,11 +25,11 @@ fun CardNumberTextField(
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
-        label = { Text(text = label) },
+        label = { Text(text = stringResource(R.string.new_card_card_number_label)) },
         onValueChange = { newValue ->
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
-        placeholder = { Text(placeholder) },
+        placeholder = { Text(stringResource(R.string.new_card_card_number_placeholder)) },
         visualTransformation = CardNumberVisualTransformation(),
     )
 }
@@ -46,8 +44,6 @@ private fun CardNumberTextFieldPreview() {
                 .padding(top = 40.dp, start = 24.dp, end = 24.dp),
         value = "1234123412341234",
         onValueChange = {},
-        label = stringResource(R.string.new_card_card_number_label),
-        placeholder = stringResource(R.string.new_card_card_number_placeholder),
         maxLength = 16,
     )
 }

@@ -16,19 +16,17 @@ import woowacourse.payments.R
 fun NameTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
-    placeholder: String,
     maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,
         value = value,
-        label = { Text(text = label) },
+        label = { Text(stringResource(R.string.new_card_name_label)) },
         onValueChange = { newValue ->
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
-        placeholder = { Text(placeholder) },
+        placeholder = { Text(stringResource(R.string.new_card_name_placeholder)) },
         supportingText = {
             Text(
                 text = stringResource(R.string.new_card_name_length, value.length, maxLength),
@@ -51,8 +49,6 @@ private fun NameTextFieldPreview() {
                 .padding(start = 24.dp, top = 30.dp, end = 24.dp),
         value = "hwannow",
         onValueChange = {},
-        label = stringResource(R.string.new_card_name_label),
-        placeholder = stringResource(R.string.new_card_name_placeholder),
         maxLength = 30,
     )
 }

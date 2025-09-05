@@ -19,8 +19,6 @@ fun ExpirationDateTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isValid: Boolean,
-    label: String,
-    placeholder: String,
     maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -28,11 +26,11 @@ fun ExpirationDateTextField(
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         value = value,
-        label = { Text(text = label) },
+        label = { Text(stringResource(R.string.new_card_expiration_date_label)) },
         onValueChange = { newValue ->
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
-        placeholder = { Text(placeholder) },
+        placeholder = { Text(stringResource(R.string.new_card_expiration_date_placeholder)) },
         visualTransformation = ExpirationDateVisualTransformation(),
         supportingText = {
             if (!isValid) {
@@ -55,8 +53,6 @@ private fun ExpirationDateTextFieldPreview() {
         value = "0611",
         isValid = true,
         onValueChange = {},
-        label = stringResource(R.string.new_card_expiration_date_label),
-        placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
         maxLength = 4,
     )
 }

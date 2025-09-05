@@ -13,10 +13,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.NameTextField
@@ -49,8 +47,6 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(top = 40.dp, start = 24.dp, end = 24.dp),
             value = cardNumber,
             onValueChange = { cardNumber = it },
-            label = stringResource(R.string.new_card_card_number_label),
-            placeholder = stringResource(R.string.new_card_card_number_placeholder),
             maxLength = 16,
         )
         ExpirationDateTextField(
@@ -60,8 +56,6 @@ fun NewCardScreen(innerPadding: PaddingValues) {
             value = expirationDateUitState.expirationDate.value,
             onValueChange = { expirationDateUitState.onValueChanged(it) },
             isValid = expirationDateUitState.isError,
-            label = stringResource(R.string.new_card_expiration_date_label),
-            placeholder = stringResource(R.string.new_card_expiration_date_placeholder),
             maxLength = 4,
         )
         NameTextField(
@@ -71,8 +65,6 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp, end = 24.dp),
             value = name,
             onValueChange = { name = it },
-            label = stringResource(R.string.new_card_name_label),
-            placeholder = stringResource(R.string.new_card_name_placeholder),
             maxLength = 30,
         )
         PasswordField(
@@ -81,8 +73,6 @@ fun NewCardScreen(innerPadding: PaddingValues) {
                     .padding(start = 24.dp, top = 30.dp),
             value = password,
             onValueChange = { password = it },
-            label = stringResource(R.string.new_card_password_label),
-            placeholder = stringResource(R.string.new_card_password_placeholder),
             maxLength = 4,
         )
     }

@@ -15,19 +15,17 @@ import woowacourse.payments.R
 fun PasswordField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
-    placeholder: String,
     maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier,
         value = value,
-        label = { Text(text = label) },
+        label = { Text(stringResource(R.string.new_card_password_label)) },
         onValueChange = { newValue ->
             if (newValue.length <= maxLength) onValueChange(newValue)
         },
-        placeholder = { Text(placeholder) },
+        placeholder = { Text(stringResource(R.string.new_card_password_placeholder)) },
         visualTransformation = PasswordVisualTransformation(),
     )
 }
@@ -41,8 +39,6 @@ private fun PasswordFieldPreview() {
                 .padding(start = 24.dp, top = 30.dp),
         value = "0611",
         onValueChange = {},
-        label = stringResource(R.string.new_card_password_label),
-        placeholder = stringResource(R.string.new_card_password_placeholder),
         maxLength = 4,
     )
 }
