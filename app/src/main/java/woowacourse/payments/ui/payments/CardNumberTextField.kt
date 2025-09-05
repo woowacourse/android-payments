@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -33,22 +34,21 @@ fun CardNumberTextField(
 
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_number_text_field_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.card_number_text_field_placeholder),
-                color = Color.Gray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.card_number_text_field_placeholder)) },
         value = cardNumber,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_NUMBER_LENGTH) {
-                return@OutlinedTextField onCardNumberChanged(newValue.take(CARD_NUMBER_LENGTH))
-            }
+            if (newValue.length > CARD_NUMBER_LENGTH) return@OutlinedTextField
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
+
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedPlaceholderColor = Color.Gray,
+                unfocusedPlaceholderColor = Color.Gray,
+            ),
         modifier = modifier,
     )
 }
