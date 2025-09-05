@@ -72,4 +72,20 @@ class ExpirationDateTest {
             .onNodeWithText("11 / 25")
             .assertIsDisplayed()
     }
+
+    @Test
+    fun `만료일은_최대_길이까지만_입력_가능하다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("만료일"))
+
+        // when
+        repeat(30) {
+            textField.performTextInput("1")
+        }
+
+        // then
+        composeTestRule
+            .onNodeWithText("11 / 11")
+            .assertIsDisplayed()
+    }
 }

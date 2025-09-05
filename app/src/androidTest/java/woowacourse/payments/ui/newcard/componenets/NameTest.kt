@@ -71,4 +71,20 @@ class NameTest {
             .onNodeWithText("7 / 30")
             .assertIsDisplayed()
     }
+
+    @Test
+    fun `이름은_최대_길이까지만_입력_가능하다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("카드 소유자 이름 (선택)"))
+
+        // when
+        repeat(50) {
+            textField.performTextInput("A")
+        }
+
+        // then
+        composeTestRule
+            .onNodeWithText("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+            .assertIsDisplayed()
+    }
 }

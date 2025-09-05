@@ -71,4 +71,20 @@ class PasswordTest {
             .onNodeWithText("••••")
             .assertIsDisplayed()
     }
+
+    @Test
+    fun `비밀번호는_최대_길이까지만_입력_가능하다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("비밀번호"))
+
+        // when
+        repeat(30) {
+            textField.performTextInput("1")
+        }
+
+        // then
+        composeTestRule
+            .onNodeWithText("••••")
+            .assertIsDisplayed()
+    }
 }

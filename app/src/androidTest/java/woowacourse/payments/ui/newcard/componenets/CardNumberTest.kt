@@ -71,4 +71,20 @@ class CardNumberTest {
             .onNodeWithText("1234 - 5678 - 9")
             .assertIsDisplayed()
     }
+
+    @Test
+    fun `카드_번호는_최대_길이까지만_입력_가능하다`() {
+        // given
+        val textField = composeTestRule.onNode(hasText("카드 번호"))
+
+        // when
+        repeat(30) {
+            textField.performTextInput("1")
+        }
+
+        // then
+        composeTestRule
+            .onNodeWithText("1111 - 1111 - 1111 - 1111")
+            .assertIsDisplayed()
+    }
 }
