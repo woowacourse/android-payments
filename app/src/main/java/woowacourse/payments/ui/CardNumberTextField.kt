@@ -73,7 +73,7 @@ private fun filteredCardNumber(text: AnnotatedString): TransformedText {
     val transformedText: String =
         trimmedText
             .mapIndexed { index: Int, char: Char ->
-                if (index % 4 == 3 && index != CARD_NUMBER_LENGTH - 1) {
+                if (index % CARD_GROUP_LENGTH == CARD_GROUP_LENGTH - 1 && index != CARD_NUMBER_LENGTH - 1) {
                     char + DELIMITER
                 } else {
                     char
@@ -86,7 +86,7 @@ private fun filteredCardNumber(text: AnnotatedString): TransformedText {
 private val creditCardOffsetTranslator =
     object : OffsetMapping {
         override fun originalToTransformed(offset: Int): Int {
-            val delimiterCount: Int = (offset / 4).coerceAtMost(DELIMITER_COUNT_MAX)
+            val delimiterCount: Int = (offset / CARD_GROUP_LENGTH).coerceAtMost(DELIMITER_COUNT_MAX)
             return offset + DELIMITER.length * delimiterCount
         }
 
@@ -97,5 +97,6 @@ private val creditCardOffsetTranslator =
     }
 
 private const val CARD_NUMBER_LENGTH: Int = 16
+private const val CARD_GROUP_LENGTH: Int = 4
 private const val DELIMITER: String = " - "
 private const val DELIMITER_COUNT_MAX: Int = 3
