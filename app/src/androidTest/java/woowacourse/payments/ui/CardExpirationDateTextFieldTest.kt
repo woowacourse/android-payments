@@ -26,12 +26,9 @@ class CardExpirationDateTextFieldTest {
     fun setup() {
         composeTestRule.setContent {
             var expirationDate by remember { mutableStateOf("") }
-            var errorMessage by remember { mutableStateOf<String?>(null) }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
-                errorMessage = errorMessage,
-                onErrorMessageChanged = { newValue -> errorMessage = newValue },
                 modifier = Modifier.testTag(TEST_TAG),
             )
         }

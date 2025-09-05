@@ -117,10 +117,6 @@ private fun CardRegistrationScreenContent(
                 )
             },
             errorMessage = uiState.cardExpirationDateErrorMessage,
-            onErrorMessageChanged = { errorMsg ->
-                val newUiState = uiState.copy(cardExpirationDateErrorMessage = errorMsg)
-                onUiStateChanged(newUiState)
-            },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
