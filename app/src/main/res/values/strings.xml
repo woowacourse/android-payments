@@ -11,4 +11,7 @@
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
     <string name="text_field_invalid_format_message">올바른 형식이 아닙니다.</string>
+    <string name="card_addition_top_bar_title">카드 추가</string>
+    <string name="card_addition_top_bar_navigate_back_content_description">뒤로 가기</string>
+    <string name="card_addition_top_bar_done_content_description">완료</string>
 </resources>
