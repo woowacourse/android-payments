@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
