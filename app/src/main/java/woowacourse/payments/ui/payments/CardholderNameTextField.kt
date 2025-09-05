@@ -60,7 +60,7 @@ fun CardholderNameTextField(
                 modifier = Modifier.fillMaxWidth(),
             )
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
     )
 }
 
