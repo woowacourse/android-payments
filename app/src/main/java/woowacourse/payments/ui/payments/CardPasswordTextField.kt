@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,22 +30,21 @@ fun CardPasswordTextField(
 
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_password_text_field_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.card_password_text_field_placeholder),
-                color = Color.Gray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.card_password_text_field_placeholder)) },
         value = cardPassword,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_PASSWORD_LENGTH) {
-                return@OutlinedTextField onCardPasswordChanged(newValue.take(CARD_PASSWORD_LENGTH))
-            }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
-            onCardPasswordChanged(newValue)
+            val newPassword = newValue.take(CARD_PASSWORD_LENGTH)
+            if (newPassword.isDigitsOnly().not()) return@OutlinedTextField
+
+            onCardPasswordChanged(newPassword)
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = visualTransformation,
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedPlaceholderColor = Color.Gray,
+                unfocusedPlaceholderColor = Color.Gray,
+            ),
         modifier = modifier,
     )
 }
