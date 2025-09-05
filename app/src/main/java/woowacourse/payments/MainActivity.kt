@@ -46,44 +46,44 @@ class MainActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            label = getString(R.string.CardNumberLabel),
+                            label = getString(R.string.card_number_label),
                             hint = "0000 - 0000 - 0000 - 0000",
                             modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 16,
                             mask = InputMask.CardNumber,
-                            errorMessage = getString(R.string.CardNumberErrorMessage),
+                            errorMessage = getString(R.string.card_number_error_message),
                             imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            label = getString(R.string.CardExpiryLabel),
+                            label = getString(R.string.card_expiry_label),
                             hint = "MM / YY",
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
                                 .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Expiry,
-                            errorMessage = getString(R.string.CardExpiryErrorMessage),
+                            errorMessage = getString(R.string.card_expiry_error_message),
                             imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedTextField(
-                            label = getString(R.string.CardOwnerLabel),
-                            hint = getString(R.string.CardOwnerHint),
+                            label = getString(R.string.card_owner_label),
+                            hint = getString(R.string.card_owner_hint),
                             modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 30,
                             imeAction = ImeAction.Next,
                         )
                         Spacer(modifier = Modifier.height(15.dp))
                         DigitTextField(
-                            label = getString(R.string.CardPasswordLabel),
+                            label = getString(R.string.card_password_label),
                             hint = "0000",
                             modifier = Modifier
                                 .fillMaxWidth(0.5f)
                                 .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Password,
-                            errorMessage = getString(R.string.CardPasswordErrorMessage),
+                            errorMessage = getString(R.string.card_password_error_message),
                         )
                     }
                 }
