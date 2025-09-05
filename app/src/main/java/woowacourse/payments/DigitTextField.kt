@@ -35,11 +35,9 @@ fun DigitTextField(
             val filtered = newText.filter { it.isDigit() }
             val newNumber = filtered.take(maxLength)
             number = newNumber
-            isError = if (mask == InputMask.Expiry) {
-                isValidExpiry(number)
-            } else {
-                (maxLength != Int.MAX_VALUE) && (newNumber.length < maxLength)
-            }
+            val lengthError = (maxLength != Int.MAX_VALUE && newNumber.length < maxLength)
+            val expiryError = (mask == InputMask.Expiry && isValidExpiry(number))
+            isError = lengthError || expiryError
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
