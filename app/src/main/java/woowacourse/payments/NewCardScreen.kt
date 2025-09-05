@@ -62,6 +62,7 @@ fun NewCardScreen(
             },
             maxLength = 4,
             modifier = Modifier
+                .fillMaxWidth(0.5f)
                 .padding(top = 18.dp)
         )
 
@@ -77,6 +78,9 @@ fun NewCardScreen(
             maxLength = 4,
             password = cardPassword,
             onPasswordChange = { cardPassword = it },
+            modifier = Modifier
+                .fillMaxWidth(0.5f)
+                .padding(top = 18.dp)
         )
     }
 }

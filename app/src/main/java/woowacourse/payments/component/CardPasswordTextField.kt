@@ -1,6 +1,5 @@
 package woowacourse.payments.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -44,7 +43,6 @@ fun CardPasswordTextField(
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         modifier = modifier
-            .fillMaxWidth(0.5f)
     )
 }
 
