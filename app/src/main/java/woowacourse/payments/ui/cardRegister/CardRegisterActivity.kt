@@ -67,7 +67,7 @@ class CardRegisterActivity : ComponentActivity() {
                             text = cardNumber,
                             onValueChanged = { cardNumber = it },
                             label = stringResource(R.string.card_number_label),
-                            hint = stringResource(R.string.card_number_place_holder),
+                            placeholder = stringResource(R.string.card_number_place_holder),
                             maxLength = 16,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -81,7 +81,7 @@ class CardRegisterActivity : ComponentActivity() {
                             text = expiredDate,
                             onValueChanged = { expiredDate = it },
                             label = stringResource(R.string.expired_date_label),
-                            hint = stringResource(R.string.expired_date_place_holder),
+                            placeholder = stringResource(R.string.expired_date_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -95,7 +95,7 @@ class CardRegisterActivity : ComponentActivity() {
                             text = ownerName,
                             onValueChanged = { ownerName = it },
                             label = stringResource(R.string.card_owner_label),
-                            hint = stringResource(R.string.card_owner_place_holder),
+                            placeholder = stringResource(R.string.card_owner_place_holder),
                             supportingText = {
                                 Text(
                                     text =
@@ -117,7 +117,7 @@ class CardRegisterActivity : ComponentActivity() {
                             text = password,
                             onValueChanged = { password = it },
                             label = stringResource(R.string.card_password_label),
-                            hint = stringResource(R.string.card_password_place_holder),
+                            placeholder = stringResource(R.string.card_password_place_holder),
                             maxLength = 4,
                             onlyDigits = true,
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

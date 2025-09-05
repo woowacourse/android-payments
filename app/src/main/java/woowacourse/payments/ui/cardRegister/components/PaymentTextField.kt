@@ -16,7 +16,7 @@ fun PaymentTextField(
     text: String,
     onValueChanged: (newText: String) -> Unit,
     label: String,
-    hint: String,
+    placeholder: String,
     maxLength: Int,
     modifier: Modifier = Modifier,
     onlyDigits: Boolean = false,
@@ -37,7 +37,7 @@ fun PaymentTextField(
             }
         },
         label = { Text(text = label) },
-        placeholder = { Text(text = hint) },
+        placeholder = { Text(text = placeholder) },
         enabled = true,
         singleLine = true,
         keyboardOptions = keyboardOptions,
@@ -53,7 +53,7 @@ fun PaymentTextFieldPreview() {
     AndroidpaymentsTheme {
         PaymentTextField(
             label = "닉네임",
-            hint = "뭉치즈",
+            placeholder = "뭉치즈",
             maxLength = 4,
             text = "뭉치즈",
             supportingText = {

@@ -23,7 +23,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "카드 번호",
-                hint = "0000-0000-0000-0000",
+                placeholder = "0000-0000-0000-0000",
                 maxLength = 4,
                 text = text,
                 onlyDigits = true,
@@ -44,7 +44,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "닉네임",
-                hint = "뭉치즈~",
+                placeholder = "뭉치즈~",
                 maxLength = maxLength,
                 text = "123456789",
                 onValueChanged = { "" },
@@ -64,7 +64,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "닉네임",
-                hint = "뭉치즈~",
+                placeholder = "뭉치즈~",
                 maxLength = 10,
                 text = "123456789",
                 onValueChanged = {},
@@ -85,7 +85,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "닉네임",
-                hint = "뭉치즈~",
+                placeholder = "뭉치즈~",
                 maxLength = 10,
                 text = "123456789",
                 onValueChanged = {},
@@ -104,7 +104,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "카드번호",
-                hint = "뭉치즈~",
+                placeholder = "뭉치즈~",
                 maxLength = 10,
                 text = "123456789",
                 onValueChanged = {},
@@ -123,7 +123,7 @@ class PaymentTextFieldTest {
         composeTestRule.setContent {
             PaymentTextField(
                 label = "만료일",
-                hint = "MM/YY",
+                placeholder = "MM/YY",
                 maxLength = 4,
                 text = "0130",
                 onValueChanged = {},
