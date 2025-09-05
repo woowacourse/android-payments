@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
 
+@Suppress("ktlint:standard:function-naming")
 class NewCardScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
