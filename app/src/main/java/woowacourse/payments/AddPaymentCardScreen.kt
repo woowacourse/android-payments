@@ -14,15 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.common.NumberVisualTransformation
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.StringTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
 @Composable
 fun AddPaymentCardScreen() {
@@ -57,7 +58,11 @@ fun AddPaymentCardScreen() {
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
                 maxLength = 16,
-                visualTransformation = NumberVisualTransformation(4, " - "),
+                visualTransformation =
+                    NumberVisualTransformation(
+                        4,
+                        stringResource(R.string.card_number_separator),
+                    ),
             )
             NumberTextField(
                 modifier = Modifier.fillMaxWidth(0.6f),
@@ -66,7 +71,11 @@ fun AddPaymentCardScreen() {
                 value = expiry,
                 onValueChange = { expiry = it },
                 maxLength = 4,
-                visualTransformation = NumberVisualTransformation(2, " / "),
+                visualTransformation =
+                    NumberVisualTransformation(
+                        2,
+                        stringResource(R.string.expiry_separator),
+                    ),
             )
             StringTextField(
                 modifier = Modifier.fillMaxWidth(),
