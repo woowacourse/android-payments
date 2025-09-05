@@ -77,6 +77,7 @@ fun NewCardScreen(
             label = stringResource(R.string.new_card_number_label),
             placeholder = stringResource(R.string.new_card_number_hint),
             maxLength = CARD_NUMBER_MAX_LENGTH,
+            modifier = Modifier.fillMaxWidth(),
             grouping = IntArray(CARD_NUMBER_GROUP_COUNT) { CARD_NUMBER_GROUP_SIZE },
             separator = SEPARATOR_GROUP,
             keyboardOptions =
@@ -84,7 +85,6 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
-            modifier = Modifier.fillMaxWidth(),
             onValueChange = { cardNumber = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
         )
@@ -95,6 +95,7 @@ fun NewCardScreen(
             label = stringResource(R.string.new_card_expiry_label),
             placeholder = stringResource(R.string.new_card_expiry_hint),
             maxLength = EXPIRY_MAX_LENGTH,
+            modifier = Modifier.width(160.dp),
             grouping = IntArray(EXPIRY_GROUP_COUNT) { EXPIRY_GROUP_SIZE },
             separator = SEPARATOR_EXPIRY,
             keyboardOptions =
@@ -102,7 +103,6 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
                 ),
-            modifier = Modifier.width(160.dp),
             onValueChange = { expiry = it },
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
         )
@@ -125,6 +125,7 @@ fun NewCardScreen(
             label = stringResource(R.string.new_card_pin_label),
             placeholder = stringResource(R.string.new_card_pin_hint),
             maxLength = PIN_MAX_LENGTH,
+            modifier = Modifier.width(160.dp),
             separator = "",
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions =
@@ -132,7 +133,6 @@ fun NewCardScreen(
                     keyboardType = KeyboardType.NumberPassword,
                     imeAction = ImeAction.Done,
                 ),
-            modifier = Modifier.width(160.dp),
             onValueChange = { pin = it },
             onImeAction = {
                 focusManager.clearFocus()

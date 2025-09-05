@@ -25,12 +25,12 @@ fun DigitsTextField(
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     grouping: IntArray? = null,
     separator: String = " - ",
     colors: TextFieldColors = formTextFieldColors(),
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     onImeAction: () -> Unit = {},
 ) {

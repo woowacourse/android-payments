@@ -21,10 +21,10 @@ fun CounterTextField(
     label: String,
     placeholder: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     showCounter: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     colors: TextFieldColors = formTextFieldColors(),
-    modifier: Modifier = Modifier,
     onImeAction: () -> Unit = {},
 ) {
     OutlinedTextField(
