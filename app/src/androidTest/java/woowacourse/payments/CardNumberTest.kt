@@ -1,6 +1,7 @@
 package woowacourse.payments
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
@@ -27,23 +28,46 @@ class CardNumberTest {
 
     @Test
     fun 카드_번호는_16자이다() {
+        // given
+        val cardNumber = "1".repeat(16)
+
+        // when
         composeTestRule
             .onNodeWithText("")
-            .performTextInput("1234123412341234")
+            .performTextInput(cardNumber)
 
+        // then
         composeTestRule
-            .onNodeWithText("1234-1234-1234-1234")
+            .onNodeWithText("1111-1111-1111-1111")
             .assertIsDisplayed()
     }
 
     @Test
     fun 카드_번호는_16자를_초과할_수_없다() {
-        composeTestRule
-            .onNodeWithText("")
-            .performTextInput("12341234123412341")
+        val input = "1".repeat(17)
 
         composeTestRule
-            .onNodeWithText("1234-1234-1234-1234")
+            .onNodeWithText("")
+            .performTextInput(input)
+
+        composeTestRule
+            .onNodeWithText("1111-1111-1111-1111")
             .assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_번호는_16자여야_한다() {
+        // given
+        val input = "1".repeat(15)
+
+        // when
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput(input)
+
+        // then
+        composeTestRule
+            .onNodeWithText("카드 번호는 16자여야 합니다.")
+            .isDisplayed()
     }
 }
