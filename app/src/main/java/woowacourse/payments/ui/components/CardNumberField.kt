@@ -7,20 +7,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
+import woowacourse.payments.ui.transformation.SeparatedTransformation
 
 @Composable
 fun CardNumberField(
-    value: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit,
+    value: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardNumberVisualTransformation =
+        SeparatedTransformation(
+            maxLength = CARD_NUMBER_MAX_LENGTH,
+            groupSize = CARD_NUMBER_CHUNK_SIZE,
+            separator = CARD_NUMBER_SEPARATOR,
+        )
+
     OutlinedTextField(
         keyboardOptions =
             KeyboardOptions(
@@ -28,9 +34,10 @@ fun CardNumberField(
             ),
         modifier = modifier,
         value = value,
-        onValueChange = { input ->
-            onValueChange(formatCardNumber(input))
+        onValueChange = {
+            onValueChange(it.filter(Char::isDigit).take(CARD_NUMBER_MAX_LENGTH))
         },
+        visualTransformation = cardNumberVisualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
@@ -42,21 +49,12 @@ fun CardNumberField(
     )
 }
 
-private fun formatCardNumber(input: TextFieldValue): TextFieldValue {
-    val digits = input.text.filter(Char::isDigit).take(CARD_NUMBER_MAX_LENGTH)
-    val formatted = digits.chunked(CARD_NUMBER_CHUNK_SIZE).joinToString(CARD_NUMBER_SEPARATOR)
-    return TextFieldValue(
-        text = formatted,
-        selection = TextRange(formatted.length),
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
 private fun CardNumberFieldPreview() {
     AndroidpaymentsTheme {
         CardNumberField(
-            value = TextFieldValue("1234-5678-9012-3456"),
+            value = "1234567890123456",
             onValueChange = {},
             modifier = Modifier.fillMaxWidth(),
         )

@@ -18,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.components.CardNumberField
@@ -41,8 +40,8 @@ class AddCardActivity : ComponentActivity() {
 @Composable
 fun AddCardScreen() {
     AndroidpaymentsTheme {
-        var number by remember { mutableStateOf(TextFieldValue("")) }
-        var expiration by remember { mutableStateOf(TextFieldValue("")) }
+        var number by remember { mutableStateOf("") }
+        var expiration by remember { mutableStateOf("") }
         var userName by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
