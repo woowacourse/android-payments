@@ -4,10 +4,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,23 +14,21 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardNumberInput(
+fun CardNumberInputField(
     cardNumber: CardNumber?,
     onCardNumberChange: (CardNumber?) -> Unit,
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
-    var text by remember { mutableStateOf("") }
-
     OutlinedTextField(
-        value = text,
+        value = cardNumber?.value ?: "",
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(16)
-            text = filteredText
-            onCardNumberChange(CardNumber(filteredText))
+            val newCardNumber = CardNumber(filteredText)
+            onCardNumberChange(newCardNumber)
         },
-        visualTransformation = CardNumberVisualTransformation(groupSize = 4, delimiter = " - "),
         modifier = modifier,
+        visualTransformation = CardNumberVisualTransformation(groupSize = 4, delimiter = " - "),
         label = { Text(text = stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
@@ -51,7 +45,7 @@ fun CardNumberInput(
 @Preview(showBackground = true)
 fun CardNumberInputPreview() {
     AndroidpaymentsTheme {
-        CardNumberInput(
+        CardNumberInputField(
             cardNumber = CardNumber(""),
             onCardNumberChange = { },
         )
