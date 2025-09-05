@@ -23,7 +23,7 @@ fun PasswordField(
     OutlinedTextField(
         keyboardOptions =
             KeyboardOptions(
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.NumberPassword,
             ),
         modifier = modifier,
         value = value,
