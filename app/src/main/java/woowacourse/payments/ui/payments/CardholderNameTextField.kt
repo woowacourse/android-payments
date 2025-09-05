@@ -23,13 +23,14 @@ import woowacourse.payments.R
 
 private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField"
 private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
+private const val CARDHOLDER_NAME_DEFAULT_MAX_LENGTH = 30
 
 @Composable
 fun CardholderNameTextField(
-    modifier: Modifier = Modifier,
     cardholderName: String,
     onCardholderNameChanged: (String) -> Unit,
-    maxLength: Int = 30,
+    modifier: Modifier = Modifier,
+    maxLength: Int = CARDHOLDER_NAME_DEFAULT_MAX_LENGTH,
 ) {
     OutlinedTextField(
         modifier = modifier.testTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG),

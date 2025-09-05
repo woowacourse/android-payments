@@ -1,15 +1,12 @@
 package woowacourse.payments.ui.payments
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -26,9 +23,9 @@ private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
 
 @Composable
 fun CardPasswordTextField(
-    modifier: Modifier = Modifier,
     cardPassword: String,
     onCardPasswordChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val visualTransformation = remember { PasswordVisualTransformation() }
 
@@ -59,12 +56,15 @@ fun CardPasswordTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardPasswordTextFieldPreview() {
-    var cardPassword by remember { mutableStateOf("1234") }
-
-    Box(modifier = Modifier.padding(12.dp)) {
+    Column(modifier = Modifier.padding(12.dp)) {
         CardPasswordTextField(
-            cardPassword = cardPassword,
-            onCardPasswordChanged = { newValue -> cardPassword = newValue },
+            cardPassword = "1234",
+            onCardPasswordChanged = {},
+        )
+
+        CardPasswordTextField(
+            cardPassword = "",
+            onCardPasswordChanged = {},
         )
     }
 }

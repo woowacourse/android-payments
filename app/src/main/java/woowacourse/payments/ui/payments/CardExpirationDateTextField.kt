@@ -24,11 +24,11 @@ private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDate
 
 @Composable
 fun CardExpirationDateTextField(
-    modifier: Modifier = Modifier,
     cardExpirationDate: String,
     onCardExpirationDateChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
     errorMessage: String? = null,
-    onErrorMessageChanged: (String?) -> Unit,
+    onErrorMessageChanged: (String?) -> Unit = {},
 ) {
     val isError = errorMessage != null
 

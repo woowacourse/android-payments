@@ -66,22 +66,22 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
-            modifier = Modifier.padding(innerPadding),
             uiState = uiState,
             onUiStateChanged = { newUiState -> uiState = newUiState },
             paymentCardValidator = paymentCardValidator,
             expiredCardMessage = expiredCardMessage,
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
 
 @Composable
 private fun CardRegistrationScreenContent(
-    modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
@@ -97,9 +97,9 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(40.dp))
 
         CardNumberTextField(
-            modifier = Modifier.fillMaxWidth(),
             cardNumber = uiState.cardNumber,
             onCardNumberChanged = { newValue -> onUiStateChanged(uiState.copy(cardNumber = newValue)) },
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -126,9 +126,9 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         CardholderNameTextField(
-            modifier = Modifier.fillMaxWidth(),
             cardholderName = uiState.cardholderName,
             onCardholderNameChanged = { newValue -> onUiStateChanged(uiState.copy(cardholderName = newValue)) },
+            modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(12.dp))

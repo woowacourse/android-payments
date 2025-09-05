@@ -1,6 +1,6 @@
 package woowacourse.payments.ui.payments
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -22,9 +22,9 @@ private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
 
 @Composable
 fun CardNumberTextField(
-    modifier: Modifier = Modifier,
     cardNumber: String,
     onCardNumberChanged: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
@@ -53,7 +53,14 @@ fun CardNumberTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardNumberTextFieldPreview() {
-    Box(modifier = Modifier.padding(CARD_NUMBER_LENGTH.dp)) {
-        CardNumberTextField(cardNumber = "") {}
+    Column(modifier = Modifier.padding(CARD_NUMBER_LENGTH.dp)) {
+        CardNumberTextField(
+            cardNumber = "",
+            onCardNumberChanged = {},
+        )
+        CardNumberTextField(
+            cardNumber = "1234123412341234",
+            onCardNumberChanged = {},
+        )
     }
 }
