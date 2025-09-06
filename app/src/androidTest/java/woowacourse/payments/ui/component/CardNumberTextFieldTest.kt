@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.component
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -15,7 +15,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.CardNumberTextField
 
 class CardNumberTextFieldTest {
     @get:Rule

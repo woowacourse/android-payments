@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +16,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.CardExpirationDateTextField
 
 class CardExpirationDateTextFieldTest {
     @get:Rule
@@ -59,7 +58,7 @@ class CardExpirationDateTextFieldTest {
 
         // then
         composeTestRule
-            .onNodeWithText("유효하지 않은 만료일 입니다.")
+            .onNodeWithText("유효하지 않은 만료일입니다.")
             .assertIsDisplayed()
     }
 
