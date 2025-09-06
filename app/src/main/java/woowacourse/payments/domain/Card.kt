@@ -10,7 +10,10 @@ data class Card(
         const val CARD_NUMBER_GROUP_SIZE = 4
         const val CARD_SEPARATOR = " - "
         const val CARD_MAX_LENGTH = 16
-        const val CARD_MASKING_CHAR = "*"
-        const val MASKING_LENGTH = 8
+        private const val CARD_MASKING_CHAR = "*"
+        private const val CARD_NUMBER_MASKING_LENGTH = 8
+
+        const val CARD_EXPIRE_DATE_GROUP_SIZE = 4
+        const val CARD_EXPIRE_DATE_SEPARATOR = " / "
     }
 }

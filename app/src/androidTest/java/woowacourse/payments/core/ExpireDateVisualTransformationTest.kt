@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class ExpireDateVisualTransformationTest {
-    private val expireDateVisualTransformation = ExpireDateVisualTransformation()
+    private val expireDateVisualTransformation = ExpireDateVisualTransformation(2, "/")
 
     @Test
     fun 입력한_카드_만료일이_포맷팅_된다() {
