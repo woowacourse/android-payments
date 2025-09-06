@@ -21,8 +21,8 @@ import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.MaskVisualTransformation
 
-private const val CARD_PASSWORD_LENGTH = 4
-private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
+private const val CardPasswordLength = 4
+private const val CardPasswordTextFieldTestTag = "CardPasswordTextField"
 
 @Composable
 fun CardPasswordTextField(
@@ -30,10 +30,10 @@ fun CardPasswordTextField(
     cardPassword: String,
     onCardPasswordChanged: (String) -> Unit,
 ) {
-    val visualTransformation = remember { MaskVisualTransformation(CARD_PASSWORD_LENGTH) }
+    val visualTransformation = remember { MaskVisualTransformation(CardPasswordLength) }
 
     OutlinedTextField(
-        modifier = modifier.testTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG),
+        modifier = modifier.testTag(CardPasswordTextFieldTestTag),
         label = {
             Text(text = stringResource(R.string.card_password_text_field_label))
         },
@@ -45,8 +45,8 @@ fun CardPasswordTextField(
         },
         value = cardPassword,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_PASSWORD_LENGTH) {
-                return@OutlinedTextField onCardPasswordChanged(newValue.take(CARD_PASSWORD_LENGTH))
+            if (newValue.length > CardPasswordLength) {
+                return@OutlinedTextField onCardPasswordChanged(newValue.take(CardPasswordLength))
             }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardPasswordChanged(newValue)

@@ -17,8 +17,8 @@ import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 
-private const val CARD_NUMBER_LENGTH = 16
-private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
+private const val CardNumberLength = 16
+private const val CardNumberTextFieldTestTag = "CardNumberTextField"
 
 @Composable
 fun CardNumberTextField(
@@ -27,7 +27,7 @@ fun CardNumberTextField(
     onCardNumberChanged: (String) -> Unit,
 ) {
     OutlinedTextField(
-        modifier = modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
+        modifier = modifier.testTag(CardNumberTextFieldTestTag),
         label = {
             Text(text = stringResource(R.string.card_number_text_field_label))
         },
@@ -39,8 +39,8 @@ fun CardNumberTextField(
         },
         value = cardNumber,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_NUMBER_LENGTH) {
-                return@OutlinedTextField onCardNumberChanged(newValue.take(CARD_NUMBER_LENGTH))
+            if (newValue.length > CardNumberLength) {
+                return@OutlinedTextField onCardNumberChanged(newValue.take(CardNumberLength))
             }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardNumberChanged(newValue)
@@ -53,7 +53,7 @@ fun CardNumberTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardNumberTextFieldPreview() {
-    Box(modifier = Modifier.padding(CARD_NUMBER_LENGTH.dp)) {
+    Box(modifier = Modifier.padding(CardNumberLength.dp)) {
         CardNumberTextField(cardNumber = "") {}
     }
 }

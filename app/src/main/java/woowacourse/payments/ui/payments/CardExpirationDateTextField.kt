@@ -18,9 +18,9 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.common.ExpirationDateVisualTransformation
 import java.time.YearMonth
 
-private const val CARD_EXPIRATION_DATE_LENGTH = 4
-private const val CENTURY_PREFIX = "20"
-private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDateTextField"
+private const val CardExpirationDateLength = 4
+private const val CenturyPrefix = "20"
+private const val CardExpirationDateTextFieldTestTag = "CardExpirationDateTextField"
 
 @Composable
 fun CardExpirationDateTextField(
@@ -32,7 +32,7 @@ fun CardExpirationDateTextField(
 ) {
     val isError = errorMessage != null
 
-    if (cardExpirationDate.length == CARD_EXPIRATION_DATE_LENGTH) {
+    if (cardExpirationDate.length == CardExpirationDateLength) {
         if (isValidYearMonth(cardExpirationDate)) {
             onErrorMessageChanged(
                 stringResource(R.string.card_expiration_date_text_field_invalid_format),
@@ -41,7 +41,7 @@ fun CardExpirationDateTextField(
     }
 
     OutlinedTextField(
-        modifier = modifier.testTag(CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG),
+        modifier = modifier.testTag(CardExpirationDateTextFieldTestTag),
         label = {
             Text(text = stringResource(R.string.card_expiration_date_text_field_label))
         },
@@ -53,9 +53,9 @@ fun CardExpirationDateTextField(
         },
         value = cardExpirationDate,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_EXPIRATION_DATE_LENGTH) {
+            if (newValue.length > CardExpirationDateLength) {
                 return@OutlinedTextField onCardExpirationDateChanged(
-                    newValue.take(CARD_EXPIRATION_DATE_LENGTH),
+                    newValue.take(CardExpirationDateLength),
                 )
             }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
@@ -71,11 +71,11 @@ fun CardExpirationDateTextField(
 
 private fun isValidYearMonth(cardExpirationDate: String): Boolean {
     val month = cardExpirationDate.take(2).toInt()
-    val year = (CENTURY_PREFIX + cardExpirationDate.takeLast(2)).toInt()
+    val year = (CenturyPrefix + cardExpirationDate.takeLast(2)).toInt()
     return runCatching { YearMonth.of(year, month) }.isFailure
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(showBackground = true)
 @Composable
 fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {

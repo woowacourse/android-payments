@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
-private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField"
-private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
+private const val CardholderNameTextFieldTestTag = "CardholderNameTextField"
+private const val CardholderNameLengthSeparator = "/"
 
 @Composable
 fun CardholderNameTextField(
@@ -32,7 +32,7 @@ fun CardholderNameTextField(
     maxLength: Int = 30,
 ) {
     OutlinedTextField(
-        modifier = modifier.testTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG),
+        modifier = modifier.testTag(CardholderNameTextFieldTestTag),
         label = {
             Text(text = stringResource(R.string.cardholder_name_text_field_label))
         },
@@ -54,7 +54,7 @@ fun CardholderNameTextField(
         },
         supportingText = {
             Text(
-                text = "${cardholderName.length}$CARDHOLDER_NAME_LENGTH_SEPARATOR$maxLength",
+                text = "${cardholderName.length}$CardholderNameLengthSeparator$maxLength",
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
