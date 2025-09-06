@@ -14,7 +14,7 @@ class DateVisualTransformation : VisualTransformation {
                 for (i in trimmed.indices) {
                     append(trimmed[i])
                     if (i == 1 && i != trimmed.lastIndex) {
-                        append("/")
+                        append(" / ")
                     }
                 }
             }
