@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
-private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
 private const val CARDHOLDER_NAME_DEFAULT_MAX_LENGTH = 30
+private const val INPUT_TEXT_COUNT_SEPARATOR = "%d/%d"
 private val CARDHOLDER_NAME_VALIDATION_REGEX = Regex("^[A-Za-z]+$")
 
 @Composable
@@ -31,7 +31,7 @@ fun CardholderNameTextField(
     onCardholderNameChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
     maxLength: Int = CARDHOLDER_NAME_DEFAULT_MAX_LENGTH,
-    errorMessage: String? = null
+    errorMessage: String? = null,
 ) {
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
@@ -47,7 +47,7 @@ fun CardholderNameTextField(
         supportingText = {
             errorMessage?.let { message -> Text(text = message) }
             Text(
-                text = "${cardholderName.length}$CARDHOLDER_NAME_LENGTH_SEPARATOR$maxLength",
+                text = INPUT_TEXT_COUNT_SEPARATOR.format(cardholderName.length, maxLength),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
