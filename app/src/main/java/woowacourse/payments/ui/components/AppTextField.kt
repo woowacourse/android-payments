@@ -37,13 +37,7 @@ fun AppTextField(
                 fontSize = 16.sp,
                 color = MaterialTheme.colorScheme.onSurface,
             ),
-        label = {
-            Text(
-                labelText,
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        },
+        label = { Text(labelText, fontSize = 12.sp) },
         placeholder = { Text(placeholderText, fontSize = 16.sp, color = inputHintColor) },
         supportingText = supportingText,
         trailingIcon = trailingIcon,
@@ -53,6 +47,7 @@ fun AppTextField(
             OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.outline,
                 unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                errorLabelColor = MaterialTheme.colorScheme.error,
             ),
     )
 }
