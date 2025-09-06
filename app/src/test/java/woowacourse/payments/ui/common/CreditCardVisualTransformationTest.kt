@@ -22,7 +22,7 @@ class CreditCardVisualTransformationTest {
         val result = creditCardVisualTransformation.filter(input)
 
         // then:
-        assertEquals("1234-5678-1234-5678", result.text.text)
+        assertEquals("1234 - 5678 - 1234 - 5678", result.text.text)
     }
 
     @Test
@@ -36,7 +36,7 @@ class CreditCardVisualTransformationTest {
         val result = creditCardVisualTransformation.filter(input)
 
         // then:
-        assertEquals("1234-5678-1234-5678", result.text.text)
+        assertEquals("1234 - 5678 - 1234 - 5678", result.text.text)
     }
 
     @Test
@@ -50,6 +50,6 @@ class CreditCardVisualTransformationTest {
         val result = creditCardVisualTransformation.filter(input)
 
         // then:
-        assertEquals("1234-56", result.text.text)
+        assertEquals("1234 - 56", result.text.text)
     }
 }

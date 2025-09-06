@@ -22,7 +22,7 @@ class DateVisualTransformationTest {
         val result = dateVisualTransformation.filter(input)
 
         // then:
-        assertEquals("02/01", result.text.text)
+        assertEquals("02 / 01", result.text.text)
     }
 
     @Test
@@ -34,6 +34,6 @@ class DateVisualTransformationTest {
         val result = dateVisualTransformation.filter(input)
 
         // then:
-        assertEquals("02/01", result.text.text)
+        assertEquals("02 / 01", result.text.text)
     }
 }
