@@ -15,5 +15,5 @@
     <!-- 카드 목록 화면 !-->
     <string name="card_list_title">Payments</string>
     <string name="card_list_empty">새로운 카드를 등록해주세요</string>
-
+    <string name="content_description_card_list_empty_">이 기본 카드 이미지를 클릭해 새로운 카드를 추가해 주세요</string>
 </resources>
