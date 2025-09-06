@@ -12,7 +12,9 @@ class CreditCardVisualTransformation : VisualTransformation {
             buildString {
                 for (i in trimmed.indices) {
                     append(trimmed[i])
-                    if (i % 4 == 3 && i != 15) append("-")
+                    if ((i + 1) % 4 == 0 && i != trimmed.lastIndex) {
+                        append(" - ")
+                    }
                 }
             }
 
@@ -20,19 +22,19 @@ class CreditCardVisualTransformation : VisualTransformation {
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int =
                     when {
-                        offset <= 3 -> offset
-                        offset <= 7 -> offset + 1
-                        offset <= 11 -> offset + 2
-                        offset <= 16 -> offset + 3
+                        offset <= 4 -> offset
+                        offset <= 8 -> offset + 3
+                        offset <= 12 -> offset + 6
+                        offset <= 16 -> offset + 9
                         else -> out.length
                     }
 
                 override fun transformedToOriginal(offset: Int): Int =
                     when {
                         offset <= 4 -> offset
-                        offset <= 9 -> offset - 1
-                        offset <= 14 -> offset - 2
-                        offset <= 19 -> offset - 3
+                        offset <= 9 -> offset - 3
+                        offset <= 14 -> offset - 6
+                        offset <= 19 -> offset - 9
                         else -> trimmed.length
                     }
             }
