@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import java.lang.Character.isDigit
 
 private const val PASSWORD_LENGTH_MAX: Int = 4
 
@@ -32,7 +33,7 @@ fun PasswordTextField(
     OutlinedTextField(
         value = value,
         onValueChange = { newValue: String ->
-            val newPassword = newValue.take(PASSWORD_LENGTH_MAX)
+            val newPassword = newValue.filter(::isDigit).take(PASSWORD_LENGTH_MAX)
             onPasswordChange(newPassword)
             if (newPassword.length == PASSWORD_LENGTH_MAX) onComplete()
         },

@@ -60,6 +60,20 @@ class PasswordTextFieldTest {
             .assertIsDisplayed()
     }
 
+    @Test
+    fun `비밀번호는_숫자만_입력할_수_있다`() {
+        // when
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .performTextInput("a1b2c3")
+
+        // then
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .assert(hasText("\u2022".repeat(3)))
+            .assertIsDisplayed()
+    }
+
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }
