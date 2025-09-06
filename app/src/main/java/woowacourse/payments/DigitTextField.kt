@@ -1,7 +1,5 @@
 package woowacourse.payments
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -36,7 +34,7 @@ fun DigitTextField(
             val newNumber = filtered.take(maxLength)
             number = newNumber
             val lengthError = (maxLength != Int.MAX_VALUE && newNumber.length < maxLength)
-            val expiryError = (mask == InputMask.Expiry && isValidExpiry(number))
+            val expiryError = (mask == InputMask.Expiry && ExpiryValidator.isValidExpiry(number))
             isError = lengthError || expiryError
         },
         label = { Text(text = label) },
