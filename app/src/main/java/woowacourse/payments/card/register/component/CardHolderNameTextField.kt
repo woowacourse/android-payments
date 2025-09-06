@@ -9,8 +9,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @Preview
 @Composable
@@ -30,8 +32,8 @@ fun CardHolderNameTextField(modifier: Modifier = Modifier) {
                     uppercased.substring(0, 30)
                 }
         },
-        label = { Text("카드 소유자 이름(선택)") },
-        placeholder = { Text("카드에 표시된 이름을 입력하세요.") },
+        label = { Text(stringResource(R.string.register_card_holder_name_text_field_label)) },
+        placeholder = { Text(stringResource(R.string.register_card_holder_name_text_field_placeholder)) },
         singleLine = true,
         modifier = modifier,
         supportingText = {
