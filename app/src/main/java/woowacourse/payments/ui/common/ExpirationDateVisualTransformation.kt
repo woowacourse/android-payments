@@ -7,34 +7,39 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 object ExpirationDateVisualTransformation : VisualTransformation {
     private const val EXPIRATION_DATE_LENGTH = 4
+    private const val MONTH_LENGTH = 2
     private const val EXPIRATION_DATE_SEPARATOR = " / "
-
-    private val offsetMapping =
-        object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int =
-                when (offset) {
-                    in 1..2 -> offset
-                    in 3..4 -> offset + 3
-                    else -> offset
-                }
-
-            override fun transformedToOriginal(offset: Int): Int {
-                val group = offset / 5
-                val posInGroup = offset % 5
-                return (group * 2 + posInGroup.coerceAtMost(1)).coerceAtMost(EXPIRATION_DATE_LENGTH)
-            }
-        }
+    private const val SEPARATOR_OFFSET = EXPIRATION_DATE_SEPARATOR.length
+    private const val SEPARATOR_INSERT_INDEX = MONTH_LENGTH
 
     override fun filter(text: AnnotatedString): TransformedText {
         val trimmed = text.text.take(EXPIRATION_DATE_LENGTH)
         val formatted =
             buildString {
                 trimmed.forEachIndexed { index, char ->
-                    if (index > 0 && index % 2 == 0) append(EXPIRATION_DATE_SEPARATOR)
+                    if (index == SEPARATOR_INSERT_INDEX) append(EXPIRATION_DATE_SEPARATOR)
                     append(char)
                 }
             }
 
         return TransformedText(AnnotatedString(formatted), offsetMapping)
     }
+
+    private val offsetMapping =
+        object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int =
+                when {
+                    offset <= MONTH_LENGTH -> offset
+                    offset <= EXPIRATION_DATE_LENGTH -> offset + SEPARATOR_OFFSET
+                    else -> offset
+                }
+
+            override fun transformedToOriginal(offset: Int): Int =
+                when {
+                    offset <= MONTH_LENGTH -> offset
+                    offset <= MONTH_LENGTH + SEPARATOR_OFFSET -> MONTH_LENGTH
+                    offset <= EXPIRATION_DATE_LENGTH + SEPARATOR_OFFSET -> offset - SEPARATOR_OFFSET
+                    else -> offset
+                }
+        }
 }
