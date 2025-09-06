@@ -1,5 +1,6 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -14,38 +15,45 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.CardNumberVisualTransformation
 import java.lang.Character.isDigit
 
-private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
+private const val CARD_NUMBER_LENGTH_MAX: Int = 16
 
 @Composable
-fun ExpiredDateTextField(
+fun CardNumberTextField(
     value: String,
-    onDateChange: (String) -> Unit,
+    onCardNumberChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = { newValue: String ->
-            val newDate = newValue.filter(::isDigit).take(EXPIRED_DATE_LENGTH_MAX)
-            onDateChange(newDate)
+            val cardNumber = newValue.filter(::isDigit).take(CARD_NUMBER_LENGTH_MAX)
+            onCardNumberChange(cardNumber)
         },
         modifier = modifier,
-        label = { Text(text = stringResource(R.string.expired_date_label)) },
+        label = {
+            Text(text = stringResource(R.string.card_number_label))
+        },
         placeholder = {
             Text(
-                text = stringResource(R.string.expired_date_placeholder),
+                text = stringResource(R.string.card_number_placeholder),
                 color = Color.Gray,
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = ExpiredDateVisualTransformation(maxInputLength = EXPIRED_DATE_LENGTH_MAX),
+        visualTransformation = CardNumberVisualTransformation(maxInputLength = CARD_NUMBER_LENGTH_MAX),
     )
 }
 
 @Preview
 @Composable
-private fun ExpiredDateTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     var text by remember { mutableStateOf("") }
-    ExpiredDateTextField(value = text, onDateChange = { text = it })
+    CardNumberTextField(
+        value = text,
+        onCardNumberChange = { text = it },
+        modifier = Modifier.fillMaxWidth(),
+    )
 }

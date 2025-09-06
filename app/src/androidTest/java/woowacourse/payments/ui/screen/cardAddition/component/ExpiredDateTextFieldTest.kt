@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CardNumberTextFieldTest {
+class ExpiredDateTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
@@ -24,56 +24,56 @@ class CardNumberTextFieldTest {
     fun setUp() {
         composeRule.setContent {
             var value by remember { mutableStateOf("") }
-            CardNumberTextField(
+            ExpiredDateTextField(
                 value = value,
-                onCardNumberChange = { value = it },
+                onDateChange = { value = it },
                 modifier = Modifier.testTag(TEST_TAG)
             )
         }
     }
 
     @Test
-    fun 카드_번호는_16자이다() {
+    fun `만료일의_달과_년도는_구분자로_구분된다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("12345678123456781")
+            .performTextInput("1225")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("1234 - 5678 - 1234 - 5678"))
+            .assert(hasText("12 / 25"))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `숫자가_아닌_값을_입력할_수_없다`() {
+    fun 만료일은_4글자이다() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("123NaN")
+            .performTextInput("12255")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("123"))
+            .assert(hasText("12 / 25"))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `숫자_4자리마다_구분자가_들어간다`() {
+    fun 만료일에_숫자가_아닌_값을_입력할_수_없다() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("1234567812345678")
+            .performTextInput("12a!25")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("1234 - 5678 - 1234 - 5678"))
+            .assert(hasText("12 / 25"))
             .assertIsDisplayed()
     }
-    
+
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }

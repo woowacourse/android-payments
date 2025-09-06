@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -12,39 +12,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.ExpiredDateVisualTransformation
+import java.lang.Character.isDigit
 
-private const val PASSWORD_LENGTH_MAX: Int = 4
+private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
 
 @Composable
-fun PasswordTextField(
+fun ExpiredDateTextField(
     value: String,
-    onPasswordChange: (String) -> Unit,
+    onDateChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = { newValue: String ->
-            val newPassword = newValue.take(PASSWORD_LENGTH_MAX)
-            onPasswordChange(newPassword)
+            val newDate = newValue.filter(::isDigit).take(EXPIRED_DATE_LENGTH_MAX)
+            onDateChange(newDate)
         },
         modifier = modifier,
-        label = {
-            Text(text = stringResource(R.string.password_label))
-        },
+        label = { Text(text = stringResource(R.string.expired_date_label)) },
         placeholder = {
-            Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
+            Text(
+                text = stringResource(R.string.expired_date_placeholder),
+                color = Color.Gray,
+            )
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        visualTransformation = ExpiredDateVisualTransformation(maxInputLength = EXPIRED_DATE_LENGTH_MAX),
     )
 }
 
 @Preview
 @Composable
-private fun PasswordTextFieldPreview() {
+private fun ExpiredDateTextFieldPreview() {
     var text by remember { mutableStateOf("") }
-    PasswordTextField(value = text, onPasswordChange = { text = it })
+    ExpiredDateTextField(value = text, onDateChange = { text = it })
 }

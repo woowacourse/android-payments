@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CardOwnerNameTextFieldTest {
+class PasswordTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
@@ -24,47 +24,42 @@ class CardOwnerNameTextFieldTest {
     fun setUp() {
         composeRule.setContent {
             var value by remember { mutableStateOf("") }
-            CardOwnerNameTextField(
+            PasswordTextField(
                 value = value,
-                onNameChange = { value = it },
+                onPasswordChange = { value = it },
                 modifier = Modifier.testTag(TEST_TAG)
             )
         }
     }
 
     @Test
-    fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
-        // given
-        composeRule
-            .onNodeWithTag(TEST_TAG)
-            .performTextInput("모".repeat(30))
-
+    fun `입력한_비밀번호는_가려진다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("모찌")
+            .performTextInput("1234")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("모".repeat(30)))
+            .assert(hasText("\u2022".repeat(4)))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `입력된_이름의_길이가_출력된다`() {
+    fun 비밀번호는_4글자이다() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("모찌")
+            .performTextInput("12345678")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("2/30"))
+            .assert(hasText("\u2022".repeat(4)))
             .assertIsDisplayed()
     }
-
+    
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }

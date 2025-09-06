@@ -1,6 +1,5 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -13,46 +12,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import java.lang.Character.isDigit
 
-private const val CARD_NUMBER_LENGTH_MAX: Int = 16
+private const val PASSWORD_LENGTH_MAX: Int = 4
 
 @Composable
-fun CardNumberTextField(
+fun PasswordTextField(
     value: String,
-    onCardNumberChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = { newValue: String ->
-            val cardNumber = newValue.filter(::isDigit).take(CARD_NUMBER_LENGTH_MAX)
-            onCardNumberChange(cardNumber)
+            val newPassword = newValue.take(PASSWORD_LENGTH_MAX)
+            onPasswordChange(newPassword)
         },
         modifier = modifier,
         label = {
-            Text(text = stringResource(R.string.card_number_label))
+            Text(text = stringResource(R.string.password_label))
         },
         placeholder = {
-            Text(
-                text = stringResource(R.string.card_number_placeholder),
-                color = Color.Gray,
-            )
+            Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CardNumberVisualTransformation(maxInputLength = CARD_NUMBER_LENGTH_MAX),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        visualTransformation = PasswordVisualTransformation(),
     )
 }
 
 @Preview
 @Composable
-private fun CardNumberTextFieldPreview() {
+private fun PasswordTextFieldPreview() {
     var text by remember { mutableStateOf("") }
-    CardNumberTextField(
-        value = text,
-        onCardNumberChange = { text = it },
-        modifier = Modifier.fillMaxWidth(),
-    )
+    PasswordTextField(value = text, onPasswordChange = { text = it })
 }
