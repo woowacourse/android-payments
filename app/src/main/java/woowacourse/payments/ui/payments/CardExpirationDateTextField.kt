@@ -14,28 +14,20 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
-import java.time.YearMonth
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.ExpirationDateVisualTransformation
-
-private const val CardExpirationDateLength = 4
-private const val CenturyPrefix = "20"
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 
 @Composable
 fun CardExpirationDateTextField(
     modifier: Modifier = Modifier,
-    cardExpirationDate: String,
-    onCardExpirationDateChanged: (String) -> Unit,
+    cardExpirationDate: CardExpirationDateUiModel,
+    onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
     errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit,
 ) {
     val isError = errorMessage != null
-    if (cardExpirationDate.length == CardExpirationDateLength &&
-        (!cardExpirationDate.isDigitsOnly() || !isValidYearMonth(cardExpirationDate))
-    ) {
-        onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))
-    }
+    if (cardExpirationDate.isError) onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))
 
     OutlinedTextField(
         modifier = modifier.semantics { contentDescription = "만료일" },
@@ -48,11 +40,14 @@ fun CardExpirationDateTextField(
                 color = Color.Gray,
             )
         },
-        value = cardExpirationDate,
+        value = cardExpirationDate.value,
         onValueChange = { newValue ->
-            if (newValue.length > CardExpirationDateLength || !newValue.isDigitsOnly()) return@OutlinedTextField
+            val newExpirationDate: CardExpirationDateUiModel =
+                runCatching { CardExpirationDateUiModel(newValue) }.getOrNull()
+                    ?: return@OutlinedTextField
+            if (!newExpirationDate.isValid) return@OutlinedTextField
             onErrorMessageChanged(null)
-            onCardExpirationDateChanged(newValue)
+            onCardExpirationDateChanged(newExpirationDate)
         },
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage.orEmpty()) },
@@ -61,24 +56,18 @@ fun CardExpirationDateTextField(
     )
 }
 
-private fun isValidYearMonth(cardExpirationDate: String): Boolean {
-    val month = cardExpirationDate.take(2).toInt()
-    val year = (CenturyPrefix + cardExpirationDate.takeLast(2)).toInt()
-    return runCatching { YearMonth.of(year, month) }.isSuccess
-}
-
 @Preview(showBackground = true)
 @Composable
 fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardExpirationDateTextField(
-            cardExpirationDate = "1226",
+            cardExpirationDate = CardExpirationDateUiModel("1226"),
             onCardExpirationDateChanged = {},
             onErrorMessageChanged = {},
         )
 
         CardExpirationDateTextField(
-            cardExpirationDate = "1326",
+            cardExpirationDate = CardExpirationDateUiModel("1226"),
             onCardExpirationDateChanged = {},
             errorMessage = "유효하지 않은 만료일 입니다.",
             onErrorMessageChanged = {},

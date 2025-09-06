@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.DefaultPaymentCardValidator
@@ -35,7 +36,6 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
     val snackbarState = remember { SnackbarHostState() }
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
-    val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
     val navigatePreviousMessage = stringResource(R.string.common_navigate_previous)
     val registerCardMessage =
         stringResource(R.string.card_registration_screen_registration_card_success)
@@ -69,16 +69,9 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
                 uiState = uiState.copy(cardNumber = newCardNumber)
             },
             onCardExpirationDateChanged = { newCardExpirationDate ->
-                val isCardExpirationDateValid =
-                    if (newCardExpirationDate.length == 4) {
-                        paymentCardValidator.validateCardExpirationDate(newCardExpirationDate)
-                    } else {
-                        true
-                    }
                 uiState =
                     uiState.copy(
                         cardExpirationDate = newCardExpirationDate,
-                        cardExpirationDateErrorMessage = if (!isCardExpirationDateValid) expiredCardMessage else null,
                     )
             },
             onCardExpirationDateErrorMessageChanged = { errorMessage ->
@@ -99,7 +92,7 @@ private fun CardRegistrationScreenContent(
     modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
-    onCardExpirationDateChanged: (String) -> Unit,
+    onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
     onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
     onCardholderNameChanged: (String) -> Unit,
     onCardPasswordChanged: (String) -> Unit,
@@ -154,7 +147,7 @@ private fun isRegistrableCard(
     paymentCardValidator: PaymentCardValidator,
 ): Boolean =
     paymentCardValidator.validateCardNumber(uiState.cardNumber.value) &&
-        paymentCardValidator.validateCardExpirationDate(uiState.cardExpirationDate) &&
+        paymentCardValidator.validateCardExpirationDate(uiState.cardExpirationDate.value) &&
         paymentCardValidator.validateCardholderName(uiState.cardholderName) &&
         paymentCardValidator.validateCardPassword(uiState.cardPassword)
 
