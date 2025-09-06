@@ -6,6 +6,8 @@ import org.junit.Test
 
 class CardNumberVisualTransformationTest {
     private val transformation = CardNumberVisualTransformation(
+        groupSize = 4,
+        separator = " - ",
         maxLength = 16,
     )
 

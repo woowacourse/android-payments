@@ -6,6 +6,8 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
 class CardNumberVisualTransformation(
+    private val separator: String,
+    private val groupSize: Int,
     private val maxLength: Int,
 ) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
@@ -13,24 +15,24 @@ class CardNumberVisualTransformation(
             text.forEachIndexed { index, char ->
                 append(char)
 
-                val indexInGroup = index % GROUP_SIZE
-                val lastIndexOfGroup = GROUP_SIZE - 1
+                val indexInGroup = index % groupSize
+                val lastIndexOfGroup = groupSize - 1
                 val isLastOfGroup = indexInGroup == lastIndexOfGroup
                 val isNotLastIndex = index != maxLength - 1
 
-                if (isLastOfGroup && isNotLastIndex) append(SEPARATOR)
+                if (isLastOfGroup && isNotLastIndex) append(separator)
             }
         }
 
         val offsetTranslator = object : OffsetMapping {
             private val actualLength = minOf(text.length, maxLength)
-            private val separatorLength = SEPARATOR.length
-            private val separatorCount = if (actualLength == 0) 0 else (actualLength - 1) / GROUP_SIZE
+            private val separatorLength = separator.length
+            private val separatorCount = if (actualLength == 0) 0 else (actualLength - 1) / groupSize
             private val transformedLength = actualLength + separatorCount * separatorLength
 
             override fun originalToTransformed(offset: Int): Int {
                 val newOffset = offset.coerceIn(0, actualLength)
-                val separatorCount = if (newOffset == 0) 0 else (newOffset - 1) / GROUP_SIZE
+                val separatorCount = if (newOffset == 0) 0 else (newOffset - 1) / groupSize
                 return newOffset + separatorCount * separatorLength
             }
 
@@ -38,10 +40,10 @@ class CardNumberVisualTransformation(
                 val adjustedOffset = offset.coerceIn(0, transformedLength)
                 var currentOffset = adjustedOffset
                 for (k in 1..separatorCount) {
-                    val sepStart = k * GROUP_SIZE + (k - 1) * separatorLength
+                    val sepStart = k * groupSize + (k - 1) * separatorLength
                     when {
                         adjustedOffset >= sepStart + separatorLength -> currentOffset -= separatorLength
-                        adjustedOffset >= sepStart -> return k * GROUP_SIZE
+                        adjustedOffset >= sepStart -> return k * groupSize
                         else -> break
                     }
                 }
@@ -50,10 +52,5 @@ class CardNumberVisualTransformation(
         }
 
         return TransformedText(AnnotatedString(newText), offsetTranslator)
-    }
-
-    companion object {
-        private const val GROUP_SIZE = 4
-        private const val SEPARATOR = " - "
     }
 }

@@ -19,7 +19,11 @@ import woowacourse.payments.component.CardNumberTextField
 import woowacourse.payments.component.CardOwnerTextField
 import woowacourse.payments.component.CardPasswordTextField
 import woowacourse.payments.component.ExpireDateTextField
-import woowacourse.payments.component.PaymentCard
+import woowacourse.payments.core.CardNumberVisualTransformation
+
+private const val GROUP_SIZE = 4
+private const val SEPARATOR = " - "
+private const val MAX_LENGTH = 16
 
 @Composable
 fun NewCardScreen(
@@ -29,7 +33,13 @@ fun NewCardScreen(
     var expireDate by remember { mutableStateOf("") }
     var cardOwner by remember { mutableStateOf("") }
     var cardPassword by remember { mutableStateOf("") }
+
     val focusManager = LocalFocusManager.current
+    val cardNumberVisualTransformation = CardNumberVisualTransformation(
+        groupSize = GROUP_SIZE,
+        separator = SEPARATOR,
+        maxLength = MAX_LENGTH,
+    )
 
     Column(
         modifier = modifier
@@ -49,6 +59,7 @@ fun NewCardScreen(
                 focusManager.moveFocus(FocusDirection.Next)
             },
             maxLength = 16,
+            visualTransformation = cardNumberVisualTransformation,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 28.dp)
