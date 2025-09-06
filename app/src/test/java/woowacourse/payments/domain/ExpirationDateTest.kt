@@ -1,0 +1,24 @@
+package woowacourse.payments.domain
+
+import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
+import java.time.YearMonth
+
+class ExpirationDateTest {
+    @ParameterizedTest
+    @ValueSource(strings = ["2024-07", "2025-05"])
+    fun `만료일이 현재 날짜보다 과거면 오류가 발생한다`(value: String) {
+        // given
+        val expirationYearMonth = YearMonth.parse(value)
+        val currentYearMonth = YearMonth.parse("2025-06")
+
+        // when & then
+        assertThrows<IllegalArgumentException> {
+            ExpirationDate(
+                expirationYearMonth,
+                currentYearMonth,
+            )
+        }
+    }
+}
