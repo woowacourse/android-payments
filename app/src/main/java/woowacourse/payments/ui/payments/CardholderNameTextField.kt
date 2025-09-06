@@ -21,15 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-
-private const val CardholderNameLengthSeparator = "/"
+import woowacourse.payments.ui.model.CardholderNameUiModel
 
 @Composable
 fun CardholderNameTextField(
     modifier: Modifier = Modifier,
-    cardholderName: String,
-    onCardholderNameChanged: (String) -> Unit,
-    maxLength: Int = 30,
+    cardholderName: CardholderNameUiModel,
+    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
 ) {
     OutlinedTextField(
         modifier =
@@ -43,19 +41,22 @@ fun CardholderNameTextField(
                 color = Color.Gray,
             )
         },
-        value = cardholderName,
+        value = cardholderName.value,
         onValueChange = { newValue ->
-            if (newValue.length > maxLength) {
-                return@OutlinedTextField onCardholderNameChanged(
-                    newValue.take(maxLength),
-                )
-            }
-            if (newValue.any { it !in 'a'..'z' && it !in 'A'..'Z' }) return@OutlinedTextField
-            onCardholderNameChanged(newValue.uppercase())
+            val newCardholderName: CardholderNameUiModel =
+                runCatching { CardholderNameUiModel(newValue.uppercase()) }.getOrNull()
+                    ?: return@OutlinedTextField
+            if (!newCardholderName.isValid) return@OutlinedTextField
+            onCardholderNameChanged(newCardholderName)
         },
         supportingText = {
             Text(
-                text = "${cardholderName.length}$CardholderNameLengthSeparator$maxLength",
+                text =
+                    stringResource(
+                        R.string.cardholder_name_text_field_display_length_status,
+                        cardholderName.value.length,
+                        cardholderName.maxNameLength,
+                    ),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -67,7 +68,7 @@ fun CardholderNameTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardholderNameTextFieldPreview() {
-    var cardholderName by remember { mutableStateOf("") }
+    var cardholderName by remember { mutableStateOf(CardholderNameUiModel()) }
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(
             cardholderName = cardholderName,

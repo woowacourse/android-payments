@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.DefaultPaymentCardValidator
 import woowacourse.payments.util.PaymentCardValidator
@@ -94,7 +95,7 @@ private fun CardRegistrationScreenContent(
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
     onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
     onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
-    onCardholderNameChanged: (String) -> Unit,
+    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
     onCardPasswordChanged: (String) -> Unit,
 ) {
     Column(
@@ -148,7 +149,7 @@ private fun isRegistrableCard(
 ): Boolean =
     paymentCardValidator.validateCardNumber(uiState.cardNumber.value) &&
         paymentCardValidator.validateCardExpirationDate(uiState.cardExpirationDate.value) &&
-        paymentCardValidator.validateCardholderName(uiState.cardholderName) &&
+        paymentCardValidator.validateCardholderName(uiState.cardholderName.value) &&
         paymentCardValidator.validateCardPassword(uiState.cardPassword)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
