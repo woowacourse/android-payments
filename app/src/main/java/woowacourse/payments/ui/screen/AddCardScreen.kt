@@ -1,9 +1,5 @@
-package woowacourse.payments
+package woowacourse.payments.ui.screen
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,14 +22,6 @@ import woowacourse.payments.ui.components.NewCardTopBar
 import woowacourse.payments.ui.components.PasswordField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.UserNameField
-
-class AddCardActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent { AddCardScreen() }
-    }
-}
 
 @Preview
 @Composable

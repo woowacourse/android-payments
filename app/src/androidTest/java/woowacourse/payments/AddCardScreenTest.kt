@@ -7,9 +7,10 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.screen.AddCardScreen
 
 @Suppress("ktlint:standard:function-naming")
-class AddCardActivityTest {
+class AddCardScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
