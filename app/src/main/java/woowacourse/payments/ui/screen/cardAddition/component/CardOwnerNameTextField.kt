@@ -38,11 +38,12 @@ fun CardOwnerNameTextField(
         },
         supportingText = {
             Text(
-                text = stringResource(
-                    R.string.card_owner_name_supporting_text,
-                    value.length,
-                    CARD_OWNER_NAME_LENGTH_MAX,
-                ),
+                text =
+                    stringResource(
+                        R.string.card_owner_name_supporting_text,
+                        value.length,
+                        CARD_OWNER_NAME_LENGTH_MAX,
+                    ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
             )

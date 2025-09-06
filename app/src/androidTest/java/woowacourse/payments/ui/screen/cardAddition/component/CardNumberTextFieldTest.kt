@@ -27,7 +27,7 @@ class CardNumberTextFieldTest {
             CardNumberTextField(
                 value = value,
                 onCardNumberChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
@@ -73,7 +73,7 @@ class CardNumberTextFieldTest {
             .assert(hasText("1234 - 5678 - 1234 - 5678"))
             .assertIsDisplayed()
     }
-    
+
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }

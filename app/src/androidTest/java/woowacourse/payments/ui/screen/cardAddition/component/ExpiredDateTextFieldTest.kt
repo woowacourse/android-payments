@@ -27,7 +27,7 @@ class ExpiredDateTextFieldTest {
             ExpiredDateTextField(
                 value = value,
                 onDateChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }

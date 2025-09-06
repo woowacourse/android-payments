@@ -27,7 +27,7 @@ class PasswordTextFieldTest {
             PasswordTextField(
                 value = value,
                 onPasswordChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
@@ -59,7 +59,7 @@ class PasswordTextFieldTest {
             .assert(hasText("\u2022".repeat(4)))
             .assertIsDisplayed()
     }
-    
+
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }

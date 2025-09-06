@@ -27,7 +27,7 @@ class CardOwnerNameTextFieldTest {
             CardOwnerNameTextField(
                 value = value,
                 onNameChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }

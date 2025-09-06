@@ -48,9 +48,11 @@ class CardNumberVisualTransformation(
             buildString {
                 rawInput.forEachIndexed { index: Int, char: Char ->
                     append(char)
-                    if ((index + 1) % CARD_NUMBER_GROUP_SIZE == 0 && index != maxInputLength - 1) append(
-                        delimiter
-                    )
+                    if ((index + 1) % CARD_NUMBER_GROUP_SIZE == 0 && index != maxInputLength - 1) {
+                        append(
+                            delimiter,
+                        )
+                    }
                 }
             }
         return TransformedText(AnnotatedString(formattedText), offsetMapping)

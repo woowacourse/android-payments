@@ -33,10 +33,11 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
         },
     ) { paddingValues: PaddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 24.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(horizontal = 24.dp),
         ) {
             PaymentCard(
                 modifier =
