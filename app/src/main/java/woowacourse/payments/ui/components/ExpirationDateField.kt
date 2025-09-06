@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,11 +22,12 @@ fun ExpirationDateField(
     modifier: Modifier = Modifier,
 ) {
     val expirationDateVisualTransformation =
-        SeparatedTransformation(
-            maxLength = EXPIRATION_DATE_MAX_LENGTH,
-            groupSize = EXPIRATION_DATE_CHUNK_SIZE,
-            separator = EXPIRATION_DATE_SEPARATOR,
-        )
+        remember {
+            SeparatedTransformation(
+                groupSize = EXPIRATION_DATE_CHUNK_SIZE,
+                separator = EXPIRATION_DATE_SEPARATOR,
+            )
+        }
 
     OutlinedTextField(
         keyboardOptions =

@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,11 +22,12 @@ fun CardNumberField(
     modifier: Modifier = Modifier,
 ) {
     val cardNumberVisualTransformation =
-        SeparatedTransformation(
-            maxLength = CARD_NUMBER_MAX_LENGTH,
-            groupSize = CARD_NUMBER_CHUNK_SIZE,
-            separator = CARD_NUMBER_SEPARATOR,
-        )
+        remember {
+            SeparatedTransformation(
+                groupSize = CARD_NUMBER_CHUNK_SIZE,
+                separator = CARD_NUMBER_SEPARATOR,
+            )
+        }
 
     OutlinedTextField(
         keyboardOptions =

@@ -7,7 +7,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import kotlin.math.min
 
 class SeparatedTransformation(
-    private val maxLength: Int,
     private val groupSize: Int,
     private val separator: String,
 ) : VisualTransformation {
@@ -15,7 +14,7 @@ class SeparatedTransformation(
     private val groupSpan = groupSize + separatorLength
 
     override fun filter(text: AnnotatedString): TransformedText {
-        val rawText = text.text.take(maxLength)
+        val rawText = text.text
         val displayedText = rawText.chunked(groupSize).joinToString(separator)
 
         val mapping =
