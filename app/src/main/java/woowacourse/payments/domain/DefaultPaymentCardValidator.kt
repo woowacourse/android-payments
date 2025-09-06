@@ -1,17 +1,34 @@
 package woowacourse.payments.domain
 
+import woowacourse.payments.domain.PaymentCardValidator.PaymentCardValidationResult
 import java.time.YearMonth
 
 class DefaultPaymentCardValidator : PaymentCardValidator {
-    override fun validateCardNumber(cardNumber: String): Boolean = cardNumber.length == VALID_CARD_NUMBER_LENGTH
+    override fun validateCardNumber(cardNumber: String): PaymentCardValidationResult =
+        when {
+            cardNumber.length != VALID_CARD_NUMBER_LENGTH -> PaymentCardValidationResult.NOT_FILLED
+            cardNumber.length == VALID_CARD_NUMBER_LENGTH -> PaymentCardValidationResult.VALID
+            else -> PaymentCardValidationResult.INVALID
+        }
 
-    override fun validateCardExpirationDate(cardExpirationDate: String): Boolean =
-        cardExpirationDate.length == VALID_CARD_EXPIRATION_DATE_LENGTH &&
-            isValidCardExpirationDate(cardExpirationDate)
+    override fun validateCardExpirationDate(cardExpirationDate: String): PaymentCardValidationResult =
+        when {
+            cardExpirationDate.length != VALID_CARD_EXPIRATION_DATE_LENGTH -> PaymentCardValidationResult.NOT_FILLED
+            cardExpirationDate.length == VALID_CARD_EXPIRATION_DATE_LENGTH &&
+                isValidCardExpirationDate(cardExpirationDate)
+            -> PaymentCardValidationResult.VALID
 
-    override fun validateCardholderName(cardholderName: String): Boolean = true
+            else -> PaymentCardValidationResult.INVALID
+        }
 
-    override fun validateCardPassword(cardPassword: String): Boolean = cardPassword.length == VALID_CARD_PASSWORD_LENGTH
+    override fun validateCardholderName(cardholderName: String): PaymentCardValidationResult = PaymentCardValidationResult.VALID
+
+    override fun validateCardPassword(cardPassword: String): PaymentCardValidationResult =
+        when {
+            cardPassword.length != VALID_CARD_PASSWORD_LENGTH -> PaymentCardValidationResult.NOT_FILLED
+            cardPassword.length == VALID_CARD_PASSWORD_LENGTH -> PaymentCardValidationResult.VALID
+            else -> PaymentCardValidationResult.INVALID
+        }
 
     private fun isValidCardExpirationDate(cardExpirationDate: String): Boolean {
         val month = cardExpirationDate.substring(0, 2).toIntOrNull() ?: return false
