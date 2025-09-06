@@ -16,7 +16,7 @@ object ExpiryValidator {
         val expiryYear = 2000 + year
         val expiryMonth = month
 
-        return expiryYear < currentYear ||
-                (expiryYear == currentYear && expiryMonth < currentMonth)
+        return expiryYear > currentYear ||
+                (expiryYear == currentYear && expiryMonth >= currentMonth)
     }
 }
