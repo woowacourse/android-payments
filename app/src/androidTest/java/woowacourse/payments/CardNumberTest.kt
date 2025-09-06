@@ -56,7 +56,7 @@ class CardNumberTest {
     }
 
     @Test
-    fun 카드_번호는_16자여야_한다() {
+    fun 카드_번호가_16자_미만이면_16자여야_한다는_메시지가_보인다() {
         // given
         val input = "1".repeat(15)
 
