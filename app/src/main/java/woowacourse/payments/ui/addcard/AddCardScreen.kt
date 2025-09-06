@@ -3,7 +3,9 @@ package woowacourse.payments.ui.addcard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -49,16 +51,16 @@ fun AddCardScreen(innerPadding: PaddingValues) {
     ) {
         Card()
         Column {
+            Spacer(modifier = Modifier.height(40.dp))
             CardNumberTextField(
                 cardInfo = cardInfo,
                 modifier = Modifier
-                    .padding(top = 40.dp)
                     .fillMaxWidth(),
             )
+            Spacer(modifier = Modifier.height(18.dp))
             ExpireDateTextField(
                 cardInfo = cardInfo,
                 modifier = Modifier
-                    .padding(top = 18.dp)
                     .fillMaxWidth(0.47f),
             )
             OwnerNameTextField(
