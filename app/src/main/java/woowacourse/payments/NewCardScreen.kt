@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -20,10 +19,7 @@ import woowacourse.payments.component.CardOwnerTextField
 import woowacourse.payments.component.CardPasswordTextField
 import woowacourse.payments.component.ExpireDateTextField
 import woowacourse.payments.core.CardNumberVisualTransformation
-
-private const val GROUP_SIZE = 4
-private const val SEPARATOR = " - "
-private const val MAX_LENGTH = 16
+import woowacourse.payments.domain.Card
 
 @Composable
 fun NewCardScreen(
@@ -36,9 +32,9 @@ fun NewCardScreen(
 
     val focusManager = LocalFocusManager.current
     val cardNumberVisualTransformation = CardNumberVisualTransformation(
-        groupSize = GROUP_SIZE,
-        separator = SEPARATOR,
-        maxLength = MAX_LENGTH,
+        groupSize = Card.CARD_NUMBER_GROUP_SIZE,
+        separator = Card.CARD_SEPARATOR,
+        maxLength = Card.CARD_MAX_LENGTH,
     )
 
     Column(
@@ -46,11 +42,11 @@ fun NewCardScreen(
             .fillMaxSize()
             .padding(horizontal = 24.dp),
     ) {
-        PaymentCard(
-            modifier = Modifier
-                .padding(top = 14.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+//        PaymentCard(
+//            modifier = Modifier
+//                .padding(top = 14.dp)
+//                .align(Alignment.CenterHorizontally)
+//        )
 
         CardNumberTextField(
             cardNumber = cardNumber,
