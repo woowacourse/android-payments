@@ -2,8 +2,8 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import androidx.core.text.isDigitsOnly
-import java.time.YearMonth
 import kotlinx.parcelize.Parcelize
+import java.time.YearMonth
 
 @Parcelize
 data class CardExpirationDateUiModel(
