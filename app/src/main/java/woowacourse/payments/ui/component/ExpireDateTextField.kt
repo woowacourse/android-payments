@@ -15,9 +15,9 @@ import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 
 @Composable
 fun ExpireDateTextField(
-    modifier: Modifier = Modifier,
     cardInfo: CardInfoUiState,
-) {
+    modifier: Modifier = Modifier,
+    ) {
     OutlinedTextField(
         modifier = modifier,
         singleLine = true,
@@ -30,7 +30,7 @@ fun ExpireDateTextField(
         label = { Text(stringResource(R.string.addcard_expire_date_label)) },
         supportingText = {
             if (!cardInfo.isExpirationDateValid) {
-                Text("유효하지 않은 날짜입니다")
+                Text(stringResource(R.string.addcard_expire_date_error))
             }
         },
         visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(

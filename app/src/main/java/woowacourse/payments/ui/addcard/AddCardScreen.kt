@@ -50,25 +50,25 @@ fun AddCardScreen(innerPadding: PaddingValues) {
         Card()
         Column {
             CardNumberTextField(
-                Modifier
+                cardInfo = cardInfo,
+                modifier = Modifier
                     .padding(top = 40.dp)
                     .fillMaxWidth(),
-                cardInfo
             )
             ExpireDateTextField(
-                Modifier
+                cardInfo = cardInfo,
+                modifier = Modifier
                     .padding(top = 18.dp)
                     .fillMaxWidth(0.47f),
-                cardInfo
             )
             OwnerNameTextField(
-                Modifier
+                cardInfo = cardInfo,
+                modifier = Modifier
                     .fillMaxWidth(),
-                cardInfo
             )
             PasswordTextField(
-                Modifier.fillMaxWidth(0.47f),
-                cardInfo
+                cardInfo = cardInfo,
+                modifier = Modifier.fillMaxWidth(0.47f)
             )
         }
     }

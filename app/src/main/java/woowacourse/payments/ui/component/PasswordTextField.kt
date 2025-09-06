@@ -15,9 +15,9 @@ import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 
 @Composable
 fun PasswordTextField(
-    modifier: Modifier = Modifier,
     cardInfo: CardInfoUiState,
-) {
+    modifier: Modifier = Modifier,
+    ) {
     OutlinedTextField(
         modifier = modifier,
         singleLine = true,
