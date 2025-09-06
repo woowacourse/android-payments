@@ -28,13 +28,11 @@ fun PaymentTextField(
     OutlinedTextField(
         value = text,
         onValueChange = { input ->
-            var filtered = input
-            if (onlyDigits) filtered = filtered.filter { it.isDigit() }
+            val digitsFiltering: String = if (onlyDigits) input.filter { it.isDigit() } else input
+            val newValue = digitsFiltering.take(maxLength)
 
-            if (filtered.length > maxLength) filtered = filtered.take(maxLength)
-
-            if (filtered.length <= maxLength) {
-                onValueChanged.invoke(filtered)
+            if (newValue != input) {
+                onValueChanged(newValue)
             }
         },
         label = { Text(text = label) },
