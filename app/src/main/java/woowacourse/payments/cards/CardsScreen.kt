@@ -1,13 +1,8 @@
 package woowacourse.payments.cards
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -15,13 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.component.PaymentCard
+import woowacourse.payments.component.RegisteredCard
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.theme.GrayE5
+import woowacourse.payments.domain.CardType
+import woowacourse.payments.preview.OneCardPreviewParameterProvider
 
 @Composable
 fun CardsScreen(
@@ -46,19 +46,38 @@ fun CardsScreen(
                     modifier = Modifier.padding(top = 50.dp)
                 )
 
-                Box(
-                    contentAlignment = Alignment.Center,
+                PaymentCard(
+                    cardType = CardType.EMPTY,
+                    {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(R.string.content_description_card_list_empty),
+                        )
+                    },
                     modifier = Modifier
-                        .height(124.dp)
-                        .width(208.dp)
-                        .padding(top = 32.dp)
-                        .background(color = GrayE5, shape = RoundedCornerShape(5.dp))
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = stringResource(R.string.content_description_card_list_empty_),
-                    )
-                }
+                        .padding(top = 18.dp)
+                )
+            }
+
+            cards.size == 1 -> {
+                PaymentCard(
+                    cardType = CardType.REGISTERED,
+                    content = { RegisteredCard(cards[0]) },
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                        .shadow(8.dp),
+                )
+                PaymentCard(
+                    cardType = CardType.EMPTY,
+                    {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(R.string.content_description_card_list_empty),
+                        )
+                    },
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                )
             }
         }
     }
@@ -70,3 +89,10 @@ fun CardScreenPreview() {
     CardsScreen(emptyList())
 }
 
+@Composable
+@Preview(showBackground = true)
+fun OneCardsScreenPreview(
+    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
+) {
+    CardsScreen(listOf(card))
+}

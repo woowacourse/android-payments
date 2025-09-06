@@ -16,3 +16,4 @@ val GrayAA = Color(0xFFAAAAAA)
 val GrayE5 = Color(0xFFE5E5E5)
 
 val Black49 = Color(0xFF49454F)
+val Black33 = Color(0xFF333333)
