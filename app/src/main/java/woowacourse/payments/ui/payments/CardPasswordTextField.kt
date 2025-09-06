@@ -19,16 +19,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-
-private const val CardPasswordLength = 4
+import woowacourse.payments.ui.model.CardPasswordUiModel
 
 @Composable
 fun CardPasswordTextField(
     modifier: Modifier = Modifier,
-    cardPassword: String,
-    onCardPasswordChanged: (String) -> Unit,
+    cardPassword: CardPasswordUiModel,
+    onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
 ) {
     OutlinedTextField(
         modifier = modifier.semantics { contentDescription = "비밀번호" },
@@ -41,10 +39,13 @@ fun CardPasswordTextField(
                 color = Color.Gray,
             )
         },
-        value = cardPassword,
+        value = cardPassword.value,
         onValueChange = { newValue ->
-            if (newValue.length > CardPasswordLength || !newValue.isDigitsOnly()) return@OutlinedTextField
-            onCardPasswordChanged(newValue)
+            val newCardPassword: CardPasswordUiModel =
+                runCatching { CardPasswordUiModel(newValue) }.getOrNull()
+                    ?: return@OutlinedTextField
+            if (!newCardPassword.isValid) return@OutlinedTextField
+            onCardPasswordChanged(newCardPassword)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = PasswordVisualTransformation(),
@@ -54,7 +55,7 @@ fun CardPasswordTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardPasswordTextFieldPreview() {
-    var cardPassword by remember { mutableStateOf("1234") }
+    var cardPassword by remember { mutableStateOf(CardPasswordUiModel("1234")) }
 
     Box(modifier = Modifier.padding(12.dp)) {
         CardPasswordTextField(
