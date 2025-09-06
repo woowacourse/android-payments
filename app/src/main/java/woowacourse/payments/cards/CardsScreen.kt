@@ -24,6 +24,12 @@ fun CardsScreen(modifier: Modifier = Modifier) {
             fontSize = 22.sp,
             modifier = Modifier.padding(top = 18.dp)
         )
+
+        Text(
+            text = stringResource(R.string.card_list_empty),
+            fontSize = 22.sp,
+            modifier = Modifier.padding(top = 50.dp)
+        )
     }
 }
 
