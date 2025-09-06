@@ -25,6 +25,7 @@ fun CardPasswordTextField(
     cardPassword: String,
     onCardPasswordChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
+    errorMessage: String? = null
 ) {
     val visualTransformation = remember { PasswordVisualTransformation() }
 
@@ -38,6 +39,8 @@ fun CardPasswordTextField(
 
             onCardPasswordChanged(newPassword)
         },
+        isError = errorMessage != null,
+        supportingText = { errorMessage?.let { message -> Text(text = message) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = visualTransformation,
         colors =
@@ -61,6 +64,12 @@ fun CardPasswordTextFieldPreview() {
         CardPasswordTextField(
             cardPassword = "",
             onCardPasswordChanged = {},
+        )
+
+        CardPasswordTextField(
+            cardPassword = "",
+            onCardPasswordChanged = {},
+            errorMessage = "유효하지 않은 비밀번호입니다.",
         )
     }
 }

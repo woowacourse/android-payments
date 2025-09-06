@@ -31,6 +31,7 @@ fun CardholderNameTextField(
     onCardholderNameChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
     maxLength: Int = CARDHOLDER_NAME_DEFAULT_MAX_LENGTH,
+    errorMessage: String? = null
 ) {
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
@@ -42,7 +43,9 @@ fun CardholderNameTextField(
 
             onCardholderNameChanged(newName.uppercase())
         },
+        isError = errorMessage != null,
         supportingText = {
+            errorMessage?.let { message -> Text(text = message) }
             Text(
                 text = "${cardholderName.length}$CARDHOLDER_NAME_LENGTH_SEPARATOR$maxLength",
                 textAlign = TextAlign.End,
@@ -67,6 +70,12 @@ fun CardholderNameTextFieldPreview() {
         CardholderNameTextField(
             cardholderName = cardholderName,
             onCardholderNameChanged = { newValue -> cardholderName = newValue },
+        )
+
+        CardholderNameTextField(
+            cardholderName = cardholderName,
+            onCardholderNameChanged = { newValue -> cardholderName = newValue },
+            errorMessage = "유효하지 않은 이름입니다.",
         )
     }
 }

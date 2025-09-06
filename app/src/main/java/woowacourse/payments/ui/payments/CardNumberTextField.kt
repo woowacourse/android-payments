@@ -28,6 +28,7 @@ fun CardNumberTextField(
     cardNumber: String,
     onCardNumberChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
+    errorMessage: String? = null,
 ) {
     val visualTransformation =
         remember { GroupedVisualTransformation(CARD_NUMBER_GROUP_SIZE, CARD_NUMBER_SEPARATOR) }
@@ -42,6 +43,8 @@ fun CardNumberTextField(
 
             onCardNumberChanged(newCardNumber)
         },
+        isError = errorMessage != null,
+        supportingText = { errorMessage?.let { message -> Text(text = message) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
         colors =
@@ -67,6 +70,11 @@ fun CardNumberTextFieldPreview() {
         CardNumberTextField(
             cardNumber = "1234123412341234",
             onCardNumberChanged = {},
+        )
+        CardNumberTextField(
+            cardNumber = "1234123412341234",
+            onCardNumberChanged = {},
+            errorMessage = "유효하지 않은 카드번호입니다.",
         )
     }
 }
