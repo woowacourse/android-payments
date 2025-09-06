@@ -4,7 +4,6 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_EXPIRE_DATE
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_PASSWORD
-import woowacourse.payments.ui.features.addcard.components.ExpireDateStatus
 import java.time.YearMonth
 
 object CardMapper {

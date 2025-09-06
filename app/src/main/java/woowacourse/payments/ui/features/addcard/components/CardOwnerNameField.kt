@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -20,7 +19,6 @@ import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.AppTestTags.CARD_OWNER_NAME_FIELD
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +30,7 @@ fun CardOwnerNameField(
     AppTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.testTag(CARD_OWNER_NAME_FIELD),
+        modifier = modifier,
         labelText = stringResource(R.string.add_card_owner_name_field_title),
         placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
         supportingText = {

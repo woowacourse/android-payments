@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,9 +23,8 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.features.addcard.CardUiState
+import woowacourse.payments.ui.features.addcard.ExpireDateStatus
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.AppTestTags
-import woowacourse.payments.ui.util.AppTestTags.CARD_EXPIRY_DATE_FIELD
 import woowacourse.payments.ui.util.CardExpireDateVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +41,7 @@ fun CardExpireDateField(
     AppTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.testTag(CARD_EXPIRY_DATE_FIELD),
+        modifier = modifier,
         labelText = stringResource(R.string.add_card_expire_date_field_title),
         placeholderText = stringResource(R.string.add_card_expire_date_field_hint),
         isError = isError,
@@ -51,7 +49,7 @@ fun CardExpireDateField(
             Box(modifier = Modifier.height(supportingTextHeight)) {
                 if (expireDateStatus is ExpireDateStatus.Invalid) {
                     Text(
-                        modifier = Modifier.testTag(AppTestTags.EXPIRE_DATE_ERROR_TEXT),
+                        modifier = Modifier,
                         text = stringResource(id = expireDateStatus.messageResId),
                         color = MaterialTheme.colorScheme.error,
                     )
@@ -80,7 +78,7 @@ fun CardExpireDateFieldPreview() {
         CardExpireDateField(
             value = text,
             onValueChange = {
-                text =  CardUiState().withCardNumber(it).expireDate
+                text = CardUiState().withCardNumber(it).expireDate
             },
         )
     }
