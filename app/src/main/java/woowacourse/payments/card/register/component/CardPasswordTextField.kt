@@ -25,11 +25,12 @@ fun CardPasswordTextField(modifier: Modifier = Modifier) {
         value = password,
         onValueChange = {
             val stripped = numericRegex.replace(it, "")
-            password = if (stripped.length <= 4) {
-                stripped
-            } else {
-                stripped.substring(0, 4)
-            }
+            password =
+                if (stripped.length <= 4) {
+                    stripped
+                } else {
+                    stripped.take(4)
+                }
         },
         label = { Text(stringResource(R.string.register_card_password_text_field_label)) },
         placeholder = { Text(stringResource(R.string.register_card_password_text_field_placeholder)) },
@@ -39,4 +40,3 @@ fun CardPasswordTextField(modifier: Modifier = Modifier) {
         modifier = modifier,
     )
 }
-

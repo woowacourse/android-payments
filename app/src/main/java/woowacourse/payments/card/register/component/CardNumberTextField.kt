@@ -32,7 +32,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
                 if (stripped.length <= 16) {
                     stripped
                 } else {
-                    stripped.substring(0, 16)
+                    stripped.take(16)
                 }
         },
         label = { Text(stringResource(R.string.register_card_number_text_field_label)) },

@@ -32,7 +32,7 @@ fun CardExpirationDateTextField(modifier: Modifier = Modifier) {
                 if (stripped.length <= 4) {
                     stripped
                 } else {
-                    stripped.substring(0, 4)
+                    stripped.take(4)
                 }
         },
         label = { Text(stringResource(R.string.register_card_expiration_date_text_field_label)) },

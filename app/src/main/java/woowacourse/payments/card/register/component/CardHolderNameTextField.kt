@@ -29,7 +29,7 @@ fun CardHolderNameTextField(modifier: Modifier = Modifier) {
                 if (uppercased.length <= 30) {
                     uppercased
                 } else {
-                    uppercased.substring(0, 30)
+                    uppercased.take(30)
                 }
         },
         label = { Text(stringResource(R.string.register_card_holder_name_text_field_label)) },
