@@ -31,13 +31,10 @@ fun CardExpirationDateTextField(
     onErrorMessageChanged: (String?) -> Unit,
 ) {
     val isError = errorMessage != null
-
-    if (cardExpirationDate.length == CardExpirationDateLength) {
-        if (isValidYearMonth(cardExpirationDate)) {
-            onErrorMessageChanged(
-                stringResource(R.string.card_expiration_date_text_field_invalid_format),
-            )
-        }
+    if (cardExpirationDate.length == CardExpirationDateLength &&
+        (!cardExpirationDate.isDigitsOnly() || !isValidYearMonth(cardExpirationDate))
+    ) {
+        onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))
     }
 
     OutlinedTextField(
@@ -53,12 +50,7 @@ fun CardExpirationDateTextField(
         },
         value = cardExpirationDate,
         onValueChange = { newValue ->
-            if (newValue.length > CardExpirationDateLength) {
-                return@OutlinedTextField onCardExpirationDateChanged(
-                    newValue.take(CardExpirationDateLength),
-                )
-            }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
+            if (newValue.length > CardExpirationDateLength || !newValue.isDigitsOnly()) return@OutlinedTextField
             onErrorMessageChanged(null)
             onCardExpirationDateChanged(newValue)
         },
@@ -72,7 +64,7 @@ fun CardExpirationDateTextField(
 private fun isValidYearMonth(cardExpirationDate: String): Boolean {
     val month = cardExpirationDate.take(2).toInt()
     val year = (CenturyPrefix + cardExpirationDate.takeLast(2)).toInt()
-    return runCatching { YearMonth.of(year, month) }.isFailure
+    return runCatching { YearMonth.of(year, month) }.isSuccess
 }
 
 @Preview(showBackground = true)
