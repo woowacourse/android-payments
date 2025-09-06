@@ -5,30 +5,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.component.CardChip
 import woowacourse.payments.component.CardNumberTextField
 import woowacourse.payments.component.CardOwnerTextField
 import woowacourse.payments.component.CardPasswordTextField
 import woowacourse.payments.component.ExpireDateTextField
+import woowacourse.payments.component.PaymentCard
 import woowacourse.payments.core.CardNumberVisualTransformation
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardType
 
 @Composable
 fun NewCardScreen(
+    card: Card,
+    onCardChange: (Card) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var cardNumber by remember { mutableStateOf("") }
-    var expireDate by remember { mutableStateOf("") }
-    var cardOwner by remember { mutableStateOf("") }
-    var cardPassword by remember { mutableStateOf("") }
 
     val focusManager = LocalFocusManager.current
     val cardNumberVisualTransformation = CardNumberVisualTransformation(
@@ -42,15 +41,18 @@ fun NewCardScreen(
             .fillMaxSize()
             .padding(horizontal = 24.dp),
     ) {
-//        PaymentCard(
-//            modifier = Modifier
-//                .padding(top = 14.dp)
-//                .align(Alignment.CenterHorizontally)
-//        )
+        PaymentCard(
+            cardType = CardType.PENDING,
+            content = { CardChip() },
+            modifier = Modifier
+                .padding(top = 18.dp)
+                .shadow(8.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+        )
 
         CardNumberTextField(
-            cardNumber = cardNumber,
-            onCardNumberChange = { cardNumber = it },
+            cardNumber = card.number,
+            onCardNumberChange = { onCardChange(card.copy(number = it)) },
             onComplete = {
                 focusManager.moveFocus(FocusDirection.Next)
             },
@@ -62,8 +64,8 @@ fun NewCardScreen(
         )
 
         ExpireDateTextField(
-            expireDate = expireDate,
-            onExpireDateChange = { expireDate = it },
+            expireDate = card.expireDate,
+            onExpireDateChange = { onCardChange(card.copy(expireDate = it)) },
             onComplete = {
                 focusManager.moveFocus(FocusDirection.Next)
             },
@@ -75,16 +77,16 @@ fun NewCardScreen(
 
         CardOwnerTextField(
             maxLength = 30,
-            ownerName = cardOwner,
-            onChangeOwnerName = { cardOwner = it },
+            ownerName = card.ownerName,
+            onChangeOwnerName = { onCardChange(card.copy(ownerName = it)) },
             modifier = Modifier
                 .padding(top = 18.dp)
         )
 
         CardPasswordTextField(
             maxLength = 4,
-            password = cardPassword,
-            onPasswordChange = { cardPassword = it },
+            password = card.password,
+            onPasswordChange = { onCardChange(card.copy(password = it)) },
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .padding(top = 18.dp)
@@ -95,5 +97,8 @@ fun NewCardScreen(
 @Preview(showBackground = true)
 @Composable
 fun NewCardScreenPreview() {
-    NewCardScreen()
+    NewCardScreen(
+        card = Card.EMPTY,
+        onCardChange = {},
+    )
 }

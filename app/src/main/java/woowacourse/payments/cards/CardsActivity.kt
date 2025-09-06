@@ -1,17 +1,24 @@
 package woowacourse.payments.cards
 
-import woowacourse.payments.R
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import woowacourse.payments.MainActivity
 import woowacourse.payments.component.PaymentToolbar
+import woowacourse.payments.core.getParcelableCompat
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardType
+import woowacourse.payments.serialization.SerializationCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -21,22 +28,52 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards = remember { mutableStateListOf<Card>() }
+                val activityResultLauncher = rememberLauncherForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
+                ) { result ->
+                    if (result.resultCode == RESULT_OK) {
+                        result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let {
+                            cards.add(it.toDomain())
+                        }
+                    }
+                }
 
                 Scaffold(
                     topBar = {
                         PaymentToolbar(
-                            onAddClick = {},
+                            onAddClick = {
+                                activityResultLauncher.launch(
+                                    MainActivity.newIntent(this)
+                                )
+                            },
                             addButtonVisible = cards.size > 1
                         )
                     }
                 ) { innerPadding ->
                     CardsScreen(
                         cards,
+                        { cardType ->
+                            if (cardType == CardType.EMPTY) {
+                                activityResultLauncher.launch(
+                                    MainActivity.newIntent(this)
+                                )
+                            }
+                        },
                         Modifier
                             .padding(innerPadding)
                     )
                 }
             }
         }
+    }
+
+    companion object {
+        fun newIntent(
+            context: Context,
+            card: SerializationCard
+        ): Intent = Intent(context, CardsActivity::class.java)
+            .apply { putExtra(EXTRA_CARD, card) }
+
+        private const val EXTRA_CARD = "extra_card"
     }
 }

@@ -19,6 +19,7 @@ data class Card(
         .joinToString(CARD_EXPIRE_DATE_SEPARATOR)
 
     companion object {
+        val EMPTY = Card("", "", "", "")
         const val CARD_NUMBER_GROUP_SIZE = 4
         const val CARD_SEPARATOR = " - "
         const val CARD_MAX_LENGTH = 16

@@ -27,6 +27,7 @@ import woowacourse.payments.preview.OneCardPreviewParameterProvider
 @Composable
 fun CardsScreen(
     cards: List<Card>,
+    onClickCard: (CardType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -43,7 +44,8 @@ fun CardsScreen(
 
                 PaymentCard(
                     cardType = CardType.EMPTY,
-                    {
+                    onClick = onClickCard,
+                    content = {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = stringResource(R.string.content_description_card_list_empty),
@@ -57,6 +59,7 @@ fun CardsScreen(
             cards.size == 1 -> {
                 PaymentCard(
                     cardType = CardType.REGISTERED,
+                    onClick = {},
                     content = { RegisteredCard(cards[0]) },
                     modifier = Modifier
                         .padding(top = 30.dp)
@@ -64,7 +67,8 @@ fun CardsScreen(
                 )
                 PaymentCard(
                     cardType = CardType.EMPTY,
-                    {
+                    onClick = { onClickCard(CardType.EMPTY) },
+                    content = {
                         Icon(
                             imageVector = Icons.Default.Add,
                             contentDescription = stringResource(R.string.content_description_card_list_empty),
@@ -79,6 +83,7 @@ fun CardsScreen(
                 repeat(cards.size) {
                     PaymentCard(
                         cardType = CardType.REGISTERED,
+                        onClick = {},
                         content = { RegisteredCard(cards[it]) },
                         modifier = Modifier
                             .padding(top = 30.dp)
@@ -93,7 +98,7 @@ fun CardsScreen(
 @Composable
 @Preview(showBackground = true)
 fun CardScreenPreview() {
-    CardsScreen(emptyList())
+    CardsScreen(emptyList(), {})
 }
 
 @Composable
@@ -101,7 +106,7 @@ fun CardScreenPreview() {
 fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
-    CardsScreen(listOf(card))
+    CardsScreen(listOf(card), {})
 }
 
 @Composable
@@ -109,6 +114,6 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
 ) {
-    CardsScreen(cards)
+    CardsScreen(cards, {})
 }
 

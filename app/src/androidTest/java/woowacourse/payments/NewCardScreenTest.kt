@@ -9,6 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Card
 
 class NewCardScreenTest {
     @get:Rule
@@ -17,7 +18,15 @@ class NewCardScreenTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            NewCardScreen()
+            NewCardScreen(
+                card = Card(
+                    number = "1234123412341234",
+                    expireDate = "0908",
+                    ownerName = "peto",
+                    password = "0908"
+                ),
+                onCardChange = {}
+            )
         }
     }
 

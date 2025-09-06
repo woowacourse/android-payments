@@ -1,6 +1,7 @@
 package woowacourse.payments.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,7 @@ fun PaymentCard(
     cardType: CardType,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    onClick: (CardType) -> Unit = {},
 ) {
     Box(
         contentAlignment = cardType.parentAlignment,
@@ -34,6 +36,7 @@ fun PaymentCard(
                 color = cardType.backgroundColor,
                 shape = RoundedCornerShape(5.dp),
             )
+            .clickable(onClick = { onClick(cardType) })
     ) {
         content()
     }
@@ -44,6 +47,7 @@ fun PaymentCard(
 private fun EmptyPaymentCardPreview() {
     PaymentCard(
         cardType = CardType.EMPTY,
+        onClick = {},
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -61,6 +65,7 @@ private fun RegisteredPaymentCardPreview(
 ) {
     PaymentCard(
         cardType = CardType.REGISTERED,
+        onClick = {},
         content = { RegisteredCard(previewCard) },
         modifier = Modifier
             .padding(top = 18.dp)
@@ -73,6 +78,7 @@ private fun RegisteredPaymentCardPreview(
 private fun PendingPaymentCardPreview() {
     PaymentCard(
         cardType = CardType.PENDING,
+        onClick = {},
         content = { CardChip() },
         modifier = Modifier
             .padding(top = 18.dp)
