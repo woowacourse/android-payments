@@ -14,17 +14,15 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
-
-private const val CardNumberLength = 16
+import woowacourse.payments.ui.model.CardNumberUiModel
 
 @Composable
 fun CardNumberTextField(
     modifier: Modifier = Modifier,
-    cardNumber: String,
-    onCardNumberChanged: (String) -> Unit,
+    cardNumber: CardNumberUiModel,
+    onCardNumberChanged: (CardNumberUiModel) -> Unit,
 ) {
     OutlinedTextField(
         modifier = modifier.semantics { contentDescription = "카드 번호" },
@@ -37,10 +35,12 @@ fun CardNumberTextField(
                 color = Color.Gray,
             )
         },
-        value = cardNumber,
+        value = cardNumber.value,
         onValueChange = { newValue ->
-            if (newValue.length > CardNumberLength || !newValue.isDigitsOnly()) return@OutlinedTextField
-            onCardNumberChanged(newValue)
+            val newCardNumber: CardNumberUiModel =
+                runCatching { CardNumberUiModel(newValue) }.getOrNull() ?: return@OutlinedTextField
+            if (!newCardNumber.isValid) return@OutlinedTextField
+            onCardNumberChanged(newCardNumber)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = CreditCardVisualTransformation,
@@ -50,7 +50,7 @@ fun CardNumberTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 fun CardNumberTextFieldPreview() {
-    Box(modifier = Modifier.padding(CardNumberLength.dp)) {
-        CardNumberTextField(cardNumber = "") {}
+    Box(modifier = Modifier.padding(16.dp)) {
+        CardNumberTextField(cardNumber = CardNumberUiModel()) {}
     }
 }
