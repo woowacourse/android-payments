@@ -19,5 +19,6 @@ data class CardUiState(
 
     fun withOwnerName(newName: String): CardUiState = this.copy(ownerName = newName.take(MAX_LENGTH_OWNER_NAME))
 
-    fun withPassword(newPassword: String): CardUiState = this.copy(newPassword.filter { it in '0'..'9' }.take(MAX_LENGTH_PASSWORD))
+    fun withPassword(newPassword: String): CardUiState =
+        this.copy(password = newPassword.filter { it in '0'..'9' }.take(MAX_LENGTH_PASSWORD))
 }
