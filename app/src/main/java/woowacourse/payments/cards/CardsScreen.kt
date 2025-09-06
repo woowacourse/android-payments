@@ -21,6 +21,7 @@ import woowacourse.payments.component.PaymentCard
 import woowacourse.payments.component.RegisteredCard
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardType
+import woowacourse.payments.preview.CardsPreviewParameterProvider
 import woowacourse.payments.preview.OneCardPreviewParameterProvider
 
 @Composable
@@ -32,12 +33,6 @@ fun CardsScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = stringResource(R.string.card_list_title),
-            fontSize = 22.sp,
-            modifier = Modifier.padding(top = 18.dp)
-        )
-
         when {
             cards.isEmpty() -> {
                 Text(
@@ -79,6 +74,18 @@ fun CardsScreen(
                         .padding(top = 30.dp)
                 )
             }
+
+            cards.size > 1 -> {
+                repeat(cards.size) {
+                    PaymentCard(
+                        cardType = CardType.REGISTERED,
+                        content = { RegisteredCard(cards[it]) },
+                        modifier = Modifier
+                            .padding(top = 30.dp)
+                            .shadow(8.dp),
+                    )
+                }
+            }
         }
     }
 }
@@ -91,8 +98,17 @@ fun CardScreenPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun OneCardsScreenPreview(
+fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
     CardsScreen(listOf(card))
 }
+
+@Composable
+@Preview(showBackground = true)
+fun CardsScreenPreview(
+    @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
+) {
+    CardsScreen(cards)
+}
+
