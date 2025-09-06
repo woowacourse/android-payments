@@ -15,11 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.MaskVisualTransformation
 
 private const val CardPasswordLength = 4
 private const val CardPasswordTextFieldTestTag = "CardPasswordTextField"
@@ -30,8 +30,6 @@ fun CardPasswordTextField(
     cardPassword: String,
     onCardPasswordChanged: (String) -> Unit,
 ) {
-    val visualTransformation = remember { MaskVisualTransformation(CardPasswordLength) }
-
     OutlinedTextField(
         modifier = modifier.testTag(CardPasswordTextFieldTestTag),
         label = {
@@ -45,14 +43,11 @@ fun CardPasswordTextField(
         },
         value = cardPassword,
         onValueChange = { newValue ->
-            if (newValue.length > CardPasswordLength) {
-                return@OutlinedTextField onCardPasswordChanged(newValue.take(CardPasswordLength))
-            }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
+            if (newValue.length > CardPasswordLength || !newValue.isDigitsOnly()) return@OutlinedTextField
             onCardPasswordChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = visualTransformation,
+        visualTransformation = PasswordVisualTransformation(),
     )
 }
 
