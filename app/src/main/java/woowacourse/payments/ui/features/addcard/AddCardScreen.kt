@@ -82,20 +82,6 @@ fun AddCardScreen(
             CardOwnerNameField(
                 value = cardUiState.ownerName,
                 onValueChange = { cardUiState = cardUiState.withOwnerName(it) },
-                supportingText = {
-                    Box(modifier = Modifier.height(SupportingTextHeight)) {
-                        Text(
-                            text =
-                                stringResource(
-                                    R.string.add_card_expire_date_field_counter_format,
-                                    cardUiState.ownerName.length,
-                                    MAX_LENGTH_OWNER_NAME,
-                                ),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.End,
-                        )
-                    }
-                },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardPasswordField(

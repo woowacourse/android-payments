@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -27,7 +28,6 @@ fun CardOwnerNameField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    supportingText: @Composable (() -> Unit)? = null,
 ) {
     AppTextField(
         value = value,
@@ -35,7 +35,18 @@ fun CardOwnerNameField(
         modifier = modifier.testTag(CARD_OWNER_NAME_FIELD),
         labelText = stringResource(R.string.add_card_owner_name_field_title),
         placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
-        supportingText = supportingText,
+        supportingText = {
+            Text(
+                text =
+                    stringResource(
+                        R.string.add_card_expire_date_field_counter_format,
+                        value.length,
+                        MAX_LENGTH_OWNER_NAME,
+                    ),
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.End,
+            )
+        },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     )
 }
@@ -48,14 +59,7 @@ fun CardOwnerNameFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardOwnerNameField(
             value = text,
-            onValueChange = { text =  CardUiState().withOwnerName(it).ownerName },
-            supportingText = {
-                Text(
-                    text = "${text.length}/30",
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End,
-                )
-            },
+            onValueChange = { text = CardUiState().withOwnerName(it).ownerName },
         )
     }
 }
