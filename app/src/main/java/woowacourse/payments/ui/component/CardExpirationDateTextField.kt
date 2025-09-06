@@ -57,8 +57,11 @@ fun CardExpirationDateTextField(
         },
         isError = errorMessage != null,
         supportingText = {
-            errorMessage?.let { message -> return@OutlinedTextField Text(text = message) }
-            if (isValidYearMonth.not()) Text(text = stringResource(R.string.card_expiration_date_text_field_invalid_format))
+            if (isValidYearMonth.not()) {
+                Text(text = stringResource(R.string.card_expiration_date_text_invalid_format))
+                return@OutlinedTextField
+            }
+            errorMessage?.let { message -> Text(text = message) }
         },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
