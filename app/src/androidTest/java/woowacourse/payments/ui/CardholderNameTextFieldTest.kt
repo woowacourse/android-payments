@@ -16,7 +16,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.payments.CardholderNameTextField
+import woowacourse.payments.ui.component.CardholderNameTextField
 
 class CardholderNameTextFieldTest {
     @get:Rule

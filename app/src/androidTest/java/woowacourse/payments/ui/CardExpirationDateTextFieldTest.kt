@@ -16,7 +16,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.payments.CardExpirationDateTextField
+import woowacourse.payments.ui.component.CardExpirationDateTextField
 
 class CardExpirationDateTextFieldTest {
     @get:Rule
