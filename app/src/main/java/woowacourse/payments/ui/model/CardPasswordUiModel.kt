@@ -9,6 +9,7 @@ class CardPasswordUiModel(
     val value: String = "",
 ) : Parcelable {
     val isValid: Boolean get() = value.length <= VALID_LENGTH
+    val isError: Boolean get() = value.length != VALID_LENGTH
 
     init {
         require(value.isDigitsOnly()) { ERROR_INVALID_FORMAT }

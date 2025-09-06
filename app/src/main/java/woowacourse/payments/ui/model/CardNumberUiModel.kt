@@ -8,11 +8,12 @@ import kotlinx.parcelize.Parcelize
 data class CardNumberUiModel(
     val value: String = "",
 ) : Parcelable {
+    val isValid get() = value.length <= REQUIRE_CARD_NUMBER_LENGTH
+    val isError get() = value.length != REQUIRE_CARD_NUMBER_LENGTH
+
     init {
         require(value.isDigitsOnly()) { ERROR_INVALID_FORMAT }
     }
-
-    val isValid get() = value.length <= REQUIRE_CARD_NUMBER_LENGTH
 
     companion object {
         private const val REQUIRE_CARD_NUMBER_LENGTH = 16

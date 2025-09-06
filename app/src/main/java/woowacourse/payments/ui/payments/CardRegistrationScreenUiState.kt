@@ -14,6 +14,7 @@ data class CardRegistrationScreenUiState(
     val cardExpirationDateErrorMessage: String? = null,
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
-    val isRegistrableCard: Boolean = false,
     val snackbarMessage: String? = null,
-) : Parcelable
+) : Parcelable {
+    val isRegistrableCard: Boolean get() = (!cardNumber.isError && !cardExpirationDate.isError && !cardPassword.isError)
+}

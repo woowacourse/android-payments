@@ -29,11 +29,9 @@ import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.util.DefaultPaymentCardValidator
-import woowacourse.payments.util.PaymentCardValidator
 
 @Composable
-fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
+fun CardRegistrationScreen() {
     val focusManager = LocalFocusManager.current
     val snackbarState = remember { SnackbarHostState() }
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
@@ -42,7 +40,6 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
     val registerCardMessage =
         stringResource(R.string.card_registration_screen_registration_card_success)
 
-    uiState = uiState.copy(isRegistrableCard = isRegistrableCard(uiState, paymentCardValidator))
     LaunchedEffect(uiState.snackbarMessage) {
         if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
         snackbarState.showSnackbar(uiState.snackbarMessage.orEmpty())
@@ -143,15 +140,6 @@ private fun CardRegistrationScreenContent(
         )
     }
 }
-
-private fun isRegistrableCard(
-    uiState: CardRegistrationScreenUiState,
-    paymentCardValidator: PaymentCardValidator,
-): Boolean =
-    paymentCardValidator.validateCardNumber(uiState.cardNumber.value) &&
-        paymentCardValidator.validateCardExpirationDate(uiState.cardExpirationDate.value) &&
-        paymentCardValidator.validateCardholderName(uiState.cardholderName.value) &&
-        paymentCardValidator.validateCardPassword(uiState.cardPassword.value)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
