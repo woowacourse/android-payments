@@ -13,6 +13,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -22,6 +24,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
     var expiredDate by remember { mutableStateOf("") }
     var ownerName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         modifier = modifier,
@@ -52,6 +55,8 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
+                onComplete = { focusManager.moveFocus(FocusDirection.Next) },
+                onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             ExpiredDateTextField(
                 value = expiredDate,
@@ -59,6 +64,8 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                 modifier =
                     Modifier
                         .padding(top = 18.dp),
+                onComplete = { focusManager.moveFocus(FocusDirection.Next) },
+                onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             CardOwnerNameTextField(
                 value = ownerName,
@@ -68,10 +75,13 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 18.dp),
+                onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             PasswordTextField(
                 value = password,
                 onPasswordChange = { newPassword: String -> password = newPassword },
+                onComplete = { focusManager.clearFocus() },
+                onKeyboardActionClick = { focusManager.clearFocus() },
             )
         }
     }
