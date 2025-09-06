@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -30,7 +29,7 @@ fun ExpirationDateTextField(
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
-    val delimiter = LocalContext.current.getString(R.string.expiration_date_delimiter)
+    val delimiter = stringResource(R.string.expiration_date_delimiter)
 
     val offsetMapping =
         object : OffsetMapping {
