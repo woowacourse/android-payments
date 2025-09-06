@@ -1,6 +1,7 @@
 package woowacourse.payments.card.register
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -51,7 +52,8 @@ fun NewCardScreen() {
                 modifier =
                     Modifier
                         .padding(top = 30.dp)
-                        .fillMaxWidth(0.5f),
+                        .fillMaxWidth(0.5f)
+                        .defaultMinSize(minWidth = 200.dp),
             )
             CardHolderNameTextField(
                 modifier =
@@ -63,7 +65,8 @@ fun NewCardScreen() {
                 modifier =
                     Modifier
                         .padding(top = 10.dp)
-                        .fillMaxWidth(0.5f),
+                        .fillMaxWidth(0.5f)
+                        .defaultMinSize(minWidth = 200.dp),
             )
         }
     }
