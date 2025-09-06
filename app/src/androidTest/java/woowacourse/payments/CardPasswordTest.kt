@@ -1,0 +1,75 @@
+package woowacourse.payments
+
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.isDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performTextInput
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+
+class CardPasswordTest {
+    private val masking = '\u2022'.toString()
+
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Before
+    fun setUp() {
+        composeTestRule.setContent {
+            DigitTextField(
+                label = "비밀번호",
+                hint = "0000",
+                maxLength = 4,
+                mask = InputMask.Password,
+                errorMessage = "비밀번호는 4자입니다.",
+            )
+        }
+    }
+
+    @Test
+    fun 비밀번호는_노출되지_않는다() {
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput("7641")
+
+        composeTestRule
+            .onNodeWithText(masking.repeat(4))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 비밀번호는_4자이다() {
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput("1234")
+
+        composeTestRule
+            .onNodeWithText(masking.repeat(4))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 비밀번호는_4자를_초과할_수_없다() {
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput("12345")
+
+        composeTestRule
+            .onNodeWithText(masking.repeat(4))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 비밀번호가_4자_미만일_때_비밀번호는_4자라는_메시지가_보인다() {
+        composeTestRule
+            .onNodeWithText("")
+            .performTextInput("123")
+
+        // then
+        composeTestRule
+            .onNodeWithText("비밀번호는 4자입니다.")
+            .isDisplayed()
+    }
+}
