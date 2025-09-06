@@ -31,7 +31,7 @@ fun PaymentTextField(
             val digitsFiltering: String = if (onlyDigits) input.filter { it.isDigit() } else input
             val newValue = digitsFiltering.take(maxLength)
 
-            if (newValue != input) {
+            if (newValue != text) {
                 onValueChanged(newValue)
             }
         },
