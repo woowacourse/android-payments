@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
+import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.AppTestTags.CARD_NUMBER_FIELD
 import woowacourse.payments.ui.util.CardNumberVisualTransformation
@@ -44,7 +45,7 @@ fun CardNumberFieldPreview() {
         CardNumberField(
             value = text,
             onValueChange = {
-                text = it
+                text =  CardUiState().withCardNumber(it).cardNumber
             },
         )
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
+import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.AppTestTags.CARD_PASSWORD_FIELD
 
@@ -44,7 +45,7 @@ fun CardPasswordFieldPreview() {
         CardPasswordField(
             value = text,
             onValueChange = {
-                text = it
+                text = CardUiState().withCardNumber(it).password
             },
         )
     }

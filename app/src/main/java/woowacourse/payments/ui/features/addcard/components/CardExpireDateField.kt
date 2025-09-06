@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
+import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.AppTestTags
 import woowacourse.payments.ui.util.AppTestTags.CARD_EXPIRY_DATE_FIELD
@@ -79,7 +80,7 @@ fun CardExpireDateFieldPreview() {
         CardExpireDateField(
             value = text,
             onValueChange = {
-                text = it
+                text =  CardUiState().withCardNumber(it).expireDate
             },
         )
     }

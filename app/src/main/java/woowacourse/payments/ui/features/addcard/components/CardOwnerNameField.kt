@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
+import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.AppTestTags.CARD_OWNER_NAME_FIELD
 
@@ -47,7 +48,7 @@ fun CardOwnerNameFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardOwnerNameField(
             value = text,
-            onValueChange = { text = it },
+            onValueChange = { text =  CardUiState().withOwnerName(it).ownerName },
             supportingText = {
                 Text(
                     text = "${text.length}/30",
