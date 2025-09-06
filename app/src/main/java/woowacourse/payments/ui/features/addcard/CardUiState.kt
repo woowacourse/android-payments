@@ -11,31 +11,13 @@ data class CardUiState(
     val ownerName: String = "",
     val password: String = "",
 ) {
-    fun withCardNumber(newNumber: String): CardUiState {
-        if (newNumber.length <= MAX_LENGTH_CARD_NUMBER && newNumber.all(Char::isDigit)) {
-            return this.copy(cardNumber = newNumber)
-        }
-        return this
-    }
+    fun withCardNumber(newNumber: String): CardUiState =
+        this.copy(cardNumber = newNumber.filter { it in '0'..'9' }.take(MAX_LENGTH_CARD_NUMBER))
 
-    fun withExpireDate(newDate: String): CardUiState {
-        if (newDate.length <= MAX_LENGTH_EXPIRE_DATE && newDate.all(Char::isDigit)) {
-            return this.copy(expireDate = newDate)
-        }
-        return this
-    }
+    fun withExpireDate(newDate: String): CardUiState =
+        this.copy(expireDate = newDate.filter { it in '0'..'9' }.take(MAX_LENGTH_EXPIRE_DATE))
 
-    fun withOwnerName(newName: String): CardUiState {
-        if (newName.length <= MAX_LENGTH_OWNER_NAME) {
-            return this.copy(ownerName = newName)
-        }
-        return this
-    }
+    fun withOwnerName(newName: String): CardUiState = this.copy(ownerName = newName.take(MAX_LENGTH_OWNER_NAME))
 
-    fun withPassword(newPassword: String): CardUiState {
-        if (newPassword.length <= MAX_LENGTH_PASSWORD && newPassword.all(Char::isDigit)) {
-            return this.copy(password = newPassword)
-        }
-        return this
-    }
+    fun withPassword(newPassword: String): CardUiState = this.copy(newPassword.filter { it in '0'..'9' }.take(MAX_LENGTH_PASSWORD))
 }
