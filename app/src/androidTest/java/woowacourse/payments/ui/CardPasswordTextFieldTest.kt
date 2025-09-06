@@ -6,8 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -33,14 +33,14 @@ class CardPasswordTextFieldTest {
     @Test
     fun `비밀번호는_숫자만_입력_가능해야_한다`() {
         // when
-        val textField = composeTestRule.onNodeWithTag("CardPasswordTextField")
+        val textField = composeTestRule.onNode(hasContentDescription("비밀번호"))
         textField.performTextInput("1")
         textField.performTextInput("a")
         textField.performTextInput("2")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardPasswordTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("비밀번호"), useUnmergedTree = true)
             .assertTextEquals("••")
     }
 
@@ -48,7 +48,7 @@ class CardPasswordTextFieldTest {
     fun `비밀번호_입력_값이_없는_경우_Placeholder가_보여진다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardPasswordTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("비밀번호"))
             .performClick()
 
         // then
@@ -60,13 +60,14 @@ class CardPasswordTextFieldTest {
     @Test
     fun `비밀번호는_길이가_4자를_넘어갈_수_없다`() {
         // when
-        composeTestRule
-            .onNodeWithTag("CardPasswordTextField")
-            .performTextInput("12345")
+        val textField = composeTestRule.onNode(hasContentDescription("비밀번호"))
+
+        textField.performTextInput("1234")
+        textField.performTextInput("5")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardPasswordTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("비밀번호"), useUnmergedTree = true)
             .assertTextEquals("••••")
     }
 }

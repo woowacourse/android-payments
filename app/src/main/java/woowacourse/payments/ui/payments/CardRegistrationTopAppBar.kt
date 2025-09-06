@@ -10,14 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import woowacourse.payments.R
-
-private const val CardRegistrationTopBarPreviousButtonTestTag =
-    "CardRegistrationTopBarPreviousButtonTestTag"
-private const val CardRegistrationTopBarRegistrationButtonTestTag =
-    "CardRegistrationTopBarRegistrationButtonTestTag"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +27,7 @@ fun CardRegistrationTopAppBar(
         title = { Text(stringResource(R.string.card_registration_bar_title)) },
         navigationIcon = {
             IconButton(
-                modifier = Modifier.testTag(CardRegistrationTopBarPreviousButtonTestTag),
+                modifier = Modifier.semantics { contentDescription = "뒤로 가기 버튼" },
                 onClick = onBackClick,
             ) {
                 Icon(
@@ -42,7 +38,7 @@ fun CardRegistrationTopAppBar(
         },
         actions = {
             IconButton(
-                modifier = Modifier.testTag(CardRegistrationTopBarRegistrationButtonTestTag),
+                modifier = Modifier.semantics { contentDescription = "완료 버튼" },
                 onClick = onSaveClick,
                 enabled = isSaveButtonEnabled,
             ) {

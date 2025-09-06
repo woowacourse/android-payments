@@ -6,8 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -36,14 +36,14 @@ class CardExpirationDateTextFieldTest {
         setup()
 
         // when
-        val textField = composeTestRule.onNodeWithTag("CardExpirationDateTextField")
+        val textField = composeTestRule.onNode(hasContentDescription("만료일"))
         textField.performTextInput("1")
         textField.performTextInput("a")
         textField.performTextInput("2")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
             .assertTextEquals("12")
     }
 
@@ -62,7 +62,7 @@ class CardExpirationDateTextFieldTest {
         }
 
         // when
-        val textField = composeTestRule.onNodeWithTag("CardExpirationDateTextField")
+        val textField = composeTestRule.onNode(hasContentDescription("만료일"))
         textField.performTextInput("1")
         textField.performTextInput("3")
         textField.performTextInput("2")
@@ -81,12 +81,12 @@ class CardExpirationDateTextFieldTest {
 
         // when
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField")
+            .onNode(hasContentDescription("만료일"))
             .performTextInput("123")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
             .assertTextEquals("12 / 3")
     }
 
@@ -97,12 +97,12 @@ class CardExpirationDateTextFieldTest {
 
         // when
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField")
+            .onNode(hasContentDescription("만료일"))
             .performTextInput("0925")
 
         // then
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
             .assertTextEquals("09 / 25")
     }
 
@@ -113,9 +113,8 @@ class CardExpirationDateTextFieldTest {
 
         // when
         composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
             .performClick()
-
         // then
         composeTestRule
             .onNodeWithText("MM / YY")

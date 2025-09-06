@@ -13,15 +13,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
-private const val CardholderNameTextFieldTestTag = "CardholderNameTextField"
 private const val CardholderNameLengthSeparator = "/"
 
 @Composable
@@ -32,7 +32,8 @@ fun CardholderNameTextField(
     maxLength: Int = 30,
 ) {
     OutlinedTextField(
-        modifier = modifier.testTag(CardholderNameTextFieldTestTag),
+        modifier =
+            modifier.semantics { contentDescription = "카드 소유자 이름" },
         label = {
             Text(text = stringResource(R.string.cardholder_name_text_field_label))
         },

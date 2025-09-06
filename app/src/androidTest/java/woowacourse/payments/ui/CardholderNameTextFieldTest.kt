@@ -6,8 +6,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -35,7 +35,7 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름은_영문만_입력할_수_있다`() {
         // when
         val textField =
-            composeTestRule.onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            composeTestRule.onNode(hasContentDescription("카드 소유자 이름"))
 
         textField.performTextInput("C")
         textField.performTextInput("1")
@@ -45,7 +45,7 @@ class CardholderNameTextFieldTest {
 
         // then
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("카드 소유자 이름"), useUnmergedTree = true)
             .assertTextEquals("CREW")
     }
 
@@ -53,12 +53,12 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름의_최대_글자는_30자이다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("카드 소유자 이름"))
             .performTextInput("C".repeat(31))
 
         // then
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("카드 소유자 이름"), useUnmergedTree = true)
             .assertTextEquals("C".repeat(30))
     }
 
@@ -66,7 +66,7 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름의_길이가_표시된다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("카드 소유자 이름"))
             .performTextInput("ABCDE")
 
         // then
@@ -79,7 +79,7 @@ class CardholderNameTextFieldTest {
     fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
         // when
         composeTestRule
-            .onNodeWithTag("CardholderNameTextField", useUnmergedTree = true)
+            .onNode(hasContentDescription("카드 소유자 이름"))
             .performClick()
 
         // then
