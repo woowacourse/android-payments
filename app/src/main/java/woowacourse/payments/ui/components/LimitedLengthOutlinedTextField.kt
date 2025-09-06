@@ -17,11 +17,13 @@ fun LimitedLengthOutlinedTextField(
     supportingText: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    inputFilter: (String) -> String = { it },
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { text ->
-            onValueChange(text.take(maxLength))
+        onValueChange = { text: String ->
+            val filteredText = inputFilter(text)
+            onValueChange(filteredText.take(maxLength))
         },
         label = label,
         placeholder = placeholder,

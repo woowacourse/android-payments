@@ -74,6 +74,7 @@ fun NewCardScreen(
                         List(4) { CARD_NUMBER_GROUP_SIZE },
                         " - ",
                     ),
+                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
@@ -88,6 +89,7 @@ fun NewCardScreen(
                         List(2) { EXPIRATION_DATE_GROUP_SIZE },
                         " / ",
                     ),
+                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             LimitedLengthOutlinedTextField(
@@ -103,6 +105,9 @@ fun NewCardScreen(
                         textAlign = TextAlign.End,
                     )
                 },
+                inputFilter = {
+                    it.uppercase().filter { ch -> ch.isLetter() || ch.isWhitespace() }
+                },
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
@@ -113,6 +118,7 @@ fun NewCardScreen(
                 placeholder = { Text("0000") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 visualTransformation = PasswordVisualTransformation(),
+                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
