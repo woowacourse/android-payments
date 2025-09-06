@@ -31,6 +31,7 @@ import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.components.PaymentCard
+import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
 @Composable
 fun NewCardScreen(
@@ -68,6 +69,7 @@ fun NewCardScreen(
                 label = { Text(stringResource(R.string.card_number)) },
                 placeholder = { Text("0000 - 0000 - 0000 - 0000") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                visualTransformation = GroupedVisualTransformation(listOf(4, 4, 4, 4), " - "),
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
@@ -77,6 +79,7 @@ fun NewCardScreen(
                 label = { Text(stringResource(R.string.card_expiration_date)) },
                 placeholder = { Text("MM / YY") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                visualTransformation = GroupedVisualTransformation(listOf(2, 2), " / "),
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             LimitedLengthOutlinedTextField(
