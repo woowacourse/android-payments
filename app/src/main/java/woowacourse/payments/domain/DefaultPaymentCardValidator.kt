@@ -1,4 +1,4 @@
-package woowacourse.payments.util
+package woowacourse.payments.domain
 
 import java.time.YearMonth
 

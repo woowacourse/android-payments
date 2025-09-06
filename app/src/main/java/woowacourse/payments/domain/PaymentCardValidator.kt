@@ -1,4 +1,4 @@
-package woowacourse.payments.util
+package woowacourse.payments.domain
 
 interface PaymentCardValidator {
     fun validateCardNumber(cardNumber: String): Boolean
