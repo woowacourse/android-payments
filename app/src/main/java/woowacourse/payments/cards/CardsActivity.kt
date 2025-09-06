@@ -10,8 +10,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import woowacourse.payments.MainActivity
 import woowacourse.payments.component.PaymentToolbar
@@ -28,12 +31,15 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards = remember { mutableStateListOf<Card>() }
+                var showToast by remember { mutableStateOf(false) }
+
                 val activityResultLauncher = rememberLauncherForActivityResult(
                     ActivityResultContracts.StartActivityForResult()
                 ) { result ->
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let {
                             cards.add(it.toDomain())
+                            showToast = true
                         }
                     }
                 }
@@ -52,6 +58,7 @@ class CardsActivity : ComponentActivity() {
                 ) { innerPadding ->
                     CardsScreen(
                         cards,
+                        showToast,
                         { cardType ->
                             if (cardType == CardType.EMPTY) {
                                 activityResultLauncher.launch(

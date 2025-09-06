@@ -1,5 +1,6 @@
 package woowacourse.payments.cards
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -27,9 +29,16 @@ import woowacourse.payments.preview.OneCardPreviewParameterProvider
 @Composable
 fun CardsScreen(
     cards: List<Card>,
+    onCompleteAddCard: Boolean,
     onClickCard: (CardType) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
+    if (onCompleteAddCard) {
+        Toast.makeText(context, stringResource(R.string.card_list_add_new_card), Toast.LENGTH_SHORT)
+            .show()
+    }
+
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -98,7 +107,7 @@ fun CardsScreen(
 @Composable
 @Preview(showBackground = true)
 fun CardScreenPreview() {
-    CardsScreen(emptyList(), {})
+    CardsScreen(emptyList(), false, {})
 }
 
 @Composable
@@ -106,7 +115,7 @@ fun CardScreenPreview() {
 fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
-    CardsScreen(listOf(card), {})
+    CardsScreen(listOf(card), false, {})
 }
 
 @Composable
@@ -114,6 +123,6 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
 ) {
-    CardsScreen(cards, {})
+    CardsScreen(cards, false, {})
 }
 

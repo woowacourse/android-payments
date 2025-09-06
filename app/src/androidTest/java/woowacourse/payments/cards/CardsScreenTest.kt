@@ -21,6 +21,7 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 cards = emptyList(),
+                onCompleteAddCard = true,
                 onClickCard = {},
             )
         }
@@ -49,7 +50,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, {})
+            CardsScreen(cards, false, {})
         }
 
         // then
@@ -92,7 +93,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, {})
+            CardsScreen(cards, false, {})
         }
 
         // then
@@ -121,7 +122,7 @@ class CardsScreenTest {
     fun `빈_카드_클릭_시_onClickCard가_호출된다`() {
         var clickedType: CardType? = null
         composeTestRule.setContent {
-            CardsScreen(emptyList(), onClickCard = { clickedType = it })
+            CardsScreen(emptyList(), false, onClickCard = { clickedType = it })
         }
 
         composeTestRule
