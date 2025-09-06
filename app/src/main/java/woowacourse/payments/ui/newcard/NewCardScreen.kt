@@ -69,7 +69,11 @@ fun NewCardScreen(
                 label = { Text(stringResource(R.string.card_number)) },
                 placeholder = { Text("0000 - 0000 - 0000 - 0000") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                visualTransformation = GroupedVisualTransformation(listOf(4, 4, 4, 4), " - "),
+                visualTransformation =
+                    GroupedVisualTransformation(
+                        List(4) { CARD_NUMBER_GROUP_SIZE },
+                        " - ",
+                    ),
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
@@ -79,7 +83,11 @@ fun NewCardScreen(
                 label = { Text(stringResource(R.string.card_expiration_date)) },
                 placeholder = { Text("MM / YY") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                visualTransformation = GroupedVisualTransformation(listOf(2, 2), " / "),
+                visualTransformation =
+                    GroupedVisualTransformation(
+                        List(2) { EXPIRATION_DATE_GROUP_SIZE },
+                        " / ",
+                    ),
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             LimitedLengthOutlinedTextField(
@@ -110,6 +118,9 @@ fun NewCardScreen(
         }
     }
 }
+
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val EXPIRATION_DATE_GROUP_SIZE = 2
 
 @Preview
 @Composable
