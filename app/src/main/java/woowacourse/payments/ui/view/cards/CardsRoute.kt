@@ -13,9 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.PaymentToolbar
 import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.Event
@@ -27,7 +27,7 @@ import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 fun CardsRoute(
     onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit
 ) {
-    val cards = remember { mutableStateListOf<Card>() }
+    val cards = rememberSaveable { mutableStateListOf<SerializationCard>() }
     var uiEvent by remember {
         mutableStateOf<Event<CardScreenUiEvent>>(
             Event(CardScreenUiEvent.Idle)
@@ -38,8 +38,8 @@ fun CardsRoute(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let {
-                cards.add(it.toDomain())
+            result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let { newCard ->
+                cards.add(newCard)
                 uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
             }
         }
@@ -56,7 +56,7 @@ fun CardsRoute(
         }
     ) { innerPadding ->
         CardsScreen(
-            cards = cards,
+            cards = cards.map { it.toDomain() },
             uiEvent = uiEvent.peekContent(),
             onClickCard = { cardType ->
                 if (cardType == CardType.EMPTY) {
