@@ -12,7 +12,7 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardListScreen()
+                CardListScreen({})
             }
         }
     }

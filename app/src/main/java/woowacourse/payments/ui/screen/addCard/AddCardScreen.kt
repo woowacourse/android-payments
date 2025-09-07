@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
 import woowacourse.payments.ui.component.ExpiredInputField
