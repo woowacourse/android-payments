@@ -4,7 +4,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class CardNumberTest {
-
     @Test
     fun `onValueChange는 카드 번호 문자열을 4자리씩 나눈다`() {
         // given

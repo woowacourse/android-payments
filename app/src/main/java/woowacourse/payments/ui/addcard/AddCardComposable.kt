@@ -46,7 +46,6 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     onValueChange = { input ->
                         cardDetails =
                             cardDetails.copy(number = cardDetails.number.onValueChange(input))
-
                     },
                     modifier =
                         Modifier
@@ -72,7 +71,6 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     onValueChange = { input ->
                         cardDetails =
                             cardDetails.copy(ownerName = cardDetails.ownerName.onValueChange(input))
-
                     },
                 )
                 Password(

@@ -28,8 +28,7 @@ class CardNumberVisualTransformation : VisualTransformation {
                 override fun originalToTransformed(offset: Int): Int =
                     min(offset + (offset / CARD_GROUP_SIZE), CARD_NUMBER_INCLUDE_HYPHEN_MAX_LENGTH)
 
-                override fun transformedToOriginal(offset: Int): Int =
-                    offset - (offset / (CARD_GROUP_SIZE + 1))
+                override fun transformedToOriginal(offset: Int): Int = offset - (offset / (CARD_GROUP_SIZE + 1))
             }
 
         return TransformedText(AnnotatedString(out), offsetMapping)

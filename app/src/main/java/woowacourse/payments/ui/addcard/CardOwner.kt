@@ -29,7 +29,7 @@ fun CardOwner(
                 stringResource(
                     R.string.add_card_card_owner_supporting_text,
                     cardOwner.toString().length,
-                    CARD_OWNER_MAX_LENGTH
+                    CARD_OWNER_MAX_LENGTH,
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,

@@ -16,7 +16,7 @@ class GenerateCardViewTest {
     val composeTestRule = createComposeRule()
 
     @Before
-    fun setUp(){
+    fun setUp() {
         composeTestRule.setContent {
             GenerateCardView()
         }
@@ -116,9 +116,10 @@ class GenerateCardViewTest {
         inputField.performTextInput(expirationDateInput)
 
         // then
-        val hasErrorProperty = SemanticsMatcher.keyIsDefined(
-            SemanticsProperties.Error
-        )
+        val hasErrorProperty =
+            SemanticsMatcher.keyIsDefined(
+                SemanticsProperties.Error,
+            )
         inputField.assert(hasErrorProperty)
     }
 
@@ -132,9 +133,10 @@ class GenerateCardViewTest {
         inputField.performTextInput(expirationDateInput)
 
         // then
-        val hasErrorProperty = SemanticsMatcher.keyIsDefined(
-            SemanticsProperties.Error
-        )
+        val hasErrorProperty =
+            SemanticsMatcher.keyIsDefined(
+                SemanticsProperties.Error,
+            )
         inputField.assert(hasErrorProperty)
     }
 

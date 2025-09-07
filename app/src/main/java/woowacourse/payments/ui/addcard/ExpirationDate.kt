@@ -27,7 +27,7 @@ fun ExpirationDate(
         supportingText = {
             if (expirationDate.isValid().not()) {
                 Text(
-                    stringResource(R.string.add_card_expiration_date_supporting_error_text)
+                    stringResource(R.string.add_card_expiration_date_supporting_error_text),
                 )
                 return@OutlinedTextField
             }

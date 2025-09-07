@@ -3,9 +3,7 @@ package woowacourse.payments.domain
 data class Password(
     val password: String = "",
 ) {
-    override fun toString(): String {
-        return password
-    }
+    override fun toString(): String = password
 
     fun onValueChange(value: String): Password {
         val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)

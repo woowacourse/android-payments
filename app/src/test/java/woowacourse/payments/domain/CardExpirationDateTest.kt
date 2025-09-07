@@ -7,7 +7,6 @@ import org.junit.Test
 import java.time.LocalDate
 
 class CardExpirationDateTest {
-
     @Test
     fun `유효한 만료일(미래)일 경우 true를 반환한다`() {
         // given
