@@ -34,7 +34,7 @@ fun CardExpireDateField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    expireDateStatus: ExpireDateStatus = ExpireDateStatus.Valid,
+    expireDateStatus: ExpireDateStatus,
     supportingTextHeight: Dp = 20.dp,
 ) {
     val isError = expireDateStatus is ExpireDateStatus.Invalid

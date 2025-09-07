@@ -2,9 +2,12 @@ package woowacourse.payments.ui.features.addcard
 
 import androidx.annotation.StringRes
 import woowacourse.payments.R
+import java.time.YearMonth
 
 sealed interface ExpireDateStatus {
-    data object Valid : ExpireDateStatus
+    data class Valid(
+        val yearMonth: YearMonth,
+    ) : ExpireDateStatus
 
     data object Typing : ExpireDateStatus
 
