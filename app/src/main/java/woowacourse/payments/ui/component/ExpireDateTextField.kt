@@ -1,10 +1,6 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import woowacourse.payments.R
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -14,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.core.ExpireDateVisualTransformation
+import woowacourse.payments.ui.core.ExpireDateVisualTransformation
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.Black49
 

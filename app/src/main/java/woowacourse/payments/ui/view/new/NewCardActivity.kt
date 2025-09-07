@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.view.new
 
 import android.content.Context
 import android.content.Intent
@@ -14,13 +14,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import woowacourse.payments.cards.CardsActivity
-import woowacourse.payments.component.NewCardTopBar
+import woowacourse.payments.ui.view.cards.CardsActivity
+import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.domain.Card
-import woowacourse.payments.serialization.toSerializationCard
+import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class MainActivity : ComponentActivity() {
+class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,6 +52,6 @@ class MainActivity : ComponentActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, MainActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }

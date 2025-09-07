@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.view.new
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,15 +12,15 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.component.CardChip
-import woowacourse.payments.component.CardNumberTextField
-import woowacourse.payments.component.CardOwnerTextField
-import woowacourse.payments.component.CardPasswordTextField
-import woowacourse.payments.component.ExpireDateTextField
-import woowacourse.payments.component.PaymentCard
-import woowacourse.payments.core.CardNumberVisualTransformation
+import woowacourse.payments.ui.component.CardChip
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardOwnerTextField
+import woowacourse.payments.ui.component.CardPasswordTextField
+import woowacourse.payments.ui.component.ExpireDateTextField
+import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardType
+import woowacourse.payments.ui.core.CardType
 
 @Composable
 fun NewCardScreen(

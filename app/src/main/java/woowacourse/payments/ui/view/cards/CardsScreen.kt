@@ -1,4 +1,4 @@
-package woowacourse.payments.cards
+package woowacourse.payments.ui.view.cards
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -19,12 +19,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.component.PaymentCard
-import woowacourse.payments.component.RegisteredCard
+import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardType
-import woowacourse.payments.preview.CardsPreviewParameterProvider
-import woowacourse.payments.preview.OneCardPreviewParameterProvider
+import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
+import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
 fun CardsScreen(

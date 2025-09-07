@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.Text

@@ -1,4 +1,4 @@
-package woowacourse.payments.cards
+package woowacourse.payments.ui.view.cards
 
 import android.content.Context
 import android.content.Intent
@@ -16,13 +16,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import woowacourse.payments.MainActivity
-import woowacourse.payments.component.PaymentToolbar
-import woowacourse.payments.core.Event
-import woowacourse.payments.core.getParcelableCompat
+import woowacourse.payments.ui.view.new.NewCardActivity
+import woowacourse.payments.ui.component.PaymentToolbar
+import woowacourse.payments.ui.core.Event
+import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardType
-import woowacourse.payments.serialization.SerializationCard
+import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -54,7 +54,7 @@ class CardsActivity : ComponentActivity() {
                         PaymentToolbar(
                             onAddClick = {
                                 activityResultLauncher.launch(
-                                    MainActivity.newIntent(this)
+                                    NewCardActivity.newIntent(this)
                                 )
                             },
                             addButtonVisible = cards.size > 1
@@ -67,7 +67,7 @@ class CardsActivity : ComponentActivity() {
                         onClickCard = { cardType ->
                             if (cardType == CardType.EMPTY) {
                                 activityResultLauncher.launch(
-                                    MainActivity.newIntent(this)
+                                    NewCardActivity.newIntent(this)
                                 )
                             }
                         },

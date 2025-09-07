@@ -6,6 +6,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.component.CardPasswordTextField
 
 class CardPasswordEditTextTest {
     @get:Rule

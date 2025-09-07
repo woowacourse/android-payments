@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import woowacourse.payments.R
 import androidx.compose.material.icons.Icons

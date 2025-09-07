@@ -1,4 +1,4 @@
-package woowacourse.payments.core
+package woowacourse.payments.ui.core
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping

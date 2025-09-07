@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
-import woowacourse.payments.preview.OneCardPreviewParameterProvider
+import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
 fun RegisteredCard(

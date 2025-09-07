@@ -3,6 +3,7 @@ package woowacourse.payments.core
 import androidx.compose.ui.text.AnnotatedString
 import org.junit.jupiter.api.Assertions
 import org.junit.Test
+import woowacourse.payments.ui.core.CardNumberVisualTransformation
 
 class CardNumberVisualTransformationTest {
     private val transformation = CardNumberVisualTransformation(

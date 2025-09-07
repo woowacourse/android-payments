@@ -9,7 +9,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardType
+import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.view.cards.CardScreenUiEvent
+import woowacourse.payments.ui.view.cards.CardsScreen
 
 class CardsScreenTest {
     @get:Rule

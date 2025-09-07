@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
-            android:name=".cards.CardsActivity"
+            android:name=".ui.view.cards.CardsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.view.new.NewCardActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
     </application>

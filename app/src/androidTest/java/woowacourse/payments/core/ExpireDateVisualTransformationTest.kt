@@ -4,6 +4,7 @@ import androidx.compose.ui.text.AnnotatedString
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.core.ExpireDateVisualTransformation
 
 class ExpireDateVisualTransformationTest {
     private val expireDateVisualTransformation = ExpireDateVisualTransformation(

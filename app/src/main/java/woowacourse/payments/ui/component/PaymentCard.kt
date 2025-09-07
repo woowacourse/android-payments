@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,8 +18,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardType
-import woowacourse.payments.preview.OneCardPreviewParameterProvider
+import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
 fun PaymentCard(

@@ -1,4 +1,4 @@
-package woowacourse.payments.domain
+package woowacourse.payments.ui.core
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
@@ -9,7 +9,7 @@ enum class CardType(
     val parentAlignment: Alignment,
     val backgroundColor: Color,
 ) {
-    EMPTY(Alignment.Center, GrayE5),
-    PENDING(Alignment.CenterStart, Black33),
-    REGISTERED(Alignment.CenterStart, Black33)
+    EMPTY(Alignment.Companion.Center, GrayE5),
+    PENDING(Alignment.Companion.CenterStart, Black33),
+    REGISTERED(Alignment.Companion.CenterStart, Black33)
 }
