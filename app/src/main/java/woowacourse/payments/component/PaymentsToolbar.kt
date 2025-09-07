@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -25,18 +26,13 @@ fun PaymentToolbar(
     addButtonVisible: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    TopAppBar(
+    CenterAlignedTopAppBar(
         title = {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.card_list_title),
-                    fontSize = 20.sp,
-                    color = Color.Black
-                )
-            }
+            Text(
+                text = stringResource(R.string.card_list_title),
+                fontSize = 20.sp,
+                color = Color.Black
+            )
         },
         actions = {
             if (addButtonVisible) {
