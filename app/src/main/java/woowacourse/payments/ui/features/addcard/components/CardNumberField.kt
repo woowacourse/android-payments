@@ -12,21 +12,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.CardNumberVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardNumberField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     AppTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.filter { it in '0'..'9' }.take(MAX_LENGTH_CARD_NUMBER)
+            onValueChange(filteredValue)
+        },
         modifier = modifier,
         labelText = stringResource(R.string.add_card_number_field_title),
         placeholderText = stringResource(R.string.add_card_number_field_hint),
@@ -42,9 +45,7 @@ fun CardNumberFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardNumberField(
             value = text,
-            onValueChange = {
-                text = CardUiState().withCardNumber(it).cardNumber
-            },
+            onValueChange = { text = it },
         )
     }
 }

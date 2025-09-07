@@ -12,7 +12,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardPasswordFieldTest {
@@ -30,9 +29,7 @@ class CardPasswordFieldTest {
             AndroidpaymentsTheme(dynamicColor = false) {
                 CardPasswordField(
                     value = state.value,
-                    onValueChange = {
-                        state.value = CardUiState().withPassword(it).password
-                    },
+                    onValueChange = { state.value = it },
                 )
             }
         }

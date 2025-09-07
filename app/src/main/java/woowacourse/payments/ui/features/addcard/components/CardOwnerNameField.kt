@@ -17,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +28,10 @@ fun CardOwnerNameField(
 ) {
     AppTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.take(MAX_LENGTH_OWNER_NAME)
+            onValueChange(filteredValue)
+        },
         modifier = modifier,
         labelText = stringResource(R.string.add_card_owner_name_field_title),
         placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
@@ -57,7 +59,7 @@ fun CardOwnerNameFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardOwnerNameField(
             value = text,
-            onValueChange = { text = CardUiState().withOwnerName(it).ownerName },
+            onValueChange = { text = it },
         )
     }
 }

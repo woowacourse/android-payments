@@ -33,9 +33,7 @@ class CardNumberFieldTest {
             AndroidpaymentsTheme(dynamicColor = false) {
                 CardNumberField(
                     value = text,
-                    onValueChange = {
-                        text = CardUiState().withCardNumber(it).cardNumber
-                    },
+                    onValueChange = { text = it },
                 )
             }
         }

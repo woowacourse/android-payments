@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.features.addcard
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -62,12 +60,12 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
                 value = cardUiState.cardNumber,
-                onValueChange = { cardUiState = cardUiState.withCardNumber(it) },
+                onValueChange = { cardUiState = cardUiState.copy(cardNumber = it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing))
             CardExpireDateField(
                 value = cardUiState.expireDate,
-                onValueChange = { cardUiState = cardUiState.withExpireDate(it) },
+                onValueChange = { cardUiState = cardUiState.copy(expireDate = it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
@@ -77,12 +75,12 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardOwnerNameField(
                 value = cardUiState.ownerName,
-                onValueChange = { cardUiState = cardUiState.withOwnerName(it) },
+                onValueChange = { cardUiState = cardUiState.copy(ownerName = it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardPasswordField(
                 value = cardUiState.password,
-                onValueChange = { cardUiState = cardUiState.withPassword(it) },
+                onValueChange = { cardUiState = cardUiState.copy(password = it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),

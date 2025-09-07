@@ -13,20 +13,23 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_PASSWORD
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardPasswordField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     AppTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.filter { it in '0'..'9' }.take(MAX_LENGTH_PASSWORD)
+            onValueChange(filteredValue)
+        },
         modifier = modifier,
         labelText = stringResource(R.string.add_card_password_field_title),
         placeholderText = stringResource(R.string.add_card_password_field_hint),
@@ -42,9 +45,7 @@ fun CardPasswordFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardPasswordField(
             value = text,
-            onValueChange = {
-                text = CardUiState().withCardNumber(it).password
-            },
+            onValueChange = { text = it },
         )
     }
 }

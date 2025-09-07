@@ -21,9 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_EXPIRE_DATE
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.features.addcard.ExpireDateStatus
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.CardExpireDateVisualTransformation
@@ -31,9 +31,9 @@ import woowacourse.payments.ui.util.CardExpireDateVisualTransformation
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardExpireDateField(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
     expireDateStatus: ExpireDateStatus = ExpireDateStatus.Valid,
     supportingTextHeight: Dp = 20.dp,
 ) {
@@ -41,7 +41,10 @@ fun CardExpireDateField(
 
     AppTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.filter { it in '0'..'9' }.take(MAX_LENGTH_EXPIRE_DATE)
+            onValueChange(filteredValue)
+        },
         modifier = modifier,
         labelText = stringResource(R.string.add_card_expire_date_field_title),
         placeholderText = stringResource(R.string.add_card_expire_date_field_hint),
@@ -78,9 +81,7 @@ fun CardExpireDateFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardExpireDateField(
             value = text,
-            onValueChange = {
-                text = CardUiState().withExpireDate(it).expireDate
-            },
+            onValueChange = { text = it },
             expireDateStatus = getExpireDateStatus(text),
         )
     }

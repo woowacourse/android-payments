@@ -19,7 +19,6 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
 import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -37,9 +36,7 @@ class CardExpireDateFieldTest {
             AndroidpaymentsTheme(dynamicColor = false) {
                 CardExpireDateField(
                     value = text,
-                    onValueChange = {
-                        text = CardUiState().withExpireDate(it).expireDate
-                    },
+                    onValueChange = { text = it },
                     expireDateStatus = getExpireDateStatus(text),
                 )
             }
