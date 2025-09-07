@@ -24,7 +24,7 @@ fun CardOwnerInputField(
     OutlinedTextField(
         value = cardOwner?.value ?: "",
         onValueChange = { newText ->
-            if (newText.length <= 30) {
+            if (newText.length <= 20) {
                 val newCardOwner = CardOwner(newText)
                 onOwnerChange(newCardOwner)
             }
