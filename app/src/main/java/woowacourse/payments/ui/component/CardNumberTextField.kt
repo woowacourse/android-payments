@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.Gray79
 import java.lang.Character.isDigit
 
 @Composable
@@ -38,7 +39,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(
                 text = stringResource(R.string.card_number_placeholder),
-                color = Color.Gray,
+                color = Gray79,
             )
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
