@@ -1,19 +1,19 @@
 package woowacourse.payments.ui.utils.ext
 
-import woowacourse.payments.domain.ExpiryException
+import woowacourse.payments.domain.CardExpiryException
 import java.time.YearMonth
 
 // 추후 도메인으로 이전
-fun String.formatExpiryException(): ExpiryException? {
+fun String.formatCardExpiryException(): CardExpiryException? {
     val digits = this.filter(Char::isDigit)
-    if (digits.length != 4) return ExpiryException.InvalidFormat
 
-    val mm = digits.substring(0, 2).toIntOrNull() ?: return ExpiryException.InvalidMonth
-    val yy = digits.substring(2, 4).toIntOrNull() ?: return ExpiryException.InvalidYear
-    if (mm !in 1..12) return ExpiryException.InvalidMonth
+    if (digits.length != 4) return null
+    val mm = digits.substring(0, 2).toIntOrNull() ?: return CardExpiryException.InvalidMonth
+    val yy = digits.substring(2, 4).toIntOrNull() ?: return CardExpiryException.InvalidYear
+    if (mm !in 1..12) return CardExpiryException.InvalidMonth
 
     val now = YearMonth.now()
     val exp = YearMonth.of(2000 + yy, mm)
-    if (exp.isBefore(now)) return ExpiryException.Expired
+    if (exp.isBefore(now)) return CardExpiryException.Expired
     return null
 }
