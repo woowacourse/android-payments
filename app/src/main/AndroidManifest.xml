@@ -12,10 +12,6 @@
         android:theme="@style/Theme.Androidpayments">
         <activity
             android:name=".CardsActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Androidpayments" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Androidpayments">
             <intent-filter>
@@ -24,6 +20,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CardAdditionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Androidpayments" />
     </application>
 
 </manifest>
