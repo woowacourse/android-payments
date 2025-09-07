@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -29,5 +31,9 @@ class NewCardActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }
