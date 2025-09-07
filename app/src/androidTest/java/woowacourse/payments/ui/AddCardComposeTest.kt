@@ -70,8 +70,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
-        val endDateInput = "1234"
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "1234"
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val expectedFormattedNumber = "12/34"
@@ -84,8 +84,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
-        val endDateInput = "123456789"
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "123456789"
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val expectedFormattedNumber = "12/34"
@@ -98,8 +98,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
-        val endDateInput = "1가2나3다4라"
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "1가2나3다4라"
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val expectedFormattedNumber = "12/34"
@@ -112,8 +112,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
-        val endDateInput = "9999"
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "9999"
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val hasErrorProperty = SemanticsMatcher.keyIsDefined(
@@ -128,8 +128,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
-        val endDateInput = "0203"
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "0203"
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val hasErrorProperty = SemanticsMatcher.keyIsDefined(
@@ -144,8 +144,8 @@ class GenerateCardViewTest {
         val inputField = composeTestRule.onNodeWithText("카드 소유자 이름(선택)")
 
         // when
-        val endDateInput = "a".repeat(99)
-        inputField.performTextInput(endDateInput)
+        val expirationDateInput = "a".repeat(99)
+        inputField.performTextInput(expirationDateInput)
 
         // then
         val expectedFormattedNumber = "a".repeat(30)

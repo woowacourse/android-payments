@@ -53,7 +53,7 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                             .fillMaxWidth()
                             .padding(top = AddCardComposableComponentPadding),
                 )
-                EndDate(
+                ExpirationDate(
                     modifier =
                         Modifier
                             .fillMaxWidth(FIELD_HALF_WIDTH),
@@ -63,7 +63,7 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                                 expirationDate = cardDetails.expirationDate.onValueChange(input),
                             )
                     },
-                    endDate = cardDetails.expirationDate,
+                    expirationDate = cardDetails.expirationDate,
                 )
                 CardOwner(
                     cardOwner = cardDetails.ownerName,

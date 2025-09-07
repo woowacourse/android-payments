@@ -11,18 +11,18 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
 
 @Composable
-fun EndDate(
-    endDate: CardExpirationDate,
+fun ExpirationDate(
+    expirationDate: CardExpirationDate,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
-        value = endDate.toCombinedFormat(),
+        value = expirationDate.toCombinedFormat(),
         onValueChange = onValueChange,
         modifier = modifier,
-        placeholder = { Text(stringResource(R.string.add_card_end_date_placeholder_text)) },
-        label = { Text(stringResource(R.string.add_card_end_date_label_text)) },
-        isError = endDate.isValid().not(),
+        placeholder = { Text(stringResource(R.string.add_card_expiration_date_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_expiration_date_label_text)) },
+        isError = expirationDate.isValid().not(),
         supportingText = {
             Text(" ")
         },
