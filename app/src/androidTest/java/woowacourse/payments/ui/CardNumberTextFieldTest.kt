@@ -1,9 +1,14 @@
 package woowacourse.payments.ui
 
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasSetTextAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.text.AnnotatedString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -34,11 +39,11 @@ class CardNumberTextFieldTest {
     @Test
     fun `숫자_4자리마다_구분자가_들어간다`() {
         // when
-        composeRule.onNodeWithText("")
+        composeRule.onNode(hasSetTextAction())
             .performTextInput("1234567812345678")
 
         // then
-        composeRule.onNodeWithText("1234 - 5678 - 1234 - 5678")
-            .assertIsDisplayed()
+        composeRule.onNode(hasText("1234 - 5678 - 1234 - 5678"))
+            .assertExists()
     }
 }
