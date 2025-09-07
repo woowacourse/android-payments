@@ -11,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -19,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -36,7 +36,7 @@ fun NewCardScreen() {
     var cardNumber: String by rememberSaveable { mutableStateOf("") }
     var cardHolder: String by rememberSaveable { mutableStateOf("") }
     var password: String by rememberSaveable { mutableStateOf("") }
-    var expirationDateUitState by remember { mutableStateOf(ExpirationDateUiState("")) }
+    var expirationDateUitState by rememberSaveable { mutableStateOf(ExpirationDateUiState("")) }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -57,7 +57,7 @@ fun NewCardScreen() {
                         }
                     activity?.setResult(RESULT_OK, resultIntent)
                     activity?.finish()
-                    Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.new_card_add_card_success, Toast.LENGTH_SHORT).show()
                 },
             )
         },
