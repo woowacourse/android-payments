@@ -103,29 +103,3 @@ fun CreateCardInputSection(
         )
     }
 }
-
-@Composable
-fun PaymentCard(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.CenterStart,
-        modifier =
-            modifier
-                .shadow(8.dp)
-                .size(width = 208.dp, height = 124.dp)
-                .background(
-                    color = colorResource(id = R.color.gray_33),
-                    shape = RoundedCornerShape(5.dp),
-                ),
-    ) {
-        Box(
-            modifier =
-                Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = colorResource(id = R.color.yellow_CB),
-                        shape = RoundedCornerShape(4.dp),
-                    ),
-        )
-    }
-}
