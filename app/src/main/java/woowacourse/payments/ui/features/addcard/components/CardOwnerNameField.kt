@@ -39,7 +39,7 @@ fun CardOwnerNameField(
             Text(
                 text =
                     stringResource(
-                        R.string.add_card_expire_date_field_counter_format,
+                        R.string.add_card_owner_name_field_counter_format,
                         value.length,
                         MAX_LENGTH_OWNER_NAME,
                     ),
