@@ -24,10 +24,10 @@ class CardNumberTextFieldTest {
     fun `숫자가_아닌_값을_입력할_수_없다`() {
         // when
         composeRule.onNodeWithText("")
-            .performTextInput("123NaN")
+            .performTextInput("123NaN456")
 
         // then
-        composeRule.onNodeWithText("123")
+        composeRule.onNodeWithText("1234 - 56")
             .assertIsDisplayed()
     }
 
