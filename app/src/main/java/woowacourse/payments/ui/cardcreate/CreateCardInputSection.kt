@@ -1,22 +1,15 @@
 package woowacourse.payments.ui.cardcreate
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -29,8 +22,8 @@ import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
 private val EXPIRY_GROUPS = intArrayOf(2, 2)
 
-private const val SEP_CARD = "-"
-private const val SEP_EXPIRY = "/"
+private const val SEPARATOR_CARD = "-"
+private const val SEPARATOR_EXPIRY = "/"
 private val KEYBOARD_OPTIONS_NUMBER = KeyboardOptions(keyboardType = KeyboardType.Number)
 private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
 
@@ -43,6 +36,13 @@ fun CreateCardInputSection(
     onCardPasswordChange: (String) -> Unit,
     modifier: Modifier,
 ) {
+    val cardNumbersVisualTransformation = remember {
+        GroupedSeparatorVisualTransformation(CARD_GROUPS, SEPARATOR_CARD)
+    }
+
+    val expiryDateVisualTransformation = remember {
+        GroupedSeparatorVisualTransformation(EXPIRY_GROUPS, SEPARATOR_EXPIRY)
+    }
     Column(
         verticalArrangement = Arrangement.spacedBy(30.dp),
         modifier = modifier,
@@ -53,7 +53,7 @@ fun CreateCardInputSection(
             modifier = Modifier.fillMaxWidth(),
             label = { Text(stringResource(R.string.card_number_label)) },
             placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
-            visualTransformation = GroupedSeparatorVisualTransformation(CARD_GROUPS, SEP_CARD),
+            visualTransformation = cardNumbersVisualTransformation,
             keyboardOptions = KEYBOARD_OPTIONS_NUMBER,
         )
 
@@ -74,7 +74,7 @@ fun CreateCardInputSection(
                     textAlign = TextAlign.End
                 )
             },
-            visualTransformation = GroupedSeparatorVisualTransformation(EXPIRY_GROUPS, SEP_EXPIRY),
+            visualTransformation = expiryDateVisualTransformation,
             keyboardOptions = KEYBOARD_OPTIONS_NUMBER,
         )
 
