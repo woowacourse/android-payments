@@ -24,6 +24,7 @@ fun CardPasswordField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
+    val visualTransformation = remember { PasswordVisualTransformation() }
     AppTextField(
         value = value,
         onValueChange = { newValue ->
@@ -34,7 +35,7 @@ fun CardPasswordField(
         labelText = stringResource(R.string.add_card_password_field_title),
         placeholderText = stringResource(R.string.add_card_password_field_hint),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation = visualTransformation,
     )
 }
 

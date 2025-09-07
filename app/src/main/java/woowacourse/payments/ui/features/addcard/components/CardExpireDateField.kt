@@ -38,6 +38,7 @@ fun CardExpireDateField(
     supportingTextHeight: Dp = 20.dp,
 ) {
     val isError = expireDateStatus is ExpireDateStatus.Invalid
+    val visualTransformation = remember { CardExpireDateVisualTransformation() }
 
     AppTextField(
         value = value,
@@ -70,7 +71,7 @@ fun CardExpireDateField(
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CardExpireDateVisualTransformation(),
+        visualTransformation = visualTransformation,
     )
 }
 

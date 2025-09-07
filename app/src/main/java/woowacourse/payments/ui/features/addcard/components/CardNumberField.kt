@@ -24,6 +24,8 @@ fun CardNumberField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
+    val visualTransformation = remember { CardNumberVisualTransformation() }
+
     AppTextField(
         value = value,
         onValueChange = { newValue ->
@@ -34,7 +36,7 @@ fun CardNumberField(
         labelText = stringResource(R.string.add_card_number_field_title),
         placeholderText = stringResource(R.string.add_card_number_field_hint),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CardNumberVisualTransformation(),
+        visualTransformation = visualTransformation,
     )
 }
 
