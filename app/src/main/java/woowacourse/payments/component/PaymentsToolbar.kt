@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,14 +37,13 @@ fun PaymentToolbar(
         },
         actions = {
             if (addButtonVisible) {
-                Text(
-                    text = stringResource(R.string.card_list_add),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clickable { onAddClick() }
-                )
+                TextButton(onClick = { onAddClick() }) {
+                    Text(
+                        text = stringResource(R.string.card_list_add),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
             }
         },
         modifier = modifier
