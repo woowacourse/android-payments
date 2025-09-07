@@ -4,26 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import woowacourse.payments.ui.view.new.NewCardActivity
-import woowacourse.payments.ui.component.PaymentToolbar
-import woowacourse.payments.ui.core.Event
-import woowacourse.payments.ui.core.getParcelableCompat
-import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.view.new.NewCardActivity
 
 class CardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,50 +16,11 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cards = remember { mutableStateListOf<Card>() }
-                var uiEvent by remember {
-                    mutableStateOf<Event<CardScreenUiEvent>>(
-                        Event(CardScreenUiEvent.Idle)
-                    )
-                }
-
-                val activityResultLauncher = rememberLauncherForActivityResult(
-                    ActivityResultContracts.StartActivityForResult()
-                ) { result ->
-                    if (result.resultCode == RESULT_OK) {
-                        result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let {
-                            cards.add(it.toDomain())
-                            uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
-                        }
+                CardsRoute(
+                    onAddCardClick = { launcher ->
+                        launcher.launch(NewCardActivity.newIntent(this))
                     }
-                }
-
-                Scaffold(
-                    topBar = {
-                        PaymentToolbar(
-                            onAddClick = {
-                                activityResultLauncher.launch(
-                                    NewCardActivity.newIntent(this)
-                                )
-                            },
-                            addButtonVisible = cards.size > 1
-                        )
-                    }
-                ) { innerPadding ->
-                    CardsScreen(
-                        cards = cards,
-                        uiEvent = uiEvent.peekContent(),
-                        onClickCard = { cardType ->
-                            if (cardType == CardType.EMPTY) {
-                                activityResultLauncher.launch(
-                                    NewCardActivity.newIntent(this)
-                                )
-                            }
-                        },
-                        Modifier
-                            .padding(innerPadding)
-                    )
-                }
+                )
             }
         }
     }
@@ -86,6 +32,6 @@ class CardsActivity : ComponentActivity() {
         ): Intent = Intent(context, CardsActivity::class.java)
             .apply { putExtra(EXTRA_CARD, card) }
 
-        private const val EXTRA_CARD = "extra_card"
+        const val EXTRA_CARD = "extra_card"
     }
 }
