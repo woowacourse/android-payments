@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.cardcreate.CreateCardScreen
+import woowacourse.payments.ui.cardcreate.NewCardTopBar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,10 +18,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    topBar = { NewCardTopBar({}, {}) }) { innerPadding ->
                     CreateCardScreen(
-                        { TODO() },
-                        { TODO() },
                         Modifier.padding(innerPadding),
                     )
                 }
