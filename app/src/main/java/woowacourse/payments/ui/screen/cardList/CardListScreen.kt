@@ -29,13 +29,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardOwner
+import woowacourse.payments.domain.Expired
+import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun CardListScreen(
-    cards: List<String>,
+    cards: List<CardUiModel>,
     navigateToAddCard: () -> Unit,
 ) {
     val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
@@ -73,9 +80,10 @@ fun CardListScreen(
                 else -> {
                     for (card in cards) {
                         Spacer(modifier = Modifier.height(32.dp))
-                        PaymentCard()
+                        PaymentCard(card = card)
                     }
                     if (cards.size == 1) {
+                        Spacer(modifier = Modifier.height(32.dp))
                         AddCardBox(onClick = navigateToAddCard)
                     }
                 }
@@ -105,7 +113,17 @@ fun AddCardBox(onClick: () -> Unit) {
 @Composable
 fun CardListScreenPreview() {
     AndroidpaymentsTheme {
-        CardListScreen(listOf()) {}
+        CardListScreen(
+            listOf(
+                Card(
+                    number = CardNumber("1234567887654321"),
+                    expired = Expired("1221"),
+                    owner = CardOwner("aaaa"),
+                    password = Password("1234"),
+                ).toPresentation(),
+            ),
+            navigateToAddCard = { },
+        )
     }
 }
 
