@@ -8,18 +8,18 @@ import kotlin.math.min
 
 class CardNumberVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed =
+        val trimmedText =
             if (text.text.length >= CARD_NUMBER_MAX_LENGTH) {
                 text.text.substring(0, CARD_NUMBER_MAX_LENGTH)
             } else {
                 text.text
             }
 
-        var out = DEFAULT_OUT
-        for (i in trimmed.indices) {
-            out += trimmed[i]
-            if (i % CARD_GROUP_SIZE == CARD_GROUP_SIZE - 1 && i < CARD_NUMBER_MAX_LENGTH - 1) {
-                out += SEPARATOR
+        var transformedText = DEFAULT_OUT
+        for (index in trimmedText.indices) {
+            transformedText += trimmedText[index]
+            if (index % CARD_GROUP_SIZE == CARD_GROUP_SIZE - 1 && index < CARD_NUMBER_MAX_LENGTH - 1) {
+                transformedText += SEPARATOR
             }
         }
 
@@ -31,7 +31,7 @@ class CardNumberVisualTransformation : VisualTransformation {
                 override fun transformedToOriginal(offset: Int): Int = offset - (offset / (CARD_GROUP_SIZE + 1))
             }
 
-        return TransformedText(AnnotatedString(out), offsetMapping)
+        return TransformedText(AnnotatedString(transformedText), offsetMapping)
     }
 
     companion object {

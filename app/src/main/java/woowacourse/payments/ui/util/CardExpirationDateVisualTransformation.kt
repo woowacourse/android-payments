@@ -7,18 +7,18 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 class CardExpirationDateVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed =
+        val trimmedText =
             if (text.text.length >= EXPIRATION_DATE_MAX_LENGTH) {
                 text.text.substring(0, EXPIRATION_DATE_MAX_LENGTH)
             } else {
                 text.text
             }
 
-        var out = ""
-        for (i in trimmed.indices) {
-            out += trimmed[i]
-            if (i == MONTH_PART_LENGTH - 1) {
-                out += SEPARATOR
+        var transformedText = DEFAULT_OUT
+        for (index in trimmedText.indices) {
+            transformedText += trimmedText[index]
+            if (index == MONTH_PART_LENGTH - 1) {
+                transformedText += SEPARATOR
             }
         }
 
@@ -31,12 +31,13 @@ class CardExpirationDateVisualTransformation : VisualTransformation {
                     if (offset <= MONTH_PART_LENGTH) offset else offset - SEPARATOR.length
             }
 
-        return TransformedText(AnnotatedString(out), offsetMapping)
+        return TransformedText(AnnotatedString(transformedText), offsetMapping)
     }
 
     companion object {
         private const val EXPIRATION_DATE_MAX_LENGTH = 4
         private const val MONTH_PART_LENGTH = 2
+        private const val DEFAULT_OUT = ""
         private const val SEPARATOR = "/"
     }
 }
