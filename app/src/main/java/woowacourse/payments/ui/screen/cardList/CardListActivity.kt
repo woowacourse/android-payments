@@ -12,7 +12,10 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardListScreen({})
+                CardListScreen(
+                    cards = listOf("aa", "bb", "cc", "dd", "ee"),
+                    navigateToAddCard = {},
+                )
             }
         }
     }
