@@ -8,6 +8,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardOwnerNameTextField
+import woowacourse.payments.ui.component.ExpiredDateTextField
+import woowacourse.payments.ui.component.PasswordTextField
+import woowacourse.payments.ui.component.PaymentCard
 
 @Composable
 fun CardAdditionColumn(modifier: Modifier = Modifier) {
