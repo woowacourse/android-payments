@@ -7,7 +7,7 @@ data class CardExpirationDate(
     val month: String = "",
     val year: String = "",
 ) {
-    fun toCombinedFormat():String = month + year
+    fun toCombinedFormat(): String = month + year
 
     fun onValueChange(date: String): CardExpirationDate {
         val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)
@@ -26,9 +26,8 @@ data class CardExpirationDate(
             runCatching {
                 YearMonth.of(numberYear, numberMonth)
             }.getOrNull() ?: return false
-        val expirationEndDate = expirationMonth.atEndOfMonth()
-        val today = LocalDate.now()
-        return !expirationEndDate.isBefore(today)
+        val today = YearMonth.now()
+        return !expirationMonth.isBefore(today)
     }
 
     companion object {
