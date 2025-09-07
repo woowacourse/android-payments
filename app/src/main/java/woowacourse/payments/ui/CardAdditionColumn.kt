@@ -27,7 +27,7 @@ fun CardAdditionColumn(modifier: Modifier = Modifier) {
         CardNumberTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
+
         )
         ExpiredDateTextField(
             modifier = Modifier
@@ -36,7 +36,6 @@ fun CardAdditionColumn(modifier: Modifier = Modifier) {
         CardOwnerNameTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.CenterHorizontally)
                 .padding(top = 18.dp)
         )
         PasswordTextField()
