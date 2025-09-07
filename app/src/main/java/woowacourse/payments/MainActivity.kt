@@ -20,7 +20,11 @@ class MainActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    topBar = { NewCardTopBar({}, {}) }) { innerPadding ->
+                    topBar = {
+                        NewCardTopBar(
+                            onBackClick = {},
+                            onSaveClick = {})
+                    }) { innerPadding ->
                     CreateCardScreen(
                         Modifier.padding(innerPadding),
                     )
