@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
+import woowacourse.payments.ui.theme.Gray33
+import woowacourse.payments.ui.theme.YellowCB
 
 @Composable
 fun PaymentCard(modifier: Modifier = Modifier) {
@@ -22,7 +22,7 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(id = R.color.gray_33),
+                    color = Gray33,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -32,7 +32,7 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                     .padding(start = 14.dp, bottom = 10.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
-                        color = colorResource(id = R.color.yellow_CB),
+                        color = YellowCB,
                         shape = RoundedCornerShape(4.dp),
                     ),
         )
