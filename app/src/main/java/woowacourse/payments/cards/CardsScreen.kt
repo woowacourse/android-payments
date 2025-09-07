@@ -29,14 +29,23 @@ import woowacourse.payments.preview.OneCardPreviewParameterProvider
 @Composable
 fun CardsScreen(
     cards: List<Card>,
-    onCompleteAddCard: Boolean,
+    uiEvent: CardScreenUiEvent,
     onClickCard: (CardType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    if (onCompleteAddCard) {
-        Toast.makeText(context, stringResource(R.string.card_list_add_new_card), Toast.LENGTH_SHORT)
-            .show()
+    val toastMessage = stringResource(R.string.card_list_add_new_card)
+
+    when (uiEvent) {
+        CardScreenUiEvent.CompleteAddCard -> {
+            Toast.makeText(
+                context,
+                toastMessage,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        CardScreenUiEvent.Idle -> Unit
     }
 
     Column(
@@ -107,7 +116,7 @@ fun CardsScreen(
 @Composable
 @Preview(showBackground = true)
 fun CardScreenPreview() {
-    CardsScreen(emptyList(), false, {})
+    CardsScreen(emptyList(), CardScreenUiEvent.Idle, {})
 }
 
 @Composable
@@ -115,7 +124,7 @@ fun CardScreenPreview() {
 fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
-    CardsScreen(listOf(card), false, {})
+    CardsScreen(listOf(card), CardScreenUiEvent.Idle, {})
 }
 
 @Composable
@@ -123,6 +132,6 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
 ) {
-    CardsScreen(cards, false, {})
+    CardsScreen(cards, CardScreenUiEvent.Idle, {})
 }
 

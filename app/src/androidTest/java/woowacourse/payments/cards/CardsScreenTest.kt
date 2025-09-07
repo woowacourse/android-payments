@@ -21,7 +21,7 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 cards = emptyList(),
-                onCompleteAddCard = true,
+                uiEvent = CardScreenUiEvent.Idle,
                 onClickCard = {},
             )
         }
@@ -50,7 +50,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, false, {})
+            CardsScreen(cards, CardScreenUiEvent.Idle, {})
         }
 
         // then
@@ -93,7 +93,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, false, {})
+            CardsScreen(cards, CardScreenUiEvent.Idle, {})
         }
 
         // then
@@ -122,7 +122,7 @@ class CardsScreenTest {
     fun `빈_카드_클릭_시_onClickCard가_호출된다`() {
         var clickedType: CardType? = null
         composeTestRule.setContent {
-            CardsScreen(emptyList(), false, onClickCard = { clickedType = it })
+            CardsScreen(emptyList(), CardScreenUiEvent.Idle, onClickCard = { clickedType = it })
         }
 
         composeTestRule

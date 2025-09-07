@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import woowacourse.payments.MainActivity
 import woowacourse.payments.component.PaymentToolbar
+import woowacourse.payments.core.Event
 import woowacourse.payments.core.getParcelableCompat
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardType
@@ -31,7 +32,11 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards = remember { mutableStateListOf<Card>() }
-                var showToast by remember { mutableStateOf(false) }
+                var uiEvent by remember {
+                    mutableStateOf<Event<CardScreenUiEvent>>(
+                        Event(CardScreenUiEvent.Idle)
+                    )
+                }
 
                 val activityResultLauncher = rememberLauncherForActivityResult(
                     ActivityResultContracts.StartActivityForResult()
@@ -39,7 +44,7 @@ class CardsActivity : ComponentActivity() {
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let {
                             cards.add(it.toDomain())
-                            showToast = true
+                            uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
                         }
                     }
                 }
@@ -57,9 +62,9 @@ class CardsActivity : ComponentActivity() {
                     }
                 ) { innerPadding ->
                     CardsScreen(
-                        cards,
-                        showToast,
-                        { cardType ->
+                        cards = cards,
+                        uiEvent = uiEvent.peekContent(),
+                        onClickCard = { cardType ->
                             if (cardType == CardType.EMPTY) {
                                 activityResultLauncher.launch(
                                     MainActivity.newIntent(this)
