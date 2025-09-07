@@ -15,7 +15,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.CardNumberVisualTransformation
+import woowacourse.payments.ui.util.SeparatorVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +24,7 @@ fun CardNumberField(
     value: String,
     onValueChange: (String) -> Unit,
 ) {
-    val visualTransformation = remember { CardNumberVisualTransformation() }
+    val visualTransformation = remember { SeparatorVisualTransformation(4, " - ") }
 
     AppTextField(
         value = value,

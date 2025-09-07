@@ -27,7 +27,7 @@ import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.mapper.messageResId
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.CardExpireDateVisualTransformation
+import woowacourse.payments.ui.util.SeparatorVisualTransformation
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +39,7 @@ fun CardExpireDateField(
     supportingTextHeight: Dp = 20.dp,
 ) {
     val isError = expireDateStatus is ExpireDateStatus.Invalid
-    val visualTransformation = remember { CardExpireDateVisualTransformation() }
+    val visualTransformation = remember { SeparatorVisualTransformation(2, " / ") }
 
     AppTextField(
         value = value,
