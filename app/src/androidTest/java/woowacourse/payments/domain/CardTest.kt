@@ -1,13 +1,13 @@
 package woowacourse.payments.domain
 
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
 class CardTest {
     private lateinit var card: Card
 
-    @BeforeEach
+    @Before
     fun setup() {
         card = Card("1111222233334444", "0421", "peto", "1234")
     }
@@ -21,7 +21,7 @@ class CardTest {
         val actual = card.formatCardNumber()
 
         // then
-        Assertions.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -33,6 +33,6 @@ class CardTest {
         val actual = card.formatExpireDate()
 
         // then
-        Assertions.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 }
