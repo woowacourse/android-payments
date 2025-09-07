@@ -1,0 +1,16 @@
+package woowacourse.payments.domain
+
+data class Password(
+    val password: String = "",
+) {
+    override fun toString(): String = password
+
+    companion object {
+        const val CARD_PASSWORD_MAX_LENGTH = 4
+
+        fun fromRawInput(value: String): Password {
+            val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
+            return Password(newPassword)
+        }
+    }
+}
