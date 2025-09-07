@@ -95,7 +95,7 @@ class CardExpirationDateTest {
         val cardExpirationDate = CardExpirationDate("", "")
 
         // when
-        val actual = cardExpirationDate.onValueChange(date)
+        val actual = cardExpirationDate.fromRawInput(date)
 
         // then
         assertEquals("12", actual.month)

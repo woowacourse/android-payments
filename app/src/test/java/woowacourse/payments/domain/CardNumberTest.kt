@@ -11,7 +11,7 @@ class CardNumberTest {
         val cardNumber = CardNumber("", "", "", "")
 
         // when
-        val actual = cardNumber.onValueChange(number)
+        val actual = cardNumber.fromRawInput(number)
 
         // then
         assertEquals("1234", actual.firstNumber)

@@ -5,7 +5,7 @@ data class Password(
 ) {
     override fun toString(): String = password
 
-    fun onValueChange(value: String): Password {
+    fun fromRawInput(value: String): Password {
         val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
         return Password(newPassword)
     }

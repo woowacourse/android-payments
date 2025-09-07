@@ -11,7 +11,7 @@ data class CardNumber(
         return parts.joinToString("")
     }
 
-    fun onValueChange(number: String): CardNumber {
+    fun fromRawInput(number: String): CardNumber {
         val pureNumbers =
             number
                 .filter { it.isDigit() }

@@ -45,7 +45,7 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     card.number,
                     onValueChange = { input ->
                         card =
-                            card.copy(number = card.number.onValueChange(input))
+                            card.copy(number = card.number.fromRawInput(input))
                     },
                     modifier =
                         Modifier
@@ -59,7 +59,7 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                     onValueChange = { input ->
                         card =
                             card.copy(
-                                expirationDate = card.expirationDate.onValueChange(input),
+                                expirationDate = card.expirationDate.fromRawInput(input),
                             )
                     },
                     expirationDate = card.expirationDate,
@@ -70,14 +70,14 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                         .fillMaxWidth(),
                     onValueChange = { input ->
                         card =
-                            card.copy(ownerName = card.ownerName.onValueChange(input))
+                            card.copy(ownerName = card.ownerName.fromRawInput(input))
                     },
                 )
                 Password(
                     password = card.password,
                     onValueChange = { input ->
                         card =
-                            card.copy(password = card.password.onValueChange(input))
+                            card.copy(password = card.password.fromRawInput(input))
                     },
                     modifier =
                         Modifier

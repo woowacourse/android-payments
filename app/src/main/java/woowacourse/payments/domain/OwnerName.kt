@@ -5,7 +5,7 @@ data class OwnerName(
 ) {
     override fun toString(): String = name
 
-    fun onValueChange(name: String): OwnerName {
+    fun fromRawInput(name: String): OwnerName {
         val newName = name.take(CARD_OWNER_MAX_LENGTH)
         return OwnerName(newName)
     }

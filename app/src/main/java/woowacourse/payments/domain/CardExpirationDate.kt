@@ -1,6 +1,5 @@
 package woowacourse.payments.domain
 
-import java.time.LocalDate
 import java.time.YearMonth
 
 data class CardExpirationDate(
@@ -9,7 +8,7 @@ data class CardExpirationDate(
 ) {
     fun toCombinedFormat(): String = month + year
 
-    fun onValueChange(date: String): CardExpirationDate {
+    fun fromRawInput(date: String): CardExpirationDate {
         val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)
         return copy(
             month = parts.getOrNull(MONTH_INDEX) ?: "",
