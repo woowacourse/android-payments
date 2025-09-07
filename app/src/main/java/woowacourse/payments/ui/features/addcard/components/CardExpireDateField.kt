@@ -22,9 +22,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_EXPIRE_DATE
+import woowacourse.payments.domain.ExpireDateStatus
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
-import woowacourse.payments.ui.features.addcard.ExpireDateStatus
+import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
+import woowacourse.payments.ui.mapper.messageResId
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.CardExpireDateVisualTransformation
 
@@ -55,7 +56,7 @@ fun CardExpireDateField(
                 if (expireDateStatus is ExpireDateStatus.Invalid) {
                     Text(
                         modifier = Modifier,
-                        text = stringResource(id = expireDateStatus.messageResId),
+                        text = stringResource(id = expireDateStatus.reason.messageResId),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }

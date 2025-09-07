@@ -18,7 +18,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
-import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
+import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

@@ -17,13 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.features.addcard.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField
 import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
 import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.features.addcard.components.PaymentCard
+import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
