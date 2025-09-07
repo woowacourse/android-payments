@@ -2,6 +2,7 @@ package woowacourse.payments.ui.newcard
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,7 +31,8 @@ import woowacourse.payments.ui.util.extensions.getActivity
 
 @Composable
 fun NewCardScreen() {
-    val context = LocalContext.current.getActivity()
+    val activity = LocalContext.current.getActivity()
+    val context = LocalContext.current
     var cardNumber: String by rememberSaveable { mutableStateOf("") }
     var cardHolder: String by rememberSaveable { mutableStateOf("") }
     var password: String by rememberSaveable { mutableStateOf("") }
@@ -40,7 +42,7 @@ fun NewCardScreen() {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-                onBackClick = { context?.finish() },
+                onBackClick = { activity?.finish() },
                 onSaveClick = {
                     val resultIntent =
                         Intent().apply {
@@ -53,8 +55,9 @@ fun NewCardScreen() {
                                 ),
                             )
                         }
-                    context?.setResult(RESULT_OK, resultIntent)
-                    context?.finish()
+                    activity?.setResult(RESULT_OK, resultIntent)
+                    activity?.finish()
+                    Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
                 },
             )
         },
