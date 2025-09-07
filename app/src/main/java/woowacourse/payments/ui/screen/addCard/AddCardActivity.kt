@@ -1,13 +1,12 @@
-package woowacourse.payments
+package woowacourse.payments.ui.screen.addCard
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.ui.screen.AddCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class PaymentsActivity : ComponentActivity() {
+class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
