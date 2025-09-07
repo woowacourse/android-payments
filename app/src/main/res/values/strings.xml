@@ -8,7 +8,7 @@
     <string name="add_card_end_date_placeholder_text">MM / YY</string>
     <string name="add_card_end_date_label_text">만료일</string>
     <string name="add_card_card_owner_placeholder_text">카드에 표시된 이름을 입력하세요.</string>
-    <string name="add_card_card_owner_label_text">카드 소유자 이름(선택)</string>"
+    <string name="add_card_card_owner_label_text">카드 소유자 이름(선택)</string>
     <string name="add_card_card_owner_supporting_text">%d/%d</string>
     <string name="add_card_password_placeholder_text">0000</string>
     <string name="add_card_password_label_text">비밀번호</string>
