@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.ui.component.CardNumberVisualTransformation
+import woowacourse.payments.ui.util.CardNumberVisualTransformation
 
 @Composable
 fun CardNumber(

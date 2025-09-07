@@ -9,7 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.ui.component.CardExpirationDateVisualTransformation
+import woowacourse.payments.ui.util.CardExpirationDateVisualTransformation
 
 @Composable
 fun ExpirationDate(
