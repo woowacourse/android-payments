@@ -13,6 +13,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.payments.CardExpirationDateTextField
 
 class CardExpirationDateTextFieldTest {
@@ -21,7 +22,7 @@ class CardExpirationDateTextFieldTest {
 
     private fun setup() {
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel()) }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
@@ -51,7 +52,7 @@ class CardExpirationDateTextFieldTest {
     fun `만료일의_월이_1-12_사이가_아닌_경우_예외가_발생한다`() {
         // given
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel("")) }
             var errorMessage by remember { mutableStateOf("") }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,

@@ -14,6 +14,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.payments.CardholderNameTextField
 
 class CardholderNameTextFieldTest {
@@ -23,7 +24,7 @@ class CardholderNameTextFieldTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            var cardholderName by remember { mutableStateOf("") }
+            var cardholderName by remember { mutableStateOf(CardholderNameUiModel("")) }
             CardholderNameTextField(
                 cardholderName = cardholderName,
                 onCardholderNameChanged = { newValue -> cardholderName = newValue },
@@ -52,9 +53,11 @@ class CardholderNameTextFieldTest {
     @Test
     fun `카드_소유자_이름의_최대_글자는_30자이다`() {
         // when
-        composeTestRule
-            .onNode(hasContentDescription("카드 소유자 이름"))
-            .performTextInput("C".repeat(31))
+        val textField =
+            composeTestRule
+                .onNode(hasContentDescription("카드 소유자 이름"))
+        textField.performTextInput("C".repeat(30))
+        textField.performTextInput("C")
 
         // then
         composeTestRule

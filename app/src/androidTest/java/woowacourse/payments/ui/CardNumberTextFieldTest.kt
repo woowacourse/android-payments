@@ -12,6 +12,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.payments.CardNumberTextField
 
 class CardNumberTextFieldTest {
@@ -21,9 +22,9 @@ class CardNumberTextFieldTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            var state by remember { mutableStateOf("") }
-            CardNumberTextField(cardNumber = state) { newValue ->
-                state = newValue
+            var cardNumber by remember { mutableStateOf(CardNumberUiModel("")) }
+            CardNumberTextField(cardNumber = cardNumber) { newValue ->
+                cardNumber = newValue
             }
         }
     }
