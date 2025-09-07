@@ -3,6 +3,7 @@ package woowacourse.payments.ui.cards
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,7 +60,10 @@ fun CardsScreen() {
                         Text(
                             modifier =
                                 Modifier
-                                    .padding(end = 20.dp),
+                                    .clickable(true) {
+                                        val intent = NewCardActivity.newIntent(context)
+                                        cardAddLauncher.launch(intent)
+                                    }.padding(end = 20.dp),
                             text = "추가",
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
