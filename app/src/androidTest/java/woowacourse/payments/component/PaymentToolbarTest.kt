@@ -34,6 +34,7 @@ class PaymentToolbarTest {
             PaymentToolbar({}, addButtonVisible)
         }
 
+        // then
         composeTestRule.onNodeWithText("추가").assertIsDisplayed()
     }
 }

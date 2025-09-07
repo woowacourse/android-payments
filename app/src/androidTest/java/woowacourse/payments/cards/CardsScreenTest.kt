@@ -120,15 +120,18 @@ class CardsScreenTest {
 
     @Test
     fun `빈_카드_클릭_시_onClickCard가_호출된다`() {
+        // given
         var clickedType: CardType? = null
         composeTestRule.setContent {
             CardsScreen(emptyList(), CardScreenUiEvent.Idle, onClickCard = { clickedType = it })
         }
 
+        // when
         composeTestRule
             .onNodeWithContentDescription("이 카드 이미지를 클릭해 새로운 카드를 추가해 주세요")
             .performClick()
 
+        // then
         assertEquals(CardType.EMPTY, clickedType)
     }
 }

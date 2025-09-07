@@ -95,5 +95,4 @@ class NewCardScreenTest {
             .onNodeWithText("••••")
             .assertIsDisplayed()
     }
-
 }
