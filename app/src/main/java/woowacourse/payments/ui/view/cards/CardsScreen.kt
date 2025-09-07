@@ -52,8 +52,8 @@ fun CardsScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        when {
-            cards.isEmpty() -> {
+        when (CardsScreenVisibility.of(cards)) {
+            CardsScreenVisibility.EMPTY -> {
                 Text(
                     text = stringResource(R.string.card_list_empty),
                     fontSize = 22.sp,
@@ -74,7 +74,7 @@ fun CardsScreen(
                 )
             }
 
-            cards.size == 1 -> {
+            CardsScreenVisibility.SINGLE -> {
                 PaymentCard(
                     cardType = CardType.REGISTERED,
                     onClick = {},
@@ -97,7 +97,7 @@ fun CardsScreen(
                 )
             }
 
-            cards.size > 1 -> {
+            CardsScreenVisibility.MULTIPLE -> {
                 repeat(cards.size) {
                     PaymentCard(
                         cardType = CardType.REGISTERED,
