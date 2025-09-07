@@ -19,7 +19,7 @@ class CardNumberVisualTransformation : VisualTransformation {
         for (i in trimmed.indices) {
             out += trimmed[i]
             if (i % CARD_GROUP_SIZE == CARD_GROUP_SIZE - 1 && i < CARD_NUMBER_MAX_LENGTH - 1) {
-                out += HYPHEN
+                out += SEPARATOR
             }
         }
 
@@ -43,6 +43,6 @@ class CardNumberVisualTransformation : VisualTransformation {
             CARD_NUMBER_MAX_LENGTH + (CARD_NUMBER_MAX_LENGTH / CARD_GROUP_SIZE - 1)
 
         private const val DEFAULT_OUT = ""
-        private const val HYPHEN = "-"
+        private const val SEPARATOR = "-"
     }
 }
