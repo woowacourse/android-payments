@@ -12,7 +12,9 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                AddCardScreen()
+                AddCardScreen(
+                    activity = this,
+                )
             }
         }
     }
