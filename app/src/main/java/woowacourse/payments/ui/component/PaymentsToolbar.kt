@@ -30,7 +30,7 @@ fun PaymentToolbar(
         },
         actions = {
             if (addButtonVisible) {
-                TextButton(onClick = { onAddClick() }) {
+                TextButton(onClick = onAddClick) {
                     Text(
                         text = stringResource(R.string.card_list_add),
                         fontSize = 16.sp,
