@@ -21,7 +21,7 @@ import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 
 @Composable
 fun GenerateCardView(modifier: Modifier = Modifier) {
-    var cardDetails by remember { mutableStateOf(Card()) }
+    var card by remember { mutableStateOf(Card()) }
 
     AndroidpaymentsTheme {
         Scaffold(
@@ -42,10 +42,10 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                             .align(Alignment.CenterHorizontally),
                 )
                 CardNumber(
-                    cardDetails.number,
+                    card.number,
                     onValueChange = { input ->
-                        cardDetails =
-                            cardDetails.copy(number = cardDetails.number.onValueChange(input))
+                        card =
+                            card.copy(number = card.number.onValueChange(input))
                     },
                     modifier =
                         Modifier
@@ -57,27 +57,27 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                         Modifier
                             .fillMaxWidth(FIELD_HALF_WIDTH),
                     onValueChange = { input ->
-                        cardDetails =
-                            cardDetails.copy(
-                                expirationDate = cardDetails.expirationDate.onValueChange(input),
+                        card =
+                            card.copy(
+                                expirationDate = card.expirationDate.onValueChange(input),
                             )
                     },
-                    expirationDate = cardDetails.expirationDate,
+                    expirationDate = card.expirationDate,
                 )
                 CardOwner(
-                    cardOwner = cardDetails.ownerName,
+                    cardOwner = card.ownerName,
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
-                        cardDetails =
-                            cardDetails.copy(ownerName = cardDetails.ownerName.onValueChange(input))
+                        card =
+                            card.copy(ownerName = card.ownerName.onValueChange(input))
                     },
                 )
                 Password(
-                    password = cardDetails.password,
+                    password = card.password,
                     onValueChange = { input ->
-                        cardDetails =
-                            cardDetails.copy(password = cardDetails.password.onValueChange(input))
+                        card =
+                            card.copy(password = card.password.onValueChange(input))
                     },
                     modifier =
                         Modifier
