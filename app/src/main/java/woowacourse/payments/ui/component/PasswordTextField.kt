@@ -23,7 +23,7 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue.substring(0, newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
+            password = newValue.take(newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
         },
         modifier = modifier,
         label = {

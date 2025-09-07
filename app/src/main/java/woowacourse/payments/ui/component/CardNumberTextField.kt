@@ -29,7 +29,7 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
         onValueChange = { newValue: String ->
             val newNumbers = newValue.filter(::isDigit)
             cardNumber =
-                newNumbers.substring(0, newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
+                newNumbers.take(newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
         },
         modifier = modifier,
         label = {

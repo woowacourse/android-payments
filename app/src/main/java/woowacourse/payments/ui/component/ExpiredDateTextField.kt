@@ -27,7 +27,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         value = expiredDate,
         onValueChange = { newValue: String ->
             val newDate = newValue.filter(::isDigit)
-            expiredDate = newDate.substring(0, newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
+            expiredDate = newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
         },
         modifier = modifier,
         label = { Text(text = stringResource(R.string.expired_date_label)) },
@@ -39,7 +39,7 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = { text: AnnotatedString ->
-            val trimmed = text.substring(0, text.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
+            val trimmed = text.take(text.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
             var out = ""
             trimmed.forEachIndexed { index: Int, char: Char ->
                 out += char

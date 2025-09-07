@@ -22,7 +22,7 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
     OutlinedTextField(
         value = name,
         onValueChange = { newName: String ->
-            name = newName.substring(0, newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
+            name = newName.take(newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
         },
         modifier = modifier,
         label = {
