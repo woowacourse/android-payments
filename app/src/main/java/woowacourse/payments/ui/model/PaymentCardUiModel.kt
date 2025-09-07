@@ -1,9 +1,11 @@
 package woowacourse.payments.ui.model
 
-import woowacourse.payments.ui.model.ExpirationDateUiModel
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PaymentCardUiModel(
     val cardNumber: String,
     val cardHolder: String,
     val expirationDate: ExpirationDateUiModel,
-)
+) : Parcelable
