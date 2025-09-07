@@ -10,12 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardcreate.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
+import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
+import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
+import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
+import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
 import woowacourse.payments.ui.cardcreate.model.CreateCardState
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
@@ -50,7 +56,9 @@ fun CreateCardInputSection(
         OutlinedTextField(
             value = createCardState.cardNumber,
             onValueChange = onCardNumbersChange,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(CARD_NUMBERS_INPUT_TAG),
             label = { Text(stringResource(R.string.card_number_label)) },
             placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
             visualTransformation = cardNumbersVisualTransformation,
@@ -63,7 +71,9 @@ fun CreateCardInputSection(
         OutlinedTextField(
             value = createCardState.expiryDate,
             onValueChange = onCardExpiryDateChange,
-            modifier = Modifier.width(146.dp),
+            modifier = Modifier
+                .width(146.dp)
+                .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
             label = { Text(stringResource(R.string.expiry_label)) },
             isError = expiryDateErrorTextRes != null,
             placeholder = { Text(stringResource(R.string.expiry_placeholder)) },
@@ -81,9 +91,11 @@ fun CreateCardInputSection(
         OutlinedTextField(
             value = createCardState.ownerName,
             onValueChange = onCardOwnerNameChange,
-            modifier = Modifier.fillMaxWidth(),
-            label = { Text(stringResource(R.string.card_number_label)) },
-            placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(CARD_OWNER_NAME_INPUT_TAG),
+            label = { Text(stringResource(R.string.owner_label)) },
+            placeholder = { Text(stringResource(R.string.owner_placeholder)) },
             supportingText = {
                 Text(
                     "${createCardState.ownerName.length}/$CARD_OWNER_NAME_MAX",
@@ -96,9 +108,12 @@ fun CreateCardInputSection(
         OutlinedTextField(
             value = createCardState.password,
             onValueChange = onCardPasswordChange,
-            modifier = Modifier.width(146.dp),
-            label = { Text(stringResource(R.string.card_number_label)) },
-            placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
+            modifier = Modifier
+                .width(146.dp)
+                .testTag(CARD_PASSWORD_INPUT_TAG),
+            label = { Text(stringResource(R.string.password_label)) },
+            placeholder = { Text(stringResource(R.string.password_placeholder)) },
+            visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KEYBOARD_OPTIONS_PIN,
         )
     }
