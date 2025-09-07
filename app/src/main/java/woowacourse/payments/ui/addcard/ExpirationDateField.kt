@@ -12,7 +12,7 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.ui.util.CardExpirationDateVisualTransformation
 
 @Composable
-fun ExpirationDate(
+fun ExpirationDateField(
     expirationDate: CardExpirationDate,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,

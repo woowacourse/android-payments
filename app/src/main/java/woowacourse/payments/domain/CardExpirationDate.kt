@@ -8,14 +8,6 @@ data class CardExpirationDate(
 ) {
     fun toCombinedFormat(): String = month + year
 
-    fun fromRawInput(date: String): CardExpirationDate {
-        val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)
-        return copy(
-            month = parts.getOrNull(MONTH_INDEX) ?: "",
-            year = parts.getOrNull(YEAR_INDEX) ?: "",
-        )
-    }
-
     fun isValid(): Boolean {
         if (month.isBlank() && year.isBlank()) return true
         if (month.length != DATE_LENGTH || year.length != DATE_LENGTH) return false
@@ -35,5 +27,13 @@ data class CardExpirationDate(
         const val MONTH_INDEX = 0
         const val YEAR_INDEX = 1
         const val YEAR_CENTURY_BASE = 2000
+
+        fun fromRawInput(date: String): CardExpirationDate {
+            val parts = date.filter { it.isDigit() }.take(DATE_INPUT_MAX_LENGTH).chunked(DATE_LENGTH)
+            return CardExpirationDate(
+                month = parts.getOrNull(MONTH_INDEX) ?: "",
+                year = parts.getOrNull(YEAR_INDEX) ?: "",
+            )
+        }
     }
 }

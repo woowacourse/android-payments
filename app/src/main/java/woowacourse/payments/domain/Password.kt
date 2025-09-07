@@ -5,12 +5,12 @@ data class Password(
 ) {
     override fun toString(): String = password
 
-    fun fromRawInput(value: String): Password {
-        val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
-        return Password(newPassword)
-    }
-
     companion object {
         const val CARD_PASSWORD_MAX_LENGTH = 4
+
+        fun fromRawInput(value: String): Password {
+            val newPassword = value.filter { it.isDigit() }.take(CARD_PASSWORD_MAX_LENGTH)
+            return Password(newPassword)
+        }
     }
 }

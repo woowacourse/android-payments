@@ -7,24 +7,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import woowacourse.payments.R
-import woowacourse.payments.domain.Password
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.util.CardNumberVisualTransformation
 
 @Composable
-fun Password(
-    password: Password,
+fun CardNumberField(
+    cardNumber: CardNumber,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = password.toString(),
-        onValueChange = onValueChange,
+        value = cardNumber.toString(),
+        onValueChange = { onValueChange(it) },
         modifier = modifier,
-        placeholder = { Text(stringResource(R.string.add_card_password_placeholder_text)) },
-        label = { Text(stringResource(R.string.add_card_password_label_text)) },
+        placeholder = { Text(stringResource(R.string.add_card_card_number_placeholder_text)) },
+        label = { Text(stringResource(R.string.add_card_card_number_label_text)) },
+        supportingText = {
+            Text(" ")
+        },
+        visualTransformation = CardNumberVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
     )
 }

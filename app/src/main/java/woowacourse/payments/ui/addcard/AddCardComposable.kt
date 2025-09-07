@@ -14,6 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardExpirationDate
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableComponentPadding
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
@@ -41,43 +45,43 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
                         Modifier
                             .align(Alignment.CenterHorizontally),
                 )
-                CardNumber(
+                CardNumberField(
                     card.number,
                     onValueChange = { input ->
                         card =
-                            card.copy(number = card.number.fromRawInput(input))
+                            card.copy(number = CardNumber.fromRawInput(input))
                     },
                     modifier =
                         Modifier
                             .fillMaxWidth()
                             .padding(top = AddCardComposableComponentPadding),
                 )
-                ExpirationDate(
+                ExpirationDateField(
                     modifier =
                         Modifier
                             .fillMaxWidth(FIELD_HALF_WIDTH),
                     onValueChange = { input ->
                         card =
                             card.copy(
-                                expirationDate = card.expirationDate.fromRawInput(input),
+                                expirationDate = CardExpirationDate.fromRawInput(input),
                             )
                     },
                     expirationDate = card.expirationDate,
                 )
-                CardOwner(
+                CardOwnerField(
                     cardOwner = card.ownerName,
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
                         card =
-                            card.copy(ownerName = card.ownerName.fromRawInput(input))
+                            card.copy(ownerName = OwnerName.fromRawInput(input))
                     },
                 )
-                Password(
+                PasswordField(
                     password = card.password,
                     onValueChange = { input ->
                         card =
-                            card.copy(password = card.password.fromRawInput(input))
+                            card.copy(password = Password.fromRawInput(input))
                     },
                     modifier =
                         Modifier

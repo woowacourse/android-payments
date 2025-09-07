@@ -12,7 +12,7 @@ import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.OwnerName.Companion.CARD_OWNER_MAX_LENGTH
 
 @Composable
-fun CardOwner(
+fun CardOwnerField(
     cardOwner: OwnerName,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
