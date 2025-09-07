@@ -12,3 +12,6 @@ val Pink40 = Color(0xFF7D5260)
 
 val CardBlack = Color(0xFF333333)
 val CardIcChip = Color(0xFFCBBA64)
+
+val Gray1 = Color(0xFFE5E5E5)
+val Gray2 = Color(0xFF575757)
