@@ -28,8 +28,8 @@ private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
 fun CardholderNameTextField(
     modifier: Modifier = Modifier,
     cardholderName: String,
+    maxLength: Int,
     onCardholderNameChanged: (String) -> Unit,
-    maxLength: Int = 30,
 ) {
     OutlinedTextField(
         modifier = modifier.testTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG),
@@ -70,7 +70,7 @@ fun CardholderNameTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(
             cardholderName = cardholderName,
-            onCardholderNameChanged = { newValue -> cardholderName = newValue },
-        )
+            maxLength = 30
+        ){ newValue -> cardholderName = newValue }
     }
 }

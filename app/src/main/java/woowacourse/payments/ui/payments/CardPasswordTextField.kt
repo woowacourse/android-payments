@@ -21,13 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 
-private const val CARD_PASSWORD_LENGTH = 4
 private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
 
 @Composable
 fun CardPasswordTextField(
     modifier: Modifier = Modifier,
     cardPassword: String,
+    maxLength: Int,
     onCardPasswordChanged: (String) -> Unit,
 ) {
     val visualTransformation = remember { PasswordVisualTransformation() }
@@ -45,8 +45,8 @@ fun CardPasswordTextField(
         },
         value = cardPassword,
         onValueChange = { newValue ->
-            if (newValue.length > CARD_PASSWORD_LENGTH) {
-                return@OutlinedTextField onCardPasswordChanged(newValue.take(CARD_PASSWORD_LENGTH))
+            if (newValue.length > maxLength) {
+                return@OutlinedTextField onCardPasswordChanged(newValue.take(maxLength))
             }
             if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardPasswordChanged(newValue)
@@ -64,7 +64,7 @@ fun CardPasswordTextFieldPreview() {
     Box(modifier = Modifier.padding(12.dp)) {
         CardPasswordTextField(
             cardPassword = cardPassword,
-            onCardPasswordChanged = { newValue -> cardPassword = newValue },
-        )
+            maxLength = 4,
+        ){ newValue -> cardPassword = newValue }
     }
 }

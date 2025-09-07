@@ -30,6 +30,11 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.DefaultPaymentCardValidator
 import woowacourse.payments.util.PaymentCardValidator
 
+private const val CARD_EXPIRATION_DATE_LENGTH = 4
+private const val CARD_NUMBER_LENGTH = 16
+private const val CARD_PASSWORD_LENGTH = 4
+private const val CARDHOLDER_NAME_LENGTH = 30
+
 @Composable
 fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
     val scope = rememberCoroutineScope()
@@ -100,6 +105,7 @@ private fun CardRegistrationScreenContent(
             modifier = Modifier.fillMaxWidth(),
             cardNumber = uiState.cardNumber,
             onCardNumberChanged = { newValue -> onUiStateChanged(uiState.copy(cardNumber = newValue)) },
+            maxLength = CARD_NUMBER_LENGTH,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -121,6 +127,7 @@ private fun CardRegistrationScreenContent(
                 val newUiState = uiState.copy(cardExpirationDateErrorMessage = errorMsg)
                 onUiStateChanged(newUiState)
             },
+            maxLength = CARD_EXPIRATION_DATE_LENGTH,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -129,6 +136,7 @@ private fun CardRegistrationScreenContent(
             modifier = Modifier.fillMaxWidth(),
             cardholderName = uiState.cardholderName,
             onCardholderNameChanged = { newValue -> onUiStateChanged(uiState.copy(cardholderName = newValue)) },
+            maxLength = CARDHOLDER_NAME_LENGTH,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -136,6 +144,7 @@ private fun CardRegistrationScreenContent(
         CardPasswordTextField(
             cardPassword = uiState.cardPassword,
             onCardPasswordChanged = { newValue -> onUiStateChanged(uiState.copy(cardPassword = newValue)) },
+            maxLength = CARD_PASSWORD_LENGTH,
         )
     }
 }
