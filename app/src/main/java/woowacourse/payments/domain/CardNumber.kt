@@ -18,7 +18,7 @@ data class CardNumber(
             firstNumber = pureNumbers.getOrNull(FIRST_NUMBER_INDEX) ?: "",
             secondNumber = pureNumbers.getOrNull(SECOND_NUMBER_INDEX) ?: "",
             thirdNumber = pureNumbers.getOrNull(THIRD_NUMBER_INDEX) ?: "",
-            fourthNumber = pureNumbers.getOrNull(FORTH_NUMBER_INDEX) ?: "",
+            fourthNumber = pureNumbers.getOrNull(FOURTH_NUMBER_INDEX) ?: "",
         )
     }
 
@@ -28,6 +28,6 @@ data class CardNumber(
         const val FIRST_NUMBER_INDEX = 0
         const val SECOND_NUMBER_INDEX = 1
         const val THIRD_NUMBER_INDEX = 2
-        const val FORTH_NUMBER_INDEX = 3
+        const val FOURTH_NUMBER_INDEX = 3
     }
 }
