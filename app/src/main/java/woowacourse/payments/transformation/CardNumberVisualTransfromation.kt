@@ -1,4 +1,4 @@
-package woowacourse.payments.util
+package woowacourse.payments.transformation
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.TransformedText

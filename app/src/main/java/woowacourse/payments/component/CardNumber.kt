@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.util.CardNumberVisualTransformation
+import woowacourse.payments.transformation.CardNumberVisualTransformation
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Grey10
 
