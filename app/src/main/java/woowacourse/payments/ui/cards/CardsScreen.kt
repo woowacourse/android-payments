@@ -18,10 +18,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.ui.cards.components.AddCardImage
 import woowacourse.payments.ui.cards.components.CardItem
 import woowacourse.payments.ui.model.PaymentCardUiModel
@@ -30,7 +32,7 @@ import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardsScreen() {
+fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
     val context = LocalContext.current
 
     val cardList =
@@ -52,11 +54,11 @@ fun CardsScreen() {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Payments",
+                        text = stringResource(R.string.cards_top_bar_title),
                     )
                 },
                 actions = {
-                    if (cardList.size > 1) {
+                    if (cardList.size > minimumCardCountForAddButton) {
                         Text(
                             modifier =
                                 Modifier
@@ -64,7 +66,7 @@ fun CardsScreen() {
                                         val intent = NewCardActivity.newIntent(context)
                                         cardAddLauncher.launch(intent)
                                     }.padding(end = 20.dp),
-                            text = "추가",
+                            text = stringResource(R.string.cards_top_bar_add),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp,
                         )
@@ -88,10 +90,10 @@ fun CardsScreen() {
                 )
             }
 
-            if (cardList.size <= 1) {
+            if (cardList.size <= minimumCardCountForAddButton) {
                 if (cardList.isEmpty()) {
                     Text(
-                        text = "새로운 카드를 등록해주세요",
+                        text = stringResource(R.string.cards_no_card),
                     )
                 }
                 AddCardImage {

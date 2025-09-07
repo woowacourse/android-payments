@@ -14,8 +14,12 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardsScreen()
+                CardsScreen(MINIMUM_CARD_COUNT_FOR_ADD_BUTTON)
             }
         }
+    }
+
+    companion object {
+        private const val MINIMUM_CARD_COUNT_FOR_ADD_BUTTON = 1
     }
 }
