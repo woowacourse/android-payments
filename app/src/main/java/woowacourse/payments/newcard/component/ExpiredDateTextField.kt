@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpiredDate
@@ -44,7 +45,11 @@ fun ExpiredDateTextField(
             )
         },
         visualTransformation = expiredDateVisualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
         isError = isError,
         supportingText = {
             if (isError) {
