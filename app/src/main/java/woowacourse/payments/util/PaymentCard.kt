@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,7 +19,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun PaymentCard(
     ) {
         Box(
             modifier =
-                Modifier
+                modifier
                     .padding(start = 14.dp, bottom = 10.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
@@ -57,29 +58,35 @@ fun PaymentCard(
         Column(
             verticalArrangement = Arrangement.Bottom,
             modifier =
-                Modifier
+                modifier
                     .fillMaxHeight()
                     .padding(bottom = 16.dp),
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp),
             ) {
                 if (card != null) {
                     Text(
                         text = card.cardNumber.toMaskCardNumber(),
                         style = cardTextStyle,
-                        letterSpacing = 4.sp,
-                        modifier = modifier.fillMaxWidth(),
+                        letterSpacing = 3.sp,
+                        modifier = Modifier.fillMaxWidth(),
                     )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp),
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text(text = card.ownerName.name, style = cardTextStyle)
+                        Text(
+                            text = card.ownerName.name,
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1,
+                            style = cardTextStyle,
+                            modifier = Modifier.width(100.dp),
+                        )
                         Text(
                             text = card.expiredDate.toFormattedString(),
                             style = cardTextStyle,
@@ -122,5 +129,4 @@ private val cardTextStyle =
         fontWeight = FontWeight.Bold,
         color = Color.White,
         letterSpacing = 1.sp,
-        textAlign = TextAlign.Center,
     )
