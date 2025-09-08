@@ -2,7 +2,7 @@ package woowacourse.payments.domain
 
 import java.time.YearMonth
 
-data class Card(
+data class PaymentCard(
     val cardNumber: String,
     val expireDate: YearMonth,
     val ownerName: String?,

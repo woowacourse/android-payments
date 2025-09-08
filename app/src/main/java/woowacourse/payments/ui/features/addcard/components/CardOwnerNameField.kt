@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
+import woowacourse.payments.domain.PaymentCard.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

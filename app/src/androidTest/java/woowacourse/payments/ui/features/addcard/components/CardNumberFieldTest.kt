@@ -17,7 +17,6 @@ import androidx.compose.ui.text.AnnotatedString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardNumberFieldTest {

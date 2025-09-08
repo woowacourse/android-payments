@@ -6,6 +6,9 @@
     <string name="card_list_top_bar_title">Payments</string>
     <string name="card_list_top_bar_add_btn">추가</string>
 
+    <!--    카드 등록 컴포넌트-->
+    <string name="card_list_add_payment_card_title">새로운 카드를 등록해주세요</string>
+
     <!--    카드 추가 컴포넌트-->
     <!--    상단바(TopBar)-->
     <string name="add_card_top_bar_title">카드 추가</string>
@@ -32,4 +35,5 @@
     <!--    카드 비멀번호 컴포넌트-->
     <string name="add_card_password_field_title">비밀번호</string>
     <string name="add_card_password_field_hint">0000</string>
+
 </resources>

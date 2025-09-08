@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_CARD_NUMBER
+import woowacourse.payments.domain.PaymentCard.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation

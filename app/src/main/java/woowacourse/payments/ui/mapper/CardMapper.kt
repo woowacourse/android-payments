@@ -1,17 +1,17 @@
 package woowacourse.payments.ui.mapper
 
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateStatus
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.CardUiState
 import java.time.YearMonth
 
 object CardMapper {
     private fun checkValidCardNumber(cardNumber: String): Boolean =
-        cardNumber.length == Card.Companion.MAX_LENGTH_CARD_NUMBER && cardNumber.all(Char::isDigit)
+        cardNumber.length == PaymentCard.Companion.MAX_LENGTH_CARD_NUMBER && cardNumber.all(Char::isDigit)
 
     private fun checkValidPassword(password: String): Boolean =
-        password.length == Card.Companion.MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
+        password.length == PaymentCard.Companion.MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
 
     private fun get21cYearMonth(
         yy: Int,
@@ -19,7 +19,7 @@ object CardMapper {
     ): YearMonth = YearMonth.of(2000 + yy, mm)
 
     fun getExpireDateStatus(expireDate: String): ExpireDateStatus {
-        if (expireDate.length != Card.Companion.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
+        if (expireDate.length != PaymentCard.Companion.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
         val mm =
             expireDate.take(2).toIntOrNull() ?: return ExpireDateStatus.Invalid(
                 ExpireDateInvalidReason.INVALID_FORMAT,
@@ -37,13 +37,13 @@ object CardMapper {
         }
     }
 
-    fun CardUiState.toDomainCard(): Card? {
+    fun CardUiState.toDomainCard(): PaymentCard? {
         if (!checkValidCardNumber(this.cardNumber)) return null
         if (!checkValidPassword(this.password)) return null
         val expireDateStatus = getExpireDateStatus(expireDate)
         if (expireDateStatus !is ExpireDateStatus.Valid) return null
 
-        return Card(
+        return PaymentCard(
             cardNumber = this.cardNumber,
             expireDate = expireDateStatus.yearMonth,
             ownerName = this.ownerName.ifEmpty { null },

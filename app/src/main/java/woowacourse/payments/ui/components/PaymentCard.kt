@@ -15,13 +15,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    isDetailsVisible: Boolean = false,
+    paymentCard: PaymentCard? = null,
 ) {
+    val halfCardNumber = paymentCard?.cardNumber?.takeLast(8)
+    val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
+
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -43,9 +49,9 @@ fun PaymentCard(
                         shape = RoundedCornerShape(4.dp),
                     ),
         )
-        if (isDetailsVisible) {
+        if (paymentCard != null) {
             Text(
-                "1111 - 2222 - **** - ****",
+                "${halfCardNumber?.take(4)} - ${halfCardNumber?.takeLast(4)} - **** - ****",
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 28.dp)
@@ -56,7 +62,7 @@ fun PaymentCard(
             )
 
             Text(
-                "CREW",
+                paymentCard.ownerName ?: "",
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 10.dp)
@@ -67,7 +73,7 @@ fun PaymentCard(
             )
 
             Text(
-                "04 / 21",
+                paymentCard.expireDate.format(yearMonthFormatter),
                 modifier =
                     Modifier
                         .padding(end = 14.dp, bottom = 10.dp)
@@ -92,6 +98,6 @@ fun PaymentCardPreview() {
 @Composable
 fun PaymentCardDetailPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(isDetailsVisible = true)
+        PaymentCard(paymentCard = PaymentCard("1234123412341234", YearMonth.now(), "CREW", "1234"))
     }
 }
