@@ -7,23 +7,29 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
+import woowacourse.payments.ui.CardAdditionUiStateSaver
+import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
-    var cardNumber by rememberSaveable { mutableStateOf("") }
-    var expiredDate by rememberSaveable { mutableStateOf("") }
-    var ownerName by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var cardAdditionUiState by rememberSaveable(stateSaver = CardAdditionUiStateSaver) {
+        mutableStateOf(CardAdditionUiState.EMPTY_CARD)
+    }
+    val isCompletable = remember { derivedStateOf { cardAdditionUiState.isValidCard } }
     val focusManager = LocalFocusManager.current
 
     Scaffold(
@@ -32,6 +38,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             CardAdditionTopBar(
                 onBackClick = {},
                 onSaveClick = {},
+                isCompletable = isCompletable.value,
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -49,8 +56,10 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         .padding(top = 14.dp, bottom = 28.dp),
             )
             CardNumberTextField(
-                value = cardNumber,
-                onCardNumberChange = { newCardNumber: String -> cardNumber = newCardNumber },
+                value = cardAdditionUiState.cardNumber.value,
+                onCardNumberChange = { newCardNumber: String ->
+                    cardAdditionUiState = cardAdditionUiState.update(newCardNumber = newCardNumber)
+                },
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -59,17 +68,26 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             ExpiredDateTextField(
-                value = expiredDate,
-                onDateChange = { newDate: String -> expiredDate = newDate },
-                modifier =
-                    Modifier
-                        .padding(top = 18.dp),
-                onComplete = { focusManager.moveFocus(FocusDirection.Next) },
+                value = cardAdditionUiState.expiredDate.value,
+                onDateChange = { newDate: String ->
+                    cardAdditionUiState = cardAdditionUiState.update(newExpiredDate = newDate)
+                },
+                modifier = Modifier.padding(top = 18.dp),
+                errorMessage = if (cardAdditionUiState.isDateError) stringResource(
+                    R.string.expired_date_error
+                ) else null,
+                onComplete = {
+                    if (cardAdditionUiState.expiredDate.isValid) focusManager.moveFocus(
+                        FocusDirection.Next
+                    )
+                },
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             CardOwnerNameTextField(
-                value = ownerName,
-                onNameChange = { newName: String -> ownerName = newName },
+                value = cardAdditionUiState.ownerName,
+                onNameChange = { newName: String ->
+                    cardAdditionUiState = cardAdditionUiState.update(newOwnerName = newName)
+                },
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -78,8 +96,10 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             PasswordTextField(
-                value = password,
-                onPasswordChange = { newPassword: String -> password = newPassword },
+                value = cardAdditionUiState.password.value,
+                onPasswordChange = { newPassword: String ->
+                    cardAdditionUiState = cardAdditionUiState.update(newPassword = newPassword)
+                },
                 onComplete = { focusManager.clearFocus() },
                 onKeyboardActionClick = { focusManager.clearFocus() },
             )
