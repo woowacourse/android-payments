@@ -12,7 +12,7 @@ class CardsViewModel(
     val uiState: CardsUiState get() = _uiState
 
     private var _uiEvent by mutableStateOf<CardsScreenUiEvent?>(null)
-    val uiEvent: CardsScreenUiEvent? get() = _uiEvent
+    val uiEvent: CardsScreenUiEvent? get() = _uiEvent?.also { _uiEvent = null }
 
     fun addCard(newCard: PaymentCardUiModel) {
         _uiState = _uiState.addCard(newCard)

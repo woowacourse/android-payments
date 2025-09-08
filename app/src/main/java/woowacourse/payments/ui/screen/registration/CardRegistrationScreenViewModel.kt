@@ -16,7 +16,7 @@ class CardRegistrationScreenViewModel(
     val uiState: CardRegistrationScreenUiState get() = _uiState
 
     private var _uiEvent by mutableStateOf<CardRegistrationScreenUiEvent?>(null)
-    val uiEvent: CardRegistrationScreenUiEvent? get() = _uiEvent
+    val uiEvent: CardRegistrationScreenUiEvent? get() = _uiEvent?.also { _uiEvent = null }
 
     fun updateCardNumber(cardNumber: CardNumberUiModel) {
         _uiState = _uiState.copy(cardNumber = cardNumber)
