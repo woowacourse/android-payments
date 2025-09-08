@@ -73,6 +73,7 @@ fun AddCardScreen(
     }
     var cardOwner by rememberSaveable(stateSaver = cardOwnerSaver) {
         mutableStateOf(viewModel.cardOwner)
+    val scrollState = rememberScrollState()
     }
     var password by rememberSaveable(stateSaver = passwordSaver) {
         mutableStateOf(viewModel.password)
@@ -106,7 +107,8 @@ fun AddCardScreen(
             modifier =
                 Modifier
                     .padding(innerPadding)
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Box(
