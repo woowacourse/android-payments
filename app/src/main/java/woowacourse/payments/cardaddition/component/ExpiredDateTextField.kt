@@ -4,10 +4,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,19 +16,17 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import java.lang.Character.isDigit
 import java.time.Month
 
 @Composable
-fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate: String by remember { mutableStateOf("") }
-
+fun ExpiredDateTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = expiredDate,
-        onValueChange = { newValue: String ->
-            val newDate: String = newValue.filter(::isDigit)
-            expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
-        },
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.expired_date_label))
@@ -42,14 +38,14 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
             )
         },
         supportingText = {
-            if (expiredDate.isInvalidExpiredDate) {
+            if (value.isInvalidExpiredDate) {
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
                 )
             }
         },
-        isError = expiredDate.isInvalidExpiredDate,
+        isError = value.isInvalidExpiredDate,
         visualTransformation = ::filteredExpiredDate,
         keyboardOptions =
             KeyboardOptions(
@@ -62,7 +58,12 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ExpiredDateTextFieldPreview() {
-    ExpiredDateTextField()
+    val (expiredDate: String, setExpiredDate: (String) -> Unit) = remember { mutableStateOf("") }
+
+    ExpiredDateTextField(
+        value = expiredDate,
+        onValueChange = setExpiredDate,
+    )
 }
 
 private val String.isInvalidExpiredDate: Boolean
@@ -102,5 +103,5 @@ private val dateOffsetTranslator =
         }
     }
 
-private const val EXPIRED_DATE_LENGTH: Int = 4
+const val EXPIRED_DATE_LENGTH: Int = 4
 private const val EXPIRED_DATE_DELIMITER: String = " / "

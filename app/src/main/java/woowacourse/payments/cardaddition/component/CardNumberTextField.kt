@@ -5,6 +5,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,13 +20,13 @@ import woowacourse.payments.R
 
 @Composable
 fun CardNumberTextField(
-    cardNumber: String,
-    onCardNumberChange: (String) -> Unit,
+    value: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
-        value = cardNumber,
-        onValueChange = onCardNumberChange,
+        value = value,
+        onValueChange = onValueChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_number_label))
@@ -36,14 +38,14 @@ fun CardNumberTextField(
             )
         },
         supportingText = {
-            if (cardNumber.isInvalidCardNumber) {
+            if (value.isInvalidCardNumber) {
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
                 )
             }
         },
-        isError = cardNumber.isInvalidCardNumber,
+        isError = value.isInvalidCardNumber,
         visualTransformation = ::filteredCardNumber,
         keyboardOptions =
             KeyboardOptions(
@@ -56,9 +58,11 @@ fun CardNumberTextField(
 @Preview
 @Composable
 private fun CardNumberTextFieldPreview() {
+    val (cardNumber: String, setCardNumber: (String) -> Unit) = remember { mutableStateOf("") }
+
     CardNumberTextField(
-        cardNumber = "",
-        onCardNumberChange = {},
+        value = cardNumber,
+        onValueChange = setCardNumber,
         modifier = Modifier.fillMaxWidth(),
     )
 }
@@ -94,7 +98,7 @@ private val creditCardOffsetTranslator =
         }
     }
 
-private const val CARD_NUMBER_LENGTH: Int = 16
+const val CARD_NUMBER_LENGTH: Int = 16
 private const val CARD_GROUP_LENGTH: Int = 4
 private const val DELIMITER: String = " - "
 private const val DELIMITER_COUNT_MAX: Int = 3

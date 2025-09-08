@@ -22,15 +22,31 @@ import woowacourse.payments.Card
 import woowacourse.payments.ui.component.PaymentCard
 import java.lang.Character.isDigit
 
-private const val CARD_NUMBER_LENGTH: Int = 16
-
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
     val activity: Activity? = LocalActivity.current
+
     var cardNumber: String by remember { mutableStateOf("") }
-    val changeCardNumber: (String) -> Unit = { newValue: String ->
+    val handleCardNumberInput: (String) -> Unit = { newValue: String ->
         val newCardNumber: String = newValue.filter(::isDigit)
         cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH)
+    }
+
+    var expiredDate: String by remember { mutableStateOf("") }
+    val handleExpiredDateInput: (String) -> Unit = { newValue: String ->
+        val newDate: String = newValue.filter(::isDigit)
+        expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
+    }
+
+    var name: String by remember { mutableStateOf("") }
+    val handleNameInput: (String) -> Unit = { newName: String ->
+        name = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
+    }
+
+    var password: String by remember { mutableStateOf("") }
+    val handlePasswordInput = { newValue: String ->
+        val newPassword: String = newValue.filter(::isDigit)
+        password = newPassword.take(PASSWORD_LENGTH)
     }
 
     Scaffold(
@@ -67,26 +83,33 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         .padding(top = 14.dp, bottom = 28.dp),
             )
             CardNumberTextField(
-                cardNumber = cardNumber,
-                onCardNumberChange = changeCardNumber,
+                value = cardNumber,
+                onValueChange = handleCardNumberInput,
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
             )
             ExpiredDateTextField(
+                value = expiredDate,
+                onValueChange = handleExpiredDateInput,
                 modifier =
                     Modifier
                         .padding(top = 18.dp),
             )
             CardOwnerNameTextField(
+                value = name,
+                onValueChange = handleNameInput,
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 18.dp),
             )
-            PasswordTextField()
+            PasswordTextField(
+                value = password,
+                onValueChange = handlePasswordInput,
+            )
         }
     }
 }
