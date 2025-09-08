@@ -20,7 +20,7 @@ class ExpiredDateTest {
 
         // then
         assertSoftly(expiredDate) {
-            date shouldBe dateString
+            value shouldBe dateString
             formattedDate.getOrNull() shouldBe YearMonth.of(2025, 9)
             isValid shouldBe true
         }

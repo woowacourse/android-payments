@@ -3,18 +3,16 @@ package woowacourse.payments.domain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-data class ExpiredDate(val date: String) {
-    val formattedDate: Result<YearMonth> by lazy {
-        runCatching { YearMonth.parse(date, formatter) }
-    }
+@JvmInline
+value class ExpiredDate(val value: String) {
+    val formattedDate: Result<YearMonth>
+        get() = runCatching { YearMonth.parse(value, formatter) }
 
-    val isValid: Boolean by lazy {
-        date.length == DATE_LENGTH && formattedDate.isSuccess && formattedDate.getOrThrow()
+    val isValid: Boolean
+        get() = formattedDate.isSuccess && formattedDate.getOrThrow()
             .isBefore(YearMonth.now()).not()
-    }
 
     companion object {
-        private const val DATE_LENGTH = 4
         private const val PATTERN = "MMyy"
         private val formatter = DateTimeFormatter.ofPattern(PATTERN)
     }
