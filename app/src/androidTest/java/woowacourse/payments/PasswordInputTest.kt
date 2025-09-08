@@ -1,7 +1,12 @@
 package woowacourse.payments
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Before
@@ -17,9 +22,11 @@ class PasswordInputTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
+            var password by remember { mutableStateOf("") }
+
             PasswordInputField(
-                password = Password(""),
-                onPasswordChange = { },
+                password = Password(password),
+                onPasswordChange = { password = it?.value ?: "" },
             )
         }
     }
@@ -28,22 +35,20 @@ class PasswordInputTest {
     fun 초기_화면에_비밀번호_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithText("비밀번호")
+            .onNodeWithContentDescription("Password Input Field")
             .assertIsDisplayed()
     }
 
     @Test
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
-        // given
-
         // when
         composeTestRule
-            .onNodeWithText("비밀번호")
+            .onNodeWithContentDescription("Password Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithText("비밀번호")
+            .onNodeWithContentDescription("Password Input Field")
             .assertIsDisplayed()
 
         composeTestRule
