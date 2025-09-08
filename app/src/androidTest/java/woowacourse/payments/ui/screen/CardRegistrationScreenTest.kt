@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.payments.CardRegistrationScreen
+import woowacourse.payments.ui.payments.screen.CardRegistrationScreen
 
 class CardRegistrationScreenTest {
     @get:Rule
@@ -28,9 +28,7 @@ class CardRegistrationScreenTest {
 
         // when
         composeTestRule.onNodeWithTag("CardNumberTextField").performTextInput(cardNumber)
-        composeTestRule
-            .onNodeWithTag("CardExpirationDateTextField")
-            .performTextInput(cardExpirationDate)
+        composeTestRule.onNodeWithTag("CardExpirationDateTextField").performTextInput(cardExpirationDate)
         composeTestRule.onNodeWithTag("CardPasswordTextField").performTextInput(cardPassword)
 
         // then

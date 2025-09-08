@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +31,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.domain.DefaultPaymentCardValidator
 import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
+import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
+import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
+import woowacourse.payments.ui.payments.component.PaymentCard
+import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
+import woowacourse.payments.ui.payments.component.CardNumberTextField
+import woowacourse.payments.ui.payments.component.CardPasswordTextField
+import woowacourse.payments.ui.payments.component.CardholderNameTextField
 
 @Composable
 fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
