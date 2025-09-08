@@ -12,7 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -37,7 +36,6 @@ import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun AddCardScreen(
-    viewModel: AddCardViewModel = remember { AddCardViewModel() },
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
 ) {
@@ -65,21 +63,23 @@ fun AddCardScreen(
             restore = { Password(it) },
         )
 
-    var cardNumber by rememberSaveable(stateSaver = cardNumberSaver) {
-        mutableStateOf(viewModel.cardNumber)
-    }
-    var expired by rememberSaveable(stateSaver = expiredSaver) {
-        mutableStateOf(viewModel.expired)
-    }
-    var cardOwner by rememberSaveable(stateSaver = cardOwnerSaver) {
-        mutableStateOf(viewModel.cardOwner)
+    var cardNumber by rememberSaveable(stateSaver = cardNumberSaver) { mutableStateOf(null) }
+    var expired by rememberSaveable(stateSaver = expiredSaver) { mutableStateOf(null) }
+    var cardOwner by rememberSaveable(stateSaver = cardOwnerSaver) { mutableStateOf(CardOwner("")) }
+    var password by rememberSaveable(stateSaver = passwordSaver) { mutableStateOf(null) }
+    var showValidationError by rememberSaveable { mutableStateOf(false) }
+
     val scrollState = rememberScrollState()
+
+    fun validateAll(): Boolean {
+        val isValid =
+            (cardNumber?.isValid == true) &&
+                (expired?.isValid == true) &&
+                (cardOwner?.isValid != false) &&
+                (password?.isValid == true)
+        showValidationError = !isValid
+        return isValid
     }
-    var password by rememberSaveable(stateSaver = passwordSaver) {
-        mutableStateOf(viewModel.password)
-    }
-    var showValidationError by rememberSaveable { mutableStateOf(viewModel.showValidationError) }
-    viewModel.showValidationError = showValidationError
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -87,9 +87,7 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    viewModel.validateAll()
-                    showValidationError = viewModel.showValidationError
-                    if (!viewModel.showValidationError) {
+                    if (validateAll()) {
                         val cardUiModel =
                             Card(
                                 number = cardNumber,
@@ -132,28 +130,28 @@ fun AddCardScreen(
                 cardNumber = cardNumber,
                 onCardNumberChange = { cardNumber = it },
                 modifier = Modifier.fillMaxWidth(),
-                showValidationError = viewModel.showValidationError,
+                showValidationError = showValidationError,
             )
 
             ExpiredInputField(
                 expired = expired,
                 onExpiredChange = { expired = it },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                showValidationError = viewModel.showValidationError,
+                showValidationError = showValidationError,
             )
 
             CardOwnerInputField(
                 cardOwner = cardOwner,
                 onOwnerChange = { cardOwner = it },
                 modifier = Modifier.fillMaxWidth(),
-                showValidationError = viewModel.showValidationError,
+                showValidationError = showValidationError,
             )
 
             PasswordInputField(
                 password = password,
                 onPasswordChange = { password = it },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                showValidationError = viewModel.showValidationError,
+                showValidationError = showValidationError,
             )
         }
     }
