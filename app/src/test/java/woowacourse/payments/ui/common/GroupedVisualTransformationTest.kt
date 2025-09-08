@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class GroupedVisualTransformationParameterizedTest {
+class GroupedVisualTransformationTest {
     @ParameterizedTest(name = "groupSize={0}, separator='{1}', input='{2}' => '{3}'")
     @MethodSource("provideCases")
     @DisplayName("다양한 groupSize, separator, 입력에 따른 포맷 검증")
