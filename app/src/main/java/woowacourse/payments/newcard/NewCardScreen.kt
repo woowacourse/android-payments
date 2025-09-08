@@ -23,6 +23,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.newcard.component.CardNumberTextField
 import woowacourse.payments.newcard.component.ExpiredDateTextField
 import woowacourse.payments.newcard.component.NewCardTopBar
@@ -125,6 +126,7 @@ private fun makeCard(
         val expiredYear = expiredDate.extractYear() ?: return null
         val expiredDate = ExpiredDate.of(expiredMonth, expiredYear) ?: return null
         val ownerName = OwnerName(ownerName)
+        val password = Password(password)
 
         Card(cardNumber, expiredDate, ownerName, password)
     } catch (e: Throwable) {

@@ -27,6 +27,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 
 @Composable
 fun PaymentCard(
@@ -72,7 +73,9 @@ fun PaymentCard(
                     Text(
                         text = card.cardNumber.toMaskCardNumber(),
                         style = cardTextStyle,
-                        letterSpacing = 3.sp,
+                        letterSpacing = 2.sp,
+                        overflow = TextOverflow.Clip,
+                        maxLines = 1,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Row(
@@ -107,7 +110,7 @@ private fun PaymentCardPreview() {
                 cardNumber = CardNumber("1234567812345678"),
                 expiredDate = ExpiredDate.of(1, 26)!!,
                 ownerName = OwnerName("크림"),
-                password = "1234",
+                password = Password("1234"),
             ),
     )
 }

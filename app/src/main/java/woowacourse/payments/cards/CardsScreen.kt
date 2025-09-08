@@ -30,6 +30,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.PaymentCard
 import woowacourse.payments.util.parcelable
@@ -45,7 +46,7 @@ fun CardsScreen(paymentCards: List<Card>) {
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val cardParcelable: CardParcelable? =
                     activityResult.data?.parcelable<CardParcelable>(NewCardActivity.KEY_CARD)
-                
+
                 val card: Card? = cardParcelable?.toDomainOrNull()
 
                 if (card != null) {
@@ -110,7 +111,7 @@ private fun CardsScreenPreview() {
                         cardNumber = CardNumber("1234567812345678"),
                         expiredDate = ExpiredDate.of(4, 26)!!,
                         ownerName = OwnerName("크림"),
-                        password = "1234",
+                        password = Password("1234"),
                     ),
                 ),
         )

@@ -6,6 +6,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 
 @Parcelize
 data class CardParcelable(
@@ -26,7 +27,7 @@ data class CardParcelable(
             cardNumber = CardNumber(cardNumber),
             expiredDate = expiredDate,
             ownerName = OwnerName(ownerName),
-            password = password,
+            password = Password(password),
         )
     }
 }
@@ -37,5 +38,5 @@ fun Card.toParcelable(): CardParcelable =
         expiredMonth = expiredDate.month,
         expiredYear = expiredDate.year,
         ownerName = ownerName.name,
-        password = password,
+        password = password.password,
     )
