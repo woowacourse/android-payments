@@ -19,10 +19,7 @@ import woowacourse.payments.ui.theme.Black800
 import woowacourse.payments.ui.theme.LightGray100
 
 @Composable
-fun AddPaymentCard(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
+fun AddPaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -49,6 +46,6 @@ fun AddPaymentCard(
 @Composable
 fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        AddPaymentCard(onClick = {})
+        AddPaymentCard()
     }
 }

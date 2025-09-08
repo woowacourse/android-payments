@@ -1,5 +1,6 @@
 package woowacourse.payments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,9 +15,14 @@ class CardlistActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardListScreen(
-                    onAddCard = { /* Todo: 카드 추가 로직 */ },
+                    onAddCard = { navigateToAddCard() },
                 )
             }
         }
+    }
+
+    private fun navigateToAddCard() {
+        val intent = Intent(this, AddcardActivity::class.java)
+        startActivity(intent)
     }
 }
