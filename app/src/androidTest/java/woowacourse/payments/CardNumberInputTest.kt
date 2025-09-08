@@ -6,6 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -35,7 +36,7 @@ class CardNumberInputTest {
     fun 초기_화면에_카드_번호_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithText("카드 번호")
+            .onNodeWithContentDescription("Card Number Input Field")
             .assertIsDisplayed()
     }
 
@@ -43,12 +44,12 @@ class CardNumberInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithText("카드 번호")
+            .onNodeWithContentDescription("Card Number Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithText("카드 번호")
+            .onNodeWithContentDescription("Card Number Input Field")
             .assertIsDisplayed()
 
         composeTestRule
@@ -60,7 +61,7 @@ class CardNumberInputTest {
     fun 카드_번호를_입력하면_4글자_기준으로_기호가_삽입된다() {
         // when
         composeTestRule
-            .onNodeWithText("카드 번호")
+            .onNodeWithContentDescription("Card Number Input Field")
             .performTextInput("1234567887654321")
 
         // then

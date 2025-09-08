@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
@@ -31,7 +33,10 @@ fun CardNumberInputField(
             val newCardNumber = CardNumber(filteredText)
             onCardNumberChange(newCardNumber)
         },
-        modifier = modifier,
+        modifier =
+            modifier.semantics {
+                this.contentDescription = "Card Number Input Field"
+            },
         label = { Text(text = stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
