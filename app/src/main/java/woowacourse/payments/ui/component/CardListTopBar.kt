@@ -28,6 +28,10 @@ fun CardListTopBar(
                 TextButton(onClick = onAddClick) {
                     Text(
                         text = "추가",
+                        modifier =
+                            modifier.semantics {
+                                this.contentDescription = "카드 목록 상단 추가 텍스트"
+                            },
                         color = Color.Black,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
@@ -35,10 +39,7 @@ fun CardListTopBar(
                 }
             }
         },
-        modifier =
-            modifier.semantics {
-                this.contentDescription = "TopBar 카드 추가 버튼"
-            },
+        modifier = modifier,
     )
 }
 
