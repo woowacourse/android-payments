@@ -18,7 +18,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.CardNumberVisualTransformation
+import woowacourse.payments.ui.screen.cardAddition.CardNumberVisualTransformation
 import java.lang.Character.isDigit
 
 private const val CARD_NUMBER_LENGTH_MAX: Int = 16

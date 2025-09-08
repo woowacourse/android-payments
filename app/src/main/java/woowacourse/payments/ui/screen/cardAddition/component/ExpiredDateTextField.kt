@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.ExpiredDateVisualTransformation
+import woowacourse.payments.ui.screen.cardAddition.ExpiredDateVisualTransformation
 import java.lang.Character.isDigit
 
 private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
