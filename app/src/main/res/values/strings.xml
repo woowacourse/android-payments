@@ -8,4 +8,7 @@
     <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>
     <string name="card_password">비밀번호</string>
     <string name="card_password_placeholder">0000</string>
+    <string name="card_add">카드 추가</string>
+    <string name="content_description_back">뒤로 가기</string>
+    <string name="content_description_complete">완료</string>
 </resources>

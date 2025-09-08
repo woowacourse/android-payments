@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.util.CardExpiryDateVisualTransformation
+import woowacourse.payments.transformation.CardExpiryDateVisualTransformation
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Grey10
 
@@ -30,7 +30,6 @@ fun CardExpiryDate(
         placeholder = {
             Text(
                 text = stringResource(R.string.card_expire_date_placeholder),
-                color = Grey10,
             )
         },
         visualTransformation = CardExpiryDateVisualTransformation(),
@@ -41,9 +40,9 @@ fun CardExpiryDate(
 
 @Composable
 @Preview(showBackground = true)
-fun CardExpiryDatePreview() {
+private fun CardExpiryDatePreview() {
     CardExpiryDate(
-        value = "",
+        value = "0723",
         onValueChange = {}
     )
 }

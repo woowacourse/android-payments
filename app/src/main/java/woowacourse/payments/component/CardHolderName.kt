@@ -35,7 +35,7 @@ fun CardHolderName(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         supportingText = {
             Text(
-                "${value.length}/CARD_HOLDER_NAME_MAX_LENGTH",
+                "${value.length}/$CARD_HOLDER_NAME_MAX_LENGTH",
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -46,9 +46,9 @@ fun CardHolderName(
 
 @Composable
 @Preview(showBackground = true)
-fun CardHolderNamePreview() {
+private fun CardHolderNamePreview() {
     CardHolderName(
-        value = "",
+        value = "이든존예",
         onValueChange = {}
     )
 }
