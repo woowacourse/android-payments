@@ -25,6 +25,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardDigit
+import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
@@ -32,6 +35,8 @@ import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun NewCardScreen(
@@ -47,7 +52,23 @@ fun NewCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = onSaveClick,
+                onSaveClick = {
+                    try {
+                        Card(
+                            number = CardNumber.from(cardNumber),
+                            expirationDate =
+                                CardExpirationDate.from(
+                                    cardExpirationDate,
+                                    DATE_TIME_FORMATTER,
+                                ),
+                            holderName = CardHolderName(cardHolderName),
+                            password = CardPassword(cardPassword),
+                        )
+                        onSaveClick()
+                    } catch (e: IllegalArgumentException) {
+                        return@NewCardTopBar
+                    }
+                },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -68,6 +89,7 @@ fun NewCardScreen(
                 maxLength = CardNumber.CARD_NUMBER_LENGTH,
                 label = { Text(stringResource(R.string.card_number)) },
                 placeholder = { Text("0000 - 0000 - 0000 - 0000") },
+                isError = cardNumber.isNotEmpty() && runCatching { CardNumber.from(cardNumber) }.isFailure,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 visualTransformation =
                     GroupedVisualTransformation(
@@ -83,6 +105,14 @@ fun NewCardScreen(
                 maxLength = 4,
                 label = { Text(stringResource(R.string.card_expiration_date)) },
                 placeholder = { Text("MM / YY") },
+                isError =
+                    cardExpirationDate.isNotEmpty() &&
+                        runCatching {
+                            CardExpirationDate.from(
+                                cardExpirationDate,
+                                DATE_TIME_FORMATTER,
+                            )
+                        }.isFailure,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 visualTransformation =
                     GroupedVisualTransformation(
@@ -98,6 +128,7 @@ fun NewCardScreen(
                 maxLength = CardHolderName.MAX_NAME_LENGTH,
                 label = { Text(stringResource(R.string.card_holder_name)) },
                 placeholder = { Text(stringResource(R.string.input_card_holder_name)) },
+                isError = cardHolderName.isNotEmpty() && runCatching { CardHolderName(cardHolderName) }.isFailure,
                 supportingText = {
                     Text(
                         "${cardHolderName.length}/${CardHolderName.MAX_NAME_LENGTH}",
@@ -116,6 +147,7 @@ fun NewCardScreen(
                 maxLength = CardPassword.CARD_PASSWORD_LENGTH,
                 label = { Text(stringResource(R.string.card_password)) },
                 placeholder = { Text("0000") },
+                isError = cardPassword.isNotEmpty() && runCatching { CardPassword(cardPassword) }.isFailure,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                 visualTransformation = PasswordVisualTransformation(),
                 inputFilter = { it.filter(Char::isDigit) },
@@ -127,6 +159,7 @@ fun NewCardScreen(
 
 private const val CARD_NUMBER_GROUP_SIZE = 4
 private const val EXPIRATION_DATE_GROUP_SIZE = 2
+private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMyy")
 
 @Preview
 @Composable
