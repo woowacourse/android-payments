@@ -7,6 +7,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -33,7 +35,10 @@ fun CardListTopBar(
                 }
             }
         },
-        modifier = modifier,
+        modifier =
+            modifier.semantics {
+                this.contentDescription = "TopBar 카드 추가 버튼"
+            },
     )
 }
 
