@@ -33,6 +33,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
@@ -62,11 +63,16 @@ fun NewCardScreen(
                                     cardExpirationDate,
                                     DATE_TIME_FORMATTER,
                                 ),
-                            holderName = CardHolderName(cardHolderName),
+                            holderName =
+                                if (cardHolderName.isBlank()) {
+                                    null
+                                } else {
+                                    CardHolderName(cardHolderName)
+                                },
                             password = CardPassword(cardPassword),
                         )
                         onSaveClick()
-                    } catch (e: IllegalArgumentException) {
+                    } catch (e: Exception) {
                         return@NewCardTopBar
                     }
                 },
@@ -89,27 +95,9 @@ fun NewCardScreen(
                 onValueChange = { cardNumber = it },
                 modifier = Modifier.fillMaxWidth(),
             )
-            LimitedLengthOutlinedTextField(
+            CardExpirationDateTextField(
                 value = cardExpirationDate,
                 onValueChange = { cardExpirationDate = it },
-                maxLength = 4,
-                label = { Text(stringResource(R.string.card_expiration_date)) },
-                placeholder = { Text("MM / YY") },
-                isError =
-                    cardExpirationDate.isNotEmpty() &&
-                        runCatching {
-                            CardExpirationDate.from(
-                                cardExpirationDate,
-                                DATE_TIME_FORMATTER,
-                            )
-                        }.isFailure,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                visualTransformation =
-                    GroupedVisualTransformation(
-                        List(2) { EXPIRATION_DATE_GROUP_SIZE },
-                        " / ",
-                    ),
-                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             LimitedLengthOutlinedTextField(
@@ -147,7 +135,6 @@ fun NewCardScreen(
     }
 }
 
-private const val EXPIRATION_DATE_GROUP_SIZE = 2
 private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMyy")
 
 @Preview
