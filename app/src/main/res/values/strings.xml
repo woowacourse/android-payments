@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">android-payments</string>
-    <string name="payments_topbar_add_card">카드 추가</string>
-    <string name="payments_topbar_all_cards">Payments</string>
+    <string name="payments_addcard_topbar_add_card">카드 추가</string>
+    <string name="payments_allcards_topbar_all_cards">Payments</string>
+    <string name="payments_allcards_topbar_add_cards">추가</string>
 
 
     <!--addcard -->
@@ -22,5 +23,5 @@
     <!--content description-->
     <string name="payments_topbar_back_icon_description">뒤로 가기</string>
     <string name="payments_topbar_checked_icon_description">확인</string>
-
+    <string name="payments_topbar_add_card_icon_description">추가</string>
 </resources>

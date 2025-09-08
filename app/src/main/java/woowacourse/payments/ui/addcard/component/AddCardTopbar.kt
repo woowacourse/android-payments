@@ -22,7 +22,7 @@ fun AddCardTopbar(
 ) {
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.payments_topbar_add_card))
+            Text(text = stringResource(id = R.string.payments_addcard_topbar_add_card))
         },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
