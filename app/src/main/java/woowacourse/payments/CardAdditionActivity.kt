@@ -7,13 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.CardAdditionScreen
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardAdditionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardAdditionScreen(modifier = Modifier.fillMaxSize())
+            AndroidpaymentsTheme {
+                CardAdditionScreen(modifier = Modifier.fillMaxSize())
+            }
         }
     }
 }
