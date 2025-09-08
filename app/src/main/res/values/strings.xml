@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-payments</string>
+    <string name="app_name">Payments</string>
 
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_place_holder">0000 – 0000 – 0000 - 0000</string>
