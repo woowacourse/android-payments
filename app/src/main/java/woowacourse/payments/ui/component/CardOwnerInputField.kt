@@ -8,6 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
@@ -29,7 +31,10 @@ fun CardOwnerInputField(
                 onOwnerChange(newCardOwner)
             }
         },
-        modifier = modifier,
+        modifier =
+            modifier.semantics {
+                this.contentDescription = "Card Owner Input Field"
+            },
         placeholder = {
             Text(
                 text = stringResource(R.string.card_owner_placeholder),
