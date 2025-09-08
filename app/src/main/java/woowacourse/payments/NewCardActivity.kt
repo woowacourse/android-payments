@@ -1,5 +1,7 @@
 package woowacourse.payments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,8 +15,21 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                NewCardScreen()
+                NewCardScreen(
+                    onBackClick = { finish() },
+                    onSaveClick = { card ->
+                        val resultIntent = Intent().putExtra(KEY_CARD, card)
+                        setResult(RESULT_OK, resultIntent)
+                        finish()
+                    },
+                )
             }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context) = Intent(context, NewCardActivity::class.java)
+
+        const val KEY_CARD = "key_card"
     }
 }

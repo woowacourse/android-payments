@@ -1,5 +1,10 @@
 package woowacourse.payments.cards
 
+import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +18,12 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.NewCardActivity
 import woowacourse.payments.cards.component.CardsTopBar
 import woowacourse.payments.cards.component.EmptyCard
 import woowacourse.payments.domain.Card
@@ -25,16 +32,36 @@ import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.PaymentCard
+import woowacourse.payments.util.parcelable
 
 @Composable
 fun CardsScreen(paymentCards: List<Card>) {
+    val context = LocalContext.current
+
     val cards: SnapshotStateList<Card> = remember { paymentCards.toMutableStateList() }
+
+    val cardAddLauncher: ActivityResultLauncher<Intent> =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val cardParcelable: CardParcelable? =
+                    activityResult.data?.parcelable<CardParcelable>(NewCardActivity.KEY_CARD)
+                
+                val card: Card? = cardParcelable?.toDomainOrNull()
+
+                if (card != null) {
+                    cards += card
+                }
+            }
+        }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                onAddClick = {},
+                onAddClick = {
+                    val intent = NewCardActivity.newIntent(context)
+                    cardAddLauncher.launch(intent)
+                },
                 modifier = Modifier.padding(),
                 isAddable = cards.size > 1,
             )
@@ -63,7 +90,10 @@ fun CardsScreen(paymentCards: List<Card>) {
             }
 
             if (cards.size <= 1) {
-                EmptyCard()
+                EmptyCard(onClick = {
+                    val intent = NewCardActivity.newIntent(context)
+                    cardAddLauncher.launch(intent)
+                })
             }
         }
     }
@@ -74,14 +104,15 @@ fun CardsScreen(paymentCards: List<Card>) {
 private fun CardsScreenPreview() {
     AndroidpaymentsTheme {
         CardsScreen(
-            listOf(
-                Card(
-                    cardNumber = CardNumber("1234567812345678"),
-                    expiredDate = ExpiredDate.of(4, 26)!!,
-                    ownerName = OwnerName("크림"),
-                    password = "1234",
+            paymentCards =
+                listOf(
+                    Card(
+                        cardNumber = CardNumber("1234567812345678"),
+                        expiredDate = ExpiredDate.of(4, 26)!!,
+                        ownerName = OwnerName("크림"),
+                        password = "1234",
+                    ),
                 ),
-            ),
         )
     }
 }
