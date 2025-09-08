@@ -36,10 +36,10 @@ fun CardPassword(
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 private fun CardPasswordPreview() {
     CardPassword(
-        value = "",
+        value = "1234",
         onValueChange = {}
     )
 }

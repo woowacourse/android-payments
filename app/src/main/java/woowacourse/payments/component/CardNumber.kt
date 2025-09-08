@@ -36,11 +36,11 @@ fun CardNumber(
         )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CardNumberPreview() {
     CardNumber(
-        value = "",
+        value = "1234567812345678",
         onValueChange = {}
     )
 }

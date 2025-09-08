@@ -42,7 +42,7 @@ fun CardExpiryDate(
 @Preview(showBackground = true)
 private fun CardExpiryDatePreview() {
     CardExpiryDate(
-        value = "",
+        value = "0723",
         onValueChange = {}
     )
 }

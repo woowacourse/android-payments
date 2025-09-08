@@ -48,7 +48,7 @@ fun CardHolderName(
 @Preview(showBackground = true)
 private fun CardHolderNamePreview() {
     CardHolderName(
-        value = "",
+        value = "이든존예",
         onValueChange = {}
     )
 }
