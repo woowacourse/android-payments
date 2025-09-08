@@ -57,7 +57,7 @@ fun CardsRoute(
     ) { innerPadding ->
         CardsScreen(
             cards = cards.map { it.toDomain() },
-            uiEvent = uiEvent.peekContent(),
+            uiEvent = uiEvent,
             onClickCard = { cardType ->
                 if (cardType == CardType.EMPTY) {
                     onAddCardClick(activityResultLauncher)

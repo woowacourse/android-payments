@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -23,29 +24,31 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
 fun CardsScreen(
     cards: List<Card>,
-    uiEvent: CardScreenUiEvent,
+    uiEvent: Event<CardScreenUiEvent>,
     onClickCard: (CardType) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val toastMessage = stringResource(R.string.card_list_add_new_card)
 
-    when (uiEvent) {
-        CardScreenUiEvent.CompleteAddCard -> {
-            Toast.makeText(
-                context,
-                toastMessage,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+    val event = uiEvent.getContentIfNotHandled()
+    LaunchedEffect(event) {
+        event?.let {
+            when (it) {
+                CardScreenUiEvent.CompleteAddCard -> {
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                }
 
-        CardScreenUiEvent.Idle -> Unit
+                CardScreenUiEvent.Idle -> Unit
+            }
+        }
     }
 
     Column(
@@ -116,7 +119,7 @@ fun CardsScreen(
 @Composable
 @Preview(showBackground = true)
 fun CardScreenPreview() {
-    CardsScreen(emptyList(), CardScreenUiEvent.Idle, {})
+    CardsScreen(emptyList(), Event(CardScreenUiEvent.Idle), {})
 }
 
 @Composable
@@ -124,7 +127,7 @@ fun CardScreenPreview() {
 fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
-    CardsScreen(listOf(card), CardScreenUiEvent.Idle, {})
+    CardsScreen(listOf(card), Event(CardScreenUiEvent.Idle), {})
 }
 
 @Composable
@@ -132,6 +135,6 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
 ) {
-    CardsScreen(cards, CardScreenUiEvent.Idle, {})
+    CardsScreen(cards, Event(CardScreenUiEvent.Idle), {})
 }
 
