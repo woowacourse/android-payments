@@ -9,13 +9,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.util.GroupingVisualTransformation
 import java.time.Month
 
 @Composable
@@ -46,7 +44,11 @@ fun ExpiredDateTextField(
             }
         },
         isError = value.isInvalidExpiredDate,
-        visualTransformation = ::filteredExpiredDate,
+        visualTransformation =
+            GroupingVisualTransformation(
+                EXPIRED_DATE_GROUP_SIZE,
+                EXPIRED_DATE_DELIMITER,
+            ),
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -74,34 +76,6 @@ private val String.isInvalidExpiredDate: Boolean
         return length != EXPIRED_DATE_LENGTH || month !in Month.entries.map(Month::getValue)
     }
 
-private fun filteredExpiredDate(text: AnnotatedString): TransformedText {
-    val trimmedText: CharSequence = text.take(EXPIRED_DATE_LENGTH)
-
-    val transformedText: String =
-        trimmedText
-            .mapIndexed { index: Int, char: Char ->
-                if (index == 1) {
-                    char + EXPIRED_DATE_DELIMITER
-                } else {
-                    char
-                }
-            }.joinToString(separator = "")
-
-    return TransformedText(AnnotatedString(transformedText), dateOffsetTranslator)
-}
-
-private val dateOffsetTranslator =
-    object : OffsetMapping {
-        override fun originalToTransformed(offset: Int): Int {
-            if (offset < 2) return offset
-            return offset + EXPIRED_DATE_DELIMITER.length
-        }
-
-        override fun transformedToOriginal(offset: Int): Int {
-            if (offset < 3) return offset
-            return offset - EXPIRED_DATE_DELIMITER.length
-        }
-    }
-
 const val EXPIRED_DATE_LENGTH: Int = 4
+private const val EXPIRED_DATE_GROUP_SIZE: Int = 2
 private const val EXPIRED_DATE_DELIMITER: String = " / "

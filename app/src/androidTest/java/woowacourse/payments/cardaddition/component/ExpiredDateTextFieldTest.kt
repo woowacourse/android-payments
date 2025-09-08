@@ -1,5 +1,7 @@
 package woowacourse.payments.cardaddition.component
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -15,7 +17,17 @@ class ExpiredDateTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            ExpiredDateTextField()
+            val (expiredDate: String, setExpiredDate: (String) -> Unit) =
+                remember {
+                    mutableStateOf(
+                        "",
+                    )
+                }
+
+            ExpiredDateTextField(
+                value = expiredDate,
+                onValueChange = setExpiredDate,
+            )
         }
     }
 
