@@ -33,6 +33,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 import java.time.YearMonth
@@ -83,20 +84,9 @@ fun NewCardScreen(
             PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(20.dp))
 
-            LimitedLengthOutlinedTextField(
+            CardNumberTextField(
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
-                maxLength = CardNumber.CARD_NUMBER_LENGTH,
-                label = { Text(stringResource(R.string.card_number)) },
-                placeholder = { Text("0000 - 0000 - 0000 - 0000") },
-                isError = cardNumber.isNotEmpty() && runCatching { CardNumber.from(cardNumber) }.isFailure,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                visualTransformation =
-                    GroupedVisualTransformation(
-                        List(4) { CARD_NUMBER_GROUP_SIZE },
-                        " - ",
-                    ),
-                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
@@ -157,7 +147,6 @@ fun NewCardScreen(
     }
 }
 
-private const val CARD_NUMBER_GROUP_SIZE = 4
 private const val EXPIRATION_DATE_GROUP_SIZE = 2
 private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMyy")
 
