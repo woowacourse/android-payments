@@ -16,8 +16,7 @@ class NewCardScreenTest {
 
 
     @Test
-    fun newCardScreen_카드번호입력_상태가_업데이트된다() {
-        // Given
+    fun newCardScreen_카드번호_입력_상태가_업데이트된다() {
         composeTestRule.setContent {
             AndroidpaymentsTheme {
                 NewCardScreen()
@@ -26,17 +25,14 @@ class NewCardScreenTest {
 
         val testCardNumber = "1234567890123456"
 
-        // When
         composeTestRule.onNodeWithText("카드 번호")
             .performTextInput(testCardNumber)
 
-        // Then
         composeTestRule.onNodeWithText(testCardNumber).assertExists()
     }
 
     @Test
-    fun newCardScreen_비밀번호입력_상태가_업데이트된다() {
-        // Given
+    fun newCardScreen_비밀번호_입력_상태가_업데이트된다() {
         composeTestRule.setContent {
             AndroidpaymentsTheme {
                 NewCardScreen()
@@ -45,11 +41,9 @@ class NewCardScreenTest {
 
         val testPassword = "1234"
 
-        // When
         composeTestRule.onNodeWithText("비밀번호")
             .performTextInput(testPassword)
 
-        // Then - 비밀번호는 마스킹되어 표시되므로 입력 필드가 비어있지 않은지 확인
         composeTestRule.onNodeWithText("비밀번호")
             .assertTextContains("••••") // 실제 구현에 따라 마스킹 문자가 다를 수 있음
     }

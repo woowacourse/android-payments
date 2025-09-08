@@ -61,13 +61,15 @@ fun NewCardScreen() {
 
             Spacer(modifier = Modifier.height(30.dp))
             CardExpiryDate(
-                value = cardExpiryDate, onValueChange = { cardExpiryDate = it },
+                value = cardExpiryDate,
+                onValueChange = { cardExpiryDate = it },
                 modifier = Modifier.fillMaxWidth(0.5f)
             )
 
             Spacer(modifier = Modifier.height(30.dp))
             CardHolderName(
-                value = cardHolderName, onValueChange = { cardHolderName = it },
+                value = cardHolderName,
+                onValueChange = { cardHolderName = it },
                 modifier = Modifier.fillMaxWidth()
             )
 
