@@ -10,12 +10,12 @@ import woowacourse.payments.ui.component.cardaddition.CardAdditionColumn
 import woowacourse.payments.ui.component.cardaddition.CardAdditionTopBar
 
 @Composable
-fun CardAdditionScreen(modifier: Modifier = Modifier) {
+fun CardAdditionScreen(navigateToBack: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier,
         topBar = {
             CardAdditionTopBar(
-                onBackClick = {}, onSaveClick = {}
+                onBackClick = { navigateToBack() }, onSaveClick = {}
             )
         }) { paddingValues: PaddingValues ->
         CardAdditionColumn(modifier = Modifier.padding(paddingValues))
@@ -25,5 +25,5 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardAdditionScreenPreview1() {
-    CardAdditionScreen()
+    CardAdditionScreen({})
 }

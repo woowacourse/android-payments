@@ -20,4 +20,5 @@
     <string name="add_card_title">카드 추가</string>
     <string name="content_description_icon_back">뒤로 가기</string>
     <string name="content_description_icon_check">완료</string>
+    <string name="payments_title">Payments</string>
 </resources>
