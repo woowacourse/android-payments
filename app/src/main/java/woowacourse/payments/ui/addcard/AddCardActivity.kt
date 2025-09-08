@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
+import woowacourse.payments.ui.allcards.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
@@ -25,7 +26,14 @@ class AddCardActivity : ComponentActivity() {
                     topBar = {
                         AddCardTopbar(
                             onBackClick = { finish() },
-                            onCheckedClick = { finish() }
+                            onCheckedClick = {
+                                if (cardInfo.isComplete()) {
+                                    setResult(RESULT_OK, Intent().apply {
+                                        putExtra(CARD_INFO_KEY, cardInfo)
+                                    })
+                                    finish()
+                                }
+                            }
                         )
                     }
                 ) { padding ->

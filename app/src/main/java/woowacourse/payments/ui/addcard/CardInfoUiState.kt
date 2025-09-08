@@ -27,12 +27,17 @@ data class CardInfoUiState(
 
 
     fun isComplete():Boolean {
-        return CardInfo.createOrNull(
+        val instance = CardInfo.createOrNull(
             cardNumber = cardNumber,
             expireDate = expireDate,
             ownerName = ownerName,
             password = password
-        ) != null
+        )
+        _cardNumber = cardNumber
+        _expireDate = expireDate
+        _ownerName = ownerName
+        _password = password
+        return instance != null
     }
 
     fun updateCardInfo(

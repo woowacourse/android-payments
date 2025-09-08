@@ -1,6 +1,8 @@
 package woowacourse.payments.ui.allcards
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +44,7 @@ import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
+import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 
@@ -49,8 +52,12 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun AllCardsScreen(innerPadding: PaddingValues) {
     val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
     val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.getCardInfo()?.let {
+                    cards.add(it)
+                }
+            }
         }
     Column(
         modifier = Modifier
@@ -64,6 +71,23 @@ fun AllCardsScreen(innerPadding: PaddingValues) {
             PlusCard(
                 launcher = launcher
             )
+            return
+        }
+
+        if (cards.size == 1) {
+            Spacer(modifier = Modifier.height(12.dp))
+            Card(cardInfoUiState = cards.first())
+            Spacer(modifier = Modifier.height(36.dp))
+            PlusCard(
+                launcher = launcher
+            )
+            return
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+        cards.forEach { cardInfoUiState ->
+            Card(cardInfoUiState = cardInfoUiState)
+            Spacer(modifier = Modifier.height(36.dp))
         }
     }
 }
@@ -123,3 +147,12 @@ private fun AllCardsScreenPreview() {
         }
     }
 }
+
+const val CARD_INFO_KEY = "cardInfo"
+private fun Intent.getCardInfo() =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(CARD_INFO_KEY, CardInfoUiState::class.java)
+    } else {
+        getParcelableExtra(CARD_INFO_KEY)
+    }
+
