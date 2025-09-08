@@ -14,6 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Gray
 
+private const val CARDHOLDER_NAME_MAX_LENGTH = 30
+
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun CardHolderNameTextField(text: MutableState<String>) {
@@ -50,5 +52,3 @@ fun CardHolderNameTextField(text: MutableState<String>) {
         keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     )
 }
-
-private const val CARDHOLDER_NAME_MAX_LENGTH = 30
