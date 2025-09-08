@@ -11,14 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.formatter.UniformlySeparatingVisualTransformation
 import woowacourse.payments.ui.theme.Gray
+
+private const val CARD_NUMBER_REQUIRED_LENGTH = 16
+private const val CARD_NUMBER_CHUNK_SIZE = 4
+private const val CARD_NUMBER_SEPARATOR = " - "
+private val visualTransformation =
+    UniformlySeparatingVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR)
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -27,36 +30,6 @@ fun CardNumberTextField(
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
-    val delimiter = stringResource(R.string.card_number_delimiter)
-
-    val offsetMapping =
-        object : OffsetMapping {
-            override fun originalToTransformed(offset: Int): Int {
-                val multiplier = (offset - 1).coerceAtLeast(0) / CARD_NUMBER_CHUNK_SIZE
-                return offset + delimiter.length * multiplier
-            }
-
-            override fun transformedToOriginal(offset: Int): Int {
-                val multiplier =
-                    ((offset - 1)).coerceAtLeast(0) / (CARD_NUMBER_CHUNK_SIZE + delimiter.length)
-                return (offset - (delimiter.length * multiplier)).coerceAtMost(
-                    CARD_NUMBER_CHUNK_SIZE * (multiplier + 1),
-                )
-            }
-        }
-
-    val visualTransformation =
-        object : VisualTransformation {
-            override fun filter(text: AnnotatedString): TransformedText =
-                TransformedText(
-                    AnnotatedString(
-                        text.text
-                            .chunked(CARD_NUMBER_CHUNK_SIZE)
-                            .joinToString(delimiter),
-                    ),
-                    offsetMapping,
-                )
-        }
 
     fun updateValue(newValue: String) {
         val filteredValue: String =
@@ -97,6 +70,3 @@ fun CardNumberTextField(
         keyboardActions = KeyboardActions(onDone = { focusManager.moveFocus(FocusDirection.Next) }),
     )
 }
-
-private const val CARD_NUMBER_REQUIRED_LENGTH = 16
-private const val CARD_NUMBER_CHUNK_SIZE = 4
