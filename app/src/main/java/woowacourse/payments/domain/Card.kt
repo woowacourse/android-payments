@@ -5,4 +5,12 @@ data class Card(
     val expirationDate: CardExpirationDate,
     val password: CardPassword,
     val holderName: CardHolderName? = null,
-)
+) {
+    init {
+        require(!expirationDate.isExpired()) { ERROR_EXPIRED_CARD_EXPIRATION_DATE }
+    }
+
+    companion object {
+        private const val ERROR_EXPIRED_CARD_EXPIRATION_DATE = "만료된 카드입니다."
+    }
+}

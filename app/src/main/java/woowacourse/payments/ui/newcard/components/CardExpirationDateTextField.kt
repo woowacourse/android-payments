@@ -28,7 +28,10 @@ fun CardExpirationDateTextField(
             value.isNotEmpty() &&
                 runCatching {
                     CardExpirationDate.from(value, DATE_TIME_FORMATTER)
-                }.isFailure,
+                }.fold(
+                    onSuccess = { it.isExpired() },
+                    onFailure = { true },
+                ),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation =
             GroupedVisualTransformation(
