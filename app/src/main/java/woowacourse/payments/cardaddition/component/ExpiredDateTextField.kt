@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField

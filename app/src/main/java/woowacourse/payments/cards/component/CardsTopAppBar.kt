@@ -1,5 +1,6 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cards.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CardsTopAppBar(
     isAddActionVisible: Boolean,
+    addCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -40,6 +42,8 @@ fun CardsTopAppBar(
                                 vertical = 9.dp,
                             ).semantics {
                                 contentDescription = "새 카드 등록 버튼"
+                            }.clickable {
+                                addCard()
                             },
                     fontSize = 18.sp,
                     fontWeight = FontWeight.W700,
@@ -56,6 +60,7 @@ private fun CardsTopAppBarPreview(
 ) {
     CardsTopAppBar(
         isAddActionVisible = isAddActionVisible,
+        addCard = {},
     )
 }
 

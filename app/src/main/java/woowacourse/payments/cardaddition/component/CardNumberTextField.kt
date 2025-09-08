@@ -1,14 +1,10 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -19,18 +15,16 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import java.lang.Character.isDigit
 
 @Composable
-fun CardNumberTextField(modifier: Modifier = Modifier) {
-    var cardNumber: String by remember { mutableStateOf("") }
-
+fun CardNumberTextField(
+    cardNumber: String,
+    onCardNumberChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
         value = cardNumber,
-        onValueChange = { newValue: String ->
-            val newCardNumber: String = newValue.filter(::isDigit)
-            cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH)
-        },
+        onValueChange = onCardNumberChange,
         modifier = modifier,
         label = {
             Text(text = stringResource(R.string.card_number_label))
@@ -62,7 +56,11 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardNumberTextFieldPreview() {
-    CardNumberTextField(modifier = Modifier.fillMaxWidth())
+    CardNumberTextField(
+        cardNumber = "",
+        onCardNumberChange = {},
+        modifier = Modifier.fillMaxWidth(),
+    )
 }
 
 private val String.isInvalidCardNumber: Boolean get() = isNotEmpty() && length != CARD_NUMBER_LENGTH

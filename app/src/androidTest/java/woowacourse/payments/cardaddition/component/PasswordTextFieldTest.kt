@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -8,49 +8,49 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class ExpiredDateTextFieldTest {
+class PasswordTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeRule.setContent {
-            ExpiredDateTextField()
+            PasswordTextField()
         }
     }
 
     @Test
-    fun `만료일의_경우_입력할_때_자동으로_기호가_삽입된다`() {
+    fun `비밀번호는_노출되어서는_안_된다`() {
         // when
         composeRule
             .onNodeWithText("")
-            .performTextInput("1225")
+            .performTextInput("1234")
 
         // then
         composeRule
-            .onNodeWithText("12 / 25")
+            .onNodeWithText("\u2022".repeat(4))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `4자리가_아닐_경우_에러_메시지를_출력한다`() {
+    fun `비밀번호는_4글자까지_입력할_수_있다`() {
+        // when
+        composeRule
+            .onNodeWithText("")
+            .performTextInput("12345678")
+
+        // then
+        composeRule
+            .onNodeWithText("\u2022".repeat(4))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `형식이_올바르지_않을_경우_에러_메시지를_출력한다`() {
         // when
         composeRule
             .onNodeWithText("")
             .performTextInput("12")
-
-        // then
-        composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `만료_달이_올바르지_않을_경우_에러_메시지를_출력한다`() {
-        // when
-        composeRule
-            .onNodeWithText("")
-            .performTextInput("1325")
 
         // then
         composeRule

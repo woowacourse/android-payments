@@ -1,11 +1,10 @@
-package woowacourse.payments
+package woowacourse.payments.cards
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.ui.CardsScreen
-import woowacourse.payments.ui.CardsUiState
+import woowacourse.payments.cards.component.CardsScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -14,9 +13,7 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardsScreen(
-                    state = CardsUiState(listOf()),
-                )
+                CardsScreen()
             }
         }
     }

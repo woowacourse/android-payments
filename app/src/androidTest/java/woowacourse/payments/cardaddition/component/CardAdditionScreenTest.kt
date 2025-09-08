@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
 import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.junit4.createComposeRule

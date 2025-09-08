@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cards.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.Card
 
 class CardsScreenTest {
     @get:Rule
@@ -15,12 +16,7 @@ class CardsScreenTest {
     fun `카드_목록이_비어있을_때에는_새_카드를_등록하라는_안내가_노출된다`() {
         // given
         composeRule.setContent {
-            CardsScreen(
-                state =
-                    CardsUiState(
-                        emptyList(),
-                    ),
-            )
+            CardsScreen(cards = emptyArray())
         }
 
         // then
@@ -34,14 +30,12 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                state =
-                    CardsUiState(
-                        listOf(
-                            Card(
-                                number = "1234".repeat(4),
-                                owner = "CREW",
-                                expiredDate = "0421",
-                            ),
+                cards =
+                    arrayOf(
+                        Card(
+                            number = "1234".repeat(4),
+                            owner = "CREW",
+                            expiredDate = "0421",
                         ),
                     ),
             )
@@ -58,8 +52,8 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                CardsUiState(
-                    listOf(
+                cards =
+                    arrayOf(
                         Card(
                             number = "1234".repeat(4),
                             owner = "CREW",
@@ -76,7 +70,6 @@ class CardsScreenTest {
                             expiredDate = "0421",
                         ),
                     ),
-                ),
             )
         }
 

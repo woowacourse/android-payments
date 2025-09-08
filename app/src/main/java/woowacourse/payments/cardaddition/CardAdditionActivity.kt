@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.cardaddition
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import woowacourse.payments.ui.CardAdditionScreen
+import woowacourse.payments.cardaddition.component.CardAdditionScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardAdditionActivity : ComponentActivity() {
@@ -15,8 +15,13 @@ class CardAdditionActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardAdditionScreen(modifier = Modifier.fillMaxSize())
+                CardAdditionScreen(
+                    modifier = Modifier.Companion.fillMaxSize(),
+                )
             }
         }
+    }
+
+    private fun addCard() {
     }
 }

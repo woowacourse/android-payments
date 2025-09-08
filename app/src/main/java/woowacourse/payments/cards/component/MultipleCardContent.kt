@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cards.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.Card
+import woowacourse.payments.ui.component.PaymentCard
 
 @Composable
 fun MultipleCardContent(
@@ -22,7 +24,7 @@ fun MultipleCardContent(
         cards.forEach { card: Card ->
             PaymentCard(
                 detail = card,
-                modifier = Modifier.padding(bottom = 36.dp)
+                modifier = Modifier.padding(bottom = 36.dp),
             )
         }
     }

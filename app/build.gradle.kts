@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.parcelize)
 }
 
 android {

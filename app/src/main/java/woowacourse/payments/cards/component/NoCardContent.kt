@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cards.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
