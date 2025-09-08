@@ -26,13 +26,10 @@ import woowacourse.payments.ui.addcard.component.PasswordTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardScreen(innerPadding: PaddingValues, cardInfo: CardInfoUiState) {
+fun AddCardScreen(cardInfo: CardInfoUiState, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
-            .padding(innerPadding)
-            .padding(top = 14.dp)
-            .padding(horizontal = 24.dp)
-            .fillMaxWidth(),
+        modifier = modifier
+            .padding(top = 14.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -73,7 +70,9 @@ private fun AddCardScreenPreview() {
                 AddCardTopbar()
             }
         ) {
-            AddCardScreen(it, CardInfoUiState())
+            AddCardScreen(CardInfoUiState(), modifier = Modifier
+                .padding(it)
+            )
         }
     }
 }

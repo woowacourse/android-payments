@@ -7,10 +7,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -37,7 +41,11 @@ class AddCardActivity : ComponentActivity() {
                         )
                     }
                 ) { padding ->
-                    AddCardScreen(padding, cardInfo)
+                    AddCardScreen(cardInfo, modifier = Modifier
+                        .padding(padding)
+                        .padding(horizontal = 24.dp)
+                        .fillMaxWidth()
+                    )
                 }
             }
         }

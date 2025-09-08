@@ -49,7 +49,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 
 @Composable
-fun AllCardsScreen(innerPadding: PaddingValues) {
+fun AllCardsScreen(modifier:Modifier = Modifier) {
     val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -60,9 +60,7 @@ fun AllCardsScreen(innerPadding: PaddingValues) {
             }
         }
     Column(
-        modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxWidth(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (cards.isEmpty()) {
@@ -128,7 +126,7 @@ private fun PlusCard(
         Icon(
             modifier = Modifier.size(34.dp),
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.payments_topbar_add_card),
+            contentDescription = stringResource(R.string.payments_allcards_topbar_add_cards),
             tint = colorResource(id = R.color.payments_plus_card_icon_color),
         )
     }
@@ -143,7 +141,7 @@ private fun AllCardsScreenPreview() {
                 AllCardsTopbar()
             }
         ) {
-            AllCardsScreen(it)
+            AllCardsScreen(modifier = Modifier.padding(it))
         }
     }
 }
