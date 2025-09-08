@@ -22,6 +22,11 @@ import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CardType
 
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val CARD_SEPARATOR = " - "
+private const val CARD_EXPIRE_DATE_GROUP_SIZE = 2
+private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
+
 @Composable
 fun NewCardScreen(
     card: Card,
@@ -31,8 +36,8 @@ fun NewCardScreen(
 
     val focusManager = LocalFocusManager.current
     val cardNumberVisualTransformation = CardNumberVisualTransformation(
-        groupSize = Card.CARD_NUMBER_GROUP_SIZE,
-        separator = Card.CARD_SEPARATOR,
+        groupSize = CARD_NUMBER_GROUP_SIZE,
+        separator = CARD_SEPARATOR,
         maxLength = Card.CARD_MAX_LENGTH,
     )
 
@@ -64,12 +69,14 @@ fun NewCardScreen(
         )
 
         ExpireDateTextField(
+            maxLength = 4,
             expireDate = card.expireDate,
+            groupSize = CARD_EXPIRE_DATE_GROUP_SIZE,
+            separator = CARD_EXPIRE_DATE_SEPARATOR,
             onExpireDateChange = { onCardChange(card.copy(expireDate = it)) },
             onComplete = {
                 focusManager.moveFocus(FocusDirection.Next)
             },
-            maxLength = 4,
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .padding(top = 18.dp)

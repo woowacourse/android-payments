@@ -8,8 +8,8 @@ import woowacourse.payments.ui.core.ExpireDateVisualTransformation
 
 class ExpireDateVisualTransformationTest {
     private val expireDateVisualTransformation = ExpireDateVisualTransformation(
-        Card.CARD_EXPIRE_DATE_GROUP_SIZE,
-        Card.CARD_EXPIRE_DATE_SEPARATOR
+        2,
+        " / "
     )
 
     @Test

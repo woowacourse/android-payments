@@ -24,7 +24,13 @@ class RegisteredCardTest {
         )
 
         composeTestRule.setContent {
-            RegisteredCard(card)
+            RegisteredCard(
+                card, 4,
+                " - ",
+                "*",
+                2,
+                " / "
+            )
         }
     }
 

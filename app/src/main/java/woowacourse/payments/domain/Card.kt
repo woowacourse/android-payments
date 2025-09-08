@@ -6,27 +6,29 @@ data class Card(
     val ownerName: String,
     val password: String,
 ) {
-    fun formatCardNumber(): String {
+    fun formatCardNumber(
+        groupSize: Int,
+        separator: String,
+        cardMaskChar: String,
+    ): String {
         val visibleLength = CARD_NUMBER_MASKING_LENGTH
         val visiblePart = number.take(visibleLength)
-        val maskedPart = CARD_MASKING_CHAR.repeat(number.length - visibleLength)
+        val maskedPart = cardMaskChar.repeat(number.length - visibleLength)
         return (visiblePart + maskedPart)
-            .chunked(CARD_NUMBER_GROUP_SIZE)
-            .joinToString(CARD_SEPARATOR)
+            .chunked(groupSize)
+            .joinToString(separator)
     }
 
-    fun formatExpireDate(): String = expireDate.chunked(CARD_EXPIRE_DATE_GROUP_SIZE)
-        .joinToString(CARD_EXPIRE_DATE_SEPARATOR)
+    fun formatExpireDate(
+        groupSize: Int,
+        separator: String
+    ): String =
+        expireDate.chunked(groupSize)
+            .joinToString(separator)
 
     companion object {
         val EMPTY = Card("", "", "", "")
-        const val CARD_NUMBER_GROUP_SIZE = 4
-        const val CARD_SEPARATOR = " - "
         const val CARD_MAX_LENGTH = 16
-        private const val CARD_MASKING_CHAR = "*"
         private const val CARD_NUMBER_MASKING_LENGTH = 8
-
-        const val CARD_EXPIRE_DATE_GROUP_SIZE = 2
-        const val CARD_EXPIRE_DATE_SEPARATOR = " / "
     }
 }

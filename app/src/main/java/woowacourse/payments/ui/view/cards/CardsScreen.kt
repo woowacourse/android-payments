@@ -28,6 +28,12 @@ import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
+private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val CARD_NUMBER_SEPARATOR = " - "
+private const val CARD_EXPIRE_DATE_GROUP_SIZE = 2
+private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
+private const val CARD_MASKING_CHAR = "*"
+
 @Composable
 fun CardsScreen(
     cards: List<Card>,
@@ -81,7 +87,16 @@ fun CardsScreen(
                 PaymentCard(
                     cardType = CardType.REGISTERED,
                     onClick = {},
-                    content = { RegisteredCard(cards[0]) },
+                    content = {
+                        RegisteredCard(
+                            cards[0],
+                            CARD_NUMBER_GROUP_SIZE,
+                            CARD_NUMBER_SEPARATOR,
+                            CARD_MASKING_CHAR,
+                            CARD_EXPIRE_DATE_GROUP_SIZE,
+                            CARD_EXPIRE_DATE_SEPARATOR
+                        )
+                    },
                     modifier = Modifier
                         .padding(top = 30.dp)
                         .shadow(8.dp),
@@ -105,7 +120,16 @@ fun CardsScreen(
                     PaymentCard(
                         cardType = CardType.REGISTERED,
                         onClick = {},
-                        content = { RegisteredCard(cards[it]) },
+                        content = {
+                            RegisteredCard(
+                                cards[it],
+                                CARD_NUMBER_GROUP_SIZE,
+                                CARD_NUMBER_SEPARATOR,
+                                CARD_MASKING_CHAR,
+                                CARD_EXPIRE_DATE_GROUP_SIZE,
+                                CARD_EXPIRE_DATE_SEPARATOR
+                            )
+                        },
                         modifier = Modifier
                             .padding(top = 30.dp)
                             .shadow(8.dp),

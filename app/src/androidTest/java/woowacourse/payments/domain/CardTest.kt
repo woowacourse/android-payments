@@ -18,7 +18,11 @@ class CardTest {
         val expected = "1111 - 2222 - **** - ****"
 
         // when
-        val actual = card.formatCardNumber()
+        val actual = card.formatCardNumber(
+            groupSize = 4,
+            separator = " - ",
+            cardMaskChar = "*",
+        )
 
         // then
         assertEquals(expected, actual)
@@ -30,7 +34,10 @@ class CardTest {
         val expected = "04 / 21"
 
         // when
-        val actual = card.formatExpireDate()
+        val actual = card.formatExpireDate(
+            groupSize = 2,
+            separator = " / "
+        )
 
         // then
         assertEquals(expected, actual)

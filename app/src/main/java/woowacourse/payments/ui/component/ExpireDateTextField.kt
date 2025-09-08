@@ -11,20 +11,21 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.core.ExpireDateVisualTransformation
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.Black49
 
 @Composable
 fun ExpireDateTextField(
     maxLength: Int,
+    separator: String,
     expireDate: String,
+    groupSize: Int,
     onExpireDateChange: (String) -> Unit,
     onComplete: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val expireDateVisualTransformation = ExpireDateVisualTransformation(
-        Card.CARD_EXPIRE_DATE_GROUP_SIZE,
-        Card.CARD_EXPIRE_DATE_SEPARATOR
+        groupSize,
+        separator
     )
 
     OutlinedTextField(
@@ -61,6 +62,8 @@ fun ExpireDateTextField(
 private fun ExpireDateTextFieldPreview() {
     ExpireDateTextField(
         maxLength = 4,
+        separator = "/",
+        groupSize = 2,
         expireDate = "",
         onComplete = {},
         onExpireDateChange = {},

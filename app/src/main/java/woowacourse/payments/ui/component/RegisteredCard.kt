@@ -19,6 +19,11 @@ import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 @Composable
 fun RegisteredCard(
     card: Card,
+    numberGroupSize: Int,
+    numberSeparator: String,
+    numberMaskingChar: String,
+    expireDateGroupSize: Int,
+    expireDateSeparator: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -29,7 +34,11 @@ fun RegisteredCard(
         CardChip()
 
         Text(
-            text = card.formatCardNumber(),
+            text = card.formatCardNumber(
+                numberGroupSize,
+                numberSeparator,
+                numberMaskingChar
+            ),
             fontSize = 12.sp,
             color = Color.White,
             modifier = Modifier.padding(horizontal = 13.dp)
@@ -48,7 +57,10 @@ fun RegisteredCard(
             )
 
             Text(
-                text = card.formatExpireDate(),
+                text = card.formatExpireDate(
+                    expireDateGroupSize,
+                    expireDateSeparator
+                ),
                 fontSize = 12.sp,
                 color = Color.White,
             )
@@ -61,5 +73,12 @@ fun RegisteredCard(
 fun RegisteredCardPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
 ) {
-    RegisteredCard(card)
+    RegisteredCard(
+        card,
+        numberGroupSize = 4,
+        numberSeparator = " - ",
+        numberMaskingChar = "*",
+        expireDateGroupSize = 2,
+        expireDateSeparator = " / "
+    )
 }
