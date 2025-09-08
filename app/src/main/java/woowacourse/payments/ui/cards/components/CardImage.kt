@@ -21,6 +21,8 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.CardHolderUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.ExpirationDateUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
@@ -59,7 +61,7 @@ fun CardItem(
 
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = formatCardNumber(paymentCard.cardNumber),
+                text = formatCardNumber(paymentCard.cardNumber.value),
                 color = Color.White,
             )
 
@@ -72,7 +74,7 @@ fun CardItem(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = paymentCard.cardHolder,
+                    text = paymentCard.cardHolder.value,
                     color = Color.White,
                 )
                 Text(
@@ -112,8 +114,8 @@ private fun formatExpirationDate(expirationDate: String): String {
 private fun CardPreview() {
     CardItem(
         PaymentCardUiModel(
-            cardNumber = "1234 5678 9012 3456",
-            cardHolder = "홍길동",
+            cardNumber = CardNumberUiModel("1234 5678 9012 3456"),
+            cardHolder = CardHolderUiModel("홍길동"),
             expirationDate = ExpirationDateUiModel("1225"),
         ),
     )

@@ -19,6 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.CardHolderUiModel
+import woowacourse.payments.ui.model.CardHolderUiModel.Companion.CARD_HOLDER_MAX_LENGTH
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel.Companion.CARD_NUMBER_LENGTH
+import woowacourse.payments.ui.model.ExpirationDateUiModel.Companion.EXPIRATION_DATE_LENGTH
+import woowacourse.payments.ui.model.PasswordUiModel.Companion.PASSWORD_LENGTH
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -44,20 +50,26 @@ fun NewCardScreen() {
             NewCardTopBar(
                 onBackClick = { activity?.finish() },
                 onSaveClick = {
-                    val resultIntent =
-                        Intent().apply {
-                            putExtra(
-                                EXTRA_NEW_CARD,
-                                PaymentCardUiModel(
-                                    cardNumber = cardNumber,
-                                    cardHolder = cardHolder,
-                                    expirationDate = expirationDateUitState.expirationDate,
-                                ),
+                    runCatching {
+                        val paymentCard =
+                            PaymentCardUiModel(
+                                cardNumber = CardNumberUiModel(cardNumber),
+                                cardHolder = CardHolderUiModel(cardHolder),
+                                expirationDate = expirationDateUitState.expirationDate,
                             )
-                        }
-                    activity?.setResult(RESULT_OK, resultIntent)
-                    activity?.finish()
-                    Toast.makeText(context, R.string.new_card_add_card_success, Toast.LENGTH_SHORT).show()
+                        val resultIntent =
+                            Intent().apply {
+                                putExtra(
+                                    EXTRA_NEW_CARD,
+                                    paymentCard,
+                                )
+                            }
+                        activity?.setResult(RESULT_OK, resultIntent)
+                        activity?.finish()
+                        Toast.makeText(context, R.string.new_card_add_card_success, Toast.LENGTH_SHORT).show()
+                    }.onFailure { e ->
+                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                    }
                 },
             )
         },
@@ -81,7 +93,7 @@ fun NewCardScreen() {
                         .padding(top = 40.dp, start = 24.dp, end = 24.dp),
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
-                maxLength = 16,
+                maxLength = CARD_NUMBER_LENGTH,
             )
             ExpirationDateTextField(
                 modifier =
@@ -90,7 +102,7 @@ fun NewCardScreen() {
                 value = expirationDateUitState.expirationDate.value,
                 onValueChange = { expirationDateUitState.onValueChanged(it) },
                 isValid = expirationDateUitState.isError,
-                maxLength = 4,
+                maxLength = EXPIRATION_DATE_LENGTH,
             )
             NameTextField(
                 modifier =
@@ -99,7 +111,7 @@ fun NewCardScreen() {
                         .padding(start = 24.dp, top = 30.dp, end = 24.dp),
                 value = cardHolder,
                 onValueChange = { cardHolder = it },
-                maxLength = 30,
+                maxLength = CARD_HOLDER_MAX_LENGTH,
             )
             PasswordField(
                 modifier =
@@ -107,7 +119,7 @@ fun NewCardScreen() {
                         .padding(start = 24.dp, top = 30.dp),
                 value = password,
                 onValueChange = { password = it },
-                maxLength = 4,
+                maxLength = PASSWORD_LENGTH,
             )
         }
     }

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PaymentCardUiModel(
-    val cardNumber: String,
-    val cardHolder: String,
+    val cardNumber: CardNumberUiModel,
+    val cardHolder: CardHolderUiModel,
     val expirationDate: ExpirationDateUiModel,
 ) : Parcelable

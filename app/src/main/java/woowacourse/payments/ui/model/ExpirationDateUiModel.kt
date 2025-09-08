@@ -12,4 +12,8 @@ data class ExpirationDateUiModel(
         if (value.length < 2) return true
         return value.substring(0, 2).toInt() in Month.JANUARY.value..Month.DECEMBER.value
     }
+
+    companion object {
+        const val EXPIRATION_DATE_LENGTH: Int = 4
+    }
 }
