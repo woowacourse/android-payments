@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -6,7 +6,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.component.CardAdditionTopBar
+import woowacourse.payments.ui.component.cardaddition.CardAdditionColumn
+import woowacourse.payments.ui.component.cardaddition.CardAdditionTopBar
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {

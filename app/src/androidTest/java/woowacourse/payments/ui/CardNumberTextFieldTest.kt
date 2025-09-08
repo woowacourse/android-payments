@@ -1,18 +1,15 @@
 package woowacourse.payments.ui
 
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.text.AnnotatedString
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.cardaddition.CardNumberTextField
 
 class CardNumberTextFieldTest {
     @get:Rule
