@@ -20,7 +20,7 @@ import woowacourse.payments.newcard.component.ExpiredDateTextField
 import woowacourse.payments.newcard.component.NewCardTopBar
 import woowacourse.payments.newcard.component.OwnerNameTextField
 import woowacourse.payments.newcard.component.PasswordTextField
-import woowacourse.payments.newcard.component.PaymentCard
+import woowacourse.payments.util.PaymentCard
 
 @Preview
 @Composable
