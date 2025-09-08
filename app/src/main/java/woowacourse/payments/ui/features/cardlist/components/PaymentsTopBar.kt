@@ -17,6 +17,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentsTopBar(
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit,
+    isAddButtonVisible: Boolean = false,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -26,16 +27,18 @@ fun PaymentsTopBar(
                 style = MaterialTheme.typography.titleLarge,
             )
         },
+        modifier = modifier,
         actions = {
-            TextButton(onClick = onAddClick) {
-                Text(
-                    text = stringResource(R.string.card_list_top_bar_add_btn),
-                    modifier = Modifier,
-                    style = MaterialTheme.typography.titleMedium,
-                )
+            if (isAddButtonVisible) {
+                TextButton(onClick = onAddClick) {
+                    Text(
+                        text = stringResource(R.string.card_list_top_bar_add_btn),
+                        modifier = Modifier,
+                        style = MaterialTheme.typography.titleMedium,
+                    )
+                }
             }
         },
-        modifier = modifier,
     )
 }
 
@@ -45,6 +48,17 @@ fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {
         PaymentsTopBar(
             onAddClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NewCardTopBarWithAddBtnPreview() {
+    AndroidpaymentsTheme {
+        PaymentsTopBar(
+            onAddClick = {},
+            isAddButtonVisible = true,
         )
     }
 }
