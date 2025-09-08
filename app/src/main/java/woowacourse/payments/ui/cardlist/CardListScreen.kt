@@ -44,7 +44,7 @@ fun CardListScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data
-                    ?.getParcelableCompat<Card>("new_card")
+                    ?.getParcelableCompat<Card>(NewCardActivity.INTENT_NEW_CARD_KEY)
                     ?.let(onCardAdded)
             }
         }

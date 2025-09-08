@@ -19,11 +19,9 @@ class NewCardActivity : ComponentActivity() {
                 NewCardScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card: Card ->
-                        val resultIntent =
-                            Intent().apply {
-                                putExtra("new_card", card)
-                            }
-                        setResult(Activity.RESULT_OK, resultIntent)
+                        val intent =
+                            Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
+                        setResult(Activity.RESULT_OK, intent)
                         finish()
                     },
                 )
@@ -32,6 +30,8 @@ class NewCardActivity : ComponentActivity() {
     }
 
     companion object {
+        const val INTENT_NEW_CARD_KEY = "new_card"
+
         fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }
