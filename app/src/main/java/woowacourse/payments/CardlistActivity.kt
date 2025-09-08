@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -24,6 +26,8 @@ class CardlistActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 var cardList by remember { mutableStateOf<List<PaymentCard>>(emptyList()) }
+
+                val context = LocalContext.current
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(
@@ -42,6 +46,13 @@ class CardlistActivity : ComponentActivity() {
                                 }
                             newCard?.let {
                                 cardList = cardList + it
+
+                                Toast
+                                    .makeText(
+                                        context,
+                                        getString(R.string.card_list_card_added_alert),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
                             }
                         }
                     }
