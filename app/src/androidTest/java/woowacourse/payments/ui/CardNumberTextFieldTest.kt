@@ -23,7 +23,10 @@ class CardNumberTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var state by remember { mutableStateOf("") }
-            CardNumberTextField(cardNumber = state) { newValue ->
+            CardNumberTextField(
+                cardNumber = state,
+                maxLength = 16
+            ) { newValue ->
                 state = newValue
             }
         }

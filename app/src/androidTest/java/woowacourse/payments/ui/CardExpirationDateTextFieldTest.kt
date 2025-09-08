@@ -26,6 +26,7 @@ class CardExpirationDateTextFieldTest {
                 cardExpirationDate = expirationDate,
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
                 onErrorMessageChanged = {},
+                maxLength = 4
             )
         }
     }
@@ -58,6 +59,7 @@ class CardExpirationDateTextFieldTest {
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
                 errorMessage = errorMessage,
                 onErrorMessageChanged = { newValue -> errorMessage = newValue.orEmpty() },
+                maxLength = 4
             )
         }
 

@@ -24,7 +24,10 @@ class CardPasswordTextFieldTest {
     fun setup() {
         composeTestRule.setContent {
             var cardPassword by remember { mutableStateOf("") }
-            CardPasswordTextField(cardPassword = cardPassword) { newValue ->
+            CardPasswordTextField(
+                cardPassword = cardPassword,
+                maxLength = 4
+            ) { newValue ->
                 cardPassword = newValue
             }
         }

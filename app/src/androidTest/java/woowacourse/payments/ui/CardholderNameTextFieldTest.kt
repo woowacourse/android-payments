@@ -27,6 +27,7 @@ class CardholderNameTextFieldTest {
             CardholderNameTextField(
                 cardholderName = cardholderName,
                 onCardholderNameChanged = { newValue -> cardholderName = newValue },
+                maxLength = 30
             )
         }
     }
