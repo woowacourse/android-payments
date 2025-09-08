@@ -1,0 +1,70 @@
+package woowacourse.payments.card.register.component
+
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performTextInput
+import androidx.test.runner.AndroidJUnit4
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+class CardHolderNameTextFieldTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Before
+    fun setup() {
+        composeTestRule.setContent {
+            CardHolderNameTextField(modifier = Modifier.testTag("CardHolderNameTextField"))
+        }
+    }
+
+    @Test
+    fun `카드_소유자_이름은_영어_대문자만_가능하다`() {
+        // Given
+        val text = "name"
+        val expected = "NAME"
+
+        // When
+        composeTestRule.onNodeWithTag("CardHolderNameTextField").performTextInput(text)
+
+        // Then
+        composeTestRule.onNodeWithText(expected).assertIsDisplayed()
+    }
+
+    @Test
+    fun `카드_소유자_이름은_30자를_초과하여_입력할_수_없다`() {
+        // Given
+        val text = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDE" // 31자
+        val expected = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCD" // 30자
+
+        // When
+        composeTestRule
+            .onNodeWithTag("CardHolderNameTextField")
+            .performTextInput(text)
+
+        // Then
+        composeTestRule.onNodeWithText(expected).assertIsDisplayed()
+    }
+
+    @Test
+    fun `supportingText는_입력한_글자수를_표시한다`() {
+        // Given
+        val text = "ABCDE"
+        val expected = "5 / 30"
+
+        // When
+        composeTestRule
+            .onNodeWithTag("CardHolderNameTextField")
+            .performTextInput(text)
+
+        // Then
+        composeTestRule.onNodeWithText(expected).assertIsDisplayed()
+    }
+}
