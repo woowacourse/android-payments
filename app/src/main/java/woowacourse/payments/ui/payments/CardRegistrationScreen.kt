@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.util.DefaultPaymentCardValidator
-import woowacourse.payments.util.PaymentCardValidator
+import woowacourse.payments.domain.DefaultPaymentCardValidator
+import woowacourse.payments.domain.PaymentCardValidator
 
 private const val CARD_EXPIRATION_DATE_LENGTH = 4
 private const val CARD_NUMBER_LENGTH = 16
