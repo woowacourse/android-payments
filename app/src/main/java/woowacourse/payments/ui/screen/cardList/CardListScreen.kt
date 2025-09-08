@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cardList
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -47,7 +46,6 @@ fun CardListScreen(
     navigateToAddCard: () -> Unit,
 ) {
     val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
-    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -66,7 +64,6 @@ fun CardListScreen(
             CardListContent(
                 cards = cards,
                 modifier = Modifier.padding(innerPadding),
-                state = scrollState,
                 onAddCardClick = navigateToAddCard,
             )
         }
@@ -100,15 +97,16 @@ private fun EmptyCardList(
 private fun CardListContent(
     cards: List<CardUiModel>,
     modifier: Modifier = Modifier,
-    state: ScrollState,
     onAddCardClick: () -> Unit,
 ) {
+    val scrollState = rememberScrollState()
+
     Column(
         modifier =
             modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .verticalScroll(state),
+                .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         for (card in cards) {
@@ -140,55 +138,57 @@ fun AddCardBox(onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 0개")
 @Composable
-fun CardListScreenPreview() {
+fun CardListScreenPreview_Empty() {
     AndroidpaymentsTheme {
         CardListScreen(
-            listOf(
-                Card(
-                    number = CardNumber("1234567887654321"),
-                    expired = Expired("1221"),
-                    owner = CardOwner("aaaa"),
-                    password = Password("1234"),
-                ).toPresentation(),
-            ),
+            cards = emptyList(),
             navigateToAddCard = { },
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 1개")
 @Composable
-fun EmptyCardListPreview() {
+fun CardListScreenPreview_OneCard() {
     AndroidpaymentsTheme {
-        EmptyCardList {}
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardListContentPreview() {
-    AndroidpaymentsTheme {
-        CardListContent(
-            listOf(
-                Card(
-                    number = CardNumber("1234567887654321"),
-                    expired = Expired("1221"),
-                    owner = CardOwner("aaaa"),
-                    password = Password("1234"),
-                ).toPresentation(),
-            ),
-            state = rememberScrollState(),
-            onAddCardClick = {},
+        CardListScreen(
+            cards =
+                listOf(
+                    Card(
+                        number = CardNumber("1234567887654321"),
+                        expired = Expired("1221"),
+                        owner = CardOwner("aaaa"),
+                        password = Password("1234"),
+                    ).toPresentation(),
+                ),
+            navigateToAddCard = { },
         )
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 2개")
 @Composable
-fun AddCardBoxPreview() {
+fun CardListScreenPreview_TwoCards() {
     AndroidpaymentsTheme {
-        AddCardBox {}
+        CardListScreen(
+            cards =
+                listOf(
+                    Card(
+                        number = CardNumber("1234567887654321"),
+                        expired = Expired("1221"),
+                        owner = CardOwner("aaaa"),
+                        password = Password("1234"),
+                    ).toPresentation(),
+                    Card(
+                        number = CardNumber("8765432112345678"),
+                        expired = Expired("1122"),
+                        owner = CardOwner("bbbb"),
+                        password = Password("5678"),
+                    ).toPresentation(),
+                ),
+            navigateToAddCard = { },
+        )
     }
 }
