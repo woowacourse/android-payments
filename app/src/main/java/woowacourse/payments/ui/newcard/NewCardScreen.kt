@@ -28,22 +28,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
 
-private const val CARD_NUMBER_MAX_LENGTH: Int = 16
 private const val EXPIRY_MAX_LENGTH: Int = 4
 private const val HOLDER_MAX_LENGTH: Int = 30
 private const val PIN_MAX_LENGTH: Int = 4
 
-private const val CARD_NUMBER_GROUP_COUNT: Int = 4
-private const val CARD_NUMBER_GROUP_SIZE: Int = 4
-
 private const val EXPIRY_GROUP_COUNT: Int = 2
 private const val EXPIRY_GROUP_SIZE: Int = 2
 
-private const val SEPARATOR_GROUP: String = " - "
 private const val SEPARATOR_EXPIRY: String = " / "
 
 @Composable
@@ -72,21 +68,9 @@ fun NewCardScreen(
         }
         Spacer(Modifier.height(40.dp))
 
-        DigitsTextField(
+        CardNumberTextField(
             value = cardNumber,
-            label = stringResource(R.string.new_card_number_label),
-            placeholder = stringResource(R.string.new_card_number_hint),
-            maxLength = CARD_NUMBER_MAX_LENGTH,
-            modifier = Modifier.fillMaxWidth(),
-            grouping = IntArray(CARD_NUMBER_GROUP_COUNT) { CARD_NUMBER_GROUP_SIZE },
-            separator = SEPARATOR_GROUP,
-            keyboardOptions =
-                KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Next,
-                ),
             onValueChange = { cardNumber = it },
-            onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
         )
         Spacer(Modifier.height(30.dp))
 
