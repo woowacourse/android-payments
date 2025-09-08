@@ -22,6 +22,7 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.ui.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import java.time.YearMonth
 
@@ -51,6 +52,9 @@ fun CardListScreen(
             }
             cards.forEach { card: Card ->
                 PaymentCard(card = card)
+            }
+            if (cards.size <= 1) {
+                AddPaymentCard()
             }
         }
     }
@@ -85,5 +89,19 @@ private fun CardListScreenPreview2() {
 @Preview(name = "카드 n개")
 @Composable
 private fun CardListScreenPreview3() {
-    CardListScreen()
+    CardListScreen(
+        cards =
+            List(3) {
+                Card(
+                    number =
+                        CardNumber(
+                            listOf(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4)
+                                .map(::CardDigit),
+                        ),
+                    expirationDate = CardExpirationDate(YearMonth.of(2025, 9)),
+                    password = CardPassword("0000"),
+                    holderName = CardHolderName("CREW"),
+                )
+            },
+    )
 }
