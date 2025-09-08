@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField"
-private const val CARDHOLDER_NAME_LENGTH_SEPARATOR = "/"
 
 @Composable
 fun CardholderNameTextField(
@@ -54,7 +53,7 @@ fun CardholderNameTextField(
         },
         supportingText = {
             Text(
-                text = "${cardholderName.length}$CARDHOLDER_NAME_LENGTH_SEPARATOR$maxLength",
+                text = stringResource(R.string.cardholder_name_text_field_name_length, cardholderName.length, maxLength),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
