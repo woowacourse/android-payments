@@ -30,7 +30,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PasswordInputField(
     password: Password?,
-    onPasswordChange: (Password?) -> (Unit),
+    onPasswordChange: (Password?) -> Unit,
     modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
@@ -43,8 +43,7 @@ fun PasswordInputField(
         value = password?.value ?: "",
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(4)
-            val newPassword = Password(filteredText)
-            onPasswordChange(newPassword)
+            onPasswordChange(if (filteredText.isEmpty()) null else Password(filteredText))
         },
         modifier =
             modifier.semantics {
