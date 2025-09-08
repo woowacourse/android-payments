@@ -25,6 +25,16 @@ data class CardInfoUiState(
     var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
         private set
 
+
+    fun isComplete():Boolean {
+        return CardInfo.createOrNull(
+            cardNumber = cardNumber,
+            expireDate = expireDate,
+            ownerName = ownerName,
+            password = password
+        ) != null
+    }
+
     fun updateCardInfo(
         cardNumber: String = this.cardNumber,
         expireDate: String = this.expireDate,
