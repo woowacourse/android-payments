@@ -1,6 +1,6 @@
 package woowacourse.payments.domain
 
-data class PaymentCard(
+data class Card(
     val number: CardNumber,
     val expirationDate: CardExpirationDate,
     val password: CardPassword,
