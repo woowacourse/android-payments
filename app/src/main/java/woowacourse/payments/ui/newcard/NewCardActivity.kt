@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -26,5 +28,9 @@ class NewCardActivity : ComponentActivity() {
                 onBackClick = { finish() },
             )
         }
+    }
+
+    companion object {
+        fun intent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }

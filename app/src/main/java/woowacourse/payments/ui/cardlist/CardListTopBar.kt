@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.cardlist
 
+import android.R.attr.onClick
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -14,7 +16,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardListTopBar() {
+fun CardListTopBar(onAddCard: () -> Unit = {}) {
     TopAppBar(
         title = {
             Text(
@@ -24,7 +26,14 @@ fun CardListTopBar() {
             )
         },
         actions = {
-            Text(text = "추가", fontWeight = FontWeight.Bold)
+            Text(
+                text = "추가",
+                fontWeight = FontWeight.Bold,
+                modifier =
+                    Modifier.clickable {
+                        onAddCard()
+                    },
+            )
         },
     )
 }
