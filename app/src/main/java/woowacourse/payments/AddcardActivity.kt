@@ -1,9 +1,11 @@
 package woowacourse.payments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.AddCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -14,10 +16,21 @@ class AddcardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 AddCardScreen(
-                    onNavigateBack = { /* Todo: 뒤로가기 로직 */ },
-                    onNavigateSave = { /* Todo: 카드 저장 로직 */ },
+                    onNavigateBack = { finish() },
+                    onNavigateSave = { card: PaymentCard ->
+                        val intent =
+                            Intent().apply {
+                                putExtra(EXTRA_PAYMENT_CARD, card)
+                            }
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    },
                 )
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_PAYMENT_CARD = "EXTRA_PAYMENT_CARD"
     }
 }

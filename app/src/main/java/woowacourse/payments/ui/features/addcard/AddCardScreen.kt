@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField
@@ -24,6 +25,7 @@ import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
 import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
+import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
@@ -32,7 +34,7 @@ private val FormFieldSpacing = 30.dp
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
-    onNavigateSave: () -> Unit,
+    onNavigateSave: (PaymentCard) -> Unit,
 ) {
     var cardUiState by remember { mutableStateOf(CardUiState()) }
     val expireDateStatus by remember(cardUiState.expireDate) {
@@ -44,7 +46,11 @@ fun AddCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onNavigateBack,
-                onSaveClick = onNavigateSave,
+                onSaveClick = {
+                    val cardDomain = cardUiState.toDomainCard()
+                    if (cardDomain == null) return@NewCardTopBar
+                    onNavigateSave(cardDomain)
+                },
             )
         },
     ) { innerPadding ->
