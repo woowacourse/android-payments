@@ -22,7 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.CardAdditionUiStateSaver
+import woowacourse.payments.ui.common.CardChip
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
+import woowacourse.payments.ui.theme.Gray20
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
@@ -54,6 +56,8 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp),
+                backgroundColor = Gray20,
+                cardContent = { CardChip(modifier = Modifier.padding(start = 14.dp)) },
             )
             CardNumberTextField(
                 value = cardAdditionUiState.cardNumber.value,
