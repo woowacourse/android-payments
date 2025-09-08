@@ -1,9 +1,13 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 @JvmInline
 value class CardNumber(
     val numbers: List<CardDigit>,
-) {
+) : Parcelable {
     init {
         require(numbers.size == CARD_NUMBER_LENGTH) { ERROR_INVALID_CARD_NUMBER_LENGTH }
     }

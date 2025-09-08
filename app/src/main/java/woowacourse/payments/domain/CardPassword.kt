@@ -1,9 +1,13 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 @JvmInline
 value class CardPassword(
     val password: String,
-) {
+) : Parcelable {
     init {
         require(password.length == CARD_PASSWORD_LENGTH) { ERROR_INVALID_CARD_PASSWORD_LENGTH }
         require(password.all(Char::isDigit)) { ERROR_INVALID_CARD_PASSWORD_FORMAT }
