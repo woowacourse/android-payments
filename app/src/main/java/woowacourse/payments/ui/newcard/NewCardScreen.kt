@@ -36,6 +36,7 @@ import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
+import woowacourse.payments.ui.newcard.components.CardPasswordTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 import java.time.YearMonth
@@ -51,32 +52,21 @@ fun NewCardScreen(
     var cardHolderName: String by remember { mutableStateOf("") }
     var cardPassword: String by remember { mutableStateOf("") }
 
+    fun buildCardOrNull(): Card? =
+        runCatching {
+            Card(
+                number = CardNumber.from(cardNumber),
+                expirationDate = CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER),
+                holderName = cardHolderName.takeIf { it.isNotBlank() }?.let(::CardHolderName),
+                password = CardPassword(cardPassword),
+            )
+        }.getOrNull()
+
     Scaffold(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = {
-                    try {
-                        Card(
-                            number = CardNumber.from(cardNumber),
-                            expirationDate =
-                                CardExpirationDate.from(
-                                    cardExpirationDate,
-                                    DATE_TIME_FORMATTER,
-                                ),
-                            holderName =
-                                if (cardHolderName.isBlank()) {
-                                    null
-                                } else {
-                                    CardHolderName(cardHolderName)
-                                },
-                            password = CardPassword(cardPassword),
-                        )
-                        onSaveClick()
-                    } catch (e: Exception) {
-                        return@NewCardTopBar
-                    }
-                },
+                onSaveClick = { buildCardOrNull()?.let { onSaveClick() } },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -106,16 +96,9 @@ fun NewCardScreen(
                 onValueChange = { cardHolderName = it },
                 modifier = Modifier.fillMaxWidth(),
             )
-            LimitedLengthOutlinedTextField(
+            CardPasswordTextField(
                 value = cardPassword,
                 onValueChange = { cardPassword = it },
-                maxLength = CardPassword.CARD_PASSWORD_LENGTH,
-                label = { Text(stringResource(R.string.card_password)) },
-                placeholder = { Text("0000") },
-                isError = cardPassword.isNotEmpty() && runCatching { CardPassword(cardPassword) }.isFailure,
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                visualTransformation = PasswordVisualTransformation(),
-                inputFilter = { it.filter(Char::isDigit) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
