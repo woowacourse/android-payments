@@ -18,6 +18,7 @@
     <!--  카드 만료일  -->
     <string name="expired_date_label">만료일</string>
     <string name="expired_date_placeholder">MM / YY</string>
+    <string name="expired_date_error">유효하지 않은 만료일입니다.</string>
 
     <!--  카드 비밀번호  -->
     <string name="password_label">비밀번호</string>

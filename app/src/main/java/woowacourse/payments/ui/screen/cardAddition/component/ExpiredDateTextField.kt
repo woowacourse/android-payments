@@ -27,6 +27,7 @@ fun ExpiredDateTextField(
     value: String,
     onDateChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    errorMessage: String? = null,
     onComplete: () -> Unit = {},
     onKeyboardActionClick: (KeyboardActionScope) -> Unit = {},
 ) {
@@ -45,6 +46,12 @@ fun ExpiredDateTextField(
                 color = Color.Gray,
             )
         },
+        supportingText = {
+            if (errorMessage != null) {
+                Text(text = errorMessage)
+            }
+        },
+        isError = errorMessage != null,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next,
