@@ -37,6 +37,7 @@ fun PasswordInputField(
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
+    val passwordTransformation = remember { PasswordVisualTransformation() }
 
     OutlinedTextField(
         value = password?.value ?: "",
@@ -56,7 +57,7 @@ fun PasswordInputField(
                 color = Color.LightGray,
             )
         },
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = if (passwordVisible) VisualTransformation.None else passwordTransformation,
         trailingIcon = {
             if (isFocused) {
                 val painter =
