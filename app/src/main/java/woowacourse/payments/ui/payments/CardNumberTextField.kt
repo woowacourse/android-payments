@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.CreditCardVisualTransformation
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 
 private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
 
@@ -46,7 +46,11 @@ fun CardNumberTextField(
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = CreditCardVisualTransformation,
+        visualTransformation = GroupedVisualTransformation(
+            maxLength = maxLength,
+            groupSize = 4,
+            separator = " - "
+        ),
     )
 }
 

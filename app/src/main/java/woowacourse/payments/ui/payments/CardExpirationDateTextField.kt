@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.ExpirationDateVisualTransformation
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 import java.time.YearMonth
 
 private const val CENTURY_BASE = 2000
@@ -65,7 +65,11 @@ fun CardExpirationDateTextField(
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = ExpirationDateVisualTransformation,
+        visualTransformation = GroupedVisualTransformation(
+            maxLength = maxLength,
+            groupSize = 2,
+            separator = " / "
+        ),
     )
 }
 
