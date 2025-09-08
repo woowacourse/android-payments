@@ -14,3 +14,6 @@ val LightGray = Color(0xFFAAAAAA)
 
 val Gray = Color(0xFF49454F)
 val GrayOutLine = Color(0xFF79747E)
+
+val Black = Color(0xFF000000)
+val Black900 = Color(0xFF1D1B20)

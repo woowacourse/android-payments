@@ -4,18 +4,17 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.ui.features.addcard.AddCardScreen
+import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class MainActivity : ComponentActivity() {
+class CardlistActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                AddCardScreen(
-                    onNavigateBack = { /* Todo: 뒤로가기 로직 */ },
-                    onNavigateSave = { /* Todo: 카드 저장 로직 */ },
+                CardListScreen(
+                    onAddCard = { /* Todo: 카드 추가 로직 */ },
                 )
             }
         }

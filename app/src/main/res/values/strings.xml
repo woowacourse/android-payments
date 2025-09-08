@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">android-payments</string>
 
+    <!--    카드 목록 컴포넌트-->
+    <!--    상단바(TopBar)-->
+    <string name="card_list_top_bar_title">Payments</string>
+    <string name="card_list_top_bar_add_btn">추가</string>
+
     <!--    카드 추가 컴포넌트-->
     <!--    상단바(TopBar)-->
     <string name="add_card_top_bar_title">카드 추가</string>
