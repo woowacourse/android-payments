@@ -18,23 +18,6 @@ class AddCardViewModel {
     var password by mutableStateOf<Password?>(null)
         private set
     var showValidationError by mutableStateOf(false)
-        private set
-
-    fun onCardNumberChange(text: CardNumber?) {
-        cardNumber = text
-    }
-
-    fun onExpiredChange(text: Expired?) {
-        expired = text
-    }
-
-    fun onCardOwnerChange(text: CardOwner?) {
-        cardOwner = text
-    }
-
-    fun onPasswordChange(text: Password?) {
-        password = text
-    }
 
     fun validateAll() {
         showValidationError = true

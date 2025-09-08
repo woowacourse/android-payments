@@ -6,9 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +41,45 @@ fun AddCardScreen(
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
 ) {
+    val cardNumberSaver =
+        Saver<CardNumber?, String>(
+            save = { it?.value },
+            restore = { CardNumber(it) },
+        )
+
+    val expiredSaver =
+        Saver<Expired?, String>(
+            save = { it?.value },
+            restore = { Expired(it) },
+        )
+
+    val cardOwnerSaver =
+        Saver<CardOwner?, String>(
+            save = { it?.value },
+            restore = { CardOwner(it) },
+        )
+
+    val passwordSaver =
+        Saver<Password?, String>(
+            save = { it?.value },
+            restore = { Password(it) },
+        )
+
+    var cardNumber by rememberSaveable(stateSaver = cardNumberSaver) {
+        mutableStateOf(viewModel.cardNumber)
+    }
+    var expired by rememberSaveable(stateSaver = expiredSaver) {
+        mutableStateOf(viewModel.expired)
+    }
+    var cardOwner by rememberSaveable(stateSaver = cardOwnerSaver) {
+        mutableStateOf(viewModel.cardOwner)
+    }
+    var password by rememberSaveable(stateSaver = passwordSaver) {
+        mutableStateOf(viewModel.password)
+    }
+    var showValidationError by rememberSaveable { mutableStateOf(viewModel.showValidationError) }
+    viewModel.showValidationError = showValidationError
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -41,13 +87,14 @@ fun AddCardScreen(
                 onBackClick = onBackPressed,
                 onSaveClick = {
                     viewModel.validateAll()
+                    showValidationError = viewModel.showValidationError
                     if (!viewModel.showValidationError) {
                         val cardUiModel =
                             Card(
-                                number = viewModel.cardNumber ?: CardNumber(""),
-                                expired = viewModel.expired ?: Expired(""),
-                                owner = viewModel.cardOwner ?: CardOwner(""),
-                                password = viewModel.password ?: Password(""),
+                                number = cardNumber,
+                                expired = expired,
+                                owner = cardOwner,
+                                password = password,
                             ).toPresentation()
                         onCardSaved(cardUiModel)
                     }
@@ -71,38 +118,38 @@ fun AddCardScreen(
             ) {
                 PaymentCard(
                     Card(
-                        number = viewModel.cardNumber,
-                        expired = viewModel.expired,
-                        owner = viewModel.cardOwner,
-                        password = viewModel.password,
+                        number = cardNumber,
+                        expired = expired,
+                        owner = cardOwner,
+                        password = password,
                     ).toPresentation(),
                 )
             }
 
             CardNumberInputField(
-                cardNumber = viewModel.cardNumber,
-                onCardNumberChange = viewModel::onCardNumberChange,
+                cardNumber = cardNumber,
+                onCardNumberChange = { cardNumber = it },
                 modifier = Modifier.fillMaxWidth(),
                 showValidationError = viewModel.showValidationError,
             )
 
             ExpiredInputField(
-                expired = viewModel.expired,
-                onExpiredChange = viewModel::onExpiredChange,
+                expired = expired,
+                onExpiredChange = { expired = it },
                 modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = viewModel.showValidationError,
             )
 
             CardOwnerInputField(
-                cardOwner = viewModel.cardOwner,
-                onOwnerChange = viewModel::onCardOwnerChange,
+                cardOwner = cardOwner,
+                onOwnerChange = { cardOwner = it },
                 modifier = Modifier.fillMaxWidth(),
                 showValidationError = viewModel.showValidationError,
             )
 
             PasswordInputField(
-                password = viewModel.password,
-                onPasswordChange = viewModel::onPasswordChange,
+                password = password,
+                onPasswordChange = { password = it },
                 modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = viewModel.showValidationError,
             )
