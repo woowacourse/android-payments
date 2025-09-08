@@ -6,9 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -40,27 +39,18 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
     val context = LocalContext.current
-    val cardAddLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-            activityResult.data?.let { data ->
-                data
-                    .getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_NEW_CARD)
-                    ?.let(viewModel::addCard)
+    val uiState = viewModel.uiState
+    val uiEvent = viewModel.uiEvent
+    val cardAddLauncher = rememberCardAddLauncher(viewModel)
+
+    LaunchedEffect(uiEvent) {
+        when (uiEvent) {
+            is CardsScreenUiEvent.RegisteredCard -> {
+                val resId = R.string.cards_screen_card_registered_message
+                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
             }
-        }
 
-    LaunchedEffect(viewModel.uiEvent) {
-        when (viewModel.uiEvent) {
-            is CardsScreenUiEvent.RegisteredCard ->
-                Toast
-                    .makeText(
-                        context,
-                        R.string.card_registration_screen_card_registered_message,
-                        Toast.LENGTH_SHORT,
-                    ).show()
-
-            null -> Unit
+            else -> Unit
         }
     }
 
@@ -68,21 +58,32 @@ fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
         topBar = {
             CardsTopAppBar(
                 onRegistrationButtonClick = {
-                    cardAddLauncher.launch(CardRegistrationActivity.newIntent(context))
+                    val newIntent = CardRegistrationActivity.newIntent(context)
+                    cardAddLauncher.launch(newIntent)
                 },
-                isRegistrationButtonEnabled = viewModel.uiState is CardsUiState.MULTIPLE,
+                isRegistrationButtonEnabled = uiState is CardsUiState.MULTIPLE,
             )
         },
     ) { innerPadding ->
         CardsScreenContent(
-            cardsUiState = viewModel.uiState,
+            cardsUiState = uiState,
             onRegistrationButtonClick = {
-                cardAddLauncher.launch(CardRegistrationActivity.newIntent(context))
+                val newIntent = CardRegistrationActivity.newIntent(context)
+                cardAddLauncher.launch(newIntent)
             },
             modifier = Modifier.padding(innerPadding),
         )
     }
 }
+
+@Composable
+private fun rememberCardAddLauncher(viewModel: CardsViewModel) =
+    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+        result.data
+            ?.getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_NEW_CARD)
+            ?.let(viewModel::addCard)
+    }
 
 @Composable
 private fun CardsScreenContent(
@@ -94,9 +95,10 @@ private fun CardsScreenContent(
         modifier =
             modifier
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(vertical = 20.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(36.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         when (cardsUiState) {
             is CardsUiState.EMPTY -> CardsEmptyContent(onRegistrationButtonClick)
@@ -104,15 +106,13 @@ private fun CardsScreenContent(
             is CardsUiState.SINGLE ->
                 CardsSingleContent(cardsUiState.card, onRegistrationButtonClick)
         }
-        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 
 @Composable
 private fun CardsEmptyContent(onRegistrationButtonClick: () -> Unit) {
-    Spacer(modifier = Modifier.height(32.dp))
     Text(
-        text = "새로운 카드를 등록해주세요",
+        text = stringResource(R.string.cards_screen_registration_message),
         color = Color.Black,
         fontSize = 18.sp,
         fontWeight = FontWeight.W700,
@@ -131,7 +131,7 @@ private fun CardsSingleContent(
 
 @Composable
 private fun CardsMultipleContent(cards: List<PaymentCardUiModel>) {
-    cards.forEach { card -> PaymentCard(paymentCardUiModel = card) }
+    cards.forEach { PaymentCard(paymentCardUiModel = it) }
 }
 
 @Preview(showBackground = true)
@@ -145,19 +145,21 @@ private fun CardsScreenPreview(
 }
 
 private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<CardsUiState> {
-    private val cards =
-        List(3) {
-            PaymentCardUiModel(
-                number = CardNumberUiModel("1234567812345678"),
-                expirationDate = CardExpirationDateUiModel("0301"),
-                cardholderName = CardholderNameUiModel("DICE"),
-            )
-        }
-
     override val values =
         sequenceOf(
             CardsUiState.EMPTY,
-            CardsUiState.SINGLE(cards.first()),
-            CardsUiState.MULTIPLE(cards),
+            CardsUiState.SINGLE(DUMMY_CARDS.first()),
+            CardsUiState.MULTIPLE(DUMMY_CARDS),
         )
+
+    companion object {
+        private val DUMMY_CARDS =
+            List(3) {
+                PaymentCardUiModel(
+                    number = CardNumberUiModel("1234567812345678"),
+                    expirationDate = CardExpirationDateUiModel("0301"),
+                    cardholderName = CardholderNameUiModel("DICE"),
+                )
+            }
+    }
 }

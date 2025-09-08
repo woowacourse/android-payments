@@ -24,8 +24,9 @@
     <string name="icon_previous_content_description">뒤로 가기</string>
     <string name="icon_save_content_description">완료</string>
 
-    <!-- card_registration_screen -->
-    <string name="card_registration_screen_card_registered_message">카드가 추가되었습니다</string>
+    <!-- cards_screen -->
+    <string name="cards_screen_card_registered_message">카드가 추가되었습니다</string>
+    <string name="cards_screen_registration_message">새로운 카드를 등록해주세요</string>
 
     <!-- cards_screen_tob_app_bar -->
     <string name="cards_screen_top_app_bar_title">Payments</string>
