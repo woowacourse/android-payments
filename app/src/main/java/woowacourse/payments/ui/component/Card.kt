@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.allcards.util.CardFormatter
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun Card(cardInfoUiState: CardInfoUiState) {
@@ -59,28 +61,31 @@ fun Card(cardInfoUiState: CardInfoUiState) {
         Column(
             modifier = Modifier
                 .padding(
-                    horizontal = 14.dp
+                    start = 14.dp,
+                    end = 14.dp,
+                    bottom = 10.dp
                 )
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth(),
         ) {
-
             Text(
-                modifier = Modifier.padding(bottom = 2.dp),
                 color = colorResource(id = R.color.white),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
+                style = TextStyle(letterSpacing = 2.sp),
                 text = CardFormatter.formatCardNumber(cardInfoUiState.cardNumber),
             )
             Row(
                 modifier = Modifier
-                    .padding(bottom = 14.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
+                    modifier = Modifier.width(90.dp),
                     color = colorResource(id = R.color.white),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     text = cardInfoUiState.ownerName,
@@ -99,12 +104,15 @@ fun Card(cardInfoUiState: CardInfoUiState) {
 @Preview(showBackground = true)
 @Composable
 private fun CardPreview() {
-    Card(
-        CardInfoUiState(
-            _cardNumber = "1234123412341234",
-            _expireDate = "12/25",
-            _ownerName = "홍길동",
-            _password = "1234"
+    AndroidpaymentsTheme {
+        Card(
+            CardInfoUiState(
+                _cardNumber = "9999999999999999",
+                _expireDate = "12/25",
+                _ownerName = "홍길동홍길동홍길동홍길동홍길동",
+                _password = "1234"
+            )
         )
-    )
+    }
+
 }
