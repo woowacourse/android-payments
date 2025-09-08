@@ -18,7 +18,7 @@ class CardPasswordTest {
 
         // then
         assertSoftly(cardPassword) {
-            password shouldBe testPassword
+            value shouldBe testPassword
             isValid shouldBe true
         }
     }
@@ -34,7 +34,7 @@ class CardPasswordTest {
 
         // then
         assertSoftly(cardPassword) {
-            password.length shouldNotBeExactly 4
+            value.length shouldNotBeExactly 4
             isValid shouldBe false
         }
     }

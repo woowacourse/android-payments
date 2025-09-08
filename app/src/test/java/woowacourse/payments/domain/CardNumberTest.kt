@@ -18,7 +18,7 @@ class CardNumberTest {
 
         // then
         assertSoftly(cardNumber) {
-            number shouldBe testNumber
+            value shouldBe testNumber
             isValid shouldBe true
         }
     }
@@ -34,7 +34,7 @@ class CardNumberTest {
 
         // then
         assertSoftly(cardNumber) {
-            number.length shouldNotBeExactly 16
+            value.length shouldNotBeExactly 16
             isValid shouldBe false
         }
     }
