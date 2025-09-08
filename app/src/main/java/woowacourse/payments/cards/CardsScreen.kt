@@ -2,6 +2,7 @@ package woowacourse.payments.cards
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -51,6 +52,7 @@ fun CardsScreen(paymentCards: List<Card>) {
 
                 if (card != null) {
                     cards += card
+                    Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
