@@ -13,11 +13,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun CardsTopBar(
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit = {},
+    isAddable: Boolean,
 ) {
     TopAppBar(
         title = {
@@ -28,10 +28,20 @@ fun CardsTopBar(
             )
         },
         actions = {
-            TextButton(onClick = { onAddClick() }) {
-                Text("추가", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            if (isAddable) {
+                TextButton(onClick = { onAddClick() }) {
+                    Text("추가", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
             }
         },
-        modifier = modifier
+        modifier = modifier,
+    )
+}
+
+@Preview
+@Composable
+private fun CardsTopBarPreview() {
+    CardsTopBar(
+        isAddable = true,
     )
 }
