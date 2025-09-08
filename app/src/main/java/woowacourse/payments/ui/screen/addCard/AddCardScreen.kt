@@ -1,8 +1,5 @@
 package woowacourse.payments.ui.screen.addCard
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +18,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
 import woowacourse.payments.ui.component.ExpiredInputField
@@ -32,14 +30,15 @@ import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun AddCardScreen(
-    activity: ComponentActivity,
     viewModel: AddCardViewModel = remember { AddCardViewModel() },
+    onBackPressed: () -> Unit,
+    onCardSaved: (CardUiModel) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-                onBackClick = { activity.finish() },
+                onBackClick = onBackPressed,
                 onSaveClick = {
                     viewModel.validateAll()
                     if (!viewModel.showValidationError) {
@@ -50,12 +49,7 @@ fun AddCardScreen(
                                 owner = viewModel.cardOwner ?: CardOwner(""),
                                 password = viewModel.password ?: Password(""),
                             ).toPresentation()
-                        val resultIntent =
-                            Intent().apply {
-                                putExtra("new_card", cardUiModel)
-                            }
-                        activity.setResult(Activity.RESULT_OK, resultIntent)
-                        activity.finish()
+                        onCardSaved(cardUiModel)
                     }
                 },
             )
@@ -87,28 +81,28 @@ fun AddCardScreen(
 
             CardNumberInputField(
                 cardNumber = viewModel.cardNumber,
-                onCardNumberChange = { viewModel.onCardNumberChange(it) },
+                onCardNumberChange = viewModel::onCardNumberChange,
                 modifier = Modifier.fillMaxWidth(),
                 showValidationError = viewModel.showValidationError,
             )
 
             ExpiredInputField(
                 expired = viewModel.expired,
-                onExpiredChange = { viewModel.onExpiredChange(it) },
+                onExpiredChange = viewModel::onExpiredChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = viewModel.showValidationError,
             )
 
             CardOwnerInputField(
                 cardOwner = viewModel.cardOwner,
-                onOwnerChange = { viewModel.onCardOwnerChange(it) },
+                onOwnerChange = viewModel::onCardOwnerChange,
                 modifier = Modifier.fillMaxWidth(),
                 showValidationError = viewModel.showValidationError,
             )
 
             PasswordInputField(
                 password = viewModel.password,
-                onPasswordChange = { viewModel.onPasswordChange(it) },
+                onPasswordChange = viewModel::onPasswordChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = viewModel.showValidationError,
             )
@@ -121,7 +115,8 @@ fun AddCardScreen(
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
         AddCardScreen(
-            activity = AddCardActivity(),
+            onBackPressed = {},
+            onCardSaved = {},
         )
     }
 }
