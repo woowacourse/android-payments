@@ -59,7 +59,7 @@ fun CardListScreen(
                 PaymentCard(card = card)
             }
             if (cards.size <= 1) {
-                AddPaymentCard()
+                AddPaymentCard(onAddClick = onAddClick)
             }
         }
     }
