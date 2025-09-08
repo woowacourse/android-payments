@@ -1,5 +1,7 @@
 package woowacourse.payments.ui
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,11 +16,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.model.Card
+import woowacourse.payments.model.EXTRA_CARD
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
@@ -28,6 +33,8 @@ import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
 @Composable
 fun AddPaymentCardScreen() {
+    val context = LocalContext.current
+
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var expiry by rememberSaveable { mutableStateOf("") }
     var owner by rememberSaveable { mutableStateOf("") }
@@ -37,8 +44,14 @@ fun AddPaymentCardScreen() {
         topBar = {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
-                onBackClick = { },
-                onSaveClick = { },
+                onBackClick = { (context as? Activity)?.finish() },
+                onSaveClick = {
+                    val card = Card(cardNumber = cardNumber, date = expiry, owner = owner)
+                    (context as? Activity)?.apply {
+                        setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_CARD, card))
+                        finish()
+                    }
+                },
             )
         },
     ) { innerPadding ->
