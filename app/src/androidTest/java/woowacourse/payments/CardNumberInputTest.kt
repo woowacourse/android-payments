@@ -56,13 +56,10 @@ class CardNumberInputTest {
 
     @Test
     fun 카드_번호를_입력하면_4글자_기준으로_기호가_삽입된다() {
-        // given
-        composeTestRule.setContent {
-            CardNumberInputField(
-                cardNumber = CardNumber("1234567887654321"),
-                onCardNumberChange = { },
-            )
-        }
+        // when
+        composeTestRule
+            .onNodeWithText("카드 번호")
+            .performTextInput("1234567887654321")
 
         // then
         composeTestRule
