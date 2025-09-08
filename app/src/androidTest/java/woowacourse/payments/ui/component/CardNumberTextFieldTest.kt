@@ -23,11 +23,11 @@ class CardNumberTextFieldTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            var cardNumber by remember { mutableStateOf("") }
+            var cardNumber by remember { mutableStateOf(CardNumberUiModel("")) }
             CardNumberTextField(
                 cardNumber = cardNumber,
                 onCardNumberChanged = { newValue -> cardNumber = newValue },
-                modifier = Modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
@@ -35,7 +35,7 @@ class CardNumberTextFieldTest {
     @Test
     fun `카드_번호는_숫자만_입력_가능해야_한다`() {
         // given
-        val textField = composeTestRule.onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
 
         // when
         textField.performTextInput("1")
@@ -44,7 +44,7 @@ class CardNumberTextFieldTest {
 
         // then
         composeTestRule
-            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
             .assertTextEquals("12")
     }
 
@@ -52,10 +52,10 @@ class CardNumberTextFieldTest {
     fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
         // given
         val textField =
-            composeTestRule.onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+            composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
 
         // when
-        textField.performTextInput("1".repeat(17))
+        repeat(17) { textField.performTextInput("1") }
 
         // then
         textField.assertTextEquals("1111 - 1111 - 1111 - 1111")
@@ -65,7 +65,7 @@ class CardNumberTextFieldTest {
     fun `카드_번호는_4자리가_될_때_마다_대시_기호가_붙는다`() {
         // given
         val textField =
-            composeTestRule.onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+            composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
         val testCases =
             listOf(
                 "1111" to "1111",
@@ -91,6 +91,6 @@ class CardNumberTextFieldTest {
     }
 
     companion object {
-        private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
+        private const val TEST_TAG = "CardNumberTextField"
     }
 }

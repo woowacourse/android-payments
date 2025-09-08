@@ -24,7 +24,7 @@ class CardExpirationDateTextFieldTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel("")) }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
@@ -64,35 +64,38 @@ class CardExpirationDateTextFieldTest {
 
     @Test
     fun `만료일은_3자리가_될_때_슬래시_기호가_붙는다`() {
+        // given
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
+
         // when
-        composeTestRule
-            .onNodeWithTag(TEST_TAG)
+        textField
             .performTextInput("123")
 
         // then
-        composeTestRule
-            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("12 / 3")
+        textField.assertTextEquals("12 / 3")
     }
 
     @Test
-    fun `입력한_값이_만료된_일자라면_에러_메시지가_노출된다`() {
+    fun `입력한_값이_만료된_일자라면_에러_메시지가_보여진다`() {
+        // given
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
+
         // when
-        composeTestRule
-            .onNodeWithTag(TEST_TAG)
-            .performTextInput("0924")
+        textField.performTextInput("0924")
 
         // then
         composeTestRule
-            .onNodeWithText("유효하지 않은 만료일입니다.")
+            .onNodeWithText("만료된 카드는 등록할 수 없습니다.")
+            .assertIsDisplayed()
     }
 
     @Test
     fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
+        // given
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
+
         // when
-        composeTestRule
-            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-            .performClick()
+        textField.performClick()
 
         // then
         composeTestRule

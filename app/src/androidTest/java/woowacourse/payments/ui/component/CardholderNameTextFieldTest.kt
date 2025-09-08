@@ -24,11 +24,11 @@ class CardholderNameTextFieldTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            var cardholderName by remember { mutableStateOf("") }
+            var cardholderName by remember { mutableStateOf(CardholderNameUiModel("")) }
             CardholderNameTextField(
                 cardholderName = cardholderName,
                 onCardholderNameChanged = { newValue -> cardholderName = newValue },
-                modifier = Modifier.testTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG),
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
@@ -38,7 +38,7 @@ class CardholderNameTextFieldTest {
         // when
         val textField =
             composeTestRule.onNodeWithTag(
-                CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG,
+                TEST_TAG,
                 useUnmergedTree = true,
             )
 
@@ -57,7 +57,7 @@ class CardholderNameTextFieldTest {
         // given
         val textField =
             composeTestRule
-                .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+                .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
 
         // when
         textField.performTextInput("C".repeat(30))
@@ -71,7 +71,7 @@ class CardholderNameTextFieldTest {
     fun `카드_소유자_이름의_길이가_표시된다`() {
         // when
         composeTestRule
-            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
             .performTextInput("ABCDE")
 
         // then
@@ -84,7 +84,7 @@ class CardholderNameTextFieldTest {
     fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
         // when
         composeTestRule
-            .onNodeWithTag(CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
+            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
             .performClick()
 
         // then
@@ -94,6 +94,6 @@ class CardholderNameTextFieldTest {
     }
 
     companion object {
-        private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField"
+        private const val TEST_TAG = "CardholderNameTextField"
     }
 }
