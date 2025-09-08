@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
 
@@ -23,7 +24,7 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 cards = emptyList(),
-                uiEvent = CardScreenUiEvent.Idle,
+                uiEvent = Event(CardScreenUiEvent.Idle),
                 onClickCard = {},
             )
         }
@@ -52,7 +53,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, CardScreenUiEvent.Idle, {})
+            CardsScreen(cards, Event(CardScreenUiEvent.Idle), {})
         }
 
         // then
@@ -95,7 +96,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, CardScreenUiEvent.Idle, {})
+            CardsScreen(cards, Event(CardScreenUiEvent.Idle), {})
         }
 
         // then
@@ -125,7 +126,10 @@ class CardsScreenTest {
         // given
         var clickedType: CardType? = null
         composeTestRule.setContent {
-            CardsScreen(emptyList(), CardScreenUiEvent.Idle, onClickCard = { clickedType = it })
+            CardsScreen(
+                emptyList(),
+                Event(CardScreenUiEvent.Idle),
+                onClickCard = { clickedType = it })
         }
 
         // when
