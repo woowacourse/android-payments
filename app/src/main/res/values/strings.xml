@@ -25,5 +25,9 @@
     <string name="icon_save_content_description">완료</string>
 
     <!-- card_registration_screen -->
-    <string name="card_registration_screen_registration_card_success">추가 완료</string>
+    <string name="card_registration_screen_card_registered_message">카드가 추가되었습니다</string>
+
+    <!-- cards_screen_tob_app_bar -->
+    <string name="cards_screen_top_app_bar_title">Payments</string>
+    <string name="cards_screen_top_app_bar_registration_button_text">추가</string>
 </resources>
