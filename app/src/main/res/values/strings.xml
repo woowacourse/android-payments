@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">android-payments</string>
 
+    <!--    PaymentTopBar-->
+    <string name="payment_top_bar_title">Payments</string>
+
     <!--    NewCardTopBar-->
     <string name="new_card_top_bar_title">카드 추가</string>
     <string name="back_content_description">뒤로 가기</string>
@@ -22,5 +25,8 @@
     <!--    PasswordField-->
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
+
+    <!--    PaymentScreen-->
+    <string name="payment_add_new_card_prompt">새로운 카드를 등록해주세요</string>
 
 </resources>

@@ -45,6 +45,7 @@ fun AddCardScreen() {
             Spacer(Modifier.height(14.dp))
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
+                cardInfo = null,
             )
 
             Spacer(Modifier.height(40.dp))

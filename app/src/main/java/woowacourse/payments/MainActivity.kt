@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                PaymentCard()
+                PaymentCard(cardInfo = null)
             }
         }
     }
