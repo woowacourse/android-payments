@@ -12,6 +12,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,19 +38,19 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
     val focusManager = LocalFocusManager.current
     val snackBarState = remember { SnackbarHostState() }
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
-
+    val isRegistrableCard by remember {
+        derivedStateOf { uiState.isRegistrable(paymentCardValidator) }
+    }
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
     val navigatePreviousMessage = stringResource(R.string.common_navigate_previous)
     val registerCardMessage =
         stringResource(R.string.card_registration_screen_registration_card_success)
 
-    uiState = uiState.copy(isRegistrableCard = uiState.isRegistrable(paymentCardValidator))
-
-    LaunchedEffect(uiState.snackbarMessage) {
-        if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
+    LaunchedEffect(uiState.snackBarMessage) {
+        if (uiState.snackBarMessage.isNullOrBlank()) return@LaunchedEffect
         scope.launch {
-            snackBarState.showSnackbar(uiState.snackbarMessage.orEmpty())
-            uiState = uiState.copy(snackbarMessage = null)
+            snackBarState.showSnackbar(uiState.snackBarMessage.orEmpty())
+            uiState = uiState.copy(snackBarMessage = null)
         }
     }
 
@@ -57,12 +58,12 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
         snackbarHost = { SnackbarHost(hostState = snackBarState) },
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = { uiState = uiState.copy(snackbarMessage = navigatePreviousMessage) },
+                onBackClick = { uiState = uiState.copy(snackBarMessage = navigatePreviousMessage) },
                 onSaveClick = {
                     focusManager.clearFocus()
-                    uiState = uiState.copy(snackbarMessage = registerCardMessage)
+                    uiState = uiState.copy(snackBarMessage = registerCardMessage)
                 },
-                isSaveButtonEnabled = uiState.isRegistrableCard,
+                isSaveButtonEnabled = isRegistrableCard,
             )
         },
     ) { innerPadding ->

@@ -10,6 +10,5 @@ data class CardRegistrationScreenUiState(
     val cardExpirationDateErrorMessage: String? = null,
     val cardholderName: String = "",
     val cardPassword: String = "",
-    val isRegistrableCard: Boolean = false,
-    val snackbarMessage: String? = null,
+    val snackBarMessage: String? = null,
 ) : Parcelable
