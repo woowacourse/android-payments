@@ -30,7 +30,6 @@ fun CardExpiryDate(
         placeholder = {
             Text(
                 text = stringResource(R.string.card_expire_date_placeholder),
-                color = Grey10,
             )
         },
         visualTransformation = CardExpiryDateVisualTransformation(),
