@@ -35,7 +35,7 @@ import woowacourse.payments.domain.PaymentCardValidator
 fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
-    val snackbarState = remember { SnackbarHostState() }
+    val snackBarState = remember { SnackbarHostState() }
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
@@ -48,13 +48,13 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
     LaunchedEffect(uiState.snackbarMessage) {
         if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
         scope.launch {
-            snackbarState.showSnackbar(uiState.snackbarMessage.orEmpty())
+            snackBarState.showSnackbar(uiState.snackbarMessage.orEmpty())
             uiState = uiState.copy(snackbarMessage = null)
         }
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState) },
+        snackbarHost = { SnackbarHost(hostState = snackBarState) },
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = { uiState = uiState.copy(snackbarMessage = navigatePreviousMessage) },
