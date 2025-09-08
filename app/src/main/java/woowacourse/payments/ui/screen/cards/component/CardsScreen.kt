@@ -42,10 +42,11 @@ fun CardsScreen(
         },
     ) { paddingValues: PaddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(top = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(top = 16.dp),
         ) {
             when (val state = cardsUiState) {
                 CardsUiState.Empty -> {

@@ -52,10 +52,11 @@ fun ExpiredDateTextField(
             }
         },
         isError = errorMessage != null,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next,
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
         keyboardActions = KeyboardActions(onNext = onKeyboardActionClick),
         visualTransformation = ExpiredDateVisualTransformation(maxInputLength = EXPIRED_DATE_LENGTH_MAX),
     )

@@ -58,10 +58,11 @@ fun CardInfo(
 @Composable
 private fun CardInfoPreview() {
     CardInfo(
-        card = CardUiModel(
-            "1234567812345678",
-            "0925",
-            "INHYEOP LEE",
-        )
+        card =
+            CardUiModel(
+                "1234567812345678",
+                "0925",
+                "INHYEOP LEE",
+            ),
     )
 }

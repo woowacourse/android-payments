@@ -34,7 +34,7 @@ fun CardsTopBar(
                     )
                 }
             }
-        }
+        },
     )
 }
 

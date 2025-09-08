@@ -26,19 +26,21 @@ class CardsActivity : ComponentActivity() {
         setContent {
             val cards = rememberSaveable { mutableStateListOf<CardUiModel>() }
             val context = LocalContext.current
-            val launcher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartActivityForResult()
-            ) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
-                    card?.let { card -> cards.add(card) }
-                    Toast.makeText(
-                        context,
-                        R.string.cards_card_addition_success,
-                        Toast.LENGTH_SHORT
-                    ).show()
+            val launcher =
+                rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.StartActivityForResult(),
+                ) { result ->
+                    if (result.resultCode == RESULT_OK) {
+                        val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
+                        card?.let { card -> cards.add(card) }
+                        Toast
+                            .makeText(
+                                context,
+                                R.string.cards_card_addition_success,
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    }
                 }
-            }
             AndroidpaymentsTheme {
                 CardsScreen(
                     onAddClick = {

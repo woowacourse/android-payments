@@ -13,12 +13,13 @@ import woowacourse.payments.ui.theme.Yellow80
 @Composable
 fun CardChip(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .size(width = 40.dp, height = 26.dp)
-            .background(
-                color = Yellow80,
-                shape = RoundedCornerShape(4.dp),
-            ),
+        modifier =
+            modifier
+                .size(width = 40.dp, height = 26.dp)
+                .background(
+                    color = Yellow80,
+                    shape = RoundedCornerShape(4.dp),
+                ),
     )
 }
 

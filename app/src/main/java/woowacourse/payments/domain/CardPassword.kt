@@ -1,7 +1,9 @@
 package woowacourse.payments.domain
 
 @JvmInline
-value class CardPassword(val value: String) {
+value class CardPassword(
+    val value: String,
+) {
     val isValid: Boolean
         get() = value.length == PASSWORD_LENGTH
 

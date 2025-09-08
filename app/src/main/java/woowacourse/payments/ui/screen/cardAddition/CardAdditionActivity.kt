@@ -17,7 +17,7 @@ class CardAdditionActivity : ComponentActivity() {
         setContent {
             CardAdditionScreen(
                 onBackClick = { finish() },
-                onSaveClick = { card -> navigateToCards(card) }
+                onSaveClick = { card -> navigateToCards(card) },
             )
         }
     }
@@ -29,7 +29,6 @@ class CardAdditionActivity : ComponentActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent =
-            Intent(context, CardAdditionActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, CardAdditionActivity::class.java)
     }
 }

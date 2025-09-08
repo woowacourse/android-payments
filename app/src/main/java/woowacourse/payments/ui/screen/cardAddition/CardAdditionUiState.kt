@@ -22,20 +22,22 @@ data class CardAdditionUiState(
         newExpiredDate: String? = null,
         newOwnerName: String? = null,
         newPassword: String? = null,
-    ): CardAdditionUiState = copy(
-        cardNumber = newCardNumber?.let { CardNumber(it) } ?: cardNumber,
-        expiredDate = newExpiredDate?.let { ExpiredDate(it) } ?: expiredDate,
-        ownerName = newOwnerName ?: ownerName,
-        password = newPassword?.let { CardPassword(it) } ?: password,
-    )
+    ): CardAdditionUiState =
+        copy(
+            cardNumber = newCardNumber?.let { CardNumber(it) } ?: cardNumber,
+            expiredDate = newExpiredDate?.let { ExpiredDate(it) } ?: expiredDate,
+            ownerName = newOwnerName ?: ownerName,
+            password = newPassword?.let { CardPassword(it) } ?: password,
+        )
 
     companion object {
-        val EMPTY_CARD = CardAdditionUiState(
-            cardNumber = CardNumber(""),
-            expiredDate = ExpiredDate(""),
-            ownerName = "",
-            password = CardPassword(""),
-        )
+        val EMPTY_CARD =
+            CardAdditionUiState(
+                cardNumber = CardNumber(""),
+                expiredDate = ExpiredDate(""),
+                ownerName = "",
+                password = CardPassword(""),
+            )
     }
 }
 

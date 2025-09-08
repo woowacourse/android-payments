@@ -26,13 +26,14 @@ fun AddCardButton(
         cardContent = {
             Text(
                 text = stringResource(R.string.cards_card_addition_btn),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(Alignment.Center),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.Center),
                 color = Gray40,
                 fontSize = 34.sp,
             )
-        }
+        },
     )
 }
 

@@ -48,10 +48,11 @@ fun CardNumberTextField(
                 color = Color.Gray,
             )
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
         keyboardActions = KeyboardActions(onNext = onKeyboardActionClick),
         visualTransformation = CardNumberVisualTransformation(maxInputLength = CARD_NUMBER_LENGTH_MAX),
     )

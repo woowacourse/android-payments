@@ -20,7 +20,8 @@ data class CardUiModel(
     }
 
     fun formatExpiredDate(): String =
-        expiredDate.filter(::isDigit)
+        expiredDate
+            .filter(::isDigit)
             .chunked(CARD_DATE_GROUP_SIZE)
             .joinToString(CARD_DATE_DELIMITER)
 

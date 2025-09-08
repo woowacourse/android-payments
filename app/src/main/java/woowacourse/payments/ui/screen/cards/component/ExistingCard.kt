@@ -26,16 +26,17 @@ fun ExistingCard(
         backgroundColor = Gray20,
         cardContent = {
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(16.dp),
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 CardChip(modifier = Modifier.align(Alignment.Start))
                 Spacer(modifier = Modifier.height(8.dp))
                 CardInfo(card)
             }
-        }
+        },
     )
 }
 
@@ -43,10 +44,11 @@ fun ExistingCard(
 @Composable
 private fun ExistingCardPreview() {
     ExistingCard(
-        card = CardUiModel(
-            number = "1234567812345678",
-            expiredDate = "0925",
-            ownerName = "INHYEOP LEE",
-        )
+        card =
+            CardUiModel(
+                number = "1234567812345678",
+                expiredDate = "0925",
+                ownerName = "INHYEOP LEE",
+            ),
     )
 }

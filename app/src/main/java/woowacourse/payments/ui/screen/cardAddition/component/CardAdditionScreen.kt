@@ -83,13 +83,20 @@ fun CardAdditionScreen(
                     cardAdditionUiState = cardAdditionUiState.update(newExpiredDate = newDate)
                 },
                 modifier = Modifier.padding(top = 18.dp),
-                errorMessage = if (cardAdditionUiState.isDateError) stringResource(
-                    R.string.expired_date_error
-                ) else null,
+                errorMessage =
+                    if (cardAdditionUiState.isDateError) {
+                        stringResource(
+                            R.string.expired_date_error,
+                        )
+                    } else {
+                        null
+                    },
                 onComplete = {
-                    if (cardAdditionUiState.expiredDate.isValid) focusManager.moveFocus(
-                        FocusDirection.Next
-                    )
+                    if (cardAdditionUiState.expiredDate.isValid) {
+                        focusManager.moveFocus(
+                            FocusDirection.Next,
+                        )
+                    }
                 },
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )

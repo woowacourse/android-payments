@@ -37,10 +37,11 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     PaymentCard(
-        modifier = Modifier
-            .background(
-                color = Color.Black,
-                shape = RoundedCornerShape(5.dp),
-            ),
+        modifier =
+            Modifier
+                .background(
+                    color = Color.Black,
+                    shape = RoundedCornerShape(5.dp),
+                ),
     )
 }
