@@ -22,12 +22,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.CardAdditionUiStateSaver
-import woowacourse.payments.ui.common.CardChip
+import woowacourse.payments.ui.common.component.CardChip
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
+import woowacourse.payments.ui.screen.cardAddition.toUiModel
 import woowacourse.payments.ui.theme.Gray20
 
 @Composable
-fun CardAdditionScreen(modifier: Modifier = Modifier) {
+fun CardAdditionScreen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {},
+    onSaveClick: (CardUiModel) -> Unit = {},
+) {
     var cardAdditionUiState by rememberSaveable(stateSaver = CardAdditionUiStateSaver) {
         mutableStateOf(CardAdditionUiState.EMPTY_CARD)
     }
@@ -38,8 +44,8 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
         modifier = modifier,
         topBar = {
             CardAdditionTopBar(
-                onBackClick = {},
-                onSaveClick = {},
+                onBackClick = onBackClick,
+                onSaveClick = { onSaveClick(cardAdditionUiState.toUiModel()) },
                 isCompletable = isCompletable.value,
             )
         },

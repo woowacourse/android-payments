@@ -3,6 +3,7 @@ package woowacourse.payments.ui.screen.cardAddition
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.model.CardUiModel
 
 data class CardAdditionUiState(
     val cardNumber: CardNumber,
@@ -37,3 +38,10 @@ data class CardAdditionUiState(
         )
     }
 }
+
+fun CardAdditionUiState.toUiModel(): CardUiModel =
+    CardUiModel(
+        number = cardNumber.value,
+        expiredDate = expiredDate.value,
+        ownerName = ownerName,
+    )
