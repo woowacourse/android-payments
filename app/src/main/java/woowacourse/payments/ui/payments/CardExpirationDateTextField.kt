@@ -33,7 +33,7 @@ fun CardExpirationDateTextField(
     val isError = errorMessage != null
 
     if (cardExpirationDate.length == maxLength) {
-        if (isValidYearMonth(cardExpirationDate)) {
+        if (!isValidYearMonth(cardExpirationDate)) {
             onErrorMessageChanged(
                 stringResource(R.string.card_expiration_date_text_field_invalid_format),
             )
@@ -76,7 +76,7 @@ fun CardExpirationDateTextField(
 private fun isValidYearMonth(cardExpirationDate: String): Boolean {
     val month = cardExpirationDate.take(2).toInt()
     val year = CENTURY_BASE + cardExpirationDate.takeLast(2).toInt()
-    return runCatching { YearMonth.of(year, month) }.isFailure
+    return runCatching { YearMonth.of(year, month) }.isSuccess
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
