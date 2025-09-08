@@ -62,7 +62,7 @@ fun CardsScreen(paymentCards: List<Card>) {
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
-            if (cards.size == 1) {
+            if (cards.size <= 1) {
                 EmptyCard()
             }
         }

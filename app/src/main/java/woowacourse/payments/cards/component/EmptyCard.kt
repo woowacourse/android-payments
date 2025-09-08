@@ -33,7 +33,8 @@ fun EmptyCard(modifier: Modifier = Modifier) {
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.ic_plus),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            tint = Color.Black
         )
     }
 }
