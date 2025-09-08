@@ -85,6 +85,6 @@ fun NewCardScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardScreenPreview() {
+private fun NewCardScreenPreview() {
     NewCardScreen()
 }

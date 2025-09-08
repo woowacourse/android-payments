@@ -41,7 +41,7 @@ fun CardExpiryDate(
 
 @Composable
 @Preview(showBackground = true)
-fun CardExpiryDatePreview() {
+private fun CardExpiryDatePreview() {
     CardExpiryDate(
         value = "",
         onValueChange = {}

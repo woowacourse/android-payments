@@ -46,7 +46,7 @@ fun CardHolderName(
 
 @Composable
 @Preview(showBackground = true)
-fun CardHolderNamePreview() {
+private fun CardHolderNamePreview() {
     CardHolderName(
         value = "",
         onValueChange = {}

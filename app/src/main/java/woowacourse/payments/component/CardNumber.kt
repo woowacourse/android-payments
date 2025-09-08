@@ -38,7 +38,7 @@ fun CardNumber(
 
 @Preview
 @Composable
-fun CardNumberPreview() {
+private fun CardNumberPreview() {
     CardNumber(
         value = "",
         onValueChange = {}

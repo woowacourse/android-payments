@@ -37,7 +37,7 @@ fun CardPassword(
 
 @Composable
 @Preview
-fun CardPasswordPreview() {
+private fun CardPasswordPreview() {
     CardPassword(
         value = "",
         onValueChange = {}
