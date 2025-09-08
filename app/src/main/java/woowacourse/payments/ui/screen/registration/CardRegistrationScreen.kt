@@ -17,15 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.component.CardExpirationDateTextField
+import woowacourse.payments.ui.component.CardExpirationDateUiModel
 import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardNumberUiModel
 import woowacourse.payments.ui.component.CardPasswordTextField
+import woowacourse.payments.ui.component.CardPasswordUiModel
 import woowacourse.payments.ui.component.CardholderNameTextField
+import woowacourse.payments.ui.component.CardholderNameUiModel
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -73,10 +74,10 @@ fun CardRegistrationScreen(viewModel: CardRegistrationScreenViewModel = remember
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
-    onCardNumberChanged: (String) -> Unit,
-    onCardExpirationDateChanged: (String) -> Unit,
-    onCardholderNameChanged: (String) -> Unit,
-    onCardPasswordChanged: (String) -> Unit,
+    onCardNumberChanged: (CardNumberUiModel) -> Unit,
+    onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
+    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
+    onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -96,13 +97,6 @@ private fun CardRegistrationScreenContent(
             cardNumber = uiState.cardNumber,
             onCardNumberChanged = onCardNumberChanged,
             modifier = Modifier.fillMaxWidth(),
-            errorMessage =
-                when (uiState.cardNumberValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_number_invalid)
-
-                    else -> null
-                },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -110,13 +104,6 @@ private fun CardRegistrationScreenContent(
         CardExpirationDateTextField(
             cardExpirationDate = uiState.cardExpirationDate,
             onCardExpirationDateChanged = onCardExpirationDateChanged,
-            errorMessage =
-                when (uiState.cardExpirationDateValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_expired)
-
-                    else -> null
-                },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -125,13 +112,6 @@ private fun CardRegistrationScreenContent(
             cardholderName = uiState.cardholderName,
             onCardholderNameChanged = onCardholderNameChanged,
             modifier = Modifier.fillMaxWidth(),
-            errorMessage =
-                when (uiState.cardholderNameValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_cardholder_name_invalid)
-
-                    else -> null
-                },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -139,13 +119,6 @@ private fun CardRegistrationScreenContent(
         CardPasswordTextField(
             cardPassword = uiState.cardPassword,
             onCardPasswordChanged = onCardPasswordChanged,
-            errorMessage =
-                when (uiState.cardPasswordValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_password_invalid)
-
-                    else -> null
-                },
         )
     }
 }
