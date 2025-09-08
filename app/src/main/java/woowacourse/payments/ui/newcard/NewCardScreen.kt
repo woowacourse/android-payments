@@ -34,6 +34,7 @@ import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
+import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
@@ -100,23 +101,9 @@ fun NewCardScreen(
                 onValueChange = { cardExpirationDate = it },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
-            LimitedLengthOutlinedTextField(
+            CardHolderNameTextField(
                 value = cardHolderName,
                 onValueChange = { cardHolderName = it },
-                maxLength = CardHolderName.MAX_NAME_LENGTH,
-                label = { Text(stringResource(R.string.card_holder_name)) },
-                placeholder = { Text(stringResource(R.string.input_card_holder_name)) },
-                isError = cardHolderName.isNotEmpty() && runCatching { CardHolderName(cardHolderName) }.isFailure,
-                supportingText = {
-                    Text(
-                        "${cardHolderName.length}/${CardHolderName.MAX_NAME_LENGTH}",
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.End,
-                    )
-                },
-                inputFilter = {
-                    it.uppercase().filter { ch -> ch.isLetter() || ch.isWhitespace() }
-                },
                 modifier = Modifier.fillMaxWidth(),
             )
             LimitedLengthOutlinedTextField(
