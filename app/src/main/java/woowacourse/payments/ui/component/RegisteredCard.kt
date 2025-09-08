@@ -34,7 +34,8 @@ fun RegisteredCard(
         CardChip()
 
         Text(
-            text = card.formatCardNumber(
+            text = formatCardNumber(
+                card.number,
                 numberGroupSize,
                 numberSeparator,
                 numberMaskingChar
@@ -57,7 +58,8 @@ fun RegisteredCard(
             )
 
             Text(
-                text = card.formatExpireDate(
+                text = formatExpireDate(
+                    card.expireDate,
                     expireDateGroupSize,
                     expireDateSeparator
                 ),
@@ -67,6 +69,26 @@ fun RegisteredCard(
         }
     }
 }
+
+private fun formatCardNumber(
+    cardNumber: String,
+    groupSize: Int,
+    separator: String,
+    cardMaskChar: String
+): String {
+    val visibleLength = Card.CARD_NUMBER_MASKING_LENGTH
+    val visiblePart = cardNumber.take(visibleLength)
+    val maskedPart = cardMaskChar.repeat(cardNumber.length - visibleLength)
+    return (visiblePart + maskedPart)
+        .chunked(groupSize)
+        .joinToString(separator)
+}
+
+private fun formatExpireDate(
+    expireDate: String,
+    groupSize: Int,
+    separator: String
+): String = expireDate.chunked(groupSize).joinToString(separator)
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
