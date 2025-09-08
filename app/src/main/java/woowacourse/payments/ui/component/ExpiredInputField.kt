@@ -30,8 +30,7 @@ fun ExpiredInputField(
         value = expired?.value ?: "",
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(4)
-            val newExpired = Expired(filteredText)
-            onExpiredChange(newExpired)
+            onExpiredChange(if (filteredText.isEmpty()) null else Expired(filteredText))
         },
         modifier =
             modifier.semantics {
