@@ -32,7 +32,12 @@ fun CardListScreen(
     onAddClick: () -> Unit = {},
 ) {
     Scaffold(
-        topBar = { CardListTopBar(onAddClick = onAddClick) },
+        topBar = {
+            CardListTopBar(
+                onAddClick = onAddClick,
+                showAddButton = cards.size > 1,
+            )
+        },
     ) { innerPadding: PaddingValues ->
         Column(
             modifier =

@@ -12,24 +12,33 @@ import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardListTopBar(
-    onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onAddClick: () -> Unit = {},
+    showAddButton: Boolean = false,
 ) {
     CenterAlignedTopAppBar(
         title = {
             Text(text = "Payments")
         },
         actions = {
-            TextButton(onClick = { onAddClick() }) {
-                Text(text = "추가", color = Color.Black)
+            if (showAddButton) {
+                TextButton(onClick = { onAddClick() }) {
+                    Text(text = "추가", color = Color.Black)
+                }
             }
         },
         modifier = modifier,
     )
 }
 
-@Preview
+@Preview(name = "카드 추가 없음")
 @Composable
-private fun CardListTopBarPreview() {
-    CardListTopBar(onAddClick = {})
+private fun CardListTopBarPreview1() {
+    CardListTopBar(showAddButton = false)
+}
+
+@Preview("카드 추가 있음")
+@Composable
+private fun CardListTopBarPreview2() {
+    CardListTopBar(showAddButton = true)
 }
