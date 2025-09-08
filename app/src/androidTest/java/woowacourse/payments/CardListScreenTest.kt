@@ -81,6 +81,6 @@ class CardListScreenTest {
             composeTestRule.onNodeWithText(card.owner).assertIsDisplayed()
         }
         composeTestRule.onNodeWithContentDescription("카드 추가").assertDoesNotExist()
-        composeTestRule.onNodeWithContentDescription("TopBar 카드 추가 버튼").assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("카드 목록 상단 추가 텍스트").assertIsDisplayed()
     }
 }
