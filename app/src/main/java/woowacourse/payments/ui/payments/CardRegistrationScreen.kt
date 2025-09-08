@@ -28,12 +28,8 @@ import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.domain.DefaultPaymentCardValidator
+import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
-
-private const val CARD_EXPIRATION_DATE_LENGTH = 4
-private const val CARD_NUMBER_LENGTH = 16
-private const val CARD_PASSWORD_LENGTH = 4
-private const val CARDHOLDER_NAME_LENGTH = 30
 
 @Composable
 fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
@@ -105,7 +101,7 @@ private fun CardRegistrationScreenContent(
             modifier = Modifier.fillMaxWidth(),
             cardNumber = uiState.cardNumber,
             onCardNumberChanged = { newValue -> onUiStateChanged(uiState.copy(cardNumber = newValue)) },
-            maxLength = CARD_NUMBER_LENGTH,
+            maxLength = InputType.CardNumber.maxLength,
         )
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -127,7 +123,7 @@ private fun CardRegistrationScreenContent(
                 val newUiState = uiState.copy(cardExpirationDateErrorMessage = errorMsg)
                 onUiStateChanged(newUiState)
             },
-            maxLength = CARD_EXPIRATION_DATE_LENGTH,
+            maxLength = InputType.ExpiryDate.maxLength,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -136,7 +132,7 @@ private fun CardRegistrationScreenContent(
             modifier = Modifier.fillMaxWidth(),
             cardholderName = uiState.cardholderName,
             onCardholderNameChanged = { newValue -> onUiStateChanged(uiState.copy(cardholderName = newValue)) },
-            maxLength = CARDHOLDER_NAME_LENGTH,
+            maxLength = InputType.CardholderName.maxLength,
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -144,7 +140,7 @@ private fun CardRegistrationScreenContent(
         CardPasswordTextField(
             cardPassword = uiState.cardPassword,
             onCardPasswordChanged = { newValue -> onUiStateChanged(uiState.copy(cardPassword = newValue)) },
-            maxLength = CARD_PASSWORD_LENGTH,
+            maxLength = InputType.Password.maxLength,
         )
     }
 }

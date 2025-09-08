@@ -3,15 +3,19 @@ package woowacourse.payments.domain
 import java.time.YearMonth
 
 class DefaultPaymentCardValidator : PaymentCardValidator {
-    override fun validateCardNumber(cardNumber: String): Boolean = cardNumber.length == VALID_CARD_NUMBER_LENGTH
+
+    override fun validateCardNumber(cardNumber: String): Boolean =
+        cardNumber.length == InputType.CardNumber.maxLength
 
     override fun validateCardExpirationDate(cardExpirationDate: String): Boolean =
-        cardExpirationDate.length == VALID_CARD_EXPIRATION_DATE_LENGTH &&
-            isValidCardExpirationDate(cardExpirationDate)
+        cardExpirationDate.length == InputType.ExpiryDate.maxLength &&
+                isValidCardExpirationDate(cardExpirationDate)
 
-    override fun validateCardholderName(cardholderName: String): Boolean = true
+    override fun validateCardholderName(cardholderName: String): Boolean =
+        cardholderName.isNotBlank() && cardholderName.length <= InputType.CardholderName.maxLength
 
-    override fun validateCardPassword(cardPassword: String): Boolean = cardPassword.length == VALID_CARD_PASSWORD_LENGTH
+    override fun validateCardPassword(cardPassword: String): Boolean =
+        cardPassword.length == InputType.Password.maxLength
 
     private fun isValidCardExpirationDate(cardExpirationDate: String): Boolean {
         val month = cardExpirationDate.substring(0, 2).toIntOrNull() ?: return false
@@ -25,9 +29,6 @@ class DefaultPaymentCardValidator : PaymentCardValidator {
     }
 
     companion object {
-        private const val VALID_CARD_NUMBER_LENGTH = 16
-        private const val VALID_CARD_EXPIRATION_DATE_LENGTH = 4
-        private const val VALID_CARD_PASSWORD_LENGTH = 4
-        private const val CENTURY_OFFSET = 2_000
+        private const val CENTURY_OFFSET = 2000
     }
 }
