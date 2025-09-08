@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -46,7 +44,6 @@ fun CardListScreen(
     navigateToAddCard: () -> Unit,
 ) {
     val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
-    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -56,41 +53,68 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp)
-                    .verticalScroll(scrollState),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            when {
-                cards.isEmpty() -> {
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Text(
-                        text = "새로운 카드를 등록해주세요",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    AddCardBox(onClick = navigateToAddCard)
-                }
-
-                else -> {
-                    for (card in cards) {
-                        Spacer(modifier = Modifier.height(32.dp))
-                        PaymentCard(card = card)
-                    }
-                    if (cards.size == 1) {
-                        Spacer(modifier = Modifier.height(32.dp))
-                        AddCardBox(onClick = navigateToAddCard)
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(40.dp))
+        if (cards.isEmpty()) {
+            EmptyCardList(
+                modifier = Modifier.padding(innerPadding),
+                onAddCardClick = navigateToAddCard,
+            )
+        } else {
+            CardListContent(
+                cards = cards,
+                modifier = Modifier.padding(innerPadding),
+                onAddCardClick = navigateToAddCard,
+            )
         }
+    }
+}
+
+@Composable
+private fun EmptyCardList(
+    modifier: Modifier = Modifier,
+    onAddCardClick: () -> Unit,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            text = "새로운 카드를 등록해주세요",
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+        AddCardBox(onClick = onAddCardClick)
+    }
+}
+
+@Composable
+private fun CardListContent(
+    cards: List<CardUiModel>,
+    modifier: Modifier = Modifier,
+    onAddCardClick: () -> Unit,
+) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        for (card in cards) {
+            Spacer(modifier = Modifier.height(32.dp))
+            PaymentCard(card = card)
+        }
+
+        if (cards.size == 1) {
+            Spacer(modifier = Modifier.height(32.dp))
+            AddCardBox(onClick = onAddCardClick)
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
     }
 }
 
@@ -105,7 +129,7 @@ fun AddCardBox(onClick: () -> Unit) {
                 .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(Icons.Default.Add, contentDescription = "카드 추가 박스")
+        Icon(Icons.Default.Add, contentDescription = "카드 추가")
     }
 }
 
@@ -123,6 +147,32 @@ fun CardListScreenPreview() {
                 ).toPresentation(),
             ),
             navigateToAddCard = { },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyCardListPreview() {
+    AndroidpaymentsTheme {
+        EmptyCardList {}
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardListContentPreview() {
+    AndroidpaymentsTheme {
+        CardListContent(
+            listOf(
+                Card(
+                    number = CardNumber("1234567887654321"),
+                    expired = Expired("1221"),
+                    owner = CardOwner("aaaa"),
+                    password = Password("1234"),
+                ).toPresentation(),
+            ),
+            onAddCardClick = {},
         )
     }
 }
