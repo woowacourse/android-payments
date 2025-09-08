@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 
 @Composable
 fun CardRegistrationButton(
@@ -34,7 +36,7 @@ fun CardRegistrationButton(
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = null,
+            contentDescription = stringResource(R.string.cards_screen_registration_button_content_description),
             tint = Color.Black,
         )
     }
