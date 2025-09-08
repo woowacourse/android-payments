@@ -14,13 +14,19 @@ import woowacourse.payments.ui.theme.Grey10
 
 @Composable
 fun CardPassword(
+    modifier: Modifier = Modifier,
     value: String = "",
     onValueChange: (String) -> Unit = {},
-    modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= CARD_PASSWORD_LENGTH && it.all { it.isDigit() }) onValueChange(it) },
+        onValueChange = {
+            if (it.length <= CARD_PASSWORD_LENGTH && it.all { it.isDigit() }) {
+                onValueChange(
+                    it,
+                )
+            }
+        },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_password)) },
         placeholder = {
@@ -40,7 +46,7 @@ fun CardPassword(
 private fun CardPasswordPreview() {
     CardPassword(
         value = "1234",
-        onValueChange = {}
+        onValueChange = {},
     )
 }
 
