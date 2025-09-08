@@ -10,8 +10,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -71,14 +73,13 @@ fun AddCardScreen(
 
     val scrollState = rememberScrollState()
 
-    fun validateAll(): Boolean {
-        val isValid =
+    val isFormValid by remember(cardNumber, expired, cardOwner, password) {
+        derivedStateOf {
             (cardNumber?.isValid == true) &&
                 (expired?.isValid == true) &&
                 (cardOwner?.isValid != false) &&
                 (password?.isValid == true)
-        showValidationError = !isValid
-        return isValid
+        }
     }
 
     Scaffold(
@@ -87,7 +88,8 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    if (validateAll()) {
+                    showValidationError = !isFormValid
+                    if (isFormValid) {
                         val cardUiModel =
                             Card(
                                 number = cardNumber,
