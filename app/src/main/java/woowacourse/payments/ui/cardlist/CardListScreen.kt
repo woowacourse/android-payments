@@ -1,5 +1,9 @@
 package woowacourse.payments.ui.cardlist
 
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,17 +30,30 @@ import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.cardlist.components.CardListTopBar
 import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.ui.util.getParcelableCompat
 import java.time.YearMonth
 
 @Composable
 fun CardListScreen(
     cards: List<Card> = emptyList(),
-    onAddClick: () -> Unit = {},
+    onCardAdded: (Card) -> Unit = {},
 ) {
+    val context = LocalContext.current
+    val newCardLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data
+                    ?.getParcelableCompat<Card>("new_card")
+                    ?.let(onCardAdded)
+            }
+        }
+    val launchNewCard: () -> Unit = { newCardLauncher.launch(NewCardActivity.newIntent(context)) }
+
     Scaffold(
         topBar = {
             CardListTopBar(
-                onAddClick = onAddClick,
+                onAddClick = launchNewCard,
                 showAddButton = cards.size > 1,
             )
         },
@@ -60,7 +78,7 @@ fun CardListScreen(
                 PaymentCard(card = card)
             }
             if (cards.size <= 1) {
-                AddPaymentCard(onAddClick = onAddClick)
+                AddPaymentCard(onAddClick = launchNewCard)
             }
         }
     }
