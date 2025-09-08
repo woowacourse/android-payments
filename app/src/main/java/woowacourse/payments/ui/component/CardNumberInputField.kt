@@ -30,8 +30,7 @@ fun CardNumberInputField(
         value = cardNumber?.value ?: "",
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(16)
-            val newCardNumber = CardNumber(filteredText)
-            onCardNumberChange(newCardNumber)
+            onCardNumberChange(if (filteredText.isEmpty()) null else CardNumber(filteredText))
         },
         modifier =
             modifier.semantics {
