@@ -5,10 +5,8 @@
     <string name="new_card_save_icon_description">완료</string>
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>
-    <string name="card_number_delimiter">" - "</string>
     <string name="expiration_date_label">만료일</string>
     <string name="expiration_date_placeholder">MM / YY</string>
-    <string name="expiration_date_delimiter">" / "</string>
     <string name="cardholder_name_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="cardholder_name_entry_length">%1s / %2s</string>
