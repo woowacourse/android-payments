@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -47,6 +49,8 @@ fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+
     var cardNumber: String by remember { mutableStateOf("") }
     var cardExpirationDate: String by remember { mutableStateOf("") }
     var cardHolderName: String by remember { mutableStateOf("") }
@@ -66,7 +70,14 @@ fun NewCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { buildCardOrNull()?.let { onSaveClick() } },
+                onSaveClick = {
+                    buildCardOrNull()?.let {
+                        onSaveClick()
+                        Toast
+                            .makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                },
             )
         },
     ) { innerPadding: PaddingValues ->
