@@ -16,4 +16,9 @@
     <string name="card_number_separator">&#160;-&#160;</string>
     <string name="expiry_separator">&#160;/&#160;</string>
     <string name="supporting_text_owner">%d / %d</string>
+
+    <!-- PaymentCards-->
+    <string name="title_payment_cards">Payments</string>
+    <string name="add_payment_card_guide">새로운 카드를 등록해주세요</string>
+    <string name="desc_add">더하기</string>
 </resources>
