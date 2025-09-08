@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.components.AddCardImage
 import woowacourse.payments.ui.cards.components.CardItem
+import woowacourse.payments.ui.cards.components.CardsTopBar
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
     val context = LocalContext.current
@@ -51,27 +51,10 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.cards_top_bar_title),
-                    )
-                },
-                actions = {
-                    if (cardList.size > minimumCardCountForAddButton) {
-                        Text(
-                            modifier =
-                                Modifier
-                                    .clickable(true) {
-                                        val intent = NewCardActivity.newIntent(context)
-                                        cardAddLauncher.launch(intent)
-                                    }.padding(end = 20.dp),
-                            text = stringResource(R.string.cards_top_bar_add),
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp,
-                        )
-                    }
-                },
+            CardsTopBar(
+                cardList = cardList,
+                minimumCardCountForAddButton = minimumCardCountForAddButton,
+                cardAddLauncher = cardAddLauncher,
             )
         },
     ) { innerPadding ->
