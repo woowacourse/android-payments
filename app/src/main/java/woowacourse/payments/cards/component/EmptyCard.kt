@@ -1,6 +1,7 @@
 package woowacourse.payments.cards.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -19,7 +20,10 @@ import woowacourse.payments.R
 
 @Preview
 @Composable
-fun EmptyCard(modifier: Modifier = Modifier) {
+fun EmptyCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -28,13 +32,15 @@ fun EmptyCard(modifier: Modifier = Modifier) {
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                ).clickable {
+                    onClick()
+                },
     ) {
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.ic_plus),
             modifier = Modifier.fillMaxWidth(),
-            tint = Color.Black
+            tint = Color.Black,
         )
     }
 }
