@@ -14,7 +14,13 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                NewCardScreen()
+                NewCardScreen(
+                    onBackPress = { finish() },
+                    onSaved = { paymentCard ->
+                        setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, paymentCard))
+                        finish()
+                    },
+                )
             }
         }
     }

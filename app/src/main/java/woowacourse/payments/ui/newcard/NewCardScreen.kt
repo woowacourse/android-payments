@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.app.Activity.RESULT_OK
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,18 +24,18 @@ import woowacourse.payments.ui.model.CardNumberUiModel.Companion.CARD_NUMBER_LEN
 import woowacourse.payments.ui.model.ExpirationDateUiModel.Companion.EXPIRATION_DATE_LENGTH
 import woowacourse.payments.ui.model.PasswordUiModel.Companion.PASSWORD_LENGTH
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.NameTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.components.PasswordField
 import woowacourse.payments.ui.newcard.components.PaymentCardBox
-import woowacourse.payments.ui.util.extensions.getActivity
 
 @Composable
-fun NewCardScreen() {
-    val activity = LocalContext.current.getActivity()
+fun NewCardScreen(
+    onBackPress: () -> Unit = {},
+    onSaved: (PaymentCardUiModel) -> Unit = {},
+) {
     val context = LocalContext.current
     var cardNumber: String by rememberSaveable { mutableStateOf("") }
     var cardHolder: String by rememberSaveable { mutableStateOf("") }
@@ -48,24 +46,16 @@ fun NewCardScreen() {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-                onBackClick = { activity?.finish() },
+                onBackClick = { onBackPress() },
                 onSaveClick = {
                     runCatching {
-                        val paymentCard =
+                        onSaved(
                             PaymentCardUiModel(
                                 cardNumber = CardNumberUiModel(cardNumber),
                                 cardHolder = CardHolderUiModel(cardHolder),
                                 expirationDate = expirationDateUitState.expirationDate,
-                            )
-                        val resultIntent =
-                            Intent().apply {
-                                putExtra(
-                                    EXTRA_NEW_CARD,
-                                    paymentCard,
-                                )
-                            }
-                        activity?.setResult(RESULT_OK, resultIntent)
-                        activity?.finish()
+                            ),
+                        )
                         Toast.makeText(context, R.string.new_card_add_card_success, Toast.LENGTH_SHORT).show()
                     }.onFailure { e ->
                         Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
