@@ -1,10 +1,16 @@
 package woowacourse.payments.ui.addcard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -13,15 +19,23 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
             AndroidpaymentsTheme {
                 Scaffold(
                     topBar = {
-                        AddCardTopbar()
+                        AddCardTopbar(
+                            onBackClick = { finish() },
+                            onCheckedClick = { finish() }
+                        )
                     }
                 ) { padding ->
-                    AddCardScreen(padding)
+                    AddCardScreen(padding, cardInfo)
                 }
             }
         }
+    }
+
+    companion object {
+        fun getIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
     }
 }

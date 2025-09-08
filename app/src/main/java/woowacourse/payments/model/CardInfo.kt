@@ -33,7 +33,7 @@ data class CardInfo(
             val formattedOwnerName = formatOwnerName(ownerName)
             val formattedPassword = formatPassword(password)
             val parsedExpireDate = runCatching {
-                LocalDate.parse(formattedExpireDateString, DateTimeFormatter.ofPattern("MM/yy"))
+                LocalDate.parse("01$formattedExpireDateString", DateTimeFormatter.ofPattern("ddMMyy"))
             }.getOrNull()
 
             if (formattedCardNumber.length != CARD_NUMBER_MAX_SIZE) return null

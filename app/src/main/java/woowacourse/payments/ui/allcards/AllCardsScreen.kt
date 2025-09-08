@@ -1,6 +1,11 @@
 package woowacourse.payments.ui.allcards
 
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +29,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,15 +37,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
+
 @Composable
 fun AllCardsScreen(innerPadding: PaddingValues) {
     val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+        }
     Column(
         modifier = Modifier
             .padding(innerPadding)
@@ -49,7 +61,9 @@ fun AllCardsScreen(innerPadding: PaddingValues) {
         if (cards.isEmpty()) {
             NotifyToAddCard()
             Spacer(modifier = Modifier.height(32.dp))
-            PlusCard()
+            PlusCard(
+                launcher = launcher
+            )
         }
     }
 }
@@ -67,7 +81,10 @@ private fun NotifyToAddCard() {
 }
 
 @Composable
-private fun PlusCard() {
+private fun PlusCard(
+    launcher: ActivityResultLauncher<Intent>,
+) {
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .height(124.dp)
@@ -75,7 +92,13 @@ private fun PlusCard() {
             .background(
                 color = colorResource(id = R.color.payments_plus_card_background),
                 shape = RoundedCornerShape(5.dp),
-            ),
+            )
+            .clickable {
+                launcher.launch(
+                    AddCardActivity.getIntent(context)
+                )
+            }
+        ,
         contentAlignment = Alignment.Center,
     ) {
         Icon(

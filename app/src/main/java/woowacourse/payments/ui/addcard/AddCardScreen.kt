@@ -26,8 +26,7 @@ import woowacourse.payments.ui.addcard.component.PasswordTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardScreen(innerPadding: PaddingValues) {
-    var cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
+fun AddCardScreen(innerPadding: PaddingValues, cardInfo: CardInfoUiState) {
     Column(
         modifier = Modifier
             .padding(innerPadding)
@@ -74,7 +73,7 @@ private fun AddCardScreenPreview() {
                 AddCardTopbar()
             }
         ) {
-            AddCardScreen(it)
+            AddCardScreen(it, CardInfoUiState())
         }
     }
 }

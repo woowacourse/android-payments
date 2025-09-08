@@ -16,13 +16,16 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun AddCardTopbar() {
+fun AddCardTopbar(
+    onBackClick: () -> Unit = {},
+    onCheckedClick: () -> Unit = {}
+) {
     TopAppBar(
         title = {
             Text(text = stringResource(id = R.string.payments_topbar_add_card))
         },
         navigationIcon = {
-            IconButton(onClick = { }) {
+            IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(id = R.string.payments_topbar_back_icon_description)
@@ -30,7 +33,7 @@ fun AddCardTopbar() {
             }
         },
         actions = {
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { onCheckedClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(id = R.string.payments_topbar_checked_icon_description)
