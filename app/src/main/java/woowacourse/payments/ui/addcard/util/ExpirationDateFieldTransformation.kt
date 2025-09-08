@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-class ExpirationDateTransformation : VisualTransformation {
+class ExpirationDateFieldTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val cardNumberWithHyphens = text.chunked(2).joinToString("/")
         return TransformedText(

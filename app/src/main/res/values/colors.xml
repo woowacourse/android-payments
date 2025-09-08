@@ -9,8 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="payments_card_background">#FF333333</color>
+    <color name="payments_plus_card_background">#FFE5E5E5</color>
+    <color name="payments_plus_card_icon_color">#FF575757</color>
     <color name="payments_card_chip">#FFCBBA64</color>
     <color name="payments_placeholder_color">#FFAAAAAA</color>
-
-
 </resources>

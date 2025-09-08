@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.addcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -10,26 +10,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.CardInfoUiState
-import woowacourse.payments.ui.addcard.util.CardNumberTransformation
+import woowacourse.payments.ui.addcard.util.ExpirationDateFieldTransformation
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 
 @Composable
-fun CardNumberTextField(
+fun ExpireDateTextField(
     cardInfo: CardInfoUiState,
     modifier: Modifier = Modifier,
     ) {
     OutlinedTextField(
         modifier = modifier,
-        value = cardInfo.cardNumber,
+        singleLine = true,
+        value = cardInfo.expireDate,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         onValueChange = {
-            cardInfo.updateCardInfo(cardNumber = it)
+            cardInfo.updateCardInfo(expireDate = it)
         },
-        singleLine = true,
-        label = { Text(stringResource(R.string.addcard_card_number_label)) },
-        visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
-            placeholder = stringResource(R.string.addcard_card_number_placeholder),
+        isError = !cardInfo.isExpirationDateValid,
+        label = { Text(stringResource(R.string.addcard_expire_date_label)) },
+        supportingText = {
+            if (!cardInfo.isExpirationDateValid) {
+                Text(stringResource(R.string.addcard_expire_date_error))
+            }
+        },
+        visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
+            placeholder = stringResource(R.string.addcard_expire_date_placeholder),
             textColor = colorResource(R.color.payments_placeholder_color)
-        ) else CardNumberTransformation(),
+        ) else ExpirationDateFieldTransformation(),
     )
 }

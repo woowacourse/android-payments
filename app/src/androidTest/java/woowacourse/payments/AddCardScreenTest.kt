@@ -7,32 +7,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsFocused
 import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.assertTextEquals
-import androidx.compose.ui.test.hasText
 import org.junit.Rule
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.test.pressKey
-import androidx.lifecycle.viewmodel.CreationExtras.Companion.Key
-import org.junit.After
-import org.junit.Before
 import org.junit.Test
 import woowacourse.payments.model.CardInfo
-import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.CardInfoUiState
-import woowacourse.payments.ui.component.CardNumberTextField
-import woowacourse.payments.ui.component.ExpireDateTextField
-import woowacourse.payments.ui.component.OwnerNameTextField
-import woowacourse.payments.ui.component.PasswordTextField
+import woowacourse.payments.ui.addcard.component.CardNumberTextField
+import woowacourse.payments.ui.addcard.component.ExpireDateTextField
+import woowacourse.payments.ui.addcard.component.OwnerNameTextField
+import woowacourse.payments.ui.addcard.component.PasswordTextField
 
 @OptIn(ExperimentalTestApi::class)
 class AddCardScreenTest {
@@ -46,7 +36,7 @@ class AddCardScreenTest {
             var state by remember { mutableStateOf(CardInfoUiState(
                 _cardNumber = "1234123412341234"
             )) }
-            CardNumberTextField(Modifier, state)
+            CardNumberTextField(state, Modifier)
         }
         val rawCardNumber = "12341234123412345"
         val expected = CardInfo.formatCardNumber(rawCardNumber).chunked(4).joinToString("-")
@@ -67,7 +57,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            CardNumberTextField(Modifier, state)
+            CardNumberTextField(state, Modifier)
         }
 
         //when
@@ -93,7 +83,7 @@ class AddCardScreenTest {
                     )
                 )
             }
-            CardNumberTextField(Modifier, state)
+            CardNumberTextField(state, Modifier)
         }
 
         //when
@@ -115,7 +105,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            ExpireDateTextField(Modifier, state)
+            ExpireDateTextField(state, Modifier)
         }
         val rawExpireDate = "12345"
         val expected = CardInfo.formatExpireDate(rawExpireDate).chunked(2).joinToString("/")
@@ -137,7 +127,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            ExpireDateTextField(Modifier, state)
+            ExpireDateTextField(state, Modifier)
         }
         val rawExpireDate = "13"
         val isValid = CardInfo.checkIsValidMonth(rawExpireDate)
@@ -166,7 +156,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            ExpireDateTextField(Modifier, state)
+            ExpireDateTextField(state, Modifier)
         }
 
         //when
@@ -187,7 +177,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            OwnerNameTextField(Modifier, state)
+            OwnerNameTextField(state, Modifier)
         }
         val rawOwnerName = "12345678901234567890123456789012345678901234567890"
         val expected = CardInfo.formatOwnerName(rawOwnerName)
@@ -209,7 +199,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            OwnerNameTextField(Modifier, state)
+            OwnerNameTextField(state, Modifier)
         }
 
         //when
@@ -229,7 +219,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            PasswordTextField(Modifier, state)
+            PasswordTextField(state, Modifier)
         }
         val rawPassword = "1234a"
         val expected = CardInfo.formatPassword(rawPassword)
@@ -251,7 +241,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            PasswordTextField(Modifier, state)
+            PasswordTextField(state, Modifier)
         }
         val rawPassword = "1234567890"
         val expected = CardInfo.formatPassword(rawPassword)
@@ -272,7 +262,7 @@ class AddCardScreenTest {
         //given
         composeTestRule.setContent {
             var state by remember { mutableStateOf(CardInfoUiState()) }
-            PasswordTextField(Modifier, state)
+            PasswordTextField(state, Modifier)
         }
 
         //when
