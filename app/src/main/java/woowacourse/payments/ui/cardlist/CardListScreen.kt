@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.newcard.components.PaymentCard
+import woowacourse.payments.ui.components.PaymentCard
 
 @Composable
 fun CardListScreen(

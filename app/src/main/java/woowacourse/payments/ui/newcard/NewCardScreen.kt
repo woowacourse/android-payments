@@ -30,7 +30,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.newcard.components.PaymentCard
+import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
 @Composable
