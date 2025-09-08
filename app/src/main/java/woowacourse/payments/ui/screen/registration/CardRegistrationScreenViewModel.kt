@@ -3,42 +3,46 @@ package woowacourse.payments.ui.screen.registration
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.R
-import woowacourse.payments.ui.common.StringResWithParams
 import woowacourse.payments.ui.component.CardExpirationDateUiModel
 import woowacourse.payments.ui.component.CardNumberUiModel
 import woowacourse.payments.ui.component.CardPasswordUiModel
 import woowacourse.payments.ui.component.CardholderNameUiModel
+import woowacourse.payments.ui.component.PaymentCardUiModel
 
 class CardRegistrationScreenViewModel(
     initialUiState: CardRegistrationScreenUiState = CardRegistrationScreenUiState(),
 ) {
-    var uiState by mutableStateOf(initialUiState)
-        private set
+    private var _uiState by mutableStateOf(initialUiState)
+    val uiState: CardRegistrationScreenUiState get() = _uiState
 
-    var uiEvent by mutableStateOf<CardRegistrationScreenUiEvent?>(null)
-        private set
+    private var _uiEvent by mutableStateOf<CardRegistrationScreenUiEvent?>(null)
+    val uiEvent: CardRegistrationScreenUiEvent? get() = _uiEvent
 
     fun updateCardNumber(cardNumber: CardNumberUiModel) {
-        uiState = uiState.copy(cardNumber = cardNumber)
+        _uiState = _uiState.copy(cardNumber = cardNumber)
     }
 
     fun updateCardExpirationDate(cardExpirationDate: CardExpirationDateUiModel) {
-        uiState = uiState.copy(cardExpirationDate = cardExpirationDate)
+        _uiState = _uiState.copy(cardExpirationDate = cardExpirationDate)
     }
 
     fun updateCardholderName(cardholderName: CardholderNameUiModel) {
-        uiState = uiState.copy(cardholderName = cardholderName)
+        _uiState = _uiState.copy(cardholderName = cardholderName)
     }
 
     fun updateCardPassword(cardPassword: CardPasswordUiModel) {
-        uiState = uiState.copy(cardPassword = cardPassword)
+        _uiState = _uiState.copy(cardPassword = cardPassword)
     }
 
     fun registerCard() {
-        if (!uiState.isSaveButtonEnabled) return
-        val message =
-            StringResWithParams(R.string.card_registration_screen_registration_card_success)
-        uiEvent = CardRegistrationScreenUiEvent.ShowSnackbar(message)
+        if (!_uiState.isSaveButtonEnabled) return
+        _uiEvent = CardRegistrationScreenUiEvent.RegisteredCard(_uiState.toPaymentCard())
     }
+
+    private fun CardRegistrationScreenUiState.toPaymentCard() =
+        PaymentCardUiModel(
+            number = cardNumber,
+            expirationDate = cardExpirationDate,
+            cardholderName = cardholderName,
+        )
 }

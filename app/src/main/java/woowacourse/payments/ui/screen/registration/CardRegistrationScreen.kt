@@ -8,14 +8,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,30 +24,30 @@ import woowacourse.payments.ui.component.CardPasswordUiModel
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.CardholderNameUiModel
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen(viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel()) {
+fun CardRegistrationScreen(
+    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
+    onBackClick: () -> Unit,
+    onRegistrationComplete: (PaymentCardUiModel) -> Unit,
+) {
     val focusManager = LocalFocusManager.current
-    val snackbarState = remember { SnackbarHostState() }
-    val context = LocalContext.current
     val uiState = viewModel.uiState
     val uiEvent = viewModel.uiEvent
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
+            is CardRegistrationScreenUiEvent.RegisteredCard -> onRegistrationComplete(uiEvent.paymentCard)
             null -> Unit
-            is CardRegistrationScreenUiEvent.ShowSnackbar -> {
-                snackbarState.showSnackbar(uiEvent.message.asString(context))
-            }
         }
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = { },
+                onBackClick = onBackClick,
                 onSaveClick = {
                     focusManager.clearFocus()
                     viewModel.registerCard()
@@ -127,6 +123,9 @@ private fun CardRegistrationScreenContent(
 @Composable
 fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen()
+        CardRegistrationScreen(
+            onBackClick = {},
+            onRegistrationComplete = {},
+        )
     }
 }

@@ -11,7 +11,7 @@ data class CardholderNameUiModel(
 ) : Parcelable {
     init {
         require(cardholderName.length <= maxLength) { INVALID_CARDHOLDER_NAME_LENGTH_MESSAGE }
-        require(cardholderName.all { it.isLetter() }) { INVALID_CARDHOLDER_NAME_MESSAGE }
+        require(cardholderName.all { it.isLetter() || it.isWhitespace() }) { INVALID_CARDHOLDER_NAME_MESSAGE }
     }
 
     @IgnoredOnParcel

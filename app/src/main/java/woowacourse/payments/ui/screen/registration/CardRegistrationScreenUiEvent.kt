@@ -1,9 +1,9 @@
 package woowacourse.payments.ui.screen.registration
 
-import woowacourse.payments.ui.common.StringResWithParams
+import woowacourse.payments.ui.component.PaymentCardUiModel
 
 sealed interface CardRegistrationScreenUiEvent {
-    data class ShowSnackbar(
-        val message: StringResWithParams,
+    data class RegisteredCard(
+        val paymentCard: PaymentCardUiModel,
     ) : CardRegistrationScreenUiEvent
 }
