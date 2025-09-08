@@ -20,11 +20,13 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.NewCardActivity
+import woowacourse.payments.R
 import woowacourse.payments.cards.component.CardsTopBar
 import woowacourse.payments.cards.component.EmptyCard
 import woowacourse.payments.domain.Card
@@ -52,7 +54,9 @@ fun CardsScreen(paymentCards: List<Card>) {
 
                 if (card != null) {
                     cards += card
-                    Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.message_card_added),
+                        Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -80,7 +84,7 @@ fun CardsScreen(paymentCards: List<Card>) {
         ) {
             if (cards.isEmpty()) {
                 Text(
-                    "새로운 카드를 등록해주세요.",
+                    stringResource(R.string.text_no_card),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(top = 20.dp, bottom = 32.dp),
