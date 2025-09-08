@@ -1,20 +1,25 @@
 <resources>
     <string name="app_name">android-payments</string>
+
     <string name="new_card_title">카드 추가</string>
     <string name="new_card_back_icon_description">뒤로 가기</string>
     <string name="new_card_save_icon_description">완료</string>
+    <string name="new_card_failure_message">카드 정보를 다시 확인해주세요.</string>
+    <string name="new_card_success_message">카드가 추가되었습니다.</string>
+
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>
+    <string name="card_number_error_message">카드 번호는 숫자 16자입니다.</string>
+
     <string name="expiration_date_label">만료일</string>
     <string name="expiration_date_placeholder">MM / YY</string>
+    <string name="expiration_date_error_message">유효하지 않은 만료일입니다.</string>
+
     <string name="cardholder_name_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="cardholder_name_entry_length">%1s / %2s</string>
+
     <string name="passcode_label">비밀번호</string>
     <string name="passcode_placeholder">0000</string>
-    <string name="card_number_error_message">카드 번호는 숫자 16자입니다.</string>
-    <string name="expiration_date_error_message">유효하지 않은 만료일입니다.</string>
     <string name="passcode_error_message">비밀번호는 숫자 4자입니다.</string>
-    <string name="new_card_failure_message">카드 정보를 다시 확인해주세요.</string>
-    <string name="new_card_success_message">카드가 추가되었습니다.</string>
 </resources>
