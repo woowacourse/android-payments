@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -88,13 +88,13 @@ fun CardRegistrationScreen() {
 
 @Composable
 private fun CardRegistrationScreenContent(
-    modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
     onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
     onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
     onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
     onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =

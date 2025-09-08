@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,9 +25,9 @@ import woowacourse.payments.ui.model.CardholderNameUiModel
 
 @Composable
 fun CardholderNameTextField(
-    modifier: Modifier = Modifier,
     cardholderName: CardholderNameUiModel,
     onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier =

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -24,9 +24,9 @@ import woowacourse.payments.ui.model.CardPasswordUiModel
 
 @Composable
 fun CardPasswordTextField(
-    modifier: Modifier = Modifier,
     cardPassword: CardPasswordUiModel,
     onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.semantics { contentDescription = "비밀번호" },

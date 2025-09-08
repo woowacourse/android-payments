@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,11 +20,11 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 
 @Composable
 fun CardExpirationDateTextField(
-    modifier: Modifier = Modifier,
     cardExpirationDate: CardExpirationDateUiModel,
     onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
-    errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit,
+    modifier: Modifier = Modifier,
+    errorMessage: String? = null,
 ) {
     val isError = errorMessage != null
     if (cardExpirationDate.isError) onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))

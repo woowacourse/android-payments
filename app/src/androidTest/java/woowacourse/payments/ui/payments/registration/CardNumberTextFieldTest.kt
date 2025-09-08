@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +13,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.payments.CardNumberTextField
 
 class CardNumberTextFieldTest {
     @get:Rule
@@ -23,9 +22,12 @@ class CardNumberTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var cardNumber by remember { mutableStateOf(CardNumberUiModel("")) }
-            CardNumberTextField(cardNumber = cardNumber) { newValue ->
-                cardNumber = newValue
-            }
+            CardNumberTextField(
+                cardNumber = cardNumber,
+                onCardNumberChanged = { newValue ->
+                    cardNumber = newValue
+                },
+            )
         }
     }
 

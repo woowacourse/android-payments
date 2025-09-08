@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.payments.CardExpirationDateTextField
 
 class CardExpirationDateTextFieldTest {
     @get:Rule

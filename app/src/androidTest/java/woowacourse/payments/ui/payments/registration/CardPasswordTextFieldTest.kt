@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.payments.registration
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,7 +15,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.model.CardPasswordUiModel
-import woowacourse.payments.ui.payments.CardPasswordTextField
 
 class CardPasswordTextFieldTest {
     @get:Rule
@@ -25,9 +24,12 @@ class CardPasswordTextFieldTest {
     fun setup() {
         composeTestRule.setContent {
             var cardPassword by remember { mutableStateOf(CardPasswordUiModel("")) }
-            CardPasswordTextField(cardPassword = cardPassword) { newValue ->
-                cardPassword = newValue
-            }
+            CardPasswordTextField(
+                cardPassword = cardPassword,
+                onCardPasswordChanged = { newValue ->
+                    cardPassword = newValue
+                },
+            )
         }
     }
 
