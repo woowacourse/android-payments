@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
