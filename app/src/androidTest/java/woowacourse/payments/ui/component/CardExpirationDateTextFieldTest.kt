@@ -48,7 +48,7 @@ class CardExpirationDateTextFieldTest {
     }
 
     @Test
-    fun `만료일의_월이_1-12_사이가_아닌_경우_예외가_발생한다`() {
+    fun `만료일의_월이_1-12_사이가_아닌_경우_에러_메시지가_보여진다`() {
         // when
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)
         textField.performTextInput("1")
@@ -76,16 +76,15 @@ class CardExpirationDateTextFieldTest {
     }
 
     @Test
-    fun `만료일의_연도는_현재_연도_이후로_입력할_수_있다`() {
+    fun `입력한_값이_만료된_일자라면_에러_메시지가_노출된다`() {
         // when
         composeTestRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("0925")
+            .performTextInput("0924")
 
         // then
         composeTestRule
-            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("09 / 25")
+            .onNodeWithText("유효하지 않은 만료일입니다.")
     }
 
     @Test
