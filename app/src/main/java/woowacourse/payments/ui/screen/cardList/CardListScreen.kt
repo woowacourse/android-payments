@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.cardList
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -44,6 +47,7 @@ fun CardListScreen(
     navigateToAddCard: () -> Unit,
 ) {
     val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
+    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
@@ -62,6 +66,7 @@ fun CardListScreen(
             CardListContent(
                 cards = cards,
                 modifier = Modifier.padding(innerPadding),
+                state = scrollState,
                 onAddCardClick = navigateToAddCard,
             )
         }
@@ -95,13 +100,15 @@ private fun EmptyCardList(
 private fun CardListContent(
     cards: List<CardUiModel>,
     modifier: Modifier = Modifier,
+    state: ScrollState,
     onAddCardClick: () -> Unit,
 ) {
     Column(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .verticalScroll(state),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         for (card in cards) {
@@ -172,6 +179,7 @@ fun CardListContentPreview() {
                     password = Password("1234"),
                 ).toPresentation(),
             ),
+            state = rememberScrollState(),
             onAddCardClick = {},
         )
     }
