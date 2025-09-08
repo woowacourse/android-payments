@@ -20,4 +20,7 @@
     <!--  카드 목록  -->
     <string name="cards_top_bar_title">Payments</string>
     <string name="cards_top_bar_add_button">추가</string>
+    <string name="cards_card_addition_success">카드가 추가되었습니다</string>
+    <string name="cards_card_addition_description">새로운 카드를 등록해주세요</string>
+    <string name="cards_card_addition_btn">+</string>
 </resources>
