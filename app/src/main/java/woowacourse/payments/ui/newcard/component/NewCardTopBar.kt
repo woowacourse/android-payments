@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
 import android.widget.Toast
 import androidx.compose.material.icons.Icons
@@ -15,10 +15,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardAdditionTopBar(
+fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -37,8 +38,9 @@ fun CardAdditionTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick()
-                Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()}) {
+            IconButton(onClick = {
+                onSaveClick()
+            }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.content_description_icon_check),
@@ -51,6 +53,6 @@ fun CardAdditionTopBar(
 
 @Preview
 @Composable
-private fun CardAdditionTopBarPreview() {
-    CardAdditionTopBar(onBackClick = {}, onSaveClick = {})
+private fun NewCardTopBarPreview() {
+    NewCardTopBar(onBackClick = {}, onSaveClick = {})
 }

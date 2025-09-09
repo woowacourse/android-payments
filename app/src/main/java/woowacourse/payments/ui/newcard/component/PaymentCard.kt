@@ -1,7 +1,5 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.fontWeight
-import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -17,11 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.Card
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun PaymentCard(
-    card: PaymentCard? = null,
+    card: Card? = null,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -50,7 +49,12 @@ fun PaymentCard(
                     .padding(start = 14.dp, bottom = 32.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = "${card.cardNumber.take(4)} - ${card.cardNumber.substring(4, 9)} - **** - ****",
+                text = "${card.number.value.take(4)} - ${
+                    card.number.value.substring(
+                        4,
+                        8
+                    )
+                } - **** - ****",
                 color = Color.White,
             )
             Text(
@@ -59,7 +63,7 @@ fun PaymentCard(
                     .padding(start = 14.dp, bottom = 16.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = "${card.cardOwnerName}",
+                text = "${card.ownerName.value}",
                 color = Color.White
             )
             Text(
@@ -68,7 +72,7 @@ fun PaymentCard(
                     .padding(end = 14.dp, bottom = 16.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = "${card.expirationDate}",
+                text = "${card.expirationDate.value.format(DateTimeFormatter.ofPattern("MM/yy"))}",
                 color = Color.White
             )
         }
