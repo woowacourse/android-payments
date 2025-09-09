@@ -57,24 +57,39 @@ class CardListActivity : ComponentActivity() {
                         }
                     },
                 ) { innerPadding: PaddingValues ->
-                    LazyColumn(
+                    Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(36.dp),
                         modifier =
                             Modifier
-                                .fillMaxSize()
-                                .padding(innerPadding)
-                                .padding(vertical = 12.dp),
+                                .fillMaxWidth()
+                                .padding(innerPadding),
                     ) {
-                        items(
-                            count = cards.size,
-                        ) { index: Int ->
-                            val card: Card = cards[index]
-                            PaymentCard(
-                                cardNumber = card.number.value,
-                                expirationDate = card.expirationDate.expirationYearMonth,
-                                cardholderName = card.holderName.value,
+                        if (cards.isEmpty()) {
+                            Text(
+                                text = "새로운 카드를 등록해주세요",
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(top = 32.dp),
                             )
+                        }
+
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(36.dp),
+                        ) {
+                            items(
+                                count = cards.size,
+                            ) { index: Int ->
+                                val card: Card = cards[index]
+                                PaymentCard(
+                                    cardNumber = card.number.value,
+                                    expirationDate = card.expirationDate.expirationYearMonth,
+                                    cardholderName = card.holderName.value,
+                                )
+                            }
+                        }
+
+                        if (cards.size <= 1) {
+                            AddCardButton(Modifier.padding())
                         }
                     }
                 }
@@ -121,17 +136,20 @@ fun CardListActivityPreview() {
         ) { innerPadding: PaddingValues ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxWidth().padding(innerPadding),
+                verticalArrangement = Arrangement.spacedBy(36.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(innerPadding),
             ) {
                 Text(
                     text = "새로운 카드를 등록해주세요",
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(vertical = 32.dp)
+                    modifier = Modifier.padding(top = 32.dp),
                 )
 
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(36.dp),
-                    modifier = Modifier.padding(vertical = 12.dp),
                 ) {
                     item {
                         PaymentCard(
@@ -149,7 +167,7 @@ fun CardListActivityPreview() {
                     }
                 }
 
-
+                AddCardButton(Modifier.padding())
             }
         }
     }

@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.sp
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun AddCardButton() {
+fun AddCardButton(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-            Modifier
+            modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
