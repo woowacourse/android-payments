@@ -2,6 +2,7 @@ package woowacourse.payments.ui.payments
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -47,6 +48,7 @@ fun PaymentCardsScreen() {
                     activityResult.data?.getParcelableCompat<CardUiModel>("card")
                 card?.let {
                     paymentCards.add(it)
+                    Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
                 }
             }
         }
