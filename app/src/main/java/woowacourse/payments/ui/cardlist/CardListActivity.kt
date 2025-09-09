@@ -8,12 +8,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
@@ -21,12 +27,13 @@ import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.ui.newcard.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class CardListActivity : ComponentActivity() {
-    private val cards = mutableListOf<Card>()
+    private val cards = mutableStateListOf<Card>()
     val activityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             handleNewCardResult(result)
@@ -46,6 +53,22 @@ class CardListActivity : ComponentActivity() {
                         }
                     },
                 ) { innerPadding: PaddingValues ->
+                    LazyColumn(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(36.dp),
+                        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(vertical = 12.dp)
+                    ) {
+                        items(
+                            count = cards.size,
+                        ) { index: Int ->
+                            val card: Card = cards[index]
+                            PaymentCard(
+                                cardNumber = card.number.value,
+                                cardholderName = card.holderName.value,
+                                expirationDate = card.expirationDate.expirationYearMonth.toString(),
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -87,6 +110,27 @@ fun CardListActivityPreview() {
             modifier = Modifier.fillMaxSize(),
             topBar = { CardListTopBar() },
         ) { innerPadding: PaddingValues ->
+            LazyColumn(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(36.dp),
+                modifier = Modifier.fillMaxSize().padding(innerPadding).padding(vertical = 12.dp)
+            ) {
+                item {
+                    PaymentCard(
+                        cardNumber = "1234 - 1234 - 1234 - 1234",
+                        cardholderName = "CREW 1",
+                        expirationDate = "12 / 34",
+                    )
+                }
+                item {
+                    PaymentCard(
+                        cardNumber = "1234 - 1234 - 1234 - 1234",
+                        cardholderName = "CREW 2",
+                        expirationDate = "12 / 34",
+                    )
+                }
+            }
+
         }
     }
 }
