@@ -1,11 +1,11 @@
 package woowacourse.payments
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.domain.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -16,11 +16,13 @@ class AddCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 AddCardScreen(
-                    onBackPressed = {},
-                    onAddCard = { cardInfo ->
+                    onBackPressed = {
+                        finish()
+                    },
+                    onAddCard = { card ->
                         val resultIntent =
                             Intent().apply {
-                                putExtra("cardInfo", cardInfo)
+                                putExtra("card", card.toUiModel())
                             }
                         setResult(RESULT_OK, resultIntent)
                         finish()

@@ -14,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import woowacourse.payments.domain.model.CardInfo
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.PaymentScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -32,15 +32,15 @@ class PaymentActivity : ComponentActivity() {
 
 @Composable
 fun PaymentScreenWithLauncher() {
-    var cards by remember { mutableStateOf(emptyList<CardInfo>()) }
+    var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
     val context = LocalContext.current
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult(),
+            contract = ActivityResultContracts.StartActivityForResult(),
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = activityResult.data?.getParcelableExtra<CardInfo>("cardInfo")
+                val newCard = activityResult.data?.getParcelableExtra<CardUiModel>("card")
                 if (newCard != null) {
                     cards = cards + newCard
                 }

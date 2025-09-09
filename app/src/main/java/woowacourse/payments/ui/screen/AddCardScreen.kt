@@ -14,10 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.model.CardInfo
+import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.toUiModel
 import woowacourse.payments.domain.validator.CardNumberValidator
 import woowacourse.payments.domain.validator.ExpirationDateValidator
 import woowacourse.payments.domain.validator.PasswordValidator
@@ -35,14 +35,13 @@ import woowacourse.payments.ui.strings.getErrorMessage
 @Composable
 fun AddCardScreen(
     onBackPressed: () -> Unit,
-    onAddCard: (CardInfo) -> Unit,
+    onAddCard: (Card) -> Unit,
 ) {
     var number by remember { mutableStateOf("") }
     var expiration by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    // 에러 타입 상태를 별도로 관리
     var numberErrorType by remember { mutableStateOf<ValidationErrorType?>(null) }
     var expirationErrorType by remember { mutableStateOf<ValidationErrorType?>(null) }
     var userNameErrorType by remember { mutableStateOf<ValidationErrorType?>(null) }
@@ -76,14 +75,14 @@ fun AddCardScreen(
                             userNameResult is ValidationResult.Success
 
                     if (isFormValid) {
-                        val cardInfo =
-                            CardInfo(
+                        val card =
+                            Card(
                                 cardNumber = number,
                                 expirationDate = expiration,
                                 userName = userName,
                                 password = password,
                             )
-                        onAddCard(cardInfo)
+                        onAddCard(card)
                     }
                 },
             )
@@ -99,7 +98,7 @@ fun AddCardScreen(
             Spacer(Modifier.height(14.dp))
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                cardInfo = null,
+                card = Card("", "", "", "").toUiModel(),
             )
 
             Spacer(Modifier.height(40.dp))

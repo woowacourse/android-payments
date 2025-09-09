@@ -22,13 +22,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.model.CardInfo
+import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.toUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    cardInfo: CardInfo?,
+    card: CardUiModel?,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -61,7 +63,7 @@ fun PaymentCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 fontWeight = FontWeight.W500,
-                text = cardInfo?.cardNumber.toString(),
+                text = card?.cardNumber.toString(),
                 color = Color.White,
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
@@ -74,7 +76,7 @@ fun PaymentCard(
             ) {
                 Text(
                     lineHeight = 10.sp,
-                    text = cardInfo?.userName.toString(),
+                    text = card?.userName.toString(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -83,7 +85,7 @@ fun PaymentCard(
                 Spacer(Modifier.height(2.dp))
                 Text(
                     lineHeight = 10.sp,
-                    text = cardInfo?.expirationDate.toString(),
+                    text = card?.expirationDate.toString(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -99,15 +101,16 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
+        val sampleCard =
+            Card(
+                cardNumber = "1111-2222-3333-4444",
+                expirationDate = "04 / 21",
+                userName = "KIMGAHYUN",
+                password = "1234",
+            )
         PaymentCard(
             modifier = Modifier,
-            cardInfo =
-                CardInfo(
-                    cardNumber = "1111-2222-****-****",
-                    expirationDate = "04 / 21",
-                    userName = "KIMGAHYUN",
-                    password = "1234",
-                ),
+            card = sampleCard.toUiModel(),
         )
     }
 }
