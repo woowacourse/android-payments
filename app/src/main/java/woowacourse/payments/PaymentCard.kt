@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,9 +62,8 @@ fun PaymentCard(
                     text = card.number,
                     color = Color.White,
                     fontSize = 12.sp,
-//                    letterSpacing = 2.04.sp,
+                    letterSpacing = 2.04.sp,
                 )
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -70,12 +71,16 @@ fun PaymentCard(
                     Text(
                         text = card.name ?: "",
                         color = Color.White,
-                        fontSize = 12.sp
+                        fontSize = 12.sp,
+                        lineHeight = 12.sp,
+                        letterSpacing = 2.sp,
                     )
                     Text(
                         text = card.expiry,
                         color = Color.White,
                         fontSize = 12.sp,
+                        lineHeight = 12.sp,
+                        letterSpacing = 1.sp,
                     )
                 }
             }
@@ -87,6 +92,9 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(Card("0000 - 0000 - 0000 - 0000", "10 / 25", "1234", "CREW"))
+        Column {
+            PaymentCard(Card("0000000000000000", "1025", "1234", "CREW"))
+            PaymentCard()
+        }
     }
 }
