@@ -28,7 +28,7 @@ fun AddCardButton(
             Icon(
                 imageVector = Icons.Default.Add,
                 contentDescription =
-                    stringResource(R.string.cards_card_addition_description),
+                    stringResource(R.string.cards_card_addition_button_description),
                 modifier = Modifier
                     .size(36.dp)
                     .align(Alignment.Center),
