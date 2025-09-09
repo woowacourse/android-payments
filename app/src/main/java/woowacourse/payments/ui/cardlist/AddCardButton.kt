@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardlist
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +17,10 @@ import androidx.compose.ui.unit.sp
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun AddCardButton(modifier: Modifier = Modifier) {
+fun AddCardButton(
+    modifier: Modifier = Modifier,
+    onAddCard: () -> Unit = {},
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -26,7 +30,7 @@ fun AddCardButton(modifier: Modifier = Modifier) {
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                ).clickable { onAddCard() },
     ) {
         Text(
             text = "+",

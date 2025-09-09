@@ -38,7 +38,7 @@ import java.time.format.DateTimeFormatter
 
 class CardListActivity : ComponentActivity() {
     private val cards = mutableStateListOf<Card>()
-    val activityResultLauncher: ActivityResultLauncher<Intent> =
+    private val activityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             handleNewCardResult(result)
         }
@@ -53,7 +53,7 @@ class CardListActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         CardListTopBar {
-                            activityResultLauncher.launch(NewCardActivity.intent(this))
+                            navigateToAddCard()
                         }
                     },
                 ) { innerPadding: PaddingValues ->
@@ -89,7 +89,7 @@ class CardListActivity : ComponentActivity() {
                         }
 
                         if (cards.size <= 1) {
-                            AddCardButton(Modifier.padding())
+                            AddCardButton { navigateToAddCard() }
                         }
                     }
                 }
@@ -97,7 +97,11 @@ class CardListActivity : ComponentActivity() {
         }
     }
 
-    fun handleNewCardResult(result: ActivityResult) {
+    private fun navigateToAddCard() {
+        activityResultLauncher.launch(NewCardActivity.intent(this))
+    }
+
+    private fun handleNewCardResult(result: ActivityResult) {
         if (result.resultCode == RESULT_OK) {
             runCatching {
                 result.data?.let { data: Intent ->
