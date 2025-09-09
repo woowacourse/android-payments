@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import woowacourse.payments.R
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.screen.addCard.AddCardActivity
@@ -32,10 +33,15 @@ class CardListActivity : ComponentActivity() {
                     ) { result ->
                         if (result.resultCode == RESULT_OK) {
                             val newCard =
-                                result.data?.getParcelableExtraCompat<CardUiModel>("new_card")
+                                result.data?.getParcelableExtraCompat<CardUiModel>(NEW_CARD_KEY)
                             newCard?.let {
                                 cards.add(it)
-                                Toast.makeText(context, "새 카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                                Toast
+                                    .makeText(
+                                        context,
+                                        R.string.card_list_add_card_toast,
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
                             }
                         }
                     }
@@ -49,5 +55,9 @@ class CardListActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    companion object {
+        const val NEW_CARD_KEY = "NEW_CARD"
     }
 }
