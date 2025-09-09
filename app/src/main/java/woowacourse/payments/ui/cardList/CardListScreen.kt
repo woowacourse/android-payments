@@ -10,10 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,9 +24,10 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
-fun CardListScreen(onRegistrationClick: () -> Unit) {
-    var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
-
+fun CardListScreen(
+    cards: List<Card> = emptyList(),
+    onRegistrationClick: () -> Unit,
+) {
     Scaffold(
         topBar = {
             CardListTopBar(
@@ -60,15 +57,15 @@ fun CardListScreen(onRegistrationClick: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
+            cards.forEach { card ->
+                Spacer(modifier = Modifier.height(36.dp))
+                PaymentCard(card = card)
+            }
             if (cards.size == 1 || cards.isEmpty()) {
                 RegistrationCard(
                     onRegistrationClick = { onRegistrationClick() },
                     modifier = Modifier.padding(top = 36.dp),
                 )
-            }
-            cards.forEach { card ->
-                Spacer(modifier = Modifier.height(36.dp))
-                PaymentCard(card = card)
             }
         }
     }
@@ -78,6 +75,6 @@ fun CardListScreen(onRegistrationClick: () -> Unit) {
 @Composable
 private fun CardListScreenPreview() {
     AndroidpaymentsTheme {
-        CardListScreen({})
+        CardListScreen(onRegistrationClick = {})
     }
 }
