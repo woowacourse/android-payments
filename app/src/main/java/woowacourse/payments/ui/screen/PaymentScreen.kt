@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
-import woowacourse.payments.domain.model.toUiModel
 import woowacourse.payments.ui.components.AddCardComponent
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.PaymentTopBar
+import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -36,66 +36,53 @@ fun PaymentScreen(
         topBar = {
             PaymentTopBar(
                 modifier = Modifier.fillMaxWidth(),
-                onAddClick = onAddCardClick,
+                onAddClick = onAddCardClick.takeIf { cards.size >= 3 },
             )
         },
     ) { innerPadding ->
-        Column(
+        PaymentBody(
+            cards = cards,
+            onAddCardClick = onAddCardClick,
             modifier =
                 Modifier
                     .padding(innerPadding)
                     .padding(horizontal = 24.dp)
                     .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(Modifier.height(32.dp))
-
-            when {
-                cards.isEmpty() -> EmptyCardContent(onAddCardClick = onAddCardClick)
-                else -> MultipleCardsContent(cards = cards, onAddCardClick = onAddCardClick)
-            }
-        }
-    }
-}
-
-@Composable
-private fun EmptyCardContent(onAddCardClick: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = stringResource(R.string.payment_add_new_card_prompt),
-            fontSize = 18.sp,
-            fontWeight = FontWeight(700),
-        )
-        Spacer(Modifier.height(32.dp))
-        AddCardComponent(
-            onClick = onAddCardClick,
         )
     }
 }
 
 @Composable
-private fun MultipleCardsContent(
+private fun PaymentBody(
     cards: List<CardUiModel>,
     onAddCardClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        cards.forEach { cardUiModel ->
-            PaymentCard(
-                card = cardUiModel,
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-        }
+        Spacer(Modifier.height(32.dp))
 
-        if (cards.size < 3) {
-            AddCardComponent(
-                onClick = onAddCardClick,
+        if (cards.isEmpty()) {
+            Text(
+                text = stringResource(R.string.payment_add_new_card_prompt),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.W700,
             )
+            Spacer(Modifier.height(32.dp))
+            AddCardComponent(onClick = onAddCardClick)
+        } else {
+            cards.forEachIndexed { index, card ->
+                PaymentCard(card = card)
+                if (index < cards.lastIndex) {
+                    Spacer(Modifier.height(16.dp))
+                }
+            }
+            if (cards.size < 3) {
+                Spacer(Modifier.height(24.dp))
+                AddCardComponent(onClick = onAddCardClick)
+            }
         }
     }
 }
@@ -112,7 +99,7 @@ private fun PaymentScreenPreview() {
                 PaymentScreen(
                     cards =
                         listOf(
-                            Card("1111-2222-3333-4444", "04/21", "CREW", "1234").toUiModel(),
+                            Card("1111222233334444", "0421", "CREW", "1234").toUiModel(),
                         ),
                     onAddCardClick = {},
                 )
@@ -121,10 +108,10 @@ private fun PaymentScreenPreview() {
                 PaymentScreen(
                     cards =
                         listOf(
-                            Card("1111-2222-3333-4444", "04/21", "CREW", "1234"),
-                            Card("5555-6666-7777-8888", "05/22", "GAHYUN", "5678"),
-                            Card("9999-0000-1111-2222", "06/23", "ANDY", "9012"),
-                        ).map { it.toUiModel() }, // `toUiModel()` 함수를 사용하여 변환
+                            Card("1111222233334444", "0421", "CREW", "1234"),
+                            Card("5555666677778888", "0522", "GAHYUN", "5678"),
+                            Card("9999000011112222", "0623", "ANDY", "9012"),
+                        ).map { it.toUiModel() },
                     onAddCardClick = {},
                 )
             }
