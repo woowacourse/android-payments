@@ -25,6 +25,8 @@ data class CardUiModel(
             .chunked(CARD_DATE_GROUP_SIZE)
             .joinToString(CARD_DATE_DELIMITER)
 
+    fun formatOwnerName(): String = ownerName.take(CARD_OWNER_NAME_MAX_LENGTH)
+
     companion object {
         private const val CARD_NUMBER_MASKING_SIGN = "*"
         private const val CARD_NUMBER_DELIMITER = " - "
@@ -32,6 +34,7 @@ data class CardUiModel(
         private const val CARD_NUMBER_VISIBLE_LENGTH = 8
         private const val CARD_NUMBER_GROUP_SIZE = 4
         private const val CARD_DATE_GROUP_SIZE = 2
+        private const val CARD_OWNER_NAME_MAX_LENGTH = 15
     }
 }
 
