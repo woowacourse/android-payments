@@ -14,12 +14,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.FF333333
+import woowacourse.payments.ui.theme.FFCBBA64
+import woowacourse.payments.ui.theme.FFFFFFFF
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
@@ -43,10 +45,9 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = FF333333,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(bottom = 16.dp)
+                ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -55,14 +56,14 @@ fun PaymentCard(
                     Modifier
                         .size(width = 40.dp, height = 26.dp)
                         .background(
-                            color = Color(0xFFCBBA64),
+                            color = FFCBBA64,
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
             if (card != null) {
                 Text(
                     text = formattedNumber,
-                    color = Color.White,
+                    color = FFFFFFFF,
                     style = Typography.labelMedium,
                     modifier = Modifier.padding(top = 8.dp),
                 )
@@ -75,14 +76,14 @@ fun PaymentCard(
                 ) {
                     Text(
                         text = card.ownerName ?: "",
-                        color = Color.White,
+                        color = FFFFFFFF,
                         style = Typography.labelMedium,
                         textAlign = TextAlign.Start,
                     )
 
                     Text(
                         text = formattedDate,
-                        color = Color.White,
+                        color = FFFFFFFF,
                         style = Typography.labelMedium,
                         textAlign = TextAlign.End,
                         modifier = Modifier.weight(1f),

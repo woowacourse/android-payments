@@ -9,10 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.theme.FF575757
+import woowacourse.payments.ui.theme.FFE5E5E5
 
 @Composable
 fun RegistrationCard(
@@ -25,14 +26,14 @@ fun RegistrationCard(
             modifier
                 .size(208.dp, 124.dp)
                 .background(
-                    color = Color(0xFFE5E5E5),
+                    color = FFE5E5E5,
                     shape = RoundedCornerShape(5.dp),
                 ).clickable { onRegistrationClick() },
     ) {
         Text(
             text = "+",
             textAlign = TextAlign.Center,
-            color = Color(0xFF575757),
+            color = FF575757,
         )
     }
 }

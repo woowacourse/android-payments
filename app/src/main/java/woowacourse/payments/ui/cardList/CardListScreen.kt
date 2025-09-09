@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,6 +20,8 @@ import woowacourse.payments.ui.cardList.components.RegistrationCard
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.FF000000
+import woowacourse.payments.ui.theme.FF333333
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
@@ -38,7 +39,7 @@ fun CardListScreen(
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(Color.White),
+                .background(color = FF000000),
     ) { innerPadding ->
         Column(
             modifier =
@@ -52,7 +53,7 @@ fun CardListScreen(
                 Text(
                     text = "새로운 카드를 등록해주세요",
                     textAlign = TextAlign.Center,
-                    color = Color(0xFF333333),
+                    color = FF333333,
                     style = Typography.displayLarge,
                     modifier = Modifier.fillMaxWidth(),
                 )
