@@ -8,7 +8,7 @@ data class PasswordUiModel(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length == PASSWORD_LENGTH) { throw IllegalArgumentException(MESSAGE_INVALID_PASSWORD_LENGTH) }
+        require(value.length == PASSWORD_LENGTH) { MESSAGE_INVALID_PASSWORD_LENGTH }
     }
 
     companion object {

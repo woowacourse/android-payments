@@ -8,7 +8,7 @@ data class CardNumberUiModel(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length == CARD_NUMBER_LENGTH) { throw IllegalArgumentException(MESSAGE_INVALID_CARD_NUMBER_LENGTH) }
+        require(value.length == CARD_NUMBER_LENGTH) { MESSAGE_INVALID_CARD_NUMBER_LENGTH }
     }
 
     companion object {

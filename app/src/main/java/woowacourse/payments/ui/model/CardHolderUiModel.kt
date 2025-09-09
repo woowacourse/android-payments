@@ -8,7 +8,7 @@ data class CardHolderUiModel(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length < CARD_HOLDER_MAX_LENGTH) { throw IllegalArgumentException(MESSAGE_INVALID_NAME_LENGTH) }
+        require(value.length < CARD_HOLDER_MAX_LENGTH) { MESSAGE_INVALID_NAME_LENGTH }
     }
 
     companion object {
