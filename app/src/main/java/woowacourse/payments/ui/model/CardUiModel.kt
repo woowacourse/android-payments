@@ -23,8 +23,9 @@ fun Card.toUiModel(): CardUiModel {
 }
 
 private fun formatUiCardNumber(number: String): String {
-    val firstTwoGroups = number.substring(0, 8)
-    return "$firstTwoGroups-****-****"
+    val firstGroups = number.substring(0, 4)
+    val secondGroups = number.substring(4, 8)
+    return "$firstGroups - $secondGroups - **** - ****"
 }
 
 private fun formatExpirationDate(expirationDate: String): String {
