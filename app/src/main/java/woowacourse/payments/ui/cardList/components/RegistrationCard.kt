@@ -27,8 +27,7 @@ fun RegistrationCard(
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable { onRegistrationClick() },
+                ).clickable { onRegistrationClick() },
     ) {
         Text(
             text = "+",
@@ -40,6 +39,6 @@ fun RegistrationCard(
 
 @Preview(showBackground = true)
 @Composable
-fun RegistrationCardPreview() {
+private fun RegistrationCardPreview() {
     RegistrationCard({})
 }

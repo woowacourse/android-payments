@@ -132,7 +132,7 @@ fun CardRegisterScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun CardRegisterScreenPreview() {
+private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
         CardRegisterScreen({}, {})
     }

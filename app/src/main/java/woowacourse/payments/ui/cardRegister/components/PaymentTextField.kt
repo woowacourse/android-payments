@@ -48,7 +48,7 @@ fun PaymentTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentTextFieldPreview() {
+private fun PaymentTextFieldPreview() {
     AndroidpaymentsTheme {
         PaymentTextField(
             label = "닉네임",

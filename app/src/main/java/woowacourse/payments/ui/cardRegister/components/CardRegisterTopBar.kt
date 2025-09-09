@@ -46,7 +46,7 @@ fun CardRegisterTopBar(
 
 @Preview(showBackground = true)
 @Composable
-fun CardRegisterTopBarPreview() {
+private fun CardRegisterTopBarPreview() {
     AndroidpaymentsTheme {
         CardRegisterTopBar({}, {})
     }
