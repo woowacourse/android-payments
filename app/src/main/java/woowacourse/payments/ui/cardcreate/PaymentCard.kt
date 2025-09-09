@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardcreate
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,7 +15,7 @@ import woowacourse.payments.ui.theme.Gray33
 import woowacourse.payments.ui.theme.YellowCB
 
 @Composable
-fun PaymentCard(modifier: Modifier = Modifier) {
+fun PaymentCard(onCardCategoryClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -24,7 +25,8 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                 .background(
                     color = Gray33,
                     shape = RoundedCornerShape(5.dp),
-                ),
+                )
+                .clickable(onClick = onCardCategoryClick)
     ) {
         Box(
             modifier =

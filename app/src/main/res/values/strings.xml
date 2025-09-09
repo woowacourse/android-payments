@@ -5,6 +5,7 @@
     <string name="card_create_save">완료</string>
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>
+    <string name="card_categories_title">Payments</string>
 
     <string name="expiry_label">만료일</string>
     <string name="expiry_placeholder">MM / YY</string>
