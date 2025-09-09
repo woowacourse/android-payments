@@ -32,4 +32,20 @@ val Typography =
                 lineHeight = 16.sp,
                 letterSpacing = 0.5.sp,
             ),
+        displayLarge =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                lineHeight = 36.sp,
+                letterSpacing = 0.5.sp,
+            ),
+        labelMedium =
+            TextStyle(
+                fontFamily = FontFamily.Default,
+                fontWeight = FontWeight.Medium,
+                fontSize = 12.sp,
+                lineHeight = 12.sp,
+                letterSpacing = 2.04.sp,
+            ),
     )
