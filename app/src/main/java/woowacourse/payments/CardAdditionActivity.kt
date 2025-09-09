@@ -35,7 +35,6 @@ class CardAdditionActivity : ComponentActivity() {
             putExtra("newCard", newCard)
         }
         setResult(Activity.RESULT_OK,  intent)
-        Log.d("test", "onSaveClick: $newCard")
         finish()
     }
     companion object {
