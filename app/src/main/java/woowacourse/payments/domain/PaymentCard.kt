@@ -7,11 +7,10 @@ import kotlinx.parcelize.Parcelize
 data class PaymentCard(
     val cardNumber: CardNumber,
     val expireDate: ExpireDate,
-    val ownerName: String?,
+    val ownerName: OwnerName,
     val password: String,
 ) : Parcelable {
     companion object {
-        const val MAX_LENGTH_OWNER_NAME = 30
         const val MAX_LENGTH_PASSWORD = 4
     }
 }

@@ -83,6 +83,7 @@ fun AddCardScreen(
                             )
 
                         is CardCreationResult.Success -> onNavigateSave(cardDomainResult.paymentCard)
+                        CardCreationResult.InvalidOwnerName -> return@NewCardTopBar
                     }
                 },
             )

@@ -5,6 +5,7 @@ import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateStatus
 import woowacourse.payments.domain.ExpireDateValidationException
+import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.CardUiState
 
@@ -47,13 +48,16 @@ object CardMapper {
                     )
                 }
 
+        val ownerName =
+            runCatching { OwnerName(this.ownerName) }.getOrElse { return CardCreationResult.InvalidOwnerName }
+
         if (!checkValidPassword(this.password)) return CardCreationResult.InvalidPassword
 
         return CardCreationResult.Success(
             PaymentCard(
                 cardNumber = cardNumber,
                 expireDate = expireDate,
-                ownerName = this.ownerName.ifEmpty { null },
+                ownerName = ownerName,
                 password = this.password,
             ),
         )

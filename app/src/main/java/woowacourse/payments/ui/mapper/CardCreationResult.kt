@@ -10,9 +10,11 @@ sealed class CardCreationResult {
 
     object InvalidCardNumber : CardCreationResult()
 
-    object InvalidPassword : CardCreationResult()
-
     data class InvalidExpireDate(
         val status: ExpireDateStatus,
     ) : CardCreationResult()
+
+    object InvalidOwnerName : CardCreationResult()
+
+    object InvalidPassword : CardCreationResult()
 }
