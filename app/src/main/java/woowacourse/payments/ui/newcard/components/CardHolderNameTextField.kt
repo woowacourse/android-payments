@@ -1,10 +1,13 @@
 package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardHolderName
@@ -30,6 +33,11 @@ fun CardHolderNameTextField(
                 textAlign = TextAlign.End,
             )
         },
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Ascii,
+                imeAction = ImeAction.Next,
+            ),
         inputFilter = {
             it.uppercase().filter { ch -> ch.isLetter() || ch.isWhitespace() }
         },

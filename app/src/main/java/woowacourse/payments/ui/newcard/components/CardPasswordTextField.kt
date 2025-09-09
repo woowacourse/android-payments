@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import woowacourse.payments.R
@@ -24,7 +25,11 @@ fun CardPasswordTextField(
         label = { Text(stringResource(R.string.card_password)) },
         placeholder = { Text("0000") },
         isError = value.isNotEmpty() && runCatching { CardPassword(value) }.isFailure,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Done,
+            ),
         visualTransformation = PasswordVisualTransformation(),
         inputFilter = { it.filter(Char::isDigit) },
         modifier = modifier,

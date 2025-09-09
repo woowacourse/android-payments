@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardExpirationDate
@@ -32,7 +33,11 @@ fun CardExpirationDateTextField(
                     onSuccess = { it.isExpired() },
                     onFailure = { true },
                 ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Next,
+            ),
         visualTransformation =
             GroupedVisualTransformation(
                 List(2) { EXPIRATION_DATE_GROUP_SIZE },
