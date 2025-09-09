@@ -14,6 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
 import woowacourse.payments.util.GroupingVisualTransformation
 
@@ -21,6 +23,7 @@ import woowacourse.payments.util.GroupingVisualTransformation
 fun CardNumberTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
@@ -37,14 +40,14 @@ fun CardNumberTextField(
             )
         },
         supportingText = {
-            if (value.isInvalidCardNumber) {
+            if (isError) {
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
                 )
             }
         },
-        isError = value.isInvalidCardNumber,
+        isError = isError,
         visualTransformation =
             GroupingVisualTransformation(
                 CARD_NUMBER_GROUP_SIZE,
@@ -60,17 +63,20 @@ fun CardNumberTextField(
 
 @Preview
 @Composable
-private fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview(
+    @PreviewParameter(CardNumberTextFieldPreviewParameterProvider::class) isError: Boolean,
+) {
     val (cardNumber: String, setCardNumber: (String) -> Unit) = remember { mutableStateOf("") }
 
     CardNumberTextField(
         value = cardNumber,
         onValueChange = setCardNumber,
+        isError = isError,
         modifier = Modifier.fillMaxWidth(),
     )
 }
 
-private val String.isInvalidCardNumber: Boolean get() = isNotEmpty() && length != CARD_NUMBER_LENGTH
+class CardNumberTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
 
 const val CARD_NUMBER_LENGTH: Int = 16
 private const val CARD_NUMBER_GROUP_SIZE: Int = 4

@@ -24,6 +24,7 @@ class CardNumberTextFieldTest {
             CardNumberTextField(
                 value = cardNumber,
                 onValueChange = setCardNumber,
+                isError = false,
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -39,19 +40,6 @@ class CardNumberTextFieldTest {
         // then
         composeRule
             .onNodeWithText("1234 - 5678 - 1234 - 5678")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `형식이_올바르지_않을_경우_에러_메시지를_출력한다`() {
-        // when
-        composeRule
-            .onNodeWithText("")
-            .performTextInput("1234")
-
-        // then
-        composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
             .assertIsDisplayed()
     }
 }

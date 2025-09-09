@@ -16,12 +16,9 @@ class CardAdditionActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardAdditionScreen(
-                    modifier = Modifier.Companion.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                 )
             }
         }
-    }
-
-    private fun addCard() {
     }
 }

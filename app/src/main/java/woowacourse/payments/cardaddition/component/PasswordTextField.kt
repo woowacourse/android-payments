@@ -14,12 +14,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
 
 @Composable
 fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
@@ -36,14 +39,14 @@ fun PasswordTextField(
             )
         },
         supportingText = {
-            if (value.isInvalidPassword) {
+            if (isError) {
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
                 )
             }
         },
-        isError = value.isInvalidPassword,
+        isError = isError,
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions =
             KeyboardOptions(
@@ -55,15 +58,16 @@ fun PasswordTextField(
 
 @Preview
 @Composable
-private fun PasswordTextFieldPreview() {
+private fun PasswordTextFieldPreview(
+    @PreviewParameter(PasswordTextFieldPreviewParameterProvider::class) isError: Boolean,
+) {
     val (password: String, setPassword: (String) -> Unit) = remember { mutableStateOf("") }
 
     PasswordTextField(
         value = password,
         onValueChange = setPassword,
+        isError = isError,
     )
 }
 
-private val String.isInvalidPassword: Boolean get() = isNotEmpty() && length != PASSWORD_LENGTH
-
-const val PASSWORD_LENGTH: Int = 4
+class PasswordTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))

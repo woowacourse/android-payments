@@ -3,10 +3,14 @@ package woowacourse.payments.cards.component
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.Card
+import woowacourse.payments.NO_CARD
+import woowacourse.payments.ONE_CARD
+import woowacourse.payments.THREE_CARD
 
 class CardsScreenTest {
     @get:Rule
@@ -15,8 +19,9 @@ class CardsScreenTest {
     @Test
     fun `카드_목록이_비어있을_때에는_새_카드를_등록하라는_안내가_노출된다`() {
         // given
+
         composeRule.setContent {
-            CardsScreen(cards = emptyArray())
+            CardsScreen(cards = NO_CARD)
         }
 
         // then
@@ -26,19 +31,28 @@ class CardsScreenTest {
     }
 
     @Test
+    fun `카드_목록이_비어있을_때_카드_추가_화면으로_이동할_수_있다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(cards = NO_CARD)
+        }
+
+        // when
+        composeRule
+            .onNodeWithContentDescription("새 카드 등록 버튼")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardAdditionScreen")
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun `카드_목록에_카드가_한_개_있을_때_카드_추가_UI가_노출된다`() {
         // given
         composeRule.setContent {
-            CardsScreen(
-                cards =
-                    arrayOf(
-                        Card(
-                            number = "1234".repeat(4),
-                            owner = "CREW",
-                            expiredDate = "0421",
-                        ),
-                    ),
-            )
+            CardsScreen(cards = ONE_CARD)
         }
 
         // then
@@ -48,32 +62,49 @@ class CardsScreenTest {
     }
 
     @Test
+    fun `카드_목록에_카드가_한_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(cards = ONE_CARD)
+        }
+
+        // when
+        composeRule
+            .onNodeWithContentDescription("새 카드 등록 버튼")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardAdditionScreen")
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_UI가_노출된다`() {
         // given
         composeRule.setContent {
-            CardsScreen(
-                cards =
-                    arrayOf(
-                        Card(
-                            number = "1234".repeat(4),
-                            owner = "CREW",
-                            expiredDate = "0421",
-                        ),
-                        Card(
-                            number = "1234".repeat(4),
-                            owner = "CREW",
-                            expiredDate = "0421",
-                        ),
-                        Card(
-                            number = "1234".repeat(4),
-                            owner = "CREW",
-                            expiredDate = "0421",
-                        ),
-                    ),
-            )
+            CardsScreen(cards = THREE_CARD)
         }
 
         // then
         composeRule.onNodeWithContentDescription("새 카드 등록 버튼")
+    }
+
+    @Test
+    fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(cards = THREE_CARD)
+        }
+
+        // when
+        composeRule
+            .onNodeWithContentDescription("새 카드 등록 버튼")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardAdditionScreen")
+            .assertIsDisplayed()
     }
 }

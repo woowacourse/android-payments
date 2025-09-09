@@ -12,14 +12,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
 import woowacourse.payments.util.GroupingVisualTransformation
-import java.time.Month
 
 @Composable
 fun ExpiredDateTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
@@ -36,14 +38,14 @@ fun ExpiredDateTextField(
             )
         },
         supportingText = {
-            if (value.isInvalidExpiredDate) {
+            if (isError) {
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
                 )
             }
         },
-        isError = value.isInvalidExpiredDate,
+        isError = isError,
         visualTransformation =
             GroupingVisualTransformation(
                 EXPIRED_DATE_GROUP_SIZE,
@@ -59,22 +61,21 @@ fun ExpiredDateTextField(
 
 @Preview
 @Composable
-private fun ExpiredDateTextFieldPreview() {
+private fun ExpiredDateTextFieldPreview(
+    @PreviewParameter(
+        ExpiredDateTextFieldPreviewParameterProvider::class,
+    ) isError: Boolean,
+) {
     val (expiredDate: String, setExpiredDate: (String) -> Unit) = remember { mutableStateOf("") }
 
     ExpiredDateTextField(
         value = expiredDate,
         onValueChange = setExpiredDate,
+        isError = isError,
     )
 }
 
-private val String.isInvalidExpiredDate: Boolean
-    get() {
-        if (isEmpty()) return false
-
-        val month: Int = take(2).toInt()
-        return length != EXPIRED_DATE_LENGTH || month !in Month.entries.map(Month::getValue)
-    }
+class ExpiredDateTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
 
 const val EXPIRED_DATE_LENGTH: Int = 4
 private const val EXPIRED_DATE_GROUP_SIZE: Int = 2

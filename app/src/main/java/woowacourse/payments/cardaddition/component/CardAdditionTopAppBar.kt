@@ -12,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardAdditionTopBar(
+fun CardAdditionTopAppBar(
+    completable: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -32,7 +35,10 @@ fun CardAdditionTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(
+                onClick = { onSaveClick() },
+                enabled = completable,
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.card_addition_top_bar_done_content_description),
@@ -45,6 +51,14 @@ fun CardAdditionTopBar(
 
 @Preview
 @Composable
-private fun CardAdditionTopBarPreview() {
-    CardAdditionTopBar(onBackClick = {}, onSaveClick = {})
+private fun CardAdditionTopBarPreview(
+    @PreviewParameter(CardAdditionTopBarPreviewParameterProvider::class) completable: Boolean,
+) {
+    CardAdditionTopAppBar(
+        completable = completable,
+        onBackClick = {},
+        onSaveClick = {},
+    )
 }
+
+class CardAdditionTopBarPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(true, false))

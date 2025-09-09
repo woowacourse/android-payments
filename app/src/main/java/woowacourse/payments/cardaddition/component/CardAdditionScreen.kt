@@ -16,11 +16,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.Card
 import woowacourse.payments.ui.component.PaymentCard
 import java.lang.Character.isDigit
+import java.time.Month
+
+private const val PASSWORD_LENGTH: Int = 4
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
@@ -38,9 +42,9 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
         expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
     }
 
-    var name: String by remember { mutableStateOf("") }
+    var ownerName: String by remember { mutableStateOf("") }
     val handleNameInput: (String) -> Unit = { newName: String ->
-        name = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
+        ownerName = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
     }
 
     var password: String by remember { mutableStateOf("") }
@@ -50,9 +54,13 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
     }
 
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.testTag("CardAdditionScreen"),
         topBar = {
-            CardAdditionTopBar(
+            CardAdditionTopAppBar(
+                completable =
+                    cardNumber.isValidCardNumber &&
+                        expiredDate.isValidExpiredDate &&
+                        password.isValidPassword,
                 onBackClick = { activity?.finish() },
                 onSaveClick = {
                     activity?.setResult(
@@ -60,12 +68,14 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         Intent().putExtra(
                             "card",
                             Card(
-                                number = "",
-                                owner = "TODO()",
-                                expiredDate = "TODO()",
+                                number = cardNumber,
+                                owner = ownerName,
+                                expiredDate = expiredDate,
                             ),
                         ),
                     )
+
+                    activity?.finish()
                 },
             )
         },
@@ -85,6 +95,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             CardNumberTextField(
                 value = cardNumber,
                 onValueChange = handleCardNumberInput,
+                isError = cardNumber.isNotBlank() && !cardNumber.isValidCardNumber,
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -93,12 +104,13 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             ExpiredDateTextField(
                 value = expiredDate,
                 onValueChange = handleExpiredDateInput,
+                isError = expiredDate.isNotBlank() && !expiredDate.isValidExpiredDate,
                 modifier =
                     Modifier
                         .padding(top = 18.dp),
             )
             CardOwnerNameTextField(
-                value = name,
+                value = ownerName,
                 onValueChange = handleNameInput,
                 modifier =
                     Modifier
@@ -109,10 +121,19 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             PasswordTextField(
                 value = password,
                 onValueChange = handlePasswordInput,
+                isError = password.isNotBlank() && !password.isValidPassword,
             )
         }
     }
 }
+
+private val String.isValidCardNumber: Boolean get() = length == CARD_NUMBER_LENGTH
+private val String.isValidExpiredDate: Boolean
+    get() {
+        val month: Int = take(2).toIntOrNull() ?: return false
+        return length == EXPIRED_DATE_LENGTH && month in Month.entries.map(Month::getValue)
+    }
+private val String.isValidPassword: Boolean get() = length == PASSWORD_LENGTH
 
 @Preview
 @Composable
