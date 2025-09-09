@@ -1,4 +1,4 @@
-package woowacourse.payments.util
+package woowacourse.payments
 
 import android.content.Intent
 import android.os.Build
