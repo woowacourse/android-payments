@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cardlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,6 +23,7 @@ import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 class CardListActivity : ComponentActivity() {
     private val cards = mutableListOf<Card>()
@@ -63,15 +63,18 @@ class CardListActivity : ComponentActivity() {
                     val expirationDateValue: YearMonth =
                         data
                             .getStringExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY)
-                            ?.let(YearMonth::parse) ?: return
+                            ?.let { value: String ->
+                                YearMonth.parse(
+                                    value,
+                                    DateTimeFormatter.ofPattern("MMyy"),
+                                )
+                            } ?: return
                     val expirationDate = ExpirationDate(expirationDateValue)
                     val passcode: Passcode =
                         data.getStringExtra(ExtraKeys.CARD_PASSCODE_KEY)?.let(::Passcode) ?: return
                     Card(cardNumber, cardholderName, expirationDate, passcode)
                 } ?: return
-            }.onSuccess { card: Card -> cards.add(card) }.onFailure { error: Throwable ->
-                Toast.makeText(this, "카드를 추가하지 못했습니다.", Toast.LENGTH_SHORT).show()
-            }
+            }.onSuccess { card: Card -> cards.add(card) }
         }
     }
 }

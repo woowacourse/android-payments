@@ -23,7 +23,12 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun NewCardContents(
-    onSaveSuccess: () -> Unit = {},
+    onSaveSuccess: (
+        cardNumber: String,
+        expirationDate: String,
+        cardholderName: String,
+        passcode: String,
+    ) -> Unit,
     onSaveFailure: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
@@ -56,8 +61,13 @@ fun NewCardContents(
         if (isError()) {
             onSaveFailure()
         } else {
+            onSaveSuccess(
+                cardNumber.value,
+                expirationDate.value,
+                cardholderName.value,
+                passcode.value,
+            )
             resetFields()
-            onSaveSuccess()
         }
     }
 
