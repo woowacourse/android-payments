@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,10 +34,10 @@ fun CardRegisterScreen(
     onBackClick: () -> Unit,
     onSaveClick: (card: Card) -> Unit,
 ) {
-    var cardNumber by remember { mutableStateOf("") }
-    var expiredDate by remember { mutableStateOf("") }
-    var ownerName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var cardNumber by rememberSaveable { mutableStateOf("") }
+    var expiredDate by rememberSaveable { mutableStateOf("") }
+    var ownerName by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
 
     Scaffold(
         topBar = {
