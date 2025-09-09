@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -21,6 +22,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardValidator
+import woowacourse.payments.domain.CardValidator.isValidCard
 import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
@@ -33,6 +36,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
     onSaveClick: (card: Card) -> Unit,
+    isNotValidInput: () -> Unit,
 ) {
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var expiredDate by rememberSaveable { mutableStateOf("") }
@@ -44,14 +48,18 @@ fun CardRegisterScreen(
             CardRegisterTopBar(
                 onBackClick = { onBackClick() },
                 onSaveClick = {
-                    onSaveClick(
-                        Card(
-                            number = cardNumber,
-                            expiredDate = expiredDate,
-                            ownerName = ownerName,
-                            password = password,
-                        ),
-                    )
+                    if (isValidCard(cardNumber, expiredDate, password)) {
+                        onSaveClick(
+                            Card(
+                                number = cardNumber,
+                                expiredDate = expiredDate,
+                                ownerName = ownerName,
+                                password = password,
+                            ),
+                        )
+                    } else {
+                        isNotValidInput()
+                    }
                 },
             )
         },
@@ -74,6 +82,12 @@ fun CardRegisterScreen(
                 text = cardNumber,
                 onValueChanged = { cardNumber = it },
                 label = stringResource(R.string.card_number_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
+                            Text("카드 번호 16자리를 입력하세요", color = Color.Red)
+                        }
+                    },
                 placeholder = stringResource(R.string.card_number_place_holder),
                 maxLength = 16,
                 onlyDigits = true,
@@ -88,6 +102,12 @@ fun CardRegisterScreen(
                 text = expiredDate,
                 onValueChanged = { expiredDate = it },
                 label = stringResource(R.string.expired_date_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
+                            Text("올바른 일자를 입력하세요", color = Color.Red)
+                        }
+                    },
                 placeholder = stringResource(R.string.expired_date_place_holder),
                 maxLength = 4,
                 onlyDigits = true,
@@ -124,6 +144,12 @@ fun CardRegisterScreen(
                 text = password,
                 onValueChanged = { password = it },
                 label = stringResource(R.string.card_password_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
+                            Text("4자리로 입력하세요", color = Color.Red)
+                        }
+                    },
                 placeholder = stringResource(R.string.card_password_place_holder),
                 maxLength = 4,
                 onlyDigits = true,
@@ -142,6 +168,6 @@ fun CardRegisterScreen(
 @Composable
 private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegisterScreen({}, {})
+        CardRegisterScreen({}, {}, {})
     }
 }
