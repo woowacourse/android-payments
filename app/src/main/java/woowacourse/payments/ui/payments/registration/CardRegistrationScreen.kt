@@ -28,6 +28,7 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.payments.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">android-payments</string>
+    <string name="app_name">Payments</string>
 
     <!-- common -->
     <string name="common_navigate_previous">뒤로 가기</string>
@@ -29,4 +29,8 @@
 
     <!-- card_registration_screen -->
     <string name="card_registration_screen_registration_card_success">추가 완료</string>
+
+    <!-- card_payment_cards_screen -->
+    <string name="payment_cards_screen_registration_guide">새로운 카드를 등록해주세요</string>
+    <string name="payment_cards_screen_registration_symbol">+</string>
 </resources>
