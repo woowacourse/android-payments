@@ -18,9 +18,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun ExpiredInputField(
+    modifier: Modifier = Modifier,
     expired: Expired?,
     onExpiredChange: (Expired?) -> Unit,
-    modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
     val transformation =

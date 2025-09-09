@@ -18,9 +18,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardOwnerInputField(
+    modifier: Modifier = Modifier,
     cardOwner: CardOwner?,
     onOwnerChange: (CardOwner?) -> Unit,
-    modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
     OutlinedTextField(

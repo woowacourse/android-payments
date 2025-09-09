@@ -129,30 +129,30 @@ fun AddCardScreen(
             }
 
             CardNumberInputField(
+                modifier = Modifier.fillMaxWidth(),
                 cardNumber = cardNumber,
                 onCardNumberChange = { cardNumber = it },
-                modifier = Modifier.fillMaxWidth(),
                 showValidationError = showValidationError,
             )
 
             ExpiredInputField(
+                modifier = Modifier.fillMaxWidth(0.5f),
                 expired = expired,
                 onExpiredChange = { expired = it },
-                modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = showValidationError,
             )
 
             CardOwnerInputField(
+                modifier = Modifier.fillMaxWidth(),
                 cardOwner = cardOwner,
                 onOwnerChange = { cardOwner = it },
-                modifier = Modifier.fillMaxWidth(),
                 showValidationError = showValidationError,
             )
 
             PasswordInputField(
+                modifier = Modifier.fillMaxWidth(0.5f),
                 password = password,
                 onPasswordChange = { password = it },
-                modifier = Modifier.fillMaxWidth(0.5f),
                 showValidationError = showValidationError,
             )
         }

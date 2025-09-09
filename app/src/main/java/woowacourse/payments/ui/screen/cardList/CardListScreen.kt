@@ -64,8 +64,8 @@ fun CardListScreen(
             )
         } else {
             CardListContent(
-                cards = cards,
                 modifier = Modifier.padding(innerPadding),
+                cards = cards,
                 onAddCardClick = navigateToAddCard,
             )
         }
@@ -101,8 +101,8 @@ private fun EmptyCardList(
 
 @Composable
 private fun CardListContent(
-    cards: List<CardUiModel>,
     modifier: Modifier = Modifier,
+    cards: List<CardUiModel>,
     onAddCardClick: () -> Unit,
 ) {
     val scrollState = rememberScrollState()

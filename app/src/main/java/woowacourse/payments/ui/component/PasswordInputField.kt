@@ -29,9 +29,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PasswordInputField(
+    modifier: Modifier = Modifier,
     password: Password?,
     onPasswordChange: (Password?) -> Unit,
-    modifier: Modifier = Modifier,
     showValidationError: Boolean = false,
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }

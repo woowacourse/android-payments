@@ -30,11 +30,10 @@ import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun PaymentCard(
-    card: CardUiModel,
     modifier: Modifier = Modifier,
+    card: CardUiModel,
 ) {
     Box(
-        contentAlignment = Alignment.CenterStart,
         modifier =
             modifier
                 .shadow(8.dp)
@@ -43,6 +42,7 @@ fun PaymentCard(
                     color = Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
                 ),
+        contentAlignment = Alignment.CenterStart,
     ) {
         Box(
             modifier =
