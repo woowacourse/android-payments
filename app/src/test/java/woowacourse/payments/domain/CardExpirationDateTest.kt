@@ -46,7 +46,7 @@ class CardExpirationDateTest {
     }
 
     @Test
-    fun `올바른 형식의 문자열은 YearMonth로 변환된다`() {
+    fun `올바른 날짜이면 정상적으로 변환된다`() {
         // given
         val dateString = "1225"
 
@@ -58,7 +58,7 @@ class CardExpirationDateTest {
     }
 
     @Test
-    fun `잘못된 날짜 문자열을 입력하면 예외가 발생한다`() {
+    fun `잘못된 날짜이면 예외가 발생한다`() {
         // given
         val dateString = "0000"
 

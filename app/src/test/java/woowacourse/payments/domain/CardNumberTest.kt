@@ -23,10 +23,10 @@ class CardNumberTest {
 
     @ParameterizedTest
     @ValueSource(strings = ["", "0123456789", "012345678901234", "01234567890123456"])
-    fun `카드 번호가 16자리가 아니면 예외가 발생한다`(invalid: String) {
+    fun `카드 번호가 16자리가 아니면 예외가 발생한다`(value: String) {
         // when & then
         shouldThrow<IllegalArgumentException> {
-            CardNumber.from(invalid)
+            CardNumber.from(value)
         }
     }
 
