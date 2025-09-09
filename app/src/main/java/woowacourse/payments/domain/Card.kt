@@ -1,0 +1,37 @@
+package woowacourse.payments.domain
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import java.time.LocalDate
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
+
+@Parcelize
+data class Card(
+    val number: CardNumber,
+    val expirationDate: ExpirationDate,
+    val ownerName: OwnerName,
+    val password: Password,
+) : Parcelable {
+    companion object {
+        fun Card(
+            number: String,
+            expirationDate: String,
+            ownerName: String,
+            password: String,
+        ) = Card(
+            CardNumber(number),
+            ExpirationDate(YearMonth.parse(expirationDate, DateTimeFormatter.ofPattern("MMyy"))),
+            OwnerName(ownerName),
+            Password(password),
+        )
+    }
+}
+
+
+
+
+
+
+
+
