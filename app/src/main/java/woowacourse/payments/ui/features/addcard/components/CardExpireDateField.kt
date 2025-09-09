@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,7 +36,9 @@ fun CardExpireDateField(
     expireDateStatus: ExpireDateStatus,
     supportingTextHeight: Dp = 20.dp,
 ) {
-    val isError = expireDateStatus is ExpireDateStatus.Invalid
+    var isFocused by remember { mutableStateOf(false) }
+    val showError =
+        (expireDateStatus is ExpireDateStatus.Typing || expireDateStatus is ExpireDateStatus.Invalid) && !isFocused
     val visualTransformation = remember { SeparatorVisualTransformation(2, " / ") }
 
     AppTextField(
@@ -44,16 +47,25 @@ fun CardExpireDateField(
             val filteredValue = newValue.filter { it in '0'..'9' }.take(MAX_LENGTH_EXPIRE_DATE)
             onValueChange(filteredValue)
         },
-        modifier = modifier,
+        modifier =
+            modifier.onFocusChanged { focusState ->
+                isFocused = focusState.isFocused
+            },
         labelText = stringResource(R.string.add_card_expire_date_field_title),
         placeholderText = stringResource(R.string.add_card_expire_date_field_hint),
-        isError = isError,
+        isError = showError,
         supportingText = {
             Box(modifier = Modifier.height(supportingTextHeight)) {
-                if (expireDateStatus is ExpireDateStatus.Invalid) {
+                if (showError && expireDateStatus is ExpireDateStatus.Invalid) {
                     Text(
                         modifier = Modifier,
                         text = stringResource(id = expireDateStatus.reason.messageResId),
+                        color = MaterialTheme.colorScheme.error,
+                    )
+                } else if (showError && expireDateStatus is ExpireDateStatus.Typing) {
+                    Text(
+                        modifier = Modifier,
+                        text = stringResource(id = R.string.add_card_expire_date_incomplete_error_message),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }

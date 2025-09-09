@@ -30,6 +30,7 @@
     <string name="add_card_expire_date_month_error_message">유효하지 않은 월입니다</string>
     <string name="add_card_expire_date_past_error_message">만료된 카드입니다</string>
     <string name="add_card_expire_date_etc_error_message">MM/YY 형식이 아닙니다</string>
+    <string name="add_card_expire_date_incomplete_error_message">MMYY 4자리를 입력하세요</string>
 
     <!--    카드 소유자 이름 컴포넌트-->
     <string name="add_card_owner_name_field_title">카드 소유자 이름(선택)</string>

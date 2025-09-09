@@ -9,6 +9,8 @@ sealed interface ExpireDateStatus {
         val yearMonth: YearMonth,
     ) : ExpireDateStatus
 
+    data object Empty : ExpireDateStatus
+
     data object Typing : ExpireDateStatus
 
     data class Invalid(

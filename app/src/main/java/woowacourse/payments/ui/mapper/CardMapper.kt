@@ -19,7 +19,8 @@ object CardMapper {
     ): YearMonth = YearMonth.of(2000 + yy, mm)
 
     fun getExpireDateStatus(expireDate: String): ExpireDateStatus {
-        if (expireDate.length != PaymentCard.Companion.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
+        if (expireDate.isEmpty()) return ExpireDateStatus.Empty
+        if (expireDate.length < PaymentCard.Companion.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
         val mm =
             expireDate.take(2).toIntOrNull() ?: return ExpireDateStatus.Invalid(
                 ExpireDateInvalidReason.INVALID_FORMAT,
