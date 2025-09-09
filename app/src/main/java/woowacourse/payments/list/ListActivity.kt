@@ -3,6 +3,7 @@ package woowacourse.payments.list
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -60,6 +61,7 @@ class ListActivity : ComponentActivity() {
                         val newCard = result.data?.getParcelableExtra<Card>("card")
                         newCard?.let {
                             cards = CardUiState(cards.cards + it)
+                            Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
