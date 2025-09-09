@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("kotlin-parcelize")
 }
 
 android {
