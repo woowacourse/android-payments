@@ -22,6 +22,7 @@ fun NewCardTopBar(
 ) {
     TopAppBar(
         title = { Text(stringResource(R.string.register_title)) },
+        modifier = modifier,
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
@@ -38,6 +39,5 @@ fun NewCardTopBar(
                 )
             }
         },
-        modifier = modifier,
     )
 }
