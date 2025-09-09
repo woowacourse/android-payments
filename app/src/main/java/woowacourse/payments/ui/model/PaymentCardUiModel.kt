@@ -1,11 +1,15 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class PaymentCardUiModel(
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,
     val password: String
-) {
+) : Parcelable {
     fun maskCardNumbersFromBack(
         visibleGroups: Int = 2,
         groupSize: Int = 4,

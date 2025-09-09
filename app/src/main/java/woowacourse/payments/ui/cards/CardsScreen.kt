@@ -19,7 +19,7 @@ fun CardsScreen(
     ) {
         when (uiState) {
             CardsUiState.None -> NonCardsSection(onAddClick)
-            is CardsUiState.Single -> SingleCardsSection(uiState.card)
+            is CardsUiState.Single -> SingleCardsSection(onAddClick, uiState.card)
             is CardsUiState.Multiple -> MultiCardsSection(uiState.cards)
         }
     }

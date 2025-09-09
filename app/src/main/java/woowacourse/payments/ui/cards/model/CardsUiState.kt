@@ -1,8 +1,11 @@
 package woowacourse.payments.ui.cards.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
-sealed interface CardsUiState {
+@Parcelize
+sealed interface CardsUiState : Parcelable {
     data object None : CardsUiState
     data class Single(val card: PaymentCardUiModel) : CardsUiState
     data class Multiple(val cards: List<PaymentCardUiModel>) : CardsUiState

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.model.paymentCardUiModelSample
 
 private val ScreenAppBarSpacing = 14.dp
 private val ScreenSectionSpacing = 40.dp
@@ -32,7 +33,7 @@ fun CreateCardScreen(
                 .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
-        PaymentCard(Modifier.align(Alignment.CenterHorizontally))
+        PaymentCard(null,Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.height(ScreenSectionSpacing))
         CreateCardInputSection(
             createCardUiState = stateHolder.cardCreateState.value,
