@@ -44,21 +44,12 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .padding(top = 12.dp)
-                    .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(36.dp),
-        ) {
-            Cards(
-                cardAddLauncher = cardAddLauncher,
-                cardList = cardList,
-                minimumCardCountForAddButton = minimumCardCountForAddButton,
-            )
-        }
+        Cards(
+            innerPadding = innerPadding,
+            cardAddLauncher = cardAddLauncher,
+            cardList = cardList,
+            minimumCardCountForAddButton = minimumCardCountForAddButton,
+        )
     }
 }
 
