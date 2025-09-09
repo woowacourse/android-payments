@@ -57,7 +57,7 @@ fun PaymentCard(
             Text(
                 text =
                     cardNumber?.let { cardNumber: String ->
-                        CardNumberFormat.formattedCardNumber(cardNumber)
+                        CardNumberFormat.formattedCardNumber(text = cardNumber, applyMask = true)
                     } ?: "",
                 color = Color.White,
                 fontSize = 12.sp,
