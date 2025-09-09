@@ -10,9 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.ui.ExtraKeys
 
-class AddCardActivity :
-    ComponentActivity(),
-    AddCardAction {
+class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -34,7 +32,7 @@ class AddCardActivity :
         }
     }
 
-    override fun submitAddedCard(
+    private fun submitAddedCard(
         cardNumber: String,
         expirationDate: String,
         cardholderName: String,
@@ -53,13 +51,4 @@ class AddCardActivity :
     companion object {
         fun intent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
     }
-}
-
-interface AddCardAction {
-    fun submitAddedCard(
-        cardNumber: String,
-        expirationDate: String,
-        cardholderName: String,
-        passcode: String,
-    )
 }
