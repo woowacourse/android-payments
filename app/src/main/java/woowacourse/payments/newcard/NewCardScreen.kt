@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +39,10 @@ fun NewCardScreen(
 ) {
     val context = LocalContext.current
 
-    var cardNumber: String by remember { mutableStateOf("") }
-    var expiredDate: String by remember { mutableStateOf("") }
-    var ownerName: String by remember { mutableStateOf("") }
-    var password: String by remember { mutableStateOf("") }
+    var cardNumber: String by rememberSaveable { mutableStateOf("") }
+    var expiredDate: String by rememberSaveable { mutableStateOf("") }
+    var ownerName: String by rememberSaveable { mutableStateOf("") }
+    var password: String by rememberSaveable { mutableStateOf("") }
 
     val card: Card? = makeCard(cardNumber, expiredDate, ownerName, password)
 

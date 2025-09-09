@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -43,7 +43,7 @@ fun CardsScreen(paymentCards: List<Card>) {
     val context = LocalContext.current
 
     // 카드 목록을 관리하는 상태 변수
-    val cards: SnapshotStateList<Card> = remember { paymentCards.toMutableStateList() }
+    val cards: SnapshotStateList<Card> = rememberSaveable { paymentCards.toMutableStateList() }
 
     // 카드 추가 Activity result를 처리하기 위한 launcher
     val cardAddLauncher: ActivityResultLauncher<Intent> =
