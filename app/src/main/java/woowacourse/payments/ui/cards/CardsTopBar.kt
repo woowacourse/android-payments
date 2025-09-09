@@ -15,10 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.cards.model.CardsUiState
+import woowacourse.payments.ui.model.paymentCardUiModelSample
+import woowacourse.payments.ui.model.paymentCardUiModelSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopBar(
+    cardsUiState: CardsUiState,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -29,24 +33,47 @@ fun CardsTopBar(
             )
         },
         actions = {
-            TextButton(onClick = onAddClick) {
-                Text(
-                    "추가",
-                    color = Color.Black,
-                    style = MaterialTheme.typography.bodyLarge.copy(
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.W700
-                    )
-                )
+            when (cardsUiState) {
+                is CardsUiState.Multiple -> CreateCardButton(onAddClick)
+                CardsUiState.None -> {}
+                is CardsUiState.Single -> {}
             }
         },
         modifier = modifier.padding(4.dp, 18.dp),
     )
 }
 
-@Preview(showBackground = true)
 @Composable
-fun NewCardCategoryTopBarPreView() {
-    CardsTopBar({})
+fun CreateCardButton(
+    onAddClick: () -> Unit,
+) {
+    TextButton(onClick = onAddClick) {
+        Text(
+            "추가",
+            color = Color.Black,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontSize = 18.sp,
+                fontWeight = FontWeight.W700
+            )
+        )
+    }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun NoneNewCardsTopBarPreview() {
+//    CardsTopBar(CardsUiState.None, {})
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun SingleNewCardsTopBarPreview() {
+//    CardsTopBar(CardsUiState.Single(paymentCardUiModelSample), {})
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun MultipleNewCardsTopBarPreview() {
+//    CardsTopBar(CardsUiState.Multiple(paymentCardUiModelSamples), {})
+//}
 

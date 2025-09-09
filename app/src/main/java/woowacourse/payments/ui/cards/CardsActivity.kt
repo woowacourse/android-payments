@@ -28,11 +28,12 @@ class CardsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         CardsTopBar(
+                            cardsStateHolder.cardsUiState,
                             onAddClick = ::navigateCreateCardActivity,
                         )
                     }) { innerPadding ->
                     CardsScreen(
-                        cardsStateHolder,
+                        cardsStateHolder.cardsUiState,
                         ::navigateCreateCardActivity,
                         Modifier
                             .padding(innerPadding)
