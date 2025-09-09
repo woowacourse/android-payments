@@ -42,8 +42,10 @@ import woowacourse.payments.util.parcelable
 fun CardsScreen(paymentCards: List<Card>) {
     val context = LocalContext.current
 
+    // 카드 목록을 관리하는 상태 변수
     val cards: SnapshotStateList<Card> = remember { paymentCards.toMutableStateList() }
 
+    // 카드 추가 Activity result를 처리하기 위한 launcher
     val cardAddLauncher: ActivityResultLauncher<Intent> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
@@ -54,9 +56,12 @@ fun CardsScreen(paymentCards: List<Card>) {
 
                 if (card != null) {
                     cards += card
-                    Toast.makeText(context,
-                        context.getString(R.string.message_card_added),
-                        Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.message_card_added),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
         }
