@@ -119,12 +119,13 @@ fun AddCardScreen(
                 contentAlignment = Alignment.Center,
             ) {
                 PaymentCard(
-                    Card(
-                        number = cardNumber,
-                        expired = expired,
-                        owner = cardOwner,
-                        password = password,
-                    ).toPresentation(),
+                    card =
+                        Card(
+                            number = cardNumber,
+                            expired = expired,
+                            owner = cardOwner,
+                            password = password,
+                        ).toPresentation(),
                 )
             }
 
