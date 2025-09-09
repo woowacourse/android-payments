@@ -11,7 +11,7 @@ class CardNumberTest {
     @Test
     fun `카드 번호는 16자리이다`() {
         // given
-        val input = buildString { repeat(16) { append(0) } }
+        val input = "0".repeat(16)
 
         // when
         val cardNumber = CardNumber.from(input)

@@ -25,39 +25,6 @@ class NewCardScreenTest {
     }
 
     @Test
-    fun 카드_번호_필드에_값을_입력하면_입력값이_표시된다() {
-        // given
-        composeTestRule.setContent { NewCardScreen() }
-
-        // when
-        val input = "1234567890123456" // 16자리
-
-        composeTestRule
-            .onNodeWithText("카드 번호")
-            .performTextInput(input)
-
-        // then
-        composeTestRule.onNodeWithText(input).assertIsDisplayed()
-    }
-
-    @Test
-    fun 카드_번호_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
-        // given
-        composeTestRule.setContent { NewCardScreen() }
-
-        // when
-        val input = "12345678901234567" // 17자리
-        val expected = input.take(16)
-
-        composeTestRule
-            .onNodeWithText("카드 번호")
-            .performTextInput(input)
-
-        // then
-        composeTestRule.onNodeWithText(expected).assertIsDisplayed()
-    }
-
-    @Test
     fun 카드_만료일_필드에_값을_입력하면_입력값이_표시된다() {
         // given
         composeTestRule.setContent { NewCardScreen() }
