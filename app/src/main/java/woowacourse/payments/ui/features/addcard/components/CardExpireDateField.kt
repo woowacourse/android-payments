@@ -3,10 +3,7 @@ package woowacourse.payments.ui.features.addcard.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,15 +57,6 @@ fun CardExpireDateField(
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
-            }
-        },
-        trailingIcon = {
-            if (isError) {
-                Icon(
-                    Icons.Filled.Info,
-                    stringResource(R.string.add_card_expire_date_icon_description),
-                    tint = MaterialTheme.colorScheme.error,
-                )
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

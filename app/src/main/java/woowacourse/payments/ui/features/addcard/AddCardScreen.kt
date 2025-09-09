@@ -68,7 +68,7 @@ fun AddCardScreen(
                 value = cardUiState.cardNumber,
                 onValueChange = { cardUiState = cardUiState.copy(cardNumber = it) },
             )
-            Spacer(modifier = Modifier.height(FormFieldSpacing))
+            Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardExpireDateField(
                 value = cardUiState.expireDate,
                 onValueChange = { cardUiState = cardUiState.copy(expireDate = it) },

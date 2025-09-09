@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">android-payments</string>
 
+    <!--    공통 컴포넌트-->
+    <string name="invalid_field_icon_description">유효하지 않은 입력폼 경고 아이콘</string>
+
     <!--    카드 목록 컴포넌트-->
     <!--    상단바(TopBar)-->
     <string name="card_list_top_bar_title">Payments</string>
@@ -19,6 +22,7 @@
     <!--    카드 번호 입력 컴포넌트-->
     <string name="add_card_number_field_title">카드 번호</string>
     <string name="add_card_number_field_hint">0000 - 0000 - 0000 - 0000</string>
+    <string name="add_card_number_incomplete_error_message">카드번호를 16자리로 입력해 주세요</string>
 
     <!--    카드 만료일 컴포넌트-->
     <string name="add_card_expire_date_field_title">만료일</string>
@@ -26,7 +30,6 @@
     <string name="add_card_expire_date_month_error_message">유효하지 않은 월입니다</string>
     <string name="add_card_expire_date_past_error_message">만료된 카드입니다</string>
     <string name="add_card_expire_date_etc_error_message">MM/YY 형식이 아닙니다</string>
-    <string name="add_card_expire_date_icon_description">유효하지 않은 만료일 경고 아이콘</string>
 
     <!--    카드 소유자 이름 컴포넌트-->
     <string name="add_card_owner_name_field_title">카드 소유자 이름(선택)</string>
