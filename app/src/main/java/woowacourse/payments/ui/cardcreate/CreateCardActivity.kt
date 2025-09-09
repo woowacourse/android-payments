@@ -22,7 +22,7 @@ class CreateCardActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         NewCardTopBar(
-                            onBackClick = {},
+                            onBackClick = { onBackPressedDispatcher.onBackPressed() },
                             onSaveClick = {})
                     }) { innerPadding ->
                     CreateCardScreen(

@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
@@ -21,12 +22,15 @@ class CardsActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         CardsTopBar(
-                            onAddClick = {},
+                            onAddClick = ::navigateCreateCardActivity,
                         )
                     }) { innerPadding ->
-                    NonCardsSection(
+                    CardsScreen(
+                        CardScreenState.None,
                         ::navigateCreateCardActivity,
-                        Modifier.padding(innerPadding)
+                        Modifier
+                            .padding(innerPadding)
+                            .fillMaxWidth()
                     )
                 }
             }
