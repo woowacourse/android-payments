@@ -76,11 +76,8 @@ fun NewCardScreen(
                     buildCardOrNull()?.let { card: Card ->
                         onSaveClick(card)
                         Toast
-                            .makeText(
-                                context,
-                                cardAddedMessage,
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            .makeText(context, cardAddedMessage, Toast.LENGTH_SHORT)
+                            .show()
                     }
                 },
             )
