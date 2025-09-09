@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.features.cardlist.components.AddPaymentCard
@@ -79,14 +80,6 @@ fun CardListScreen(
     }
 }
 
-val dummyPaymentCard = PaymentCard("1234123412341234", YearMonth.now(), "CREW", "1234")
-val dummyPaymentCardList1 = listOf(dummyPaymentCard)
-
-val dummyPaymentCardList5 =
-    List(5) { index ->
-        dummyPaymentCard
-    }
-
 @Preview(showBackground = true)
 @Composable
 fun CardListScreenEmptyPreview() {
@@ -98,6 +91,15 @@ fun CardListScreenEmptyPreview() {
 @Preview(showBackground = true)
 @Composable
 fun CardListScreenOneCardPreview() {
+    val dummyPaymentCard =
+        PaymentCard(
+            CardNumber("1234123412341234"),
+            YearMonth.now(),
+            "CREW",
+            "1234",
+        )
+    val dummyPaymentCardList1 = listOf(dummyPaymentCard)
+
     AndroidpaymentsTheme {
         CardListScreen({}, dummyPaymentCardList1)
     }
@@ -106,6 +108,13 @@ fun CardListScreenOneCardPreview() {
 @Preview(showBackground = true)
 @Composable
 fun CardListScreenManyCardPreview() {
+    val dummyPaymentCard =
+        PaymentCard(CardNumber("1234123412341234"), YearMonth.now(), "CREW", "1234")
+
+    val dummyPaymentCardList5 =
+        List(5) { index ->
+            dummyPaymentCard
+        }
     AndroidpaymentsTheme {
         CardListScreen({}, dummyPaymentCardList5)
     }

@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
@@ -25,7 +26,7 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     paymentCard: PaymentCard? = null,
 ) {
-    val halfCardNumber = paymentCard?.cardNumber?.takeLast(8)
+    val halfCardNumber = paymentCard?.cardNumber?.value?.takeLast(8)
     val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
     Box(
@@ -98,6 +99,14 @@ fun PaymentCardPreview() {
 @Composable
 fun PaymentCardDetailPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(paymentCard = PaymentCard("1234123412341234", YearMonth.now(), "CREW", "1234"))
+        PaymentCard(
+            paymentCard =
+                PaymentCard(
+                    CardNumber("1234123412341234"),
+                    YearMonth.now(),
+                    "CREW",
+                    "1234",
+                ),
+        )
     }
 }

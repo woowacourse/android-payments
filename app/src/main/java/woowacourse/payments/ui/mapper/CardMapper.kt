@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.mapper
 
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateStatus
 import woowacourse.payments.domain.PaymentCard
@@ -7,9 +8,6 @@ import woowacourse.payments.ui.features.addcard.CardUiState
 import java.time.YearMonth
 
 object CardMapper {
-    private fun checkValidCardNumber(cardNumber: String): Boolean =
-        cardNumber.length == PaymentCard.Companion.MAX_LENGTH_CARD_NUMBER && cardNumber.all(Char::isDigit)
-
     private fun checkValidPassword(password: String): Boolean =
         password.length == PaymentCard.Companion.MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
 
@@ -39,7 +37,11 @@ object CardMapper {
     }
 
     fun CardUiState.toDomainCard(): CardCreationResult {
-        if (!checkValidCardNumber(this.cardNumber)) return CardCreationResult.InvalidCardNumber
+        val cardNumber =
+            runCatching { CardNumber(this.cardNumber) }
+                .getOrElse {
+                    return CardCreationResult.InvalidCardNumber
+                }
         val expireDateStatus = getExpireDateStatus(expireDate)
         if (expireDateStatus !is ExpireDateStatus.Valid) {
             return CardCreationResult.InvalidExpireDate(
@@ -50,7 +52,7 @@ object CardMapper {
 
         return CardCreationResult.Success(
             PaymentCard(
-                cardNumber = this.cardNumber,
+                cardNumber = cardNumber,
                 expireDate = expireDateStatus.yearMonth,
                 ownerName = this.ownerName.ifEmpty { null },
                 password = this.password,
