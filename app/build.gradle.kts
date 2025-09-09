@@ -42,7 +42,9 @@ android {
         compose = true
     }
     packaging {
-        resources.excludes.add("META-INF/*")
+        resources {
+            excludes += "META-INF/*.version"
+        }
     }
 }
 
