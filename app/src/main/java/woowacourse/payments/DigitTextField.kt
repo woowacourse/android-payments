@@ -1,5 +1,6 @@
 package woowacourse.payments
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -39,7 +40,7 @@ fun DigitTextField(
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,

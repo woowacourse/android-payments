@@ -34,7 +34,7 @@ fun LimitedTextField(
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(imeAction = imeAction),
         supportingText = {
             Text(
