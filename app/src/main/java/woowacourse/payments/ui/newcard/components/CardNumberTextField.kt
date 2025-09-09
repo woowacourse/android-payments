@@ -17,14 +17,14 @@ import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
+const val CARD_NUMBER_SEPARATOR = " - "
 private const val MAX_CARD_NUMBER_LENGTH = 16
 private const val CARD_NUMBER_GROUP_SIZE = 4
-private const val HYPHEN = " - "
 
 private val groupedVisualTransformation: VisualTransformation =
     GroupedVisualTransformation(
         groupSize = CARD_NUMBER_GROUP_SIZE,
-        separator = HYPHEN,
+        separator = CARD_NUMBER_SEPARATOR,
     )
 
 @Composable

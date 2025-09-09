@@ -26,9 +26,9 @@ import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.designsystem.theme.Yellow
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.newcard.components.CARD_NUMBER_SEPARATOR
 
 private const val MASKED_DIGITS = "****"
-private const val HYPHEN = " - "
 
 @Composable
 fun PaymentCard(
@@ -123,7 +123,7 @@ private fun formatCardNumber(digits: String): String {
                     else -> MASKED_DIGITS
                 },
             )
-            if (index < chunks.lastIndex) append(HYPHEN)
+            if (index < chunks.lastIndex) append(CARD_NUMBER_SEPARATOR)
         }
     }
 }
