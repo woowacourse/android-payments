@@ -25,8 +25,13 @@ import woowacourse.payments.domain.PaymentCard
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
+private const val HIDE_PASSWORD = "********"
+private const val GROUP_SIZE = 4
+private const val CARD_NUMBER_SEPARATOR = "-"
+private const val CARD_EXPIRATION_DATE_FORMAT = "MM / yy"
+
 @Composable
-fun PaymentCard(
+fun PaymentCardField(
     modifier: Modifier = Modifier,
     paymentCard: PaymentCard? = null,
 ) {
@@ -92,27 +97,27 @@ fun PaymentCard(
 }
 
 private fun Long.toUi(): String =
-    this.toString().let { it.substring(0, it.length / 2) + "********" }
-        .chunked(4)
-        .joinToString("-")
+    this.toString().let { it.substring(0, it.length / 2) + HIDE_PASSWORD }
+        .chunked(GROUP_SIZE)
+        .joinToString(CARD_NUMBER_SEPARATOR)
         .chunked(1)
         .joinToString(" ")
 
 private fun YearMonth.toUi(): String {
-    val formatter = DateTimeFormatter.ofPattern("MM / yy")
+    val formatter = DateTimeFormatter.ofPattern(CARD_EXPIRATION_DATE_FORMAT)
     return this.format(formatter)
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentCardPreview() {
+fun PaymentCardFieldPreview() {
     Column(
         modifier = Modifier.padding(20.dp)
     ) {
-        PaymentCard(paymentCard = PaymentCard(1111111111111111, "04/21", "CREW"))
+        PaymentCardField(paymentCard = PaymentCard(1111111111111111, "04/21", "CREW"))
 
         Spacer(modifier = Modifier.height(40.dp))
 
-        PaymentCard(paymentCard = null)
+        PaymentCardField(paymentCard = null)
     }
 }
