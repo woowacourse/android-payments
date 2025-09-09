@@ -19,22 +19,24 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentTopBar(
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit,
+    onAddClick: (() -> Unit)? = null,
 ) {
     CenterAlignedTopAppBar(
-        actions = {
-            Text(
-                text = "추가",
-                modifier =
-                    Modifier
-                        .padding(horizontal = 20.dp)
-                        .clickable(onClick = onAddClick),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W700,
-            )
-        },
-        title = { Text(stringResource(R.string.payment_top_bar_title)) },
         modifier = modifier,
+        title = { Text(text = stringResource(R.string.payment_top_bar_title)) },
+        actions = {
+            if (onAddClick != null) {
+                Text(
+                    text = "추가",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.W700,
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 20.dp)
+                            .clickable { onAddClick() },
+                )
+            }
+        },
     )
 }
 

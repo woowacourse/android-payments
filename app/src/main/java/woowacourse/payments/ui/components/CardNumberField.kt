@@ -11,9 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.text.SeparatedVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
-import woowacourse.payments.ui.transformation.SeparatedTransformation
 
 @Composable
 fun CardNumberField(
@@ -25,7 +25,7 @@ fun CardNumberField(
 ) {
     val cardNumberVisualTransformation =
         remember {
-            SeparatedTransformation(
+            SeparatedVisualTransformation(
                 groupSize = CARD_NUMBER_CHUNK_SIZE,
                 separator = CARD_NUMBER_SEPARATOR,
             )

@@ -11,9 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.text.SeparatedVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
-import woowacourse.payments.ui.transformation.SeparatedTransformation
 
 @Composable
 fun ExpirationDateField(
@@ -25,7 +25,7 @@ fun ExpirationDateField(
 ) {
     val expirationDateVisualTransformation =
         remember {
-            SeparatedTransformation(
+            SeparatedVisualTransformation(
                 groupSize = EXPIRATION_DATE_CHUNK_SIZE,
                 separator = EXPIRATION_DATE_SEPARATOR,
             )

@@ -1,5 +1,3 @@
-@file:Suppress("ktlint:standard:filename")
-
 package woowacourse.payments.ui.strings
 
 import androidx.compose.runtime.Composable

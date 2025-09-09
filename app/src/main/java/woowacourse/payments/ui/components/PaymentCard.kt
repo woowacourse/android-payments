@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.model.Card
-import woowacourse.payments.domain.model.toUiModel
+import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -103,8 +103,8 @@ private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
         val sampleCard =
             Card(
-                cardNumber = "1111-2222-3333-4444",
-                expirationDate = "04 / 21",
+                cardNumber = "1111222233334444",
+                expirationDate = "0421",
                 userName = "KIMGAHYUN",
                 password = "1234",
             )

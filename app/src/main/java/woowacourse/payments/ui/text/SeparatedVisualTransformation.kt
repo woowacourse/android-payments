@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.transformation
+package woowacourse.payments.ui.text
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -6,7 +6,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import kotlin.math.min
 
-class SeparatedTransformation(
+class SeparatedVisualTransformation(
     private val groupSize: Int,
     private val separator: String,
 ) : VisualTransformation {
@@ -36,6 +36,10 @@ class SeparatedTransformation(
                 }
             }
 
-        return TransformedText(AnnotatedString(displayedText), mapping)
+        return TransformedText(
+            androidx.compose.ui.text
+                .AnnotatedString(displayedText),
+            mapping,
+        )
     }
 }
