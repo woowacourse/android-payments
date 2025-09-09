@@ -19,15 +19,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.screen.PaymentCardCount
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
 fun PaymentsColumn(
+    cards: List<PaymentCard> = emptyList(),
+    screenType: PaymentCardCount = PaymentCardCount.Empty,
     onClickAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -35,28 +40,66 @@ fun PaymentsColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        Text(
-            text = stringResource(woowacourse.payments.R.string.payments_enroll_new_card),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.W700,
-            modifier = modifier.align(Alignment.CenterHorizontally)
-        )
-        Box(
-            modifier = modifier
-                .shadow(8.dp)
-                .size(width = 208.dp, height = 124.dp)
-                .background(
-                    color = GrayE5,
-                    shape = RoundedCornerShape(5.dp)
-                )
-                .clickable { onClickAddCard() }
-                .align(Alignment.CenterHorizontally),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(woowacourse.payments.R.string.content_description_add_card),
+        if (screenType == PaymentCardCount.Empty) {
+            Text(
+                text = stringResource(woowacourse.payments.R.string.payments_enroll_new_card),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.W700,
+                modifier = modifier.align(Alignment.CenterHorizontally)
             )
+        }
+        for (card in cards) {
+            Box(
+                contentAlignment = Alignment.CenterStart,
+                modifier = modifier
+                    .shadow(8.dp)
+                    .size(width = 208.dp, height = 124.dp)
+                    .background(
+                        color = Color(0xFF333333),
+                        shape = RoundedCornerShape(5.dp),
+                    )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .padding(start = 14.dp, bottom = 10.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .background(
+                            color = Color(0xFFCBBA64),
+                            shape = RoundedCornerShape(4.dp),
+                        )
+                )
+                Text(
+                    modifier = modifier.padding(start = 14.dp, bottom = 10.dp),
+                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.cardNumber}"
+                )
+                Text(
+                    modifier = modifier.padding(start = 14.dp, bottom = 10.dp),
+                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.cardOwnerName}"
+                )
+                Text(
+                    modifier = modifier.padding(end = 14.dp, bottom = 10.dp),
+                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.expirationDate}"
+                )
+            }
+        }
+        if (screenType != PaymentCardCount.MoreThanOne) {
+            Box(
+                modifier = modifier
+                    .shadow(8.dp)
+                    .size(width = 208.dp, height = 124.dp)
+                    .background(
+                        color = GrayE5,
+                        shape = RoundedCornerShape(5.dp)
+                    )
+                    .clickable { onClickAddCard() }
+                    .align(Alignment.CenterHorizontally),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = stringResource(woowacourse.payments.R.string.content_description_add_card),
+                )
+            }
         }
     }
 }
