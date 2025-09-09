@@ -55,6 +55,7 @@ fun CardOwnerNameTextField(
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
         keyboardActions = KeyboardActions(onNext = onKeyboardActionClick),
+        singleLine = true,
     )
 }
 
