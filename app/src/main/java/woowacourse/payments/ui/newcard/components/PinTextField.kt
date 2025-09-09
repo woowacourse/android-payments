@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 
 private const val MAX_PIN_LENGTH = 4
 
@@ -51,9 +52,11 @@ fun PinTextField(
 @Preview(showBackground = true)
 @Composable
 private fun PinTextFieldPreview() {
-    PinTextField(
-        value = "",
-        onValueChange = {},
-        modifier = Modifier,
-    )
+    AndroidpaymentsTheme {
+        PinTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier,
+        )
+    }
 }

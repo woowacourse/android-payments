@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
 private const val MAX_CARD_NUMBER_LENGTH = 16
@@ -58,9 +59,11 @@ fun CardNumberTextField(
 @Preview(showBackground = true)
 @Composable
 private fun CardNumberTextFieldPreview() {
-    CardNumberTextField(
-        value = "1234 - 5678 - 9012 - 3456",
-        onValueChange = {},
-        modifier = Modifier,
-    )
+    AndroidpaymentsTheme {
+        CardNumberTextField(
+            value = "1234 - 5678 - 9012 - 3456",
+            onValueChange = {},
+            modifier = Modifier,
+        )
+    }
 }

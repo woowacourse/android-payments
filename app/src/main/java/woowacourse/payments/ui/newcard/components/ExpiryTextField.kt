@@ -14,6 +14,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
 private const val MAX_EXPIRY_LENGTH = 4
@@ -58,9 +59,11 @@ fun ExpiryTextField(
 @Preview(showBackground = true)
 @Composable
 private fun ExpiryTextFieldPreview() {
-    ExpiryTextField(
-        value = "1225",
-        onValueChange = {},
-        modifier = Modifier,
-    )
+    AndroidpaymentsTheme {
+        ExpiryTextField(
+            value = "1225",
+            onValueChange = {},
+            modifier = Modifier,
+        )
+    }
 }

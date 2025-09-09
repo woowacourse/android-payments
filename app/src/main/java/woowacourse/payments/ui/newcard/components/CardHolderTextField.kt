@@ -15,6 +15,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 
 private const val MAX_CARD_HOLDER_LENGTH = 30
 
@@ -57,9 +58,11 @@ fun CardHolderTextField(
 @Preview(showBackground = true)
 @Composable
 private fun CardHolderTextFieldPreview() {
-    CardHolderTextField(
-        value = "",
-        onValueChange = {},
-        modifier = Modifier,
-    )
+    AndroidpaymentsTheme {
+        CardHolderTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier,
+        )
+    }
 }
