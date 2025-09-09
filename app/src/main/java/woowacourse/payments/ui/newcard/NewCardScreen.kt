@@ -91,7 +91,7 @@ fun NewCardScreen(
                         .padding(start = 24.dp, top = 30.dp),
                 value = expirationDateUitState.expirationDate.value,
                 onValueChange = { expirationDateUitState.onValueChanged(it) },
-                isValid = expirationDateUitState.isError,
+                isValid = expirationDateUitState.isValid,
                 maxLength = EXPIRATION_DATE_LENGTH,
             )
             NameTextField(
