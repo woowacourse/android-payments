@@ -9,7 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.model.CardWalletState
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.common.model.CardUiModel
 
 class CardWalletContentTest {
     @get:Rule

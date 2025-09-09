@@ -29,7 +29,7 @@ import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
 import woowacourse.payments.ui.cardwallet.model.CardWalletState
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 
 @Composable

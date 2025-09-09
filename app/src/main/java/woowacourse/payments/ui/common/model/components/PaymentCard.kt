@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.common.model.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.designsystem.theme.Yellow
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.common.model.CardUiModel
 
 private const val MASKED_DIGITS = "****"
 private const val HYPHEN = " - "
