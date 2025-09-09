@@ -38,17 +38,23 @@ object CardMapper {
         }
     }
 
-    fun CardUiState.toDomainCard(): PaymentCard? {
-        if (!checkValidCardNumber(this.cardNumber)) return null
-        if (!checkValidPassword(this.password)) return null
+    fun CardUiState.toDomainCard(): CardCreationResult {
+        if (!checkValidCardNumber(this.cardNumber)) return CardCreationResult.InvalidCardNumber
         val expireDateStatus = getExpireDateStatus(expireDate)
-        if (expireDateStatus !is ExpireDateStatus.Valid) return null
+        if (expireDateStatus !is ExpireDateStatus.Valid) {
+            return CardCreationResult.InvalidExpireDate(
+                expireDateStatus,
+            )
+        }
+        if (!checkValidPassword(this.password)) return CardCreationResult.InvalidPassword
 
-        return PaymentCard(
-            cardNumber = this.cardNumber,
-            expireDate = expireDateStatus.yearMonth,
-            ownerName = this.ownerName.ifEmpty { null },
-            password = this.password,
+        return CardCreationResult.Success(
+            PaymentCard(
+                cardNumber = this.cardNumber,
+                expireDate = expireDateStatus.yearMonth,
+                ownerName = this.ownerName.ifEmpty { null },
+                password = this.password,
+            ),
         )
     }
 }

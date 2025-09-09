@@ -1,5 +1,8 @@
 package woowacourse.payments.ui.features.addcard
 
+import android.content.Context
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,8 +18,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
@@ -24,12 +29,21 @@ import woowacourse.payments.ui.features.addcard.components.CardNumberField
 import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
 import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
+import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
+
+private fun showToast(
+    context: Context,
+    @StringRes
+    message: Int,
+) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
 
 @Composable
 fun AddCardScreen(
@@ -40,6 +54,7 @@ fun AddCardScreen(
     val expireDateStatus by remember(cardUiState.expireDate) {
         derivedStateOf { getExpireDateStatus(cardUiState.expireDate) }
     }
+    val context = LocalContext.current
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -47,9 +62,28 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onNavigateBack,
                 onSaveClick = {
-                    val cardDomain = cardUiState.toDomainCard()
-                    if (cardDomain == null) return@NewCardTopBar
-                    onNavigateSave(cardDomain)
+                    val cardDomainResult = cardUiState.toDomainCard()
+                    when (cardDomainResult) {
+                        CardCreationResult.InvalidCardNumber ->
+                            showToast(
+                                context,
+                                R.string.card_list_incomplete_card_number_field_alert,
+                            )
+
+                        is CardCreationResult.InvalidExpireDate ->
+                            showToast(
+                                context,
+                                R.string.card_list_incomplete_expire_date_field_alert,
+                            )
+
+                        CardCreationResult.InvalidPassword ->
+                            showToast(
+                                context,
+                                R.string.card_list_incomplete_card_password_field_alert,
+                            )
+
+                        is CardCreationResult.Success -> onNavigateSave(cardDomainResult.paymentCard)
+                    }
                 },
             )
         },
