@@ -18,10 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.EmptyCard
-import woowacourse.payments.ui.component.MultiCards
+import woowacourse.payments.ui.component.PaymentCardsContent
 import woowacourse.payments.ui.component.PaymentCardsTopBar
-import woowacourse.payments.ui.component.SingleCard
 import woowacourse.payments.ui.model.EXTRA_CARD
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -60,25 +58,6 @@ fun PaymentCardsScreen() {
             paymentCards = paymentCards,
             onAddCard = { launchAddCard() },
         )
-    }
-}
-
-@Composable
-private fun PaymentCardsContent(
-    modifier: Modifier = Modifier,
-    paymentCards: List<PaymentCardUiModel>,
-    onAddCard: () -> Unit,
-) {
-    when (paymentCards.size) {
-        0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
-        1 ->
-            SingleCard(
-                modifier = modifier,
-                paymentCard = paymentCards.first(),
-                onAddCard = onAddCard,
-            )
-
-        else -> MultiCards(modifier = modifier, paymentCards = paymentCards)
     }
 }
 
