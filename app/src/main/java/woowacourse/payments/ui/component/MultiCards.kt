@@ -8,11 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.model.PaymentCard
+import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun MultiCards(
-    paymentCards: List<PaymentCard>,
+    paymentCards: List<PaymentCardUiModel>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -36,8 +37,8 @@ fun MultiCardsPreview() {
     MultiCards(
         paymentCards =
             listOf(
-                PaymentCard("1234123456785678", "1215", "minjeong"),
-                PaymentCard("1111222233334444", "1234", "junseo"),
+                PaymentCardUiModel("1234123456785678", "1215", "minjeong"),
+                PaymentCardUiModel("1111222233334444", "1234", "junseo"),
             ),
     )
 }

@@ -19,13 +19,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.model.PaymentCard
+import woowacourse.payments.ui.format.formattedExpiry
+import woowacourse.payments.ui.format.maskedCardNumber
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.CardTextStyle
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    paymentCard: PaymentCard?,
+    paymentCard: PaymentCardUiModel?,
 ) {
     Box(
         modifier =
@@ -53,10 +55,7 @@ fun PaymentCard(
             )
             if (paymentCard != null) {
                 Text(
-                    text =
-                        paymentCard.cardNumber
-                            .chunked(4)
-                            .joinToString(stringResource(R.string.card_number_separator)),
+                    text = paymentCard.cardNumber.maskedCardNumber(stringResource(R.string.card_number_separator)),
                     style = CardTextStyle,
                     color = Color.White,
                     modifier = Modifier.padding(top = 8.dp),
@@ -77,9 +76,7 @@ fun PaymentCard(
                     )
                     Text(
                         text =
-                            paymentCard.expiry
-                                .chunked(2)
-                                .joinToString(stringResource(R.string.expiry_separator)),
+                            paymentCard.expiry.formattedExpiry(stringResource(R.string.expiry_separator)),
                         style = CardTextStyle,
                         color = Color.White,
                     )
@@ -92,5 +89,5 @@ fun PaymentCard(
 @Preview(showBackground = true)
 @Composable
 fun RegisteredPaymentCardPreview() {
-    PaymentCard(Modifier, PaymentCard("1234567812345678", "0511", "minjeong"))
+    PaymentCard(Modifier, PaymentCardUiModel("1234567812345678", "0511", "minjeong"))
 }

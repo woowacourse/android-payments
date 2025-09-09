@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package woowacourse.payments.ui
 
 import android.app.Activity
@@ -13,23 +15,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.model.EXTRA_CARD
-import woowacourse.payments.model.PaymentCard
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.component.EmptyCard
 import woowacourse.payments.ui.component.MultiCards
 import woowacourse.payments.ui.component.PaymentCardsTopBar
 import woowacourse.payments.ui.component.SingleCard
+import woowacourse.payments.ui.model.EXTRA_CARD
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCardsScreen() {
     val context = LocalContext.current
-    var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCard>()) }
+    var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCardUiModel>()) }
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val newPaymentCard = result.data?.getParcelableExtra<PaymentCard>(EXTRA_CARD)
+                val newPaymentCard = result.data?.getParcelableExtra<PaymentCardUiModel>(EXTRA_CARD)
                 newPaymentCard?.let { paymentCards = paymentCards + it }
             }
         }
@@ -57,7 +60,7 @@ fun PaymentCardsScreen() {
 @Composable
 private fun PaymentCardsContent(
     modifier: Modifier = Modifier,
-    paymentCards: List<PaymentCard>,
+    paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
 ) {
     when (paymentCards.size) {

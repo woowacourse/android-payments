@@ -8,11 +8,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.model.PaymentCard
+import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun SingleCard(
-    paymentCard: PaymentCard,
+    paymentCard: PaymentCardUiModel,
     onAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -25,5 +26,5 @@ fun SingleCard(
 @Preview(showBackground = true)
 @Composable
 fun SingleCardPreview() {
-    SingleCard(onAddCard = {}, paymentCard = PaymentCard("1234567812345678", "0511", "minjeong"))
+    SingleCard(onAddCard = {}, paymentCard = PaymentCardUiModel("1234567812345678", "0511", "minjeong"))
 }

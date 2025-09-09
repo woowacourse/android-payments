@@ -22,12 +22,13 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.model.EXTRA_CARD
-import woowacourse.payments.model.PaymentCard
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.StringTextField
+import woowacourse.payments.ui.model.EXTRA_CARD
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
@@ -46,8 +47,7 @@ fun AddPaymentCardScreen() {
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = { (context as? Activity)?.finish() },
                 onSaveClick = {
-                    val paymentCard =
-                        PaymentCard(cardNumber = cardNumber, expiry = expiry, owner = owner)
+                    val paymentCard = PaymentCard(cardNumber, expiry, owner, pin).toUiModel()
                     (context as? Activity)?.apply {
                         setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_CARD, paymentCard))
                         finish()

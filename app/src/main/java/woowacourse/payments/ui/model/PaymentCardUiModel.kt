@@ -1,10 +1,10 @@
-package woowacourse.payments.model
+package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PaymentCard(
+data class PaymentCardUiModel(
     val cardNumber: String,
     val expiry: String,
     val owner: String,
