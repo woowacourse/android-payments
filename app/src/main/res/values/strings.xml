@@ -12,21 +12,27 @@
     <!--    CardNumberField-->
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_placeholder" tools:ignore="TypographyDashes">0000 – 0000 - 0000 - 0000</string>
+    <string name="error_invalid_card_number_length">카드 번호는 16자리여야 합니다.</string>
 
     <!--    ExpirationDateField-->
     <string name="expiration_date_label">만료일</string>
     <string name="expiration_date_placeholder">MM / YY</string>
+    <string name="error_invalid_format">형식이 올바르지 않습니다.</string>
+    <string name="error_expired_date">만료일이 지났습니다.</string>
+    <string name="error_invalid_expiration_length">만료일은 4자리여야 합니다.</string>
 
     <!--    UserNameField-->
     <string name="user_name_label">카드 소유자 이름(선택)</string>
     <string name="user_name_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="user_name_counter">%1$d / %2$d</string>
+    <string name="error_invalid_username_length">이름은 30자 이내로 입력해주세요.</string>
+    <string name="error_invalid_characters">이름에 숫자나 특수문자는 사용할 수 없습니다.</string>
 
     <!--    PasswordField-->
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
+    <string name="error_invalid_password_length">비밀번호는 4자리여야 합니다.</string>
 
     <!--    PaymentScreen-->
     <string name="payment_add_new_card_prompt">새로운 카드를 등록해주세요</string>
-
 </resources>

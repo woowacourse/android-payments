@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,8 @@ fun UserNameField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorMessage: String? = null,
 ) {
     OutlinedTextField(
         modifier = modifier,
@@ -32,17 +35,25 @@ fun UserNameField(
             )
         },
         supportingText = {
-            Text(
-                text =
-                    stringResource(
-                        R.string.user_name_counter,
-                        value.length,
-                        USER_NAME_MAX_LENGTH,
-                    ),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End,
-            )
+            if (isError && errorMessage != null) {
+                Text(
+                    text = errorMessage,
+                    color = MaterialTheme.colorScheme.error,
+                )
+            } else {
+                Text(
+                    text =
+                        stringResource(
+                            R.string.user_name_counter,
+                            value.length,
+                            USER_NAME_MAX_LENGTH,
+                        ),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                )
+            }
         },
+        isError = isError,
         singleLine = true,
     )
 }

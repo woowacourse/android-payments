@@ -19,6 +19,8 @@ fun PasswordField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorMessage: String? = null,
 ) {
     OutlinedTextField(
         keyboardOptions =
@@ -39,7 +41,13 @@ fun PasswordField(
                 color = Grey40,
             )
         },
+        isError = isError,
         singleLine = true,
+        supportingText = {
+            if (isError && errorMessage != null) {
+                Text(text = errorMessage)
+            }
+        },
     )
 }
 

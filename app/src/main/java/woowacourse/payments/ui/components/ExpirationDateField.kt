@@ -20,6 +20,8 @@ fun ExpirationDateField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorMessage: String? = null,
 ) {
     val expirationDateVisualTransformation =
         remember {
@@ -47,7 +49,13 @@ fun ExpirationDateField(
                 color = Grey40,
             )
         },
+        isError = isError,
         singleLine = true,
+        supportingText = {
+            if (isError && errorMessage != null) {
+                Text(text = errorMessage)
+            }
+        },
     )
 }
 

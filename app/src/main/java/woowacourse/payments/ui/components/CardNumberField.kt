@@ -20,6 +20,8 @@ fun CardNumberField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
+    errorMessage: String? = null,
 ) {
     val cardNumberVisualTransformation =
         remember {
@@ -48,6 +50,12 @@ fun CardNumberField(
             )
         },
         singleLine = true,
+        isError = isError,
+        supportingText = {
+            if (isError && errorMessage != null) {
+                Text(text = errorMessage)
+            }
+        },
     )
 }
 
