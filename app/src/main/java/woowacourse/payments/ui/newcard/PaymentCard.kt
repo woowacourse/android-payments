@@ -18,15 +18,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.formatter.CardNumberFormatter
+import woowacourse.payments.ui.formatter.ExpirationDateFormatter
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    cardNumber: String = "",
-    cardholderName: String = "",
-    expirationDate: String = "",
+    cardNumber: String? = null,
+    expirationDate: YearMonth? = null,
+    cardholderName: String? = null,
 ) {
     Box(
         modifier
@@ -51,7 +54,7 @@ fun PaymentCard(
                     ),
             )
             Text(
-                text = cardNumber,
+                text = cardNumber?.let { CardNumberFormatter().format(it) } ?: "",
                 color = Color.White,
                 fontSize = 12.sp,
             )
@@ -60,12 +63,12 @@ fun PaymentCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = cardholderName,
+                    text = cardholderName ?: "",
                     color = Color.White,
                     fontSize = 12.sp,
                 )
                 Text(
-                    text = expirationDate,
+                    text = expirationDate?.let { ExpirationDateFormatter().format(it) } ?: "",
                     color = Color.White,
                     fontSize = 12.sp,
                     textAlign = TextAlign.End,
@@ -92,7 +95,7 @@ fun PaymentCardWithDetailPreview() {
         PaymentCard(
             cardNumber = "1111 - 2222 - **** - ****",
             cardholderName = "CREW",
-            expirationDate = "04 / 21"
-            )
+            expirationDate = YearMonth.of(2034, 12),
+        )
     }
 }

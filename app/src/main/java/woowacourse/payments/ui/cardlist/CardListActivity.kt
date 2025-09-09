@@ -56,7 +56,11 @@ class CardListActivity : ComponentActivity() {
                     LazyColumn(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(36.dp),
-                        modifier = Modifier.fillMaxSize().padding(innerPadding).padding(vertical = 12.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding)
+                                .padding(vertical = 12.dp),
                     ) {
                         items(
                             count = cards.size,
@@ -64,8 +68,8 @@ class CardListActivity : ComponentActivity() {
                             val card: Card = cards[index]
                             PaymentCard(
                                 cardNumber = card.number.value,
+                                expirationDate = card.expirationDate.expirationYearMonth,
                                 cardholderName = card.holderName.value,
-                                expirationDate = card.expirationDate.expirationYearMonth.toString(),
                             )
                         }
                     }
@@ -102,6 +106,7 @@ class CardListActivity : ComponentActivity() {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListActivityPreview() {
@@ -113,24 +118,27 @@ fun CardListActivityPreview() {
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(36.dp),
-                modifier = Modifier.fillMaxSize().padding(innerPadding).padding(vertical = 12.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(vertical = 12.dp),
             ) {
                 item {
                     PaymentCard(
-                        cardNumber = "1234 - 1234 - 1234 - 1234",
+                        cardNumber = "1234 - 1234 - **** - ****",
                         cardholderName = "CREW 1",
-                        expirationDate = "12 / 34",
+                        expirationDate = YearMonth.of(2034, 12),
                     )
                 }
                 item {
                     PaymentCard(
-                        cardNumber = "1234 - 1234 - 1234 - 1234",
+                        cardNumber = "1234 - 1234 - **** - ****",
                         cardholderName = "CREW 2",
-                        expirationDate = "12 / 34",
+                        expirationDate = YearMonth.of(2034, 12),
                     )
                 }
             }
-
         }
     }
 }
