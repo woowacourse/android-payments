@@ -1,14 +1,18 @@
 package woowacourse.payments.ui.addcard.textfields
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import woowacourse.payments.R
@@ -61,5 +65,27 @@ fun PasscodeTextField(
         },
         isError = isError.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+    )
+}
+
+@Suppress("ktlint:standard:function-naming")
+@SuppressLint("UnrememberedMutableState")
+@Preview(showBackground = true)
+@Composable
+fun PasscodeTextFieldPreview() {
+    PasscodeTextField(
+        text = mutableStateOf("1234"),
+        isError = mutableStateOf(false),
+    )
+}
+
+@Suppress("ktlint:standard:function-naming")
+@SuppressLint("UnrememberedMutableState")
+@Preview(showBackground = true)
+@Composable
+fun PasscodeTextFieldWithErrorPreview() {
+    PasscodeTextField(
+        text = mutableStateOf("123"),
+        isError = mutableStateOf(true),
     )
 }

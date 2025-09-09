@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,10 +21,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardholderName
+import woowacourse.payments.domain.ExpirationDate
+import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.addcard.PaymentCard
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -34,7 +40,7 @@ fun CardListContents(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                CardListTopBar {
+                CardListTopBar(cards) {
                     navigateToAddCard()
                 }
             },
@@ -74,58 +80,57 @@ fun CardListContents(
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
-fun CardListContentsPreview() {
-    AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                CardListTopBar()
-            },
-        ) { innerPadding: PaddingValues ->
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(36.dp),
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(innerPadding),
-            ) {
-                Text(
-                    text = stringResource(R.string.card_list_add_card_guide_text),
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 32.dp),
-                )
+fun CardListContentsWithNoCardsPreview() {
+    CardListContents(
+        cards = mutableStateListOf(),
+        navigateToAddCard = {},
+    )
+}
 
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(36.dp),
-                ) {
-                    item {
-                        PaymentCard(
-                            card =
-                                CardUiModel(
-                                    "1234 - 1234 - **** - ****",
-                                    "CREW 1",
-                                    "12 / 34",
-                                ),
-                        )
-                    }
-                    item {
-                        PaymentCard(
-                            card =
-                                CardUiModel(
-                                    "1111 - 2222 - **** - ****",
-                                    "CREW 2",
-                                    "12 / 34",
-                                ),
-                        )
-                    }
-                }
+@SuppressLint("UnrememberedMutableState")
+@Suppress("ktlint:standard:function-naming")
+@Preview(showBackground = true)
+@Composable
+fun CardListContentsWithOneCardPreview() {
+    CardListContents(
+        cards =
+            mutableStateListOf(
+                Card(
+                    CardNumber("1234123412341234"),
+                    ExpirationDate(YearMonth.of(2034, 12)),
+                    CardholderName("디랙"),
+                    Passcode("1234"),
+                ),
+            ),
+        navigateToAddCard = {},
+    )
+}
 
-                AddCardButton()
-            }
-        }
-    }
+@SuppressLint("UnrememberedMutableState")
+@Suppress("ktlint:standard:function-naming")
+@Preview(showBackground = true)
+@Composable
+fun CardListContentsWithTwoCardsPreview() {
+    CardListContents(
+        cards =
+            mutableStateListOf(
+                Card(
+                    CardNumber("1234123412341234"),
+                    ExpirationDate(YearMonth.of(2034, 12)),
+                    CardholderName("디랙"),
+                    Passcode("1234"),
+                ),
+                Card(
+                    CardNumber("1234123412341234"),
+                    ExpirationDate(YearMonth.of(2034, 12)),
+                    CardholderName("디랙"),
+                    Passcode("1234"),
+                ),
+            ),
+        navigateToAddCard = {},
+    )
 }

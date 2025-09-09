@@ -11,6 +11,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Suppress("ktlint:standard:function-naming")
@@ -40,5 +41,15 @@ fun AddCardTopBar(
             }
         },
         modifier = modifier,
+    )
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Preview
+@Composable
+fun AddCardTopBarPreview() {
+    AddCardTopBar(
+        onBackClick = {},
+        onSaveClick = {},
     )
 }

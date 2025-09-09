@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
@@ -29,8 +31,8 @@ fun AddCardContents(
         cardholderName: String,
         passcode: String,
     ) -> Unit,
-    onSaveFailure: () -> Unit = {},
-    onBackClick: () -> Unit = {},
+    onSaveFailure: () -> Unit,
+    onBackClick: () -> Unit,
 ) {
     val cardNumber: MutableState<String> = remember { mutableStateOf("") }
     val expirationDate: MutableState<String> = remember { mutableStateOf("") }
@@ -99,4 +101,15 @@ fun AddCardContents(
             }
         }
     }
+}
+
+@Suppress("ktlint:standard:function-naming")
+@Preview(showBackground = true)
+@Composable
+fun AddCardContentsPreview() {
+    AddCardContents(
+        onSaveSuccess = { _, _, _, _ -> },
+        onSaveFailure = {},
+        onBackClick = {},
+    )
 }
