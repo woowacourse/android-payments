@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.component.payments
 
-import android.util.Log
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -12,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.screen.PaymentCardCount
 import woowacourse.payments.ui.theme.Black
 import woowacourse.payments.ui.theme.Black1D
 
@@ -19,6 +19,7 @@ import woowacourse.payments.ui.theme.Black1D
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentsTopBar(
+    paymentCardCount: PaymentCardCount = PaymentCardCount.Empty,
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -32,11 +33,12 @@ fun PaymentsTopBar(
             )
         },
         actions = {
-            TextButton(onClick = {
-                Log.d("test", "추가 버튼 클릭!")
-                onAddNewCardClick()
-            }) {
-                Text(text = "추가", fontSize = 18.sp, fontWeight = FontWeight.W700, color = Black)
+            if (paymentCardCount == PaymentCardCount.MoreThanOne) {
+                TextButton(onClick = {
+                    onAddNewCardClick()
+                }) {
+                    Text(text = stringResource(R.string.payments_top_bar_icon_name), fontSize = 18.sp, fontWeight = FontWeight.W700, color = Black)
+                }
             }
         },
         modifier = modifier,

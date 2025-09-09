@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.screen
 
 import android.content.Intent
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,8 +21,11 @@ fun PaymentScreen(
     Scaffold(
         modifier = modifier,
         topBar = { PaymentsTopBar(onAddNewCardClick = { onAddNewCardClick() }) }
-    ) { paddingValues ->
-        PaymentsColumn(cards, modifier = Modifier.padding(paddingValues))
+    ) { paddingValues: PaddingValues ->
+        PaymentsColumn(
+            onClickAddCard = onAddNewCardClick,
+            modifier = Modifier.padding(paddingValues)
+        )
     }
 }
 
@@ -29,4 +33,10 @@ fun PaymentScreen(
 @Composable
 private fun PaymentScreenPreview() {
     PaymentScreen(cards = emptyList(), onAddNewCardClick = {})
+}
+
+sealed class PaymentCardCount {
+    data object Empty : PaymentCardCount()
+    data object One : PaymentCardCount()
+    data object MoreThanOne : PaymentCardCount()
 }
