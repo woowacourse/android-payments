@@ -29,6 +29,8 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
@@ -144,56 +146,43 @@ fun AddCardBox(onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true, name = "카드 0개")
-@Composable
-fun CardListScreenPreview_Empty() {
-    AndroidpaymentsTheme {
-        CardListScreen(
-            cards = emptyList(),
-            navigateToAddCard = { },
+class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
+    override val values: Sequence<List<CardUiModel>> =
+        sequenceOf(
+            emptyList(),
+            listOf(
+                Card(
+                    number = CardNumber("1234567887654321"),
+                    expired = Expired("1221"),
+                    owner = CardOwner("aaaa"),
+                    password = Password("1234"),
+                ).toPresentation(),
+            ),
+            listOf(
+                Card(
+                    number = CardNumber("1234567887654321"),
+                    expired = Expired("1221"),
+                    owner = CardOwner("aaaa"),
+                    password = Password("1234"),
+                ).toPresentation(),
+                Card(
+                    number = CardNumber("8765432112345678"),
+                    expired = Expired("1122"),
+                    owner = CardOwner("bbbb"),
+                    password = Password("5678"),
+                ).toPresentation(),
+            ),
         )
-    }
 }
 
-@Preview(showBackground = true, name = "카드 1개")
+@Preview(showBackground = true)
 @Composable
-fun CardListScreenPreview_OneCard() {
+fun CardListScreenPreview(
+    @PreviewParameter(CardListPreviewProvider::class) cards: List<CardUiModel>,
+) {
     AndroidpaymentsTheme {
         CardListScreen(
-            cards =
-                listOf(
-                    Card(
-                        number = CardNumber("1234567887654321"),
-                        expired = Expired("1221"),
-                        owner = CardOwner("aaaa"),
-                        password = Password("1234"),
-                    ).toPresentation(),
-                ),
-            navigateToAddCard = { },
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "카드 2개")
-@Composable
-fun CardListScreenPreview_TwoCards() {
-    AndroidpaymentsTheme {
-        CardListScreen(
-            cards =
-                listOf(
-                    Card(
-                        number = CardNumber("1234567887654321"),
-                        expired = Expired("1221"),
-                        owner = CardOwner("aaaa"),
-                        password = Password("1234"),
-                    ).toPresentation(),
-                    Card(
-                        number = CardNumber("8765432112345678"),
-                        expired = Expired("1122"),
-                        owner = CardOwner("bbbb"),
-                        password = Password("5678"),
-                    ).toPresentation(),
-                ),
+            cards = cards,
             navigateToAddCard = { },
         )
     }
