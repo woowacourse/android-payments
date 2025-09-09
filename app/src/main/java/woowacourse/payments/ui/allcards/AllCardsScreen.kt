@@ -45,6 +45,7 @@ import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
+import woowacourse.payments.ui.allcards.component.PlusCard
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -94,32 +95,6 @@ private fun NotifyToAddCard() {
             text = stringResource(R.string.allcards_request_add_card),
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
-        )
-    }
-}
-
-@Composable
-private fun PlusCard(
-    onClick:()->Unit = {},
-) {
-    Box(
-        modifier = Modifier
-            .height(124.dp)
-            .width(208.dp)
-            .background(
-                color = colorResource(id = R.color.payments_plus_card_background),
-                shape = RoundedCornerShape(5.dp),
-            )
-            .clickable {
-                onClick()
-            },
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            modifier = Modifier.size(34.dp),
-            imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.payments_allcards_topbar_add_cards),
-            tint = colorResource(id = R.color.payments_plus_card_icon_color),
         )
     }
 }
