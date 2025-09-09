@@ -32,7 +32,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
+    onSaveClick: (card: Card) -> Unit,
 ) {
     var cardNumber by remember { mutableStateOf("") }
     var expiredDate by remember { mutableStateOf("") }
@@ -43,7 +43,16 @@ fun CardRegisterScreen(
         topBar = {
             CardRegisterTopBar(
                 onBackClick = { onBackClick() },
-                onSaveClick = { onSaveClick() },
+                onSaveClick = {
+                    onSaveClick(
+                        Card(
+                            number = cardNumber,
+                            expiredDate = expiredDate,
+                            ownerName = ownerName,
+                            password = password,
+                        ),
+                    )
+                },
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -56,7 +65,6 @@ fun CardRegisterScreen(
                     .padding(horizontal = 24.dp),
         ) {
             PaymentCard(
-                card = Card(cardNumber, expiredDate, ownerName, password),
                 modifier =
                     Modifier
                         .padding(top = 14.dp)

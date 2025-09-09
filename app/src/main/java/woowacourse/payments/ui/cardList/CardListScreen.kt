@@ -68,7 +68,7 @@ fun CardListScreen(onRegistrationClick: () -> Unit) {
             }
             cards.forEach { card ->
                 Spacer(modifier = Modifier.height(36.dp))
-                PaymentCard(card)
+                PaymentCard(card = card)
             }
         }
     }

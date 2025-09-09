@@ -23,11 +23,11 @@ import woowacourse.payments.ui.theme.Typography
 
 @Composable
 fun PaymentCard(
-    card: Card,
     modifier: Modifier = Modifier,
+    card: Card? = null,
 ) {
     Box(
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = if (card == null) Alignment.Center else Alignment.BottomCenter,
         modifier =
             modifier
                 .shadow(8.dp)
@@ -48,34 +48,35 @@ fun PaymentCard(
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
-
-            Text(
-                text = card.number,
-                color = Color.White,
-                style = Typography.labelMedium,
-                modifier = Modifier.padding(top = 8.dp),
-            )
-
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(top = 2.dp),
-            ) {
+            if (card != null) {
                 Text(
-                    text = card.ownerName ?: "",
+                    text = card.number,
                     color = Color.White,
                     style = Typography.labelMedium,
-                    textAlign = TextAlign.Start,
+                    modifier = Modifier.padding(top = 8.dp),
                 )
 
-                Text(
-                    text = card.expiredDate,
-                    color = Color.White,
-                    style = Typography.labelMedium,
-                    textAlign = TextAlign.End,
-                    modifier = Modifier.weight(1f),
-                )
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 2.dp),
+                ) {
+                    Text(
+                        text = card.ownerName ?: "",
+                        color = Color.White,
+                        style = Typography.labelMedium,
+                        textAlign = TextAlign.Start,
+                    )
+
+                    Text(
+                        text = card.expiredDate,
+                        color = Color.White,
+                        style = Typography.labelMedium,
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
         }
     }
@@ -83,15 +84,24 @@ fun PaymentCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentCardPreview() {
+private fun PaymentCardPreview1() {
     AndroidpaymentsTheme {
         PaymentCard(
-            Card(
-                number = "1111 - 2222 - **** - ****",
-                expiredDate = "04 / 21",
-                ownerName = "CREW",
-                password = "1234",
-            ),
+            card =
+                Card(
+                    number = "1111 - 2222 - **** - ****",
+                    expiredDate = "04 / 21",
+                    ownerName = "CREW",
+                    password = "1234",
+                ),
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaymentCardPreview2() {
+    AndroidpaymentsTheme {
+        PaymentCard()
     }
 }
