@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.common.parcelable
@@ -32,7 +33,9 @@ class CardListActivity : ComponentActivity() {
                                 activityResult.data?.parcelable("newCard")
                                     ?: return@rememberLauncherForActivityResult
                             cards += newCard
-                            Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context,
+                                getString(R.string.registration_card_complete_message),
+                                Toast.LENGTH_SHORT).show()
                         }
                     }
                 CardListScreen(

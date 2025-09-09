@@ -14,7 +14,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,6 +30,7 @@ import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.FFFF0000
 
 @Composable
 fun CardRegisterScreen(
@@ -85,7 +85,10 @@ fun CardRegisterScreen(
                 supportingText =
                     {
                         if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
-                            Text("카드 번호 16자리를 입력하세요", color = Color.Red)
+                            Text(
+                                text = stringResource(R.string.card_number_supporting_text),
+                                color = FFFF0000,
+                            )
                         }
                     },
                 placeholder = stringResource(R.string.card_number_place_holder),
@@ -105,7 +108,10 @@ fun CardRegisterScreen(
                 supportingText =
                     {
                         if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
-                            Text("올바른 일자를 입력하세요", color = Color.Red)
+                            Text(
+                                text = stringResource(R.string.card_expired_date_supporting_text),
+                                color = FFFF0000,
+                            )
                         }
                     },
                 placeholder = stringResource(R.string.expired_date_place_holder),
@@ -147,7 +153,10 @@ fun CardRegisterScreen(
                 supportingText =
                     {
                         if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
-                            Text("4자리로 입력하세요", color = Color.Red)
+                            Text(
+                                text = stringResource(R.string.card_password_supporting_text),
+                                color = FFFF0000,
+                            )
                         }
                     },
                 placeholder = stringResource(R.string.card_password_place_holder),

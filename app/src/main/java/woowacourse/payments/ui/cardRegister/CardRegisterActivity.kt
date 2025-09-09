@@ -8,6 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalContext
+import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -30,7 +31,9 @@ class CardRegisterActivity : ComponentActivity() {
                         finish()
                     },
                     isNotValidInput = {
-                        Toast.makeText(context, "입력값을 확인해주세요", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,
+                            getString(R.string.card_input_not_valid_message),
+                            Toast.LENGTH_SHORT).show()
                     },
                 )
             }

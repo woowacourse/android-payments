@@ -37,7 +37,7 @@ fun CardListTopBar(
             {
                 if (isShowRegistrationButton) {
                     Text(
-                        text = "추가",
+                        text = stringResource(R.string.add_title),
                         style = Typography.displayLarge,
                         color = FF000000,
                         modifier =
