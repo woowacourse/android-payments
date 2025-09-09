@@ -1,8 +1,8 @@
 package woowacourse.payments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 class CardlistActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,24 +36,12 @@ class CardlistActivity : ComponentActivity() {
                     ) { activityResult ->
                         if (activityResult.resultCode == Activity.RESULT_OK) {
                             val newCard =
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                                    activityResult.data?.getParcelableExtra(
-                                        AddcardActivity.EXTRA_PAYMENT_CARD,
-                                        PaymentCard::class.java,
-                                    )
-                                } else {
-                                    @Suppress("DEPRECATION")
-                                    activityResult.data?.getParcelableExtra(AddcardActivity.EXTRA_PAYMENT_CARD)
-                                }
+                                activityResult.data?.getParcelableExtraCompat<PaymentCard>(
+                                    AddcardActivity.EXTRA_PAYMENT_CARD,
+                                )
                             newCard?.let {
                                 cardList = cardList + it
-
-                                Toast
-                                    .makeText(
-                                        context,
-                                        getString(R.string.card_list_card_added_alert),
-                                        Toast.LENGTH_SHORT,
-                                    ).show()
+                                showToast(context, R.string.card_list_card_added_alert)
                             }
                         }
                     }
@@ -66,5 +55,12 @@ class CardlistActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun showToast(
+        context: Context,
+        messageId: Int,
+    ) {
+        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show()
     }
 }
