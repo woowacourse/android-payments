@@ -46,6 +46,6 @@ fun AddCard(
 
 @Preview(showBackground = true)
 @Composable
-fun AddCardPreview() {
+private fun AddCardPreview() {
     AddCard(onAddClick = {})
 }

@@ -42,12 +42,12 @@ fun PaymentCardsTopBar(
 
 @Preview
 @Composable
-fun MultiPaymentCardsTopBarPreview() {
+private fun MultiPaymentCardsTopBarPreview() {
     PaymentCardsTopBar(2)
 }
 
 @Preview
 @Composable
-fun SinglePaymentCardsTopBarPreview() {
+private fun SinglePaymentCardsTopBarPreview() {
     PaymentCardsTopBar(1)
 }

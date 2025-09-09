@@ -88,6 +88,6 @@ fun PaymentCard(
 
 @Preview(showBackground = true)
 @Composable
-fun RegisteredPaymentCardPreview() {
+private fun RegisteredPaymentCardPreview() {
     PaymentCard(Modifier, PaymentCardUiModel("1234567812345678", "0511", "minjeong"))
 }

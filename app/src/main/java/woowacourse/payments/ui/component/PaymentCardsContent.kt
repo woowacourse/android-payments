@@ -36,7 +36,7 @@ fun PaymentCardsContent(
 }
 
 @Composable
-fun EmptyCard(
+private fun EmptyCard(
     modifier: Modifier = Modifier,
     onAddCard: () -> Unit,
 ) {
@@ -55,7 +55,7 @@ fun EmptyCard(
 }
 
 @Composable
-fun SingleCard(
+private fun SingleCard(
     paymentCard: PaymentCardUiModel,
     onAddCard: () -> Unit,
     modifier: Modifier = Modifier,
@@ -67,7 +67,7 @@ fun SingleCard(
 }
 
 @Composable
-fun MultiCards(
+private fun MultiCards(
     paymentCards: List<PaymentCardUiModel>,
     modifier: Modifier = Modifier,
 ) {
@@ -88,13 +88,13 @@ fun MultiCards(
 
 @Preview(showBackground = true)
 @Composable
-fun EmptyCardPreview() {
+private fun EmptyCardPreview() {
     EmptyCard(onAddCard = {})
 }
 
 @Preview(showBackground = true)
 @Composable
-fun SingleCardPreview() {
+private fun SingleCardPreview() {
     SingleCard(
         onAddCard = {},
         paymentCard = PaymentCardUiModel("1234567812345678", "0511", "minjeong"),
@@ -103,7 +103,7 @@ fun SingleCardPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun MultiCardsPreview() {
+private fun MultiCardsPreview() {
     MultiCards(
         paymentCards =
             listOf(
