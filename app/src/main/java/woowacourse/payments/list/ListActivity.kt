@@ -148,7 +148,7 @@ fun CardListScreen(
 fun CardList(
     cards: List<Card>,
 ) {
-    cards.forEach { card: Card -> PaymentCard(card) }
+    cards.forEach { card: Card -> PaymentCard(card = card) }
 }
 
 @Composable

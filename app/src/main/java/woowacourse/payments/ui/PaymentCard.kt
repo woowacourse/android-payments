@@ -25,8 +25,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCard(
-    card: Card? = null,
     modifier: Modifier = Modifier,
+    card: Card? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -91,7 +91,7 @@ fun PaymentCard(
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
         Column {
-            PaymentCard(Card("0000000000000000", "1025", "1234", "CREW"))
+            PaymentCard(card = Card("0000000000000000", "1025", "1234", "CREW"))
             PaymentCard()
         }
     }
