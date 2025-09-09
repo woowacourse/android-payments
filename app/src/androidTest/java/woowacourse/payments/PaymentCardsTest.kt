@@ -1,0 +1,80 @@
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
+import org.junit.Rule
+import org.junit.Test
+import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.components.PaymentCards
+import woowacourse.payments.ui.mapper.toUiModel
+import woowacourse.payments.ui.model.CardUiModel
+
+@Suppress("ktlint:standard:function-naming")
+class PaymentCardsTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    private val sampleCard: CardUiModel =
+        Card(
+            cardNumber = "1111222233334444",
+            expirationDate = "1226",
+            userName = "KIMGAHYUN",
+            password = "1234",
+        ).toUiModel()
+
+    @Test
+    fun 카드_목록이_비어있을_때_카드_추가_안내와_버튼이_표시된다() {
+        val cards = emptyList<CardUiModel>()
+
+        composeTestRule.setContent {
+            PaymentCards(
+                cards = cards,
+                onAddCardClick = {},
+            )
+        }
+
+        composeTestRule
+            .onNodeWithText("새로운 카드를 등록해주세요")
+            .assertIsDisplayed()
+
+        composeTestRule
+            .onNodeWithText("+")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_개수가_3개_미만일_때_카드_추가_버튼이_표시된다() {
+        val cards = listOf(sampleCard, sampleCard)
+
+        composeTestRule.setContent {
+            PaymentCards(
+                cards = cards,
+                onAddCardClick = {},
+            )
+        }
+
+        composeTestRule
+            .onNodeWithText("+")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_개수가_3개_이상일_때_추가_버튼이_숨겨진다() {
+        val cards = listOf(sampleCard, sampleCard, sampleCard)
+
+        composeTestRule.setContent {
+            PaymentCards(
+                cards = cards,
+                onAddCardClick = {},
+            )
+        }
+
+        composeTestRule
+            .onNodeWithText("추가")
+            .assertIsNotDisplayed()
+
+        composeTestRule
+            .onNodeWithText("+")
+            .assertDoesNotExist()
+    }
+}

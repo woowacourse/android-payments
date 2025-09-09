@@ -16,7 +16,7 @@ class AddCardScreenTest {
 
     @Before
     fun setup() {
-        composeTestRule.setContent { AddCardScreen() }
+        composeTestRule.setContent { AddCardScreen({}, {}) }
     }
 
     @Test

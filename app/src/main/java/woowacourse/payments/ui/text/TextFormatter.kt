@@ -3,7 +3,7 @@ package woowacourse.payments.ui.text
 private const val CARD_VISIBLE_PREFIX = 8
 private const val CARD_GROUP_SIZE = 4
 private const val CARD_GROUP_SEP = " - "
-private const val MASK_CHAR = '•'
+private const val MASK_CHAR = '*'
 
 fun String.maskAndFormatCardNumber(): String {
     if (this.isEmpty()) return ""
