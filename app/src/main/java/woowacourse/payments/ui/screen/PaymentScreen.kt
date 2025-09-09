@@ -2,25 +2,17 @@ package woowacourse.payments.ui.screen
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
-import woowacourse.payments.ui.components.AddCardComponent
-import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.components.PaymentCards
 import woowacourse.payments.ui.components.PaymentTopBar
 import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
@@ -40,7 +32,7 @@ fun PaymentScreen(
             )
         },
     ) { innerPadding ->
-        PaymentBody(
+        PaymentCards(
             cards = cards,
             onAddCardClick = onAddCardClick,
             modifier =
@@ -49,41 +41,6 @@ fun PaymentScreen(
                     .padding(horizontal = 24.dp)
                     .fillMaxSize(),
         )
-    }
-}
-
-@Composable
-private fun PaymentBody(
-    cards: List<CardUiModel>,
-    onAddCardClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Spacer(Modifier.height(32.dp))
-
-        if (cards.isEmpty()) {
-            Text(
-                text = stringResource(R.string.payment_add_new_card_prompt),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W700,
-            )
-            Spacer(Modifier.height(32.dp))
-            AddCardComponent(onClick = onAddCardClick)
-        } else {
-            cards.forEachIndexed { index, card ->
-                PaymentCard(card = card)
-                if (index < cards.lastIndex) {
-                    Spacer(Modifier.height(16.dp))
-                }
-            }
-            if (cards.size < 3) {
-                Spacer(Modifier.height(24.dp))
-                AddCardComponent(onClick = onAddCardClick)
-            }
-        }
     }
 }
 

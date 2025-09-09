@@ -17,7 +17,7 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
-fun PaymentScreenWithLauncher() {
+fun PaymentScreenContainer() {
     var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
     val context = LocalContext.current
 
