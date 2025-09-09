@@ -27,7 +27,7 @@ fun NewCardTopBar(
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.new_card_back_icon_description),
+                    contentDescription = stringResource(R.string.new_card_back_button_description),
                 )
             }
         },
@@ -35,7 +35,7 @@ fun NewCardTopBar(
             IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.new_card_save_icon_description),
+                    contentDescription = stringResource(R.string.new_card_save_button_description),
                 )
             }
         },

@@ -21,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
@@ -67,7 +69,7 @@ class CardListActivity : ComponentActivity() {
                     ) {
                         if (cards.isEmpty()) {
                             Text(
-                                text = "새로운 카드를 등록해주세요",
+                                text = stringResource(R.string.card_list_add_card_guide_text),
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.padding(top = 32.dp),
                             )
