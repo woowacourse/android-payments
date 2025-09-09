@@ -9,27 +9,22 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.getParcelableExtraCompat
-import woowacourse.payments.ui.getParcelableList
 import woowacourse.payments.ui.screen.addCard.AddCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
-    private val cardList = mutableStateListOf<CardUiModel>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val restoredList: List<CardUiModel> =
-            savedInstanceState?.getParcelableList<CardUiModel>("cards") ?: emptyList()
-        cardList.addAll(restoredList)
-
         setContent {
             AndroidpaymentsTheme {
                 val context = LocalContext.current
+                val cards = rememberSaveable { mutableStateListOf<CardUiModel>() }
 
                 val addCardLauncher =
                     rememberLauncherForActivityResult(
@@ -39,14 +34,14 @@ class CardListActivity : ComponentActivity() {
                             val newCard =
                                 result.data?.getParcelableExtraCompat<CardUiModel>("new_card")
                             newCard?.let {
-                                cardList.add(it)
+                                cards.add(it)
                                 Toast.makeText(context, "새 카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
 
                 CardListScreen(
-                    cards = cardList,
+                    cards = cards,
                     navigateToAddCard = {
                         val intent = Intent(this@CardListActivity, AddCardActivity::class.java)
                         addCardLauncher.launch(intent)
@@ -54,10 +49,5 @@ class CardListActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelableArrayList("cards", ArrayList(cardList))
     }
 }
