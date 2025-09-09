@@ -16,6 +16,8 @@ class CardOwnerTest {
     fun setUp() {
         composeTestRule.setContent {
             LimitedTextField(
+                text = "",
+                onValueChange = {},
                 label = "카드 소유자 이름(선택)",
                 hint = "카드에 표시된 이름을 입력하세요.",
                 maxLength = 30,

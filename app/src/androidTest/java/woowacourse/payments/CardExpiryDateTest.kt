@@ -17,6 +17,8 @@ class CardExpiryDateTest {
     fun setUp() {
         composeTestRule.setContent {
             DigitTextField(
+                text = "",
+                onValueChange = {},
                 label = "만료일",
                 hint = "MM / YY",
                 maxLength = 4,

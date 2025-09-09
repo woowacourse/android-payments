@@ -19,6 +19,8 @@ class CardPasswordTest {
     fun setUp() {
         composeTestRule.setContent {
             DigitTextField(
+                text = "",
+                onValueChange = {},
                 label = "비밀번호",
                 hint = "0000",
                 maxLength = 4,
