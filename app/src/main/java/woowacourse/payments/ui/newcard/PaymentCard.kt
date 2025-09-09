@@ -18,18 +18,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.formatter.CardNumberFormat
-import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    cardNumber: String? = null,
-    expirationDate: YearMonth? = null,
-    cardholderName: String? = null,
+    card: CardUiModel = CardUiModel(),
 ) {
     Box(
         modifier
@@ -55,10 +51,7 @@ fun PaymentCard(
             )
 
             Text(
-                text =
-                    cardNumber?.let { cardNumber: String ->
-                        CardNumberFormat.formattedCardNumber(text = cardNumber, applyMask = true)
-                    } ?: "",
+                text = card.number,
                 color = Color.White,
                 fontSize = 12.sp,
             )
@@ -68,16 +61,13 @@ fun PaymentCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = cardholderName ?: "",
+                    text = card.holderName,
                     color = Color.White,
                     fontSize = 12.sp,
                 )
 
                 Text(
-                    text =
-                        expirationDate?.let { expirationDate: YearMonth ->
-                            ExpirationDateFormat.formattedExpirationDate(expirationDate)
-                        } ?: "",
+                    text = card.expirationDate,
                     color = Color.White,
                     fontSize = 12.sp,
                     textAlign = TextAlign.End,
@@ -102,9 +92,12 @@ fun BlankPaymentCardPreview() {
 fun PaymentCardWithDetailPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
-            cardNumber = "1234123412341234",
-            cardholderName = "CREW",
-            expirationDate = YearMonth.of(2034, 12),
+            card =
+                CardUiModel(
+                    "1234 - 1234 - **** - ****",
+                    "CREW",
+                    "34 / 12",
+                ),
         )
     }
 }

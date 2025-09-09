@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -61,11 +61,7 @@ fun CardListContents(
                         count = cards.size,
                     ) { index: Int ->
                         val card: Card = cards[index]
-                        PaymentCard(
-                            cardNumber = card.number.value,
-                            expirationDate = card.expirationDate.expirationYearMonth,
-                            cardholderName = card.holderName.value,
-                        )
+                        PaymentCard(card = CardUiModel.from(card))
                     }
                 }
 
@@ -107,16 +103,22 @@ fun CardListContentsPreview() {
                 ) {
                     item {
                         PaymentCard(
-                            cardNumber = "1234123412341234",
-                            cardholderName = "CREW 1",
-                            expirationDate = YearMonth.of(2034, 12),
+                            card =
+                                CardUiModel(
+                                    "1234 - 1234 - **** - ****",
+                                    "CREW 1",
+                                    "12 / 34",
+                                ),
                         )
                     }
                     item {
                         PaymentCard(
-                            cardNumber = "5678567856785678",
-                            cardholderName = "CREW 2",
-                            expirationDate = YearMonth.of(2034, 12),
+                            card =
+                                CardUiModel(
+                                    "1111 - 2222 - **** - ****",
+                                    "CREW 2",
+                                    "12 / 34",
+                                ),
                         )
                     }
                 }
