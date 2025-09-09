@@ -10,9 +10,15 @@ value class OwnerName(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length in 1..30) { "소유자의 이름의 길이는 1 ~ 30자 사이이다." }
-        requireNotNull(value.all { it.isWhitespace() }) { "소유자의 이름은 공백으로만 이루어질 수 없습니다." }
-        require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { "소유자의 이름에는 문자와 공백 가능하다" }
+        require(value.length in OWNER_NAME_MIN_LENGTH..OWNER_NAME_MAX_LENGTH) { OwnerNameException.OwnerNameMaxLengthException }
+        requireNotNull(value.all { it.isWhitespace() }) { OwnerNameException.OwnerNameWhitespaceException }
+        require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { OwnerNameException.OwnerNameTypeException }
+    }
+
+    companion object {
+        private const val OWNER_NAME_MIN_LENGTH: Int = 1
+        private const val OWNER_NAME_MAX_LENGTH: Int = 30
     }
 }
+
 

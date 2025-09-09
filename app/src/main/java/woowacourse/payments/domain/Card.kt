@@ -2,7 +2,6 @@ package woowacourse.payments.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 

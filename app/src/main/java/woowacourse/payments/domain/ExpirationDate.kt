@@ -11,9 +11,17 @@ value class ExpirationDate(
     val value: YearMonth
 ) : Parcelable {
     init {
-        require(value.monthValue in 1..12) { "월은 1~12 사이입니다." }
-        require(value.year >= LocalDate.now().year) { "년은 현재 년도 이후입니다." }
-        require(value.year <= LocalDate.now().year + 5) { "년은 현재 년도 이후 5년 이내입니다." }
+        require(value.monthValue in JANUARY..DECEMBER) { ExpirationDateException.ExpirationDateMonthException }
+        require(value.year >= LocalDate.now().year) { ExpirationDateException.ExpirationDateYearAfterNowException }
+        require(value.year <= LocalDate.now().year + COMMERCIAL_DEBT_LIMITED_YEAR) { ExpirationDateException.ExpirationDateYearBeforeFiveYearsException }
+    }
+
+    companion object {
+        private const val JANUARY: Int = 1
+        private const val DECEMBER: Int = 12
+        private const val COMMERCIAL_DEBT_LIMITED_YEAR: Int = 5
     }
 }
+
+
 

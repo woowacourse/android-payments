@@ -16,7 +16,12 @@ class PasswordTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            PasswordTextField()
+            PasswordTextField(
+                password = TODO(),
+                onPasswordChange = TODO(),
+                passwordErrorMessage = TODO(),
+                modifier = TODO()
+            )
         }
     }
 

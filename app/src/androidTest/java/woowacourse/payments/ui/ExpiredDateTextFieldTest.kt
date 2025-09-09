@@ -16,7 +16,12 @@ class ExpiredDateTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            ExpiredDateTextField()
+            ExpiredDateTextField(
+                expiredDate = TODO(),
+                onExpirationDateChange = TODO(),
+                expiredDateErrorMessage = TODO(),
+                modifier = TODO()
+            )
         }
     }
 

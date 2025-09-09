@@ -9,8 +9,13 @@ value class Password(
     val value: String
 ) : Parcelable {
     init {
-        require(value.length == 4) { "비밀번호는 4자리입니다" }
-        require(value.all(Char::isDigit)) { "비밀 번호에는 숫자만 올 수 있습니다." }
+        require(value.length == PASSWORD_LENGTH) { PasswordException.PasswordLengthException }
+        require(value.all(Char::isDigit)) { PasswordException.PasswordTypeException }
+    }
+
+    companion object {
+        private const val PASSWORD_LENGTH: Int = 4
     }
 }
+
 

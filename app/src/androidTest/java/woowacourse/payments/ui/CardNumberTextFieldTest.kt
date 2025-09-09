@@ -18,7 +18,12 @@ class CardNumberTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardNumberTextField()
+            CardNumberTextField(
+                number = TODO(),
+                onNumberChange = TODO(),
+                numberErrorMessage = TODO(),
+                modifier = TODO()
+            )
         }
     }
 

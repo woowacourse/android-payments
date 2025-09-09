@@ -16,7 +16,12 @@ class CardOwnerNameTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardOwnerNameTextField()
+            CardOwnerNameTextField(
+                ownerName = TODO(),
+                onOwnerNameChange = TODO(),
+                ownerNameErrorMessage = TODO(),
+                modifier = TODO()
+            )
         }
     }
 
