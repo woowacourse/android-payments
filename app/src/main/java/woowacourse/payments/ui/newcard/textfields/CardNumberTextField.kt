@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.formatter.CardNumberFormatter
 import woowacourse.payments.ui.formatter.UniformlySeparatingVisualTransformation
 import woowacourse.payments.ui.theme.Gray
 
@@ -48,7 +49,7 @@ fun CardNumberTextField(
         value = text.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
-        visualTransformation = visualTransformation,
+        visualTransformation = CardNumberFormatter().visualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
