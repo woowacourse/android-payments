@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.features.cardlist.components.AddPaymentCard
@@ -94,7 +95,7 @@ fun CardListScreenOneCardPreview() {
     val dummyPaymentCard =
         PaymentCard(
             CardNumber("1234123412341234"),
-            YearMonth.now(),
+            ExpireDate(YearMonth.now().plusMonths(1)),
             "CREW",
             "1234",
         )
@@ -109,7 +110,12 @@ fun CardListScreenOneCardPreview() {
 @Composable
 fun CardListScreenManyCardPreview() {
     val dummyPaymentCard =
-        PaymentCard(CardNumber("1234123412341234"), YearMonth.now(), "CREW", "1234")
+        PaymentCard(
+            CardNumber("1234123412341234"),
+            ExpireDate(YearMonth.now().plusMonths(1)),
+            "CREW",
+            "1234",
+        )
 
     val dummyPaymentCardList5 =
         List(5) { index ->

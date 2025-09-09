@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
@@ -74,7 +75,7 @@ fun PaymentCard(
             )
 
             Text(
-                paymentCard.expireDate.format(yearMonthFormatter),
+                paymentCard.expireDate.value.format(yearMonthFormatter),
                 modifier =
                     Modifier
                         .padding(end = 14.dp, bottom = 10.dp)
@@ -103,7 +104,7 @@ fun PaymentCardDetailPreview() {
             paymentCard =
                 PaymentCard(
                     CardNumber("1234123412341234"),
-                    YearMonth.now(),
+                    ExpireDate(YearMonth.now().plusMonths(1)),
                     "CREW",
                     "1234",
                 ),
