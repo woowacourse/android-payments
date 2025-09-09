@@ -33,7 +33,7 @@ import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
 import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
-import woowacourse.payments.ui.payments.component.PaymentCardField
+import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
 import woowacourse.payments.ui.payments.component.CardNumberTextField
 import woowacourse.payments.ui.payments.component.CardPasswordTextField

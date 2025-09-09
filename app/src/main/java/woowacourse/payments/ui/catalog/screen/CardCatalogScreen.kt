@@ -21,7 +21,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
-import woowacourse.payments.ui.payments.component.PaymentCardField
+import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -31,7 +31,11 @@ fun CardCatalogScreen() {
     Scaffold(
         topBar = { CardCatalogTopAppBar {} },
     ) { innerPadding ->
-        CardCatalogScreenContent(cardList = cardList, modifier = Modifier.padding(innerPadding), maxCardCount = 3)
+        CardCatalogScreenContent(
+            cardList = cardList,
+            modifier = Modifier.padding(innerPadding),
+            maxCardCount = 3,
+        )
     }
 }
 
