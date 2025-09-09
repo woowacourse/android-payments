@@ -14,6 +14,11 @@ value class CardNumber(
         }
     }
 
+    override fun toString(): String {
+        val halfCardNumber = value.take(8)
+        return "${halfCardNumber.take(4)} - ${halfCardNumber.takeLast(4)} - **** - ****"
+    }
+
     private fun checkValidCardNumber(cardNumber: String): Boolean =
         cardNumber.length == MAX_LENGTH_CARD_NUMBER && cardNumber.all(Char::isDigit)
 

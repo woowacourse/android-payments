@@ -2,6 +2,8 @@
     <string name="app_name">android-payments</string>
 
     <!--    공통 컴포넌트-->
+    <string name="payment_card_full_description">카드 플레이트 이미지. 카드 번호 %1$s, 소유자 이름 %2$s, 만료일 %3$s</string>
+    <string name="payment_card_empty_description">빈 카드 플레이트 이미지</string>
     <string name="invalid_field_icon_description">유효하지 않은 입력폼 경고 아이콘</string>
 
     <!--    카드 목록 컴포넌트-->

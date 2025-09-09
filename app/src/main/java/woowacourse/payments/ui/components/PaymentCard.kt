@@ -11,10 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.OwnerName
@@ -29,8 +33,19 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     paymentCard: PaymentCard? = null,
 ) {
-    val halfCardNumber = paymentCard?.cardNumber?.value?.takeLast(8)
     val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
+
+    val description =
+        if (paymentCard == null) {
+            stringResource(R.string.payment_card_empty_description)
+        } else {
+            stringResource(
+                R.string.payment_card_full_description,
+                paymentCard.cardNumber.value,
+                paymentCard.ownerName.value ?: "",
+                paymentCard.expireDate.value.format(yearMonthFormatter),
+            )
+        }
 
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -41,7 +56,9 @@ fun PaymentCard(
                 .background(
                     color = Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                ).semantics {
+                    contentDescription = description
+                },
     ) {
         Box(
             modifier =
@@ -55,7 +72,7 @@ fun PaymentCard(
         )
         if (paymentCard != null) {
             Text(
-                "${halfCardNumber?.take(4)} - ${halfCardNumber?.takeLast(4)} - **** - ****",
+                paymentCard.cardNumber.toString(),
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 28.dp)
