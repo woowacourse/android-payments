@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
@@ -25,11 +26,7 @@ fun CardInfo(
         Text(
             text = card.formatCardNumber(),
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            color = Color.White,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
-            letterSpacing = 2.sp,
-            lineHeight = 12.sp,
+            style = CardTextStyle.copy(letterSpacing = 2.sp),
             maxLines = 1,
         )
         Row(
@@ -38,21 +35,22 @@ fun CardInfo(
         ) {
             Text(
                 text = card.ownerName,
-                color = Color.White,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                lineHeight = 12.sp,
+                style = CardTextStyle,
             )
             Text(
                 text = card.formatExpiredDate(),
-                color = Color.White,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                lineHeight = 12.sp,
+                style = CardTextStyle,
             )
         }
     }
 }
+
+private val CardTextStyle = TextStyle(
+    color = Color.White,
+    fontSize = 12.sp,
+    fontWeight = FontWeight.Medium,
+    lineHeight = 12.sp,
+)
 
 @Preview
 @Composable
