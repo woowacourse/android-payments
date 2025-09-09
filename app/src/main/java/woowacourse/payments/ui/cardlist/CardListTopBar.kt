@@ -3,6 +3,7 @@ package woowacourse.payments.ui.cardlist
 import android.R.attr.onClick
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Suppress("ktlint:standard:function-naming")
@@ -30,7 +32,7 @@ fun CardListTopBar(onAddCard: () -> Unit = {}) {
                 text = "추가",
                 fontWeight = FontWeight.Bold,
                 modifier =
-                    Modifier.clickable {
+                    Modifier.padding(end = 16.dp).clickable {
                         onAddCard()
                     },
             )
