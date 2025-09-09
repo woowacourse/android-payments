@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.component.cardaddition
 
+import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -10,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
@@ -21,6 +23,9 @@ fun CardAdditionTopBar(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+
+
     TopAppBar(
         title = { Text(stringResource(R.string.add_card_title)) },
         navigationIcon = {
@@ -32,7 +37,8 @@ fun CardAdditionTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = { onSaveClick()
+                Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()}) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.content_description_icon_check),

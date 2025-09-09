@@ -25,7 +25,7 @@ fun PaymentScreen(
     cards: List<PaymentCard>,
     onAddNewCardClick: () -> Unit
 ) {
-    val context = LocalContext.current
+
     val cardList = remember { mutableStateListOf<PaymentCard>() }
     val screenType = remember { mutableStateListOf<PaymentCardCount>() }
     val cardAddLauncher =
@@ -41,8 +41,9 @@ fun PaymentScreen(
         modifier = modifier,
         topBar = {
             PaymentsTopBar(onAddNewCardClick = {
+
                 onAddNewCardClick()
-                Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+
             })
         }
     ) { paddingValues: PaddingValues ->
