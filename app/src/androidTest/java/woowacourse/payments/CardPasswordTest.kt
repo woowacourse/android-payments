@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.DigitTextField
 
 class CardPasswordTest {
     private val masking = '\u2022'.toString()

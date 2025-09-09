@@ -21,11 +21,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.DigitTextField
+import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ExpiryValidator
 import woowacourse.payments.InputMask
-import woowacourse.payments.LimitedTextField
-import woowacourse.payments.PaymentCard
+import woowacourse.payments.ui.LimitedTextField
+import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
