@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -26,8 +25,7 @@ fun PaymentCard(
     expiredDate: String? = null,
     ownerName: String? = null,
 ) {
-    Box(
-        contentAlignment = Alignment.CenterStart,
+    Column(
         modifier =
             modifier
                 .shadow(8.dp)
@@ -40,7 +38,7 @@ fun PaymentCard(
         Box(
             modifier =
                 Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
+                    .padding(start = 14.dp, top = 44.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
                         color = Color(0xFFCBBA64),
@@ -50,10 +48,9 @@ fun PaymentCard(
         Column(
             modifier =
                 Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(vertical = 16.dp, horizontal = 13.dp),
+                    .padding(start = 14.dp, end = 14.dp, top = 16.dp),
         ) {
-            Text(text = cardNumber ?: "", color = Color.White, fontSize = 12.sp)
+            Text(text = cardNumber ?: "", color = Color.White, fontSize = 12.sp, lineHeight = 12.sp)
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -62,11 +59,13 @@ fun PaymentCard(
                     text = ownerName ?: "",
                     color = Color.White,
                     fontSize = 12.sp,
+                    lineHeight = 12.sp,
                 )
                 Text(
                     text = expiredDate ?: "",
                     color = Color.White,
                     fontSize = 12.sp,
+                    lineHeight = 12.sp,
                 )
             }
         }

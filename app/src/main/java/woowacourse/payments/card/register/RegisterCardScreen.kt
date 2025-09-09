@@ -2,7 +2,6 @@ package woowacourse.payments.card.register
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Column
@@ -42,10 +41,6 @@ fun RegisterCardScreen() {
     val activity = context as? ComponentActivity
 
     val onSaveClick: () -> Unit = {
-        Log.d(
-            "NewCardScreen",
-            "cardNumber: $cardNumber , expirationDate: $expirationDate, cardHolderName: $cardHolderName, password: $password",
-        )
         Card
             .newCard(
                 number = cardNumber,
