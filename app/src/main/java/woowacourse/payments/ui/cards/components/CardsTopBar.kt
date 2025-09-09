@@ -1,8 +1,7 @@
 package woowacourse.payments.ui.cards.components
 
 import android.content.Intent
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -16,16 +15,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopBar(
-    cardList: List<PaymentCardUiModel>,
-    minimumCardCountForAddButton: Int,
-    cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+    cardAddLauncher: ActivityResultLauncher<Intent>,
     modifier: Modifier = Modifier,
+    isAddable: Boolean = false,
 ) {
     val context = LocalContext.current
 
@@ -36,7 +33,7 @@ fun CardsTopBar(
             )
         },
         actions = {
-            if (cardList.size > minimumCardCountForAddButton) {
+            if (isAddable) {
                 Text(
                     modifier =
                         modifier

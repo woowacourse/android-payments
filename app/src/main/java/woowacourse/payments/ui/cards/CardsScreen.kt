@@ -47,9 +47,8 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                cardList = cardList,
-                minimumCardCountForAddButton = minimumCardCountForAddButton,
                 cardAddLauncher = cardAddLauncher,
+                isAddable = cardList.size > minimumCardCountForAddButton,
             )
         },
     ) { innerPadding ->
