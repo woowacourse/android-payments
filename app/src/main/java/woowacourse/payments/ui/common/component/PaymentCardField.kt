@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +17,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.PaymentCard
@@ -66,6 +66,7 @@ fun PaymentCardField(
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 13.sp,
+                    letterSpacing = 3.5.sp,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 2.dp)
@@ -82,6 +83,10 @@ fun PaymentCardField(
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 2.dp),
+                        maxLines = 1
                     )
 
                     Text(
@@ -100,8 +105,6 @@ private fun Long.toUi(): String =
     this.toString().let { it.substring(0, it.length / 2) + HIDE_PASSWORD }
         .chunked(GROUP_SIZE)
         .joinToString(CARD_NUMBER_SEPARATOR)
-        .chunked(1)
-        .joinToString(" ")
 
 private fun YearMonth.toUi(): String {
     val formatter = DateTimeFormatter.ofPattern(CARD_EXPIRATION_DATE_FORMAT)
@@ -110,14 +113,20 @@ private fun YearMonth.toUi(): String {
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentCardFieldPreview() {
+fun PaymentCardFieldPreview(
+    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCard: PaymentCard?,
+) {
     Column(
         modifier = Modifier.padding(20.dp)
     ) {
-        PaymentCardField(paymentCard = PaymentCard(1111111111111111, "04/21", "CREW"))
-
-        Spacer(modifier = Modifier.height(40.dp))
-
-        PaymentCardField(paymentCard = null)
+        PaymentCardField(paymentCard = paymentCard)
     }
+}
+
+private class PaymentCardFieldPreviewParameterProvider() : PreviewParameterProvider<PaymentCard?> {
+    override val values: Sequence<PaymentCard?> = sequenceOf(
+        null,
+        PaymentCard(1111111111111111, "0421", "CREW"),
+        PaymentCard(2222222222222222, "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
+    )
 }
