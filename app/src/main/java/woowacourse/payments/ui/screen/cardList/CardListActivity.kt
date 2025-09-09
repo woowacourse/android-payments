@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.screen.cardList
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,23 +8,27 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.getParcelableExtraCompat
+import woowacourse.payments.ui.getParcelableList
 import woowacourse.payments.ui.screen.addCard.AddCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val cardList = mutableStateListOf<CardUiModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val restoredList: List<CardUiModel> =
+            savedInstanceState?.getParcelableList<CardUiModel>("cards") ?: emptyList()
+        cardList.addAll(restoredList)
+
         setContent {
             AndroidpaymentsTheme {
-                val cardList = remember { mutableStateListOf<CardUiModel>() }
                 val context = LocalContext.current
 
                 val addCardLauncher =
@@ -51,5 +54,10 @@ class CardListActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("cards", ArrayList(cardList))
     }
 }
