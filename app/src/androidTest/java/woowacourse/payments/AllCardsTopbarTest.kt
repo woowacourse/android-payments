@@ -17,14 +17,14 @@ class AllCardsTopbarTest {
 
     @Test
     fun 카드_개수가_1개_이하라면_추가_버튼이_표시되지_않는다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards = listOf()
+                cards = listOf(),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithContentDescription("추가")
             .assertDoesNotExist()
@@ -32,17 +32,18 @@ class AllCardsTopbarTest {
 
     @Test
     fun 카드_개수가_2개_이상이면_추가_버튼이_표시된다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards = listOf(
-                    CardInfoUiState(),
-                    CardInfoUiState()
-                )
+                cards =
+                    listOf(
+                        CardInfoUiState(),
+                        CardInfoUiState(),
+                    ),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("추가")
             .assertExists()
@@ -50,26 +51,27 @@ class AllCardsTopbarTest {
 
     @Test
     fun 추가_버튼을_누르면_카드_추가_동작이_실행된다() {
-        //given
+        // given
         var isClicked = false
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards = listOf(
-                    CardInfoUiState(),
-                    CardInfoUiState(),
-                ),
+                cards =
+                    listOf(
+                        CardInfoUiState(),
+                        CardInfoUiState(),
+                    ),
                 onPlusCardClick = {
                     isClicked = true
-                }
+                },
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onNodeWithText("추가")
             .performClick()
 
-        //then
+        // then
         assert(isClicked == true)
     }
 }

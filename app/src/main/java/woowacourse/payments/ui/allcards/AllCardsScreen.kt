@@ -24,7 +24,6 @@ import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
-
 @Composable
 fun AllCardsScreen(
     cards: SnapshotStateList<CardInfoUiState>,
@@ -39,7 +38,7 @@ fun AllCardsScreen(
             NotifyToAddCard()
             Spacer(modifier = Modifier.height(32.dp))
             PlusCard(
-                onClick = onPlusCardClick
+                onClick = onPlusCardClick,
             )
             return
         }
@@ -49,7 +48,7 @@ fun AllCardsScreen(
             Card(cardInfoUiState = cards.first())
             Spacer(modifier = Modifier.height(36.dp))
             PlusCard(
-                onClick = onPlusCardClick
+                onClick = onPlusCardClick,
             )
             return
         }
@@ -82,13 +81,12 @@ private fun AllCardsScreenPreview() {
         Scaffold(
             topBar = {
                 AllCardsTopbar(cards)
-            }
+            },
         ) {
             AllCardsScreen(
                 cards = cards,
-                modifier = Modifier.padding(it)
+                modifier = Modifier.padding(it),
             )
         }
     }
 }
-

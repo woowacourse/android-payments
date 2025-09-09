@@ -19,7 +19,7 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 fun AllCardsTopbar(
     cards: List<CardInfoUiState>,
     modifier: Modifier = Modifier,
-    onPlusCardClick: () -> Unit = {}
+    onPlusCardClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -29,16 +29,17 @@ fun AllCardsTopbar(
         actions = {
             if (cards.size > 1) {
                 Text(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clickable {
-                            onPlusCardClick()
-                        },
+                    modifier =
+                        Modifier
+                            .padding(end = 16.dp)
+                            .clickable {
+                                onPlusCardClick()
+                            },
                     text = stringResource(R.string.payments_allcards_topbar_add_cards),
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
                 )
             }
-        }
+        },
     )
 }

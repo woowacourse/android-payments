@@ -15,7 +15,7 @@ class AddCardTopbarTest {
 
     @Test
     fun 뒤로_가기_버튼을_누르면_뒤로_가기_동작을_수행한다() {
-        //given
+        // given
         var isBackClicked = false
         composeTestRule.setContent {
             AddCardTopbar(
@@ -23,18 +23,18 @@ class AddCardTopbarTest {
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onNodeWithContentDescription("뒤로 가기")
             .performClick()
 
-        //then
+        // then
         assert(isBackClicked == true)
     }
 
     @Test
     fun 체크_버튼을_누르면_완료_동작을_수행한다() {
-        //given
+        // given
         var isCompleteClicked = false
         composeTestRule.setContent {
             AddCardTopbar(
@@ -43,13 +43,12 @@ class AddCardTopbarTest {
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onNodeWithContentDescription("확인")
             .performClick()
 
-        //then
+        // then
         assert(isCompleteClicked == true)
     }
-
 }

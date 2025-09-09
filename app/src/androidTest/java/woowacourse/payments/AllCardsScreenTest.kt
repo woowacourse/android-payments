@@ -20,14 +20,14 @@ class AllCardsScreenTest {
 
     @Test
     fun 현재_카드_개수만큼_카드를_출력한다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = cards
+                cards = cards,
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onAllNodesWithText("홍길동", substring = true)
             .assertCountEquals(3)
@@ -35,14 +35,14 @@ class AllCardsScreenTest {
 
     @Test
     fun 카드가_없을_때_등록_안내_문구와_카드_추가_버튼을_출력한다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = mutableStateListOf()
+                cards = mutableStateListOf(),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("새로운 카드를 등록해주세요")
             .assertExists()
@@ -54,16 +54,17 @@ class AllCardsScreenTest {
 
     @Test
     fun 카드가_하나일_떄_등록된_카드와_카드_추가_버튼을_출력한다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = mutableStateListOf(
-                    cards[1]
-                )
+                cards =
+                    mutableStateListOf(
+                        cards[1],
+                    ),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("홍길동")
             .assertExists()
@@ -75,14 +76,14 @@ class AllCardsScreenTest {
 
     @Test
     fun 카드가_두개_이상일_때_등록된_카드만_출력한다() {
-        //given
+        // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = cards
+                cards = cards,
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onAllNodesWithText("홍길동")
 
@@ -93,22 +94,22 @@ class AllCardsScreenTest {
 
     @Test
     fun 카드_추가_버튼을_클릭하면_카드_추가_동작을_수행한다() {
-        //given
+        // given
         var isClicked = false
         composeTestRule.setContent {
             PlusCard(
                 onClick = {
                     isClicked = true
-                }
+                },
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onNodeWithContentDescription("추가")
             .performClick()
 
-        //then
+        // then
         assert(isClicked == true)
     }
 }

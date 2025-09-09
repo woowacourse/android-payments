@@ -15,14 +15,14 @@ class CardTest {
 
     @Test
     fun 카드의_비밀번호는_하이픈으로_구분뒤고_뒤_8자리는_마스킹_처리된다() {
-        //given
+        // given
         composeTestRule.setContent {
             Card(
-                cardInfoUiState = cards.first()
+                cardInfoUiState = cards.first(),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("1234 - 1234 - **** - ****")
             .assertExists()
@@ -30,14 +30,14 @@ class CardTest {
 
     @Test
     fun 카드의_만료일은_슬래시로_구분되어_출력한다() {
-        //given
+        // given
         composeTestRule.setContent {
             Card(
-                cardInfoUiState = cards.first()
+                cardInfoUiState = cards.first(),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("12 / 25")
             .assertExists()
@@ -45,14 +45,14 @@ class CardTest {
 
     @Test
     fun 불완전한_카드_정보는_출력하지_않는다() {
-        //given
+        // given
         composeTestRule.setContent {
             Card(
-                cardInfoUiState = CardInfoUiState()
+                cardInfoUiState = CardInfoUiState(),
             )
         }
 
-        //when - then
+        // when - then
         composeTestRule
             .onNodeWithText("홍길동")
             .assertDoesNotExist()
