@@ -58,6 +58,10 @@ fun CardListScreen() {
             if (cards.size == 1 || cards.isEmpty()) {
                 RegistrationCard(modifier = Modifier.padding(top = 36.dp))
             }
+            cards.forEach { card ->
+                Spacer(modifier = Modifier.height(36.dp))
+                PaymentCard(card)
+            }
         }
     }
 }
