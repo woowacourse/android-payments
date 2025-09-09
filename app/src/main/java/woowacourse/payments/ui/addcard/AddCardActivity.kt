@@ -30,16 +30,7 @@ class AddCardActivity : ComponentActivity() {
                     topBar = {
                         AddCardTopbar(
                             onBackClick = { finish() },
-                            onCheckedClick = {
-                                if (cardInfo.isComplete()) {
-                                    setResult(RESULT_OK, Intent().apply {
-                                        putExtra(CARD_INFO_KEY, cardInfo)
-                                    })
-                                    finish()
-                                } else {
-                                    Toast.makeText(this, getString(R.string.addcard_failed_to_add_card), Toast.LENGTH_SHORT).show()
-                                }
-                            }
+                            onCheckedClick = { saveCard(cardInfo) }
                         )
                     }
                 ) { padding ->
@@ -51,6 +42,18 @@ class AddCardActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    private fun saveCard(cardInfo: CardInfoUiState) {
+        if (cardInfo.isComplete()) {
+            setResult(RESULT_OK, Intent().apply {
+                putExtra(CARD_INFO_KEY, cardInfo)
+            })
+            finish()
+        } else {
+            Toast.makeText(this, getString(R.string.addcard_failed_to_add_card), Toast.LENGTH_SHORT)
+                .show()
         }
     }
 }
