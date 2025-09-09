@@ -1,4 +1,4 @@
-package woowacourse.payments.card.list
+package woowacourse.payments.ui.card.list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

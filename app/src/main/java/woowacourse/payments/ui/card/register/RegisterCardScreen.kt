@@ -1,4 +1,4 @@
-package woowacourse.payments.card.register
+package woowacourse.payments.ui.card.register
 
 import android.app.Activity
 import android.content.Intent
@@ -20,13 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.card.component.PaymentCard
-import woowacourse.payments.card.register.component.CardExpirationDateTextField
-import woowacourse.payments.card.register.component.CardHolderNameTextField
-import woowacourse.payments.card.register.component.CardNumberTextField
-import woowacourse.payments.card.register.component.CardPasswordTextField
-import woowacourse.payments.card.register.component.NewCardTopBar
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.card.component.PaymentCard
+import woowacourse.payments.ui.card.register.component.CardExpirationDateTextField
+import woowacourse.payments.ui.card.register.component.CardHolderNameTextField
+import woowacourse.payments.ui.card.register.component.CardNumberTextField
+import woowacourse.payments.ui.card.register.component.CardPasswordTextField
+import woowacourse.payments.ui.card.register.component.NewCardTopBar
 import woowacourse.payments.ui.model.toUiModel
 
 @Preview

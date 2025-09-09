@@ -1,4 +1,4 @@
-package woowacourse.payments.card.list
+package woowacourse.payments.ui.card.list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.card.component.PaymentCard
+import woowacourse.payments.ui.card.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

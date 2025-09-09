@@ -1,6 +1,5 @@
-package woowacourse.payments.card.list
+package woowacourse.payments.ui.card.list
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import woowacourse.payments.card.register.CardRegisterActivity
+import woowacourse.payments.ui.card.register.CardRegisterActivity
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

@@ -1,4 +1,4 @@
-package woowacourse.payments.card.register
+package woowacourse.payments.ui.card.register
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
-            android:name=".card.list.CardListActivity"
+            android:name=".ui.card.list.CardListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".card.register.CardRegisterActivity"
+            android:name=".ui.card.register.CardRegisterActivity"
             android:exported="true">
 
         </activity>

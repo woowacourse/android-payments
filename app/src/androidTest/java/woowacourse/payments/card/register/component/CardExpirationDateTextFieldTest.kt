@@ -12,6 +12,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import woowacourse.payments.ui.card.register.component.CardExpirationDateTextField
 
 @RunWith(AndroidJUnit4::class)
 class CardExpirationDateTextFieldTest {
