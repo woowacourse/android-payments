@@ -22,7 +22,7 @@ fun CardPasswordTextField(
         value = value,
         onValueChange = onValueChange,
         maxLength = CardPassword.CARD_PASSWORD_LENGTH,
-        label = { Text(stringResource(R.string.card_password)) },
+        label = { Text(stringResource(R.string.card_password_label)) },
         placeholder = { Text("0000") },
         isError = value.isNotEmpty() && runCatching { CardPassword(value) }.isFailure,
         keyboardOptions =

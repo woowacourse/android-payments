@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +22,7 @@ fun CardNumberTextField(
         value = value,
         onValueChange = onValueChange,
         maxLength = CardNumber.CARD_NUMBER_LENGTH,
-        label = { Text(stringResource(R.string.card_number)) },
+        label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
         isError = value.isNotEmpty() && runCatching { CardNumber.from(value) }.isFailure,
         keyboardOptions =

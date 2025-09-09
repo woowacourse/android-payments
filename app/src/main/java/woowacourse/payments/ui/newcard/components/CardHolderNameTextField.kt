@@ -23,8 +23,8 @@ fun CardHolderNameTextField(
         value = value,
         onValueChange = onValueChange,
         maxLength = CardHolderName.MAX_NAME_LENGTH,
-        label = { Text(stringResource(R.string.card_holder_name)) },
-        placeholder = { Text(stringResource(R.string.input_card_holder_name)) },
+        label = { Text(stringResource(R.string.card_holder_name_label)) },
+        placeholder = { Text(stringResource(R.string.input_card_holder_name_placeholder)) },
         isError = value.isNotEmpty() && runCatching { CardHolderName(value) }.isFailure,
         supportingText = {
             Text(

@@ -23,7 +23,7 @@ fun CardExpirationDateTextField(
         value = value,
         onValueChange = onValueChange,
         maxLength = 4,
-        label = { Text(stringResource(R.string.card_expiration_date)) },
+        label = { Text(stringResource(R.string.card_expiration_date_label)) },
         placeholder = { Text("MM / YY") },
         isError =
             value.isNotEmpty() &&
