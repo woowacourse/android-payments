@@ -54,7 +54,7 @@ class CardsTest {
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
-                minimumCardCountForAddButton = 0,
+                minimumCardCountForAddButton = 1,
             )
         }
 
@@ -72,7 +72,7 @@ class CardsTest {
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = emptyList(),
-                minimumCardCountForAddButton = 0,
+                minimumCardCountForAddButton = 1,
             )
         }
 
@@ -93,8 +93,8 @@ class CardsTest {
             Cards(
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
-                cardList = emptyList(),
-                minimumCardCountForAddButton = 0,
+                cardList = listOf(HWANNOW_CARD),
+                minimumCardCountForAddButton = 1,
             )
         }
 
@@ -105,6 +105,24 @@ class CardsTest {
     }
 
     @Test
+    fun `카드가_한장_이상_있을_경우_카드_등록_문구가_보이지_않는다`() {
+        // when
+        composeTestRule.setContent {
+            Cards(
+                innerPadding = PaddingValues(0.dp),
+                cardAddLauncher = fakeLauncher,
+                cardList = listOf(HWANNOW_CARD),
+                minimumCardCountForAddButton = 1,
+            )
+        }
+
+        // then
+        composeTestRule
+            .onNodeWithText("새로운 카드를 등록해주세요")
+            .assertIsNotDisplayed()
+    }
+
+    @Test
     fun `카드가_여러장_있을_경우_카드_추가_이미지가_뜨지_않는다`() {
         // when
         composeTestRule.setContent {
@@ -112,7 +130,7 @@ class CardsTest {
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD, JUNSEO511_CARD),
-                minimumCardCountForAddButton = 0,
+                minimumCardCountForAddButton = 1,
             )
         }
 

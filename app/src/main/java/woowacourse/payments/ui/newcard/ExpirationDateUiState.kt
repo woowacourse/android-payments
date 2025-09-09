@@ -17,12 +17,12 @@ class ExpirationDateUiState(
         private set
 
     @IgnoredOnParcel
-    var isError: Boolean by mutableStateOf(this.expirationDate.isValidMonth())
+    var isValid: Boolean by mutableStateOf(this.expirationDate.isValidMonth())
         private set
 
     fun onValueChanged(value: String) {
         val newCardNumber = ExpirationDateUiModel(value)
         expirationDate = newCardNumber
-        isError = newCardNumber.isValidMonth()
+        isValid = newCardNumber.isValidMonth()
     }
 }
