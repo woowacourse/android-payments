@@ -178,7 +178,7 @@ fun AddNewCardText() {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+private fun CardListPreview() {
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
