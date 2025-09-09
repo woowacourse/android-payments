@@ -43,61 +43,69 @@ fun PaymentCard(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        Box(
+        Column(
             modifier =
-                Modifier
-                    .padding(start = 14.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .align(Alignment.CenterStart)
-                    .background(
-                        color = Color(0xFFCBBA64),
-                        shape = RoundedCornerShape(4.dp),
-                    ),
-        )
-
-        if (paymentCardInformation != null) {
-            Column(
+                if (paymentCardInformation != null) {
+                    Modifier.align(Alignment.BottomCenter)
+                } else {
+                    Modifier.align(Alignment.CenterStart)
+                },
+        ) {
+            Box(
                 modifier =
                     Modifier
-                        .semantics { contentDescription = "카드 정보" }
-                        .align(Alignment.BottomStart)
-                        .padding(start = 14.dp, end = 14.dp, bottom = 16.dp),
-            ) {
-                Text(
-                    text = paymentCardInformation.formattedCardNumber(),
-                    color = Color.White,
-                    fontWeight = FontWeight.W500,
-                    fontSize = 12.sp,
-                    letterSpacing = 2.0.sp,
+                        .padding(start = 14.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .align(Alignment.Start)
+                        .background(
+                            color = Color(0xFFCBBA64),
+                            shape = RoundedCornerShape(4.dp),
+                        ),
+            )
+
+            if (paymentCardInformation != null) {
+                Column(
                     modifier =
                         Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp),
-                    maxLines = 1,
-                )
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                            .semantics { contentDescription = "카드 정보" }
+                            .padding(start = 14.dp, end = 14.dp),
                 ) {
                     Text(
-                        text = paymentCardInformation.cardholderName,
-                        modifier = Modifier.weight(1f),
+                        text = paymentCardInformation.formattedCardNumber(),
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 12.sp,
-                        letterSpacing = 1.sp,
+                        letterSpacing = 2.0.sp,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp),
                         maxLines = 1,
                     )
-                    Text(
-                        text = paymentCardInformation.formattedCardExpirationDate(),
-                        color = Color.White,
-                        fontWeight = FontWeight.W500,
-                        fontSize = 12.sp,
-                        letterSpacing = 1.sp,
-                        maxLines = 1,
-                        textAlign = TextAlign.End,
-                    )
+
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.padding(bottom = 5.dp),
+                    ) {
+                        Text(
+                            text = paymentCardInformation.cardholderName,
+                            modifier = Modifier.weight(1f),
+                            color = Color.White,
+                            fontWeight = FontWeight.W500,
+                            fontSize = 12.sp,
+                            letterSpacing = 1.sp,
+                            maxLines = 1,
+                        )
+                        Text(
+                            text = paymentCardInformation.formattedCardExpirationDate(),
+                            color = Color.White,
+                            fontWeight = FontWeight.W500,
+                            fontSize = 12.sp,
+                            letterSpacing = 1.sp,
+                            maxLines = 1,
+                            textAlign = TextAlign.End,
+                        )
+                    }
                 }
             }
         }
