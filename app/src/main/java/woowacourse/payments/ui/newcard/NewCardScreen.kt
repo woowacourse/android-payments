@@ -31,6 +31,7 @@ import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
+import woowacourse.payments.ui.newcard.components.ExpiryTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
 
 private const val EXPIRY_MAX_LENGTH: Int = 4
@@ -73,6 +74,12 @@ fun NewCardScreen(
             onValueChange = { cardNumber = it },
         )
         Spacer(Modifier.height(30.dp))
+
+        ExpiryTextField(
+            value = expiry,
+            onValueChange = { expiry = it },
+            modifier = Modifier.width(146.dp),
+        )
 
         DigitsTextField(
             value = expiry,

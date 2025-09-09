@@ -57,10 +57,10 @@ class CardNumberTextFieldTest {
                 onValueChange = { cardNumber = it },
             )
         }
-        val cardNumberField = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
+        val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        cardNumberField
+        field
             .performTextInput("1a2b3c4d5!6@7#8$")
 
         // then
@@ -79,10 +79,10 @@ class CardNumberTextFieldTest {
                 onValueChange = { cardNumber = it },
             )
         }
-        val cardNumberField = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
+        val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        cardNumberField
+        field
             .performTextInput("1234123412341234")
 
         // then
@@ -101,10 +101,10 @@ class CardNumberTextFieldTest {
                 onValueChange = { cardNumber = it },
             )
         }
-        val cardNumberField = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
+        val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        cardNumberField
+        field
             .performTextInput("12341234123412341")
 
         // then
@@ -123,10 +123,10 @@ class CardNumberTextFieldTest {
                 onValueChange = { cardNumber = it },
             )
         }
-        val cardNumberField = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
+        val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        cardNumberField
+        field
             .performTextInput("1234")
 
         // then
@@ -135,7 +135,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        cardNumberField
+        field
             .performTextInput("1")
 
         // then
@@ -144,7 +144,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        cardNumberField
+        field
             .performTextInput("2341")
 
         // then
@@ -153,7 +153,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        cardNumberField
+        field
             .performTextInput("2341")
 
         // then
