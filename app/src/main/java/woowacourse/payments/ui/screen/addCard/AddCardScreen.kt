@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.addCard
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,10 +11,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -21,11 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.os.bundleOf
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.AddCardUiState
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
@@ -41,46 +42,32 @@ fun AddCardScreen(
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
 ) {
-    val cardNumberSaver =
-        Saver<CardNumber?, String>(
-            save = { it?.value },
-            restore = { CardNumber(it) },
+    val addCardStateSaver =
+        Saver<AddCardUiState, Bundle>(
+            save = { state ->
+                bundleOf(
+                    "cardNumber" to state.cardNumber?.value,
+                    "expired" to state.expired?.value,
+                    "cardOwner" to state.cardOwner.value,
+                    "password" to state.password?.value,
+                    "showValidationError" to state.showValidationError,
+                )
+            },
+            restore = { bundle ->
+                AddCardUiState(
+                    cardNumber = bundle.getString("cardNumber")?.let(::CardNumber),
+                    expired = bundle.getString("expired")?.let(::Expired),
+                    cardOwner = CardOwner(bundle.getString("cardOwner") ?: ""),
+                    password = bundle.getString("password")?.let(::Password),
+                    showValidationError = bundle.getBoolean("showValidationError"),
+                )
+            },
         )
 
-    val expiredSaver =
-        Saver<Expired?, String>(
-            save = { it?.value },
-            restore = { Expired(it) },
-        )
-
-    val cardOwnerSaver =
-        Saver<CardOwner?, String>(
-            save = { it?.value },
-            restore = { CardOwner(it) },
-        )
-
-    val passwordSaver =
-        Saver<Password?, String>(
-            save = { it?.value },
-            restore = { Password(it) },
-        )
-
-    var cardNumber by rememberSaveable(stateSaver = cardNumberSaver) { mutableStateOf(null) }
-    var expired by rememberSaveable(stateSaver = expiredSaver) { mutableStateOf(null) }
-    var cardOwner by rememberSaveable(stateSaver = cardOwnerSaver) { mutableStateOf(CardOwner("")) }
-    var password by rememberSaveable(stateSaver = passwordSaver) { mutableStateOf(null) }
-    var showValidationError by rememberSaveable { mutableStateOf(false) }
-
-    val scrollState = rememberScrollState()
-
-    val isFormValid by remember(cardNumber, expired, cardOwner, password) {
-        derivedStateOf {
-            (cardNumber?.isValid == true) &&
-                (expired?.isValid == true) &&
-                (cardOwner?.isValid != false) &&
-                (password?.isValid == true)
-        }
+    var uiState by rememberSaveable(stateSaver = addCardStateSaver) {
+        mutableStateOf(AddCardUiState())
     }
+    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -88,14 +75,14 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    showValidationError = !isFormValid
-                    if (isFormValid) {
+                    uiState = uiState.copy(showValidationError = !uiState.isFormValid)
+                    if (uiState.isFormValid) {
                         val cardUiModel =
                             Card(
-                                number = cardNumber,
-                                expired = expired,
-                                owner = cardOwner,
-                                password = password,
+                                number = uiState.cardNumber,
+                                expired = uiState.expired,
+                                owner = uiState.cardOwner,
+                                password = uiState.password,
                             ).toPresentation()
                         onCardSaved(cardUiModel)
                     }
@@ -121,40 +108,40 @@ fun AddCardScreen(
                 PaymentCard(
                     card =
                         Card(
-                            number = cardNumber,
-                            expired = expired,
-                            owner = cardOwner,
-                            password = password,
+                            number = uiState.cardNumber,
+                            expired = uiState.expired,
+                            owner = uiState.cardOwner,
+                            password = uiState.password,
                         ).toPresentation(),
                 )
             }
 
             CardNumberInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardNumber = cardNumber,
-                onCardNumberChange = { cardNumber = it },
-                showValidationError = showValidationError,
+                cardNumber = uiState.cardNumber,
+                onCardNumberChange = { uiState = uiState.copy(cardNumber = it) },
+                showValidationError = uiState.showValidationError,
             )
 
             ExpiredInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                expired = expired,
-                onExpiredChange = { expired = it },
-                showValidationError = showValidationError,
+                expired = uiState.expired,
+                onExpiredChange = { uiState = uiState.copy(expired = it) },
+                showValidationError = uiState.showValidationError,
             )
 
             CardOwnerInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardOwner = cardOwner,
-                onOwnerChange = { cardOwner = it },
-                showValidationError = showValidationError,
+                cardOwner = uiState.cardOwner,
+                onOwnerChange = { uiState = uiState.copy(cardOwner = it) },
+                showValidationError = uiState.showValidationError,
             )
 
             PasswordInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                password = password,
-                onPasswordChange = { password = it },
-                showValidationError = showValidationError,
+                password = uiState.password,
+                onPasswordChange = { uiState = uiState.copy(password = it) },
+                showValidationError = uiState.showValidationError,
             )
         }
     }
