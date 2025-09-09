@@ -33,7 +33,11 @@ class CardsScreenTest {
 
         // then
         assertAll(
-            { composeTestRule.onNodeWithText(context.getString(R.string.cards_screen_registration_message)) },
+            {
+                composeTestRule
+                    .onNodeWithText(context.getString(R.string.cards_screen_registration_message))
+                    .assertIsDisplayed()
+            },
             {
                 composeTestRule
                     .onNodeWithContentDescription(context.getString(R.string.cards_screen_registration_button_content_description))
