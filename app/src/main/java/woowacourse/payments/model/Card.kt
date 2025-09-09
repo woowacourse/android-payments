@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Card(
     val cardNumber: String,
-    val date: String,
+    val expiry: String,
     val owner: String,
 ) : Parcelable
 

@@ -46,7 +46,7 @@ fun AddPaymentCardScreen() {
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = { (context as? Activity)?.finish() },
                 onSaveClick = {
-                    val card = Card(cardNumber = cardNumber, date = expiry, owner = owner)
+                    val card = Card(cardNumber = cardNumber, expiry = expiry, owner = owner)
                     (context as? Activity)?.apply {
                         setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_CARD, card))
                         finish()
@@ -61,7 +61,7 @@ fun AddPaymentCardScreen() {
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
-            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally), null)
 
             Spacer(modifier = Modifier.height(40.dp))
 

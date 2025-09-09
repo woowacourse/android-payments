@@ -2,7 +2,6 @@ package woowacourse.payments.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
@@ -18,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.model.Card
 import woowacourse.payments.model.EXTRA_CARD
 import woowacourse.payments.ui.component.EmptyCard
-import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentCardsTopBar
+import woowacourse.payments.ui.component.SingleCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -61,6 +60,7 @@ private fun PaymentCardsContent(
 ) {
     when (cards.size) {
         0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
+        1 -> SingleCard(modifier = modifier, card = cards.first(), onAddCard = onAddCard)
     }
 }
 
