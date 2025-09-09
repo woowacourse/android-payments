@@ -13,7 +13,7 @@ class CardRegisterActivity : ComponentActivity() {
 
         setContent {
             AndroidpaymentsTheme {
-                NewCardScreen()
+                RegisterCardScreen()
             }
         }
     }
