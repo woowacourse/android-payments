@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.os.bundleOf
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
@@ -34,8 +33,9 @@ import woowacourse.payments.ui.component.ExpiredInputField
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.formatCardNumber
+import woowacourse.payments.ui.formatExpired
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun AddCardScreen(
@@ -78,12 +78,11 @@ fun AddCardScreen(
                     uiState = uiState.copy(showValidationError = !uiState.isFormValid)
                     if (uiState.isFormValid) {
                         val cardUiModel =
-                            Card(
-                                number = uiState.cardNumber,
-                                expired = uiState.expired,
-                                owner = uiState.cardOwner,
-                                password = uiState.password,
-                            ).toPresentation()
+                            CardUiModel(
+                                number = formatCardNumber(uiState.cardNumber),
+                                expired = formatExpired(uiState.expired),
+                                owner = uiState.cardOwner.value,
+                            )
                         onCardSaved(cardUiModel)
                     }
                 },
@@ -105,15 +104,13 @@ fun AddCardScreen(
                         .padding(vertical = 12.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                PaymentCard(
-                    card =
-                        Card(
-                            number = uiState.cardNumber,
-                            expired = uiState.expired,
-                            owner = uiState.cardOwner,
-                            password = uiState.password,
-                        ).toPresentation(),
-                )
+                val cardUiModel =
+                    CardUiModel(
+                        number = formatCardNumber(uiState.cardNumber),
+                        expired = formatExpired(uiState.expired),
+                        owner = uiState.cardOwner.value,
+                    )
+                PaymentCard(card = cardUiModel)
             }
 
             CardNumberInputField(
