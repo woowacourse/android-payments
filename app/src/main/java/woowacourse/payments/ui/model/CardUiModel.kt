@@ -5,16 +5,16 @@ import woowacourse.payments.ui.formatter.CardNumberFormat
 import woowacourse.payments.ui.formatter.ExpirationDateFormat
 
 data class CardUiModel(
-    val number: String = "",
+    val cardNumber: String = "",
     val expirationDate: String = "",
-    val holderName: String = "",
+    val cardholderName: String = "",
 ) {
     companion object {
         fun from(card: Card): CardUiModel =
             CardUiModel(
-                number = CardNumberFormat.formattedCardNumber(card.number.value),
+                cardNumber = CardNumberFormat.formattedCardNumber(card.cardNumber.value),
                 expirationDate = ExpirationDateFormat.formattedExpirationDate(card.expirationDate.value),
-                holderName = card.holderName.value,
+                cardholderName = card.cardholderName.value,
             )
     }
 }

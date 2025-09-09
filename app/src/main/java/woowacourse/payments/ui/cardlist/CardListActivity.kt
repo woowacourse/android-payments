@@ -54,8 +54,8 @@ class CardListActivity : ComponentActivity() {
 
             Card(
                 CardNumber(cardNumber),
-                CardholderName(cardholderName),
                 ExpirationDate(expirationDate),
+                CardholderName(cardholderName),
                 Passcode(passcode),
             )
         }.getOrNull()

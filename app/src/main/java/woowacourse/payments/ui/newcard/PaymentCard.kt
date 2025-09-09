@@ -51,7 +51,7 @@ fun PaymentCard(
             )
 
             Text(
-                text = card.number,
+                text = card.cardNumber,
                 color = Color.White,
                 fontSize = 12.sp,
             )
@@ -61,7 +61,7 @@ fun PaymentCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = card.holderName,
+                    text = card.cardholderName,
                     color = Color.White,
                     fontSize = 12.sp,
                 )
