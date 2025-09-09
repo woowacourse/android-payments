@@ -49,7 +49,7 @@ fun PaymentScreen(
         modifier = modifier,
         topBar = {
             PaymentsTopBar(
-                cards = cards,
+                cards = cards  ,
                 onAddNewCardClick = {
                     onAddNewCardClick()
                     openAddCardWithResult()
