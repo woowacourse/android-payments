@@ -12,14 +12,14 @@ import woowacourse.payments.ui.screen.DEFAULT_CARD
 
 class CardInfoTest {
     @get:Rule
-    val composeRule =    createComposeRule()
+    val composeRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeRule.setContent {
             CardInfo(
                 card = DEFAULT_CARD,
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }

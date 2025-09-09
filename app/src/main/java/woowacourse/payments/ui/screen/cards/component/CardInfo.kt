@@ -44,12 +44,13 @@ fun CardInfo(
     }
 }
 
-private val CardTextStyle = TextStyle(
-    color = Color.White,
-    fontSize = 12.sp,
-    fontWeight = FontWeight.Medium,
-    lineHeight = 12.sp,
-)
+private val CardTextStyle =
+    TextStyle(
+        color = Color.White,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Medium,
+        lineHeight = 12.sp,
+    )
 
 @Preview
 @Composable
