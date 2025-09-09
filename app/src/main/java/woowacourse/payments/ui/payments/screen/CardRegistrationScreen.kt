@@ -33,7 +33,7 @@ import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
 import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
-import woowacourse.payments.ui.payments.component.PaymentCard
+import woowacourse.payments.ui.payments.component.PaymentCardField
 import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
 import woowacourse.payments.ui.payments.component.CardNumberTextField
 import woowacourse.payments.ui.payments.component.CardPasswordTextField
@@ -101,7 +101,7 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+        PaymentCardField(modifier = Modifier.align(Alignment.CenterHorizontally))
 
         Spacer(modifier = Modifier.height(40.dp))
 

@@ -30,4 +30,7 @@
     <!-- card_registration_screen -->
     <string name="card_registration_screen_registration_card_success">추가 완료</string>
     <string name="card_registration_screen_expired_card">만료된 카드입니다.</string>
+
+    <!-- card_catalog_screen -->
+    <string name="CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD">새로운 카드를 등록해주세요</string>
 </resources>

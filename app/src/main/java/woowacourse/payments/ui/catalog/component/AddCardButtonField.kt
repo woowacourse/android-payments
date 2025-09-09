@@ -33,7 +33,7 @@ fun AddCardButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
     ) {
         Text(
             text = "+",
-            fontSize = 17.sp,
+            fontSize = 34.sp,
             color = Color.DarkGray,
             modifier = Modifier.padding(12.dp)
         )
