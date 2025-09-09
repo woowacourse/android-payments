@@ -24,8 +24,14 @@ class GroupingVisualTransformation(
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {
-                    val separatorCount = offset / (groupSize + separator.length)
-                    return offset - separatorCount * separator.length
+                    val blockSize: Int = groupSize + separator.length
+                    val separatorCount: Int = offset / blockSize
+
+                    val offsetInBlock: Int = offset % blockSize
+                    val separatorCharsInPartialBlock: Int =
+                        (offsetInBlock - groupSize).coerceAtLeast(0)
+
+                    return offset - (separatorCount * separator.length + separatorCharsInPartialBlock)
                 }
             }
 
