@@ -14,12 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpirationDate
-import woowacourse.payments.ui.formatter.ExpirationDateFormatter
+import woowacourse.payments.ui.formatter.ExpirationDateFormat
 import woowacourse.payments.ui.theme.Gray
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-
-private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -31,7 +28,7 @@ fun ExpirationDateTextField(
 
     fun updateValue(newValue: String) {
         val filteredValue: String =
-            newValue.filter(Char::isDigit).take(EXPIRATION_DATE_REQUIRED_LENGTH)
+            newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
         text.value = filteredValue
 
         isError.value =
@@ -39,12 +36,12 @@ fun ExpirationDateTextField(
                 ExpirationDate(
                     YearMonth.parse(
                         filteredValue,
-                        DateTimeFormatter.ofPattern("MMyy"),
+                        ExpirationDateFormat.formatPattern,
                     ),
                 )
             }.isFailure
 
-        if (!isError.value && filteredValue.length == EXPIRATION_DATE_REQUIRED_LENGTH) {
+        if (!isError.value && filteredValue.length == ExpirationDateFormat.REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }
     }
@@ -54,7 +51,7 @@ fun ExpirationDateTextField(
         value = text.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
-        visualTransformation = ExpirationDateFormatter().visualTransformation,
+        visualTransformation = ExpirationDateFormat.visualTransformation,
         label = { Text(stringResource(R.string.expiration_date_label)) },
         placeholder = {
             Text(

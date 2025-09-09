@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.formatter.CardNumberFormatter
-import woowacourse.payments.ui.formatter.ExpirationDateFormatter
+import woowacourse.payments.ui.formatter.CardNumberFormat
+import woowacourse.payments.ui.formatter.ExpirationDateFormat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
@@ -53,11 +53,16 @@ fun PaymentCard(
                         shape = RoundedCornerShape(4.dp),
                     ),
             )
+
             Text(
-                text = cardNumber?.let { CardNumberFormatter().format(it) } ?: "",
+                text =
+                    cardNumber?.let { cardNumber: String ->
+                        CardNumberFormat.formattedCardNumber(cardNumber)
+                    } ?: "",
                 color = Color.White,
                 fontSize = 12.sp,
             )
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -67,8 +72,12 @@ fun PaymentCard(
                     color = Color.White,
                     fontSize = 12.sp,
                 )
+
                 Text(
-                    text = expirationDate?.let { ExpirationDateFormatter().format(it) } ?: "",
+                    text =
+                        expirationDate?.let { expirationDate: YearMonth ->
+                            ExpirationDateFormat.formattedExpirationDate(expirationDate)
+                        } ?: "",
                     color = Color.White,
                     fontSize = 12.sp,
                     textAlign = TextAlign.End,
@@ -93,7 +102,7 @@ fun BlankPaymentCardPreview() {
 fun PaymentCardWithDetailPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
-            cardNumber = "1111 - 2222 - **** - ****",
+            cardNumber = "1234123412341234",
             cardholderName = "CREW",
             expirationDate = YearMonth.of(2034, 12),
         )

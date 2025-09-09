@@ -14,15 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.ui.formatter.CardNumberFormatter
-import woowacourse.payments.ui.formatter.UniformlySeparatingVisualTransformation
+import woowacourse.payments.ui.formatter.CardNumberFormat
 import woowacourse.payments.ui.theme.Gray
-
-private const val CARD_NUMBER_REQUIRED_LENGTH = 16
-private const val CARD_NUMBER_CHUNK_SIZE = 4
-private const val CARD_NUMBER_SEPARATOR = " - "
-private val visualTransformation =
-    UniformlySeparatingVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR)
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -34,12 +27,12 @@ fun CardNumberTextField(
 
     fun updateValue(newValue: String) {
         val filteredValue: String =
-            newValue.filter(Char::isDigit).take(CARD_NUMBER_REQUIRED_LENGTH)
+            newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
 
         text.value = filteredValue
         isError.value = runCatching { CardNumber(text.value) }.isFailure
 
-        if (!isError.value && filteredValue.length == CARD_NUMBER_REQUIRED_LENGTH) {
+        if (!isError.value && filteredValue.length == CardNumberFormat.REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }
     }
@@ -49,7 +42,7 @@ fun CardNumberTextField(
         value = text.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
-        visualTransformation = CardNumberFormatter().visualTransformation,
+        visualTransformation = CardNumberFormat.visualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
