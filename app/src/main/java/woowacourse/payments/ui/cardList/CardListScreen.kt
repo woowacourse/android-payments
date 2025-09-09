@@ -106,14 +106,14 @@ private fun CardListScreenPreview3() {
             cards =
                 listOf(
                     Card(
-                        number = "1111 - 2222 - **** - ****",
-                        expiredDate = "04 / 21",
+                        number = "1111222233334444",
+                        expiredDate = "0421",
                         ownerName = "CREW",
                         password = "1234",
                     ),
                     Card(
-                        number = "1111 - 2222 - **** - ****",
-                        expiredDate = "04 / 21",
+                        number = "1111222233334444",
+                        expiredDate = "0421",
                         ownerName = "CREW",
                         password = "1234",
                     ),

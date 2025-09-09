@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -26,6 +27,15 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     card: Card? = null,
 ) {
+    val formattedNumber: String =
+        remember(card?.number) {
+            formatCardNumber(card?.number ?: "")
+        }
+    val formattedDate: String =
+        remember(card?.expiredDate) {
+            formatExpiredDate(card?.expiredDate ?: "")
+        }
+
     Box(
         contentAlignment = if (card == null) Alignment.Center else Alignment.BottomCenter,
         modifier =
@@ -35,7 +45,8 @@ fun PaymentCard(
                 .background(
                     color = Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(bottom = 16.dp)
+                )
+                .padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -50,7 +61,7 @@ fun PaymentCard(
             )
             if (card != null) {
                 Text(
-                    text = card.number,
+                    text = formattedNumber,
                     color = Color.White,
                     style = Typography.labelMedium,
                     modifier = Modifier.padding(top = 8.dp),
@@ -70,7 +81,7 @@ fun PaymentCard(
                     )
 
                     Text(
-                        text = card.expiredDate,
+                        text = formattedDate,
                         color = Color.White,
                         style = Typography.labelMedium,
                         textAlign = TextAlign.End,
@@ -82,6 +93,18 @@ fun PaymentCard(
     }
 }
 
+private fun formatCardNumber(number: String): String {
+    val visibleNumber = number.take(8).chunked(4).joinToString(" - ")
+    return "$visibleNumber - **** - ****"
+}
+
+private fun formatExpiredDate(date: String): String =
+    if (date.length == 4) {
+        "${date.take(2)} / ${date.takeLast(2)}"
+    } else {
+        date
+    }
+
 @Preview(showBackground = true)
 @Composable
 private fun PaymentCardPreview1() {
@@ -89,8 +112,8 @@ private fun PaymentCardPreview1() {
         PaymentCard(
             card =
                 Card(
-                    number = "1111 - 2222 - **** - ****",
-                    expiredDate = "04 / 21",
+                    number = "1111222233334444",
+                    expiredDate = "0421",
                     ownerName = "CREW",
                     password = "1234",
                 ),
