@@ -1,19 +1,35 @@
 package woowacourse.payments.ui.payments.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.PaymentCard
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun PaymentCard(modifier: Modifier = Modifier) {
+fun PaymentCard(
+    modifier: Modifier = Modifier,
+    paymentCard: PaymentCard? = null,
+) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -25,15 +41,78 @@ fun PaymentCard(modifier: Modifier = Modifier) {
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        Box(
-            modifier =
-                Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = Color(0xFFCBBA64),
-                        shape = RoundedCornerShape(4.dp),
-                    ),
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .padding(start = 14.dp, bottom = 8.dp, top = 22.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .background(
+                            color = Color(0xFFCBBA64),
+                            shape = RoundedCornerShape(4.dp),
+                        ),
+            )
+
+            if (paymentCard != null) {
+                Text(
+                    text = paymentCard.number.toUi(),
+                    color = Color.White,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 13.sp,
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(bottom = 2.dp)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 14.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = paymentCard.cardholderName,
+                        color = Color.White,
+                        fontWeight = FontWeight.W500,
+                        fontSize = 13.sp,
+                    )
+
+                    Text(
+                        text = paymentCard.expirationDate.toUi(),
+                        color = Color.White,
+                        fontWeight = FontWeight.W500,
+                        fontSize = 13.sp,
+                    )
+                }
+            }
+        }
+    }
+}
+
+private fun Long.toUi(): String =
+    this.toString().let { it.substring(0, it.length / 2) + "********" }
+        .chunked(4)
+        .joinToString("-")
+        .chunked(1)
+        .joinToString(" ")
+
+private fun YearMonth.toUi(): String {
+    val formatter = DateTimeFormatter.ofPattern("MM / yy")
+    return this.format(formatter)
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PaymentCardPreview() {
+    Column(
+        modifier = Modifier.padding(20.dp)
+    ) {
+        PaymentCard(paymentCard = PaymentCard(1111111111111111, "04/21", "CREW"))
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        PaymentCard(paymentCard = null)
     }
 }
