@@ -9,15 +9,19 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
@@ -115,29 +119,37 @@ fun CardListActivityPreview() {
             modifier = Modifier.fillMaxSize(),
             topBar = { CardListTopBar() },
         ) { innerPadding: PaddingValues ->
-            LazyColumn(
+            Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(36.dp),
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(vertical = 12.dp),
+                modifier = Modifier.fillMaxWidth().padding(innerPadding),
             ) {
-                item {
-                    PaymentCard(
-                        cardNumber = "1234 - 1234 - **** - ****",
-                        cardholderName = "CREW 1",
-                        expirationDate = YearMonth.of(2034, 12),
-                    )
+                Text(
+                    text = "새로운 카드를 등록해주세요",
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(vertical = 32.dp)
+                )
+
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(36.dp),
+                    modifier = Modifier.padding(vertical = 12.dp),
+                ) {
+                    item {
+                        PaymentCard(
+                            cardNumber = "1234 - 1234 - **** - ****",
+                            cardholderName = "CREW 1",
+                            expirationDate = YearMonth.of(2034, 12),
+                        )
+                    }
+                    item {
+                        PaymentCard(
+                            cardNumber = "1234 - 1234 - **** - ****",
+                            cardholderName = "CREW 2",
+                            expirationDate = YearMonth.of(2034, 12),
+                        )
+                    }
                 }
-                item {
-                    PaymentCard(
-                        cardNumber = "1234 - 1234 - **** - ****",
-                        cardholderName = "CREW 2",
-                        expirationDate = YearMonth.of(2034, 12),
-                    )
-                }
+
+
             }
         }
     }
