@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,7 +17,10 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun EmptyCard(modifier: Modifier = Modifier) {
+fun AddCardComponent(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -25,7 +29,8 @@ fun EmptyCard(modifier: Modifier = Modifier) {
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                )
+                .clickable(onClick = onClick),
     ) {
         Text(
             text = "+",
@@ -40,8 +45,9 @@ fun EmptyCard(modifier: Modifier = Modifier) {
 @Composable
 private fun EmptyCardPreview() {
     AndroidpaymentsTheme {
-        EmptyCard(
+        AddCardComponent(
             modifier = Modifier,
+            onClick = {},
         )
     }
 }
