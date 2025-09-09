@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardList
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -23,6 +24,7 @@ class CardListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
+                val context = LocalContext.current
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
@@ -30,9 +32,9 @@ class CardListActivity : ComponentActivity() {
                                 activityResult.data?.parcelable("newCard")
                                     ?: return@rememberLauncherForActivityResult
                             cards += newCard
+                            Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
                         }
                     }
-                val context = LocalContext.current
                 CardListScreen(
                     cards = cards,
                     onRegistrationClick = {
