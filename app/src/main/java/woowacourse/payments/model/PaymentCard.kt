@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Card(
+data class PaymentCard(
     val cardNumber: String,
     val expiry: String,
     val owner: String,

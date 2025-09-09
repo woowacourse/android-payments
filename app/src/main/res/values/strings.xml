@@ -20,5 +20,6 @@
     <!-- PaymentCards-->
     <string name="title_payment_cards">Payments</string>
     <string name="add_payment_card_guide">새로운 카드를 등록해주세요</string>
+    <string name="payment_card_top_bar_add_card">추가</string>
     <string name="desc_add">더하기</string>
 </resources>

@@ -15,15 +15,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.model.Card
+import woowacourse.payments.R
+import woowacourse.payments.model.PaymentCard
 import woowacourse.payments.ui.theme.CardTextStyle
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: Card?,
+    paymentCard: PaymentCard?,
 ) {
     Box(
         modifier =
@@ -49,9 +51,12 @@ fun PaymentCard(
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
-            if (card != null) {
+            if (paymentCard != null) {
                 Text(
-                    text = card.cardNumber.chunked(4).joinToString(" - "),
+                    text =
+                        paymentCard.cardNumber
+                            .chunked(4)
+                            .joinToString(stringResource(R.string.card_number_separator)),
                     style = CardTextStyle,
                     color = Color.White,
                     modifier = Modifier.padding(top = 8.dp),
@@ -66,12 +71,15 @@ fun PaymentCard(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = card.owner,
+                        text = paymentCard.owner,
                         style = CardTextStyle,
                         color = Color.White,
                     )
                     Text(
-                        text = card.expiry.chunked(2).joinToString(" / "),
+                        text =
+                            paymentCard.expiry
+                                .chunked(2)
+                                .joinToString(stringResource(R.string.expiry_separator)),
                         style = CardTextStyle,
                         color = Color.White,
                     )
@@ -84,5 +92,5 @@ fun PaymentCard(
 @Preview(showBackground = true)
 @Composable
 fun RegisteredPaymentCardPreview() {
-    PaymentCard(Modifier, Card("1234567812345678", "0511", "minjeong"))
+    PaymentCard(Modifier, PaymentCard("1234567812345678", "0511", "minjeong"))
 }

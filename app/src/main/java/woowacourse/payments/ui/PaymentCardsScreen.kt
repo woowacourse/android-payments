@@ -1,7 +1,6 @@
 package woowacourse.payments.ui
 
 import android.app.Activity
-import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
@@ -14,9 +13,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.model.Card
 import woowacourse.payments.model.EXTRA_CARD
+import woowacourse.payments.model.PaymentCard
 import woowacourse.payments.ui.component.EmptyCard
+import woowacourse.payments.ui.component.MultiCards
 import woowacourse.payments.ui.component.PaymentCardsTopBar
 import woowacourse.payments.ui.component.SingleCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -24,30 +24,32 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCardsScreen() {
     val context = LocalContext.current
-    var cards by rememberSaveable { mutableStateOf(listOf<Card>()) }
+    var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCard>()) }
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val newCard = result.data?.getParcelableExtra<Card>(EXTRA_CARD)
-                newCard?.let { cards = cards + it }
+                val newPaymentCard = result.data?.getParcelableExtra<PaymentCard>(EXTRA_CARD)
+                newPaymentCard?.let { paymentCards = paymentCards + it }
             }
         }
 
+    fun launchAddCard() {
+        val intent = AddPaymentCardActivity.newIntent(context)
+        cardAddLauncher.launch(intent)
+    }
+
     Scaffold(
         topBar = {
-            PaymentCardsTopBar()
+            PaymentCardsTopBar(paymentCards.size, Modifier, onAddClick = { launchAddCard() })
         },
     ) { innerPadding ->
         PaymentCardsContent(
             modifier =
                 Modifier
                     .padding(innerPadding),
-            cards = cards,
-            onAddCard = {
-                val intent = Intent(context, AddPaymentCardActivity::class.java)
-                cardAddLauncher.launch(intent)
-            },
+            paymentCards = paymentCards,
+            onAddCard = { launchAddCard() },
         )
     }
 }
@@ -55,12 +57,19 @@ fun PaymentCardsScreen() {
 @Composable
 private fun PaymentCardsContent(
     modifier: Modifier = Modifier,
-    cards: List<Card>,
+    paymentCards: List<PaymentCard>,
     onAddCard: () -> Unit,
 ) {
-    when (cards.size) {
+    when (paymentCards.size) {
         0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
-        1 -> SingleCard(modifier = modifier, card = cards.first(), onAddCard = onAddCard)
+        1 ->
+            SingleCard(
+                modifier = modifier,
+                paymentCard = paymentCards.first(),
+                onAddCard = onAddCard,
+            )
+
+        else -> MultiCards(modifier = modifier, paymentCards = paymentCards)
     }
 }
 
