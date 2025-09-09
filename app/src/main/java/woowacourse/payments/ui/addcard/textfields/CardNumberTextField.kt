@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.textfields
+package woowacourse.payments.ui.addcard.textfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,14 +13,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
-import woowacourse.payments.domain.ExpirationDate
-import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.formatter.CardNumberFormat
 import woowacourse.payments.ui.theme.Gray
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun ExpirationDateTextField(
+fun CardNumberTextField(
     text: MutableState<String>,
     isError: MutableState<Boolean>,
 ) {
@@ -28,41 +27,33 @@ fun ExpirationDateTextField(
 
     fun updateValue(newValue: String) {
         val filteredValue: String =
-            newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
+            newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
+
         text.value = filteredValue
+        isError.value = runCatching { CardNumber(text.value) }.isFailure
 
-        isError.value =
-            runCatching {
-                ExpirationDate(
-                    YearMonth.parse(
-                        filteredValue,
-                        ExpirationDateFormat.formatPattern,
-                    ),
-                )
-            }.isFailure
-
-        if (!isError.value && filteredValue.length == ExpirationDateFormat.REQUIRED_LENGTH) {
+        if (!isError.value && filteredValue.length == CardNumberFormat.REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
         }
     }
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(0.5F),
+        modifier = Modifier.fillMaxWidth(),
         value = text.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
-        visualTransformation = ExpirationDateFormat.visualTransformation,
-        label = { Text(stringResource(R.string.expiration_date_label)) },
+        visualTransformation = CardNumberFormat.visualTransformation,
+        label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = {
             Text(
-                text = stringResource(R.string.expiration_date_placeholder),
+                text = stringResource(R.string.card_number_placeholder),
                 color = Gray,
             )
         },
         supportingText = {
             Text(
                 if (isError.value) {
-                    stringResource(R.string.expiration_date_error_message)
+                    stringResource(R.string.card_number_error_message)
                 } else {
                     ""
                 },

@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.addcard.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
-import woowacourse.payments.ui.newcard.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Suppress("ktlint:standard:function-naming")

@@ -15,8 +15,8 @@ import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.ExtraKeys
+import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.formatter.ExpirationDateFormat
-import woowacourse.payments.ui.newcard.NewCardActivity
 import java.time.YearMonth
 
 class CardListActivity : ComponentActivity() {
@@ -38,7 +38,7 @@ class CardListActivity : ComponentActivity() {
     }
 
     private fun navigateToAddCard() {
-        activityResultLauncher.launch(NewCardActivity.intent(this))
+        activityResultLauncher.launch(AddCardActivity.intent(this))
     }
 
     private fun Intent.toCardOrNull(): Card? =

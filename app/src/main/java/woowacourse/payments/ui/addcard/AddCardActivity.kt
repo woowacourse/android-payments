@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.addcard
 
 import android.content.Context
 import android.content.Intent
@@ -10,23 +10,23 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.ui.ExtraKeys
 
-class NewCardActivity :
+class AddCardActivity :
     ComponentActivity(),
-    NewCardAction {
+    AddCardAction {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            NewCardContents(
+            AddCardContents(
                 onSaveSuccess = { cardNumber: String, expirationDate: String, cardholderName: String, passcode: String ->
-                    submitNewCard(cardNumber, expirationDate, cardholderName, passcode)
+                    submitAddedCard(cardNumber, expirationDate, cardholderName, passcode)
                     Toast
-                        .makeText(this, R.string.new_card_success_message, Toast.LENGTH_SHORT)
+                        .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
                         .show()
                 },
                 onSaveFailure = {
                     Toast
-                        .makeText(this, R.string.new_card_failure_message, Toast.LENGTH_SHORT)
+                        .makeText(this, R.string.add_card_failure_message, Toast.LENGTH_SHORT)
                         .show()
                 },
                 onBackClick = { finish() },
@@ -34,7 +34,7 @@ class NewCardActivity :
         }
     }
 
-    override fun submitNewCard(
+    override fun submitAddedCard(
         cardNumber: String,
         expirationDate: String,
         cardholderName: String,
@@ -51,12 +51,12 @@ class NewCardActivity :
     }
 
     companion object {
-        fun intent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
+        fun intent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
     }
 }
 
-interface NewCardAction {
-    fun submitNewCard(
+interface AddCardAction {
+    fun submitAddedCard(
         cardNumber: String,
         expirationDate: String,
         cardholderName: String,

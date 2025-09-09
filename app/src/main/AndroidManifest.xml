@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.newcard.NewCardActivity"
+            android:name=".ui.addcard.AddCardActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
     </application>

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.addcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,15 +14,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.textfields.CardHolderNameTextField
-import woowacourse.payments.ui.newcard.textfields.CardNumberTextField
-import woowacourse.payments.ui.newcard.textfields.ExpirationDateTextField
-import woowacourse.payments.ui.newcard.textfields.PasscodeTextField
+import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
+import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
+import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
+import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun NewCardContents(
+fun AddCardContents(
     onSaveSuccess: (
         cardNumber: String,
         expirationDate: String,
@@ -56,7 +56,7 @@ fun NewCardContents(
         passcode.value = ""
     }
 
-    fun saveNewCard() {
+    fun saveAddedCard() {
         checkEmptyFields()
         if (isError()) {
             onSaveFailure()
@@ -75,9 +75,9 @@ fun NewCardContents(
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                NewCardTopBar(
+                AddCardTopBar(
                     onBackClick = onBackClick,
-                    onSaveClick = { saveNewCard() },
+                    onSaveClick = { saveAddedCard() },
                 )
             },
         ) { innerPadding: PaddingValues ->
