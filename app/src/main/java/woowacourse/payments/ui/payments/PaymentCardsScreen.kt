@@ -27,7 +27,11 @@ fun PaymentCardsScreen() {
     Scaffold(
         topBar = {
             PaymentCardsTopAppBar(
-                onRegistrationClick = {},
+                onRegistrationClick = {
+                    val intent =
+                        Intent(context, PaymentCardRegistrationActivity::class.java)
+                    cardAddLauncher.launch(intent)
+                },
                 isVisibleRegistrationButton = false,
                 modifier = Modifier,
             )
@@ -51,22 +55,22 @@ fun PaymentCardsScreen() {
                 textAlign = TextAlign.Center,
             )
 
-            Box(
-                modifier =
-                    Modifier
-                        .size(width = 208.dp, height = 124.dp)
-                        .background(Color.LightGray)
-                        .clickable {},
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.payment_cards_screen_registration_symbol),
-                    fontSize = 34.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextGray,
-                )
-            }
-        }
+@Composable
+private fun RegistrationBox(onClickRegistration: () -> Unit) {
+    Box(
+        modifier =
+            Modifier
+                .size(width = 208.dp, height = 124.dp)
+                .background(Color.LightGray)
+                .clickable { onClickRegistration() },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringResource(R.string.payment_cards_screen_registration_symbol),
+            fontSize = 34.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextGray,
+        )
     }
 }
 
