@@ -15,8 +15,8 @@ class ExpirationDateFormatter {
         visualTransformation.filter(AnnotatedString(yearMonth.format(EXPIRATION_DATE_PATTERN))).text.text
 
     companion object {
+        val EXPIRATION_DATE_PATTERN: DateTimeFormatter = DateTimeFormatter.ofPattern("MMyy")
         private const val EXPIRATION_DATE_CHUNK_SIZE = 2
         private const val EXPIRATION_DATE_SEPARATOR = " / "
-        private val EXPIRATION_DATE_PATTERN: DateTimeFormatter = DateTimeFormatter.ofPattern("MMyy")
     }
 }
