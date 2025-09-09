@@ -10,4 +10,11 @@ val DEFAULT_CARD = CardUiModel(
 
 val SINGLE_CARD = listOf(DEFAULT_CARD)
 
-val MULTIPLE_CARD = List(3) { DEFAULT_CARD }
+val MULTIPLE_CARD = listOf(
+    DEFAULT_CARD,
+    CardUiModel(
+        number = "0000000000000000",
+        expiredDate = "1025",
+        ownerName = "BEOMJUN HAM",
+    )
+)
