@@ -23,19 +23,17 @@ import kotlin.jvm.java
 
 @Composable
 fun PaymentScreen(
-    modifier: Modifier = Modifier,
-    cards: List<PaymentCard>,
-    onAddNewCardClick: () -> Unit
+    onAddNewCardClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val cards = remember { mutableStateListOf<PaymentCard>() }
-    val screenType = remember { mutableStateListOf<PaymentCardCount>() }
+
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                // 카드 추가 성공!
                 val newCard = activityResult.data?.getParcelableExtra<PaymentCard>("newCard")
-                if (newCard != null) {
+                newCard?.let {
                     cards.add(newCard)
                     Log.d("test", "PaymentScreen: $cards")
                 }
@@ -46,16 +44,20 @@ fun PaymentScreen(
         val intent = Intent(context, CardAdditionActivity::class.java)
         cardAddLauncher.launch(intent)
     }
+
     Scaffold(
         modifier = modifier,
         topBar = {
-            PaymentsTopBar(onAddNewCardClick = {
-                onAddNewCardClick()
-                openAddCardWithResult()
-            })
+            PaymentsTopBar(
+                cards = cards,
+                onAddNewCardClick = {
+                    onAddNewCardClick()
+                    openAddCardWithResult()
+                })
         }
     ) { paddingValues: PaddingValues ->
         PaymentsColumn(
+            cards = cards,
             onClickAddCard = {
                 onAddNewCardClick()
                 openAddCardWithResult()
@@ -66,15 +68,8 @@ fun PaymentScreen(
 }
 
 
-
 @Preview
 @Composable
 private fun PaymentScreenPreview() {
-    PaymentScreen(cards = emptyList(), onAddNewCardClick = {})
-}
-
-sealed class PaymentCardCount {
-    data object Empty : PaymentCardCount()
-    data object One : PaymentCardCount()
-    data object MoreThanOne : PaymentCardCount()
+    PaymentScreen(onAddNewCardClick = {})
 }

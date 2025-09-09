@@ -1,6 +1,5 @@
 package woowacourse.payments
 
-import android.R.attr.password
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,10 +8,8 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.screen.CardAdditionScreen
-import kotlin.String
 
 class CardAdditionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

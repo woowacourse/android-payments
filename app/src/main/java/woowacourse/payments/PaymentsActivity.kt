@@ -15,12 +15,10 @@ class PaymentsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PaymentScreen(
-                cards = emptyList(),
                 onAddNewCardClick = { navigateToCardAddition() }
             )
         }
     }
-
     fun navigateToCardAddition() {
         val intent = CardAdditionActivity.Intent(this)
         startActivity(intent)

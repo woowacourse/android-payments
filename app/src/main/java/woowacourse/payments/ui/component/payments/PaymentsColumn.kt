@@ -26,13 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.PaymentCard
-import woowacourse.payments.ui.screen.PaymentCardCount
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
 fun PaymentsColumn(
     cards: List<PaymentCard> = emptyList(),
-    screenType: PaymentCardCount = PaymentCardCount.Empty,
     onClickAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -40,24 +38,26 @@ fun PaymentsColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
-        if (screenType == PaymentCardCount.Empty) {
+        Spacer(modifier = Modifier.height(32.dp))
+        if (cards.size <= 1) {
             Text(
                 text = stringResource(woowacourse.payments.R.string.payments_enroll_new_card),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W700,
-                modifier = modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
+            Spacer(modifier = Modifier.height(32.dp))
         }
         for (card in cards) {
             Box(
-                contentAlignment = Alignment.CenterStart,
-                modifier = modifier
+                modifier = Modifier
                     .shadow(8.dp)
                     .size(width = 208.dp, height = 124.dp)
                     .background(
                         color = Color(0xFF333333),
                         shape = RoundedCornerShape(5.dp),
                     )
+                    .align(Alignment.CenterHorizontally)
             ) {
                 Box(
                     modifier = Modifier
@@ -69,22 +69,32 @@ fun PaymentsColumn(
                         )
                 )
                 Text(
-                    modifier = modifier.padding(start = 14.dp, bottom = 10.dp),
-                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.cardNumber}"
+                    modifier = Modifier.padding(start = 14.dp, bottom = 8.dp),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W500,
+                    text = "${card.cardNumber}",
+                    color = Color.White
                 )
                 Text(
-                    modifier = modifier.padding(start = 14.dp, bottom = 10.dp),
-                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.cardOwnerName}"
+                    modifier = Modifier.padding(start = 14.dp, bottom = 4.dp),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W500,
+                    text = "${card.cardOwnerName}",
+                    color = Color.White
                 )
                 Text(
-                    modifier = modifier.padding(end = 14.dp, bottom = 10.dp),
-                    fontSize = 12.sp, fontWeight = FontWeight.W500, text = "${card.expirationDate}"
+                    modifier = Modifier.padding(end = 14.dp, bottom = 4.dp),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W500,
+                    text = "${card.expirationDate}",
+                    color = Color.White
                 )
             }
+            Spacer(modifier = Modifier.height(36.dp))
         }
-        if (screenType != PaymentCardCount.MoreThanOne) {
+        if (2 > cards.size) {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .shadow(8.dp)
                     .size(width = 208.dp, height = 124.dp)
                     .background(

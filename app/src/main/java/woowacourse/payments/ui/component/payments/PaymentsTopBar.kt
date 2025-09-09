@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.screen.PaymentCardCount
+import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.theme.Black
 import woowacourse.payments.ui.theme.Black1D
 
@@ -19,7 +19,7 @@ import woowacourse.payments.ui.theme.Black1D
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentsTopBar(
-    paymentCardCount: PaymentCardCount = PaymentCardCount.Empty,
+    cards: List<PaymentCard>,
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,7 +33,7 @@ fun PaymentsTopBar(
             )
         },
         actions = {
-            if (paymentCardCount == PaymentCardCount.MoreThanOne) {
+            if (cards.size >= 2) {
                 TextButton(onClick = {
                     onAddNewCardClick()
                 }) {
@@ -48,5 +48,5 @@ fun PaymentsTopBar(
 @Preview
 @Composable
 fun PaymentsTopBarPreview() {
-    PaymentsTopBar(onAddNewCardClick = {})
+    PaymentsTopBar(emptyList(), onAddNewCardClick = {})
 }
