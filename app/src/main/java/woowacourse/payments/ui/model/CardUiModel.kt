@@ -8,13 +8,11 @@ data class CardUiModel(
     val cardNumber: String = "",
     val expirationDate: String = "",
     val cardholderName: String = "",
-) {
-    companion object {
-        fun from(card: Card): CardUiModel =
-            CardUiModel(
-                cardNumber = CardNumberFormat.formattedCardNumber(card.cardNumber.value),
-                expirationDate = ExpirationDateFormat.formattedExpirationDate(card.expirationDate.value),
-                cardholderName = card.cardholderName.value,
-            )
-    }
-}
+)
+
+fun Card.toUiModel(): CardUiModel =
+    CardUiModel(
+        cardNumber = CardNumberFormat.formattedCardNumber(cardNumber.value),
+        expirationDate = ExpirationDateFormat.formattedExpirationDate(expirationDate.value),
+        cardholderName = cardholderName.value,
+    )

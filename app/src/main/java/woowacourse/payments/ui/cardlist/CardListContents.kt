@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.newcard.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -61,7 +62,7 @@ fun CardListContents(
                         count = cards.size,
                     ) { index: Int ->
                         val card: Card = cards[index]
-                        PaymentCard(card = CardUiModel.from(card))
+                        PaymentCard(card = card.toUiModel())
                     }
                 }
 
