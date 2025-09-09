@@ -32,7 +32,7 @@ fun CardListScreen() {
     var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
 
     Scaffold(
-        topBar = { CardListTopBar() },
+        topBar = { CardListTopBar(isShowRegistrationButton = cards.size > 1) },
         modifier =
             Modifier
                 .fillMaxSize()
