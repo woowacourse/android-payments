@@ -19,7 +19,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,13 +26,16 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.payments.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen() {
-    val focusManager = LocalFocusManager.current
+fun CardRegistrationScreen(
+    onBackPressed: () -> Unit,
+    onCardRegistered: (CardUiModel) -> Unit,
+) {
     val snackbarState = remember { SnackbarHostState() }
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
@@ -52,10 +54,18 @@ fun CardRegistrationScreen() {
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = {
+                    onBackPressed()
                     uiState = uiState.copy(snackbarMessage = navigatePreviousMessage)
                 },
                 onSaveClick = {
-                    focusManager.clearFocus()
+                    onCardRegistered(
+                        CardUiModel(
+                            cardholderNameUiModel = uiState.cardholderName,
+                            cardNumberUiModel = uiState.cardNumber,
+                            cardExpirationDateUiModel = uiState.cardExpirationDate,
+                        ),
+                    )
+
                     uiState = uiState.copy(snackbarMessage = registerCardMessage)
                 },
                 isSaveButtonEnabled = uiState.isRegistrableCard,
@@ -146,6 +156,9 @@ private fun CardRegistrationScreenContent(
 @Composable
 fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen()
+        CardRegistrationScreen(
+            onBackPressed = { },
+            onCardRegistered = {},
+        )
     }
 }
