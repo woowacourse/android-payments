@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcategories
+package woowacourse.payments.ui.cards
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,7 +16,7 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardCategoryTopBar(
+fun CardsTopBar(
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -45,6 +45,6 @@ fun NewCardCategoryTopBar(
 @Preview(showBackground = true)
 @Composable
 fun NewCardCategoryTopBarPreView() {
-    NewCardCategoryTopBar({})
+    CardsTopBar({})
 }
 

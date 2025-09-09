@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.cards
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,12 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import woowacourse.payments.ui.cardcategories.CardCategoriesActivity
-import woowacourse.payments.ui.cardcreate.CreateCardScreen
-import woowacourse.payments.ui.cardcreate.NewCardTopBar
+import woowacourse.payments.ui.cardcreate.CreateCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class MainActivity : ComponentActivity() {
+class CardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -22,21 +20,21 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
-                        NewCardTopBar(
-                            onBackClick = {},
-                            onSaveClick = {})
+                        CardsTopBar(
+                            onAddClick = {},
+                        )
                     }) { innerPadding ->
-                    CreateCardScreen(
-                        ::navigateCardCategoriesActivity,
-                        Modifier.padding(innerPadding),
+                    NonCardsSection(
+                        ::navigateCreateCardActivity,
+                        Modifier.padding(innerPadding)
                     )
                 }
             }
         }
     }
 
-    fun navigateCardCategoriesActivity() {
-        val intent = CardCategoriesActivity.instance(this)
+    fun navigateCreateCardActivity() {
+        val intent = CreateCardActivity.instance(this)
         startActivity(intent)
     }
 }
