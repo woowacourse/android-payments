@@ -19,7 +19,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun CardListTopBar(
     showAddButton: Boolean,
     onAddClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
         title = { Text(text = "Payments", fontWeight = FontWeight.Normal) },
@@ -29,7 +28,7 @@ fun CardListTopBar(
                     Text(
                         text = "추가",
                         modifier =
-                            modifier.semantics {
+                            Modifier.semantics {
                                 this.contentDescription = "카드 목록 상단 추가 텍스트"
                             },
                         color = Color.Black,
@@ -39,7 +38,6 @@ fun CardListTopBar(
                 }
             }
         },
-        modifier = modifier,
     )
 }
 
