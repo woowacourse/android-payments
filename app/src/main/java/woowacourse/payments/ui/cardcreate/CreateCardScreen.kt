@@ -21,22 +21,19 @@ private val ScreenSidePadding = 24.dp
 
 @Composable
 fun CreateCardScreen(
+    stateHolder: CreateCardStateHolder,
     modifier: Modifier = Modifier,
 ) {
-    val stateHolder = rememberSaveable(saver = CreateCardStateHolderSaver()) {
-        CreateCardStateHolder()
-    }
-
     Column(
         modifier =
             modifier
                 .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
-        PaymentCard(null,Modifier.align(Alignment.CenterHorizontally))
+        PaymentCard(null, Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.height(ScreenSectionSpacing))
         CreateCardInputSection(
-            createCardUiState = stateHolder.cardCreateState.value,
+            createCardUiState = stateHolder.cardCreateState,
             onCardNumbersChange = stateHolder::updateCreateCardNumbers,
             onCardExpiryDateChange = stateHolder::updateCreateCardExpiryDate,
             onCardOwnerNameChange = stateHolder::updateCreateCardOwnerName,
@@ -47,10 +44,4 @@ fun CreateCardScreen(
                     .padding(horizontal = ScreenSidePadding),
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CardCreateScreenPreView() {
-    CreateCardScreen()
 }

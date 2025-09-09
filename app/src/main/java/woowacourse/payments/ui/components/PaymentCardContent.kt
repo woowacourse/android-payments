@@ -38,7 +38,6 @@ fun PaymentCardContent(paymentCardUiModel: PaymentCardUiModel, modifier: Modifie
             fontSize = 12.sp,
             fontWeight = FontWeight.W500,
             letterSpacing = 0.10.em,
-            textAlign = TextAlign.Center,
         )
         Text(
             paymentCardUiModel.formatCardExpiry(),

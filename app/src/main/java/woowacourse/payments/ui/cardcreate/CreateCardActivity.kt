@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardcreate
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,7 +10,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import woowacourse.payments.ui.cards.CardsActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CreateCardActivity : ComponentActivity() {
@@ -18,14 +21,21 @@ class CreateCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
+                val stateHolder =
+                    rememberSaveable(saver = CreateCardStateHolderSaver()) { CreateCardStateHolder() }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         NewCardTopBar(
                             onBackClick = { onBackPressedDispatcher.onBackPressed() },
-                            onSaveClick = {})
+                            onSaveClick = {
+                                val intent = CardsActivity.intent(stateHolder.newCard())
+                                setResult(RESULT_OK, intent)
+                                finish()
+                            })
                     }) { innerPadding ->
                     CreateCardScreen(
+                        stateHolder,
                         Modifier.Companion.padding(innerPadding),
                     )
                 }
