@@ -15,6 +15,7 @@
     <string name="addcard_owner_name_placeholder">카드에 표시된 이름을 입력하세요</string>
     <string name="addcard_password_label">비밀번호</string>
     <string name="addcard_password_placeholder">0000</string>
+    <string name="addcard_failed_to_add_card">카드 정보를 전부 입력해주세요</string>
 
     <!--allcards-->
     <string name="allcards_request_add_card">새로운 카드를 등록해주세요</string>
