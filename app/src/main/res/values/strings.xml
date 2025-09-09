@@ -28,7 +28,7 @@
     <string name="icon_save_content_description">완료</string>
 
     <!-- card_registration_screen -->
-    <string name="card_registration_screen_registration_card_success">추가 완료</string>
+    <string name="card_registration_screen_registration_card_success">카드가 추가되었습니다</string>
     <string name="card_registration_screen_expired_card">만료된 카드입니다.</string>
 
     <!-- card_catalog_screen -->
