@@ -128,3 +128,19 @@ private fun PaymentCardPreview2() {
         PaymentCard()
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun PaymentCardPreview3() {
+    AndroidpaymentsTheme {
+        PaymentCard(
+            card =
+                Card(
+                    number = "1111222233334444",
+                    expiredDate = "0421",
+                    ownerName = null,
+                    password = "1234",
+                ),
+        )
+    }
+}

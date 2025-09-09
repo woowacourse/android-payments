@@ -57,3 +57,11 @@ private fun CardListTopBarPreview() {
         CardListTopBar({})
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun CardListTopBarPreview2() {
+    AndroidpaymentsTheme {
+        CardListTopBar(isShowRegistrationButton = false, onRegistrationClick = {})
+    }
+}
