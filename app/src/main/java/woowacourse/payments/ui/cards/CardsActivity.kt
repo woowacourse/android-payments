@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.cardcreate.CreateCardActivity
 import woowacourse.payments.ui.cards.model.CardsUiState
-import woowacourse.payments.ui.model.paymentCardUiModelSample
+import woowacourse.payments.ui.model.paymentCardUiModelSamples
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -22,7 +22,7 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cardsStateHolder = rememberSaveable(saver = CardsStateHolderSaver()) {
-                    CardsStateHolder(CardsUiState.of(listOf(paymentCardUiModelSample)))
+                    CardsStateHolder(CardsUiState.of(paymentCardUiModelSamples))
                 }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
