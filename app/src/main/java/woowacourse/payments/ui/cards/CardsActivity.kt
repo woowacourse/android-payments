@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.cardcreate.CreateCardActivity
+import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -18,6 +20,9 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
+                val cardsStateHolder = rememberSaveable(saver = CardsStateHolderSaver()) {
+                    CardsStateHolder(CardsUiState.of(listOf()))
+                }
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
@@ -26,7 +31,7 @@ class CardsActivity : ComponentActivity() {
                         )
                     }) { innerPadding ->
                     CardsScreen(
-                        CardScreenState.None,
+                        cardsStateHolder,
                         ::navigateCreateCardActivity,
                         Modifier
                             .padding(innerPadding)
