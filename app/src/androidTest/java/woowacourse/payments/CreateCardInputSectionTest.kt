@@ -19,7 +19,7 @@ import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INP
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.model.CreateCardState
+import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
 
 @RunWith(AndroidJUnit4::class)
 class CreateCardInputSectionTest {
@@ -27,11 +27,11 @@ class CreateCardInputSectionTest {
     @get:Rule
     val rule = createComposeRule()
 
-    private fun setContentWithState(initial: CreateCardState = CreateCardState()) {
+    private fun setContentWithState(initial: CreateCardUiState = CreateCardUiState()) {
         rule.setContent {
             var state by rememberSaveable { mutableStateOf(initial) }
             CreateCardInputSection(
-                createCardState = state,
+                createCardUiState = state,
                 onCardNumbersChange = { state = state.copy(cardNumber = it) },
                 onCardExpiryDateChange = { state = state.copy(expiryDate = it) },
                 onCardOwnerNameChange = { state = state.copy(ownerName = it) },
@@ -64,7 +64,7 @@ class CreateCardInputSectionTest {
 
     @Test
     fun 잘못된_만료일이면_에러메시지가_보인다() {
-        val initial = CreateCardState(
+        val initial = CreateCardUiState(
             cardNumber = "",
             expiryDate = "13/22",
             ownerName = "",

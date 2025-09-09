@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CreateCardState(
+data class CreateCardUiState(
     val cardNumber: String = "",
     val expiryDate: String = "",
     @StringRes val expiryDateErrorTextRes: Int? = null,

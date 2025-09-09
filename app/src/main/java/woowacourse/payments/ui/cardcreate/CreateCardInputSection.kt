@@ -22,7 +22,7 @@ import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INP
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.model.CreateCardState
+import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
@@ -35,7 +35,7 @@ private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.N
 
 @Composable
 fun CreateCardInputSection(
-    createCardState: CreateCardState,
+    createCardUiState: CreateCardUiState,
     onCardNumbersChange: (String) -> Unit,
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
@@ -54,7 +54,7 @@ fun CreateCardInputSection(
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = createCardState.cardNumber,
+            value = createCardUiState.cardNumber,
             onValueChange = onCardNumbersChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,10 +66,10 @@ fun CreateCardInputSection(
         )
 
         val expiryDateErrorTextRes =
-            createCardState.expiryDateErrorTextRes?.let { stringResource(it) }
+            createCardUiState.expiryDateErrorTextRes?.let { stringResource(it) }
 
         OutlinedTextField(
-            value = createCardState.expiryDate,
+            value = createCardUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
             modifier = Modifier
                 .width(146.dp)
@@ -89,7 +89,7 @@ fun CreateCardInputSection(
         )
 
         OutlinedTextField(
-            value = createCardState.ownerName,
+            value = createCardUiState.ownerName,
             onValueChange = onCardOwnerNameChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -98,7 +98,7 @@ fun CreateCardInputSection(
             placeholder = { Text(stringResource(R.string.owner_placeholder)) },
             supportingText = {
                 Text(
-                    "${createCardState.ownerName.length}/$CARD_OWNER_NAME_MAX",
+                    "${createCardUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End
                 )
@@ -106,7 +106,7 @@ fun CreateCardInputSection(
         )
 
         OutlinedTextField(
-            value = createCardState.password,
+            value = createCardUiState.password,
             onValueChange = onCardPasswordChange,
             modifier = Modifier
                 .width(146.dp)

@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.components.PaymentCard
 
 private val ScreenAppBarSpacing = 14.dp
 private val ScreenSectionSpacing = 40.dp
@@ -19,7 +20,6 @@ private val ScreenSidePadding = 24.dp
 
 @Composable
 fun CreateCardScreen(
-    onCardCategoryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val stateHolder = rememberSaveable(saver = CreateCardStateHolderSaver()) {
@@ -32,10 +32,10 @@ fun CreateCardScreen(
                 .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
-        PaymentCard(onCardCategoryClick, Modifier.align(Alignment.CenterHorizontally))
+        PaymentCard(Modifier.align(Alignment.CenterHorizontally))
         Spacer(modifier = Modifier.height(ScreenSectionSpacing))
         CreateCardInputSection(
-            createCardState = stateHolder.cardCreateState.value,
+            createCardUiState = stateHolder.cardCreateState.value,
             onCardNumbersChange = stateHolder::updateCreateCardNumbers,
             onCardExpiryDateChange = stateHolder::updateCreateCardExpiryDate,
             onCardOwnerNameChange = stateHolder::updateCreateCardOwnerName,
@@ -51,5 +51,5 @@ fun CreateCardScreen(
 @Preview(showBackground = true)
 @Composable
 fun CardCreateScreenPreView() {
-    CreateCardScreen({})
+    CreateCardScreen()
 }

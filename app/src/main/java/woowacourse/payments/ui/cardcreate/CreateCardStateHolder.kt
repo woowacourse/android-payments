@@ -5,21 +5,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.core.text.isDigitsOnly
-import woowacourse.payments.ui.cardcreate.model.CreateCardState
+import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
 import woowacourse.payments.ui.utils.ext.formatCardExpiryException
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 
-class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardState> {
-    override fun SaverScope.save(value: CreateCardStateHolder): CreateCardState? =
+class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiState> {
+    override fun SaverScope.save(value: CreateCardStateHolder): CreateCardUiState? =
         value.cardCreateState.value
 
-    override fun restore(value: CreateCardState): CreateCardStateHolder? =
+    override fun restore(value: CreateCardUiState): CreateCardStateHolder? =
         CreateCardStateHolder(value)
 }
 
-class CreateCardStateHolder(initialCardCreateState: CreateCardState = CreateCardState()) {
+class CreateCardStateHolder(initialCardCreateState: CreateCardUiState = CreateCardUiState()) {
     private var _cardCreateState = mutableStateOf(initialCardCreateState)
-    val cardCreateState: State<CreateCardState> get() = _cardCreateState
+    val cardCreateState: State<CreateCardUiState> get() = _cardCreateState
 
     fun updateCreateCardNumbers(cardNumbers: String) {
         if (!cardNumbers.isDigitsOnly() || cardNumbers.length > CARD_NUMBERS_MAX) return
