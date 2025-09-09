@@ -12,7 +12,7 @@ class CardCatalogActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CardCatalogScreen(
-                onAddNewCardClick = { navigateToCardAddition() }
+                onAddNewCardClick = { ::navigateToCardAddition }
             )
         }
     }
