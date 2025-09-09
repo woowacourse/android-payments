@@ -30,7 +30,10 @@ import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegisterScreen() {
+fun CardRegisterScreen(
+    onBackClick: () -> Unit,
+    onSaveClick: () -> Unit,
+) {
     var cardNumber by remember { mutableStateOf("") }
     var expiredDate by remember { mutableStateOf("") }
     var ownerName by remember { mutableStateOf("") }
@@ -39,8 +42,8 @@ fun CardRegisterScreen() {
     Scaffold(
         topBar = {
             CardRegisterTopBar(
-                onBackClick = { /* 뒤로가기 */ },
-                onSaveClick = { /* 저장하기 */ },
+                onBackClick = { onBackClick() },
+                onSaveClick = { onSaveClick() },
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -131,6 +134,6 @@ fun CardRegisterScreen() {
 @Composable
 fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegisterScreen()
+        CardRegisterScreen({}, {})
     }
 }

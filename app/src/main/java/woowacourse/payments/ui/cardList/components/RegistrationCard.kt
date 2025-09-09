@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardList.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RegistrationCard(modifier: Modifier = Modifier) {
+fun RegistrationCard(
+    onRegistrationClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -23,7 +27,8 @@ fun RegistrationCard(modifier: Modifier = Modifier) {
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                )
+                .clickable { onRegistrationClick() },
     ) {
         Text(
             text = "+",
@@ -36,5 +41,5 @@ fun RegistrationCard(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun RegistrationCardPreview() {
-    RegistrationCard()
+    RegistrationCard({})
 }

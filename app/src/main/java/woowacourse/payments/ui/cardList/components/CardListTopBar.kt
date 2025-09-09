@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardList.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -20,6 +21,7 @@ import woowacourse.payments.ui.theme.Typography
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardListTopBar(
+    onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
     isShowRegistrationButton: Boolean = true,
 ) {
@@ -38,7 +40,10 @@ fun CardListTopBar(
                         text = "추가",
                         style = Typography.displayLarge,
                         color = Color.Black,
-                        modifier = Modifier.padding(end = 20.dp),
+                        modifier =
+                            Modifier
+                                .padding(end = 20.dp)
+                                .clickable { onRegistrationClick() },
                     )
                 }
             },
@@ -50,6 +55,6 @@ fun CardListTopBar(
 @Composable
 private fun CardListTopBarPreview() {
     AndroidpaymentsTheme {
-        CardListTopBar()
+        CardListTopBar({})
     }
 }

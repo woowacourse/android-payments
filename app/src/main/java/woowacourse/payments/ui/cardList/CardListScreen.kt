@@ -28,11 +28,16 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
-fun CardListScreen() {
+fun CardListScreen(onRegistrationClick: () -> Unit) {
     var cards by remember { mutableStateOf<List<Card>>(emptyList()) }
 
     Scaffold(
-        topBar = { CardListTopBar(isShowRegistrationButton = cards.size > 1) },
+        topBar = {
+            CardListTopBar(
+                onRegistrationClick = { onRegistrationClick() },
+                isShowRegistrationButton = cards.size > 1,
+            )
+        },
         modifier =
             Modifier
                 .fillMaxSize()
@@ -56,7 +61,10 @@ fun CardListScreen() {
                 )
             }
             if (cards.size == 1 || cards.isEmpty()) {
-                RegistrationCard(modifier = Modifier.padding(top = 36.dp))
+                RegistrationCard(
+                    onRegistrationClick = { onRegistrationClick() },
+                    modifier = Modifier.padding(top = 36.dp),
+                )
             }
             cards.forEach { card ->
                 Spacer(modifier = Modifier.height(36.dp))
@@ -70,6 +78,6 @@ fun CardListScreen() {
 @Composable
 private fun CardListScreenPreview() {
     AndroidpaymentsTheme {
-        CardListScreen()
+        CardListScreen({})
     }
 }

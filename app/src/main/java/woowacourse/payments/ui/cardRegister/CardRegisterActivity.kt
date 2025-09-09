@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.cardRegister
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,8 +14,15 @@ class CardRegisterActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardRegisterScreen()
+                CardRegisterScreen(
+                    onBackClick = { finish() },
+                    onSaveClick = {},
+                )
             }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
     }
 }
