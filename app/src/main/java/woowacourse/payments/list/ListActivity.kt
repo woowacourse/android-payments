@@ -50,7 +50,7 @@ class ListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cards by remember { mutableStateOf(CardUiState()) }
+                var list by remember { mutableStateOf(ListUiState()) }
                 val context = LocalContext.current
 
                 val launcher = rememberLauncherForActivityResult(
@@ -59,14 +59,14 @@ class ListActivity : ComponentActivity() {
                     if (result.resultCode == RESULT_OK) {
                         val newCard = result.data?.getParcelableExtra<Card>("card")
                         newCard?.let {
-                            cards = CardUiState(cards.cards + it)
+                            list = ListUiState(list.cards + it)
                             Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
 
                 CardListScreen(
-                    cards = cards.cards,
+                    cards = list.cards,
                     onAddClick = {
                         val intent = Intent(context, NewCardActivity::class.java)
                         launcher.launch(intent)
