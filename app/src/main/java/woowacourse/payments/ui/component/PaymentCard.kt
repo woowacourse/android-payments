@@ -71,6 +71,7 @@ private fun PaymentCardText(
         color = Color.White,
         fontSize = 12.sp,
         fontWeight = FontWeight.W500,
+        maxLines = 1,
         letterSpacing = 1.sp,
         lineHeight = 1.em,
         modifier = modifier,
@@ -90,9 +91,12 @@ private fun PaymentCardInfo(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            PaymentCardText(paymentCardUiModel?.upperCardholderName.orEmpty())
+            PaymentCardText(
+                text = paymentCardUiModel?.upperCardholderName.orEmpty(),
+                modifier = Modifier.weight(1f)
+            )
             PaymentCardText(paymentCardUiModel?.formattedExpirationDate().orEmpty())
         }
     }
