@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -49,7 +50,8 @@ fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (Card) -> Unit = {},
 ) {
-    val context = LocalContext.current
+    val context: Context = LocalContext.current
+    val cardAddedMessage: String = stringResource(R.string.card_added_message)
 
     var cardNumber: String by remember { mutableStateOf("") }
     var cardExpirationDate: String by remember { mutableStateOf("") }
@@ -74,8 +76,11 @@ fun NewCardScreen(
                     buildCardOrNull()?.let { card: Card ->
                         onSaveClick(card)
                         Toast
-                            .makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT)
-                            .show()
+                            .makeText(
+                                context,
+                                cardAddedMessage,
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     }
                 },
             )

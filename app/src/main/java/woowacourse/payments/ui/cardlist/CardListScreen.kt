@@ -17,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardDigit
 import woowacourse.payments.domain.CardExpirationDate
@@ -69,7 +71,7 @@ fun CardListScreen(
             if (cards.isEmpty()) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
-                    text = "새로운 카드를 등록해주세요",
+                    text = stringResource(R.string.add_card_message),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                 )

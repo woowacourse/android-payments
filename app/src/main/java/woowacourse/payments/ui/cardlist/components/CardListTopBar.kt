@@ -7,7 +7,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +25,7 @@ fun CardListTopBar(
         actions = {
             if (showAddButton) {
                 TextButton(onClick = { onAddClick() }) {
-                    Text(text = "추가", color = Color.Black)
+                    Text(text = stringResource(R.string.add), color = Color.Black)
                 }
             }
         },
