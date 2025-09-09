@@ -55,6 +55,9 @@ fun CardListScreen() {
                     modifier = Modifier.fillMaxWidth(),
                 )
             }
+            if (cards.size == 1 || cards.isEmpty()) {
+                RegistrationCard(modifier = Modifier.padding(top = 36.dp))
+            }
         }
     }
 }
