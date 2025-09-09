@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +24,7 @@ fun EmptyCard(
         Text(
             text = stringResource(R.string.add_payment_card_guide),
             fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
             color = Gray300,
             modifier =
                 modifier
