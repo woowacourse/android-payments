@@ -50,7 +50,7 @@ class NewCardActivity : ComponentActivity() {
                             },
                             onSaveClick = {
                                 val data = Intent().apply {
-                                    putExtra("card", Card(cardNumber, cardExpriy, cardName, cardPassword))
+                                    putExtra("card", Card(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName))
                                 }
                                 setResult(RESULT_OK, data)
                                 finish()
