@@ -2,6 +2,7 @@ package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.dp
 fun PaymentCard(
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.Black,
-    cardContent: @Composable () -> Unit = {},
+    cardContent: @Composable BoxScope.() -> Unit = {},
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
