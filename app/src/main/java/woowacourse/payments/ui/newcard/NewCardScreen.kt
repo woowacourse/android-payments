@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.newcard.components.CardHolderTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
@@ -72,6 +73,7 @@ fun NewCardScreen(
         CardNumberTextField(
             value = cardNumber,
             onValueChange = { cardNumber = it },
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(Modifier.height(30.dp))
 
@@ -98,6 +100,12 @@ fun NewCardScreen(
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
         )
         Spacer(Modifier.height(30.dp))
+
+        CardHolderTextField(
+            value = cardholder,
+            onValueChange = { cardholder = it },
+            modifier = Modifier.fillMaxWidth(),
+        )
 
         CounterTextField(
             value = cardholder,

@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -36,7 +35,7 @@ fun CardNumberTextField(
             val limited = onlyDigits.take(MAX_CARD_NUMBER_LENGTH)
             onValueChange(limited)
         },
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_number_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_number_hint)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),

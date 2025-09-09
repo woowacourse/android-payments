@@ -82,8 +82,7 @@ class CardNumberTextFieldTest {
         val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        field
-            .performTextInput("1234123412341234")
+        field.performTextInput("1234123412341234")
 
         // then
         composeRule
@@ -104,8 +103,7 @@ class CardNumberTextFieldTest {
         val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        field
-            .performTextInput("12341234123412341")
+        field.performTextInput("12341234123412341")
 
         // then
         composeRule
@@ -126,8 +124,7 @@ class CardNumberTextFieldTest {
         val field = composeRule.onNode(hasText("카드 번호") and hasSetTextAction())
 
         // when
-        field
-            .performTextInput("1234")
+        field.performTextInput("1234")
 
         // then
         composeRule
@@ -135,8 +132,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        field
-            .performTextInput("1")
+        field.performTextInput("1")
 
         // then
         composeRule
@@ -144,8 +140,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        field
-            .performTextInput("2341")
+        field.performTextInput("2341")
 
         // then
         composeRule
@@ -153,8 +148,7 @@ class CardNumberTextFieldTest {
             .assertIsDisplayed()
 
         // when
-        field
-            .performTextInput("2341")
+        field.performTextInput("2341")
 
         // then
         composeRule
