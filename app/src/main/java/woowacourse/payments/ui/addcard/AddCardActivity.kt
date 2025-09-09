@@ -1,10 +1,8 @@
 package woowacourse.payments.ui.addcard
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
-import woowacourse.payments.ui.allcards.CARD_INFO_KEY
+import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
@@ -41,17 +39,14 @@ class AddCardActivity : ComponentActivity() {
                         )
                     }
                 ) { padding ->
-                    AddCardScreen(cardInfo, modifier = Modifier
-                        .padding(padding)
-                        .padding(horizontal = 24.dp)
-                        .fillMaxWidth()
+                    AddCardScreen(
+                        cardInfo, modifier = Modifier
+                            .padding(padding)
+                            .padding(horizontal = 24.dp)
+                            .fillMaxWidth()
                     )
                 }
             }
         }
-    }
-
-    companion object {
-        fun getIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
     }
 }

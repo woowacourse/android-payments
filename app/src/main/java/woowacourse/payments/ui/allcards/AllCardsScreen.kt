@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -49,16 +50,11 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 
 @Composable
-fun AllCardsScreen(modifier:Modifier = Modifier) {
-    val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
-    val launcher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                result.data?.getCardInfo()?.let {
-                    cards.add(it)
-                }
-            }
-        }
+fun AllCardsScreen(
+    cards: SnapshotStateList<CardInfoUiState>,
+    modifier: Modifier = Modifier,
+    onPlusCardClick: () -> Unit = {},
+) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,7 +63,7 @@ fun AllCardsScreen(modifier:Modifier = Modifier) {
             NotifyToAddCard()
             Spacer(modifier = Modifier.height(32.dp))
             PlusCard(
-                launcher = launcher
+                onClick = onPlusCardClick
             )
             return
         }
@@ -77,7 +73,7 @@ fun AllCardsScreen(modifier:Modifier = Modifier) {
             Card(cardInfoUiState = cards.first())
             Spacer(modifier = Modifier.height(36.dp))
             PlusCard(
-                launcher = launcher
+                onClick = onPlusCardClick
             )
             return
         }
@@ -104,9 +100,8 @@ private fun NotifyToAddCard() {
 
 @Composable
 private fun PlusCard(
-    launcher: ActivityResultLauncher<Intent>,
+    onClick:()->Unit = {},
 ) {
-    val context = LocalContext.current
     Box(
         modifier = Modifier
             .height(124.dp)
@@ -116,11 +111,8 @@ private fun PlusCard(
                 shape = RoundedCornerShape(5.dp),
             )
             .clickable {
-                launcher.launch(
-                    AddCardActivity.getIntent(context)
-                )
-            }
-        ,
+                onClick()
+            },
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -136,21 +128,17 @@ private fun PlusCard(
 @Composable
 private fun AllCardsScreenPreview() {
     AndroidpaymentsTheme {
+        val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
         Scaffold(
             topBar = {
-                AllCardsTopbar()
+                AllCardsTopbar(cards)
             }
         ) {
-            AllCardsScreen(modifier = Modifier.padding(it))
+            AllCardsScreen(
+                cards = cards,
+                modifier = Modifier.padding(it)
+            )
         }
     }
 }
-
-const val CARD_INFO_KEY = "cardInfo"
-private fun Intent.getCardInfo() =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getParcelableExtra(CARD_INFO_KEY, CardInfoUiState::class.java)
-    } else {
-        getParcelableExtra(CARD_INFO_KEY)
-    }
 
