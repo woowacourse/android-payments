@@ -1,5 +1,12 @@
 package woowacourse.payments.ui.catalog.screen
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +19,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,16 +30,29 @@ import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
 import woowacourse.payments.ui.common.component.PaymentCardField
+import woowacourse.payments.ui.payments.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardCatalogScreen() {
     val cardList = remember { mutableStateListOf<PaymentCard>() }
 
+    val cardCatalogLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                // TODO()
+            }
+        }
+    val context = LocalContext.current
+
     Scaffold(
         topBar = { CardCatalogTopAppBar {} },
     ) { innerPadding ->
         CardCatalogScreenContent(
+            cardCatalogLauncher = cardCatalogLauncher,
+            context = context,
             cardList = cardList,
             modifier = Modifier.padding(innerPadding),
             maxCardCount = 3,
@@ -41,6 +62,8 @@ fun CardCatalogScreen() {
 
 @Composable
 fun CardCatalogScreenContent(
+    cardCatalogLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+    context: Context,
     modifier: Modifier = Modifier,
     cardList: List<PaymentCard> = emptyList<PaymentCard>(),
     maxCardCount: Int,
@@ -58,14 +81,17 @@ fun CardCatalogScreenContent(
             )
         }
 
-        cardList.forEach { paymentCard->
+        cardList.forEach { paymentCard ->
             Spacer(modifier = Modifier.height(36.dp))
             PaymentCardField(paymentCard = paymentCard, modifier = Modifier)
         }
 
-        if (cardList.size < maxCardCount){
+        if (cardList.size < maxCardCount) {
             AddCardButton(
-                onClick = {},
+                onClick = {
+                    val intent = Intent(context, CardRegistrationActivity::class.java)
+                    cardCatalogLauncher.launch(intent)
+                },
                 modifier = Modifier.padding(top = 32.dp)
             )
         }
