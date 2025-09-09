@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.cardaddition.CardNumberTextField
+import woowacourse.payments.ui.newcard.component.CardNumberTextField
 
 class CardNumberTextFieldTest {
     @get:Rule

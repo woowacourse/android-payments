@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
@@ -16,13 +16,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
-fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
-    var name by remember { mutableStateOf("") }
-
+fun CardOwnerNameTextField(
+    ownerName: String,
+    onOwnerNameChange: (String) -> Unit,
+    ownerNameErrorMessage: String? = null,
+    modifier: Modifier = Modifier
+) {
     OutlinedTextField(
-        value = name,
+        value = ownerName,
         onValueChange = { newName: String ->
-            name = newName.take(newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
+            onOwnerNameChange(newName.take(newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX)))
         },
         modifier = modifier,
         label = {
@@ -31,16 +34,23 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
         placeholder = {
             Text(text = stringResource(R.string.card_owner_name_placeholder), color = Color.Gray)
         },
+        isError = ownerNameErrorMessage != null,
         supportingText = {
             Text(
                 text = stringResource(
                     R.string.card_owner_name_supporting_text,
-                    name.length,
+                    ownerName.length,
                     CARD_OWNER_NAME_LENGTH_MAX
                 ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
+            if (ownerNameErrorMessage != null) {
+                Text(
+                    text = ownerNameErrorMessage,
+                    color = Color.Red
+                )
+            }
         },
     )
 }
@@ -48,7 +58,11 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardOwnerNameTextFieldPreview() {
-    CardOwnerNameTextField()
+    var ownerName by remember { mutableStateOf("") }
+    CardOwnerNameTextField(
+        ownerName = ownerName,
+        onOwnerNameChange = { ownerName = it },
+    )
 }
 
 private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30

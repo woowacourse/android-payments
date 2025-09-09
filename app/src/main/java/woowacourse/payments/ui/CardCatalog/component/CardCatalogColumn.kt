@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.payments
+package woowacourse.payments.ui.CardCatalog.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,12 +22,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.R
+import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.newcard.component.PaymentCard
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
-fun PaymentsColumn(
-    cards: List<PaymentCard> = emptyList(),
+fun CardCatalogColumn(
+    cards: List<Card> = emptyList(),
     onClickAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -38,7 +40,7 @@ fun PaymentsColumn(
         Spacer(modifier = Modifier.height(32.dp))
         if (cards.size <= 1) {
             Text(
-                text = stringResource(woowacourse.payments.R.string.payments_enroll_new_card),
+                text = stringResource(R.string.payments_enroll_new_card),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.W700,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -46,7 +48,7 @@ fun PaymentsColumn(
             Spacer(modifier = Modifier.height(32.dp))
         }
         for (card in cards) {
-            woowacourse.payments.ui.component.cardaddition.PaymentCard(
+            PaymentCard(
                 card,
                 Modifier.align(Alignment.CenterHorizontally)
             )
@@ -67,7 +69,7 @@ fun PaymentsColumn(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(woowacourse.payments.R.string.content_description_add_card),
+                    contentDescription = stringResource(R.string.content_description_add_card),
                 )
             }
         }
@@ -76,6 +78,6 @@ fun PaymentsColumn(
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentsColumnPreview() {
-    PaymentsColumn(onClickAddCard = {})
+private fun CardCatalogColumnPreview() {
+    CardCatalogColumn(onClickAddCard = {})
 }

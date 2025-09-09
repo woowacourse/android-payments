@@ -1,6 +1,7 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,15 +16,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Password
 
 @Composable
-fun PasswordTextField(modifier: Modifier = Modifier) {
-    var password by remember { mutableStateOf("") }
-
+fun PasswordTextField(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    passwordErrorMessage: String? = null,
+    modifier: Modifier = Modifier
+) {
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
-            password = newValue.take(newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
+            onPasswordChange(newValue.take(newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX)))
         },
         modifier = modifier,
         label = {
@@ -31,6 +36,15 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
         },
         placeholder = {
             Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
+        },
+        isError = passwordErrorMessage != null,
+        supportingText = {
+            if (passwordErrorMessage != null) {
+                Text(
+                    text = passwordErrorMessage,
+                    color = Color.Red
+                )
+            }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = PasswordVisualTransformation(),
@@ -40,7 +54,12 @@ fun PasswordTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun PasswordTextFieldPreview() {
-    PasswordTextField()
+    var password by remember { mutableStateOf("") }
+
+    PasswordTextField(
+        password = password,
+        onPasswordChange = { password = it },
+    )
 }
 
 private const val PASSWORD_LENGTH_MAX: Int = 4

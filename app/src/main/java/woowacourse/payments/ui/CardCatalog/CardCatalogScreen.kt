@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.screen
+package woowacourse.payments.ui.CardCatalog
 
 import android.app.Activity
 import android.content.Intent
@@ -14,41 +14,40 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.CardAdditionActivity
-import woowacourse.payments.domain.PaymentCard
-import woowacourse.payments.ui.component.payments.PaymentsColumn
-import woowacourse.payments.ui.component.payments.PaymentsTopBar
+import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.CardCatalog.component.CardCatalogColumn
+import woowacourse.payments.ui.CardCatalog.component.CardCatalogTopBar
 import kotlin.jvm.java
 
 
 @Composable
-fun PaymentScreen(
+fun CardCatalogScreen(
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    val cards = remember { mutableStateListOf<PaymentCard>() }
+    val cards = remember { mutableStateListOf<Card>() }
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = activityResult.data?.getParcelableExtra<PaymentCard>("newCard")
+                val newCard = activityResult.data?.getParcelableExtra<Card>("newCard")
                 newCard?.let {
                     cards.add(newCard)
-                    Log.d("test", "PaymentScreen: $cards")
                 }
             }
         }
 
     fun openAddCardWithResult() {
-        val intent = Intent(context, CardAdditionActivity::class.java)
+        val intent = Intent(context, NewCardActivity::class.java)
         cardAddLauncher.launch(intent)
     }
 
     Scaffold(
         modifier = modifier,
         topBar = {
-            PaymentsTopBar(
+            CardCatalogTopBar(
                 cards = cards  ,
                 onAddNewCardClick = {
                     onAddNewCardClick()
@@ -56,7 +55,7 @@ fun PaymentScreen(
                 })
         }
     ) { paddingValues: PaddingValues ->
-        PaymentsColumn(
+        CardCatalogColumn(
             cards = cards,
             onClickAddCard = {
                 onAddNewCardClick()
@@ -70,6 +69,6 @@ fun PaymentScreen(
 
 @Preview
 @Composable
-private fun PaymentScreenPreview() {
-    PaymentScreen(onAddNewCardClick = {})
+private fun CardCatalogScreenPreview() {
+    CardCatalogScreen(onAddNewCardClick = {})
 }

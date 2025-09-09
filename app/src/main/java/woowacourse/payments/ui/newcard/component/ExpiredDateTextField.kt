@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -20,14 +20,17 @@ import woowacourse.payments.R
 import java.lang.Character.isDigit
 
 @Composable
-fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate by remember { mutableStateOf("") }
-
+fun ExpiredDateTextField(
+    expiredDate: String,
+    onExpirationDateChange: (String) -> Unit,
+    expiredDateErrorMessage: String? = null,
+    modifier: Modifier = Modifier
+) {
     OutlinedTextField(
         value = expiredDate,
         onValueChange = { newValue: String ->
             val newDate = newValue.filter(::isDigit)
-            expiredDate = newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
+            onExpirationDateChange(newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX)))
         },
         modifier = modifier,
         label = { Text(text = stringResource(R.string.expired_date_label)) },
@@ -36,6 +39,15 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.expired_date_placeholder),
                 color = Color.Gray
             )
+        },
+        isError = expiredDateErrorMessage != null,
+        supportingText = {
+            if (expiredDateErrorMessage != null) {
+                Text(
+                    text = expiredDateErrorMessage,
+                    color = Color.Red
+                )
+            }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = { text: AnnotatedString ->
@@ -65,7 +77,11 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ExpiredDateTextFieldPreview() {
-    ExpiredDateTextField()
+    var expiredDate by remember { mutableStateOf("") }
+    ExpiredDateTextField(
+        expiredDate = expiredDate,
+        onExpirationDateChange = { expiredDate = it },
+    )
 }
 
 private const val EXPIRED_DATE_LENGTH_MAX: Int = 4

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.payments
+package woowacourse.payments.ui.CardCatalog.component
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,15 +11,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.Black
 import woowacourse.payments.ui.theme.Black1D
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentsTopBar(
-    cards: List<PaymentCard>,
+fun CardCatalogTopBar(
+    cards: List<Card>,
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -47,6 +47,6 @@ fun PaymentsTopBar(
 
 @Preview
 @Composable
-fun PaymentsTopBarPreview() {
-    PaymentsTopBar(emptyList(), onAddNewCardClick = {})
+fun CardCatalogTopBarPreview() {
+    CardCatalogTopBar(emptyList(), onAddNewCardClick = {})
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.cardaddition
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,15 +22,19 @@ import woowacourse.payments.ui.theme.Gray79
 import java.lang.Character.isDigit
 
 @Composable
-fun CardNumberTextField(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
-
+fun CardNumberTextField(
+    number: String,
+    onNumberChange: (String) -> Unit,
+    numberErrorMessage: String? = null,
+    modifier: Modifier = Modifier
+) {
     OutlinedTextField(
-        value = cardNumber,
+        value = number,
         onValueChange = { newValue: String ->
             val newNumbers = newValue.filter(::isDigit)
-            cardNumber =
+            onNumberChange(
                 newNumbers.take(newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
+            )
         },
         modifier = modifier,
         label = {
@@ -41,6 +46,15 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
                 color = Gray79,
             )
         },
+        isError = numberErrorMessage != null,
+        supportingText = {
+            if (numberErrorMessage != null) {
+                Text(
+                    text = numberErrorMessage,
+                    color = Color.Red
+                )
+            }
+        },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = ::creditCardFilter
     )
@@ -49,7 +63,8 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardNumberTextFieldPreview() {
-    CardNumberTextField(modifier = Modifier.fillMaxWidth())
+    var number by remember { mutableStateOf("") }
+    CardNumberTextField(onNumberChange = { number = it }, number = number)
 }
 
 private fun creditCardFilter(text: AnnotatedString): TransformedText {
