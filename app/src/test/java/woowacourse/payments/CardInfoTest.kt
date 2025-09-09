@@ -124,4 +124,38 @@ class CardInfoTest {
         //then
         assert(result == "1234")
     }
+
+    @Test
+    fun `유효하지 않은 값을 입력받으면 객체를 생성하지 않는다`() {
+        //given
+        val rawPassword = "123"
+
+        //when
+        val result = CardInfo.createOrNull(
+            cardNumber = "1234123412341234",
+            password = rawPassword,
+            ownerName = "홍길동",
+            expireDate = "1225"
+        )
+
+        //then
+        assert(result == null)
+    }
+
+    @Test
+    fun `유효한 값을 입력받으면 객체를 생성한다`() {
+        //given
+        val rawPassword = "1234"
+
+        //when
+        val result = CardInfo.createOrNull(
+            cardNumber = "1234123412341234",
+            password = rawPassword,
+            ownerName = "홍길동",
+            expireDate = "1225"
+        )
+
+        //then
+        assert(result is CardInfo)
+    }
 }
