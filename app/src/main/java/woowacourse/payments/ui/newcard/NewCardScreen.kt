@@ -34,6 +34,7 @@ import woowacourse.payments.ui.newcard.components.CounterTextField
 import woowacourse.payments.ui.newcard.components.DigitsTextField
 import woowacourse.payments.ui.newcard.components.ExpiryTextField
 import woowacourse.payments.ui.newcard.components.PaymentCard
+import woowacourse.payments.ui.newcard.components.PinTextField
 
 private const val EXPIRY_MAX_LENGTH: Int = 4
 private const val HOLDER_MAX_LENGTH: Int = 30
@@ -118,6 +119,12 @@ fun NewCardScreen(
             onImeAction = { focusManager.moveFocus(FocusDirection.Next) },
         )
         Spacer(Modifier.height(10.dp))
+
+        PinTextField(
+            value = pin,
+            onValueChange = { pin = it },
+            modifier = Modifier.width(146.dp),
+        )
 
         DigitsTextField(
             value = pin,
