@@ -15,13 +15,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.AddCardActivity
-import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 class AllCardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +33,11 @@ class AllCardsActivity : ComponentActivity() {
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getCardInfo()?.let {
                             cards.add(it)
-                            Toast.makeText(this, getString(R.string.allcards_card_added), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                getString(R.string.allcards_card_added),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }

@@ -10,14 +10,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 fun OwnerNameTextField(
     cardInfo: CardInfoUiState,
     modifier: Modifier = Modifier,
-    ) {
+) {
     OutlinedTextField(
         modifier = modifier,
         value = cardInfo.ownerName,

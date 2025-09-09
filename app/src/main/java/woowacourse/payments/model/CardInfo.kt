@@ -21,6 +21,7 @@ data class CardInfo(
         }
 
     }
+
     companion object {
         fun createOrNull(
             cardNumber: String,
@@ -33,7 +34,10 @@ data class CardInfo(
             val formattedOwnerName = formatOwnerName(ownerName)
             val formattedPassword = formatPassword(password)
             val parsedExpireDate = runCatching {
-                LocalDate.parse("01$formattedExpireDateString", DateTimeFormatter.ofPattern("ddMMyy"))
+                LocalDate.parse(
+                    "01$formattedExpireDateString",
+                    DateTimeFormatter.ofPattern("ddMMyy")
+                )
             }.getOrNull()
 
             if (formattedCardNumber.length != CARD_NUMBER_MAX_SIZE) return null
@@ -49,24 +53,25 @@ data class CardInfo(
                 password = formattedPassword
             )
         }
+
         fun checkIsValidMonth(expireDate: String): Boolean = expireDate
-                .take(2)
-                .toIntOrNull() in 1..12
+            .take(2)
+            .toIntOrNull() in 1..12
 
         fun formatCardNumber(cardNumber: String): String = cardNumber
-                .filter { it.isDigit() }
-                .take(CARD_NUMBER_MAX_SIZE)
+            .filter { it.isDigit() }
+            .take(CARD_NUMBER_MAX_SIZE)
 
         fun formatExpireDate(expireDate: String): String = expireDate
-                .filter { it.isDigit() }
-                .take(EXPIRE_DATE_MAX_SIZE)
+            .filter { it.isDigit() }
+            .take(EXPIRE_DATE_MAX_SIZE)
 
         fun formatOwnerName(ownerName: String): String = ownerName
-                .take(OWNER_NAME_MAX_SIZE)
+            .take(OWNER_NAME_MAX_SIZE)
 
         fun formatPassword(password: String): String = password
-                .filter { it.isDigit() }
-                .take(PASSWORD_MAX_SIZE)
+            .filter { it.isDigit() }
+            .take(PASSWORD_MAX_SIZE)
 
         const val OWNER_NAME_MAX_SIZE = 30
         private const val CARD_NUMBER_MAX_SIZE = 16

@@ -18,6 +18,8 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.uimodel.isComplete
 
 class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

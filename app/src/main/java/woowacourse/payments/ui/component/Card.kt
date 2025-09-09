@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,13 +21,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.allcards.util.CardFormatter
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.uimodel.isComplete
 
 @Composable
 fun Card(cardInfoUiState: CardInfoUiState) {
@@ -48,7 +47,8 @@ fun Card(cardInfoUiState: CardInfoUiState) {
                 .padding(
                     start = 14.dp,
                     end = 14.dp,
-                    bottom = 8.dp)
+                    bottom = 8.dp
+                )
                 .shadow(8.dp)
                 .align(Alignment.CenterStart)
                 .size(width = 40.dp, height = 26.dp)

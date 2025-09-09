@@ -12,7 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.CardInfoUiState
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,8 +33,7 @@ fun AllCardsTopbar(
                         .padding(end = 16.dp)
                         .clickable {
                             onPlusCardClick()
-                        }
-                    ,
+                        },
                     text = stringResource(R.string.payments_allcards_topbar_add_cards),
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp

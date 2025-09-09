@@ -9,15 +9,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.util.CardNumberFieldTransformation
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 fun CardNumberTextField(
     cardInfo: CardInfoUiState,
     modifier: Modifier = Modifier,
-    ) {
+) {
     OutlinedTextField(
         modifier = modifier,
         value = cardInfo.cardNumber,

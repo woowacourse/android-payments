@@ -9,20 +9,20 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextContains
-import org.junit.Rule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.pressKey
+import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.model.CardInfo
-import woowacourse.payments.ui.addcard.CardInfoUiState
 import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField
 import woowacourse.payments.ui.addcard.component.PasswordTextField
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @OptIn(ExperimentalTestApi::class)
 class AddCardScreenTest {
@@ -33,9 +33,13 @@ class AddCardScreenTest {
     fun 카드_번호는_유효한_자리까지_입력할_수_있다() {
         //given
         composeTestRule.setContent {
-            var state by remember { mutableStateOf(CardInfoUiState(
-                _cardNumber = "1234123412341234"
-            )) }
+            var state by remember {
+                mutableStateOf(
+                    CardInfoUiState(
+                        _cardNumber = "1234123412341234"
+                    )
+                )
+            }
             CardNumberTextField(state, Modifier)
         }
         val rawCardNumber = "12341234123412345"
@@ -79,7 +83,7 @@ class AddCardScreenTest {
             var state by remember {
                 mutableStateOf(
                     CardInfoUiState(
-                         _cardNumber = "12341"
+                        _cardNumber = "12341"
                     )
                 )
             }

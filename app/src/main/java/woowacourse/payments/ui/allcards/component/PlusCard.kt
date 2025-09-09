@@ -20,7 +20,7 @@ import woowacourse.payments.R
 
 @Composable
 fun PlusCard(
-    onClick:()->Unit = {},
+    onClick: () -> Unit = {},
 ) {
     Box(
         modifier = Modifier

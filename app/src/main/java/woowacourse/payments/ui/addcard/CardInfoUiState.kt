@@ -26,7 +26,7 @@ data class CardInfoUiState(
         private set
 
 
-    fun isComplete():Boolean {
+    fun isComplete(): Boolean {
         val instance = CardInfo.createOrNull(
             cardNumber = cardNumber,
             expireDate = expireDate,
@@ -58,6 +58,7 @@ data class CardInfoUiState(
             CardInfo.checkIsValidMonth(expireDate)
         } else true
     }
+
     companion object {
         const val OWNER_NAME_MAX_SIZE = CardInfo.OWNER_NAME_MAX_SIZE
     }
