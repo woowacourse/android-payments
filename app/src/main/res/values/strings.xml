@@ -4,6 +4,7 @@
     <string name="cards_top_bar_title">Payments</string>
     <string name="cards_top_bar_add">추가</string>
     <string name="cards_no_card">새로운 카드를 등록해주세요</string>
+    <string name="cards_add_card_description">카드 등록 이미지 버튼</string>
 
     <string name="new_card_top_bar_back_icon_description">뒤로 가기</string>
     <string name="new_card_top_bar_check_icon_description">완료</string>
