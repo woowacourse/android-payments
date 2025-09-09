@@ -50,8 +50,8 @@ fun PaymentCard(
                     .padding(start = 14.dp, bottom = 32.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = "${card.cardNumber}",
-                color = Color.White
+                text = "${card.cardNumber.take(4)} - ${card.cardNumber.substring(4, 9)} - **** - ****",
+                color = Color.White,
             )
             Text(
                 modifier = Modifier
