@@ -1,5 +1,9 @@
 package woowacourse.payments.card.register.component
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
@@ -8,7 +12,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import androidx.test.runner.AndroidJUnit4
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,20 +22,21 @@ class CardExpirationDateTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setup() {
-        composeTestRule.setContent {
-            CardExpirationDateTextField(modifier = Modifier.testTag("CardExpirationDateTextField"))
-        }
-    }
-
     @Test
-    fun `카드_만료일은_4자리까지만_입력이_기능하다`() {
+    fun `카드_만료일은_4자리까지만_입력이_가능하다`() {
         // Given
         val text = "112432"
         val expected = "11 / 24"
 
         // When
+        composeTestRule.setContent {
+            var expirationDate by remember { mutableStateOf("") }
+            CardExpirationDateTextField(
+                value = expirationDate,
+                onValueChange = { expirationDate = it },
+                modifier = Modifier.testTag("CardExpirationDateTextField"),
+            )
+        }
         composeTestRule.onNodeWithTag("CardExpirationDateTextField").performTextInput(text)
 
         // Then
@@ -46,6 +50,14 @@ class CardExpirationDateTextFieldTest {
         val expected = "11 / 24"
 
         // When
+        composeTestRule.setContent {
+            var expirationDate by remember { mutableStateOf("") }
+            CardExpirationDateTextField(
+                value = expirationDate,
+                onValueChange = { expirationDate = it },
+                modifier = Modifier.testTag("CardExpirationDateTextField"),
+            )
+        }
         composeTestRule.onNodeWithTag("CardExpirationDateTextField").performTextInput(text)
 
         // Then
@@ -59,6 +71,14 @@ class CardExpirationDateTextFieldTest {
         val expected = "11 / 24"
 
         // When
+        composeTestRule.setContent {
+            var expirationDate by remember { mutableStateOf("") }
+            CardExpirationDateTextField(
+                value = expirationDate,
+                onValueChange = { expirationDate = it },
+                modifier = Modifier.testTag("CardExpirationDateTextField"),
+            )
+        }
         composeTestRule.onNodeWithTag("CardExpirationDateTextField").performTextInput(text)
 
         // Then
