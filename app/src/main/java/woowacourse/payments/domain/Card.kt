@@ -12,12 +12,14 @@ data class Card(
             expirationDate: String,
             cardHolderName: String,
             password: String,
-        ): Card =
-            Card(
-                number = CardNumber(number),
-                expirationDate = ExpirationDate(expirationDate),
-                cardHolderName = CardHolderName(cardHolderName),
-                password = Password(password),
-            )
+        ): Result<Card> =
+            runCatching {
+                Card(
+                    number = CardNumber(number),
+                    expirationDate = ExpirationDate(expirationDate),
+                    cardHolderName = CardHolderName(cardHolderName),
+                    password = Password(password),
+                )
+            }
     }
 }
