@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
@@ -107,7 +108,7 @@ fun PaymentCardDetailPreview() {
                     CardNumber("1234123412341234"),
                     ExpireDate(YearMonth.now().plusMonths(1)),
                     OwnerName("CREW"),
-                    "1234",
+                    Password("1234"),
                 ),
         )
     }

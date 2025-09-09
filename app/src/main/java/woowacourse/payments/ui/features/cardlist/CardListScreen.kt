@@ -22,6 +22,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpireDate
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.features.cardlist.components.AddPaymentCard
@@ -98,7 +99,7 @@ fun CardListScreenOneCardPreview() {
             CardNumber("1234123412341234"),
             ExpireDate(YearMonth.now().plusMonths(1)),
             OwnerName("CREW"),
-            "1234",
+            Password("1234"),
         )
     val dummyPaymentCardList1 = listOf(dummyPaymentCard)
 
@@ -115,7 +116,7 @@ fun CardListScreenManyCardPreview() {
             CardNumber("1234123412341234"),
             ExpireDate(YearMonth.now().plusMonths(1)),
             OwnerName("CREW"),
-            "1234",
+            Password("1234"),
         )
 
     val dummyPaymentCardList5 =

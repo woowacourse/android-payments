@@ -6,13 +6,11 @@ import woowacourse.payments.domain.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateStatus
 import woowacourse.payments.domain.ExpireDateValidationException
 import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.CardUiState
 
 object CardMapper {
-    private fun checkValidPassword(password: String): Boolean =
-        password.length == PaymentCard.Companion.MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
-
     fun getExpireDateStatus(expireDate: String): ExpireDateStatus {
         if (expireDate.isEmpty()) return ExpireDateStatus.Empty
         if (expireDate.length < ExpireDate.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
@@ -51,14 +49,15 @@ object CardMapper {
         val ownerName =
             runCatching { OwnerName(this.ownerName) }.getOrElse { return CardCreationResult.InvalidOwnerName }
 
-        if (!checkValidPassword(this.password)) return CardCreationResult.InvalidPassword
+        val password =
+            runCatching { Password(this.password) }.getOrElse { return CardCreationResult.InvalidPassword }
 
         return CardCreationResult.Success(
             PaymentCard(
                 cardNumber = cardNumber,
                 expireDate = expireDate,
                 ownerName = ownerName,
-                password = this.password,
+                password = password,
             ),
         )
     }

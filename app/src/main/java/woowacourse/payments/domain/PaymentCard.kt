@@ -8,9 +8,5 @@ data class PaymentCard(
     val cardNumber: CardNumber,
     val expireDate: ExpireDate,
     val ownerName: OwnerName,
-    val password: String,
-) : Parcelable {
-    companion object {
-        const val MAX_LENGTH_PASSWORD = 4
-    }
-}
+    val password: Password,
+) : Parcelable
