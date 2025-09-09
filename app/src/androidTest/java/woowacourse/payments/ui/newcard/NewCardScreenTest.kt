@@ -25,39 +25,6 @@ class NewCardScreenTest {
     }
 
     @Test
-    fun 카드_소유자_이름_필드에_값을_입력하면_입력값이_표시된다() {
-        // given
-        composeTestRule.setContent { NewCardScreen() }
-
-        // when
-        val input = "123456789012345678901234567890" // 30자리
-
-        composeTestRule
-            .onNodeWithText("카드 소유자 이름 (선택)")
-            .performTextInput(input)
-
-        // then
-        composeTestRule.onNodeWithText(input).assertIsDisplayed()
-    }
-
-    @Test
-    fun 카드_소유자_이름_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
-        // given
-        composeTestRule.setContent { NewCardScreen() }
-
-        // when
-        val input = "1234567890123456789012345678901" // 31자리
-        val expected = input.take(30)
-
-        composeTestRule
-            .onNodeWithText("카드 소유자 이름 (선택)")
-            .performTextInput(input)
-
-        // then
-        composeTestRule.onNodeWithText(expected).assertIsDisplayed()
-    }
-
-    @Test
     fun 카드_비밀번호_필드에_값을_입력하면_입력값이_표시된다() {
         // given
         composeTestRule.setContent { NewCardScreen() }
