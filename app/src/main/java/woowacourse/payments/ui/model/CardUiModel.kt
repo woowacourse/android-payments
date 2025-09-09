@@ -1,11 +1,17 @@
 package woowacourse.payments.ui.model
 
-data class PaymentCardInformationUiModel(
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class CardUiModel(
     private val cardholderNameUiModel: CardholderNameUiModel = CardholderNameUiModel(),
     private val cardNumberUiModel: CardNumberUiModel = CardNumberUiModel(),
     private val cardExpirationDateUiModel: CardExpirationDateUiModel = CardExpirationDateUiModel(),
-) {
-    val cardholderName: String = cardholderNameUiModel.value
+) : Parcelable {
+    @IgnoredOnParcel
+    val cardholderName: String = cardholderNameUiModel.nameOrDefault()
 
     fun formattedCardNumber(
         chunkSize: Int = CARD_NUMBER_CHUNK_SIZE,

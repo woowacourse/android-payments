@@ -25,12 +25,12 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.model.PaymentCardInformationUiModel
+import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    paymentCardInformation: PaymentCardInformationUiModel? = null,
+    paymentCardInformation: CardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -117,7 +117,7 @@ fun PaymentCard(
 private fun HasPaymentCardInformationPreview() {
     PaymentCard(
         paymentCardInformation =
-            PaymentCardInformationUiModel(
+            CardUiModel(
                 cardholderNameUiModel = CardholderNameUiModel("CREW"),
                 cardNumberUiModel = CardNumberUiModel("1111222233334444"),
                 cardExpirationDateUiModel = CardExpirationDateUiModel("0421"),
