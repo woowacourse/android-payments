@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,10 +15,20 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
-                    onSaved = { /* TODO: 저장 기능 추가 */ },
+                    onSaved = { card ->
+                        val intent = Intent().putExtra(EXTRA_NEW_CARD_RESULT, card)
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    },
                     onFinish = { finish() },
                 )
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_NEW_CARD_RESULT: String = "EXTRA_NEW_CARD_RESULT"
+
+        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }

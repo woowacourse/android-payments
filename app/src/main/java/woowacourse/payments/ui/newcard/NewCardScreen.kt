@@ -29,6 +29,7 @@ import woowacourse.payments.designsystem.theme.Black
 import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.components.CardHolderTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpiryTextField
@@ -38,7 +39,7 @@ import woowacourse.payments.ui.newcard.components.PinTextField
 
 @Composable
 fun NewCardScreen(
-    onSaved: () -> Unit = {},
+    onSaved: (CardUiModel) -> Unit = {},
     onFinish: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
@@ -54,7 +55,7 @@ fun NewCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = { onFinish() },
-                onSaveClick = { onSaved() },
+                onSaveClick = { onSaved(CardUiModel(cardNumber, expiry, cardholder)) },
             )
         },
         modifier = modifier.fillMaxSize(),
@@ -68,7 +69,10 @@ fun NewCardScreen(
                     .verticalScroll(scrollState),
         ) {
             Spacer(Modifier.height(14.dp))
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
                 PaymentCard()
             }
             Spacer(Modifier.height(28.dp))
@@ -105,7 +109,7 @@ fun NewCardScreen(
                 modifier = Modifier.width(146.dp),
                 onImeAction = {
                     focusManager.clearFocus()
-                    onSaved()
+                    onSaved(CardUiModel(cardNumber, expiry, cardholder))
                 },
                 colors = formTextFieldColors(),
             )

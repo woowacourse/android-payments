@@ -14,6 +14,7 @@ val GrayText = Color(0xFF49454F)
 val GrayOutline = Color(0xFF79747E)
 val GrayHint = Color(0xFFAAAAAA)
 val GrayBackground = Color(0xFF333333)
+val GrayPlaceholder = Color(0xFFE5E5E5)
 
 val Yellow = Color(0xFFCBBA64)
 
