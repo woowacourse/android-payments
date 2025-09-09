@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter
 
 private const val EXPIRATION_DATE_REQUIRED_LENGTH = 4
 private const val EXPIRATION_DATE_CHUNK_SIZE = 2
-private const val EXPIRATION_DATE_SEPARATOR = " - "
+private const val EXPIRATION_DATE_SEPARATOR = " / "
 private val visualTransformation =
     UniformlySeparatingVisualTransformation(EXPIRATION_DATE_CHUNK_SIZE, EXPIRATION_DATE_SEPARATOR)
 
