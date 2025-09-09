@@ -30,7 +30,8 @@ fun NewCardPlaceholder(
                 .background(
                     color = GrayPlaceholder,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable { onClick() },
+                )
+                .clickable { onClick() },
         contentAlignment = Alignment.Center,
     ) {
         Text(
