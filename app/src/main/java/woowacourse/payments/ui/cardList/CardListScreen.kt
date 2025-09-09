@@ -73,8 +73,52 @@ fun CardListScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListScreenPreview() {
+private fun CardListScreenPreview1() {
     AndroidpaymentsTheme {
         CardListScreen(onRegistrationClick = {})
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardListScreenPreview2() {
+    AndroidpaymentsTheme {
+        CardListScreen(
+            cards =
+                listOf(
+                    Card(
+                        number = "1111 - 2222 - **** - ****",
+                        expiredDate = "04 / 21",
+                        ownerName = "CREW",
+                        password = "1234",
+                    ),
+                ),
+            onRegistrationClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardListScreenPreview3() {
+    AndroidpaymentsTheme {
+        CardListScreen(
+            cards =
+                listOf(
+                    Card(
+                        number = "1111 - 2222 - **** - ****",
+                        expiredDate = "04 / 21",
+                        ownerName = "CREW",
+                        password = "1234",
+                    ),
+                    Card(
+                        number = "1111 - 2222 - **** - ****",
+                        expiredDate = "04 / 21",
+                        ownerName = "CREW",
+                        password = "1234",
+                    ),
+                ),
+            onRegistrationClick = {},
+        )
     }
 }
