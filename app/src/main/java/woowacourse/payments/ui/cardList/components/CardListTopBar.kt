@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cardList.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +27,7 @@ fun CardListTopBar(
     CenterAlignedTopAppBar(
         title = {
             Text(
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier,
                 text = stringResource(R.string.app_name),
                 textAlign = TextAlign.Center,
             )
