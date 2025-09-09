@@ -14,14 +14,11 @@ value class CardExpirationDate(
 
     companion object {
         fun from(
-            date: String,
+            value: String,
             formatter: DateTimeFormatter,
-        ): CardExpirationDate =
-            CardExpirationDate(
-                YearMonth.parse(
-                    date.replace(" ", ""),
-                    formatter,
-                ),
-            )
+        ): CardExpirationDate {
+            val date: String = value.filter(Char::isDigit)
+            return CardExpirationDate(YearMonth.parse(date, formatter))
+        }
     }
 }
