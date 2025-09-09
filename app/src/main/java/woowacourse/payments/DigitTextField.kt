@@ -18,6 +18,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun DigitTextField(
+    text: String,
+    onValueChange: (String) -> Unit,
     label: String,
     hint: String,
     errorMessage: String,
@@ -25,18 +27,12 @@ fun DigitTextField(
     maxLength: Int = Int.MAX_VALUE,
     mask: InputMask = InputMask.None,
     imeAction: ImeAction = ImeAction.Done,
+    isError: Boolean = false,
 ) {
-    var number by remember { mutableStateOf("") }
-    var isError by remember { mutableStateOf(false) }
     OutlinedTextField(
-        value = number,
+        value = text,
         onValueChange = { newText ->
-            val filtered = newText.filter { it.isDigit() }
-            val newNumber = filtered.take(maxLength)
-            number = newNumber
-            val lengthError = (maxLength != Int.MAX_VALUE && newNumber.length < maxLength)
-            val expiryError = (mask == InputMask.Expiry && !ExpiryValidator.isValidExpiry(number))
-            isError = lengthError || expiryError
+            onValueChange(newText.filter { it.isDigit() }.take(maxLength))
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
@@ -57,11 +53,14 @@ fun DigitTextField(
 private fun DigitTextFieldPreview() {
     AndroidpaymentsTheme {
         DigitTextField(
+            text = "",
+            onValueChange = {},
             label = "카드 번호",
             hint = "0000 - 0000 - 0000 - 0000",
             maxLength = 16,
             mask = InputMask.CardNumber,
             errorMessage = "카드 번호는 16자입니다.",
+            isError = false,
         )
     }
 }
