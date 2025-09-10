@@ -3,8 +3,8 @@ package woowacourse.payments.cards
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import woowacourse.payments.Card
-import woowacourse.shopping.view.MutableSingleLiveData
-import woowacourse.shopping.view.SingleLiveData
+import woowacourse.payments.MutableSingleLiveData
+import woowacourse.payments.SingleLiveData
 
 class CardsViewModel {
     private val _cards: MutableLiveData<List<Card>> = MutableLiveData()

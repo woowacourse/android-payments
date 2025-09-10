@@ -2,8 +2,6 @@ package woowacourse.payments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import woowacourse.shopping.view.Event
-import woowacourse.shopping.view.SingleLiveData
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
