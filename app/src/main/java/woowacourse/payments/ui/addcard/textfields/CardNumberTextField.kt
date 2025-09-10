@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -18,7 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.ui.formatter.CardNumberFormat
+import woowacourse.payments.ui.format.CardNumberFormat
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
@@ -74,7 +73,7 @@ fun CardNumberTextField(
 fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         text = mutableStateOf("1234123412341234"),
-        isError = mutableStateOf(false)
+        isError = mutableStateOf(false),
     )
 }
 
@@ -84,6 +83,6 @@ fun CardNumberTextFieldPreview() {
 fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
         text = mutableStateOf("12341234"),
-        isError = mutableStateOf(true)
+        isError = mutableStateOf(true),
     )
 }

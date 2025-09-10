@@ -1,8 +1,8 @@
 package woowacourse.payments.ui.model
 
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.formatter.CardNumberFormat
-import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.ui.format.CardNumberFormat
+import woowacourse.payments.ui.format.ExpirationDateFormat
 
 data class CardUiModel(
     val cardNumber: String = "",

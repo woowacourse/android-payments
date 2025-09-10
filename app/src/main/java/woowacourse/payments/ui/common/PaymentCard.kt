@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.sharedcomposable
+package woowacourse.payments.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

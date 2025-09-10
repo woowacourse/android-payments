@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.formatter
+package woowacourse.payments.ui.format
 
 import androidx.compose.ui.text.AnnotatedString
 import woowacourse.payments.domain.ExpirationDate

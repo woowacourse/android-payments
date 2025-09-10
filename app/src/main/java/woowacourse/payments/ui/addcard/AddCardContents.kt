@@ -19,7 +19,7 @@ import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
-import woowacourse.payments.ui.sharedcomposable.PaymentCard
+import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable

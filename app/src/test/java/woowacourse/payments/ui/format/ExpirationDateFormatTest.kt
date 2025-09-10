@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.formatter
+package woowacourse.payments.ui.format
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

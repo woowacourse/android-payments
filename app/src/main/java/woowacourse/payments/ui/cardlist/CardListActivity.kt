@@ -16,7 +16,7 @@ import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.addcard.AddCardActivity
-import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
@@ -46,7 +46,8 @@ class CardListActivity : ComponentActivity() {
     private fun Intent.toCardOrNull(): Card? =
         runCatching {
             val cardNumber: String = getStringExtra(ExtraKeys.CARD_NUMBER_KEY) ?: return null
-            val cardholderName: String = getStringExtra(ExtraKeys.CARDHOLDER_NAME_KEY) ?: return null
+            val cardholderName: String =
+                getStringExtra(ExtraKeys.CARDHOLDER_NAME_KEY) ?: return null
             val expirationDate: YearMonth =
                 getStringExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY)?.let { yearMonth: String ->
                     YearMonth.parse(yearMonth, ExpirationDateFormat.formatPattern)

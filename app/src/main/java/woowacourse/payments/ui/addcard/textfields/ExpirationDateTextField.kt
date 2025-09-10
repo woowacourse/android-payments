@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -18,7 +17,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpirationDate
-import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.theme.Gray
 import java.time.YearMonth
 
