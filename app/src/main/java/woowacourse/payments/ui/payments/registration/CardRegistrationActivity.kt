@@ -7,10 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.payments.PaymentCardsActivity
+import woowacourse.payments.ui.payments.CardsActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class PaymentCardRegistrationActivity : ComponentActivity() {
+class CardRegistrationActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,7 +19,7 @@ class PaymentCardRegistrationActivity : ComponentActivity() {
                 CardRegistrationScreen(
                     onBackPressed = { finish() },
                     onCardRegistered = { registeredCard: CardUiModel ->
-                        val intent = PaymentCardsActivity.newIntent(this, registeredCard)
+                        val intent = CardsActivity.newIntent(this, registeredCard)
                         setResult(RESULT_OK, intent)
                         finish()
                     },
@@ -29,6 +29,6 @@ class PaymentCardRegistrationActivity : ComponentActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, PaymentCardRegistrationActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, CardRegistrationActivity::class.java)
     }
 }

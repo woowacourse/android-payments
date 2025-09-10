@@ -9,26 +9,26 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class PaymentCardsActivity : ComponentActivity() {
+class CardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                PaymentCardsScreen()
+                CardsScreen()
             }
         }
     }
 
     companion object {
-        const val EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD = "EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD"
+        const val EXTRA_CARDS_REGISTER_NEW_CARD = "EXTRA_CARDS_REGISTER_NEW_CARD"
 
         fun newIntent(
             context: Context,
             newCard: CardUiModel,
         ): Intent =
-            Intent(context, PaymentCardsActivity::class.java).apply {
-                putExtra(EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD, newCard)
+            Intent(context, CardsActivity::class.java).apply {
+                putExtra(EXTRA_CARDS_REGISTER_NEW_CARD, newCard)
             }
     }
 }

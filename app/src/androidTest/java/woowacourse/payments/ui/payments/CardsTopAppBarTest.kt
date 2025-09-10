@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import org.junit.Rule
 import org.junit.Test
 
-class PaymentCardsTopAppBarTest {
+class CardsTopAppBarTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -16,7 +16,7 @@ class PaymentCardsTopAppBarTest {
         // given && when
         val isVisibleRegistrationButton = true
         composeTestRule.setContent {
-            PaymentCardsTopAppBar(
+            CardsTopAppBar(
                 onRegistrationClick = {},
                 isVisibleRegistrationButton = isVisibleRegistrationButton,
             )
@@ -33,7 +33,7 @@ class PaymentCardsTopAppBarTest {
         // given && when
         val isVisibleRegistrationButton = false
         composeTestRule.setContent {
-            PaymentCardsTopAppBar(
+            CardsTopAppBar(
                 onRegistrationClick = {},
                 isVisibleRegistrationButton = isVisibleRegistrationButton,
             )

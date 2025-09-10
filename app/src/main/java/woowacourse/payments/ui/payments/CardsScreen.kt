@@ -36,12 +36,12 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.payments.PaymentCardsActivity.Companion.EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD
-import woowacourse.payments.ui.payments.registration.PaymentCardRegistrationActivity
+import woowacourse.payments.ui.payments.CardsActivity.Companion.EXTRA_CARDS_REGISTER_NEW_CARD
+import woowacourse.payments.ui.payments.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.TextGray
 
 @Composable
-fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiState()) {
+fun CardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiState()) {
     var uiState: CardsScreenUiState by remember { mutableStateOf(cardsScreenUiState) }
     val context = LocalContext.current
 
@@ -50,7 +50,7 @@ fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiSta
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val newCard: CardUiModel? =
                     activityResult.data?.getParcelableExtraCompat(
-                        EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD,
+                        EXTRA_CARDS_REGISTER_NEW_CARD,
                     )
                 newCard?.let {
                     uiState = uiState.updateUiStateWithCard(newCard)
@@ -66,9 +66,9 @@ fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiSta
 
     Scaffold(
         topBar = {
-            PaymentCardsTopAppBar(
+            CardsTopAppBar(
                 onRegistrationClick = {
-                    val intent = PaymentCardRegistrationActivity.newIntent(context)
+                    val intent = CardRegistrationActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
                 },
                 isVisibleRegistrationButton = uiState.isVisibleRegistrationButtonInTopBar(),
@@ -76,10 +76,10 @@ fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiSta
             )
         },
     ) { innerPadding ->
-        PaymentCardsScreenContent(
+        CardsScreenContent(
             uiState = uiState,
             onClickRegistration = {
-                val intent = PaymentCardRegistrationActivity.newIntent(context)
+                val intent = CardRegistrationActivity.newIntent(context)
                 cardAddLauncher.launch(intent)
             },
             modifier = Modifier.padding(innerPadding),
@@ -88,7 +88,7 @@ fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiSta
 }
 
 @Composable
-private fun PaymentCardsScreenContent(
+private fun CardsScreenContent(
     uiState: CardsScreenUiState,
     onClickRegistration: () -> Unit,
     modifier: Modifier = Modifier,
@@ -102,7 +102,7 @@ private fun PaymentCardsScreenContent(
         if (uiState.hasNoContent()) RegistrationGuideText()
 
         uiState.value.forEach { card: CardUiModel ->
-            PaymentCard(paymentCardInformation = card)
+            PaymentCard(card = card)
 
             Spacer(modifier = Modifier.height(36.dp))
         }
@@ -149,7 +149,7 @@ private fun RegistrationBox(onClickRegistration: () -> Unit) {
 @Composable
 fun NoContentPreview() {
     val uiState: CardsScreenUiState = CardsScreenUiState(emptyList())
-    PaymentCardsScreen(
+    CardsScreen(
         cardsScreenUiState = uiState,
     )
 }
@@ -168,7 +168,7 @@ fun HasOneContentPreview() {
             ),
         )
 
-    PaymentCardsScreen(
+    CardsScreen(
         cardsScreenUiState = uiState,
     )
 }
@@ -191,7 +191,7 @@ fun HasMultipleContentPreview() {
                 ),
             ),
         )
-    PaymentCardsScreen(
+    CardsScreen(
         cardsScreenUiState = uiState,
     )
 }

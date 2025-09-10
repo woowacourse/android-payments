@@ -24,13 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    paymentCardInformation: CardUiModel? = null,
+    card: CardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -45,7 +45,7 @@ fun PaymentCard(
     ) {
         Column(
             modifier =
-                if (paymentCardInformation != null) {
+                if (card != null) {
                     Modifier.align(Alignment.BottomCenter)
                 } else {
                     Modifier.align(Alignment.CenterStart)
@@ -63,7 +63,7 @@ fun PaymentCard(
                         ),
             )
 
-            if (paymentCardInformation != null) {
+            if (card != null) {
                 Column(
                     modifier =
                         Modifier
@@ -71,7 +71,7 @@ fun PaymentCard(
                             .padding(start = 14.dp, end = 14.dp),
                 ) {
                     Text(
-                        text = paymentCardInformation.formattedCardNumber(),
+                        text = card.formattedCardNumber(),
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 12.sp,
@@ -88,7 +88,7 @@ fun PaymentCard(
                         modifier = Modifier.padding(bottom = 5.dp),
                     ) {
                         Text(
-                            text = paymentCardInformation.cardholderName,
+                            text = card.cardholderName,
                             modifier = Modifier.weight(1f),
                             color = Color.White,
                             fontWeight = FontWeight.W500,
@@ -97,7 +97,7 @@ fun PaymentCard(
                             maxLines = 1,
                         )
                         Text(
-                            text = paymentCardInformation.formattedCardExpirationDate(),
+                            text = card.formattedCardExpirationDate(),
                             color = Color.White,
                             fontWeight = FontWeight.W500,
                             fontSize = 12.sp,
@@ -114,9 +114,9 @@ fun PaymentCard(
 
 @Preview(showBackground = true, name = "카드 정보 있다면 화면에 보여준다.")
 @Composable
-private fun HasPaymentCardInformationPreview() {
+private fun HasCardPreview() {
     PaymentCard(
-        paymentCardInformation =
+        card =
             CardUiModel(
                 cardholderNameUiModel = CardholderNameUiModel("CREW"),
                 cardNumberUiModel = CardNumberUiModel("1111222233334444"),
@@ -127,6 +127,6 @@ private fun HasPaymentCardInformationPreview() {
 
 @Preview(showBackground = true, name = "카드 정보 없다면 IC Chip만 보인다.")
 @Composable
-private fun HasNotPaymentCardInformationPaymentCardPreview() {
-    PaymentCard(paymentCardInformation = null)
+private fun HasNotCardPreview() {
+    PaymentCard(card = null)
 }

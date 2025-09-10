@@ -157,7 +157,7 @@ private fun CardRegistrationScreenContent(
 fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
-            onBackPressed = { },
+            onBackPressed = {},
             onCardRegistered = {},
         )
     }

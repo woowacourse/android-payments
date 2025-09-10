@@ -24,7 +24,7 @@ class PaymentCardTest {
                 cardNumberUiModel = CardNumberUiModel("1111222233334444"),
                 cardExpirationDateUiModel = CardExpirationDateUiModel("0421"),
             )
-        composeTestRule.setContent { PaymentCard(paymentCardInformation = paymentCardInformation) }
+        composeTestRule.setContent { PaymentCard(card = paymentCardInformation) }
 
         // then
         composeTestRule
@@ -36,7 +36,7 @@ class PaymentCardTest {
     fun 카드_정보가_없다면_정보_영역은_보여지지_않는다() {
         // given && when
         val paymentCardInformation = null
-        composeTestRule.setContent { PaymentCard(paymentCardInformation = paymentCardInformation) }
+        composeTestRule.setContent { PaymentCard(card = paymentCardInformation) }
 
         // then
         composeTestRule

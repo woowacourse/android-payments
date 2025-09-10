@@ -15,7 +15,12 @@ class CardRegistrationScreenTest {
 
     @Before
     fun setup() {
-        composeTestRule.setContent { CardRegistrationScreen() }
+        composeTestRule.setContent {
+            CardRegistrationScreen(
+                onBackPressed = {},
+                onCardRegistered = {},
+            )
+        }
     }
 
     @Test

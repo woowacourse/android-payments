@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 
 @Composable
-fun PaymentCardsTopAppBar(
+fun CardsTopAppBar(
     onRegistrationClick: () -> Unit,
     isVisibleRegistrationButton: Boolean,
     modifier: Modifier = Modifier,
@@ -68,7 +68,7 @@ private fun BoxScope.ShowRegistrationButton(onRegistrationClick: () -> Unit) {
 @Preview(showBackground = true, name = "메인 화면 앱 바 추가 버튼 비활성화")
 @Composable
 private fun InvisibleRegistrationButtonPreview() {
-    PaymentCardsTopAppBar(
+    CardsTopAppBar(
         onRegistrationClick = { },
         isVisibleRegistrationButton = false,
     )
@@ -77,7 +77,7 @@ private fun InvisibleRegistrationButtonPreview() {
 @Preview(showBackground = true, name = "메인 화면 앱 바 추가 버튼 활성화")
 @Composable
 private fun VisibleRegistrationButtonPreview() {
-    PaymentCardsTopAppBar(
+    CardsTopAppBar(
         onRegistrationClick = { },
         isVisibleRegistrationButton = true,
     )
