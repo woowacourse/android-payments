@@ -24,10 +24,10 @@ data class CardAdditionUiState(
         newPassword: String? = null,
     ): CardAdditionUiState =
         copy(
-            cardNumber = newCardNumber?.let { CardNumber(it) } ?: cardNumber,
-            expiredDate = newExpiredDate?.let { ExpiredDate(it) } ?: expiredDate,
+            cardNumber = newCardNumber?.let(::CardNumber) ?: cardNumber,
+            expiredDate = newExpiredDate?.let(::ExpiredDate) ?: expiredDate,
             ownerName = newOwnerName ?: ownerName,
-            password = newPassword?.let { CardPassword(it) } ?: password,
+            password = newPassword?.let(::CardPassword) ?: password,
         )
 
     companion object {
