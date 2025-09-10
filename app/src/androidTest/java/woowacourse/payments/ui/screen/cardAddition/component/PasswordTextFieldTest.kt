@@ -47,7 +47,7 @@ class PasswordTextFieldTest {
     }
 
     @Test
-    fun 비밀번호는_4글자이다() {
+    fun `비밀번호는_4글자이다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)

@@ -33,7 +33,7 @@ class CardNumberTextFieldTest {
     }
 
     @Test
-    fun 카드_번호는_16자이다() {
+    fun `카드_번호는_16자이다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)

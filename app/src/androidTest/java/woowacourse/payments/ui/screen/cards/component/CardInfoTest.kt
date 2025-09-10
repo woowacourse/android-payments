@@ -25,7 +25,7 @@ class CardInfoTest {
     }
 
     @Test
-    fun 카드_번호에_구분자가_추가되며_뒤의_8자리는_가려진다() {
+    fun `카드_번호에_구분자가_추가되며_뒤의_8자리는_가려진다`() {
         // then
         composeRule
             .onNodeWithText("1234 - 5678 - **** - ****")
@@ -33,7 +33,7 @@ class CardInfoTest {
     }
 
     @Test
-    fun 만료일에_구분자가_추가된다() {
+    fun `만료일에_구분자가_추가된다`() {
         // then
         composeRule
             .onNodeWithText("09 / 25")
@@ -41,7 +41,7 @@ class CardInfoTest {
     }
 
     @Test
-    fun 소유자_이름이_출력된다() {
+    fun `소유자_이름이_출력된다`() {
         // then
         composeRule
             .onNodeWithText("INHYEOP LEE")

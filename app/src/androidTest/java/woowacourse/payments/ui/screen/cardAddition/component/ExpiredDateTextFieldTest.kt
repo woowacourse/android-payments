@@ -47,7 +47,7 @@ class ExpiredDateTextFieldTest {
     }
 
     @Test
-    fun 만료일은_4글자이다() {
+    fun `만료일은_4글자이다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
@@ -61,7 +61,7 @@ class ExpiredDateTextFieldTest {
     }
 
     @Test
-    fun 만료일에_숫자가_아닌_값을_입력할_수_없다() {
+    fun `만료일에_숫자가_아닌_값을_입력할_수_없다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
