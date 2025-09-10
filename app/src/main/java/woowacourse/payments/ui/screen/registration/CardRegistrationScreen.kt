@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.component.CardExpirationDateTextField
@@ -20,10 +21,6 @@ import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.CardPasswordUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -70,10 +67,10 @@ fun CardRegistrationScreen(
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
-    onCardNumberChanged: (CardNumberUiModel) -> Unit,
-    onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
-    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
-    onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
+    onCardNumberChanged: (String) -> Unit,
+    onCardExpirationDateChanged: (String) -> Unit,
+    onCardholderNameChanged: (String) -> Unit,
+    onCardPasswordChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -90,31 +87,36 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(40.dp))
 
         CardNumberTextField(
-            cardNumber = uiState.cardNumber,
+            cardNumber = uiState.cardNumber.cardNumber,
             onCardNumberChanged = onCardNumberChanged,
+            errorMessage = uiState.cardNumberErrorMessageResId?.let { stringResource(it) },
             modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         CardExpirationDateTextField(
-            cardExpirationDate = uiState.cardExpirationDate,
+            cardExpirationDate = uiState.cardExpirationDate.cardExpirationDate,
             onCardExpirationDateChanged = onCardExpirationDateChanged,
+            errorMessage = uiState.cardExpirationDateErrorMessageResId?.let { stringResource(it) },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         CardholderNameTextField(
-            cardholderName = uiState.cardholderName,
+            cardholderName = uiState.cardholderName.cardholderName,
             onCardholderNameChanged = onCardholderNameChanged,
+            maxLength = uiState.cardholderName.maxLength,
+            errorMessage = uiState.cardholderNameErrorMessageResId?.let { stringResource(it) },
             modifier = Modifier.fillMaxWidth(),
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         CardPasswordTextField(
-            cardPassword = uiState.cardPassword,
+            cardPassword = uiState.cardPassword.cardPassword,
             onCardPasswordChanged = onCardPasswordChanged,
+            errorMessage = uiState.cardPasswordErrorMessageResId?.let { stringResource(it) },
         )
     }
 }
