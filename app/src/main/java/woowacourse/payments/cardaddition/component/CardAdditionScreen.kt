@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,24 +35,24 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
     val activity: Activity? = LocalActivity.current
     val scrollState = rememberScrollState()
 
-    var cardNumber: String by remember { mutableStateOf("") }
+    var cardNumber: String by rememberSaveable { mutableStateOf("") }
     val handleCardNumberInput: (String) -> Unit = { newValue: String ->
         val newCardNumber: String = newValue.filter(::isDigit)
         cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH)
     }
 
-    var expiredDate: String by remember { mutableStateOf("") }
+    var expiredDate: String by rememberSaveable { mutableStateOf("") }
     val handleExpiredDateInput: (String) -> Unit = { newValue: String ->
         val newDate: String = newValue.filter(::isDigit)
         expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
     }
 
-    var ownerName: String by remember { mutableStateOf("") }
+    var ownerName: String by rememberSaveable { mutableStateOf("") }
     val handleNameInput: (String) -> Unit = { newName: String ->
         ownerName = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
     }
 
-    var password: String by remember { mutableStateOf("") }
+    var password: String by rememberSaveable { mutableStateOf("") }
     val handlePasswordInput = { newValue: String ->
         val newPassword: String = newValue.filter(::isDigit)
         password = newPassword.take(PASSWORD_LENGTH)
