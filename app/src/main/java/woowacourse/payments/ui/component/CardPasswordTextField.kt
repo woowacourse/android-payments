@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -31,9 +32,8 @@ fun CardPasswordTextField(
     onCardPasswordChanged: (String) -> Unit,
     errorMessage: String?,
     modifier: Modifier = Modifier,
+    visualTransformation: VisualTransformation = rememberDefaultCardExpirationDateVisualTransformation(),
 ) {
-    val visualTransformation = remember { PasswordVisualTransformation() }
-
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_password_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.card_password_text_field_placeholder)) },
@@ -59,6 +59,9 @@ fun CardPasswordTextField(
         modifier = modifier,
     )
 }
+
+@Composable
+private fun rememberDefaultCardExpirationDateVisualTransformation(): VisualTransformation = remember { PasswordVisualTransformation() }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
