@@ -24,7 +24,7 @@ fun NewCardTopBar(
     onSaveClick: () -> Unit,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.top_bar_title)) },
+        title = { Text(stringResource(R.string.new_card_top_bar_title)) },
         modifier = modifier,
         actions = {
             IconButton(onClick = { onSaveClick() }) {

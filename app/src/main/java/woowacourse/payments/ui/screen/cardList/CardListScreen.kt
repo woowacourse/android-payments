@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +34,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
@@ -59,53 +61,33 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        if (cards.isEmpty()) {
-            EmptyCardList(
-                modifier = Modifier.padding(innerPadding),
-                onAddCardClick = navigateToAddCard,
-            )
-        } else {
-            CardListContent(
-                modifier = Modifier.padding(innerPadding),
-                cards = cards,
-                onAddCardClick = navigateToAddCard,
-            )
-        }
-    }
-}
+        CardListContent(modifier = Modifier.padding(innerPadding)) {
+            if (cards.isEmpty()) {
+                Spacer(modifier = Modifier.height(32.dp))
+                Text(
+                    text = stringResource(R.string.card_list_add_new_card),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
 
-@Composable
-private fun EmptyCardList(
-    modifier: Modifier = Modifier,
-    onAddCardClick: () -> Unit,
-) {
-    Column(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = "새로운 카드를 등록해주세요",
-            modifier =
-                Modifier.semantics {
-                    this.contentDescription = "새로운 카드 등록 텍스트"
-                },
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        AddCardBox(onClick = onAddCardClick)
+            for (card in cards) {
+                Spacer(modifier = Modifier.height(32.dp))
+                PaymentCard(card = card)
+            }
+
+            if (cards.size <= 1) {
+                Spacer(modifier = Modifier.height(32.dp))
+                AddCardBox(onClick = navigateToAddCard)
+            }
+        }
     }
 }
 
 @Composable
 private fun CardListContent(
     modifier: Modifier = Modifier,
-    cards: List<CardUiModel>,
-    onAddCardClick: () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -117,16 +99,7 @@ private fun CardListContent(
                 .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        for (card in cards) {
-            Spacer(modifier = Modifier.height(32.dp))
-            PaymentCard(card = card)
-        }
-
-        if (cards.size == 1) {
-            Spacer(modifier = Modifier.height(32.dp))
-            AddCardBox(onClick = onAddCardClick)
-        }
-
+        content()
         Spacer(modifier = Modifier.height(40.dp))
     }
 }
