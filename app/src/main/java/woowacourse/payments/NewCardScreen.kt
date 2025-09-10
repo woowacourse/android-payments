@@ -50,6 +50,7 @@ fun NewCardScreen(
                             cardNumber = cardNumber,
                             cardHolderName = cardHolderName,
                             cardExpiryDate = cardExpiryDate,
+                            cardPassword = cardPassword
                         )
                     )
                     Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
