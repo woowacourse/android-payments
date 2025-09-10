@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.payments
 
 import android.app.Activity
-import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,9 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,24 +30,35 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.getParcelableCompat
+import woowacourse.payments.ui.common.getParcelableExtraCompat
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.payments.PaymentCardsActivity.Companion.EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD
 import woowacourse.payments.ui.payments.registration.PaymentCardRegistrationActivity
 import woowacourse.payments.ui.theme.TextGray
 
 @Composable
-fun PaymentCardsScreen() {
-    val paymentCards: SnapshotStateList<CardUiModel> = remember { mutableStateListOf() }
+fun PaymentCardsScreen(cards: List<CardUiModel> = emptyList()) {
+    val paymentCards: SnapshotStateList<CardUiModel> = remember { cards.toMutableStateList() }
     val context = LocalContext.current
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val card: CardUiModel? =
-                    activityResult.data?.getParcelableCompat<CardUiModel>("card")
-                card?.let {
-                    paymentCards.add(it)
-                    Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                val newCard: CardUiModel? =
+                    activityResult.data?.getParcelableExtraCompat(
+                        EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD,
+                    )
+                newCard?.let {
+                    paymentCards.add(newCard)
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.payment_cards_screen_registration_toast),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
         }
@@ -57,8 +67,7 @@ fun PaymentCardsScreen() {
         topBar = {
             PaymentCardsTopAppBar(
                 onRegistrationClick = {
-                    val intent =
-                        Intent(context, PaymentCardRegistrationActivity::class.java)
+                    val intent = PaymentCardRegistrationActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
                 },
                 isVisibleRegistrationButton = paymentCards.size >= 2,
@@ -66,34 +75,38 @@ fun PaymentCardsScreen() {
             )
         },
     ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
+        PaymentCardsScreenContent(
+            paymentCards = paymentCards,
+            onClickRegistration = {
+                val intent = PaymentCardRegistrationActivity.newIntent(context)
+                cardAddLauncher.launch(intent)
+            },
+            modifier = Modifier.padding(innerPadding),
+        )
+    }
+}
 
-            if (paymentCards.isEmpty()) {
-                RegistrationGuideText()
+@Composable
+private fun PaymentCardsScreenContent(
+    paymentCards: List<CardUiModel>,
+    onClickRegistration: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
 
-                Spacer(modifier = Modifier.height(16.dp))
-            }
+        if (paymentCards.isEmpty()) RegistrationGuideText()
 
-            for (card in paymentCards) {
-                PaymentCard(paymentCardInformation = card)
+        paymentCards.forEach { card: CardUiModel ->
+            PaymentCard(paymentCardInformation = card)
 
-                Spacer(modifier = Modifier.height(36.dp))
-            }
-
-            if (paymentCards.size <= 1) {
-                RegistrationBox {
-                    val intent = Intent(context, PaymentCardRegistrationActivity::class.java)
-                    cardAddLauncher.launch(intent)
-                }
-            }
+            Spacer(modifier = Modifier.height(36.dp))
         }
+
+        if (paymentCards.size <= 1) RegistrationBox { onClickRegistration() }
     }
 }
 
@@ -101,13 +114,13 @@ fun PaymentCardsScreen() {
 private fun RegistrationGuideText() {
     Text(
         text = stringResource(R.string.payment_cards_screen_registration_guide),
-        modifier =
-            Modifier
-                .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         fontWeight = FontWeight.W700,
         fontSize = 18.sp,
         textAlign = TextAlign.Center,
     )
+
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
@@ -127,10 +140,54 @@ private fun RegistrationBox(onClickRegistration: () -> Unit) {
             color = TextGray,
         )
     }
+
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "데이터 존재 X")
 @Composable
-fun PaymentCardsScreenPreview() {
-    PaymentCardsScreen()
+fun NoContentPreview() {
+    val cards: List<CardUiModel> = emptyList()
+    PaymentCardsScreen(
+        cards = cards,
+    )
+}
+
+@Preview(showBackground = true, name = "데이터 1개 존재")
+@Composable
+fun HasOneContentPreview() {
+    val cards: List<CardUiModel> =
+        listOf(
+            CardUiModel(
+                cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+            ),
+        )
+
+    PaymentCardsScreen(
+        cards = cards,
+    )
+}
+
+@Preview(showBackground = true, name = "데이터 2개 이상 존재")
+@Composable
+fun HasMultipleContentPreview() {
+    val cards: List<CardUiModel> =
+        listOf(
+            CardUiModel(
+                cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+            ),
+            CardUiModel(
+                cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
+                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
+            ),
+        )
+
+    PaymentCardsScreen(
+        cards = cards,
+    )
 }
