@@ -15,9 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import woowacourse.payments.Card
 import woowacourse.payments.ui.theme.CardBlack
 import woowacourse.payments.ui.theme.CardIcChip
@@ -37,9 +41,8 @@ fun PaymentCard(
                     color = CardBlack,
                     shape = RoundedCornerShape(5.dp),
                 ).padding(
-                    start = 14.dp,
-                    end = 14.dp,
-                    bottom = 10.dp,
+                    horizontal = 14.dp,
+                    vertical = 10.dp,
                 ),
     ) {
         Box(
@@ -73,10 +76,13 @@ private fun PaymentCardDetail(
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         Text(
-            text = detail.number.toMarkedCardNumber(),
+            text = detail.markedCardNumber,
             modifier = Modifier.fillMaxWidth(),
+            fontSize = 12.sp,
+            letterSpacing = 2.sp,
             color = Color.White,
             textAlign = TextAlign.Center,
+            fontWeight = FontWeight.W500
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -85,6 +91,7 @@ private fun PaymentCardDetail(
             Text(
                 text = detail.owner,
                 color = Color.White,
+                fontWeight = FontWeight.W500
             )
             Text(
                 text =
@@ -97,35 +104,46 @@ private fun PaymentCardDetail(
                             }
                         }.joinToString(separator = ""),
                 color = Color.White,
+                fontWeight = FontWeight.W500
             )
         }
     }
 }
 
-private fun String.toMarkedCardNumber(): String =
-    chunked(4)
-        .mapIndexed { index, string ->
-            if (index > 1) {
-                string.map { "*" }.joinToString("")
-            } else {
-                string
-            }
-        }.joinToString(separator = " - ")
+private val Card.markedCardNumber: String
+    get() =
+        number.chunked(4)
+            .mapIndexed { index, string ->
+                if (index > 1) {
+                    string.map { "*" }.joinToString("")
+                } else {
+                    string
+                }
+            }.joinToString(separator = " - ")
 
 @Preview
 @Composable
-private fun PaymentCardPreview() {
+private fun PaymentCardPreview(
+    @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: Card?,
+) {
     PaymentCard(
-        detail =
+        detail = card,
+    )
+}
+
+private class PaymentCardPreviewParameterProvider :
+    CollectionPreviewParameterProvider<Card?>(
+        listOf(
+            null,
             Card(
                 number = "1234".repeat(4),
                 owner = "CREW",
                 expiredDate = "0421",
             ),
+        ),
     )
-}
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF333333)
 @Composable
 private fun PaymentCardDetailPreview() {
     PaymentCardDetail(
