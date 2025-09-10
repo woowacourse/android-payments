@@ -1,14 +1,31 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class CardNumber(
     val firstNumber: String = "",
     val secondNumber: String = "",
     val thirdNumber: String = "",
     val fourthNumber: String = "",
-) {
+) : Parcelable {
     override fun toString(): String {
         val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
         return parts.joinToString("")
+    }
+
+    fun isValid(): Boolean {
+        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        for(part in parts){
+            if(part.length != CARD_NUMBER_PART_LENGTH) return false
+        }
+        return true
+    }
+
+    fun toFormattedString(): String {
+        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        return parts.joinToString(" - ")
     }
 
     companion object {

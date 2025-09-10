@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.addcard
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
@@ -26,10 +29,23 @@ import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 @Composable
 fun GenerateCardView(modifier: Modifier = Modifier) {
     var card by remember { mutableStateOf(Card()) }
-
+    val context = LocalContext.current
     AndroidpaymentsTheme {
         Scaffold(
-            topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
+            topBar = {
+                NewCardTopBar(
+                    onBackClick = { (context as? Activity)?.finish() },
+                    onSaveClick = {
+                        val resultIntent = Intent()
+                        resultIntent.putExtra("card", card)
+
+                        (context as? Activity)?.setResult(Activity.RESULT_OK, resultIntent)
+
+                        (context as? Activity)?.finish()
+                    },
+                    isOnSaveClickable = card.isValid(),
+                )
+            },
             modifier = modifier.fillMaxSize(),
         ) { innerPadding ->
             Column(

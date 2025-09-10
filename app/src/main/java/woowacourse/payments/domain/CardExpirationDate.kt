@@ -1,12 +1,17 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.time.YearMonth
 
+@Parcelize
 data class CardExpirationDate(
     val month: String = "",
     val year: String = "",
-) {
+) : Parcelable {
     fun toCombinedFormat(): String = month + year
+
+    fun toFormattedString(separator : String): String = month + separator + year
 
     fun isValid(): Boolean {
         if (month.isBlank() && year.isBlank()) return true

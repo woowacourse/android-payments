@@ -1,8 +1,12 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class OwnerName(
     val name: String = "",
-) {
+) : Parcelable {
     override fun toString(): String = name
 
     companion object {
