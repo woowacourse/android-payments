@@ -15,7 +15,10 @@
             android:name=".NewCardScreenActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Androidpayments">
+            android:theme="@style/Theme.Androidpayments"/>
+        <activity
+            android:name=".CardWalletActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
