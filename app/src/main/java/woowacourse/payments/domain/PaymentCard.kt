@@ -19,10 +19,16 @@ data class PaymentCard(
         cardholderName
     )
 
-    private var password: String = ""
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is PaymentCard) return false
+        return number == other.number && expirationDate == other.expirationDate
+    }
 
-    fun updatePassword(newPassword: String) {
-        password = newPassword
+    override fun hashCode(): Int {
+        var result = number.hashCode()
+        result = 31 * result + expirationDate.hashCode()
+        return result
     }
 
     companion object {
