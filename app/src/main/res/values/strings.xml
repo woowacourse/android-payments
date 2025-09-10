@@ -21,7 +21,7 @@
 
     <string name="cardholder_name_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_placeholder">카드에 표시된 이름을 입력하세요.</string>
-    <string name="cardholder_name_entry_length">%1s / %2s</string>
+    <string name="cardholder_name_entry_length">%1$d / %2$d</string>
 
     <string name="passcode_label">비밀번호</string>
     <string name="passcode_placeholder">0000</string>
