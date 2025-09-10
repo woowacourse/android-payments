@@ -1,26 +1,29 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
-import androidx.core.text.isDigitsOnly
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.CardNumber
 
 @Parcelize
 data class CardNumberUiModel(
-    val cardNumber: String,
+    val cardNumber: String = "",
+    val state: State = State.NOT_FILLED,
 ) : Parcelable {
-    init {
-        require(cardNumber.length <= VALID_CARD_NUMBER_LENGTH) { INVALID_CARD_NUMBER_LENGTH_MESSAGE }
-        require(cardNumber.isDigitsOnly()) { INVALID_CARD_NUMBER_MESSAGE }
+    @IgnoredOnParcel
+    val isValid: Boolean = state == State.VALID
+
+    enum class State {
+        NOT_FILLED,
+        VALID,
+        INVALID,
     }
 
-    @IgnoredOnParcel
-    val isFilled: Boolean = cardNumber.length == VALID_CARD_NUMBER_LENGTH
-
     companion object {
-        private const val VALID_CARD_NUMBER_LENGTH = 16
-        private const val INVALID_CARD_NUMBER_LENGTH_MESSAGE =
-            "[ERROR] 최대 글자 수는 $VALID_CARD_NUMBER_LENGTH 입니다."
-        private const val INVALID_CARD_NUMBER_MESSAGE = "[ERROR] 카드번호는 숫자만 입력 가능합니다."
+        fun from(cardNumber: CardNumber): CardNumberUiModel =
+            CardNumberUiModel(
+                cardNumber = cardNumber.value,
+                state = State.VALID,
+            )
     }
 }
