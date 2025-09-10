@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,27 +20,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardDigit
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
-import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CardPasswordTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.transformation.GroupedVisualTransformation
-import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @Composable
