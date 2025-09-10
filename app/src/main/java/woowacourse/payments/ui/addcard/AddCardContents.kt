@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +19,7 @@ import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
+import woowacourse.payments.ui.sharedcomposable.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Suppress("ktlint:standard:function-naming")
