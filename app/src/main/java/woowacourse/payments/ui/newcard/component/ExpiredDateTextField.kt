@@ -22,8 +22,8 @@ import java.lang.Character.isDigit
 @Composable
 fun ExpiredDateTextField(
     expiredDate: String,
+    expirationDateErrorMessage: String? = null,
     onExpirationDateChange: (String) -> Unit,
-    expiredDateErrorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -40,11 +40,11 @@ fun ExpiredDateTextField(
                 color = Color.Gray
             )
         },
-        isError = expiredDateErrorMessage != null,
+        isError = expirationDateErrorMessage != null,
         supportingText = {
-            if (expiredDateErrorMessage != null) {
+            if (expirationDateErrorMessage != null) {
                 Text(
-                    text = expiredDateErrorMessage,
+                    text = expirationDateErrorMessage,
                     color = Color.Red
                 )
             }

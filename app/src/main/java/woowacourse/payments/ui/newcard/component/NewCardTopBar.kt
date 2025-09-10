@@ -24,9 +24,6 @@ fun NewCardTopBar(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-
-
     TopAppBar(
         title = { Text(stringResource(R.string.add_card_title)) },
         navigationIcon = {

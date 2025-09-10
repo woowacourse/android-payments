@@ -17,8 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.Card.Companion.Card
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpirationDate
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
+import woowacourse.payments.domain.exception.ExpirationDateException
 import woowacourse.payments.ui.newcard.component.NewCardColumn
 import woowacourse.payments.ui.newcard.component.NewCardTopBar
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun NewCardScreen(
@@ -36,10 +42,49 @@ fun NewCardScreen(
     var ownerNameErrorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordErrorMessage by rememberSaveable { mutableStateOf<String?>(null) }
 
-    runCatching {
-        CardNumber(value = number)
-    }.onFailure { e: Throwable ->
-        numberErrorMessage = e.message
+    if (number.isNotEmpty()) {
+        runCatching {
+            CardNumber(value = number)
+        }.onSuccess {
+            numberErrorMessage = null
+        }.onFailure { e: Throwable ->
+            numberErrorMessage = e.message
+        }
+    }
+
+    if (expirationDate.isNotEmpty()) {
+        runCatching {
+            ExpirationDate(
+                value = YearMonth.parse(
+                    expirationDate,
+                    DateTimeFormatter.ofPattern("MMyy")
+                )
+            )
+        }.onSuccess {
+            expirationDateErrorMessage = null
+        }.onFailure { e: Throwable ->
+            expirationDateErrorMessage = e.message
+        }
+    }
+
+    if (ownerName.isNotEmpty()) {
+        runCatching {
+            OwnerName(ownerName)
+        }.onSuccess {
+            ownerNameErrorMessage = null
+        }.onFailure { e: Throwable ->
+            ownerNameErrorMessage = e.message
+        }
+    }
+
+    if (password.isNotEmpty()) {
+        runCatching {
+            Password(password)
+        }.onSuccess {
+            passwordErrorMessage = null
+        }.onFailure { e: Throwable ->
+            passwordErrorMessage = e.message
+        }
     }
 
     val newCardUiState = NewCardUiState(
@@ -83,6 +128,9 @@ fun NewCardScreen(
             onPasswordChange = { password = it.take(4) },
             modifier = Modifier.padding(paddingValues),
             numberErrorMessage = numberErrorMessage,
+            expirationDateErrorMessage = expirationDateErrorMessage,
+            ownerNameErrorMessage = ownerNameErrorMessage,
+            passwordErrorMessage = passwordErrorMessage,
         )
     }
 }

@@ -19,7 +19,10 @@ import woowacourse.payments.ui.newcard.NewCardUiState
 @Composable
 fun NewCardColumn(
     newCardUiState: NewCardUiState,
-    numberErrorMessage: String?,
+    numberErrorMessage: String? = null,
+    expirationDateErrorMessage: String? = null,
+    ownerNameErrorMessage: String? = null,
+    passwordErrorMessage: String? = null,
     onNumberChange: (String) -> Unit,
     onExpirationDateChange: (String) -> Unit,
     onOwnerNameChange: (String) -> Unit,
@@ -44,12 +47,14 @@ fun NewCardColumn(
         )
         ExpiredDateTextField(
             expiredDate = newCardUiState.expirationDate,
+            expirationDateErrorMessage = expirationDateErrorMessage,
             onExpirationDateChange = onExpirationDateChange,
             modifier = Modifier
                 .padding(top = 18.dp)
         )
         CardOwnerNameTextField(
             ownerName = newCardUiState.ownerName,
+            ownerNameErrorMessage = ownerNameErrorMessage,
             onOwnerNameChange = onOwnerNameChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -57,6 +62,7 @@ fun NewCardColumn(
         )
         PasswordTextField(
             password = newCardUiState.password,
+            passwordErrorMessage = passwordErrorMessage,
             onPasswordChange = onPasswordChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -75,6 +81,7 @@ private fun NewCardColumnPreview() {
         onExpirationDateChange = {},
         onOwnerNameChange = {},
         onPasswordChange = {},
-        numberErrorMessage = null
+        numberErrorMessage = null,
+        expirationDateErrorMessage = null,
     )
 }
