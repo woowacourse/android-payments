@@ -53,11 +53,9 @@ class ListActivity : ComponentActivity() {
                 var list by remember { mutableStateOf(ListUiState()) }
                 val context = LocalContext.current
 
-                val launcher = rememberLauncherForActivityResult(
-                    contract = ActivityResultContracts.StartActivityForResult()
-                ) { result ->
-                    if (result.resultCode == RESULT_OK) {
-                        val newCard = result.data?.getParcelableExtra<Card>("card")
+                val cardAddLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                    if(activityResult.resultCode == RESULT_OK) {
+                        val newCard = activityResult.data?.getParcelableExtra<Card>("card")
                         newCard?.let {
                             list = ListUiState(list.cards + it)
                             Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
@@ -69,7 +67,7 @@ class ListActivity : ComponentActivity() {
                     cards = list.cards,
                     onAddClick = {
                         val intent = Intent(context, NewCardActivity::class.java)
-                        launcher.launch(intent)
+                        cardAddLauncher.launch(intent)
                     }
                 )
             }
