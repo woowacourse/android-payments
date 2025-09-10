@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.Card
 import woowacourse.payments.ui.theme.CardBlack
@@ -79,7 +80,7 @@ private fun PaymentCardDetail(
             text = detail.markedCardNumber,
             modifier = Modifier.fillMaxWidth(),
             fontSize = 12.sp,
-            letterSpacing = 2.sp,
+            letterSpacing = 0.17.em,
             color = Color.White,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.W500
