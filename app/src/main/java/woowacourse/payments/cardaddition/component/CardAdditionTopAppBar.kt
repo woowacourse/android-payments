@@ -27,7 +27,7 @@ fun CardAdditionTopAppBar(
     TopAppBar(
         title = { Text(stringResource(R.string.card_addition_top_bar_title)) },
         navigationIcon = {
-            IconButton(onClick = { onBackClick() }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.card_addition_top_bar_navigate_back_content_description),
@@ -36,7 +36,7 @@ fun CardAdditionTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = { onSaveClick() },
+                onClick = onSaveClick,
                 enabled = completable,
             ) {
                 Icon(
