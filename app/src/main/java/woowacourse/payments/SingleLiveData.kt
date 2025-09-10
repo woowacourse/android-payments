@@ -25,14 +25,17 @@ abstract class SingleLiveData<T> {
 
     fun observe(
         owner: LifecycleOwner,
-        onResult: (T) -> Unit,
+        onChanged: (T) -> Unit,
     ) {
-        liveData.observe(owner) { it.getContentIfNotHandled()?.let(onResult) }
+        liveData.observe(owner) { it.getContentIfNotHandled()?.let(onChanged) }
     }
 
     fun removeObserver(observer: Observer<Event<T>>) = liveData.removeObserver(observer)
 
-    fun observeForever(observer: Observer<Event<T>>) = liveData.observeForever(observer)
+    fun observeForever(onChanged: (T) -> Unit) {
+        val observer = Observer<Event<T>> { it.getContentIfNotHandled()?.let(onChanged) }
+        liveData.observeForever(observer)
+    }
 }
 
 /**
