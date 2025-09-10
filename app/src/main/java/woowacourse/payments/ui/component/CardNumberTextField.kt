@@ -88,7 +88,7 @@ private class CardNumberTextFieldPreviewParameterProvider :
     data class CardNumberTextFieldPreviewCase(
         val caseName: String,
         val cardNumber: String,
-        val errorMessage: String?
+        val errorMessage: String?,
     )
 
     override val values =
