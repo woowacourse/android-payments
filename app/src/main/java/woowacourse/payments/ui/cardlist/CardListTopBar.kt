@@ -22,6 +22,8 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
@@ -29,7 +31,7 @@ import java.time.YearMonth
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardListTopBar(
-    cards: SnapshotStateList<Card>,
+    cards: SnapshotStateList<CardUiModel>,
     onAddCard: () -> Unit = {},
 ) {
     TopAppBar(
@@ -76,13 +78,13 @@ fun CardListTopBarWithTwoCardsPreview() {
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
-                ),
+                ).toUiModel(),
                 Card(
                     CardNumber("1234123412341234"),
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
-                ),
+                ).toUiModel(),
             ),
         )
     }

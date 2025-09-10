@@ -25,15 +25,16 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
-import woowacourse.payments.ui.sharedcomposable.PaymentCard
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.sharedcomposable.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
 fun CardListContents(
-    cards: SnapshotStateList<Card>,
+    cards: SnapshotStateList<CardUiModel>,
     navigateToAddCard: () -> Unit,
 ) {
     AndroidpaymentsTheme {
@@ -67,8 +68,8 @@ fun CardListContents(
                     items(
                         count = cards.size,
                     ) { index: Int ->
-                        val card: Card = cards[index]
-                        PaymentCard(card = card.toUiModel())
+                        val card: CardUiModel = cards[index]
+                        PaymentCard(card = card)
                     }
                 }
 
@@ -104,7 +105,7 @@ fun CardListContentsWithOneCardPreview() {
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
-                ),
+                ).toUiModel(),
             ),
         navigateToAddCard = {},
     )
@@ -123,13 +124,13 @@ fun CardListContentsWithTwoCardsPreview() {
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
-                ),
+                ).toUiModel(),
                 Card(
                     CardNumber("1234123412341234"),
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
-                ),
+                ).toUiModel(),
             ),
         navigateToAddCard = {},
     )

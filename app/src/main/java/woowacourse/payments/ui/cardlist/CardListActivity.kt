@@ -17,10 +17,12 @@ import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.formatter.ExpirationDateFormat
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
 class CardListActivity : ComponentActivity() {
-    private val cards = mutableStateListOf<Card>()
+    private val cards = mutableStateListOf<CardUiModel>()
     private val activityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             handleAddCardResult(result)
@@ -63,6 +65,6 @@ class CardListActivity : ComponentActivity() {
     private fun handleAddCardResult(result: ActivityResult) {
         if (result.resultCode != RESULT_OK) return
         val card: Card = result.data?.toCardOrNull() ?: return
-        cards.add(card)
+        cards.add(card.toUiModel())
     }
 }
