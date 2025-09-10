@@ -8,5 +8,10 @@
     <string name="card_owner_hint">카드에 표시된 이름을 입력하세요.</string>
     <string name="card_password_label">비밀번호</string>
     <string name="card_password_error_message">비밀번호는 4자입니다.</string>
-    <string name="title_activity_list">ListActivity</string>
+    <string name="add_new_card_prompt">새로운 카드를 등록해주세요</string>
+    <string name="content_description_add_new_card">새로운 카드 추가</string>
+    <string name="add_new_card_button">추가</string>
+    <string name="add_new_card_top_bar_title">카드 추가</string>
+    <string name="add_new_card_top_bar_back_button">뒤로 가기</string>
+    <string name="add_new_card_top_bar_check_button">완료</string>
 </resources>

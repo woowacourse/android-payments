@@ -35,10 +35,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.newCard.NewCardActivity
 import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.domain.Card
@@ -101,7 +103,7 @@ fun CardListScreen(
                         TextButton(
                             onClick = onAddClick,
                             content = { Text(
-                            text = "추가",
+                            text = stringResource(R.string.add_new_card_button),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.Black
@@ -162,7 +164,7 @@ fun AddNewCard(
         content = {
             Icon(
                 imageVector = Icons.Filled.Add,
-                contentDescription = "새로운 카드 추가",
+                contentDescription = stringResource(R.string.content_description_add_new_card),
                 modifier = Modifier.align(alignment = Alignment.Center)
             )
         })
@@ -170,7 +172,7 @@ fun AddNewCard(
 
 @Composable
 fun AddNewCardText() {
-    Text(text = "새로운 카드를 등록해주세요", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+    Text(text = stringResource(R.string.add_new_card_prompt), fontSize = 18.sp, fontWeight = FontWeight.Bold)
 }
 
 @Preview(name = "카드가 없을 때")
