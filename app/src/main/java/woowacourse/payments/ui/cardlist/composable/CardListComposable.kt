@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cardlist.composable
 
 import android.app.Activity
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -46,11 +45,12 @@ fun GenerateCardListView() {
                     }
                 if (card != null) {
                     cards.add(card)
-                    Toast.makeText(
-                        context,
-                        context.getString(R.string.card_list_card_registered_toast),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.card_list_card_registered_toast),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
         }
@@ -62,9 +62,9 @@ fun GenerateCardListView() {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                Modifier
-                    .padding(padding)
-                    .fillMaxWidth(),
+                    Modifier
+                        .padding(padding)
+                        .fillMaxWidth(),
             ) {
                 if (cards.isEmpty()) {
                     Text(
