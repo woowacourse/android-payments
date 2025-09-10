@@ -18,24 +18,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.cardlist.util.navigateToAddCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun GenerateCardListView() {
-    Log.d("test", "cardlist")
     val cards: MutableList<Card> = remember { mutableStateListOf() }
     val context = LocalContext.current
     val addCardLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
-            Log.d("test", "success")
             if (result.resultCode == Activity.RESULT_OK) {
                 val card =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -46,7 +46,11 @@ fun GenerateCardListView() {
                     }
                 if (card != null) {
                     cards.add(card)
-                    Toast.makeText(context, "카드가 등록되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.card_list_card_registered_toast),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -58,14 +62,14 @@ fun GenerateCardListView() {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier =
-                    Modifier
-                        .padding(padding)
-                        .fillMaxWidth(),
+                Modifier
+                    .padding(padding)
+                    .fillMaxWidth(),
             ) {
                 if (cards.isEmpty()) {
                     Text(
                         modifier = Modifier.padding(top = 32.dp),
-                        text = "새로운 카드를 등록해주세요",
+                        text = stringResource(R.string.card_list_empty_prompt),
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                     )

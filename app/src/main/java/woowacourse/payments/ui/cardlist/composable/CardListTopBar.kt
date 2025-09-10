@@ -10,8 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.ui.cardlist.util.navigateToAddCard
 
 @Composable
@@ -24,11 +26,15 @@ fun CardListTopBar(
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
-        title = { Text("Payments") },
+        title = { Text(stringResource(R.string.card_list_title)) },
         actions = {
             if (showAddCardBtn) {
                 TextButton(onClick = { navigateToAddCard(context, addCardLauncher) }) {
-                    Text("추가", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        stringResource(R.string.card_list_add_card_button),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         },
