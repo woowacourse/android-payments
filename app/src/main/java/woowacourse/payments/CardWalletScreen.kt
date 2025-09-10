@@ -65,13 +65,17 @@ fun CardWalletScreen(
         ) {
             when {
                 cardList.isEmpty() -> {
-                    Spacer(modifier = Modifier
-                        .height(32.dp)
-                        .fillMaxSize())
+                    Spacer(
+                        modifier = Modifier
+                            .height(32.dp)
+                            .fillMaxSize()
+                    )
                     Text("새로운 카드를 등록해주세요", fontSize = 18.sp, fontWeight = FontWeight.W700)
-                    Spacer(modifier = Modifier
-                        .height(32.dp)
-                        .fillMaxSize())
+                    Spacer(
+                        modifier = Modifier
+                            .height(32.dp)
+                            .fillMaxSize()
+                    )
                     EmptyCard(
                         onClick = {
                             val intent = NewCardScreenActivity.newIntent(context)

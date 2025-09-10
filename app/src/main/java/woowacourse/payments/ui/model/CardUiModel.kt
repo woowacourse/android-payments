@@ -21,7 +21,7 @@ data class CardUiModel(
     fun formattedExpiryDate(): String {
         return if (cardExpiryDate.length == 4) {
 //            cardExpiryDate.substring(0, 2) + " / " + cardExpiryDate.substring(2)
-            "${cardExpiryDate.substring(0,2)} / ${cardExpiryDate.substring(2,4)}"
+            "${cardExpiryDate.substring(0, 2)} / ${cardExpiryDate.substring(2, 4)}"
         } else {
             cardExpiryDate
         }

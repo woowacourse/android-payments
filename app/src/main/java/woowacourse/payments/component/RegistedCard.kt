@@ -63,7 +63,9 @@ fun RegisteredCard(
                 Text(
                     text = cardUiModel.formattedExpiryDate(),
                     color = Color.White,
-                    modifier = Modifier.padding(end = 12.dp).padding(top = 3.dp)
+                    modifier = Modifier
+                        .padding(end = 12.dp)
+                        .padding(top = 3.dp)
                 )
             }
         }

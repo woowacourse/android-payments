@@ -20,7 +20,11 @@ fun CardNumber(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { if (it.length <= CARD_NUMBER_MAX_LENGTH && it.all { it.isDigit() }) onValueChange(it) },
+        onValueChange = {
+            if (it.length <= CARD_NUMBER_MAX_LENGTH && it.all { it.isDigit() }) onValueChange(
+                it
+            )
+        },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_number)) },
         placeholder = {
