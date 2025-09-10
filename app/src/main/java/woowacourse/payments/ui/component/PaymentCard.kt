@@ -3,6 +3,7 @@ package woowacourse.payments.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -113,7 +114,7 @@ fun PaymentCardPreview() {
         PaymentCardUiModel(
             number = CardNumberUiModel("1234567812345678"),
             expirationDate = CardExpirationDateUiModel("1224"),
-            cardholderName = CardholderNameUiModel("JOHN DOE"),
+            cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
     PaymentCard(paymentCardUiModel = paymentCardUiModel)
 }

@@ -158,7 +158,7 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Car
                 PaymentCardUiModel(
                     number = CardNumberUiModel("1234567812345678"),
                     expirationDate = CardExpirationDateUiModel("0301"),
-                    cardholderName = CardholderNameUiModel("DICE"),
+                    cardholderName = CardholderNameUiModel("DICE", 30),
                 )
             }
     }
