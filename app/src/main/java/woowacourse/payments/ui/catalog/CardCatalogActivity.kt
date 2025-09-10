@@ -22,7 +22,7 @@ class CardCatalogActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val PAYMENT_CARD_UI_MODEL_KEY =
+        const val PAYMENT_CARD_UI_MODEL_KEY =
             "woowacourse.payments.ui.catalog.PAYMENT_CARD_KEY"
 
         fun newIntent(

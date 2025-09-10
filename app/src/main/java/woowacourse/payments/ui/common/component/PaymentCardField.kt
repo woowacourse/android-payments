@@ -21,19 +21,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.PaymentCard
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
-
-private const val HIDE_PASSWORD = "********"
-private const val GROUP_SIZE = 4
-private const val CARD_NUMBER_SEPARATOR = "-"
-private const val CARD_EXPIRATION_DATE_FORMAT = "MM / yy"
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun PaymentCardField(
     modifier: Modifier = Modifier,
-    paymentCard: PaymentCard? = null,
+    paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -60,9 +53,9 @@ fun PaymentCardField(
                         ),
             )
 
-            if (paymentCard != null) {
+            if (paymentCardUiModel != null) {
                 Text(
-                    text = paymentCard.number.toUi(),
+                    text = paymentCardUiModel.formatNumber(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 13.sp,
@@ -79,7 +72,7 @@ fun PaymentCardField(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = paymentCard.cardholderName,
+                        text = paymentCardUiModel.cardholderName,
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
@@ -90,7 +83,7 @@ fun PaymentCardField(
                     )
 
                     Text(
-                        text = paymentCard.expirationDate.toUi(),
+                        text = paymentCardUiModel.formatExpirationDate(),
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
@@ -101,32 +94,23 @@ fun PaymentCardField(
     }
 }
 
-private fun Long.toUi(): String =
-    this.toString().let { it.substring(0, it.length / 2) + HIDE_PASSWORD }
-        .chunked(GROUP_SIZE)
-        .joinToString(CARD_NUMBER_SEPARATOR)
-
-private fun YearMonth.toUi(): String {
-    val formatter = DateTimeFormatter.ofPattern(CARD_EXPIRATION_DATE_FORMAT)
-    return this.format(formatter)
-}
-
 @Preview(showBackground = true)
 @Composable
 fun PaymentCardFieldPreview(
-    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCard: PaymentCard?,
+    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel?,
 ) {
     Column(
         modifier = Modifier.padding(20.dp)
     ) {
-        PaymentCardField(paymentCard = paymentCard)
+        PaymentCardField(paymentCardUiModel = paymentCardUiModel)
     }
 }
 
-private class PaymentCardFieldPreviewParameterProvider() : PreviewParameterProvider<PaymentCard?> {
-    override val values: Sequence<PaymentCard?> = sequenceOf(
+private class PaymentCardFieldPreviewParameterProvider() :
+    PreviewParameterProvider<PaymentCardUiModel?> {
+    override val values: Sequence<PaymentCardUiModel?> = sequenceOf(
         null,
-        PaymentCard(1111111111111111, "0421", "CREW"),
-        PaymentCard(2222222222222222, "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
+        PaymentCardUiModel("1111111111111111", "0421", "CREW"),
+        PaymentCardUiModel("2222222222222222", "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
     )
 }

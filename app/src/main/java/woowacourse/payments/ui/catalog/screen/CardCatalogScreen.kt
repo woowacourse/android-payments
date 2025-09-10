@@ -29,12 +29,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.PaymentCards
+import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
 import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.showToast
 import woowacourse.payments.ui.mapper.toDomain
+import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -50,7 +52,7 @@ fun CardCatalogScreen() {
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val paymentCardUiModel =
                     activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
-                        "woowacourse.payments.ui.catalog.PAYMENT_CARD_KEY"
+                        PAYMENT_CARD_UI_MODEL_KEY
                     )
 
                 paymentCardUiModel?.toDomain()?.let { card ->
@@ -113,7 +115,7 @@ fun CardCatalogScreenContent(
 
         cardList.cards.forEach { paymentCard ->
             Spacer(modifier = Modifier.height(36.dp))
-            PaymentCardField(paymentCard = paymentCard, modifier = Modifier)
+            PaymentCardField(paymentCardUiModel = paymentCard.toUiModel(), modifier = Modifier)
         }
 
         if (cardList.cards.size < maxCardCount) {

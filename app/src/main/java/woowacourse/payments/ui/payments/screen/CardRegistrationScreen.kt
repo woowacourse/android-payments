@@ -55,8 +55,8 @@ fun CardRegistrationScreen(
                 onSaveClick = {
                     onCardRegistered(
                         PaymentCardUiModel(
-                            cardNumber = uiState.cardNumber,
-                            cardExpirationDate = uiState.cardExpirationDate,
+                            number = uiState.cardNumber,
+                            expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
                         )
                     )
