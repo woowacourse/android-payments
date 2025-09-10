@@ -7,12 +7,16 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -97,25 +101,27 @@ private fun CardsContent(
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit = {},
 ) {
-    Column(modifier = modifier) {
+    Box(
+        modifier = modifier,
+    ) {
         when (state) {
             CardsUiState.Empty ->
                 EmptyView(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier.align(Alignment.TopCenter),
                     onAddClick = onAddClick,
                 )
 
             is CardsUiState.SingleCard ->
                 SingleCardView(
                     card = state.card,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier.align(Alignment.TopCenter),
                     onAddClick = onAddClick,
                 )
 
             is CardsUiState.MultipleCards ->
                 MultipleCardsView(
                     cards = state.cards,
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier.align(Alignment.TopCenter),
                 )
         }
     }
@@ -124,41 +130,52 @@ private fun CardsContent(
 @Composable
 private fun EmptyView(
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit,
+    onAddClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
-    Text(
-        text = stringResource(R.string.cards_card_addition_notice),
-        modifier =
-            modifier.semantics {
-                contentDescription =
-                    context.getString(R.string.cards_card_addition_description)
-            },
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold,
-    )
-    Spacer(modifier = modifier.height(32.dp))
-    AddCardButton(
+
+    Column(
         modifier = modifier,
-        onClick = onAddClick,
-    )
+    ) {
+        Text(
+            text = stringResource(R.string.cards_card_addition_notice),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .semantics {
+                        contentDescription =
+                            context.getString(R.string.cards_card_addition_description)
+                    },
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = modifier.height(32.dp))
+        AddCardButton(
+            modifier = modifier,
+            onClick = onAddClick,
+        )
+    }
 }
 
 @Composable
 private fun SingleCardView(
     card: CardUiModel,
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit,
+    onAddClick: () -> Unit = {},
 ) {
-    ExistingCard(
-        card = card,
+    Column(
         modifier = modifier,
-    )
-    Spacer(modifier = modifier.height(36.dp))
-    AddCardButton(
-        modifier = modifier,
-        onClick = onAddClick,
-    )
+    ) {
+        ExistingCard(
+            card = card,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        )
+        Spacer(modifier = modifier.height(36.dp))
+        AddCardButton(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            onClick = onAddClick,
+        )
+    }
 }
 
 @Composable
@@ -166,12 +183,23 @@ private fun MultipleCardsView(
     cards: List<CardUiModel>,
     modifier: Modifier = Modifier,
 ) {
-    cards.forEach { card: CardUiModel ->
-        ExistingCard(
-            card = card,
-            modifier = modifier,
-        )
-        Spacer(modifier = modifier.height(36.dp))
+    val scrollState = rememberScrollState()
+
+    Column(
+        modifier = modifier.verticalScroll(scrollState),
+    ) {
+        cards.forEach { card: CardUiModel ->
+            ExistingCard(
+                card = card,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
+            Spacer(
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .height(36.dp),
+            )
+        }
     }
 }
 
