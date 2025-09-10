@@ -15,7 +15,7 @@ object CardNumberFormat {
             SEPARATOR,
         )
 
-    fun formattedCardNumber(cardNumber: CardNumber): String {
+    fun formatted(cardNumber: CardNumber): String {
         val maskedText: String =
             cardNumber.value.take(cardNumber.value.length - MASK_SIZE) + MASK.repeat(MASK_SIZE)
         return visualTransformation.filter(AnnotatedString(maskedText)).text.text

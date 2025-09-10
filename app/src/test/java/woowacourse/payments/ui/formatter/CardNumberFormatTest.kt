@@ -11,7 +11,7 @@ class CardNumberFormatTest {
         val cardNumber = CardNumber("1234123412341234")
 
         // when
-        val actual: String = CardNumberFormat.formattedCardNumber(cardNumber)
+        val actual: String = CardNumberFormat.formatted(cardNumber)
 
         // then
         val expected = "1234 - 1234 - **** - ****"

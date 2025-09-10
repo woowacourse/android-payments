@@ -15,6 +15,6 @@ object ExpirationDateFormat {
             SEPARATOR,
         )
 
-    fun formattedExpirationDate(expirationDate: ExpirationDate): String =
+    fun formatted(expirationDate: ExpirationDate): String =
         visualTransformation.filter(AnnotatedString(expirationDate.value.format(formatPattern))).text.text
 }

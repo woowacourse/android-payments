@@ -12,7 +12,7 @@ class ExpirationDateFormatTest {
         val expirationDate = ExpirationDate(YearMonth.of(2099, 12))
 
         // when
-        val actual: String = ExpirationDateFormat.formattedExpirationDate(expirationDate)
+        val actual: String = ExpirationDateFormat.formatted(expirationDate)
 
         // then
         val expected = "12 / 99"
