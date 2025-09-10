@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.Card
+import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.ui.component.PaymentCard
 import java.lang.Character.isDigit
 import java.time.Month
@@ -69,7 +70,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                     activity?.setResult(
                         RESULT_OK,
                         Intent().putExtra(
-                            "card",
+                            EXTRA_CARD,
                             Card(
                                 number = cardNumber,
                                 owner = ownerName,

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.Card
+import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.cardaddition.CardAdditionActivity
 import woowacourse.payments.getParcelableCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -37,7 +38,7 @@ fun CardsScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val card: Card =
-                    result.data?.getParcelableCompat("card")
+                    result.data?.getParcelableCompat(EXTRA_CARD)
                         ?: return@rememberLauncherForActivityResult
                 addCard(card)
             }

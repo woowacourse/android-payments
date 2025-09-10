@@ -9,3 +9,5 @@ inline fun <reified T> Intent.getParcelableCompat(key: String): T? =
     } else {
         getParcelableExtra(key)
     }
+
+const val EXTRA_CARD = "woowacourse.payments.CARD"
