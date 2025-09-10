@@ -16,9 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,8 +41,8 @@ import woowacourse.payments.ui.payments.registration.PaymentCardRegistrationActi
 import woowacourse.payments.ui.theme.TextGray
 
 @Composable
-fun PaymentCardsScreen(cards: List<CardUiModel> = emptyList()) {
-    val paymentCards: SnapshotStateList<CardUiModel> = remember { cards.toMutableStateList() }
+fun PaymentCardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiState()) {
+    var uiState: CardsScreenUiState by remember { mutableStateOf(cardsScreenUiState) }
     val context = LocalContext.current
 
     val cardAddLauncher =
@@ -52,7 +53,7 @@ fun PaymentCardsScreen(cards: List<CardUiModel> = emptyList()) {
                         EXTRA_PAYMENT_CARDS_REGISTER_NEW_CARD,
                     )
                 newCard?.let {
-                    paymentCards.add(newCard)
+                    uiState = uiState.updateUiStateWithCard(newCard)
                     Toast
                         .makeText(
                             context,
@@ -70,13 +71,13 @@ fun PaymentCardsScreen(cards: List<CardUiModel> = emptyList()) {
                     val intent = PaymentCardRegistrationActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
                 },
-                isVisibleRegistrationButton = paymentCards.size >= 2,
+                isVisibleRegistrationButton = uiState.isVisibleRegistrationButtonInTopBar(),
                 modifier = Modifier,
             )
         },
     ) { innerPadding ->
         PaymentCardsScreenContent(
-            paymentCards = paymentCards,
+            uiState = uiState,
             onClickRegistration = {
                 val intent = PaymentCardRegistrationActivity.newIntent(context)
                 cardAddLauncher.launch(intent)
@@ -88,7 +89,7 @@ fun PaymentCardsScreen(cards: List<CardUiModel> = emptyList()) {
 
 @Composable
 private fun PaymentCardsScreenContent(
-    paymentCards: List<CardUiModel>,
+    uiState: CardsScreenUiState,
     onClickRegistration: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -98,15 +99,15 @@ private fun PaymentCardsScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (paymentCards.isEmpty()) RegistrationGuideText()
+        if (uiState.hasNoContent()) RegistrationGuideText()
 
-        paymentCards.forEach { card: CardUiModel ->
+        uiState.value.forEach { card: CardUiModel ->
             PaymentCard(paymentCardInformation = card)
 
             Spacer(modifier = Modifier.height(36.dp))
         }
 
-        if (paymentCards.size <= 1) RegistrationBox { onClickRegistration() }
+        if (uiState.isVisibleRegistrationBoxInContent()) RegistrationBox { onClickRegistration() }
     }
 }
 
@@ -147,47 +148,50 @@ private fun RegistrationBox(onClickRegistration: () -> Unit) {
 @Preview(showBackground = true, name = "데이터 존재 X")
 @Composable
 fun NoContentPreview() {
-    val cards: List<CardUiModel> = emptyList()
+    val uiState: CardsScreenUiState = CardsScreenUiState(emptyList())
     PaymentCardsScreen(
-        cards = cards,
+        cardsScreenUiState = uiState,
     )
 }
 
 @Preview(showBackground = true, name = "데이터 1개 존재")
 @Composable
 fun HasOneContentPreview() {
-    val cards: List<CardUiModel> =
-        listOf(
-            CardUiModel(
-                cardholderNameUiModel = CardholderNameUiModel("CREW"),
-                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+    val uiState: CardsScreenUiState =
+        CardsScreenUiState(
+            listOf(
+                CardUiModel(
+                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+                ),
             ),
         )
 
     PaymentCardsScreen(
-        cards = cards,
+        cardsScreenUiState = uiState,
     )
 }
 
 @Preview(showBackground = true, name = "데이터 2개 이상 존재")
 @Composable
 fun HasMultipleContentPreview() {
-    val cards: List<CardUiModel> =
-        listOf(
-            CardUiModel(
-                cardholderNameUiModel = CardholderNameUiModel("CREW"),
-                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
-            ),
-            CardUiModel(
-                cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
-                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
+    val uiState: CardsScreenUiState =
+        CardsScreenUiState(
+            listOf(
+                CardUiModel(
+                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+                ),
+                CardUiModel(
+                    cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
+                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                    cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
+                ),
             ),
         )
-
     PaymentCardsScreen(
-        cards = cards,
+        cardsScreenUiState = uiState,
     )
 }
