@@ -102,7 +102,9 @@ class CardsScreenTest {
         }
 
         // then
-        composeRule.onNodeWithContentDescription("새 카드 등록 버튼")
+        composeRule
+            .onNodeWithContentDescription("새 카드 등록 버튼")
+            .assertIsDisplayed()
     }
 
     @Test
