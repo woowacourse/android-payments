@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.performTextReplacement
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
@@ -39,7 +40,7 @@ class PaymentTextFieldTest {
         composeTestRule.onNodeWithText("카드 번호").performTextInput("1234뭉abc5678")
 
         // then:
-        assert(inputText == "12345678")
+        assertThat(inputText).isEqualTo("12345678")
     }
 
     @Test
@@ -62,8 +63,8 @@ class PaymentTextFieldTest {
         composeTestRule.onNodeWithText("닉네임").performTextInput("123456789")
 
         // then:
-        assert(inputText == "123456")
-        assert(inputText.length == maxLength)
+        assertThat(inputText).isEqualTo("123456")
+        assertThat(inputText.length).isEqualTo(maxLength)
     }
 
     @Test
