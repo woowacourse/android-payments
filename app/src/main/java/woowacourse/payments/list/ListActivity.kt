@@ -175,9 +175,9 @@ fun AddNewCardText() {
     Text(text = "새로운 카드를 등록해주세요", fontSize = 18.sp, fontWeight = FontWeight.Bold)
 }
 
-@Preview(showBackground = true)
+@Preview(name = "카드가 없을 때")
 @Composable
-private fun CardListPreview() {
+private fun EmptyCardListPreview() {
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -192,6 +192,74 @@ private fun CardListPreview() {
             ) {
                 CardListScreen(
                     emptyList(),
+                    onAddClick = {}
+                )
+            }
+        }
+    }
+}
+
+@Preview(name = "카드가 한 개일 때")
+@Composable
+private fun AddOneCardListPreview() {
+    AndroidpaymentsTheme {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+        ) { innerPadding ->
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(18.dp)
+            ) {
+                CardListScreen(
+                    listOf(
+                        Card(
+                            "0000000000000000",
+                            "0925",
+                            "1234",
+                            "PARK JIWON"
+                        )
+                    ),
+                    onAddClick = {}
+                )
+            }
+        }
+    }
+}
+
+@Preview(name = "카드가 여러 개일 때")
+@Composable
+private fun AddTwoOrMoreCardListPreview() {
+    AndroidpaymentsTheme {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+        ) { innerPadding ->
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(18.dp)
+            ) {
+                CardListScreen(
+                    listOf(
+                        Card(
+                            "0000000000000000",
+                            "1225",
+                            "1234",
+                            "PARK JIWON"
+                        ),
+                        Card(
+                            "1234123412341234",
+                            "0999",
+                            "9999",
+                            "TOMATO BASIL ADE"
+                        ),
+                    ),
                     onAddClick = {}
                 )
             }
