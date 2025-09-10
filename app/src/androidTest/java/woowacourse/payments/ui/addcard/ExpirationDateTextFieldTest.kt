@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
+import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class ExpirationDateTextFieldTest {
@@ -20,7 +21,7 @@ class ExpirationDateTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             ExpirationDateTextField(
-                mutableStateOf(""),
+                mutableStateOf(CardUiModel.EMPTY),
                 mutableStateOf(false),
             )
         }

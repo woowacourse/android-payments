@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
+import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class PasscodeTextFieldTest {
@@ -20,7 +21,7 @@ class PasscodeTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             PasscodeTextField(
-                mutableStateOf(""),
+                mutableStateOf(CardUiModel.EMPTY),
                 mutableStateOf(false),
             )
         }

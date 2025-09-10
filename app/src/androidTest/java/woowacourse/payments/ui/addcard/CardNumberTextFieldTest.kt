@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
+import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class CardNumberTextFieldTest {
@@ -20,7 +21,7 @@ class CardNumberTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             CardNumberTextField(
-                mutableStateOf(""),
+                mutableStateOf(CardUiModel.EMPTY),
                 mutableStateOf(false),
             )
         }
