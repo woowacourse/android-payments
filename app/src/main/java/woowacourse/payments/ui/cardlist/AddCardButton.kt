@@ -19,7 +19,7 @@ import woowacourse.payments.ui.theme.AddCardButtonTextColor
 @Composable
 fun AddCardButton(
     modifier: Modifier = Modifier,
-    onAddCard: () -> Unit = {},
+    onAddCard: () -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -43,5 +43,5 @@ fun AddCardButton(
 @Preview(showBackground = true)
 @Composable
 fun AddCardButtonPreview() {
-    AddCardButton()
+    AddCardButton {}
 }

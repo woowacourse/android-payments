@@ -31,7 +31,7 @@ import java.time.YearMonth
 @Composable
 fun CardListTopBar(
     cards: SnapshotStateList<CardUiModel>,
-    onAddCard: () -> Unit = {},
+    onAddCard: () -> Unit,
 ) {
     TopAppBar(
         title = {
@@ -59,7 +59,7 @@ fun CardListTopBar(
 @Composable
 fun CardListTopBarWithNoCardPreview() {
     AndroidpaymentsTheme {
-        CardListTopBar(mutableStateListOf())
+        CardListTopBar(mutableStateListOf()) {}
     }
 }
 
@@ -83,6 +83,6 @@ fun CardListTopBarWithTwoCardsPreview() {
                     Passcode("1234"),
                 ).toUiModel(),
             ),
-        )
+        ) {}
     }
 }

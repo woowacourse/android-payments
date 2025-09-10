@@ -36,7 +36,7 @@ class CardListContentsTest {
         composeTestRule.setContent { CardListContents(cards) {} }
 
         // then
-        composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertDoesNotExist()
     }
 
     @Test
