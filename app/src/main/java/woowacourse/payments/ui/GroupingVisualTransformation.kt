@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -35,6 +35,10 @@ class GroupingVisualTransformation(
                 }
             }
 
-        return TransformedText(AnnotatedString(transformedText), offsetTranslator)
+        return TransformedText(
+            androidx.compose.ui.text
+                .AnnotatedString(transformedText),
+            offsetTranslator,
+        )
     }
 }

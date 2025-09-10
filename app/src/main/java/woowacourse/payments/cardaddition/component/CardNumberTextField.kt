@@ -16,8 +16,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
-import woowacourse.payments.GroupingVisualTransformation
 import woowacourse.payments.R
+import woowacourse.payments.ui.GroupingVisualTransformation
 
 @Composable
 fun CardNumberTextField(

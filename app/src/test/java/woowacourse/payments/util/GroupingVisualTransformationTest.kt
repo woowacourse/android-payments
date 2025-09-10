@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import woowacourse.payments.GroupingVisualTransformation
+import woowacourse.payments.ui.GroupingVisualTransformation
 
 class GroupingVisualTransformationTest {
     private lateinit var groupingVisualTransformation: GroupingVisualTransformation
