@@ -18,7 +18,6 @@ import woowacourse.payments.ui.cards.CardsActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CreateCardActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

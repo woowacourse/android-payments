@@ -24,8 +24,8 @@ import woowacourse.payments.ui.cardcreate.CreateCardActivity
 import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.utils.ext.parcelable
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class CardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +67,16 @@ class CardsActivity : ComponentActivity() {
             contract = ActivityResultContracts.StartActivityForResult()
         ) { activityResult ->
             if (activityResult.resultCode == RESULT_OK) {
-                val data = activityResult.data
-                val cardUiModel = data?.getParcelableExtra(
+                val intent = activityResult.data
+                val cardUiModel = intent?.parcelable<PaymentCardUiModel>(
                     NEW_CARD_KEY,
-                    PaymentCardUiModel::class.java
                 ) ?: return@rememberLauncherForActivityResult
                 cardsStateHolder.addCard(cardUiModel)
-                Toast.makeText(context, getString(R.string.created_card_message), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    getString(R.string.created_card_message),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
