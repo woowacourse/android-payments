@@ -56,17 +56,17 @@ fun CardCatalogScreen() {
                 paymentCardUiModel?.toDomain()?.let { card ->
                     when {
                         cardList.isContain(card) -> {
-                            context.showToast("이미 등록된 카드입니다.")
+                            context.showToast(context.getString(R.string.card_catalog_screen_already_registered))
                         }
 
                         else -> {
-                            context.showToast("카드가 추가되었습니다!")
+                            context.showToast(context.getString(R.string.card_catalog_screen_registration_card_success))
                             cardList = cardList.add(card)
                         }
                     }
                 }
             } else {
-                context.showToast("카드 추가가 취소 되었습니다.")
+                context.showToast(context.getString(R.string.card_catalog_screen_add_canceled))
             }
         }
     Scaffold(
