@@ -86,13 +86,18 @@ fun PaymentCard(
     }
 }
 
-@Preview
+@Preview(name = "정보가 있는 카드")
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        Column {
-            PaymentCard(card = Card("0000000000000000", "1025", "1234", "CREW"))
-            PaymentCard()
-        }
+        PaymentCard(card = Card("0000000000000000", "1025", "1234", "CREW"))
+    }
+}
+
+@Preview(name = "빈 카드")
+@Composable
+private fun EmptyPaymentCardPreview() {
+    AndroidpaymentsTheme {
+        PaymentCard()
     }
 }
