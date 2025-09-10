@@ -70,7 +70,15 @@ fun CardCatalogScreen() {
             }
         }
     Scaffold(
-        topBar = { CardCatalogTopAppBar {} },
+        topBar = {
+            CardCatalogTopAppBar(
+                isAddButtonVisible = cardList.cards.size >= 3,
+                onCardAddClick = {
+                    val intent = CardRegistrationActivity.newIntent(context)
+                    cardCatalogLauncher.launch(intent)
+                }
+            )
+        },
     ) { innerPadding ->
         CardCatalogScreenContent(
             cardCatalogLauncher = cardCatalogLauncher,
