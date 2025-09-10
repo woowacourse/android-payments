@@ -41,28 +41,31 @@ fun PaymentCard(
                 .background(
                     color = CardBlack,
                     shape = RoundedCornerShape(5.dp),
-                ).padding(
-                    horizontal = 14.dp,
-                    vertical = 10.dp,
                 ),
     ) {
-        Box(
-            modifier =
-                Modifier
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = CardIcChip,
-                        shape = RoundedCornerShape(4.dp),
-                    ),
-        )
-        if (detail != null) {
-            PaymentCardDetail(
-                detail = detail,
+        Column(
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(top = if (detail != null) 10.dp else 0.dp),
+        ) {
+            Box(
                 modifier =
                     Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter),
+                        .padding(start = 14.dp, bottom = 10.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .background(
+                            color = CardIcChip,
+                            shape = RoundedCornerShape(4.dp),
+                        ),
             )
+            if (detail != null) {
+                PaymentCardDetail(
+                    detail = detail,
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp),
+                )
+            }
         }
     }
 }
@@ -83,7 +86,7 @@ private fun PaymentCardDetail(
             letterSpacing = 0.17.em,
             color = Color.White,
             textAlign = TextAlign.Center,
-            fontWeight = FontWeight.W500
+            fontWeight = FontWeight.W500,
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -92,7 +95,8 @@ private fun PaymentCardDetail(
             Text(
                 text = detail.owner,
                 color = Color.White,
-                fontWeight = FontWeight.W500
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W500,
             )
             Text(
                 text =
@@ -105,7 +109,8 @@ private fun PaymentCardDetail(
                             }
                         }.joinToString(separator = ""),
                 color = Color.White,
-                fontWeight = FontWeight.W500
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W500,
             )
         }
     }
@@ -113,7 +118,8 @@ private fun PaymentCardDetail(
 
 private val Card.markedCardNumber: String
     get() =
-        number.chunked(4)
+        number
+            .chunked(4)
             .mapIndexed { index, string ->
                 if (index > 1) {
                     string.map { "*" }.joinToString("")
