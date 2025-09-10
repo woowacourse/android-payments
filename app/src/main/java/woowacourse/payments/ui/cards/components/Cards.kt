@@ -43,7 +43,7 @@ fun Cards(
         val context = LocalContext.current
 
         cardList.forEach { card ->
-            CardItem(
+            CardImage(
                 paymentCard = card,
             )
         }

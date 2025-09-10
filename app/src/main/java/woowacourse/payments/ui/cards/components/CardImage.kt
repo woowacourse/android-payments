@@ -27,7 +27,7 @@ import woowacourse.payments.ui.model.ExpirationDateUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
-fun CardItem(
+fun CardImage(
     paymentCard: PaymentCardUiModel,
     modifier: Modifier = Modifier,
 ) {
@@ -112,7 +112,7 @@ private fun formatExpirationDate(expirationDate: String): String {
 @Preview(showBackground = true)
 @Composable
 private fun CardPreview() {
-    CardItem(
+    CardImage(
         PaymentCardUiModel(
             cardNumber = CardNumberUiModel("1234 5678 9012 3456"),
             cardHolder = CardHolderUiModel("홍길동"),
