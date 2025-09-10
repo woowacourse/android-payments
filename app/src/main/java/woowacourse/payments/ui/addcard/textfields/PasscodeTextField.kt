@@ -17,11 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun PasscodeTextField(
-    text: MutableState<String>,
+    card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
@@ -30,8 +31,8 @@ fun PasscodeTextField(
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
 
-        text.value = filteredValue
-        isError.value = runCatching { Passcode(text.value) }.isFailure
+        card.value = card.value.copy(passcode = filteredValue)
+        isError.value = runCatching { Passcode(card.value.passcode) }.isFailure
 
         if (!isError.value && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
             focusManager.clearFocus()
@@ -40,7 +41,7 @@ fun PasscodeTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
-        value = text.value,
+        value = card.value.passcode,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
@@ -63,7 +64,17 @@ fun PasscodeTextField(
 @Composable
 fun PasscodeTextFieldPreview() {
     PasscodeTextField(
-        text = remember { mutableStateOf("1234") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "1234 - 1234 - **** - ****",
+                        "34 / 12",
+                        "CREW",
+                        "1234",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(false) },
     )
 }
@@ -72,7 +83,17 @@ fun PasscodeTextFieldPreview() {
 @Composable
 fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
-        text = remember { mutableStateOf("123") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "1234 - 1234 - **** - ****",
+                        "34 / 12",
+                        "CREW",
+                        "123",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(true) },
     )
 }

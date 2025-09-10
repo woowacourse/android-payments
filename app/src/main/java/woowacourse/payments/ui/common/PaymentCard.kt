@@ -26,7 +26,7 @@ import woowacourse.payments.ui.theme.CardEmvChip
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: CardUiModel = CardUiModel(),
+    card: CardUiModel = CardUiModel.EMPTY,
 ) {
     Box(
         modifier
@@ -96,6 +96,7 @@ fun PaymentCardWithDetailPreview() {
                     "1234 - 1234 - **** - ****",
                     "CREW",
                     "34 / 12",
+                    "1234",
                 ),
         )
     }

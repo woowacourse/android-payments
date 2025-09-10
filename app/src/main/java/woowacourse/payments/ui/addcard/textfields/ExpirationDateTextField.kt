@@ -18,12 +18,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.ui.format.ExpirationDateFormat
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Gray
 import java.time.YearMonth
 
 @Composable
 fun ExpirationDateTextField(
-    text: MutableState<String>,
+    card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
@@ -31,7 +32,7 @@ fun ExpirationDateTextField(
     fun updateValue(newValue: String) {
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
-        text.value = filteredValue
+        card.value = card.value.copy(expirationDate = filteredValue)
 
         isError.value =
             runCatching {
@@ -50,7 +51,7 @@ fun ExpirationDateTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
-        value = text.value,
+        value = card.value.expirationDate,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = ExpirationDateFormat.visualTransformation,
@@ -74,7 +75,17 @@ fun ExpirationDateTextField(
 @Composable
 fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
-        text = remember { mutableStateOf("1234") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "1234 - 1234 - **** - ****",
+                        "1234",
+                        "CREW",
+                        "1234",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(false) },
     )
 }
@@ -83,7 +94,17 @@ fun ExpirationDateTextFieldPreview() {
 @Composable
 fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(
-        text = remember { mutableStateOf("9999") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "1234 - 1234 - **** - ****",
+                        "9999",
+                        "CREW",
+                        "1234",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(true) },
     )
 }

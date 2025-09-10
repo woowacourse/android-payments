@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.ui.ExtraKeys
+import woowacourse.payments.ui.model.CardUiModel
 
 class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,11 +17,11 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AddCardContents(
-                onSaveSuccess = { cardNumber: String, expirationDate: String, cardholderName: String, passcode: String ->
+                onSaveSuccess = { card: CardUiModel ->
                     Toast
                         .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
                         .show()
-                    submitAddedCard(cardNumber, expirationDate, cardholderName, passcode)
+                    submitAddedCard(card)
                 },
                 onSaveFailure = {
                     Toast
@@ -32,18 +33,13 @@ class AddCardActivity : ComponentActivity() {
         }
     }
 
-    private fun submitAddedCard(
-        cardNumber: String,
-        expirationDate: String,
-        cardholderName: String,
-        passcode: String,
-    ) {
+    private fun submitAddedCard(card: CardUiModel) {
         Intent()
             .apply {
-                putExtra(ExtraKeys.CARD_NUMBER_KEY, cardNumber)
-                putExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY, expirationDate)
-                putExtra(ExtraKeys.CARDHOLDER_NAME_KEY, cardholderName)
-                putExtra(ExtraKeys.CARD_PASSCODE_KEY, passcode)
+                putExtra(ExtraKeys.CARD_NUMBER_KEY, card.cardNumber)
+                putExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY, card.expirationDate)
+                putExtra(ExtraKeys.CARDHOLDER_NAME_KEY, card.cardholderName)
+                putExtra(ExtraKeys.CARD_PASSCODE_KEY, card.passcode)
             }.let { result: Intent -> setResult(RESULT_OK, result) }
         finish()
     }

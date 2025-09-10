@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard.textfields
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.OutlinedTextField
@@ -17,19 +16,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
-fun CardHolderNameTextField(text: MutableState<String>) {
+fun CardHolderNameTextField(card: MutableState<CardUiModel>) {
     val focusManager = LocalFocusManager.current
 
     fun updateValue(newValue: String) {
-        text.value = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
+        card.value = card.value.copy(cardholderName = newValue.take(CARDHOLDER_NAME_MAX_LENGTH))
     }
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = text.value,
+        value = card.value.cardholderName,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         label = { Text(stringResource(R.string.cardholder_name_label)) },
@@ -44,7 +44,7 @@ fun CardHolderNameTextField(text: MutableState<String>) {
                 text =
                     stringResource(
                         R.string.cardholder_name_entry_length,
-                        text.value.length,
+                        card.value.cardholderName.length,
                         CARDHOLDER_NAME_MAX_LENGTH,
                     ),
                 textAlign = TextAlign.End,
@@ -58,6 +58,17 @@ fun CardHolderNameTextField(text: MutableState<String>) {
 @Preview(showBackground = true)
 @Composable
 fun CardHolderNameTextFieldPreview() {
-    val text: MutableState<String> = remember { mutableStateOf("디랙") }
-    CardHolderNameTextField(text)
+    remember { mutableStateOf("디랙") }
+    CardHolderNameTextField(
+        remember {
+            mutableStateOf(
+                CardUiModel(
+                    "1234 - 1234 - **** - ****",
+                    "34 / 12",
+                    "CREW",
+                    "1234",
+                ),
+            )
+        },
+    )
 }

@@ -20,23 +20,16 @@ import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.PaymentCard
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddCardContents(
-    onSaveSuccess: (
-        cardNumber: String,
-        expirationDate: String,
-        cardholderName: String,
-        passcode: String,
-    ) -> Unit,
+    onSaveSuccess: (card: CardUiModel) -> Unit,
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val cardNumber: MutableState<String> = remember { mutableStateOf("") }
-    val expirationDate: MutableState<String> = remember { mutableStateOf("") }
-    val cardholderName: MutableState<String> = remember { mutableStateOf("") }
-    val passcode: MutableState<String> = remember { mutableStateOf("") }
+    val card: MutableState<CardUiModel> = remember { mutableStateOf(CardUiModel.EMPTY) }
 
     val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
@@ -45,16 +38,9 @@ fun AddCardContents(
     fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
     fun checkEmptyFields() {
-        if (cardNumber.value.isEmpty()) isCardNumberError.value = true
-        if (expirationDate.value.isEmpty()) isExpirationDateError.value = true
-        if (passcode.value.isEmpty()) isPasscodeError.value = true
-    }
-
-    fun resetFields() {
-        cardNumber.value = ""
-        expirationDate.value = ""
-        cardholderName.value = ""
-        passcode.value = ""
+        if (card.value.cardNumber.isEmpty()) isCardNumberError.value = true
+        if (card.value.expirationDate.isEmpty()) isExpirationDateError.value = true
+        if (card.value.passcode.isEmpty()) isPasscodeError.value = true
     }
 
     fun saveAddedCard() {
@@ -62,13 +48,8 @@ fun AddCardContents(
         if (isError()) {
             onSaveFailure()
         } else {
-            onSaveSuccess(
-                cardNumber.value,
-                expirationDate.value,
-                cardholderName.value,
-                passcode.value,
-            )
-            resetFields()
+            onSaveSuccess(card.value)
+            card.value = CardUiModel.EMPTY
         }
     }
 
@@ -89,13 +70,13 @@ fun AddCardContents(
                     modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
                 ) {
-                    CardNumberTextField(cardNumber, isCardNumberError)
+                    CardNumberTextField(card, isCardNumberError)
 
-                    ExpirationDateTextField(expirationDate, isExpirationDateError)
+                    ExpirationDateTextField(card, isExpirationDateError)
 
-                    CardHolderNameTextField(cardholderName)
+                    CardHolderNameTextField(card)
 
-                    PasscodeTextField(passcode, isPasscodeError)
+                    PasscodeTextField(card, isPasscodeError)
                 }
             }
         }
@@ -106,7 +87,7 @@ fun AddCardContents(
 @Composable
 fun AddCardContentsPreview() {
     AddCardContents(
-        onSaveSuccess = { _, _, _, _ -> },
+        onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},
     )

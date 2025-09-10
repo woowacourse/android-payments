@@ -18,11 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.format.CardNumberFormat
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardNumberTextField(
-    text: MutableState<String>,
+    card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
 ) {
     val focusManager = LocalFocusManager.current
@@ -31,8 +32,8 @@ fun CardNumberTextField(
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
 
-        text.value = filteredValue
-        isError.value = runCatching { CardNumber(text.value) }.isFailure
+        card.value = card.value.copy(cardNumber = filteredValue)
+        isError.value = runCatching { CardNumber(card.value.cardNumber) }.isFailure
 
         if (!isError.value && filteredValue.length == CardNumberFormat.REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
@@ -41,7 +42,7 @@ fun CardNumberTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = text.value,
+        value = card.value.cardNumber,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = CardNumberFormat.visualTransformation,
@@ -65,7 +66,17 @@ fun CardNumberTextField(
 @Composable
 fun CardNumberTextFieldPreview() {
     CardNumberTextField(
-        text = remember { mutableStateOf("1234123412341234") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "1234123412341234",
+                        "34 / 12",
+                        "CREW",
+                        "1234",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(false) },
     )
 }
@@ -74,7 +85,17 @@ fun CardNumberTextFieldPreview() {
 @Composable
 fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
-        text = remember { mutableStateOf("12341234") },
+        card =
+            remember {
+                mutableStateOf(
+                    CardUiModel(
+                        "12341234",
+                        "34 / 12",
+                        "CREW",
+                        "1234",
+                    ),
+                )
+            },
         isError = remember { mutableStateOf(true) },
     )
 }
