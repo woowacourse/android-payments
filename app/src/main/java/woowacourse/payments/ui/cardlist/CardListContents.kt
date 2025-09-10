@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,22 +74,20 @@ fun CardListContents(
     }
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithNoCardsPreview() {
     CardListContents(
-        cards = mutableStateListOf(),
+        cards = remember { mutableStateListOf() },
         navigateToAddCard = {},
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithOneCardPreview() {
     CardListContents(
-        cards =
+        cards = remember {
             mutableStateListOf(
                 Card(
                     CardNumber("1234123412341234"),
@@ -96,17 +95,17 @@ fun CardListContentsWithOneCardPreview() {
                     CardholderName("디랙"),
                     Passcode("1234"),
                 ).toUiModel(),
-            ),
+            )
+        },
         navigateToAddCard = {},
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithTwoCardsPreview() {
     CardListContents(
-        cards =
+        cards = remember {
             mutableStateListOf(
                 Card(
                     CardNumber("1234123412341234"),
@@ -120,7 +119,8 @@ fun CardListContentsWithTwoCardsPreview() {
                     CardholderName("디랙"),
                     Passcode("1234"),
                 ).toUiModel(),
-            ),
+            )
+        },
         navigateToAddCard = {},
     )
 }

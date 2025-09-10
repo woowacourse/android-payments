@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard.textfields
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -8,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -59,22 +59,20 @@ fun PasscodeTextField(
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun PasscodeTextFieldPreview() {
     PasscodeTextField(
-        text = mutableStateOf("1234"),
-        isError = mutableStateOf(false),
+        text = remember { mutableStateOf("1234") },
+        isError = remember { mutableStateOf(false) },
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
-        text = mutableStateOf("123"),
-        isError = mutableStateOf(true),
+        text = remember { mutableStateOf("123") },
+        isError = remember { mutableStateOf(true) },
     )
 }

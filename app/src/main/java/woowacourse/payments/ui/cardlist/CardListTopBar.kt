@@ -1,15 +1,13 @@
 package woowacourse.payments.ui.cardlist
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -54,35 +52,35 @@ fun CardListTopBar(
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardListTopBarWithNoCardPreview() {
     AndroidpaymentsTheme {
-        CardListTopBar(mutableStateListOf()) {}
+        CardListTopBar(remember { mutableStateListOf() }) {}
     }
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardListTopBarWithTwoCardsPreview() {
     AndroidpaymentsTheme {
         CardListTopBar(
-            mutableStateListOf(
-                Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                ).toUiModel(),
-                Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                ).toUiModel(),
-            ),
+            remember {
+                mutableStateListOf(
+                    Card(
+                        CardNumber("1234123412341234"),
+                        ExpirationDate(YearMonth.of(2034, 12)),
+                        CardholderName("디랙"),
+                        Passcode("1234"),
+                    ).toUiModel(),
+                    Card(
+                        CardNumber("1234123412341234"),
+                        ExpirationDate(YearMonth.of(2034, 12)),
+                        CardholderName("디랙"),
+                        Passcode("1234"),
+                    ).toUiModel(),
+                )
+            },
         ) {}
     }
 }

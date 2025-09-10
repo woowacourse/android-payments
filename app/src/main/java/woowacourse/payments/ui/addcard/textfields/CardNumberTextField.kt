@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard.textfields
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -61,22 +61,20 @@ fun CardNumberTextField(
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardNumberTextFieldPreview() {
     CardNumberTextField(
-        text = mutableStateOf("1234123412341234"),
-        isError = mutableStateOf(false),
+        text = remember { mutableStateOf("1234123412341234") },
+        isError = remember { mutableStateOf(false) },
     )
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
 fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
-        text = mutableStateOf("12341234"),
-        isError = mutableStateOf(true),
+        text = remember { mutableStateOf("12341234") },
+        isError = remember { mutableStateOf(true) },
     )
 }
