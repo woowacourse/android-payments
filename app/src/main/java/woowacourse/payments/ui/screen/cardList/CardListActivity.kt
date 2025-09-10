@@ -13,9 +13,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.CardUiModel
-import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.screen.addCard.AddCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 class CardListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

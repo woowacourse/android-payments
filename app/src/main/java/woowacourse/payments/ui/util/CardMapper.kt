@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.util
 
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.Expired

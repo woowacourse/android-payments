@@ -33,9 +33,14 @@ import woowacourse.payments.ui.component.ExpiredInputField
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.formatCardNumber
-import woowacourse.payments.ui.formatExpired
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
+import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
+import woowacourse.payments.ui.util.BundleKeys.PASSWORD_KEY
+import woowacourse.payments.ui.util.BundleKeys.VALIDATION_ERROR_KEY
+import woowacourse.payments.ui.util.formatCardNumber
+import woowacourse.payments.ui.util.formatExpired
 
 @Composable
 fun AddCardScreen(
@@ -46,20 +51,20 @@ fun AddCardScreen(
         Saver<AddCardUiState, Bundle>(
             save = { state ->
                 bundleOf(
-                    "cardNumber" to state.cardNumber?.value,
-                    "expired" to state.expired?.value,
-                    "cardOwner" to state.cardOwner.value,
-                    "password" to state.password?.value,
-                    "showValidationError" to state.showValidationError,
+                    CARD_NUMBER_KEY to state.cardNumber?.value,
+                    EXPIRED_KEY to state.expired?.value,
+                    CARD_OWNER_KEY to state.cardOwner.value,
+                    PASSWORD_KEY to state.password?.value,
+                    VALIDATION_ERROR_KEY to state.showValidationError,
                 )
             },
             restore = { bundle ->
                 AddCardUiState(
-                    cardNumber = bundle.getString("cardNumber")?.let(::CardNumber),
-                    expired = bundle.getString("expired")?.let(::Expired),
-                    cardOwner = CardOwner(bundle.getString("cardOwner") ?: ""),
-                    password = bundle.getString("password")?.let(::Password),
-                    showValidationError = bundle.getBoolean("showValidationError"),
+                    cardNumber = bundle.getString(CARD_NUMBER_KEY)?.let(::CardNumber),
+                    expired = bundle.getString(EXPIRED_KEY)?.let(::Expired),
+                    cardOwner = CardOwner(bundle.getString(CARD_OWNER_KEY) ?: ""),
+                    password = bundle.getString(PASSWORD_KEY)?.let(::Password),
+                    showValidationError = bundle.getBoolean(VALIDATION_ERROR_KEY),
                 )
             },
         )
