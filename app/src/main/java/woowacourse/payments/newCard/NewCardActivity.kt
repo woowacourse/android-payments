@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ExpiryValidator
 import woowacourse.payments.InputMask
-import woowacourse.payments.ui.LimitedTextField
+import woowacourse.payments.ui.LimitedUppercaseTextField
 import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
@@ -101,7 +101,7 @@ class NewCardActivity : ComponentActivity() {
                             isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardExpriy.isNotEmpty()
                         )
                         Spacer(modifier = Modifier.height(30.dp))
-                        LimitedTextField(
+                        LimitedUppercaseTextField(
                             text = cardName,
                             onValueChange = { cardName = it },
                             label = getString(R.string.card_owner_label),

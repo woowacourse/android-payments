@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun LimitedTextField(
+fun LimitedUppercaseTextField(
     text: String,
     onValueChange: (String) -> Unit,
     label: String,
@@ -24,7 +24,7 @@ fun LimitedTextField(
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
-            onValueChange(newText.take(maxLength))
+            onValueChange(newText.filter { it.isLetter() || it.isWhitespace() }.uppercase().take(maxLength))
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
@@ -43,9 +43,9 @@ fun LimitedTextField(
 
 @Preview
 @Composable
-private fun LimitedTextFieldPreview() {
+private fun LimitedUppercaseTextFieldPreview() {
     AndroidpaymentsTheme {
-        LimitedTextField(
+        LimitedUppercaseTextField(
             text = "",
             onValueChange = {},
             label = "카드 소유자 이름(선택)",

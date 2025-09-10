@@ -7,7 +7,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.LimitedTextField
+import woowacourse.payments.ui.LimitedUppercaseTextField
 
 class CardOwnerTest {
     @get:Rule
@@ -16,7 +16,7 @@ class CardOwnerTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            LimitedTextField(
+            LimitedUppercaseTextField(
                 text = "",
                 onValueChange = {},
                 label = "카드 소유자 이름(선택)",
