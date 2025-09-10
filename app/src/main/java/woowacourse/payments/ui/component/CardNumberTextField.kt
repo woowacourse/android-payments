@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.GroupedVisualTransformation
+import woowacourse.payments.ui.model.CardNumberUiModel
 
 private const val CARD_NUMBER_GROUP_SIZE = 4
 private const val CARD_NUMBER_SEPARATOR = " - "

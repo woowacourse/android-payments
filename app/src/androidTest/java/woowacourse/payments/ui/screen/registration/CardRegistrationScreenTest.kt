@@ -9,10 +9,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.CardExpirationDateUiModel
-import woowacourse.payments.ui.component.CardNumberUiModel
-import woowacourse.payments.ui.component.CardPasswordUiModel
-import woowacourse.payments.ui.component.CardholderNameUiModel
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardPasswordUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
 
 class CardRegistrationScreenTest {
     @get:Rule

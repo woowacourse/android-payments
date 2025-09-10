@@ -8,6 +8,10 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class PaymentCardTest {
     @get:Rule

@@ -10,10 +10,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.CardExpirationDateUiModel
-import woowacourse.payments.ui.component.CardNumberUiModel
-import woowacourse.payments.ui.component.CardholderNameUiModel
-import woowacourse.payments.ui.component.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardsScreenTest {
     @get:Rule

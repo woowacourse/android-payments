@@ -15,6 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
+import woowacourse.payments.ui.model.CardNumberUiModel
 
 class CardNumberTextFieldTest {
     @get:Rule

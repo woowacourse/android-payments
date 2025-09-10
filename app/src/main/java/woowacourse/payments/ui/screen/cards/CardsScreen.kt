@@ -26,13 +26,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.CardExpirationDateUiModel
-import woowacourse.payments.ui.component.CardNumberUiModel
 import woowacourse.payments.ui.component.CardRegistrationButton
-import woowacourse.payments.ui.component.CardholderNameUiModel
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.component.PaymentCardUiModel
 import woowacourse.payments.ui.extension.getParcelableExtraCompat
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

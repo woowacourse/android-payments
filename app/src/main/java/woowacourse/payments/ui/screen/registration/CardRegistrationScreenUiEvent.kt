@@ -1,6 +1,6 @@
 package woowacourse.payments.ui.screen.registration
 
-import woowacourse.payments.ui.component.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 sealed interface CardRegistrationScreenUiEvent {
     data class RegisteredCard(

@@ -2,7 +2,7 @@ package woowacourse.payments.ui.screen.cards
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.component.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 sealed interface CardsUiState : Parcelable {

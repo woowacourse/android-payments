@@ -16,15 +16,15 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.component.CardExpirationDateTextField
-import woowacourse.payments.ui.component.CardExpirationDateUiModel
 import woowacourse.payments.ui.component.CardNumberTextField
-import woowacourse.payments.ui.component.CardNumberUiModel
 import woowacourse.payments.ui.component.CardPasswordTextField
-import woowacourse.payments.ui.component.CardPasswordUiModel
 import woowacourse.payments.ui.component.CardholderNameTextField
-import woowacourse.payments.ui.component.CardholderNameUiModel
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.component.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardPasswordUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable

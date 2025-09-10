@@ -3,7 +3,7 @@ package woowacourse.payments.ui.screen.cards
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.ui.component.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardsViewModel(
     initialUiState: CardsUiState = CardsUiState.EMPTY,

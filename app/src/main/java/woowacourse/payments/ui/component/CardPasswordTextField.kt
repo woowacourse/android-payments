@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.CardPasswordUiModel
 
 @Composable
 fun CardPasswordTextField(

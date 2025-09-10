@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel

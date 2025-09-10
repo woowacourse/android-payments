@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.GroupedVisualTransformation
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 
 private const val CARD_EXPIRATION_DATE_GROUP_SIZE = 2
 private const val CARD_EXPIRATION_DATE_SEPARATOR = " / "

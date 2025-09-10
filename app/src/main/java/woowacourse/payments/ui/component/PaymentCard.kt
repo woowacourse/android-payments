@@ -20,6 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun PaymentCard(
@@ -95,7 +99,7 @@ private fun PaymentCardInfo(
         ) {
             PaymentCardText(
                 text = paymentCardUiModel?.upperCardholderName.orEmpty(),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             PaymentCardText(paymentCardUiModel?.formattedExpirationDate().orEmpty())
         }
