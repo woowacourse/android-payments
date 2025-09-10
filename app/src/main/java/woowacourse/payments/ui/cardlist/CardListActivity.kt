@@ -43,16 +43,16 @@ class CardListActivity : ComponentActivity() {
         activityResultLauncher.launch(AddCardActivity.intent(this))
     }
 
-    private fun Intent.toCardOrNull(): Card? {
-        val cardNumber: String = getStringExtra(ExtraKeys.CARD_NUMBER_KEY) ?: return null
-        val cardholderName: String = getStringExtra(ExtraKeys.CARDHOLDER_NAME_KEY) ?: return null
-        val expirationDate: YearMonth =
-            getStringExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY)?.let { yearMonth: String ->
-                YearMonth.parse(yearMonth, ExpirationDateFormat.formatPattern)
-            } ?: return null
-        val passcode: String = getStringExtra(ExtraKeys.CARD_PASSCODE_KEY) ?: return null
+    private fun Intent.toCardOrNull(): Card? =
+        runCatching {
+            val cardNumber: String = getStringExtra(ExtraKeys.CARD_NUMBER_KEY) ?: return null
+            val cardholderName: String = getStringExtra(ExtraKeys.CARDHOLDER_NAME_KEY) ?: return null
+            val expirationDate: YearMonth =
+                getStringExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY)?.let { yearMonth: String ->
+                    YearMonth.parse(yearMonth, ExpirationDateFormat.formatPattern)
+                } ?: return null
+            val passcode: String = getStringExtra(ExtraKeys.CARD_PASSCODE_KEY) ?: return null
 
-        return runCatching {
             Card(
                 CardNumber(cardNumber),
                 ExpirationDate(expirationDate),
@@ -60,7 +60,6 @@ class CardListActivity : ComponentActivity() {
                 Passcode(passcode),
             )
         }.getOrNull()
-    }
 
     private fun handleAddCardResult(result: ActivityResult) {
         if (result.resultCode != RESULT_OK) return
