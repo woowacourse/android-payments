@@ -15,9 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
 import woowacourse.payments.ui.theme.Gray
-
-private const val CARDHOLDER_NAME_MAX_LENGTH = 30
 
 @Composable
 fun CardHolderNameTextField(text: MutableState<String>) {

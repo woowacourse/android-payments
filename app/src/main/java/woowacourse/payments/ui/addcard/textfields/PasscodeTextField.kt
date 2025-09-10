@@ -16,9 +16,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Passcode
+import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
 import woowacourse.payments.ui.theme.Gray
-
-private const val PASSCODE_REQUIRED_LENGTH = 4
 
 @Composable
 fun PasscodeTextField(

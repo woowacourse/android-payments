@@ -5,10 +5,10 @@ data class Passcode(
 ) {
     init {
         require(value.all(Char::isDigit)) { IllegalArgumentException() }
-        require(value.length == PASSCODE_LENGTH) { IllegalArgumentException() }
+        require(value.length == PASSCODE_REQUIRED_LENGTH) { IllegalArgumentException() }
     }
 
     companion object {
-        private const val PASSCODE_LENGTH = 4
+        const val PASSCODE_REQUIRED_LENGTH = 4
     }
 }

@@ -8,6 +8,6 @@ data class CardholderName(
     }
 
     companion object {
-        private const val CARDHOLDER_NAME_MAX_LENGTH = 30
+        const val CARDHOLDER_NAME_MAX_LENGTH = 30
     }
 }
