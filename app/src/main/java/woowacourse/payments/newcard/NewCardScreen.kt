@@ -1,5 +1,6 @@
 package woowacourse.payments.newcard
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -129,7 +130,8 @@ private fun makeCard(
         val password = Password(password)
 
         Card(cardNumber, expiredDate, ownerName, password)
-    } catch (e: Throwable) {
+    } catch (e: IllegalArgumentException) {
+        Log.e("NewCardScreen", "makeCard: $e")
         null
     }
 }
