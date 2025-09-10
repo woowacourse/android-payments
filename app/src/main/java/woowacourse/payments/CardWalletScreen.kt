@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,8 @@ fun CardWalletScreen(
             result.data?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
                 ?.let {
                     onCardAddResult(it)
-                    Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,
+                        context.getString(R.string.add_card_confirm), Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -70,7 +72,7 @@ fun CardWalletScreen(
                             .height(32.dp)
                             .fillMaxSize()
                     )
-                    Text("새로운 카드를 등록해주세요", fontSize = 18.sp, fontWeight = FontWeight.W700)
+                    Text(stringResource(R.string.add_new_card_description), fontSize = 18.sp, fontWeight = FontWeight.W700)
                     Spacer(
                         modifier = Modifier
                             .height(32.dp)
