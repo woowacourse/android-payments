@@ -57,7 +57,7 @@ fun PaymentCard(
 
             if (card != null) {
                 Text(
-                    text = card.number.chunked(4).joinToString(" - "),
+                    text = card.number.chunked(4).mapIndexed { index, element -> if(index < 2) element else "*".repeat(element.length) }.joinToString(" - "),
                     color = Color.White,
                     fontSize = 12.sp,
                     letterSpacing = 1.5.sp,
