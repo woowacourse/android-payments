@@ -21,7 +21,7 @@ class CardsScreenTest {
         // given
 
         composeRule.setContent {
-            CardsScreen(cards = NO_CARD)
+            CardsScreen(cards = NO_CARD, {})
         }
 
         // then
@@ -34,7 +34,10 @@ class CardsScreenTest {
     fun `카드_목록이_비어있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = NO_CARD)
+            CardsScreen(
+                cards = NO_CARD,
+                addCard = {},
+            )
         }
 
         // when
@@ -52,7 +55,10 @@ class CardsScreenTest {
     fun `카드_목록에_카드가_한_개_있을_때_카드_추가_UI가_노출된다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = ONE_CARD)
+            CardsScreen(
+                cards = ONE_CARD,
+                addCard = {},
+            )
         }
 
         // then
@@ -65,7 +71,10 @@ class CardsScreenTest {
     fun `카드_목록에_카드가_한_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = ONE_CARD)
+            CardsScreen(
+                cards = ONE_CARD,
+                addCard = {},
+            )
         }
 
         // when
@@ -83,7 +92,10 @@ class CardsScreenTest {
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_UI가_노출된다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = THREE_CARD)
+            CardsScreen(
+                cards = THREE_CARD,
+                addCard = {},
+            )
         }
 
         // then
@@ -94,7 +106,10 @@ class CardsScreenTest {
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = THREE_CARD)
+            CardsScreen(
+                cards = THREE_CARD,
+                addCard = {},
+            )
         }
 
         // when

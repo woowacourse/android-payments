@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package woowacourse.payments.cards.component
 
 import android.app.Activity
@@ -13,12 +11,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,25 +20,25 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.Card
 import woowacourse.payments.cardaddition.CardAdditionActivity
+import woowacourse.payments.getParcelableCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.util.getParcelableCompat
 
 @Composable
 fun CardsScreen(
+    cards: List<Card>,
+    addCard: (Card) -> Unit,
     modifier: Modifier = Modifier,
-    vararg cards: Card = emptyArray(),
 ) {
-    val cards: SnapshotStateList<Card> = remember { mutableStateListOf(*cards) }
+    val context = LocalContext.current
     val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val card: Card =
                     result.data?.getParcelableCompat("card")
                         ?: return@rememberLauncherForActivityResult
-                cards.add(card)
+                addCard(card)
             }
         }
-    val context = LocalContext.current
 
     Scaffold(
         modifier = modifier,
@@ -97,27 +91,28 @@ private fun ManagedActivityResultLauncher<Intent, ActivityResult>.launch(context
 @Preview
 @Composable
 private fun CardsScreenPreview(
-    @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: Array<Card>,
+    @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: List<Card>,
 ) {
     AndroidpaymentsTheme {
         CardsScreen(
             cards = cards,
+            addCard = {},
         )
     }
 }
 
-private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Array<Card>> {
-    override val values: Sequence<Array<Card>> =
+private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<List<Card>> {
+    override val values: Sequence<List<Card>> =
         sequenceOf(
-            emptyArray(),
-            arrayOf(
+            emptyList(),
+            listOf(
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
                 ),
             ),
-            arrayOf(
+            listOf(
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",

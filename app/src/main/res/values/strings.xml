@@ -14,4 +14,5 @@
     <string name="card_addition_top_bar_title">카드 추가</string>
     <string name="card_addition_top_bar_navigate_back_content_description">뒤로 가기</string>
     <string name="card_addition_top_bar_done_content_description">완료</string>
+    <string name="cards_add_card_success_message">카드가 추가되었습니다</string>
 </resources>
