@@ -21,7 +21,10 @@ class CardsScreenTest {
         // given
 
         composeRule.setContent {
-            CardsScreen(cards = NO_CARD, {})
+            CardsScreen(
+                cards = NO_CARD,
+                addCard = {},
+            )
         }
 
         // then
