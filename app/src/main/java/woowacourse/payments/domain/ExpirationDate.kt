@@ -2,6 +2,7 @@ package woowacourse.payments.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.exception.ExpirationDateException
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -11,9 +12,9 @@ value class ExpirationDate(
     val value: YearMonth
 ) : Parcelable {
     init {
-        require(value.monthValue in JANUARY..DECEMBER) { ExpirationDateException.ExpirationDateMonthException }
-        require(value.year >= LocalDate.now().year) { ExpirationDateException.ExpirationDateYearAfterNowException }
-        require(value.year <= LocalDate.now().year + COMMERCIAL_DEBT_LIMITED_YEAR) { ExpirationDateException.ExpirationDateYearBeforeFiveYearsException }
+        require(value.monthValue in JANUARY..DECEMBER) { ExpirationDateException.ExpirationDateMonthException.message }
+        require(value.year >= LocalDate.now().year) { ExpirationDateException.ExpirationDateYearAfterNowException.message }
+        require(value.year <= LocalDate.now().year + COMMERCIAL_DEBT_LIMITED_YEAR) { ExpirationDateException.ExpirationDateYearBeforeFiveYearsException.message }
     }
 
     companion object {

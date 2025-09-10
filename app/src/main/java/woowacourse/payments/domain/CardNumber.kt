@@ -10,8 +10,8 @@ value class CardNumber(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length == CARD_NUMBER_LENGTH) { CardNumberException.CardNumberLengthException }
-        require(value.all(Char::isDigit)) { CardNumberException.CardNumberTypeException }
+        require(value.length == CARD_NUMBER_LENGTH) { CardNumberException.CardNumberLengthException.message }
+        require(value.all(Char::isDigit)) { CardNumberException.CardNumberTypeException.message }
     }
 
     companion object {

@@ -3,6 +3,7 @@ package woowacourse.payments.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.exception.OwnerNameException
 
 @Parcelize
 @JvmInline
@@ -10,9 +11,9 @@ value class OwnerName(
     val value: String,
 ) : Parcelable {
     init {
-        require(value.length in OWNER_NAME_MIN_LENGTH..OWNER_NAME_MAX_LENGTH) { OwnerNameException.OwnerNameMaxLengthException }
-        requireNotNull(value.all { it.isWhitespace() }) { OwnerNameException.OwnerNameWhitespaceException }
-        require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { OwnerNameException.OwnerNameTypeException }
+        require(value.length in OWNER_NAME_MIN_LENGTH..OWNER_NAME_MAX_LENGTH) { OwnerNameException.OwnerNameMaxLengthException.message }
+        requireNotNull(value.all { it.isWhitespace() }) { OwnerNameException.OwnerNameWhitespaceException.message }
+        require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { OwnerNameException.OwnerNameTypeException.message }
     }
 
     companion object {

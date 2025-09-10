@@ -24,8 +24,8 @@ import java.lang.Character.isDigit
 @Composable
 fun CardNumberTextField(
     number: String,
-    onNumberChange: (String) -> Unit,
     numberErrorMessage: String? = null,
+    onNumberChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
