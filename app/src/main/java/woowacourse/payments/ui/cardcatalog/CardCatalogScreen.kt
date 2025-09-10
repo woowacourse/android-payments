@@ -1,8 +1,7 @@
-package woowacourse.payments.ui.CardCatalog
+package woowacourse.payments.ui.cardcatalog
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,8 +15,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.CardCatalog.component.CardCatalogColumn
-import woowacourse.payments.ui.CardCatalog.component.CardCatalogTopBar
+import woowacourse.payments.ui.cardcatalog.component.CardCatalogColumn
+import woowacourse.payments.ui.cardcatalog.component.CardCatalogTopBar
 import kotlin.jvm.java
 
 

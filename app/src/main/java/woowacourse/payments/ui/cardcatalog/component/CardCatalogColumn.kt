@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.CardCatalog.component
+package woowacourse.payments.ui.cardcatalog.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
