@@ -3,11 +3,14 @@ package woowacourse.payments.ui.cards.components
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,6 +29,7 @@ import woowacourse.payments.ui.newcard.NewCardActivity
 
 @Composable
 fun Cards(
+    scrollState: ScrollState,
     innerPadding: PaddingValues,
     cardAddLauncher: ActivityResultLauncher<Intent>,
     cardList: List<PaymentCardUiModel>,
@@ -36,7 +40,8 @@ fun Cards(
             Modifier
                 .padding(innerPadding)
                 .padding(top = 12.dp)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(36.dp),
     ) {
@@ -79,6 +84,7 @@ private fun getDummyCardAddLauncher(): ActivityResultLauncher<Intent> =
 @Composable
 private fun CardsPreview_NoCards() {
     Cards(
+        scrollState = rememberScrollState(),
         innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = emptyList(),
@@ -96,6 +102,7 @@ private fun CardsPreview_OneCard_AddButtonVisible() {
             cardHolder = CardHolderUiModel("김환노"),
         )
     Cards(
+        scrollState = rememberScrollState(),
         innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = listOf(sampleCard),
@@ -120,6 +127,7 @@ private fun CardsPreview_MultipleCards_AddButtonHidden() {
             ),
         )
     Cards(
+        scrollState = rememberScrollState(),
         innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = sampleCards,

@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -51,6 +52,7 @@ class CardsTest {
         // when
         composeTestRule.setContent {
             Cards(
+                scrollState = rememberScrollState(),
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
@@ -69,6 +71,7 @@ class CardsTest {
         // when
         composeTestRule.setContent {
             Cards(
+                scrollState = rememberScrollState(),
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = emptyList(),
@@ -91,6 +94,7 @@ class CardsTest {
         // when
         composeTestRule.setContent {
             Cards(
+                scrollState = rememberScrollState(),
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
@@ -109,6 +113,7 @@ class CardsTest {
         // when
         composeTestRule.setContent {
             Cards(
+                scrollState = rememberScrollState(),
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
@@ -127,6 +132,7 @@ class CardsTest {
         // when
         composeTestRule.setContent {
             Cards(
+                scrollState = rememberScrollState(),
                 innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD, JUNSEO511_CARD),

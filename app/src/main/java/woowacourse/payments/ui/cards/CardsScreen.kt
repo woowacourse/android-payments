@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -17,6 +18,8 @@ import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 
 @Composable
 fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
+    val scrollState = rememberScrollState()
+
     val cardList =
         rememberSaveable { mutableStateListOf<PaymentCardUiModel>() }
 
@@ -40,6 +43,7 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
         },
     ) { innerPadding ->
         Cards(
+            scrollState = scrollState,
             innerPadding = innerPadding,
             cardAddLauncher = cardAddLauncher,
             cardList = cardList,
