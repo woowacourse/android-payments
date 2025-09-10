@@ -98,7 +98,7 @@ class NewCardActivity : ComponentActivity() {
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.card_expiry_error_message),
                             imeAction = ImeAction.Next,
-                            isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardNumber.isNotEmpty()
+                            isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardExpriy.isNotEmpty()
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedTextField(
@@ -122,7 +122,7 @@ class NewCardActivity : ComponentActivity() {
                             maxLength = 4,
                             mask = InputMask.Password,
                             errorMessage = getString(R.string.card_password_error_message),
-                            isError = cardPassword.length < 4 && cardNumber.isNotEmpty()
+                            isError = cardPassword.length < 4 && cardPassword.isNotEmpty()
                         )
                     }
                 }
