@@ -4,10 +4,13 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +32,7 @@ private const val PASSWORD_LENGTH: Int = 4
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
     val activity: Activity? = LocalActivity.current
+    val scrollState = rememberScrollState()
 
     var cardNumber: String by remember { mutableStateOf("") }
     val handleCardNumberInput: (String) -> Unit = { newValue: String ->
@@ -84,7 +88,8 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
             modifier =
                 Modifier
                     .padding(paddingValues)
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(scrollState),
         ) {
             PaymentCard(
                 modifier =
