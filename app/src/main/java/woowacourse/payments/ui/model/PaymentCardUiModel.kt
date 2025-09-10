@@ -8,7 +8,6 @@ data class PaymentCardUiModel(
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,
-    val password: String
 ) : Parcelable {
     fun maskCardNumbersFromBack(
         visibleGroups: Int = 2,
@@ -21,7 +20,7 @@ data class PaymentCardUiModel(
         val masked = groups.drop(visibleGroups).map { maskingChar.toString().repeat(groupSize) }
         return (firstVisible + masked).joinToString(separator)
     }
-    
+
     fun formatCardExpiry(
         separator: String = " / ",
     ): String =

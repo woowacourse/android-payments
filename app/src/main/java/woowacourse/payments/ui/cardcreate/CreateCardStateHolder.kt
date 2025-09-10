@@ -26,7 +26,7 @@ class CreateCardStateHolder(initialCardCreateState: CreateCardUiState = CreateCa
 
     fun newCard(): PaymentCardUiModel =
         cardCreateState.run {
-            PaymentCardUiModel(cardNumber, expiryDate, ownerName, password)
+            PaymentCardUiModel(cardNumber, expiryDate, ownerName)
         }
 
 
