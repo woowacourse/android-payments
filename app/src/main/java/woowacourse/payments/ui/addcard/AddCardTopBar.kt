@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
-@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardTopBar(
@@ -44,7 +43,6 @@ fun AddCardTopBar(
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @Preview
 @Composable
 fun AddCardTopBarPreview() {

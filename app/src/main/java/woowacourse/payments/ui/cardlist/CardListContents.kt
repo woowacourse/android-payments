@@ -84,7 +84,6 @@ fun CardListContentsWithNoCardsPreview() {
 }
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithOneCardPreview() {

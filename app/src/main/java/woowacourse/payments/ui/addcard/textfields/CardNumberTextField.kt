@@ -21,7 +21,6 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.formatter.CardNumberFormat
 import woowacourse.payments.ui.theme.Gray
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CardNumberTextField(
     text: MutableState<String>,
@@ -69,7 +68,6 @@ fun CardNumberTextField(
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
@@ -80,7 +78,6 @@ fun CardNumberTextFieldPreview() {
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable

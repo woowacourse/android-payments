@@ -19,7 +19,6 @@ import woowacourse.payments.ui.theme.Gray
 
 private const val CARDHOLDER_NAME_MAX_LENGTH = 30
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CardHolderNameTextField(text: MutableState<String>) {
     val focusManager = LocalFocusManager.current
@@ -56,7 +55,6 @@ fun CardHolderNameTextField(text: MutableState<String>) {
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable

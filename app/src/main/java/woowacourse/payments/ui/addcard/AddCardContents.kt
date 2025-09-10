@@ -22,7 +22,6 @@ import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.sharedcomposable.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun AddCardContents(
     onSaveSuccess: (
@@ -103,7 +102,6 @@ fun AddCardContents(
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun AddCardContentsPreview() {

@@ -22,7 +22,6 @@ import woowacourse.payments.ui.formatter.ExpirationDateFormat
 import woowacourse.payments.ui.theme.Gray
 import java.time.YearMonth
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun ExpirationDateTextField(
     text: MutableState<String>,
@@ -78,7 +77,6 @@ fun ExpirationDateTextField(
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
@@ -89,7 +87,6 @@ fun ExpirationDateTextFieldPreview() {
     )
 }
 
-@Suppress("ktlint:standard:function-naming")
 @SuppressLint("UnrememberedMutableState")
 @Preview(showBackground = true)
 @Composable
