@@ -23,7 +23,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.CardBackgroundColor
 import woowacourse.payments.ui.theme.CardEmvChipColor
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
@@ -79,7 +78,6 @@ fun PaymentCard(
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun BlankPaymentCardPreview() {
@@ -88,7 +86,6 @@ fun BlankPaymentCardPreview() {
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun PaymentCardWithDetailPreview() {

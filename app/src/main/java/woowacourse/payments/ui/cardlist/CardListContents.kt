@@ -31,7 +31,6 @@ import woowacourse.payments.ui.sharedcomposable.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun CardListContents(
     cards: SnapshotStateList<CardUiModel>,
@@ -40,11 +39,7 @@ fun CardListContents(
     AndroidpaymentsTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
-            topBar = {
-                CardListTopBar(cards) {
-                    navigateToAddCard()
-                }
-            },
+            topBar = { CardListTopBar(cards) { navigateToAddCard() } },
         ) { innerPadding: PaddingValues ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,11 +60,8 @@ fun CardListContents(
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(36.dp),
                 ) {
-                    items(
-                        count = cards.size,
-                    ) { index: Int ->
-                        val card: CardUiModel = cards[index]
-                        PaymentCard(card = card)
+                    items(count = cards.size) { index: Int ->
+                        PaymentCard(card = cards[index])
                     }
                 }
 
@@ -82,7 +74,6 @@ fun CardListContents(
 }
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithNoCardsPreview() {
@@ -112,7 +103,6 @@ fun CardListContentsWithOneCardPreview() {
 }
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListContentsWithTwoCardsPreview() {

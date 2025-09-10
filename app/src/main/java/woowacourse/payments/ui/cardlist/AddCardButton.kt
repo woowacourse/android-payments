@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.theme.AddCardButtonBackgroundColor
 import woowacourse.payments.ui.theme.AddCardButtonTextColor
 
-@Suppress("ktlint:standard:function-naming")
 @Composable
 fun AddCardButton(
     modifier: Modifier = Modifier,
@@ -41,7 +40,6 @@ fun AddCardButton(
     }
 }
 
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun AddCardButtonPreview() {

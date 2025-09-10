@@ -27,7 +27,6 @@ import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
-@Suppress("ktlint:standard:function-naming")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardListTopBar(
@@ -56,7 +55,6 @@ fun CardListTopBar(
 }
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListTopBarWithNoCardPreview() {
@@ -66,7 +64,6 @@ fun CardListTopBarWithNoCardPreview() {
 }
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("ktlint:standard:function-naming")
 @Preview(showBackground = true)
 @Composable
 fun CardListTopBarWithTwoCardsPreview() {
