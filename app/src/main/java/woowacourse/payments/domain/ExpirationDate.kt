@@ -23,7 +23,7 @@ value class ExpirationDate(
                 throw IllegalArgumentException("유효하지 않은 날짜 형식입니다.", it)
             }
 
-        require(expirationYearMonth.isAfter(YearMonth.now())) {
+        require(!expirationYearMonth.isBefore(YearMonth.now())) {
             "만료된 카드입니다."
         }
     }
