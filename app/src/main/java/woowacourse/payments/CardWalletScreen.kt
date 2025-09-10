@@ -85,6 +85,7 @@ fun CardWalletScreen(
                 }
 
                 cardList.size == 1 -> {
+                    Spacer(modifier = Modifier.height(12.dp))
                     RegisteredCard(cardList.first())
                     Spacer(modifier = Modifier.height(36.dp))
                     EmptyCard(
@@ -96,6 +97,7 @@ fun CardWalletScreen(
                 }
 
                 else -> {
+                    Spacer(modifier = Modifier.height(12.dp))
                     repeat(cardList.size) {
                         RegisteredCard(cardList[it])
                         Spacer(modifier = Modifier.height(36.dp))
