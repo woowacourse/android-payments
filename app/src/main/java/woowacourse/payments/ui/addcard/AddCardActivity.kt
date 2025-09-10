@@ -17,10 +17,10 @@ class AddCardActivity : ComponentActivity() {
         setContent {
             AddCardContents(
                 onSaveSuccess = { cardNumber: String, expirationDate: String, cardholderName: String, passcode: String ->
-                    submitAddedCard(cardNumber, expirationDate, cardholderName, passcode)
                     Toast
                         .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
                         .show()
+                    submitAddedCard(cardNumber, expirationDate, cardholderName, passcode)
                 },
                 onSaveFailure = {
                     Toast
