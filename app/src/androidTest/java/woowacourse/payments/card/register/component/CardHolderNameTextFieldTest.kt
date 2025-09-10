@@ -2,8 +2,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -32,7 +30,6 @@ class CardHolderNameTextFieldTest {
             CardHolderNameTextField(
                 value = cardHolderName,
                 onValueChange = { cardHolderName = it },
-                modifier = Modifier.testTag("CardHolderNameTextField"),
             )
         }
         composeTestRule.onNodeWithTag("CardHolderNameTextField").performTextInput(text)
@@ -53,7 +50,6 @@ class CardHolderNameTextFieldTest {
             CardHolderNameTextField(
                 value = cardHolderName,
                 onValueChange = { cardHolderName = it },
-                modifier = Modifier.testTag("CardHolderNameTextField"),
             )
         }
         composeTestRule.onNodeWithTag("CardHolderNameTextField").performTextInput(text)
@@ -74,7 +70,6 @@ class CardHolderNameTextFieldTest {
             CardHolderNameTextField(
                 value = cardHolderName,
                 onValueChange = { cardHolderName = it },
-                modifier = Modifier.testTag("CardHolderNameTextField"),
             )
         }
         composeTestRule.onNodeWithTag("CardHolderNameTextField").performTextInput(text)
