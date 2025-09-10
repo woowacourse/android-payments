@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cardlist
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
@@ -49,7 +48,7 @@ class CardListContentsTest {
 
         // then
         composeTestRule.onNodeWithText("+").assertIsDisplayed()
-        composeTestRule.onNodeWithText("추가").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("추가").assertDoesNotExist()
     }
 
     @Test
@@ -62,7 +61,7 @@ class CardListContentsTest {
 
         // then
         composeTestRule.onNodeWithText("+").assertIsDisplayed()
-        composeTestRule.onNodeWithText("추가").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("추가").assertDoesNotExist()
     }
 
     @Test
@@ -75,6 +74,6 @@ class CardListContentsTest {
 
         // then
         composeTestRule.onNodeWithText("추가").assertIsDisplayed()
-        composeTestRule.onNodeWithText("+").assertIsNotDisplayed()
+        composeTestRule.onNodeWithText("+").assertDoesNotExist()
     }
 }
