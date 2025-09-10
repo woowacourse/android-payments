@@ -19,6 +19,7 @@ import woowacourse.payments.ui.newcard.NewCardUiState
 @Composable
 fun NewCardColumn(
     newCardUiState: NewCardUiState,
+    numberErrorMessage: String?,
     onNumberChange: (String) -> Unit,
     onExpirationDateChange: (String) -> Unit,
     onOwnerNameChange: (String) -> Unit,
@@ -35,6 +36,7 @@ fun NewCardColumn(
         )
         CardNumberTextField(
             number = newCardUiState.number,
+            numberErrorMessage = numberErrorMessage,
             onNumberChange = onNumberChange,
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,6 +74,7 @@ private fun NewCardColumnPreview() {
         onNumberChange = {},
         onExpirationDateChange = {},
         onOwnerNameChange = {},
-        onPasswordChange = {}
+        onPasswordChange = {},
+        numberErrorMessage = null
     )
 }

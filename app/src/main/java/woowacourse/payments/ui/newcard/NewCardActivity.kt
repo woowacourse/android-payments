@@ -2,8 +2,8 @@ package woowacourse.payments.ui.newcard
 
 import android.content.Context
 import android.content.Intent
+import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -16,7 +16,7 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
-                onSaveClick = { card -> onSaveClick(card) })
+                onSaveClick = { newCard: Card -> onSaveClick(newCard) })
         }
     }
 
@@ -25,9 +25,7 @@ class NewCardActivity : ComponentActivity() {
     }
 
     fun onSaveClick(newCard: Card) {
-        intent = android.content.Intent().apply {
-            putExtra("newCard", newCard)
-        }
+        val intent = Intent(context = this, newCard = newCard)
         setResult(RESULT_OK, intent)
         finish()
     }

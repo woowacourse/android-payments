@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.Card.Companion.Card
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.newcard.component.NewCardColumn
 import woowacourse.payments.ui.newcard.component.NewCardTopBar
 
@@ -34,6 +35,12 @@ fun NewCardScreen(
     var expirationDateErrorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     var ownerNameErrorMessage by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordErrorMessage by rememberSaveable { mutableStateOf<String?>(null) }
+
+    runCatching {
+        CardNumber(value = number)
+    }.onFailure { e: Throwable ->
+        numberErrorMessage = e.message
+    }
 
     val newCardUiState = NewCardUiState(
         number = number,
@@ -74,7 +81,8 @@ fun NewCardScreen(
             onExpirationDateChange = { expirationDate = it.removeSurrounding(" / ").take(4) },
             onOwnerNameChange = { ownerName = it.take(30) },
             onPasswordChange = { password = it.take(4) },
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            numberErrorMessage = numberErrorMessage,
         )
     }
 }
