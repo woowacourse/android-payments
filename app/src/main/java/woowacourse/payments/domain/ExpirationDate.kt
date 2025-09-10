@@ -7,6 +7,6 @@ data class ExpirationDate(
     val currentYearMonth: YearMonth = YearMonth.now(),
 ) {
     init {
-        require(value > currentYearMonth) { IllegalArgumentException() }
+        require(value >= currentYearMonth) { IllegalArgumentException() }
     }
 }
