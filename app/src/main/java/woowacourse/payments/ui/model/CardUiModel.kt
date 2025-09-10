@@ -2,7 +2,6 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.screen.cards.CardsUiState
 import java.lang.Character.isDigit
 
 @Parcelize
@@ -11,21 +10,29 @@ data class CardUiModel(
     val expiredDate: String,
     val ownerName: String,
 ) : Parcelable {
-    fun formatCardNumber(): String {
-        val visiblePart = number.take(CARD_NUMBER_VISIBLE_LENGTH)
-        val maskedPart = CARD_NUMBER_MASKING_SIGN.repeat(CARD_NUMBER_VISIBLE_LENGTH)
+    fun formatCardNumber(
+        visibleLength: Int = CARD_NUMBER_VISIBLE_LENGTH,
+        maskingSign: String = CARD_NUMBER_MASKING_SIGN,
+        groupSize: Int = CARD_NUMBER_GROUP_SIZE,
+        delimiter: String = CARD_NUMBER_DELIMITER,
+    ): String {
+        val visiblePart = number.take(visibleLength)
+        val maskedPart = maskingSign.repeat(number.length - visibleLength)
         return (visiblePart + maskedPart)
-            .chunked(CARD_NUMBER_GROUP_SIZE)
-            .joinToString(CARD_NUMBER_DELIMITER)
+            .chunked(groupSize)
+            .joinToString(delimiter)
     }
 
-    fun formatExpiredDate(): String =
+    fun formatExpiredDate(
+        groupSize: Int = CARD_DATE_GROUP_SIZE,
+        delimiter: String = CARD_DATE_DELIMITER,
+    ): String =
         expiredDate
             .filter(::isDigit)
-            .chunked(CARD_DATE_GROUP_SIZE)
-            .joinToString(CARD_DATE_DELIMITER)
+            .chunked(groupSize)
+            .joinToString(delimiter)
 
-    fun formatOwnerName(): String = ownerName.take(CARD_OWNER_NAME_MAX_LENGTH)
+    fun formatOwnerName(maxLength: Int = CARD_OWNER_NAME_MAX_LENGTH): String = ownerName.take(maxLength)
 
     companion object {
         private const val CARD_NUMBER_MASKING_SIGN = "*"
@@ -37,10 +44,3 @@ data class CardUiModel(
         private const val CARD_OWNER_NAME_MAX_LENGTH = 15
     }
 }
-
-fun List<CardUiModel>.toUiState(): CardsUiState =
-    when {
-        isEmpty() -> CardsUiState.Empty
-        size == 1 -> CardsUiState.SingleCard(first())
-        else -> CardsUiState.MultipleCards(this)
-    }
