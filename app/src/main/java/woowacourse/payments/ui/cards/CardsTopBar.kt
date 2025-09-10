@@ -46,8 +46,9 @@ fun CardsTopBar(
 @Composable
 fun CreateCardButton(
     onAddClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    TextButton(onClick = onAddClick) {
+    TextButton(onClick = onAddClick,modifier) {
         Text(
             stringResource(R.string.add_message),
             color = Color.Black,

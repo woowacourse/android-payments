@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.YellowCB
 
 @Composable
-fun PaymentCardChip() {
+fun PaymentCardChip(modifier: Modifier = Modifier) {
     Box(
         modifier =
-            Modifier
+            modifier
                 .size(width = 40.dp, height = 26.dp)
                 .padding(start = 2.dp)
                 .background(

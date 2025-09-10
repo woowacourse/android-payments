@@ -21,8 +21,7 @@ data class PaymentCardUiModel(
         val masked = groups.drop(visibleGroups).map { maskingChar.toString().repeat(groupSize) }
         return (firstVisible + masked).joinToString(separator)
     }
-
-
+    
     fun formatCardExpiry(
         separator: String = " / ",
     ): String =
