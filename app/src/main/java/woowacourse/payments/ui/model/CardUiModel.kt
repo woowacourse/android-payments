@@ -12,7 +12,7 @@ data class CardUiModel(
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
-        cardNumber = CardNumberFormat.formattedCardNumber(cardNumber.value),
-        expirationDate = ExpirationDateFormat.formattedExpirationDate(expirationDate.value),
+        cardNumber = CardNumberFormat.formattedCardNumber(cardNumber),
+        expirationDate = ExpirationDateFormat.formattedExpirationDate(expirationDate),
         cardholderName = cardholderName.value,
     )

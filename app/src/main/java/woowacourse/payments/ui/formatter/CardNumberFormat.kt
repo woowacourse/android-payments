@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.formatter
 
 import androidx.compose.ui.text.AnnotatedString
+import woowacourse.payments.domain.CardNumber
 
 object CardNumberFormat {
     const val REQUIRED_LENGTH = 16
@@ -14,8 +15,9 @@ object CardNumberFormat {
             SEPARATOR,
         )
 
-    fun formattedCardNumber(text: String): String {
-        val maskedText: String = text.take(text.length - MASK_SIZE) + MASK.repeat(MASK_SIZE)
+    fun formattedCardNumber(cardNumber: CardNumber): String {
+        val maskedText: String =
+            cardNumber.value.take(cardNumber.value.length - MASK_SIZE) + MASK.repeat(MASK_SIZE)
         return visualTransformation.filter(AnnotatedString(maskedText)).text.text
     }
 }
