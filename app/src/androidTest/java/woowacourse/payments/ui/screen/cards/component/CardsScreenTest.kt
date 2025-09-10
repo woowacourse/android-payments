@@ -1,9 +1,13 @@
 package woowacourse.payments.ui.screen.cards.component
 
+import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.screen.DEFAULT_CARD
@@ -23,11 +27,13 @@ class CardsScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("새로운 카드를 등록해주세요")
+            .onNodeWithContentDescription("카드 추가 안내")
+            .assert(hasText("새로운 카드를 등록해주세요"))
             .assertIsDisplayed()
 
         composeRule
-            .onNodeWithContentDescription("카드 추가 버튼")
+            .onNodeWithContentDescription("카드 추가")
+            .assert(hasClickAction())
             .assertIsDisplayed()
     }
 
@@ -40,11 +46,13 @@ class CardsScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("1234 - 5678 - **** - ****")
+            .onNodeWithContentDescription("카드 번호")
+            .assert(hasText(DEFAULT_CARD.formatCardNumber()))
             .assertIsDisplayed()
 
         composeRule
-            .onNodeWithContentDescription("카드 추가 버튼")
+            .onNodeWithContentDescription("카드 추가")
+            .assert(hasClickAction())
             .assertIsDisplayed()
     }
 
@@ -57,13 +65,12 @@ class CardsScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("추가")
+            .onNodeWithContentDescription("카드 추가")
+            .assert(hasClickAction())
             .assertIsDisplayed()
 
-        MULTIPLE_CARD.forEach { card ->
-            composeRule
-                .onNodeWithText(card.formatCardNumber())
-                .assertIsDisplayed()
-        }
+        composeRule
+            .onAllNodesWithContentDescription("카드 번호")
+            .assertCountEquals(MULTIPLE_CARD.size)
     }
 }
