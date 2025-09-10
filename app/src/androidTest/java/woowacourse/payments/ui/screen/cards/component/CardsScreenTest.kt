@@ -6,15 +6,16 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.screen.DEFAULT_CARD
 import woowacourse.payments.ui.screen.MULTIPLE_CARD
-import woowacourse.payments.ui.screen.SINGLE_CARD
+import woowacourse.payments.ui.screen.cards.CardsUiState
 
 class CardsScreenTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Test
-    fun 카드가_없을_때_안내_텍스트와_추가_버튼이_나타난다() {
+    fun `카드가_없을_때_안내_텍스트와_추가_버튼이_나타난다`() {
         // given
         composeRule.setContent {
             CardsScreen()
@@ -31,10 +32,10 @@ class CardsScreenTest {
     }
 
     @Test
-    fun 카드가_1장만_있을_때_카드와_추가_버튼이_나타난다() {
+    fun `카드가_1장만_있을_때_카드와_추가_버튼이_나타난다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = SINGLE_CARD)
+            CardsScreen(initialState = CardsUiState.SingleCard(DEFAULT_CARD))
         }
 
         // then
@@ -48,10 +49,10 @@ class CardsScreenTest {
     }
 
     @Test
-    fun 카드가_여러_장_있을_때_카드와_상단에_추가_버튼이_나타난다() {
+    fun `카드가_여러_장_있을_때_카드와_상단에_추가_버튼이_나타난다`() {
         // given
         composeRule.setContent {
-            CardsScreen(cards = MULTIPLE_CARD)
+            CardsScreen(initialState = CardsUiState.MultipleCards(MULTIPLE_CARD))
         }
 
         // then

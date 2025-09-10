@@ -9,8 +9,6 @@ val DEFAULT_CARD =
         ownerName = "INHYEOP LEE",
     )
 
-val SINGLE_CARD = listOf(DEFAULT_CARD)
-
 val MULTIPLE_CARD =
     listOf(
         DEFAULT_CARD,
