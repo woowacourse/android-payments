@@ -27,7 +27,10 @@ import woowacourse.payments.ui.component.PaymentCard
 import java.lang.Character.isDigit
 import java.time.Month
 
+private const val CARD_NUMBER_LENGTH: Int = 16
 private const val PASSWORD_LENGTH: Int = 4
+private const val EXPIRED_DATE_LENGTH: Int = 4
+private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
 
 @Composable
 fun CardAdditionScreen(modifier: Modifier = Modifier) {
@@ -122,6 +125,7 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 18.dp),
+                maxLength = CARD_OWNER_NAME_LENGTH_MAX,
             )
             PasswordTextField(
                 value = password,

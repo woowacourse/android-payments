@@ -21,6 +21,7 @@ import woowacourse.payments.R
 fun CardOwnerNameTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    maxLength: Int,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
@@ -42,7 +43,7 @@ fun CardOwnerNameTextField(
                     stringResource(
                         R.string.card_owner_name_supporting_text,
                         value.length,
-                        CARD_OWNER_NAME_LENGTH_MAX,
+                        maxLength,
                     ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
@@ -64,7 +65,6 @@ private fun CardOwnerNameTextFieldPreview() {
     CardOwnerNameTextField(
         value = ownerName,
         onValueChange = setOwnerName,
+        maxLength = 30,
     )
 }
-
-const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30

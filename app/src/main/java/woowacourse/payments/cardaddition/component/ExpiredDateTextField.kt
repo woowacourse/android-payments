@@ -77,6 +77,5 @@ private fun ExpiredDateTextFieldPreview(
 
 class ExpiredDateTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
 
-const val EXPIRED_DATE_LENGTH: Int = 4
 private const val EXPIRED_DATE_GROUP_SIZE: Int = 2
 private const val EXPIRED_DATE_DELIMITER: String = " / "
