@@ -1,10 +1,8 @@
-package woowacourse.payments
+package woowacourse.payments.ui.cardwallet
 
 import android.app.Activity
-import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.component.CardWalletTopBar
-import woowacourse.payments.component.EmptyCard
-import woowacourse.payments.component.RegisteredCard
+import woowacourse.payments.R
+import woowacourse.payments.ui.component.CardWalletTopBar
+import woowacourse.payments.ui.component.EmptyCard
+import woowacourse.payments.ui.component.RegisteredCard
+import woowacourse.payments.ui.newcard.NewCardScreenActivity
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable

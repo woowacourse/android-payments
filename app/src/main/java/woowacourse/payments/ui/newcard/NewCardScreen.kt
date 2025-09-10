@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.ui.newcard
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -18,12 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.component.CardExpiryDate
-import woowacourse.payments.component.CardHolderName
-import woowacourse.payments.component.CardNumber
-import woowacourse.payments.component.CardPassword
-import woowacourse.payments.component.NewCardTopBar
-import woowacourse.payments.component.PaymentCard
+import woowacourse.payments.ui.component.CardExpiryDate
+import woowacourse.payments.ui.component.CardHolderName
+import woowacourse.payments.ui.component.CardNumber
+import woowacourse.payments.ui.component.CardPassword
+import woowacourse.payments.ui.component.NewCardTopBar
+import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
