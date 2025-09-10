@@ -7,12 +7,6 @@ data class PaymentCard(
     val expirationDate: YearMonth,
     val cardholderName: String,
 ) {
-    constructor(number: Long, expirationDate: String, cardholderName: String) : this(
-        number,
-        parseExpirationDate(expirationDate),
-        cardholderName
-    )
-
     constructor(number: String, expirationDate: String, cardholderName: String) : this(
         number.toLong(),
         parseExpirationDate(expirationDate),
