@@ -70,4 +70,4 @@ private fun PasswordTextFieldPreview(
     )
 }
 
-class PasswordTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
+private class PasswordTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))

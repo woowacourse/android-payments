@@ -76,7 +76,7 @@ private fun CardNumberTextFieldPreview(
     )
 }
 
-class CardNumberTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
+private class CardNumberTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
 
 private const val CARD_NUMBER_GROUP_SIZE: Int = 4
 private const val CARD_NUMBER_SEPARATOR: String = " - "

@@ -61,4 +61,4 @@ private fun CardAdditionTopBarPreview(
     )
 }
 
-class CardAdditionTopBarPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(true, false))
+private class CardAdditionTopBarPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(true, false))
