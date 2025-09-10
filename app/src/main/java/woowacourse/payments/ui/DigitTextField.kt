@@ -35,9 +35,10 @@ fun DigitTextField(
         placeholder = { Text(text = hint) },
         modifier = modifier.fillMaxWidth(),
         singleLine = true,
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = imeAction,
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = imeAction,
             ),
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage) },

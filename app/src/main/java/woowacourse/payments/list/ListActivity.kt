@@ -41,9 +41,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card
 import woowacourse.payments.newCard.NewCardActivity
 import woowacourse.payments.ui.PaymentCard
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class ListActivity : ComponentActivity() {
@@ -55,22 +55,23 @@ class ListActivity : ComponentActivity() {
                 var list by remember { mutableStateOf(ListUiState()) }
                 val context = LocalContext.current
 
-                val cardAddLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-                    if(activityResult.resultCode == RESULT_OK) {
-                        val newCard = activityResult.data?.getParcelableExtra<Card>("card")
-                        newCard?.let {
-                            list = ListUiState(list.cards + it)
-                            Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
+                val cardAddLauncher =
+                    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                        if (activityResult.resultCode == RESULT_OK) {
+                            val newCard = activityResult.data?.getParcelableExtra<Card>("card")
+                            newCard?.let {
+                                list = ListUiState(list.cards + it)
+                                Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
+                            }
                         }
                     }
-                }
 
                 CardListScreen(
                     cards = list.cards,
                     onAddClick = {
                         val intent = Intent(context, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
-                    }
+                    },
                 )
             }
         }
@@ -81,7 +82,7 @@ class ListActivity : ComponentActivity() {
 @Composable
 fun CardListTopBar(
     modifier: Modifier = Modifier,
-    actions: @Composable (RowScope.() -> Unit) = {}
+    actions: @Composable (RowScope.() -> Unit) = {},
 ) {
     CenterAlignedTopAppBar(
         title = { Text(text = "Payments") },
@@ -102,23 +103,27 @@ fun CardListScreen(
                     if (cards.size >= 2) {
                         TextButton(
                             onClick = onAddClick,
-                            content = { Text(
-                            text = stringResource(R.string.add_new_card_button),
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        ) } )
+                            content = {
+                                Text(
+                                    text = stringResource(R.string.add_new_card_button),
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black,
+                                )
+                            },
+                        )
                     }
-                }
+                },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(18.dp)
+            verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
             when (cards.size) {
                 0 -> {
@@ -141,33 +146,30 @@ fun CardListScreen(
             }
         }
     }
-
 }
 
 @Composable
-fun CardList(
-    cards: List<Card>,
-) {
+fun CardList(cards: List<Card>) {
     cards.forEach { card: Card -> PaymentCard(card = card) }
 }
 
 @Composable
-fun AddNewCard(
-    onAddClick: () -> Unit,
-) {
+fun AddNewCard(onAddClick: () -> Unit) {
     Box(
-        modifier = Modifier
-            .height(124.dp)
-            .width(208.dp)
-            .clickable(onClick = onAddClick)
-            .background(color = Color(0xFFE5E5E5)),
+        modifier =
+            Modifier
+                .height(124.dp)
+                .width(208.dp)
+                .clickable(onClick = onAddClick)
+                .background(color = Color(0xFFE5E5E5)),
         content = {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = stringResource(R.string.content_description_add_new_card),
-                modifier = Modifier.align(alignment = Alignment.Center)
+                modifier = Modifier.align(alignment = Alignment.Center),
             )
-        })
+        },
+    )
 }
 
 @Composable
@@ -188,11 +190,11 @@ private fun EmptyCardListPreview() {
                         .fillMaxSize()
                         .padding(innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp)
+                verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
                 CardListScreen(
                     emptyList(),
-                    onAddClick = {}
+                    onAddClick = {},
                 )
             }
         }
@@ -212,7 +214,7 @@ private fun AddOneCardListPreview() {
                         .fillMaxSize()
                         .padding(innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp)
+                verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
                 CardListScreen(
                     listOf(
@@ -220,10 +222,10 @@ private fun AddOneCardListPreview() {
                             "0000000000000000",
                             "0925",
                             "1234",
-                            "PARK JIWON"
-                        )
+                            "PARK JIWON",
+                        ),
                     ),
-                    onAddClick = {}
+                    onAddClick = {},
                 )
             }
         }
@@ -243,7 +245,7 @@ private fun AddTwoOrMoreCardListPreview() {
                         .fillMaxSize()
                         .padding(innerPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp)
+                verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
                 CardListScreen(
                     listOf(
@@ -251,16 +253,16 @@ private fun AddTwoOrMoreCardListPreview() {
                             "0000000000000000",
                             "1225",
                             "1234",
-                            "PARK JIWON"
+                            "PARK JIWON",
                         ),
                         Card(
                             "1234123412341234",
                             "0999",
                             "9999",
-                            "TOMATO BASIL ADE"
+                            "TOMATO BASIL ADE",
                         ),
                     ),
-                    onAddClick = {}
+                    onAddClick = {},
                 )
             }
         }

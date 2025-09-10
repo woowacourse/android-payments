@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.list.CardListScreen
 
+@Suppress("ktlint:standard:function-naming")
 class EmptyCardListTest {
     @get:Rule
     val composeTestRule = createComposeRule()

@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.DigitTextField
 
+@Suppress("ktlint:standard:function-naming")
 class CardExpiryDateTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -61,6 +62,5 @@ class CardExpiryDateTest {
         composeTestRule
             .onNodeWithText("만료일")
             .performTextInput("123")
-
     }
 }

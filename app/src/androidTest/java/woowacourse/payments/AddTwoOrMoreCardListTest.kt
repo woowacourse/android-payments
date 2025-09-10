@@ -10,6 +10,7 @@ import org.junit.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.list.CardListScreen
 
+@Suppress("ktlint:standard:function-naming")
 class AddTwoOrMoreCardListTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -18,20 +19,23 @@ class AddTwoOrMoreCardListTest {
     fun setUp() {
         composeTestRule.setContent {
             CardListScreen(
-                cards = listOf(
-                    Card(
-                        "1234123412341234",
-                        "1234",
-                        "9999",
-                        "PARK JIWON"
+                cards =
+                    listOf(
+                        Card(
+                            "1234123412341234",
+                            "1234",
+                            "9999",
+                            "PARK JIWON",
+                        ),
+                        Card(
+                            "7890789078907890",
+                            "0999",
+                            "1234",
+                            "TOMATO BASIL ADE",
+                        ),
                     ),
-                    Card(
-                        "7890789078907890",
-                        "0999",
-                        "1234",
-                        "TOMATO BASIL ADE"
-                    )
-                ), onAddClick = {})
+                onAddClick = {},
+            )
         }
     }
 

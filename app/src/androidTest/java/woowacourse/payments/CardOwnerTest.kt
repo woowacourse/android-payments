@@ -13,6 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.LimitedUppercaseTextField
 
+@Suppress("ktlint:standard:function-naming")
 class CardOwnerTest {
     @get:Rule
     val composeTestRule = createComposeRule()

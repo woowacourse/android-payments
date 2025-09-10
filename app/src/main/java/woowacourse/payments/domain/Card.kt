@@ -9,4 +9,4 @@ data class Card(
     val expiry: String,
     val password: String,
     val name: String? = null,
-): Parcelable
+) : Parcelable

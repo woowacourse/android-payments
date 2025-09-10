@@ -14,6 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.DigitTextField
 
+@Suppress("ktlint:standard:function-naming")
 class CardPasswordTest {
     private val masking = '\u2022'.toString()
 

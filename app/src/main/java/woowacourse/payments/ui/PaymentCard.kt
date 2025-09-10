@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.InputMask
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -40,10 +39,11 @@ fun PaymentCard(
                 ),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-                .padding(top = 28.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .padding(top = 28.dp),
         ) {
             Box(
                 modifier =
@@ -57,14 +57,20 @@ fun PaymentCard(
 
             if (card != null) {
                 Text(
-                    text = card.number.chunked(4).mapIndexed { index, element -> if(index < 2) element else "*".repeat(element.length) }.joinToString(" - "),
+                    text =
+                        card.number.chunked(4).mapIndexed {
+                                index,
+                                element,
+                            ->
+                            if (index < 2) element else "*".repeat(element.length)
+                        }.joinToString(" - "),
                     color = Color.White,
                     fontSize = 12.sp,
                     letterSpacing = 1.5.sp,
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
                         text = card.name ?: "",

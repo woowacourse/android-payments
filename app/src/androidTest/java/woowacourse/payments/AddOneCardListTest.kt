@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.list.CardListScreen
 
+@Suppress("ktlint:standard:function-naming")
 class AddOneCardListTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -16,14 +17,18 @@ class AddOneCardListTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardListScreen(cards = listOf(
-                woowacourse.payments.domain.Card(
-                    "1234123412341234",
-                    "1234",
-                    "9999",
-                    "PARK JIWON"
-                )
-            ), onAddClick = {})
+            CardListScreen(
+                cards =
+                    listOf(
+                        woowacourse.payments.domain.Card(
+                            "1234123412341234",
+                            "1234",
+                            "9999",
+                            "PARK JIWON",
+                        ),
+                    ),
+                onAddClick = {},
+            )
         }
     }
 

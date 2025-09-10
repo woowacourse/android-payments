@@ -21,13 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ExpiryValidator
 import woowacourse.payments.InputMask
-import woowacourse.payments.ui.LimitedUppercaseTextField
-import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.DigitTextField
+import woowacourse.payments.ui.LimitedUppercaseTextField
+import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -49,9 +49,13 @@ class NewCardActivity : ComponentActivity() {
                                 finish()
                             },
                             onSaveClick = {
-                                val data = Intent().apply {
-                                    putExtra("card", Card(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName))
-                                }
+                                val data =
+                                    Intent().apply {
+                                        putExtra(
+                                            "card",
+                                            Card(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName),
+                                        )
+                                    }
                                 setResult(RESULT_OK, data)
                                 finish()
                             },
@@ -66,9 +70,10 @@ class NewCardActivity : ComponentActivity() {
                     ) {
                         Spacer(modifier = Modifier.height(14.dp))
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            contentAlignment = Alignment.Center
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(),
+                            contentAlignment = Alignment.Center,
                         ) {
                             PaymentCard()
                         }
@@ -83,7 +88,7 @@ class NewCardActivity : ComponentActivity() {
                             mask = InputMask.CardNumber,
                             errorMessage = getString(R.string.card_number_error_message),
                             imeAction = ImeAction.Next,
-                            isError = cardNumber.length < 16 && cardNumber.isNotEmpty()
+                            isError = cardNumber.length < 16 && cardNumber.isNotEmpty(),
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
@@ -91,14 +96,15 @@ class NewCardActivity : ComponentActivity() {
                             onValueChange = { cardExpriy = it },
                             label = getString(R.string.card_expiry_label),
                             hint = "MM / YY",
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(horizontal = 24.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.card_expiry_error_message),
                             imeAction = ImeAction.Next,
-                            isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardExpriy.isNotEmpty()
+                            isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardExpriy.isNotEmpty(),
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedUppercaseTextField(
@@ -116,13 +122,14 @@ class NewCardActivity : ComponentActivity() {
                             onValueChange = { cardPassword = it },
                             label = getString(R.string.card_password_label),
                             hint = "0000",
-                            modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(horizontal = 24.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth(0.5f)
+                                    .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Password,
                             errorMessage = getString(R.string.card_password_error_message),
-                            isError = cardPassword.length < 4 && cardPassword.isNotEmpty()
+                            isError = cardPassword.length < 4 && cardPassword.isNotEmpty(),
                         )
                     }
                 }

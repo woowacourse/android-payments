@@ -37,7 +37,6 @@ fun LimitedUppercaseTextField(
                 textAlign = TextAlign.End,
             )
         },
-
     )
 }
 
