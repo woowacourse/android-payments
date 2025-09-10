@@ -23,7 +23,6 @@ import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
 
 @RunWith(AndroidJUnit4::class)
 class CreateCardInputSectionTest {
-
     @get:Rule
     val rule = createComposeRule()
 
@@ -36,7 +35,7 @@ class CreateCardInputSectionTest {
                 onCardExpiryDateChange = { state = state.copy(expiryDate = it) },
                 onCardOwnerNameChange = { state = state.copy(ownerName = it) },
                 onCardPasswordChange = { state = state.copy(password = it) },
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
     }
@@ -45,10 +44,12 @@ class CreateCardInputSectionTest {
     fun 카드번호_입력시_구분자가_포맷된다() {
         setContentWithState()
 
-        rule.onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
             .performTextInput("1234567812345678")
 
-        rule.onNodeWithText("1234-5678-1234-5678")
+        rule
+            .onNodeWithText("1234-5678-1234-5678")
             .assertIsDisplayed()
     }
 
@@ -56,7 +57,8 @@ class CreateCardInputSectionTest {
     fun 만료일_입력시_구분자가_포맷된다() {
         setContentWithState()
 
-        rule.onNodeWithTag(CARD_EXPIRY_DATE_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_EXPIRY_DATE_INPUT_TAG)
             .performTextInput("1229")
 
         rule.onNodeWithText("12/29").assertIsDisplayed()
@@ -64,13 +66,14 @@ class CreateCardInputSectionTest {
 
     @Test
     fun 잘못된_만료일이면_에러메시지가_보인다() {
-        val initial = CreateCardUiState(
-            cardNumber = "",
-            expiryDate = "13/22",
-            ownerName = "",
-            password = "",
-            expiryDateErrorTextRes = R.string.error_card_expiry_invalid_month
-        )
+        val initial =
+            CreateCardUiState(
+                cardNumber = "",
+                expiryDate = "13/22",
+                ownerName = "",
+                password = "",
+                expiryDateErrorTextRes = R.string.error_card_expiry_invalid_month,
+            )
         setContentWithState(initial)
 
         val errorText = "월은 01~12여야 합니다"
@@ -88,7 +91,8 @@ class CreateCardInputSectionTest {
     @Test
     fun 비밀번호는_숫자입력이_가능하고_마스킹된다() {
         setContentWithState()
-        rule.onNodeWithTag(CARD_PASSWORD_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_PASSWORD_INPUT_TAG)
             .performTextInput("123")
 
         rule.onNodeWithText("•••").assertIsDisplayed()

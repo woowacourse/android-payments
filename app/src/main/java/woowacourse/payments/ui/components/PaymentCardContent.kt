@@ -21,12 +21,16 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 
 @Composable
-fun PaymentCardContent(paymentCardUiModel: PaymentCardUiModel, modifier: Modifier = Modifier) {
-    val cardContentStyle = MaterialTheme.typography.bodyLarge.copy(
-        fontSize = 12.sp,
-        fontWeight = FontWeight.W500,
-        color = Color.White
-    )
+fun PaymentCardContent(
+    paymentCardUiModel: PaymentCardUiModel,
+    modifier: Modifier = Modifier,
+) {
+    val cardContentStyle =
+        MaterialTheme.typography.bodyLarge.copy(
+            fontSize = 12.sp,
+            fontWeight = FontWeight.W500,
+            color = Color.White,
+        )
     Column(modifier) {
         Spacer(Modifier.height(8.dp))
         Text(
@@ -34,8 +38,9 @@ fun PaymentCardContent(paymentCardUiModel: PaymentCardUiModel, modifier: Modifie
             style = cardContentStyle,
             letterSpacing = 0.17.em,
             textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         )
         Spacer(Modifier.height(2.dp))
         Row(
@@ -53,7 +58,7 @@ fun PaymentCardContent(paymentCardUiModel: PaymentCardUiModel, modifier: Modifie
                 text = paymentCardUiModel.formatCardExpiry(),
                 style = cardContentStyle,
                 letterSpacing = 0.08.em,
-                textAlign = TextAlign.Right
+                textAlign = TextAlign.Right,
             )
         }
     }

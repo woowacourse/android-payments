@@ -24,7 +24,7 @@ fun CreateCardScreen(
     Column(
         modifier =
             modifier
-                .fillMaxSize()
+                .fillMaxSize(),
     ) {
         Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
         PaymentCard(null, Modifier.align(Alignment.CenterHorizontally))

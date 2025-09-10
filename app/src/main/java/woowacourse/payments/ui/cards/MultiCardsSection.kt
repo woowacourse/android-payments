@@ -14,11 +14,14 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSamples
 
 @Composable
-fun MultiCardsSection(cards: List<PaymentCardUiModel>, modifier: Modifier = Modifier) {
+fun MultiCardsSection(
+    cards: List<PaymentCardUiModel>,
+    modifier: Modifier = Modifier,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(36.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Spacer(Modifier.height(12.dp))
         cards.forEach { card ->
@@ -31,6 +34,6 @@ fun MultiCardsSection(cards: List<PaymentCardUiModel>, modifier: Modifier = Modi
 @Composable
 fun MultiCardsSectionPreview() {
     MultiCardsSection(
-        paymentCardUiModelSamples
+        paymentCardUiModelSamples,
     )
 }

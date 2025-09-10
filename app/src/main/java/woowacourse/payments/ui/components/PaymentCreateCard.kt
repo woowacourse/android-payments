@@ -17,7 +17,10 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
-fun PaymentCreateCard(onAddCardCategoryClick: () -> Unit, modifier: Modifier = Modifier) {
+fun PaymentCreateCard(
+    onAddCardCategoryClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -27,8 +30,7 @@ fun PaymentCreateCard(onAddCardCategoryClick: () -> Unit, modifier: Modifier = M
                 .background(
                     color = GrayE5,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = onAddCardCategoryClick)
+                ).clickable(onClick = onAddCardCategoryClick),
     ) {
         Image(painter = painterResource(R.drawable.ic_create_card), "카드 추가 버튼 입니다")
     }

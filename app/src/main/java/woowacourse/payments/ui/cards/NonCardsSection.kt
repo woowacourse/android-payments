@@ -19,20 +19,24 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.components.PaymentCreateCard
 
 @Composable
-fun NonCardsSection(onAddClick: () -> Unit, modifier: Modifier = Modifier) {
+fun NonCardsSection(
+    onAddClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(32.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Spacer(Modifier.height(32.dp))
         Text(
             stringResource(R.string.guide_add_new_card),
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W700
-            ),
-            textAlign = TextAlign.Center
+            style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.W700,
+                ),
+            textAlign = TextAlign.Center,
         )
         PaymentCreateCard(onAddClick)
     }

@@ -9,28 +9,30 @@ import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardsStateHolderSaver : Saver<CardsStateHolder, CardsUiState> {
-    override fun SaverScope.save(value: CardsStateHolder): CardsUiState? =
-        value.cardsUiState
+    override fun SaverScope.save(value: CardsStateHolder): CardsUiState? = value.cardsUiState
 
-    override fun restore(value: CardsUiState): CardsStateHolder? =
-        CardsStateHolder(value)
+    override fun restore(value: CardsUiState): CardsStateHolder? = CardsStateHolder(value)
 }
 
-class CardsStateHolder(cardsUiState: CardsUiState) {
+class CardsStateHolder(
+    cardsUiState: CardsUiState,
+) {
     var cardsUiState by mutableStateOf(cardsUiState)
         private set
 
     fun addCard(cardUiModel: PaymentCardUiModel) {
         val currentCardsUiState = cardsUiState
-        cardsUiState = when (currentCardsUiState) {
-            is CardsUiState.Multiple -> CardsUiState.Multiple(currentCardsUiState.cards + cardUiModel)
-            CardsUiState.None -> CardsUiState.Single(cardUiModel)
-            is CardsUiState.Single -> CardsUiState.Multiple(
-                listOf(
-                    currentCardsUiState.card,
-                    cardUiModel
-                )
-            )
-        }
+        cardsUiState =
+            when (currentCardsUiState) {
+                is CardsUiState.Multiple -> CardsUiState.Multiple(currentCardsUiState.cards + cardUiModel)
+                CardsUiState.None -> CardsUiState.Single(cardUiModel)
+                is CardsUiState.Single ->
+                    CardsUiState.Multiple(
+                        listOf(
+                            currentCardsUiState.card,
+                            cardUiModel,
+                        ),
+                    )
+            }
     }
 }

@@ -46,16 +46,17 @@ fun CardsTopBar(
 @Composable
 fun CreateCardButton(
     onAddClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    TextButton(onClick = onAddClick,modifier) {
+    TextButton(onClick = onAddClick, modifier) {
         Text(
             stringResource(R.string.add_message),
             color = Color.Black,
-            style = MaterialTheme.typography.bodyLarge.copy(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W700
-            )
+            style =
+                MaterialTheme.typography.bodyLarge.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.W700,
+                ),
         )
     }
 }
@@ -77,4 +78,3 @@ fun SingleNewCardsTopBarPreview() {
 fun MultipleNewCardsTopBarPreview() {
     CardsTopBar(CardsUiState.Multiple(paymentCardUiModelSamples), {})
 }
-

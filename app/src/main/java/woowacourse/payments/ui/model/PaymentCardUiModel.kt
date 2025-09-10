@@ -13,7 +13,7 @@ data class PaymentCardUiModel(
         visibleGroups: Int = 2,
         groupSize: Int = 4,
         separator: String = " - ",
-        maskingChar: Char = '*'
+        maskingChar: Char = '*',
     ): String {
         val groups = cardNumbers.chunked(groupSize)
         val firstVisible = groups.take(visibleGroups)
@@ -21,9 +21,8 @@ data class PaymentCardUiModel(
         return (firstVisible + masked).joinToString(separator)
     }
 
-    fun formatCardExpiry(
-        separator: String = " / ",
-    ): String =
-        cardExpiry.chunked(2)
+    fun formatCardExpiry(separator: String = " / "): String =
+        cardExpiry
+            .chunked(2)
             .joinToString(separator)
 }

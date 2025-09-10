@@ -16,9 +16,11 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 import woowacourse.payments.ui.theme.Gray33
 
-
 @Composable
-fun PaymentCard(paymentCardUiModel: PaymentCardUiModel?, modifier: Modifier = Modifier) {
+fun PaymentCard(
+    paymentCardUiModel: PaymentCardUiModel?,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -28,7 +30,7 @@ fun PaymentCard(paymentCardUiModel: PaymentCardUiModel?, modifier: Modifier = Mo
                 .background(
                     color = Gray33,
                     shape = RoundedCornerShape(5.dp),
-                )
+                ),
     ) {
         Column(Modifier.padding(horizontal = 14.dp)) {
             PaymentCardChip()

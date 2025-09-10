@@ -18,12 +18,12 @@ import woowacourse.payments.ui.preview.paymentCardUiModelSample
 fun SingleCardsSection(
     onAddClick: () -> Unit,
     card: PaymentCardUiModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(36.dp),
-        modifier = modifier
+        modifier = modifier,
     ) {
         Spacer(Modifier.height(12.dp))
         PaymentCard(card)

@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardcreate
 
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -13,14 +12,14 @@ import woowacourse.payments.ui.utils.ext.formatCardExpiryException
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 
 class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiState> {
-    override fun SaverScope.save(value: CreateCardStateHolder): CreateCardUiState? =
-        value.cardCreateState
+    override fun SaverScope.save(value: CreateCardStateHolder): CreateCardUiState? = value.cardCreateState
 
-    override fun restore(value: CreateCardUiState): CreateCardStateHolder? =
-        CreateCardStateHolder(value)
+    override fun restore(value: CreateCardUiState): CreateCardStateHolder? = CreateCardStateHolder(value)
 }
 
-class CreateCardStateHolder(initialCardCreateState: CreateCardUiState = CreateCardUiState()) {
+class CreateCardStateHolder(
+    initialCardCreateState: CreateCardUiState = CreateCardUiState(),
+) {
     var cardCreateState by mutableStateOf(initialCardCreateState)
         private set
 
@@ -28,7 +27,6 @@ class CreateCardStateHolder(initialCardCreateState: CreateCardUiState = CreateCa
         cardCreateState.run {
             PaymentCardUiModel(cardNumber, expiryDate, ownerName)
         }
-
 
     fun updateCreateCardNumbers(cardNumbers: String) {
         if (!cardNumbers.isDigitsOnly() || cardNumbers.length > CARD_NUMBERS_MAX) return

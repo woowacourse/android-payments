@@ -7,8 +7,14 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 @Parcelize
 sealed interface CardsUiState : Parcelable {
     data object None : CardsUiState
-    data class Single(val card: PaymentCardUiModel) : CardsUiState
-    data class Multiple(val cards: List<PaymentCardUiModel>) : CardsUiState
+
+    data class Single(
+        val card: PaymentCardUiModel,
+    ) : CardsUiState
+
+    data class Multiple(
+        val cards: List<PaymentCardUiModel>,
+    ) : CardsUiState
 
     companion object {
         fun of(paymentCards: List<PaymentCardUiModel>): CardsUiState =

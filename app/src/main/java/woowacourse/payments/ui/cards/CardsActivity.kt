@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cards
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,7 +9,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,9 +30,10 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cardsStateHolder = rememberSaveable(saver = CardsStateHolderSaver()) {
-                    CardsStateHolder(CardsUiState.of(emptyList()))
-                }
+                val cardsStateHolder =
+                    rememberSaveable(saver = CardsStateHolderSaver()) {
+                        CardsStateHolder(CardsUiState.of(emptyList()))
+                    }
                 val cardAddLauncher = cardAddLauncher(cardsStateHolder, LocalContext.current)
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -44,8 +43,10 @@ class CardsActivity : ComponentActivity() {
                             onAddClick = {
                                 val intent = CreateCardActivity.instance(this)
                                 cardAddLauncher.launch(intent)
-                            })
-                    }) { innerPadding ->
+                            },
+                        )
+                    },
+                ) { innerPadding ->
                     CardsScreen(
                         cardsUiState = cardsStateHolder.cardsUiState,
                         onAddClick = {
@@ -54,7 +55,7 @@ class CardsActivity : ComponentActivity() {
                         },
                         Modifier
                             .padding(innerPadding)
-                            .fillMaxWidth()
+                            .fillMaxWidth(),
                     )
                 }
             }
@@ -62,26 +63,31 @@ class CardsActivity : ComponentActivity() {
     }
 
     @Composable
-    fun cardAddLauncher(cardsStateHolder: CardsStateHolder, context: Context) =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult()
-        ) { activityResult ->
-            if (activityResult.resultCode == RESULT_OK) {
-                val intent = activityResult.data
-                val cardUiModel = intent?.parcelable<PaymentCardUiModel>(
+    fun cardAddLauncher(
+        cardsStateHolder: CardsStateHolder,
+        context: Context,
+    ) = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { activityResult ->
+        if (activityResult.resultCode == RESULT_OK) {
+            val intent = activityResult.data
+            val cardUiModel =
+                intent?.parcelable<PaymentCardUiModel>(
                     NEW_CARD_KEY,
                 ) ?: return@rememberLauncherForActivityResult
-                cardsStateHolder.addCard(cardUiModel)
-                Toast.makeText(
+            cardsStateHolder.addCard(cardUiModel)
+            Toast
+                .makeText(
                     context,
                     getString(R.string.created_card_message),
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_SHORT,
                 ).show()
-            }
         }
+    }
 
     companion object {
         private const val NEW_CARD_KEY = "new_card_key"
+
         fun intent(cardUiModel: PaymentCardUiModel) = Intent().putExtra(NEW_CARD_KEY, cardUiModel)
     }
 }

@@ -13,11 +13,11 @@ import woowacourse.payments.ui.preview.paymentCardUiModelSamples
 fun CardsScreen(
     cardsUiState: CardsUiState,
     onAddClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier,
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.TopCenter,
     ) {
         when (cardsUiState) {
             CardsUiState.None -> NonCardsSection(onAddClick)

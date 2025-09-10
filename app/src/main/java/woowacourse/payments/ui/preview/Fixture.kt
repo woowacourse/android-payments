@@ -9,5 +9,5 @@ val paymentCardUiModelSamples =
     listOf(
         paymentCardUiModelSample,
         paymentCardUiModelSample,
-        paymentCardUiModelSample
+        paymentCardUiModelSample,
     )
