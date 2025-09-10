@@ -23,7 +23,6 @@ fun CardWalletTopBar(
     onAddCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
 
     CenterAlignedTopAppBar(
         title = {

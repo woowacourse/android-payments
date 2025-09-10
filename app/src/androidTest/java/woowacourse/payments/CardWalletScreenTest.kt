@@ -14,7 +14,7 @@ class CardWalletScreenTest {
     @Test
     fun `Payments라는_텍스트가_표시된다`() {
         composeTestRule.setContent {
-            CardWalletScreen()
+            CardWalletScreen(cardList,)
         }
         composeTestRule.onNodeWithText("Payments").assertIsDisplayed()
     }
