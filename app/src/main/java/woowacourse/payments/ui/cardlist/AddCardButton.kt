@@ -13,8 +13,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.theme.AddCardButtonBackgroundColor
-import woowacourse.payments.ui.theme.AddCardButtonTextColor
+import woowacourse.payments.ui.theme.AddCardButtonBackground
+import woowacourse.payments.ui.theme.AddCardButtonText
 
 @Composable
 fun AddCardButton(
@@ -28,14 +28,14 @@ fun AddCardButton(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = AddCardButtonBackgroundColor,
+                    color = AddCardButtonBackground,
                     shape = RoundedCornerShape(5.dp),
                 ).clickable { onAddCard() },
     ) {
         Text(
             text = "+",
             fontSize = 34.sp,
-            color = AddCardButtonTextColor,
+            color = AddCardButtonText,
         )
     }
 }

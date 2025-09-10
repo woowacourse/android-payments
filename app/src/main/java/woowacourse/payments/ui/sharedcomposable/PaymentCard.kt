@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.CardBackgroundColor
-import woowacourse.payments.ui.theme.CardEmvChipColor
+import woowacourse.payments.ui.theme.CardBackground
+import woowacourse.payments.ui.theme.CardEmvChip
 
 @Composable
 fun PaymentCard(
@@ -33,7 +33,7 @@ fun PaymentCard(
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
             .background(
-                color = CardBackgroundColor,
+                color = CardBackground,
                 shape = RoundedCornerShape(5.dp),
             ),
     ) {
@@ -46,7 +46,7 @@ fun PaymentCard(
                 Modifier
                     .size(width = 40.dp, height = 26.dp)
                     .background(
-                        color = CardEmvChipColor,
+                        color = CardEmvChip,
                         shape = RoundedCornerShape(4.dp),
                     ),
             )

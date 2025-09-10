@@ -12,10 +12,10 @@ val Pink40 = Color(0xFF7D5260)
 
 val Gray = Color(0xFFAAAAAA)
 
-val CardBackgroundColor = Color(0xFF333333)
+val CardBackground = Color(0xFF333333)
 
-val CardEmvChipColor = Color(0xFFCBBA64)
+val CardEmvChip = Color(0xFFCBBA64)
 
-val AddCardButtonBackgroundColor = Color(0xFFE5E5E5)
+val AddCardButtonBackground = Color(0xFFE5E5E5)
 
-val AddCardButtonTextColor = Color(0xFF575757)
+val AddCardButtonText = Color(0xFF575757)
