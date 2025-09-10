@@ -62,13 +62,7 @@ fun ExpirationDateTextField(
             )
         },
         supportingText = {
-            Text(
-                if (isError.value) {
-                    stringResource(R.string.expiration_date_error_message)
-                } else {
-                    ""
-                },
-            )
+            if (isError.value) Text(stringResource(R.string.expiration_date_error_message)) else null
         },
         isError = isError.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

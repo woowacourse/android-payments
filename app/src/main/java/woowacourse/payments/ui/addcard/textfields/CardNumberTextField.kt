@@ -53,13 +53,7 @@ fun CardNumberTextField(
             )
         },
         supportingText = {
-            Text(
-                if (isError.value) {
-                    stringResource(R.string.card_number_error_message)
-                } else {
-                    ""
-                },
-            )
+            if (isError.value) Text(stringResource(R.string.card_number_error_message)) else null
         },
         isError = isError.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

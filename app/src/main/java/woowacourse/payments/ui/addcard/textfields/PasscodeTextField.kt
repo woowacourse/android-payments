@@ -52,13 +52,7 @@ fun PasscodeTextField(
             )
         },
         supportingText = {
-            Text(
-                if (isError.value) {
-                    stringResource(R.string.passcode_error_message)
-                } else {
-                    ""
-                },
-            )
+            if (isError.value) Text(stringResource(R.string.passcode_error_message)) else null
         },
         isError = isError.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
