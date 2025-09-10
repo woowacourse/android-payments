@@ -79,6 +79,7 @@ fun RegisteredCardPreview() {
             cardNumber = "1234567890123456",
             cardHolderName = "홍길동",
             cardExpiryDate = "1224",
+            cardPassword = "1234"
         )
     )
 }
