@@ -3,24 +3,31 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.CardholderName
 
 @Parcelize
 data class CardholderNameUiModel(
-    val cardholderName: String,
-    val maxLength: Int = DEFAULT_MAX_LENGTH,
+    private val cardholderNameValue: String = "",
+    val maxLength: Int,
+    val state: State = State.VALID,
 ) : Parcelable {
-    init {
-        require(cardholderName.length <= maxLength) { INVALID_CARDHOLDER_NAME_LENGTH_MESSAGE }
-        require(cardholderName.all { it.isLetter() || it.isWhitespace() }) { INVALID_CARDHOLDER_NAME_MESSAGE }
-    }
+    @IgnoredOnParcel
+    val cardholderName = cardholderNameValue.uppercase()
 
     @IgnoredOnParcel
-    val length: Int = cardholderName.length
+    val isValid: Boolean = state == State.VALID
+
+    enum class State {
+        VALID,
+        INVALID,
+    }
 
     companion object {
-        private const val DEFAULT_MAX_LENGTH = 30
-        private const val INVALID_CARDHOLDER_NAME_LENGTH_MESSAGE =
-            "[ERROR] 최대 글자 수는 $DEFAULT_MAX_LENGTH 입니다."
-        private const val INVALID_CARDHOLDER_NAME_MESSAGE = "[ERROR] 소유자 이름은 영문만 입력 가능합니다."
+        fun from(cardholderName: CardholderName): CardholderNameUiModel =
+            CardholderNameUiModel(
+                cardholderNameValue = cardholderName.value,
+                maxLength = CardholderName.MAX_LENGTH,
+                state = State.VALID,
+            )
     }
 }

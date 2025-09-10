@@ -1,7 +1,14 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -14,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardholderNameUiModel
 
@@ -21,25 +29,30 @@ private const val INPUT_TEXT_COUNT_SEPARATOR = "%d/%d"
 
 @Composable
 fun CardholderNameTextField(
-    cardholderName: CardholderNameUiModel,
-    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
+    cardholderName: String,
+    onCardholderNameChanged: (String) -> Unit,
+    maxLength: Int,
+    errorMessage: String?,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.cardholder_name_text_field_placeholder)) },
-        value = cardholderName.cardholderName,
-        onValueChange = { newValue ->
-            runCatching { CardholderNameUiModel(newValue.uppercase()) }
-                .onSuccess(onCardholderNameChanged)
+        value = cardholderName,
+        onValueChange = onCardholderNameChanged,
+        isError = errorMessage != null,
+        trailingIcon = {
+            errorMessage?.let {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                )
+            }
         },
         supportingText = {
+            errorMessage?.let { message -> Text(text = message) }
             Text(
-                text =
-                    INPUT_TEXT_COUNT_SEPARATOR.format(
-                        cardholderName.length,
-                        cardholderName.maxLength,
-                    ),
+                text = INPUT_TEXT_COUNT_SEPARATOR.format(cardholderName.length, maxLength),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -57,18 +70,34 @@ fun CardholderNameTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun CardholderNameTextFieldPreview(
-    @PreviewParameter(CardholderNameTextFieldPreviewParameterProvider::class) cardholderName: CardholderNameUiModel,
+    @PreviewParameter(CardholderNameTextFieldPreviewParameterProvider::class) case:
+        CardholderNameTextFieldPreviewParameterProvider.CardholderNamePreviewCase,
 ) {
-    CardholderNameTextField(
-        cardholderName = cardholderName,
-        onCardholderNameChanged = {},
-    )
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Preview Case: ${case.caseName}")
+        HorizontalDivider()
+        CardholderNameTextField(
+            cardholderName = case.cardholderName,
+            onCardholderNameChanged = {},
+            maxLength = 30,
+            errorMessage = case.errorMessage,
+            modifier = Modifier.padding(horizontal = 12.dp),
+        )
+    }
 }
 
-private class CardholderNameTextFieldPreviewParameterProvider : PreviewParameterProvider<CardholderNameUiModel> {
+private class CardholderNameTextFieldPreviewParameterProvider :
+    PreviewParameterProvider<CardholderNameTextFieldPreviewParameterProvider.CardholderNamePreviewCase> {
+    data class CardholderNamePreviewCase(
+        val caseName: String,
+        val cardholderName: String,
+        val errorMessage: String?
+    )
+
     override val values =
         sequenceOf(
-            CardholderNameUiModel(""),
-            CardholderNameUiModel("DICE"),
+            CardholderNamePreviewCase("빈 값", "", null),
+            CardholderNamePreviewCase("정상", "DICE", null),
+            CardholderNamePreviewCase("오류", "1234", "유효하지 않은 형식입니다."),
         )
 }
