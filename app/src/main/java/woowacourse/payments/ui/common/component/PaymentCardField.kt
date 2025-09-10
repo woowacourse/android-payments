@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
@@ -39,27 +40,32 @@ fun PaymentCardField(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier =
-                    Modifier
-                        .padding(start = 14.dp, bottom = 8.dp, top = 22.dp)
-                        .size(width = 40.dp, height = 26.dp)
-                        .background(
-                            color = Color(0xFFCBBA64),
-                            shape = RoundedCornerShape(4.dp),
-                        ),
-            )
+        Box(
+            modifier =
+                Modifier
+                    .padding(start = 14.dp)
+                    .size(width = 40.dp, height = 26.dp)
+                    .background(
+                        color = Color(0xFFCBBA64),
+                        shape = RoundedCornerShape(4.dp),
+                    )
+                    .align(Alignment.CenterStart)
+        )
 
-            if (paymentCardUiModel != null) {
+        if (paymentCardUiModel != null) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 8.dp)
+            ) {
                 Text(
                     text = paymentCardUiModel.formatNumber(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 13.sp,
                     letterSpacing = 3.5.sp,
+                    lineHeight = 1.em,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 2.dp)
@@ -76,6 +82,7 @@ fun PaymentCardField(
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
+                        lineHeight = 1.em,
                         modifier = Modifier
                             .weight(1f)
                             .padding(end = 2.dp),
@@ -86,6 +93,7 @@ fun PaymentCardField(
                         text = paymentCardUiModel.formatExpirationDate(),
                         color = Color.White,
                         fontWeight = FontWeight.W500,
+                        lineHeight = 1.em,
                         fontSize = 13.sp,
                     )
                 }
