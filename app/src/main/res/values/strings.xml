@@ -21,4 +21,6 @@
     <string name="error_card_expiry_invalid_year">년도 형식이 올바르지 않습니다</string>
     <string name="error_card_expiry_expired">만료된 카드입니다</string>
     <string name="created_card_message">카드가 추가되었습니다</string>
+    <string name="add_message">추가</string>
+    <string name="guide_add_new_card">새로운 카드를 등록해주세요</string>
 </resources>

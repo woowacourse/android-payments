@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.GrayE5
@@ -31,4 +32,10 @@ fun PaymentCreateCard(onAddCardCategoryClick: () -> Unit, modifier: Modifier = M
     ) {
         Image(painter = painterResource(R.drawable.ic_create_card), "카드 추가 버튼 입니다")
     }
+}
+
+@Preview
+@Composable
+fun PaymentCreateCardPreview() {
+    PaymentCreateCard({})
 }

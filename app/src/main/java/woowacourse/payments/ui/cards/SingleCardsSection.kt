@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.PaymentCreateCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.paymentCardUiModelSample
+import woowacourse.payments.ui.preview.paymentCardUiModelSample
 
 @Composable
 fun SingleCardsSection(

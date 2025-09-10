@@ -6,8 +6,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.cards.model.CardsUiState
-import woowacourse.payments.ui.model.paymentCardUiModelSample
-import woowacourse.payments.ui.model.paymentCardUiModelSamples
+import woowacourse.payments.ui.preview.paymentCardUiModelSample
+import woowacourse.payments.ui.preview.paymentCardUiModelSamples
 
 @Composable
 fun CardsScreen(

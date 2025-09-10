@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.model.CardsUiState
-import woowacourse.payments.ui.model.paymentCardUiModelSample
-import woowacourse.payments.ui.model.paymentCardUiModelSamples
+import woowacourse.payments.ui.preview.paymentCardUiModelSample
+import woowacourse.payments.ui.preview.paymentCardUiModelSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,7 +49,7 @@ fun CreateCardButton(
 ) {
     TextButton(onClick = onAddClick) {
         Text(
-            "추가",
+            stringResource(R.string.add_message),
             color = Color.Black,
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontSize = 18.sp,
@@ -59,21 +59,21 @@ fun CreateCardButton(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun NoneNewCardsTopBarPreview() {
-//    CardsTopBar(CardsUiState.None, {})
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun SingleNewCardsTopBarPreview() {
-//    CardsTopBar(CardsUiState.Single(paymentCardUiModelSample), {})
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun MultipleNewCardsTopBarPreview() {
-//    CardsTopBar(CardsUiState.Multiple(paymentCardUiModelSamples), {})
-//}
+@Preview(showBackground = true)
+@Composable
+fun NoneNewCardsTopBarPreview() {
+    CardsTopBar(CardsUiState.None, {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun SingleNewCardsTopBarPreview() {
+    CardsTopBar(CardsUiState.Single(paymentCardUiModelSample), {})
+}
+
+@Preview(showBackground = true)
+@Composable
+fun MultipleNewCardsTopBarPreview() {
+    CardsTopBar(CardsUiState.Multiple(paymentCardUiModelSamples), {})
+}
 

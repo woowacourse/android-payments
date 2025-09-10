@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.paymentCardUiModelSamples
+import woowacourse.payments.ui.preview.paymentCardUiModelSamples
 
 @Composable
 fun MultiCardsSection(cards: List<PaymentCardUiModel>, modifier: Modifier = Modifier) {
