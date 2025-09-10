@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @Suppress("ktlint:standard:function-naming")
-class CardExpirationDateTextFieldTest {
+class CardPasswordTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -21,37 +21,36 @@ class CardExpirationDateTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var text by remember { mutableStateOf("") }
-            CardExpirationDateTextField(value = text, onValueChange = { text = it })
+            CardPasswordTextField(value = text, onValueChange = { text = it })
         }
     }
 
     @Test
-    fun 카드_만료일_필드에_값을_입력하면_자동으로_기호가_삽입된다() {
+    fun 카드_비밀번호_필드에_값을_입력하면_입력값이_표시된다() {
         // given
-        val input = "1234"
+        val input = "0000"
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 비밀번호")
             .performTextInput(input)
-        val expected = "12 / 34"
 
         // then
         composeTestRule
-            .onNodeWithText(expected)
+            .onNodeWithText(input)
             .assertIsDisplayed()
     }
 
     @Test
-    fun 카드_만료일_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
+    fun 카드_비밀번호_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
         // given
-        val input = "12345"
+        val input = "00000"
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 비밀번호")
             .performTextInput(input)
-        val expected = "12 / 34"
+        val expected = "0000"
 
         // then
         composeTestRule
@@ -66,9 +65,26 @@ class CardExpirationDateTextFieldTest {
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 비밀번호")
             .performTextInput(input)
         val expected = "12"
+
+        // then
+        composeTestRule
+            .onNodeWithText(expected)
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun 카드_비밀번호는_마스킹되어_표시된다() {
+        // given
+        val input = "0000"
+
+        // when
+        composeTestRule
+            .onNodeWithText("카드 비밀번호")
+            .performTextInput(input)
+        val expected = "••••"
 
         // then
         composeTestRule
