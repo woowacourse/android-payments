@@ -1,6 +1,8 @@
 package woowacourse.payments.ui.addcard.textfields
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -14,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
@@ -53,7 +56,9 @@ fun PasscodeTextField(
             )
         },
         supportingText = {
-            if (isError.value) Text(stringResource(R.string.passcode_error_message)) else null
+            Box(Modifier.height(20.dp)) {
+                if (isError.value) Text(stringResource(R.string.passcode_error_message)) else null
+            }
         },
         isError = isError.value,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
