@@ -1,5 +1,9 @@
 package woowacourse.payments
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -19,9 +23,10 @@ class CardPasswordTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
+            var text by remember { mutableStateOf("") }
             DigitTextField(
-                text = "",
-                onValueChange = {},
+                text = text,
+                onValueChange = { text = it },
                 label = "비밀번호",
                 hint = "0000",
                 maxLength = 4,
