@@ -43,6 +43,7 @@ fun NewCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     onSaveClick(
