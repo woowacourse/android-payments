@@ -1,6 +1,8 @@
 package woowacourse.payments.ui.cards
 
 import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,7 @@ import woowacourse.payments.ui.cards.components.Cards
 import woowacourse.payments.ui.cards.components.CardsTopBar
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
+import woowacourse.payments.ui.util.extensions.getSerializableCompat
 
 @Composable
 fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
@@ -29,7 +32,7 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = activityResult.data?.getParcelableExtra<PaymentCardUiModel>(EXTRA_NEW_CARD)
+                val newCard = activityResult.data?.getSerializableCompat<PaymentCardUiModel>(EXTRA_NEW_CARD)
                 newCard?.let { cardList.add(it) }
             }
         }
