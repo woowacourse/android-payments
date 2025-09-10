@@ -6,7 +6,6 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -30,15 +29,14 @@ import woowacourse.payments.ui.newcard.NewCardActivity
 @Composable
 fun Cards(
     scrollState: ScrollState,
-    innerPadding: PaddingValues,
     cardAddLauncher: ActivityResultLauncher<Intent>,
     cardList: List<PaymentCardUiModel>,
+    modifier: Modifier = Modifier,
     minimumCardCountForAddButton: Int = 0,
 ) {
     Column(
         modifier =
-            Modifier
-                .padding(innerPadding)
+            modifier
                 .padding(top = 12.dp)
                 .fillMaxSize()
                 .verticalScroll(scrollState),
@@ -85,7 +83,6 @@ private fun getDummyCardAddLauncher(): ActivityResultLauncher<Intent> =
 private fun CardsPreview_NoCards() {
     Cards(
         scrollState = rememberScrollState(),
-        innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = emptyList(),
         minimumCardCountForAddButton = 1,
@@ -103,7 +100,6 @@ private fun CardsPreview_OneCard_AddButtonVisible() {
         )
     Cards(
         scrollState = rememberScrollState(),
-        innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = listOf(sampleCard),
         minimumCardCountForAddButton = 1,
@@ -128,7 +124,6 @@ private fun CardsPreview_MultipleCards_AddButtonHidden() {
         )
     Cards(
         scrollState = rememberScrollState(),
-        innerPadding = PaddingValues(0.dp),
         cardAddLauncher = getDummyCardAddLauncher(),
         cardList = sampleCards,
         minimumCardCountForAddButton = 1,

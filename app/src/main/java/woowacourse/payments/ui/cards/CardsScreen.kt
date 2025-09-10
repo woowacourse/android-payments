@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -44,9 +45,9 @@ fun CardsScreen(minimumCardCountForAddButton: Int = 0) {
     ) { innerPadding ->
         Cards(
             scrollState = scrollState,
-            innerPadding = innerPadding,
             cardAddLauncher = cardAddLauncher,
             cardList = cardList,
+            modifier = Modifier.padding(innerPadding),
             minimumCardCountForAddButton = minimumCardCountForAddButton,
         )
     }

@@ -5,14 +5,12 @@ import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityOptionsCompat
 import org.junit.Rule
 import org.junit.Test
@@ -53,7 +51,6 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
                 minimumCardCountForAddButton = 1,
@@ -72,7 +69,6 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = emptyList(),
                 minimumCardCountForAddButton = 1,
@@ -95,7 +91,6 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
                 minimumCardCountForAddButton = 1,
@@ -114,7 +109,6 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD),
                 minimumCardCountForAddButton = 1,
@@ -133,7 +127,6 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                innerPadding = PaddingValues(0.dp),
                 cardAddLauncher = fakeLauncher,
                 cardList = listOf(HWANNOW_CARD, JUNSEO511_CARD),
                 minimumCardCountForAddButton = 1,
