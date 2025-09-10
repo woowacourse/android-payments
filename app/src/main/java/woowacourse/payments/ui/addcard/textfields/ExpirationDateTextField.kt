@@ -79,10 +79,10 @@ fun ExpirationDateTextFieldPreview() {
             remember {
                 mutableStateOf(
                     CardUiModel(
-                        "1234 - 1234 - **** - ****",
+                        "1234123412341234",
                         "1234",
                         "CREW",
-                        "1234",
+                        "0000",
                     ),
                 )
             },
@@ -98,10 +98,10 @@ fun ExpirationDateTextFieldWithErrorPreview() {
             remember {
                 mutableStateOf(
                     CardUiModel(
-                        "1234 - 1234 - **** - ****",
+                        "1234123412341234",
                         "9999",
                         "CREW",
-                        "1234",
+                        "0000",
                     ),
                 )
             },

@@ -68,10 +68,10 @@ fun PasscodeTextFieldPreview() {
             remember {
                 mutableStateOf(
                     CardUiModel(
-                        "1234 - 1234 - **** - ****",
-                        "34 / 12",
-                        "CREW",
+                        "1234123412341234",
                         "1234",
+                        "CREW",
+                        "0000",
                     ),
                 )
             },
@@ -87,10 +87,10 @@ fun PasscodeTextFieldWithErrorPreview() {
             remember {
                 mutableStateOf(
                     CardUiModel(
-                        "1234 - 1234 - **** - ****",
-                        "34 / 12",
+                        "1234123412341234",
+                        "1234",
                         "CREW",
-                        "123",
+                        "00",
                     ),
                 )
             },

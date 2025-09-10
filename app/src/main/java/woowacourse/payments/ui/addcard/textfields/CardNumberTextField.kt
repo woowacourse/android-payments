@@ -71,9 +71,9 @@ fun CardNumberTextFieldPreview() {
                 mutableStateOf(
                     CardUiModel(
                         "1234123412341234",
-                        "34 / 12",
-                        "CREW",
                         "1234",
+                        "CREW",
+                        "0000",
                     ),
                 )
             },
@@ -90,9 +90,9 @@ fun CardNumberTextFieldWithErrorPreview() {
                 mutableStateOf(
                     CardUiModel(
                         "12341234",
-                        "34 / 12",
-                        "CREW",
                         "1234",
+                        "CREW",
+                        "0000",
                     ),
                 )
             },
