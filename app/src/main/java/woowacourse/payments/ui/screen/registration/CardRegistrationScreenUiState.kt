@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments.registration
+package woowacourse.payments.ui.screen.registration
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

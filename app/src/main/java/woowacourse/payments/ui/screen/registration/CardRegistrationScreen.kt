@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments.registration
+package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,12 +23,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.component.CardExpirationDateTextField
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardPasswordTextField
+import woowacourse.payments.ui.component.CardRegistrationTopAppBar
+import woowacourse.payments.ui.component.CardholderNameTextField
+import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.payments.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable

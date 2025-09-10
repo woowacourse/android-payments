@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments.registration
+package woowacourse.payments.ui.screen.registration
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.payments.CardsActivity
+import woowacourse.payments.ui.screen.cards.CardsActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardRegistrationActivity : ComponentActivity() {

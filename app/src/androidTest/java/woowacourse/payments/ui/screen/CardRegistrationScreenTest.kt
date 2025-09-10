@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments.registration
+package woowacourse.payments.ui.screen
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.screen.registration.CardRegistrationScreen
 
 class CardRegistrationScreenTest {
     @get:Rule

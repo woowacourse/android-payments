@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.screen.cards
 
 enum class CardsScreenState {
     EMPTY,

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.screen.cards
 
 import android.app.Activity
 import android.widget.Toast
@@ -32,12 +32,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.getParcelableExtraCompat
+import woowacourse.payments.ui.component.CardsTopAppBar
+import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.payments.CardsActivity.Companion.EXTRA_CARDS_REGISTER_NEW_CARD
-import woowacourse.payments.ui.payments.registration.CardRegistrationActivity
+import woowacourse.payments.ui.screen.cards.CardsActivity.Companion.EXTRA_CARDS_REGISTER_NEW_CARD
+import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.TextGray
 
 @Composable
