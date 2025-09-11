@@ -3,12 +3,12 @@ package woowacourse.payments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.newcard.NewCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.util.showShortToast
 
 class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,12 +24,7 @@ class NewCardActivity : ComponentActivity() {
                         finish()
                     },
                     onCardSaveFailed = {
-                        Toast
-                            .makeText(
-                                this,
-                                getString(R.string.card_save_failed),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        showShortToast(getString(R.string.card_save_failed))
                     },
                 )
             }
