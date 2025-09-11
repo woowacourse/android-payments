@@ -1,6 +1,5 @@
 package woowacourse.payments
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,10 +11,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import woowacourse.payments.AddcardActivity.Companion.getPaymentCardUiModel
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 class CardlistActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +28,10 @@ class CardlistActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
-                        if (activityResult.resultCode == Activity.RESULT_OK) {
-                            val newCard =
-                                activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
-                                    AddcardActivity.EXTRA_PAYMENT_CARD_UI_MODEL,
-                                )
-                            newCard?.let {
-                                cardUiModels.add(it)
-                                showToast(this, R.string.card_list_card_added_alert)
-                            }
+                        val newCard = getPaymentCardUiModel(activityResult)
+                        newCard?.let {
+                            cardUiModels.add(it)
+                            showToast(this, R.string.card_list_card_added_alert)
                         }
                     }
 
