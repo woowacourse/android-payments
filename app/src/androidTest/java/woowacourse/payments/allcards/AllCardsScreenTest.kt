@@ -92,10 +92,11 @@ class AllCardsScreenTest {
 
         // when - then
         composeTestRule
-            .onAllNodesWithText("홍길동")
+            .onNodeWithContentDescription("추가")
+            .assertDoesNotExist()
 
         composeTestRule
-            .onNodeWithContentDescription("추가")
+            .onNodeWithText("추가")
             .assertDoesNotExist()
     }
 }
