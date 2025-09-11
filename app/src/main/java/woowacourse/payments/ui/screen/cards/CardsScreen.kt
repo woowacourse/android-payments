@@ -5,8 +5,11 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -90,14 +93,11 @@ private fun CardsScreenContent(
     onRegistrationButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .padding(vertical = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 20.dp),
+        contentAlignment = Alignment.TopCenter,
     ) {
         when (cardsUiState) {
             is CardsUiState.EMPTY -> CardsEmptyContent(onRegistrationButtonClick)
@@ -109,28 +109,49 @@ private fun CardsScreenContent(
 }
 
 @Composable
-private fun CardsEmptyContent(onRegistrationButtonClick: () -> Unit) {
-    Text(
-        text = stringResource(R.string.cards_screen_registration_message),
-        color = Color.Black,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.W700,
-    )
-    CardRegistrationButton(onClick = onRegistrationButtonClick)
+private fun CardsEmptyContent(
+    onRegistrationButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(R.string.cards_screen_registration_message),
+            color = Color.Black,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.W700,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        CardRegistrationButton(onClick = onRegistrationButtonClick)
+    }
 }
 
 @Composable
 private fun CardsSingleContent(
     card: PaymentCardUiModel,
     onRegistrationButtonClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    PaymentCard(paymentCardUiModel = card)
-    CardRegistrationButton(onClick = onRegistrationButtonClick)
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+        PaymentCard(paymentCardUiModel = card)
+        CardRegistrationButton(onClick = onRegistrationButtonClick)
+    }
 }
 
 @Composable
-private fun CardsMultipleContent(cards: List<PaymentCardUiModel>) {
-    cards.forEach { PaymentCard(paymentCardUiModel = it) }
+private fun CardsMultipleContent(
+    cards: List<PaymentCardUiModel>,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+    ) {
+        cards.forEach { card -> PaymentCard(paymentCardUiModel = card) }
+        Spacer(modifier = Modifier.height(12.dp))
+    }
 }
 
 @Preview(showBackground = true)
