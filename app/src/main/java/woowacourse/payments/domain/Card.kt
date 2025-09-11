@@ -1,15 +1,11 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class Card(
     val number: CardNumber,
     val expirationDate: CardExpirationDate,
     val password: CardPassword,
     val holderName: CardHolderName? = null,
-) : Parcelable {
+) {
     init {
         require(!expirationDate.isExpired()) { ERROR_EXPIRED_CARD_EXPIRATION_DATE }
     }

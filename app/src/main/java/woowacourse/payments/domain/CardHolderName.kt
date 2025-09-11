@@ -1,13 +1,9 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 @JvmInline
 value class CardHolderName(
     val name: String,
-) : Parcelable {
+) {
     init {
         require(name.length in MIN_NAME_LENGTH..MAX_NAME_LENGTH) { ERROR_INVALID_NAME_LENGTH }
     }
