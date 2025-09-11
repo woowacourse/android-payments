@@ -63,7 +63,12 @@ object CardMapper {
                 }
 
         val ownerName =
-            runCatching { OwnerName(this.ownerName) }.getOrElse { return CardCreationResult.InvalidOwnerName }
+            OwnerName
+                .create(this.ownerName)
+                .fold(
+                    onSuccess = { it },
+                    onFailure = { return CardCreationResult.InvalidOwnerName },
+                )
 
         val password =
             runCatching { Password(this.password) }.getOrElse { return CardCreationResult.InvalidPassword }

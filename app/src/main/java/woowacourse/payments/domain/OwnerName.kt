@@ -1,21 +1,25 @@
 package woowacourse.payments.domain
 
+import woowacourse.payments.domain.exception.OwnerNamerException
+
 @JvmInline
-value class OwnerName(
+value class OwnerName private constructor(
     val value: String?,
 ) {
     init {
-        require(checkValidOwnerName(value)) {
-            "카드 소유자 이름이 유효하지 않습니다."
+        value?.length?.let {
+            if (it > MAX_LENGTH_OWNER_NAME) {
+                throw OwnerNamerException.InvalidLength
+            }
         }
-    }
-
-    private fun checkValidOwnerName(ownerName: String?): Boolean {
-        if (ownerName == null) return true
-        return ownerName.length <= MAX_LENGTH_OWNER_NAME
     }
 
     companion object {
         const val MAX_LENGTH_OWNER_NAME = 30
+
+        fun create(value: String?): Result<OwnerName> =
+            runCatching {
+                OwnerName(value)
+            }
     }
 }

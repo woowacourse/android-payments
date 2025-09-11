@@ -101,12 +101,12 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
                 value = cardUiState.cardNumber,
-                onValueChange = { cardUiState = cardUiState.copy(cardNumber = it) },
+                onValueChange = { cardUiState = cardUiState.updateCardNumber(it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardExpireDateField(
                 value = cardUiState.expireDate,
-                onValueChange = { cardUiState = cardUiState.copy(expireDate = it) },
+                onValueChange = { cardUiState = cardUiState.updateExpireDate(it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
@@ -116,12 +116,12 @@ fun AddCardScreen(
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardOwnerNameField(
                 value = cardUiState.ownerName,
-                onValueChange = { cardUiState = cardUiState.copy(ownerName = it) },
+                onValueChange = { cardUiState = cardUiState.updateOwnerName(it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardPasswordField(
                 value = cardUiState.password,
-                onValueChange = { cardUiState = cardUiState.copy(password = it) },
+                onValueChange = { cardUiState = cardUiState.updatePassword(it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
