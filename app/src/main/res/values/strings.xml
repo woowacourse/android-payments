@@ -3,6 +3,7 @@
 
     <string name="add">추가</string>
     <string name="add_card_message">새로운 카드를 등록해주세요</string>
+    <string name="add_button_description">카드 추가하기</string>
     <string name="add_card_button_description">카드 등록하기</string>
 
     <string name="add_card">카드 추가</string>
