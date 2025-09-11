@@ -15,10 +15,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.cards.toParcelable
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpiredDate
-import woowacourse.payments.domain.OwnerName
-import woowacourse.payments.domain.Password
 import woowacourse.payments.newcard.component.CardNumberTextField
 import woowacourse.payments.newcard.component.ExpiredDateTextField
 import woowacourse.payments.newcard.component.NewCardTopBar
@@ -43,7 +39,7 @@ fun NewCardScreen(
                 onSaveClick = {
                     val cardResult: Result<Card> =
                         with(newCardStateHolder) {
-                            makeCard(cardNumber, expiredDate, ownerName, password)
+                            Card.from(cardNumber, expiredDate, ownerName, password)
                         }
 
                     cardResult
@@ -94,18 +90,3 @@ fun NewCardScreen(
         }
     }
 }
-
-private fun makeCard(
-    cardNumber: String,
-    expiredDate: String,
-    ownerName: String,
-    password: String,
-): Result<Card> =
-    runCatching {
-        val cardNumber = CardNumber(cardNumber)
-        val expiredDate = ExpiredDate.of(expiredDate) ?: throw IllegalArgumentException()
-        val ownerName = OwnerName(ownerName)
-        val password = Password(password)
-
-        Card(cardNumber, expiredDate, ownerName, password)
-    }
