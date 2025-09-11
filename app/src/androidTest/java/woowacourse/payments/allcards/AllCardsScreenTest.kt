@@ -10,6 +10,8 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.cards
+import woowacourse.payments.multipleAllCardUiState
+import woowacourse.payments.singleAllCardUiState
 import woowacourse.payments.ui.allcards.AllCardsScreen
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 
@@ -36,36 +38,11 @@ class AllCardsScreenTest {
     }
 
     @Test
-    fun 카드가_없을_때_등록_안내_문구와_카드_추가_버튼을_출력한다() {
+    fun Single뷰_타입일_떄_등록된_카드와_카드_추가_버튼을_출력한다() {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                AllCardsUiState(
-                    mutableStateListOf(),
-                ),
-            )
-        }
-
-        // when - then
-        composeTestRule
-            .onNodeWithText("새로운 카드를 등록해주세요")
-            .assertExists()
-
-        composeTestRule
-            .onNodeWithContentDescription("추가")
-            .assertExists()
-    }
-
-    @Test
-    fun 카드가_하나일_떄_등록된_카드와_카드_추가_버튼을_출력한다() {
-        // given
-        composeTestRule.setContent {
-            AllCardsScreen(
-                AllCardsUiState(
-                    mutableListOf(
-                        cards.first(),
-                    ),
-                ),
+                singleAllCardUiState,
             )
         }
 
@@ -80,13 +57,11 @@ class AllCardsScreenTest {
     }
 
     @Test
-    fun 카드가_두개_이상일_때_등록된_카드만_출력한다() {
+    fun Multiple_뷰_타입일때_가_두개_이상일_때_등록된_카드만_출력한다() {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                AllCardsUiState(
-                    cards,
-                ),
+                multipleAllCardUiState,
             )
         }
 

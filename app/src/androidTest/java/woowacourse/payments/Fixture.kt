@@ -1,6 +1,7 @@
 package woowacourse.payments
 
 import androidx.compose.runtime.mutableStateListOf
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
@@ -31,3 +32,12 @@ val cards =
             ),
         ),
     )
+
+val singleAllCardUiState =
+    AllCardsUiState(
+        mutableListOf(
+            cards.first(),
+        ),
+    )
+
+val multipleAllCardUiState = AllCardsUiState(cards)
