@@ -25,7 +25,7 @@ fun CardRegistrationTopAppBar(
     isSaveButtonEnabled: Boolean = false,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.card_registration_bar_title)) },
+        title = { Text(stringResource(R.string.card_registration_top_app_bar_title)) },
         navigationIcon = {
             IconButton(
                 modifier = Modifier.semantics { contentDescription = "뒤로 가기 버튼" },
@@ -33,7 +33,7 @@ fun CardRegistrationTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.icon_previous_content_description),
+                    contentDescription = stringResource(R.string.common_navigate_previous),
                 )
             }
         },
@@ -45,7 +45,7 @@ fun CardRegistrationTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.icon_save_content_description),
+                    contentDescription = stringResource(R.string.card_registration_top_app_bar_save_content_description),
                 )
             }
         },

@@ -62,7 +62,7 @@ fun CardsScreen(
                     Toast
                         .makeText(
                             context,
-                            context.getString(R.string.payment_cards_screen_registration_toast),
+                            context.getString(R.string.cards_screen_registration_toast),
                             Toast.LENGTH_SHORT,
                         ).show()
                 }
@@ -105,7 +105,7 @@ private fun CardsScreenContent(
 
         if (uiState.hasNoContent()) {
             Text(
-                text = stringResource(R.string.payment_cards_screen_registration_guide),
+                text = stringResource(R.string.cards_screen_registration_guide),
                 modifier = Modifier.fillMaxWidth(),
                 fontWeight = FontWeight.W700,
                 fontSize = 18.sp,
@@ -131,7 +131,7 @@ private fun CardsScreenContent(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = stringResource(R.string.payment_cards_screen_registration_symbol),
+                    text = stringResource(R.string.cards_screen_registration_symbol),
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     color = TextGray,
