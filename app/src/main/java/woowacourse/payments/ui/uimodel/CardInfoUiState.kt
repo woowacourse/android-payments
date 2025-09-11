@@ -9,18 +9,15 @@ import woowacourse.payments.model.CardInfo
 
 @Parcelize
 data class CardInfoUiState(
-    private var _cardNumber: String = "",
-    private var _expireDate: String = "",
-    private var _ownerName: String = "",
-    private var _password: String = "",
+    private var cardInfoUiModel: CardInfoUiModel = CardInfoUiModel(),
 ) : Parcelable {
-    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(_cardNumber))
+    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(cardInfoUiModel.cardNumber))
         private set
-    var expireDate by mutableStateOf(CardInfo.formatExpireDate(_expireDate))
+    var expireDate by mutableStateOf(CardInfo.formatExpireDate(cardInfoUiModel.expireDate))
         private set
-    var ownerName by mutableStateOf(CardInfo.formatOwnerName(_ownerName))
+    var ownerName by mutableStateOf(CardInfo.formatOwnerName(cardInfoUiModel.ownerName))
         private set
-    var password by mutableStateOf(CardInfo.formatPassword(_password))
+    var password by mutableStateOf(CardInfo.formatPassword(cardInfoUiModel.password))
         private set
     var isExpirationDateValid by mutableStateOf(CardInfo.checkIsValidMonth(expireDate))
         private set
@@ -36,10 +33,7 @@ data class CardInfoUiState(
         this.ownerName = CardInfo.formatOwnerName(ownerName)
         this.password = CardInfo.formatPassword(password)
         this.isExpirationDateValid = CardInfo.checkIsValidMonth(expireDate)
-        _cardNumber = this.cardNumber
-        _expireDate = this.expireDate
-        _ownerName = this.ownerName
-        _password = this.password
+        cardInfoUiModel = CardInfoUiModel(cardNumber, expireDate, ownerName, password)
     }
 }
 

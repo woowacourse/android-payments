@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.allcards.util.CardFormatter
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
 
@@ -111,10 +112,12 @@ private fun CardPreview() {
     AndroidpaymentsTheme {
         Card(
             CardInfoUiState(
-                _cardNumber = "9999999999999999",
-                _expireDate = "12/25",
-                _ownerName = "홍길동홍길동홍길동홍길동홍길동",
-                _password = "1234",
+                CardInfoUiModel(
+                    cardNumber = "9999999999999999",
+                    expireDate = "12/25",
+                    ownerName = "홍길동홍길동홍길동홍길동홍길동",
+                    password = "1234",
+                ),
             ),
         )
     }
