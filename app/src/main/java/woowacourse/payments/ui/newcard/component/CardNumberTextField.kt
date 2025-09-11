@@ -53,8 +53,6 @@ fun CardNumberTextField(
                     text = numberErrorMessage,
                     color = Color.Red
                 )
-            } else {
-                null
             }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
