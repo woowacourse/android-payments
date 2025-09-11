@@ -1,20 +1,28 @@
 package woowacourse.payments.domain
 
+import woowacourse.payments.domain.exception.PasswordException
+
 @JvmInline
-value class Password(
+value class Password private constructor(
     val value: String,
 ) {
     init {
-        require(checkValidPassword(value)) {
-            "비밀번호가 유효하지 않습니다."
+        if (value.length != MAX_LENGTH_PASSWORD) {
+            throw PasswordException.InvalidLength
+        }
+        if (!value.all(Char::isDigit)) {
+            throw PasswordException.NotDigit
         }
     }
 
     override fun toString(): String = "****"
 
-    private fun checkValidPassword(password: String): Boolean = password.length == MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
-
     companion object {
         const val MAX_LENGTH_PASSWORD = 4
+
+        fun create(value: String): Result<Password> =
+            runCatching {
+                Password(value)
+            }
     }
 }

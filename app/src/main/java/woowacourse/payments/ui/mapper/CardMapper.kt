@@ -71,7 +71,10 @@ object CardMapper {
                 )
 
         val password =
-            runCatching { Password(this.password) }.getOrElse { return CardCreationResult.InvalidPassword }
+            Password.create(this.password).fold(
+                onSuccess = { it },
+                onFailure = { return CardCreationResult.InvalidPassword },
+            )
 
         return CardCreationResult.Success(
             PaymentCard(
