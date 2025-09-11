@@ -3,6 +3,7 @@ package woowacourse.payments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,14 @@ class NewCardActivity : ComponentActivity() {
                         val resultIntent = Intent().putExtra(KEY_CARD, card)
                         setResult(RESULT_OK, resultIntent)
                         finish()
+                    },
+                    onCardSaveFailed = {
+                        Toast
+                            .makeText(
+                                this,
+                                getString(R.string.card_save_failed),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     },
                 )
             }

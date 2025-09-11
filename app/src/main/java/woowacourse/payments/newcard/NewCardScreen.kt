@@ -1,7 +1,6 @@
 package woowacourse.payments.newcard
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.cards.CardParcelable
@@ -36,9 +34,8 @@ fun NewCardScreen(
     newCardStateHolder: NewCardStateHolder = rememberSaveable { NewCardStateHolder() },
     onBackClick: () -> Unit = {},
     onSaveClick: (CardParcelable) -> Unit = {},
+    onCardSaveFailed: () -> Unit = {},
 ) {
-    val context = LocalContext.current
-
     val card: Card? =
         with(newCardStateHolder) {
             makeCard(cardNumber, expiredDate, ownerName, password)
@@ -53,7 +50,7 @@ fun NewCardScreen(
                     if (card != null) {
                         onSaveClick(card.toParcelable())
                     } else {
-                        Toast.makeText(context, "입력란을 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
+                        onCardSaveFailed
                     }
                 },
             )
