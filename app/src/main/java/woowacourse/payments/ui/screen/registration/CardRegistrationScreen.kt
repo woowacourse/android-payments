@@ -36,8 +36,8 @@ fun CardRegistrationScreen(
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
+            is CardRegistrationScreenUiEvent.None -> Unit
             is CardRegistrationScreenUiEvent.RegisteredCard -> onRegistrationComplete(uiEvent.paymentCard)
-            null -> Unit
         }
     }
 

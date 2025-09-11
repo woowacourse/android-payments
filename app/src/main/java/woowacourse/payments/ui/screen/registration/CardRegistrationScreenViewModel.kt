@@ -25,8 +25,14 @@ class CardRegistrationScreenViewModel(
     private var _uiState by mutableStateOf(initialUiState)
     val uiState: CardRegistrationScreenUiState get() = _uiState
 
-    private var _uiEvent by mutableStateOf<CardRegistrationScreenUiEvent?>(null)
-    val uiEvent: CardRegistrationScreenUiEvent? get() = _uiEvent?.also { _uiEvent = null }
+    private var _uiEvent by mutableStateOf<CardRegistrationScreenUiEvent>(
+        CardRegistrationScreenUiEvent.None,
+    )
+    val uiEvent: CardRegistrationScreenUiEvent
+        get() =
+            _uiEvent.also {
+                _uiEvent = CardRegistrationScreenUiEvent.None
+            }
 
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }

@@ -45,12 +45,11 @@ fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
+            is CardsScreenUiEvent.None -> Unit
             is CardsScreenUiEvent.RegisteredCard -> {
                 val resId = R.string.cards_screen_card_registered_message
                 Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
             }
-
-            else -> Unit
         }
     }
 
