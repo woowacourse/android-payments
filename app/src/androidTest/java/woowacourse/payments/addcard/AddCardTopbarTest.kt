@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.addcard
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createComposeRule

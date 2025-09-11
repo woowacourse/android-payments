@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
@@ -27,17 +28,18 @@ class AllCardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
+            val allCards = rememberSaveable { AllCardsUiState(listOf()) }
             val launcher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getCardInfo()?.let {
-                            cards.add(it)
-                            Toast.makeText(
-                                this,
-                                getString(R.string.allcards_card_added),
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            allCards.addCard(it)
+                            Toast
+                                .makeText(
+                                    this,
+                                    getString(R.string.allcards_card_added),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
                     }
                 }
@@ -45,23 +47,25 @@ class AllCardsActivity : ComponentActivity() {
                 Scaffold(
                     topBar = {
                         AllCardsTopbar(
-                            cards,
-                            modifier = Modifier
-                                .padding(horizontal = 20.dp),
+                            allCards = allCards,
+                            modifier =
+                                Modifier
+                                    .padding(horizontal = 20.dp),
                             onPlusCardClick = {
                                 launcher.launch(Intent(this, AddCardActivity::class.java))
-                            }
+                            },
                         )
-                    }
+                    },
                 ) { padding ->
                     AllCardsScreen(
-                        cards,
-                        modifier = Modifier
-                            .padding(padding)
-                            .fillMaxWidth(),
+                        allCards = allCards,
+                        modifier =
+                            Modifier
+                                .padding(padding)
+                                .fillMaxWidth(),
                         onPlusCardClick = {
                             launcher.launch(Intent(this, AddCardActivity::class.java))
-                        }
+                        },
                     )
                 }
             }

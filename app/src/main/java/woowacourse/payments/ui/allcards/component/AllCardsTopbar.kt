@@ -12,12 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun AllCardsTopbar(
-    cards: List<CardInfoUiState>,
+    allCards: AllCardsUiState,
     modifier: Modifier = Modifier,
     onPlusCardClick: () -> Unit = {},
 ) {
@@ -27,18 +28,21 @@ fun AllCardsTopbar(
             Text(text = stringResource(R.string.payments_allcards_topbar_all_cards))
         },
         actions = {
-            if (cards.size > 1) {
-                Text(
-                    modifier =
-                        Modifier
-                            .padding(end = 16.dp)
-                            .clickable {
-                                onPlusCardClick()
-                            },
-                    text = stringResource(R.string.payments_allcards_topbar_add_cards),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                )
+            when (allCards.viewType) {
+                AllCardsUiState.ViewType.MULTIPLE -> {
+                    Text(
+                        modifier =
+                            Modifier
+                                .padding(end = 16.dp)
+                                .clickable {
+                                    onPlusCardClick()
+                                },
+                        text = stringResource(R.string.payments_allcards_topbar_add_cards),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                    )
+                }
+                else -> Unit
             }
         },
     )

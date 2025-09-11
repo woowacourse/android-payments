@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.allcards
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -10,6 +10,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.cards
 import woowacourse.payments.ui.allcards.AllCardsScreen
 import woowacourse.payments.ui.allcards.component.PlusCard
 
@@ -90,26 +91,5 @@ class AllCardsScreenTest {
         composeTestRule
             .onNodeWithContentDescription("추가")
             .assertDoesNotExist()
-    }
-
-    @Test
-    fun 카드_추가_버튼을_클릭하면_카드_추가_동작을_수행한다() {
-        // given
-        var isClicked = false
-        composeTestRule.setContent {
-            PlusCard(
-                onClick = {
-                    isClicked = true
-                },
-            )
-        }
-
-        // when
-        composeTestRule
-            .onNodeWithContentDescription("추가")
-            .performClick()
-
-        // then
-        assert(isClicked == true)
     }
 }

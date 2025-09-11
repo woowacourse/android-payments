@@ -19,14 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
+import woowacourse.payments.ui.allcards.component.EmptyCard
+import woowacourse.payments.ui.allcards.component.MultipleCards
 import woowacourse.payments.ui.allcards.component.PlusCard
+import woowacourse.payments.ui.allcards.component.SingleCard
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 fun AllCardsScreen(
-    cards: SnapshotStateList<CardInfoUiState>,
+    allCards: AllCardsUiState,
     modifier: Modifier = Modifier,
     onPlusCardClick: () -> Unit = {},
 ) {
@@ -34,42 +38,11 @@ fun AllCardsScreen(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (cards.isEmpty()) {
-            NotifyToAddCard()
-            Spacer(modifier = Modifier.height(32.dp))
-            PlusCard(
-                onClick = onPlusCardClick,
-            )
-            return
+        when (allCards.viewType) {
+            AllCardsUiState.ViewType.EMPTY -> EmptyCard(onPlusCardClick)
+            AllCardsUiState.ViewType.SINGLE -> SingleCard(allCards.cards, onPlusCardClick)
+            AllCardsUiState.ViewType.MULTIPLE -> MultipleCards(allCards.cards)
         }
-
-        if (cards.size == 1) {
-            Spacer(modifier = Modifier.height(12.dp))
-            Card(cardInfoUiState = cards.first())
-            Spacer(modifier = Modifier.height(36.dp))
-            PlusCard(
-                onClick = onPlusCardClick,
-            )
-            return
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-        cards.forEach { cardInfoUiState ->
-            Card(cardInfoUiState = cardInfoUiState)
-            Spacer(modifier = Modifier.height(36.dp))
-        }
-    }
-}
-
-@Composable
-private fun NotifyToAddCard() {
-    Column {
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = stringResource(R.string.allcards_request_add_card),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-        )
     }
 }
 
@@ -80,11 +53,13 @@ private fun AllCardsScreenPreview() {
         val cards = rememberSaveable { mutableStateListOf<CardInfoUiState>() }
         Scaffold(
             topBar = {
-                AllCardsTopbar(cards)
+                AllCardsTopbar(
+                    allCards = AllCardsUiState(cards),
+                )
             },
         ) {
             AllCardsScreen(
-                cards = cards,
+                allCards = AllCardsUiState(cards),
                 modifier = Modifier.padding(it),
             )
         }
