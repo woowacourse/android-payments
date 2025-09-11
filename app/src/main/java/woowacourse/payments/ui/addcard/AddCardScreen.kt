@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,7 +35,7 @@ fun AddCardScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Card(CardInfoUiState())
+        Card(cardInfo)
         Column {
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberTextField(
@@ -74,7 +75,7 @@ private fun AddCardScreenPreview() {
             },
         ) {
             AddCardScreen(
-                CardInfoUiState(),
+                rememberSaveable { CardInfoUiState() },
                 modifier =
                     Modifier
                         .padding(it),
