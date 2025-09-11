@@ -1,8 +1,8 @@
 package woowacourse.payments.cards
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,9 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,11 +37,12 @@ import woowacourse.payments.util.PaymentCard
 import woowacourse.payments.util.parcelable
 
 @Composable
-fun CardsScreen(paymentCards: List<Card>) {
+fun CardsScreen(
+    modifier: Modifier = Modifier,
+    cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
+    onCardAdded: () -> Unit = {},
+) {
     val context = LocalContext.current
-
-    // 카드 목록을 관리하는 상태 변수
-    val cards: SnapshotStateList<Card> = rememberSaveable { paymentCards.toMutableStateList() }
 
     // 카드 추가 Activity result를 처리하기 위한 launcher
     val cardAddLauncher: ActivityResultLauncher<Intent> =
@@ -55,14 +54,9 @@ fun CardsScreen(paymentCards: List<Card>) {
                 val card: Card? = cardParcelable?.toDomainOrNull()
 
                 if (card != null) {
-                    cards += card
-                    Toast
-                        .makeText(
-                            context,
-                            context.getString(R.string.message_card_added),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                    cardsStateHolder.add(card)
                 }
+                onCardAdded
             }
         }
 
@@ -70,12 +64,9 @@ fun CardsScreen(paymentCards: List<Card>) {
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                onAddClick = {
-                    val intent = NewCardActivity.newIntent(context)
-                    cardAddLauncher.launch(intent)
-                },
+                onAddClick = { launchNewCardActivity(context, cardAddLauncher) },
                 modifier = Modifier.padding(),
-                isAddable = cards.size > 1,
+                isAddable = cardsStateHolder.cards.size > 1,
             )
         },
     ) { innerPadding ->
@@ -87,7 +78,7 @@ fun CardsScreen(paymentCards: List<Card>) {
                     .padding(innerPadding)
                     .padding(top = 12.dp),
         ) {
-            if (cards.isEmpty()) {
+            if (cardsStateHolder.isCardsEmpty()) {
                 Text(
                     stringResource(R.string.text_no_card),
                     fontSize = 18.sp,
@@ -96,19 +87,24 @@ fun CardsScreen(paymentCards: List<Card>) {
                 )
             }
 
-            cards.forEach { card: Card ->
+            cardsStateHolder.cards.forEach { card: Card ->
                 PaymentCard(card = card)
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
-            if (cards.size <= 1) {
-                EmptyCard(onClick = {
-                    val intent = NewCardActivity.newIntent(context)
-                    cardAddLauncher.launch(intent)
-                })
+            if (cardsStateHolder.shouldDisplayEmptyCard()) {
+                EmptyCard(onClick = { launchNewCardActivity(context, cardAddLauncher) })
             }
         }
     }
+}
+
+private fun launchNewCardActivity(
+    context: Context,
+    launcher: ActivityResultLauncher<Intent>,
+) {
+    val intent = NewCardActivity.newIntent(context)
+    launcher.launch(intent)
 }
 
 @Preview
@@ -116,15 +112,17 @@ fun CardsScreen(paymentCards: List<Card>) {
 private fun CardsScreenPreview() {
     AndroidpaymentsTheme {
         CardsScreen(
-            paymentCards =
-                listOf(
-                    Card(
-                        cardNumber = CardNumber("1234567812345678"),
-                        expiredDate = ExpiredDate.of(4, 26)!!,
-                        ownerName = OwnerName("크림"),
-                        password = Password("1234"),
-                    ),
-                ),
+            cardsStateHolder =
+                CardsStateHolder().apply {
+                    add(
+                        Card(
+                            cardNumber = CardNumber("1234567812345678"),
+                            expiredDate = ExpiredDate.of(4, 26)!!,
+                            ownerName = OwnerName("크림"),
+                            password = Password("1234"),
+                        ),
+                    )
+                },
         )
     }
 }
