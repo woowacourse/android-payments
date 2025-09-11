@@ -122,7 +122,7 @@ fun PaymentCardDetailPreview() {
         PaymentCard(
             paymentCard =
                 PaymentCard(
-                    CardNumber("1234123412341234"),
+                    CardNumber.create("1234123412341234").getOrThrow(),
                     ExpireDate(YearMonth.now().plusMonths(1)),
                     OwnerName("CREW"),
                     Password("1234"),

@@ -42,7 +42,7 @@ class PaymentCardTest {
         // given
         val dummyCard =
             PaymentCardDomain(
-                cardNumber = CardNumber(cardNumber),
+                cardNumber = CardNumber.create(cardNumber).getOrThrow(),
                 expireDate = ExpireDate(YearMonth.now().plusMonths(1)),
                 ownerName = OwnerName(ownerName),
                 password = Password("1234"),

@@ -96,7 +96,7 @@ fun CardListScreenEmptyPreview() {
 fun CardListScreenOneCardPreview() {
     val dummyPaymentCard =
         PaymentCard(
-            CardNumber("1234123412341234"),
+            CardNumber.create("1234123412341234").getOrThrow(),
             ExpireDate(YearMonth.now().plusMonths(1)),
             OwnerName("CREW"),
             Password("1234"),
@@ -113,7 +113,7 @@ fun CardListScreenOneCardPreview() {
 fun CardListScreenManyCardPreview() {
     val dummyPaymentCard =
         PaymentCard(
-            CardNumber("1234123412341234"),
+            CardNumber.create("1234123412341234").getOrThrow(),
             ExpireDate(YearMonth.now().plusMonths(1)),
             OwnerName("CREW"),
             Password("1234"),

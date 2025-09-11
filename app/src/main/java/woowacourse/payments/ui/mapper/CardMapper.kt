@@ -29,10 +29,12 @@ object CardMapper {
 
     fun CardUiState.toDomainCard(): CardCreationResult {
         val cardNumber =
-            runCatching { CardNumber(cardNumber) }
-                .getOrElse {
-                    return CardCreationResult.InvalidCardNumber
-                }
+            CardNumber
+                .create(this.cardNumber)
+                .fold(
+                    onSuccess = { it },
+                    onFailure = { return CardCreationResult.InvalidCardNumber },
+                )
         val expireDate =
             ExpireDate
                 .from(this.expireDate)
