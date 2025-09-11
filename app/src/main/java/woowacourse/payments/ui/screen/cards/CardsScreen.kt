@@ -77,7 +77,6 @@ fun CardsScreen(
                     cardAddLauncher.launch(intent)
                 },
                 isVisibleRegistrationButton = uiState.isVisibleRegistrationButtonInTopBar(),
-                modifier = Modifier,
             )
         },
     ) { innerPadding ->
@@ -87,7 +86,7 @@ fun CardsScreen(
                 val intent = CardRegistrationActivity.newIntent(context)
                 cardAddLauncher.launch(intent)
             },
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
         )
     }
 }
@@ -104,7 +103,17 @@ private fun CardsScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (uiState.hasNoContent()) RegistrationGuideText()
+        if (uiState.hasNoContent()) {
+            Text(
+                text = stringResource(R.string.payment_cards_screen_registration_guide),
+                modifier = Modifier.fillMaxWidth(),
+                fontWeight = FontWeight.W700,
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center,
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
 
         uiState.value.forEach { card: CardUiModel ->
             PaymentCard(card = card)
@@ -112,47 +121,31 @@ private fun CardsScreenContent(
             Spacer(modifier = Modifier.height(36.dp))
         }
 
-        if (uiState.isVisibleRegistrationBoxInContent()) RegistrationBox { onClickRegistration() }
+        if (uiState.isVisibleRegistrationBoxInContent()) {
+            Box(
+                modifier =
+                    Modifier
+                        .size(width = 208.dp, height = 124.dp)
+                        .background(Color.LightGray)
+                        .clickable { onClickRegistration() },
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = stringResource(R.string.payment_cards_screen_registration_symbol),
+                    fontSize = 34.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TextGray,
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
     }
-}
-
-@Composable
-private fun RegistrationGuideText() {
-    Text(
-        text = stringResource(R.string.payment_cards_screen_registration_guide),
-        modifier = Modifier.fillMaxWidth(),
-        fontWeight = FontWeight.W700,
-        fontSize = 18.sp,
-        textAlign = TextAlign.Center,
-    )
-
-    Spacer(modifier = Modifier.height(16.dp))
-}
-
-@Composable
-private fun RegistrationBox(onClickRegistration: () -> Unit) {
-    Box(
-        modifier =
-            Modifier
-                .size(width = 208.dp, height = 124.dp)
-                .background(Color.LightGray)
-                .clickable { onClickRegistration() },
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.payment_cards_screen_registration_symbol),
-            fontSize = 34.sp,
-            fontWeight = FontWeight.Bold,
-            color = TextGray,
-        )
-    }
-
-    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Preview(showBackground = true, name = "데이터 존재 X")
 @Composable
-fun NoContentPreview() {
+private fun NoContentPreview() {
     val uiState: CardsScreenUiState = CardsScreenUiState(emptyList())
     CardsScreen(
         cardsScreenUiState = uiState,
@@ -161,7 +154,7 @@ fun NoContentPreview() {
 
 @Preview(showBackground = true, name = "데이터 1개 존재")
 @Composable
-fun HasOneContentPreview() {
+private fun HasOneContentPreview() {
     val uiState: CardsScreenUiState =
         CardsScreenUiState(
             listOf(
@@ -180,7 +173,7 @@ fun HasOneContentPreview() {
 
 @Preview(showBackground = true, name = "데이터 2개 이상 존재")
 @Composable
-fun HasMultipleContentPreview() {
+private fun HasMultipleContentPreview() {
     val uiState: CardsScreenUiState =
         CardsScreenUiState(
             listOf(

@@ -67,7 +67,7 @@ fun CardholderNameTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardholderNameTextFieldPreview() {
+private fun CardholderNameTextFieldPreview() {
     var cardholderName by remember { mutableStateOf(CardholderNameUiModel()) }
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(

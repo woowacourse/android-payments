@@ -58,7 +58,7 @@ fun CardExpirationDateTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
+private fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardExpirationDateTextField(
             cardExpirationDate = CardExpirationDateUiModel("1226"),

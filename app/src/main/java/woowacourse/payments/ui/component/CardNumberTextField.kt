@@ -49,7 +49,7 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     Box(modifier = Modifier.padding(16.dp)) {
         CardNumberTextField(cardNumber = CardNumberUiModel(), onCardNumberChanged = {})
     }

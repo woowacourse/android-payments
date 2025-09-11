@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,5 +50,14 @@ fun CardRegistrationTopAppBar(
             }
         },
         modifier = modifier,
+    )
+}
+
+@Preview
+@Composable
+private fun CardRegistrationTopAppBarPreview() {
+    CardRegistrationTopAppBar(
+        onBackClick = {},
+        onSaveClick = {},
     )
 }

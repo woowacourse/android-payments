@@ -26,6 +26,7 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCard(
@@ -115,18 +116,22 @@ fun PaymentCard(
 @Preview(showBackground = true, name = "카드 정보 있다면 화면에 보여준다.")
 @Composable
 private fun HasCardPreview() {
-    PaymentCard(
-        card =
-            CardUiModel(
-                cardholderNameUiModel = CardholderNameUiModel("CREW"),
-                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                cardExpirationDateUiModel = CardExpirationDateUiModel("0421"),
-            ),
-    )
+    AndroidpaymentsTheme {
+        PaymentCard(
+            card =
+                CardUiModel(
+                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                    cardExpirationDateUiModel = CardExpirationDateUiModel("0421"),
+                ),
+        )
+    }
 }
 
 @Preview(showBackground = true, name = "카드 정보 없다면 IC Chip만 보인다.")
 @Composable
 private fun HasNotCardPreview() {
-    PaymentCard(card = null)
+    AndroidpaymentsTheme {
+        PaymentCard(card = null)
+    }
 }

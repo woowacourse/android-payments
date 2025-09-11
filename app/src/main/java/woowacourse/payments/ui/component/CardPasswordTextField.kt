@@ -54,7 +54,7 @@ fun CardPasswordTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardPasswordTextFieldPreview() {
+private fun CardPasswordTextFieldPreview() {
     var cardPassword by remember { mutableStateOf(CardPasswordUiModel("1234")) }
 
     Box(modifier = Modifier.padding(12.dp)) {

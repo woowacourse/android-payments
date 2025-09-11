@@ -154,7 +154,7 @@ private fun CardRegistrationScreenContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
             onBackPressed = {},
