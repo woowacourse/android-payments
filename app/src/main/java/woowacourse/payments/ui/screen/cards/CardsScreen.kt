@@ -104,42 +104,49 @@ private fun CardsScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         if (uiState.hasNoContent()) {
-            Text(
-                text = stringResource(R.string.cards_screen_registration_guide),
-                modifier = Modifier.fillMaxWidth(),
-                fontWeight = FontWeight.W700,
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-            )
-
+            RegistrationGuideText()
             Spacer(modifier = Modifier.height(16.dp))
         }
 
         uiState.value.forEach { card: CardUiModel ->
             PaymentCard(card = card)
-
             Spacer(modifier = Modifier.height(36.dp))
         }
 
         if (uiState.isVisibleRegistrationBoxInContent()) {
-            Box(
-                modifier =
-                    Modifier
-                        .size(width = 208.dp, height = 124.dp)
-                        .background(Color.LightGray)
-                        .clickable { onClickRegistration() },
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.cards_screen_registration_symbol),
-                    fontSize = 34.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = TextGray,
-                )
-            }
-
+            RegistrationBox(onClickRegistration)
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+}
+
+@Composable
+private fun RegistrationGuideText() {
+    Text(
+        text = stringResource(R.string.cards_screen_registration_guide),
+        modifier = Modifier.fillMaxWidth(),
+        fontWeight = FontWeight.W700,
+        fontSize = 18.sp,
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+private fun RegistrationBox(onClickRegistration: () -> Unit) {
+    Box(
+        modifier =
+            Modifier
+                .size(width = 208.dp, height = 124.dp)
+                .background(Color.LightGray)
+                .clickable { onClickRegistration() },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringResource(R.string.cards_screen_registration_symbol),
+            fontSize = 34.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextGray,
+        )
     }
 }
 
