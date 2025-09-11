@@ -22,7 +22,7 @@ data class CardInfoUiState(
         private set
     var password by mutableStateOf(CardInfo.formatPassword(_password))
         private set
-    var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
+    var isExpirationDateValid by mutableStateOf(CardInfo.checkIsValidMonth(expireDate))
         private set
 
     fun updateCardInfo(
@@ -35,19 +35,12 @@ data class CardInfoUiState(
         this.expireDate = CardInfo.formatExpireDate(expireDate)
         this.ownerName = CardInfo.formatOwnerName(ownerName)
         this.password = CardInfo.formatPassword(password)
-        this.isExpirationDateValid = checkIfMonthCompleted()
+        this.isExpirationDateValid = CardInfo.checkIsValidMonth(expireDate)
         _cardNumber = this.cardNumber
         _expireDate = this.expireDate
         _ownerName = this.ownerName
         _password = this.password
     }
-
-    private fun checkIfMonthCompleted(): Boolean =
-        if (expireDate.length >= 2) {
-            CardInfo.checkIsValidMonth(expireDate)
-        } else {
-            true
-        }
 }
 
 fun CardInfoUiState.isComplete(): Boolean {

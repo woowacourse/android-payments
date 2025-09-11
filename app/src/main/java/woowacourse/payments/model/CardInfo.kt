@@ -57,9 +57,13 @@ data class CardInfo(
         }
 
         fun checkIsValidMonth(expireDate: String): Boolean =
-            expireDate
-                .take(2)
-                .toIntOrNull() in 1..12
+            if (expireDate.length < 2) {
+                true
+            } else {
+                expireDate
+                    .take(2)
+                    .toIntOrNull() in 1..12
+            }
 
         fun formatCardNumber(cardNumber: String): String =
             cardNumber
