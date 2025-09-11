@@ -54,7 +54,7 @@ fun CardsScreen(
                         EXTRA_CARDS_REGISTER_NEW_CARD,
                     )
                 newCard?.let {
-                    uiState = uiState.updateUiStateWithCard(newCard)
+                    uiState = uiState.copyWithAddCard(newCard)
                     Toast
                         .makeText(
                             context,

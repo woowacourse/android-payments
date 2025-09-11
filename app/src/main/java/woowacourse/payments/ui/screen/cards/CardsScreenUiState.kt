@@ -18,5 +18,5 @@ data class CardsScreenUiState(
 
     fun hasNoContent(): Boolean = screenState == CardsScreenState.EMPTY
 
-    fun updateUiStateWithCard(newCard: CardUiModel): CardsScreenUiState = CardsScreenUiState(this.value + newCard)
+    fun copyWithAddCard(newCard: CardUiModel): CardsScreenUiState = CardsScreenUiState(this.value + newCard)
 }
