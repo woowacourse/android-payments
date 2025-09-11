@@ -14,6 +14,8 @@ value class Password(
         }
     }
 
+    override fun toString(): String = "****"
+
     private fun checkValidPassword(password: String): Boolean = password.length == MAX_LENGTH_PASSWORD && password.all(Char::isDigit)
 
     companion object {

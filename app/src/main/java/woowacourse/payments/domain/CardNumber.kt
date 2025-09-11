@@ -18,10 +18,7 @@ value class CardNumber private constructor(
         }
     }
 
-    override fun toString(): String {
-        val halfCardNumber = value.take(8)
-        return "${halfCardNumber.take(4)} - ${halfCardNumber.takeLast(4)} - **** - ****"
-    }
+    override fun toString(): String = "카드번호의 마지막 4자리: ${value.takeLast(4)}"
 
     companion object {
         const val MAX_LENGTH_CARD_NUMBER = 16

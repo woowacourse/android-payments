@@ -72,7 +72,7 @@ fun PaymentCard(
         )
         if (paymentCard != null) {
             Text(
-                paymentCard.cardNumber.toString(),
+                paymentCard.cardNumber.toMaskedString(),
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 28.dp)
@@ -105,6 +105,12 @@ fun PaymentCard(
             )
         }
     }
+}
+
+fun CardNumber.toMaskedString(): String {
+    val firstPart = this.value.substring(0, 4)
+    val secondPart = this.value.substring(4, 8)
+    return "$firstPart - $secondPart - **** - ****"
 }
 
 @Preview(showBackground = true)
