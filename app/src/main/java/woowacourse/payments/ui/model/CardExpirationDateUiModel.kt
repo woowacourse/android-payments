@@ -26,7 +26,7 @@ data class CardExpirationDateUiModel(
 
         fun from(cardExpirationDate: CardExpirationDate): CardExpirationDateUiModel =
             CardExpirationDateUiModel(
-                cardExpirationDate = cardExpirationDate.yearMonth.format(formatter),
+                cardExpirationDate = cardExpirationDate.value.format(formatter),
                 state = if (cardExpirationDate.isExpired()) State.EXPIRED else State.VALID,
             )
     }
