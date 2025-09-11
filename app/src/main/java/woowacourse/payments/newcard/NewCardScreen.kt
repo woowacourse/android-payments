@@ -1,6 +1,5 @@
 package woowacourse.payments.newcard
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,22 +35,23 @@ fun NewCardScreen(
     onSaveClick: (CardParcelable) -> Unit = {},
     onCardSaveFailed: () -> Unit = {},
 ) {
-    val card: Card? =
-        with(newCardStateHolder) {
-            makeCard(cardNumber, expiredDate, ownerName, password)
-        }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
                 onSaveClick = {
-                    if (card != null) {
-                        onSaveClick(card.toParcelable())
-                    } else {
-                        onCardSaveFailed
-                    }
+                    val cardResult: Result<Card> =
+                        with(newCardStateHolder) {
+                            makeCard(cardNumber, expiredDate, ownerName, password)
+                        }
+
+                    cardResult
+                        .onSuccess {
+                            onSaveClick(cardResult.getOrThrow().toParcelable())
+                        }.onFailure {
+                            onCardSaveFailed
+                        }
                 },
             )
         },
@@ -100,16 +100,12 @@ private fun makeCard(
     expiredDate: String,
     ownerName: String,
     password: String,
-): Card? {
-    return try {
+): Result<Card> =
+    runCatching {
         val cardNumber = CardNumber(cardNumber)
-        val expiredDate = ExpiredDate.of(expiredDate) ?: return null
+        val expiredDate = ExpiredDate.of(expiredDate) ?: throw IllegalArgumentException()
         val ownerName = OwnerName(ownerName)
         val password = Password(password)
 
         Card(cardNumber, expiredDate, ownerName, password)
-    } catch (e: IllegalArgumentException) {
-        Log.e("NewCardScreen", "makeCard: $e")
-        null
     }
-}
