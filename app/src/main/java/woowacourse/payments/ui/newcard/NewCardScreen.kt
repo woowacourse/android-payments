@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,15 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
@@ -41,13 +36,10 @@ fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (Card) -> Unit = {},
 ) {
-    val context: Context = LocalContext.current
-    val cardAddedMessage: String = stringResource(R.string.card_added_message)
-
-    var cardNumber: String by remember { mutableStateOf("") }
-    var cardExpirationDate: String by remember { mutableStateOf("") }
-    var cardHolderName: String by remember { mutableStateOf("") }
-    var cardPassword: String by remember { mutableStateOf("") }
+    var cardNumber: String by rememberSaveable { mutableStateOf("") }
+    var cardExpirationDate: String by rememberSaveable { mutableStateOf("") }
+    var cardHolderName: String by rememberSaveable { mutableStateOf("") }
+    var cardPassword: String by rememberSaveable { mutableStateOf("") }
 
     fun buildCardOrNull(): Card? =
         runCatching {
@@ -64,12 +56,7 @@ fun NewCardScreen(
             NewCardTopBar(
                 onBackClick = onBackClick,
                 onSaveClick = {
-                    buildCardOrNull()?.let { card: Card ->
-                        onSaveClick(card)
-                        Toast
-                            .makeText(context, cardAddedMessage, Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    buildCardOrNull()?.let { card: Card -> onSaveClick(card) }
                 },
             )
         },

@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -22,6 +24,12 @@ class NewCardActivity : ComponentActivity() {
                         val intent =
                             Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
                         setResult(Activity.RESULT_OK, intent)
+                        Toast
+                            .makeText(
+                                this,
+                                getString(R.string.card_added_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         finish()
                     },
                 )
