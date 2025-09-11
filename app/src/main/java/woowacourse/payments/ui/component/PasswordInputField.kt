@@ -29,8 +29,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PasswordInputField(
-    modifier: Modifier = Modifier,
     password: Password?,
+    modifier: Modifier = Modifier,
     onPasswordChange: (Password?) -> Unit,
     showValidationError: Boolean = false,
 ) {

@@ -18,8 +18,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardNumberInputField(
-    modifier: Modifier = Modifier,
     cardNumber: CardNumber?,
+    modifier: Modifier = Modifier,
     onCardNumberChange: (CardNumber?) -> Unit,
     showValidationError: Boolean = false,
 ) {

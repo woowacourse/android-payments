@@ -30,8 +30,8 @@ import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun PaymentCard(
-    modifier: Modifier = Modifier,
     card: CardUiModel,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         modifier =
