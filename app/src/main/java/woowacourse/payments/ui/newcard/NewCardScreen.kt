@@ -12,54 +12,31 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.domain.CardHolderName
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CardPasswordTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (Card) -> Unit = {},
+    state: NewCardState = rememberNewCardState(),
 ) {
-    var cardNumber: String by rememberSaveable { mutableStateOf("") }
-    var cardExpirationDate: String by rememberSaveable { mutableStateOf("") }
-    var cardHolderName: String by rememberSaveable { mutableStateOf("") }
-    var cardPassword: String by rememberSaveable { mutableStateOf("") }
-    val card: Card? =
-        runCatching {
-            Card(
-                number = CardNumber.from(cardNumber),
-                expirationDate = CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER),
-                holderName = cardHolderName.takeIf { it.isNotBlank() }?.let(::CardHolderName),
-                password = CardPassword(cardPassword),
-            )
-        }.getOrNull()
-
     val scrollState = rememberScrollState()
-
     Scaffold(
         topBar = {
             NewCardTopBar(
-                canSave = card != null,
+                canSave = state.card != null,
                 onBackClick = onBackClick,
-                onSaveClick = { card?.let { card: Card -> onSaveClick(card) } },
+                onSaveClick = { state.card?.let { card: Card -> onSaveClick(card) } },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -76,30 +53,28 @@ fun NewCardScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             CardNumberTextField(
-                value = cardNumber,
-                onValueChange = { cardNumber = it },
+                value = state.cardNumber,
+                onValueChange = state::onCardNumberChange,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardExpirationDateTextField(
-                value = cardExpirationDate,
-                onValueChange = { cardExpirationDate = it },
+                value = state.cardExpirationDate,
+                onValueChange = state::onCardExpirationDateChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             CardHolderNameTextField(
-                value = cardHolderName,
-                onValueChange = { cardHolderName = it },
+                value = state.cardHolderName,
+                onValueChange = state::onCardHolderNameChange,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardPasswordTextField(
-                value = cardPassword,
-                onValueChange = { cardPassword = it },
+                value = state.cardPassword,
+                onValueChange = state::onCardPasswordChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
     }
 }
-
-private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMyy")
 
 @Preview
 @Composable
