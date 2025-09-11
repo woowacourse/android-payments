@@ -103,26 +103,20 @@ private fun CardsContent(
 ) {
     Box(
         modifier = modifier,
+        contentAlignment = Alignment.TopCenter,
     ) {
         when (state) {
             CardsUiState.Empty ->
-                EmptyView(
-                    modifier = Modifier.align(Alignment.TopCenter),
-                    onAddClick = onAddClick,
-                )
+                EmptyView(onAddClick = onAddClick)
 
             is CardsUiState.SingleCard ->
                 SingleCardView(
                     card = state.card,
-                    modifier = Modifier.align(Alignment.TopCenter),
                     onAddClick = onAddClick,
                 )
 
             is CardsUiState.MultipleCards ->
-                MultipleCardsView(
-                    cards = state.cards,
-                    modifier = Modifier.align(Alignment.TopCenter),
-                )
+                MultipleCardsView(cards = state.cards)
         }
     }
 }
