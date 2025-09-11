@@ -63,3 +63,16 @@ fun CardOwnerNameFieldPreview() {
         )
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun CardOwnerNameFieldTypingPreview() {
+    var text by remember { mutableStateOf("메다") }
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        CardOwnerNameField(
+            value = text,
+            onValueChange = { text = it },
+        )
+    }
+}
