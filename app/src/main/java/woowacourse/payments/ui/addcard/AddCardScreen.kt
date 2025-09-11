@@ -22,40 +22,47 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
-fun AddCardScreen(cardInfo: CardInfoUiState, modifier: Modifier = Modifier) {
+fun AddCardScreen(
+    cardInfo: CardInfoUiState,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = modifier
-            .padding(top = 14.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(top = 14.dp),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card(CardInfoUiState())
         Column {
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberTextField(
                 cardInfo = cardInfo,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(18.dp))
             ExpireDateTextField(
                 cardInfo = cardInfo,
-                modifier = Modifier
-                    .fillMaxWidth(0.47f),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.47f),
             )
             OwnerNameTextField(
                 cardInfo = cardInfo,
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
             )
             PasswordTextField(
                 cardInfo = cardInfo,
-                modifier = Modifier.fillMaxWidth(0.47f)
+                modifier = Modifier.fillMaxWidth(0.47f),
             )
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
@@ -64,11 +71,13 @@ private fun AddCardScreenPreview() {
         Scaffold(
             topBar = {
                 AddCardTopbar()
-            }
+            },
         ) {
             AddCardScreen(
-                CardInfoUiState(), modifier = Modifier
-                    .padding(it)
+                CardInfoUiState(),
+                modifier =
+                    Modifier
+                        .padding(it),
             )
         }
     }
