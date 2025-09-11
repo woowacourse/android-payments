@@ -15,9 +15,13 @@ class CardWalletScreenTest {
     @Test
     fun `Payments라는_텍스트가_표시된다`() {
         composeTestRule.setContent {
-            CardWalletScreen(cardList,)
+            CardWalletScreen(cardList = emptyList(), onCardAddResult = {
+            })
         }
         composeTestRule.onNodeWithText("Payments").assertIsDisplayed()
     }
+
+//    @Test
+//    fun `등록된_카드가_없을 때`
 
 }
