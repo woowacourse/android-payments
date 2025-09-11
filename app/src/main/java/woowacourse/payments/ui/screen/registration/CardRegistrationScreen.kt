@@ -27,8 +27,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardRegistrationScreen(
     viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
-    onBackClick: () -> Unit,
     onRegistrationComplete: (PaymentCardUiModel) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val uiState = viewModel.uiState
