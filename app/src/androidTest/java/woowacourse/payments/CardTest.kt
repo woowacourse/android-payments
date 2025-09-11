@@ -1,6 +1,7 @@
 package woowacourse.payments
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
@@ -14,7 +15,7 @@ class CardTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun 카드의_비밀번호는_하이픈으로_구분뒤고_뒤_8자리는_마스킹_처리된다() {
+    fun 카드번호는_하이픈으로_구분뒤고_뒤_8자리는_마스킹_처리된다() {
         // given
         composeTestRule.setContent {
             Card(

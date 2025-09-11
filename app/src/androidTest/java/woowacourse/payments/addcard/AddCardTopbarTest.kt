@@ -8,7 +8,6 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 
-@OptIn(ExperimentalTestApi::class)
 class AddCardTopbarTest {
     @get:Rule
     val composeTestRule = createComposeRule()
