@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.HWANNOW_CARD
 import woowacourse.payments.ui.JUNSEO511_CARD
+import woowacourse.payments.ui.cards.CardsStateHolder
 
 class CardsTest {
     @get:Rule
@@ -51,9 +52,8 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                cardAddLauncher = fakeLauncher,
-                cardList = listOf(HWANNOW_CARD),
-                minimumCardCountForAddButton = 1,
+                onAddClick = {},
+                cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
             )
         }
 
@@ -69,9 +69,7 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                cardAddLauncher = fakeLauncher,
-                cardList = emptyList(),
-                minimumCardCountForAddButton = 1,
+                onAddClick = {},
             )
         }
 
@@ -91,9 +89,8 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                cardAddLauncher = fakeLauncher,
-                cardList = listOf(HWANNOW_CARD),
-                minimumCardCountForAddButton = 1,
+                onAddClick = {},
+                cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
             )
         }
 
@@ -109,9 +106,8 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                cardAddLauncher = fakeLauncher,
-                cardList = listOf(HWANNOW_CARD),
-                minimumCardCountForAddButton = 1,
+                onAddClick = {},
+                cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
             )
         }
 
@@ -127,9 +123,8 @@ class CardsTest {
         composeTestRule.setContent {
             Cards(
                 scrollState = rememberScrollState(),
-                cardAddLauncher = fakeLauncher,
-                cardList = listOf(HWANNOW_CARD, JUNSEO511_CARD),
-                minimumCardCountForAddButton = 1,
+                onAddClick = {},
+                cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD, JUNSEO511_CARD)),
             )
         }
 

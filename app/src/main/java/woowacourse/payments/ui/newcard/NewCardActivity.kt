@@ -9,12 +9,15 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
+    private val newCardStateHolder = NewCardStateHolder()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
                     onSaved = { paymentCard ->
                         setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, paymentCard))

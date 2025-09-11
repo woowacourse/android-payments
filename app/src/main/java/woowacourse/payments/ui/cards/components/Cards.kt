@@ -1,8 +1,5 @@
 package woowacourse.payments.ui.cards.components
 
-import android.content.Intent
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,27 +9,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityOptionsCompat
 import woowacourse.payments.R
+import woowacourse.payments.ui.cards.CardsStateHolder
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.ExpirationDateUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.newcard.NewCardActivity
 
 @Composable
 fun Cards(
     scrollState: ScrollState,
-    cardAddLauncher: ActivityResultLauncher<Intent>,
-    cardList: List<PaymentCardUiModel>,
+    onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
-    minimumCardCountForAddButton: Int = 0,
+    cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
 ) {
     Column(
         modifier =
@@ -43,49 +39,31 @@ fun Cards(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(36.dp),
     ) {
-        val context = LocalContext.current
-
-        cardList.forEach { card ->
+        cardsStateHolder.cardList.forEach { card ->
             CardImage(
                 paymentCard = card,
             )
         }
 
-        if (cardList.size <= minimumCardCountForAddButton) {
-            if (cardList.isEmpty()) {
+        if (cardsStateHolder.isAddableWithAddCard()) {
+            if (cardsStateHolder.isEmpty()) {
                 Text(
                     text = stringResource(R.string.cards_no_card),
                 )
             }
             AddCardImage {
-                val intent = NewCardActivity.newIntent(context)
-                cardAddLauncher.launch(intent)
+                onAddClick()
             }
         }
     }
 }
-
-private fun getDummyCardAddLauncher(): ActivityResultLauncher<Intent> =
-    object : ActivityResultLauncher<Intent>() {
-        override val contract: ActivityResultContract<Intent, *>
-            get() = TODO("Not yet implemented")
-
-        override fun launch(
-            input: Intent,
-            options: ActivityOptionsCompat?,
-        ) = Unit
-
-        override fun unregister() = Unit
-    }
 
 @Preview(showBackground = true, name = "카드가 없을 때")
 @Composable
 private fun CardsPreview_NoCards() {
     Cards(
         scrollState = rememberScrollState(),
-        cardAddLauncher = getDummyCardAddLauncher(),
-        cardList = emptyList(),
-        minimumCardCountForAddButton = 1,
+        onAddClick = {},
     )
 }
 
@@ -100,9 +78,8 @@ private fun CardsPreview_OneCard_AddButtonVisible() {
         )
     Cards(
         scrollState = rememberScrollState(),
-        cardAddLauncher = getDummyCardAddLauncher(),
-        cardList = listOf(sampleCard),
-        minimumCardCountForAddButton = 1,
+        onAddClick = {},
+        cardsStateHolder =  CardsStateHolder(listOf(sampleCard)),
     )
 }
 
@@ -124,8 +101,7 @@ private fun CardsPreview_MultipleCards_AddButtonHidden() {
         )
     Cards(
         scrollState = rememberScrollState(),
-        cardAddLauncher = getDummyCardAddLauncher(),
-        cardList = sampleCards,
-        minimumCardCountForAddButton = 1,
+        onAddClick = {},
+        cardsStateHolder = CardsStateHolder(sampleCards),
     )
 }

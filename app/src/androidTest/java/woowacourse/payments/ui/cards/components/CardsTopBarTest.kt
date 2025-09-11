@@ -46,7 +46,7 @@ class CardsTopBarTest {
         // when
         composeTestRule.setContent {
             CardsTopBar(
-                cardAddLauncher = fakeLauncher,
+                onAddClick = {},
                 isAddable = true,
             )
         }
@@ -60,7 +60,7 @@ class CardsTopBarTest {
         // when
         composeTestRule.setContent {
             CardsTopBar(
-                cardAddLauncher = fakeLauncher,
+                onAddClick = {},
                 isAddable = false,
             )
         }

@@ -15,17 +15,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopBar(
-    cardAddLauncher: ActivityResultLauncher<Intent>,
+    onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
     isAddable: Boolean = false,
 ) {
-    val context = LocalContext.current
-
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -38,8 +37,7 @@ fun CardsTopBar(
                     modifier =
                         modifier
                             .clickable(true) {
-                                val intent = NewCardActivity.newIntent(context)
-                                cardAddLauncher.launch(intent)
+                                onAddClick()
                             }.padding(end = 20.dp),
                     text = stringResource(R.string.cards_top_bar_add),
                     fontWeight = FontWeight.Bold,
