@@ -14,13 +14,13 @@ data class CardInfoUiState(
     private var _ownerName: String = "",
     private var _password: String = "",
 ) : Parcelable {
-    var cardNumber by mutableStateOf(CardInfo.Companion.formatCardNumber(_cardNumber))
+    var cardNumber by mutableStateOf(CardInfo.formatCardNumber(_cardNumber))
         private set
-    var expireDate by mutableStateOf(CardInfo.Companion.formatExpireDate(_expireDate))
+    var expireDate by mutableStateOf(CardInfo.formatExpireDate(_expireDate))
         private set
-    var ownerName by mutableStateOf(CardInfo.Companion.formatOwnerName(_ownerName))
+    var ownerName by mutableStateOf(CardInfo.formatOwnerName(_ownerName))
         private set
-    var password by mutableStateOf(CardInfo.Companion.formatPassword(_password))
+    var password by mutableStateOf(CardInfo.formatPassword(_password))
         private set
     var isExpirationDateValid by mutableStateOf(checkIfMonthCompleted())
         private set
@@ -29,12 +29,12 @@ data class CardInfoUiState(
         cardNumber: String = this.cardNumber,
         expireDate: String = this.expireDate,
         ownerName: String = this.ownerName,
-        password: String = this.password
+        password: String = this.password,
     ) {
-        this.cardNumber = CardInfo.Companion.formatCardNumber(cardNumber)
-        this.expireDate = CardInfo.Companion.formatExpireDate(expireDate)
-        this.ownerName = CardInfo.Companion.formatOwnerName(ownerName)
-        this.password = CardInfo.Companion.formatPassword(password)
+        this.cardNumber = CardInfo.formatCardNumber(cardNumber)
+        this.expireDate = CardInfo.formatExpireDate(expireDate)
+        this.ownerName = CardInfo.formatOwnerName(ownerName)
+        this.password = CardInfo.formatPassword(password)
         this.isExpirationDateValid = checkIfMonthCompleted()
         _cardNumber = this.cardNumber
         _expireDate = this.expireDate
@@ -42,11 +42,12 @@ data class CardInfoUiState(
         _password = this.password
     }
 
-    private fun checkIfMonthCompleted(): Boolean {
-        return if (expireDate.length >= 2) {
+    private fun checkIfMonthCompleted(): Boolean =
+        if (expireDate.length >= 2) {
             CardInfo.Companion.checkIsValidMonth(expireDate)
-        } else true
-    }
+        } else {
+            true
+        }
 
     companion object {
         const val OWNER_NAME_MAX_SIZE = CardInfo.Companion.OWNER_NAME_MAX_SIZE
@@ -54,11 +55,12 @@ data class CardInfoUiState(
 }
 
 fun CardInfoUiState.isComplete(): Boolean {
-    val instance = CardInfo.createOrNull(
-        cardNumber = cardNumber,
-        expireDate = expireDate,
-        ownerName = ownerName,
-        password = password
-    )
+    val instance =
+        CardInfo.createOrNull(
+            cardNumber = cardNumber,
+            expireDate = expireDate,
+            ownerName = ownerName,
+            password = password,
+        )
     return instance != null
 }

@@ -28,7 +28,7 @@ data class CardInfo(
             ownerName: String,
             password: String,
         ): CardInfo? {
-            val formattedCardNumber = (cardNumber)
+            val formattedCardNumber = formatCardNumber(cardNumber)
             val formattedExpireDateString = formatExpireDate(expireDate)
             val formattedOwnerName = formatOwnerName(ownerName)
             val formattedPassword = formatPassword(password)
