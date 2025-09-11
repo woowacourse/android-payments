@@ -68,7 +68,7 @@ fun NewCardScreen(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding())
+                    .padding(innerPadding)
                     .padding(horizontal = 24.dp, vertical = 20.dp)
                     .verticalScroll(scrollState),
         ) {

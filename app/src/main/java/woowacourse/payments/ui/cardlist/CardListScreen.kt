@@ -64,7 +64,8 @@ fun CardListScreen(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding() + 12.dp)
+                    .padding(innerPadding)
+                    .padding(top = 12.dp)
                     .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(36.dp),
