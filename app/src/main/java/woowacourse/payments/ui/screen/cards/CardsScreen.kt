@@ -43,7 +43,10 @@ import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.TextGray
 
 @Composable
-fun CardsScreen(cardsScreenUiState: CardsScreenUiState = CardsScreenUiState()) {
+fun CardsScreen(
+    modifier: Modifier = Modifier,
+    cardsScreenUiState: CardsScreenUiState = CardsScreenUiState(),
+) {
     var uiState: CardsScreenUiState by remember { mutableStateOf(cardsScreenUiState) }
     val context = LocalContext.current
 

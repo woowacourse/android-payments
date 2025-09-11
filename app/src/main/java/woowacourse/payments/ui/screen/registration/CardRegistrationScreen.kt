@@ -37,6 +37,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun CardRegistrationScreen(
     onBackPressed: () -> Unit,
     onCardRegistered: (CardUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
@@ -72,7 +73,7 @@ fun CardRegistrationScreen(
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             uiState = uiState,
             onCardNumberChanged = { newCardNumber ->
                 uiState = uiState.copy(cardNumber = newCardNumber)
