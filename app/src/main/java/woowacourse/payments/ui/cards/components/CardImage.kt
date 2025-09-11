@@ -18,8 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
+import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -62,6 +65,10 @@ fun CardImage(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = formatCardNumber(paymentCard.cardNumber.value),
+                fontWeight = W500,
+                fontSize = 12.sp,
+                lineHeight = 14.sp,
+                letterSpacing = 0.17.em,
                 color = Color.White,
             )
 
@@ -75,10 +82,18 @@ fun CardImage(
             ) {
                 Text(
                     text = paymentCard.cardHolder.value,
+                    fontWeight = W500,
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
+                    letterSpacing = 0.1.em,
                     color = Color.White,
                 )
                 Text(
                     text = formatExpirationDate(paymentCard.expirationDate.value),
+                    fontWeight = W500,
+                    fontSize = 12.sp,
+                    lineHeight = 14.sp,
+                    letterSpacing = 0.08.em,
                     color = Color.White,
                 )
             }
@@ -114,7 +129,7 @@ private fun formatExpirationDate(expirationDate: String): String {
 private fun CardPreview() {
     CardImage(
         PaymentCardUiModel(
-            cardNumber = CardNumberUiModel("1234 5678 9012 3456"),
+            cardNumber = CardNumberUiModel("1234567890123456"),
             cardHolder = CardHolderUiModel("홍길동"),
             expirationDate = ExpirationDateUiModel("1225"),
         ),
