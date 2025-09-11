@@ -2,6 +2,7 @@ package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +46,7 @@ fun PasswordTextField(
             if (passwordErrorMessage != null) {
                 Text(
                     text = passwordErrorMessage,
-                    color = Color.Red
+                    color = MaterialTheme.colorScheme.error
                 )
             }
         },

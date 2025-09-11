@@ -2,6 +2,7 @@ package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -51,7 +52,7 @@ fun CardNumberTextField(
             if (numberErrorMessage != null) {
                 Text(
                     text = numberErrorMessage,
-                    color = Color.Red
+                    color = MaterialTheme.colorScheme.error
                 )
             }
         },

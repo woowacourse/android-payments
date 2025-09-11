@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +49,7 @@ fun CardOwnerNameTextField(
             if (ownerNameErrorMessage != null) {
                 Text(
                     text = ownerNameErrorMessage,
-                    color = Color.Red
+                    color = MaterialTheme.colorScheme.error
                 )
             }
         },

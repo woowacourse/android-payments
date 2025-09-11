@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,7 +46,7 @@ fun ExpiredDateTextField(
             if (expirationDateErrorMessage != null) {
                 Text(
                     text = expirationDateErrorMessage,
-                    color = Color.Red
+                    color = MaterialTheme.colorScheme.error
                 )
             }
         },
