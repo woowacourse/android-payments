@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class CardExpirationDateUiModel(
-    val cardExpirationDate: String = "",
+    val expirationDate: String = "",
     val state: State = State.NOT_FILLED,
 ) : Parcelable {
     @IgnoredOnParcel
@@ -26,7 +26,7 @@ data class CardExpirationDateUiModel(
 
         fun from(cardExpirationDate: CardExpirationDate): CardExpirationDateUiModel =
             CardExpirationDateUiModel(
-                cardExpirationDate = cardExpirationDate.value.format(formatter),
+                expirationDate = cardExpirationDate.value.format(formatter),
                 state = if (cardExpirationDate.isExpired()) State.EXPIRED else State.VALID,
             )
     }

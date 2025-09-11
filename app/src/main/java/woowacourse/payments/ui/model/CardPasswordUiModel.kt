@@ -7,7 +7,7 @@ import woowacourse.payments.domain.CardPassword
 
 @Parcelize
 data class CardPasswordUiModel(
-    val cardPassword: String = "",
+    val password: String = "",
     val state: State = State.NOT_FILLED,
 ) : Parcelable {
     @IgnoredOnParcel
@@ -22,7 +22,7 @@ data class CardPasswordUiModel(
     companion object {
         fun from(cardPassword: CardPassword): CardPasswordUiModel =
             CardPasswordUiModel(
-                cardPassword = cardPassword.value,
+                password = cardPassword.value,
                 state = State.VALID,
             )
     }

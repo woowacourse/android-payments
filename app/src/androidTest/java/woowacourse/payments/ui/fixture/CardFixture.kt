@@ -8,13 +8,13 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 val VALIDATED_CARD_NUMBER =
     CardNumberUiModel(
-        cardNumber = "1234123412341234",
+        number = "1234123412341234",
         state = CardNumberUiModel.State.VALID,
     )
 
 val VALIDATED_CARD_EXPIRATION_DATE =
     CardExpirationDateUiModel(
-        cardExpirationDate = "1234",
+        expirationDate = "1234",
         state = CardExpirationDateUiModel.State.VALID,
     )
 
@@ -27,7 +27,7 @@ val VALIDATED_CARD_HOLDER_NAME =
 
 val VALIDATED_CARD_PASSWORD =
     CardPasswordUiModel(
-        cardPassword = "1234",
+        password = "1234",
         state = CardPasswordUiModel.State.VALID,
     )
 
