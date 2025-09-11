@@ -14,9 +14,9 @@ value class OwnerName(
         }
     }
 
-    private fun checkValidOwnerName(cardNumber: String?): Boolean {
-        if (cardNumber == null) return true
-        return cardNumber.length <= MAX_LENGTH_OWNER_NAME
+    private fun checkValidOwnerName(ownerName: String?): Boolean {
+        if (ownerName == null) return true
+        return ownerName.length <= MAX_LENGTH_OWNER_NAME
     }
 
     companion object {
