@@ -15,6 +15,7 @@ import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 fun CardNumberTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isValid: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LimitedLengthOutlinedTextField(
@@ -23,7 +24,7 @@ fun CardNumberTextField(
         maxLength = CardNumber.CARD_NUMBER_LENGTH,
         label = { Text(stringResource(R.string.card_number_label)) },
         placeholder = { Text("0000 - 0000 - 0000 - 0000") },
-        isError = value.isNotEmpty() && runCatching { CardNumber.from(value) }.isFailure,
+        isError = value.isNotEmpty() && !isValid,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,

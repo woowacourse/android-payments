@@ -8,14 +8,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.ui.transformation.GroupedVisualTransformation
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun CardExpirationDateTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isValid: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LimitedLengthOutlinedTextField(
@@ -25,13 +24,7 @@ fun CardExpirationDateTextField(
         label = { Text(stringResource(R.string.card_expiration_date_label)) },
         placeholder = { Text("MM / YY") },
         isError =
-            value.isNotEmpty() &&
-                runCatching {
-                    CardExpirationDate.from(value, DATE_TIME_FORMATTER)
-                }.fold(
-                    onSuccess = { it.isExpired() },
-                    onFailure = { true },
-                ),
+            value.isNotEmpty() && !isValid,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,
@@ -48,4 +41,3 @@ fun CardExpirationDateTextField(
 }
 
 private const val EXPIRATION_DATE_GROUP_SIZE = 2
-private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMyy")

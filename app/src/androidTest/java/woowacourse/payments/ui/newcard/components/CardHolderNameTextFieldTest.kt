@@ -21,7 +21,7 @@ class CardHolderNameTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var text by remember { mutableStateOf("") }
-            CardHolderNameTextField(value = text, onValueChange = { text = it })
+            CardHolderNameTextField(value = text, onValueChange = { text = it }, isValid = true)
         }
     }
 

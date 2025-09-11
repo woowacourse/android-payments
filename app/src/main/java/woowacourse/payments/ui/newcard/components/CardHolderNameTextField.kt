@@ -16,6 +16,7 @@ import woowacourse.payments.domain.CardHolderName
 fun CardHolderNameTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isValid: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LimitedLengthOutlinedTextField(
@@ -24,7 +25,7 @@ fun CardHolderNameTextField(
         maxLength = CardHolderName.MAX_NAME_LENGTH,
         label = { Text(stringResource(R.string.card_holder_name_label)) },
         placeholder = { Text(stringResource(R.string.input_card_holder_name_placeholder)) },
-        isError = value.isNotEmpty() && runCatching { CardHolderName(value) }.isFailure,
+        isError = value.isNotEmpty() && !isValid,
         supportingText = {
             Text(
                 "${value.length}/${CardHolderName.MAX_NAME_LENGTH}",

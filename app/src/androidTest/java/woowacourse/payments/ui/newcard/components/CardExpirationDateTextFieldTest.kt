@@ -21,7 +21,7 @@ class CardExpirationDateTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var text by remember { mutableStateOf("") }
-            CardExpirationDateTextField(value = text, onValueChange = { text = it })
+            CardExpirationDateTextField(value = text, onValueChange = { text = it }, isValid = true)
         }
     }
 

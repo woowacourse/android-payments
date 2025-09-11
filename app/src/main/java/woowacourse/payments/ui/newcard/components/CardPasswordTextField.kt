@@ -15,6 +15,7 @@ import woowacourse.payments.domain.CardPassword
 fun CardPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
+    isValid: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LimitedLengthOutlinedTextField(
@@ -23,7 +24,7 @@ fun CardPasswordTextField(
         maxLength = CardPassword.CARD_PASSWORD_LENGTH,
         label = { Text(stringResource(R.string.card_password_label)) },
         placeholder = { Text("0000") },
-        isError = value.isNotEmpty() && runCatching { CardPassword(value) }.isFailure,
+        isError = value.isNotEmpty() && !isValid,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,

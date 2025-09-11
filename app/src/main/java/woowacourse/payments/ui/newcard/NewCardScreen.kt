@@ -55,21 +55,25 @@ fun NewCardScreen(
             CardNumberTextField(
                 value = state.cardNumber,
                 onValueChange = state::onCardNumberChange,
+                isValid = state.isCardNumberValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardExpirationDateTextField(
                 value = state.cardExpirationDate,
                 onValueChange = state::onCardExpirationDateChange,
+                isValid = state.isCardExpirationDateValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             CardHolderNameTextField(
                 value = state.cardHolderName,
                 onValueChange = state::onCardHolderNameChange,
+                isValid = state.isCardHolderNameValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardPasswordTextField(
                 value = state.cardPassword,
                 onValueChange = state::onCardPasswordChange,
+                isValid = state.isCardPasswordValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
