@@ -31,7 +31,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.cardlist.components.CardListTopBar
-import woowacourse.payments.ui.components.PaymentCard
+import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.util.getParcelableCompat
 import java.time.YearMonth

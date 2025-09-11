@@ -10,7 +10,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardPassword
-import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 
 @Composable
 fun CardPasswordTextField(

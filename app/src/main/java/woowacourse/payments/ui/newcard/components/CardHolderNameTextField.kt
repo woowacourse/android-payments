@@ -11,7 +11,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardHolderName
-import woowacourse.payments.ui.components.LimitedLengthOutlinedTextField
 
 @Composable
 fun CardHolderNameTextField(
