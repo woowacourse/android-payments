@@ -7,7 +7,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.cards
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @OptIn(ExperimentalTestApi::class)
@@ -20,7 +22,9 @@ class AllCardsTopbarTest {
         // given
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards = listOf(),
+                AllCardsUiState(
+                    listOf(),
+                ),
             )
         }
 
@@ -35,11 +39,12 @@ class AllCardsTopbarTest {
         // given
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards =
+                AllCardsUiState(
                     listOf(
                         CardInfoUiState(),
                         CardInfoUiState(),
                     ),
+                ),
             )
         }
 
@@ -55,11 +60,13 @@ class AllCardsTopbarTest {
         var isClicked = false
         composeTestRule.setContent {
             AllCardsTopbar(
-                cards =
-                    listOf(
-                        CardInfoUiState(),
-                        CardInfoUiState(),
-                    ),
+                AllCardsUiState(
+                    cards =
+                        listOf(
+                            CardInfoUiState(),
+                            CardInfoUiState(),
+                        ),
+                ),
                 onPlusCardClick = {
                     isClicked = true
                 },

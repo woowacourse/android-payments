@@ -1,7 +1,9 @@
 package woowacourse.payments.addcard
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -20,6 +22,7 @@ import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField
 import woowacourse.payments.ui.addcard.component.PasswordTextField
+import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @OptIn(ExperimentalTestApi::class)
@@ -34,7 +37,9 @@ class AddCardScreenTest {
             var state by remember {
                 mutableStateOf(
                     CardInfoUiState(
-                        _cardNumber = "1234123412341234",
+                        CardInfoUiModel(
+                            cardNumber = "1234123412341234",
+                        ),
                     ),
                 )
             }
@@ -85,11 +90,13 @@ class AddCardScreenTest {
             var state by remember {
                 mutableStateOf(
                     CardInfoUiState(
-                        _cardNumber = "12341",
+                        CardInfoUiModel(
+                            cardNumber = "12341",
+                        ),
                     ),
                 )
             }
-            CardNumberTextField(state, Modifier.Companion)
+            CardNumberTextField(state)
         }
 
         // when
@@ -97,13 +104,13 @@ class AddCardScreenTest {
             .onNodeWithText("카드 번호")
             .performClick()
             .performKeyInput {
-                pressKey(Key.Companion.Backspace)
+                pressKey(Key.Backspace)
             }
 
         // then
         composeTestRule
-            .onNodeWithText("카드 번호")
-            .assertTextContains("1234")
+            .onNodeWithText("-", substring = true)
+            .assertDoesNotExist()
     }
 
     @Test

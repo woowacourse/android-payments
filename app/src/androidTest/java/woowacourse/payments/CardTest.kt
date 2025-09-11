@@ -19,6 +19,7 @@ class CardTest {
         composeTestRule.setContent {
             Card(
                 cardInfoUiState = cards.first(),
+                showCardInfo = true,
             )
         }
 
@@ -34,6 +35,7 @@ class CardTest {
         composeTestRule.setContent {
             Card(
                 cardInfoUiState = cards.first(),
+                showCardInfo = true,
             )
         }
 
@@ -49,6 +51,7 @@ class CardTest {
         composeTestRule.setContent {
             Card(
                 cardInfoUiState = CardInfoUiState(),
+                showCardInfo = true,
             )
         }
 

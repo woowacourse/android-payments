@@ -7,12 +7,11 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.cards
 import woowacourse.payments.ui.allcards.AllCardsScreen
-import woowacourse.payments.ui.allcards.component.PlusCard
+import woowacourse.payments.ui.allcards.model.AllCardsUiState
 
 @OptIn(ExperimentalTestApi::class)
 class AllCardsScreenTest {
@@ -24,7 +23,9 @@ class AllCardsScreenTest {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = cards,
+                AllCardsUiState(
+                    cards,
+                ),
             )
         }
 
@@ -39,7 +40,9 @@ class AllCardsScreenTest {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = mutableStateListOf(),
+                AllCardsUiState(
+                    mutableStateListOf(),
+                ),
             )
         }
 
@@ -58,16 +61,17 @@ class AllCardsScreenTest {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards =
-                    mutableStateListOf(
-                        cards[1],
+                AllCardsUiState(
+                    mutableListOf(
+                        cards.first(),
                     ),
+                ),
             )
         }
 
         // when - then
         composeTestRule
-            .onNodeWithText("홍길동")
+            .onNodeWithText("홍길동", substring = true)
             .assertExists()
 
         composeTestRule
@@ -80,7 +84,9 @@ class AllCardsScreenTest {
         // given
         composeTestRule.setContent {
             AllCardsScreen(
-                cards = cards,
+                AllCardsUiState(
+                    cards,
+                ),
             )
         }
 
