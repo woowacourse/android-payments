@@ -63,7 +63,7 @@ fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
                     val newIntent = CardRegistrationActivity.newIntent(context)
                     cardAddLauncher.launch(newIntent)
                 },
-                isRegistrationButtonEnabled = uiState is CardsUiState.MULTIPLE,
+                showRegistrationButton = uiState is CardsUiState.MULTIPLE,
             )
         },
     ) { innerPadding ->

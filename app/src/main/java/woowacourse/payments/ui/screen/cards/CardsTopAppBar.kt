@@ -21,11 +21,11 @@ import woowacourse.payments.R
 fun CardsTopAppBar(
     onRegistrationButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isRegistrationButtonEnabled: Boolean = false,
+    showRegistrationButton: Boolean = false,
 ) {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(R.string.cards_screen_top_app_bar_title)) },
-        actions = { if (isRegistrationButtonEnabled) RegistrationButton(onRegistrationButtonClick) },
+        actions = { if (showRegistrationButton) RegistrationButton(onRegistrationButtonClick) },
         modifier = modifier,
     )
 }
@@ -57,11 +57,11 @@ private fun CardsTopAppBarPreview() {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         CardsTopAppBar(
             onRegistrationButtonClick = {},
-            isRegistrationButtonEnabled = true,
+            showRegistrationButton = true,
         )
         CardsTopAppBar(
             onRegistrationButtonClick = {},
-            isRegistrationButtonEnabled = false,
+            showRegistrationButton = false,
         )
     }
 }
