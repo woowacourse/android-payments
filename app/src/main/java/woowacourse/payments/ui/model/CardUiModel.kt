@@ -11,7 +11,7 @@ data class CardUiModel(
     private val cardExpirationDateUiModel: CardExpirationDateUiModel = CardExpirationDateUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
-    val cardholderName: String = cardholderNameUiModel.nameOrDefault()
+    val cardholderName: String? = cardholderNameUiModel.nameOrNull()
 
     fun formattedCardNumber(
         chunkSize: Int = CARD_NUMBER_CHUNK_SIZE,

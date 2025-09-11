@@ -37,4 +37,8 @@
 
     <!-- cards_top_app_bar -->
     <string name="cards_top_app_bar_add">추가</string>
+
+    <!-- payment_card -->
+    <string name="payment_card_default_name">CREW</string>
+
 </resources>

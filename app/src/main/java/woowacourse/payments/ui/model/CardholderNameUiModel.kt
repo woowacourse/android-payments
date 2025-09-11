@@ -17,11 +17,10 @@ class CardholderNameUiModel(
         require(value.length <= MAXIMUM_NAME_LENGTH_VALUE) { ERROR_INVALID_LENGTH }
     }
 
-    fun nameOrDefault(): String = value.ifBlank { DEFAULT_NAME }
+    fun nameOrNull(): String? = value.ifBlank { null }
 
     companion object {
         private const val ERROR_INVALID_LENGTH = "카드 소유자 이름은 30자를 초과할 수 없습니다."
         private const val MAXIMUM_NAME_LENGTH_VALUE = 30
-        private const val DEFAULT_NAME = "CREW"
     }
 }
