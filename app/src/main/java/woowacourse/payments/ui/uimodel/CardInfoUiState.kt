@@ -44,14 +44,10 @@ data class CardInfoUiState(
 
     private fun checkIfMonthCompleted(): Boolean =
         if (expireDate.length >= 2) {
-            CardInfo.Companion.checkIsValidMonth(expireDate)
+            CardInfo.checkIsValidMonth(expireDate)
         } else {
             true
         }
-
-    companion object {
-        const val OWNER_NAME_MAX_SIZE = CardInfo.Companion.OWNER_NAME_MAX_SIZE
-    }
 }
 
 fun CardInfoUiState.isComplete(): Boolean {

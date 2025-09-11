@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
+import woowacourse.payments.model.CardInfo
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
@@ -30,12 +31,17 @@ fun OwnerNameTextField(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
-                text = "${cardInfo.ownerName.length}/${CardInfoUiState.OWNER_NAME_MAX_SIZE}"
+                text = "${cardInfo.ownerName.length}/${CardInfo.OWNER_NAME_MAX_SIZE}",
             )
         },
-        visualTransformation = if (cardInfo.ownerName.isEmpty()) PlaceholderTransformation(
-            placeholder = stringResource(R.string.addcard_owner_name_placeholder),
-            textColor = colorResource(R.color.payments_placeholder_color)
-        ) else VisualTransformation.None
+        visualTransformation =
+            if (cardInfo.ownerName.isEmpty()) {
+                PlaceholderTransformation(
+                    placeholder = stringResource(R.string.addcard_owner_name_placeholder),
+                    textColor = colorResource(R.color.payments_placeholder_color),
+                )
+            } else {
+                VisualTransformation.None
+            },
     )
 }
