@@ -12,7 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -32,7 +31,7 @@ class AllCardsActivity : ComponentActivity() {
             val launcher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        result.data?.getCardInfo()?.let {
+                        result.data?.getCardInfoCompat()?.let {
                             allCards.addCard(it)
                             Toast
                                 .makeText(
@@ -72,7 +71,7 @@ class AllCardsActivity : ComponentActivity() {
         }
     }
 
-    private fun Intent.getCardInfo() =
+    private fun Intent.getCardInfoCompat() =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             getParcelableExtra(CARD_INFO_KEY, CardInfoUiState::class.java)
         } else {
