@@ -9,17 +9,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
 import woowacourse.payments.ui.component.CardExpirationDateTextField
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
@@ -41,21 +38,11 @@ fun CardRegistrationScreen(
 ) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
-    val navigatePreviousMessage = stringResource(R.string.common_navigate_previous)
-    val registerCardMessage =
-        stringResource(R.string.card_registration_screen_registration_card_success)
-
-    LaunchedEffect(uiState.snackbarMessage) {
-        if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
-        uiState = uiState.copy(snackbarMessage = null)
-    }
-
     Scaffold(
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = {
                     onBackPressed()
-                    uiState = uiState.copy(snackbarMessage = navigatePreviousMessage)
                 },
                 onSaveClick = {
                     onCardRegistered(
@@ -65,8 +52,6 @@ fun CardRegistrationScreen(
                             cardExpirationDateUiModel = uiState.cardExpirationDate,
                         ),
                     )
-
-                    uiState = uiState.copy(snackbarMessage = registerCardMessage)
                 },
                 isSaveButtonEnabled = uiState.isRegistrableCard,
             )
