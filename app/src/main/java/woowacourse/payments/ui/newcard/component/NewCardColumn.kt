@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.password
-import android.R.attr.top
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
