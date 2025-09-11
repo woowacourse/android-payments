@@ -23,13 +23,7 @@ class CardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cards: SnapshotStateList<Card> =
-                remember {
-                    mutableStateListOf(
-                        *(viewModel.cards.value?.toTypedArray() ?: emptyArray()),
-                    )
-                }
-
+            val cards: SnapshotStateList<Card> = remember { mutableStateListOf() }
             setUpObservers(cards)
 
             AndroidpaymentsTheme {
