@@ -76,12 +76,12 @@ private fun AddCardScreenPreview() {
             topBar = {
                 AddCardTopbar()
             },
-        ) {
+        ) { paddingValues ->
             AddCardScreen(
                 rememberSaveable { CardInfoUiState() },
                 modifier =
                     Modifier
-                        .padding(it),
+                        .padding(paddingValues),
             )
         }
     }
