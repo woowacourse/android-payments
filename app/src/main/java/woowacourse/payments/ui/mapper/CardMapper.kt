@@ -2,27 +2,28 @@ package woowacourse.payments.ui.mapper
 
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpireDate
-import woowacourse.payments.domain.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateStatus
+import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.domain.ExpireDateValidationException
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.CardUiState
+import woowacourse.payments.ui.features.addcard.ExpireDateUiState
 
 object CardMapper {
-    fun getExpireDateStatus(expireDate: String): ExpireDateStatus {
-        if (expireDate.isEmpty()) return ExpireDateStatus.Empty
-        if (expireDate.length < ExpireDate.MAX_LENGTH_EXPIRE_DATE) return ExpireDateStatus.Typing
+    fun getExpireDateUiState(expireDate: String): ExpireDateUiState {
+        if (expireDate.isEmpty()) return ExpireDateUiState.Empty
+        if (expireDate.length < ExpireDate.MAX_LENGTH_EXPIRE_DATE) return ExpireDateUiState.Typing
 
         val result = ExpireDate.from(expireDate)
         return result.fold(
             onSuccess = { createdExpireDate ->
-                ExpireDateStatus.Valid(createdExpireDate.value)
+                ExpireDateUiState.Valid(createdExpireDate)
             },
             onFailure = { throwable ->
                 val reason = getExpireDateInvalidReason(throwable)
-                ExpireDateStatus.Invalid(reason)
+                ExpireDateUiState.Invalid(reason)
             },
         )
     }

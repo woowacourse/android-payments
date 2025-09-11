@@ -2,21 +2,11 @@ package woowacourse.payments.domain
 
 import java.time.YearMonth
 
-typealias ExpireDateInvalidReason = ExpireDateStatus.Invalid.Reason
-
 sealed interface ExpireDateStatus {
-    data class Valid(
-        val yearMonth: YearMonth,
-    ) : ExpireDateStatus
-
-    data object Empty : ExpireDateStatus
-
-    data object Typing : ExpireDateStatus
-
     data class Invalid(
-        val reason: Reason,
+        val reason: ExpireDateInvalidReason,
     ) : ExpireDateStatus {
-        enum class Reason {
+        enum class ExpireDateInvalidReason {
             INVALID_FORMAT,
             EXPIRED,
             INVALID_MONTH,

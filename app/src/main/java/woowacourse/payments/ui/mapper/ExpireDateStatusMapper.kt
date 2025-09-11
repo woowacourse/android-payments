@@ -2,7 +2,7 @@ package woowacourse.payments.ui.mapper
 
 import androidx.annotation.StringRes
 import woowacourse.payments.R
-import woowacourse.payments.domain.ExpireDateInvalidReason
+import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 
 @get:StringRes
 val ExpireDateInvalidReason.messageResId: Int

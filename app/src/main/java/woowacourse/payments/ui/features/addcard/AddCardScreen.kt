@@ -30,7 +30,7 @@ import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
 import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.mapper.CardCreationResult
-import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
+import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -51,8 +51,8 @@ fun AddCardScreen(
     onNavigateSave: (PaymentCard) -> Unit,
 ) {
     var cardUiState by remember { mutableStateOf(CardUiState()) }
-    val expireDateStatus by remember(cardUiState.expireDate) {
-        derivedStateOf { getExpireDateStatus(cardUiState.expireDate) }
+    val expireDateUiState by remember(cardUiState.expireDate) {
+        derivedStateOf { getExpireDateUiState(cardUiState.expireDate) }
     }
     val context = LocalContext.current
 
@@ -110,7 +110,7 @@ fun AddCardScreen(
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
-                expireDateStatus = expireDateStatus,
+                expireDateUiState = expireDateUiState,
                 supportingTextHeight = SupportingTextHeight,
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))

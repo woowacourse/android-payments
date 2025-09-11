@@ -20,9 +20,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpireDate.Companion.MAX_LENGTH_EXPIRE_DATE
-import woowacourse.payments.domain.ExpireDateStatus
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.mapper.CardMapper.getExpireDateStatus
+import woowacourse.payments.ui.features.addcard.ExpireDateUiState
 import woowacourse.payments.ui.mapper.messageResId
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation
@@ -33,12 +32,12 @@ fun CardExpireDateField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    expireDateStatus: ExpireDateStatus,
+    expireDateUiState: ExpireDateUiState,
     supportingTextHeight: Dp = 20.dp,
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val showError =
-        expireDateStatus is ExpireDateStatus.Invalid || expireDateStatus is ExpireDateStatus.Typing && !isFocused
+        expireDateUiState is ExpireDateUiState.Invalid || expireDateUiState is ExpireDateUiState.Typing && !isFocused
     val visualTransformation = remember { SeparatorVisualTransformation(2, " / ") }
 
     AppTextField(
@@ -56,13 +55,13 @@ fun CardExpireDateField(
         isError = showError,
         supportingText = {
             Box(modifier = Modifier.height(supportingTextHeight)) {
-                if (showError && expireDateStatus is ExpireDateStatus.Invalid) {
+                if (showError && expireDateUiState is ExpireDateUiState.Invalid) {
                     Text(
                         modifier = Modifier,
-                        text = stringResource(id = expireDateStatus.reason.messageResId),
+                        text = stringResource(id = expireDateUiState.reason.messageResId),
                         color = MaterialTheme.colorScheme.error,
                     )
-                } else if (showError && expireDateStatus is ExpireDateStatus.Typing) {
+                } else if (showError && expireDateUiState is ExpireDateUiState.Typing) {
                     Text(
                         modifier = Modifier,
                         text = stringResource(id = R.string.add_card_expire_date_incomplete_error_message),
@@ -84,7 +83,7 @@ fun CardExpireDateFieldPreview() {
         CardExpireDateField(
             value = text,
             onValueChange = { text = it },
-            expireDateStatus = getExpireDateStatus(text),
+            expireDateUiState = ExpireDateUiState.Empty,
         )
     }
 }

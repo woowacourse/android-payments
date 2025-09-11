@@ -1,8 +1,8 @@
 package woowacourse.payments.domain
 
-import android.R.attr.digits
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import java.time.YearMonth
 
 @JvmInline
