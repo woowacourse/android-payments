@@ -1,12 +1,14 @@
 package woowacourse.payments.ui.screen.cards.component
 
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,8 +21,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,9 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.extension.getParcelableCompat
+import woowacourse.payments.ui.common.extension.showToast
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionActivity
 import woowacourse.payments.ui.screen.cards.CardsActivity.Companion.EXTRA_CARD
+import woowacourse.payments.ui.screen.cards.CardsUiEvent
 import woowacourse.payments.ui.screen.cards.CardsUiState
 
 @Composable
@@ -46,11 +52,24 @@ fun CardsScreen(
     initialState: CardsUiState = CardsUiState.Empty,
 ) {
     var cardsUiState by rememberSaveable { mutableStateOf(initialState) }
+    var cardsUiEvent by rememberSaveable { mutableStateOf<CardsUiEvent>(CardsUiEvent.None) }
     val context = LocalContext.current
     val launcher =
-        rememberCardAdditionLauncher { newCard ->
-            cardsUiState = cardsUiState.addCard(newCard)
+        rememberCardAdditionLauncher(
+            onCardAdded = { newCard -> cardsUiState = cardsUiState.addCard(newCard) },
+            onEvent = { event -> cardsUiEvent = event },
+        )
+
+    LaunchedEffect(cardsUiEvent) {
+        when (cardsUiEvent) {
+            CardsUiEvent.AddCardFailure -> context.showToast(R.string.cards_card_addition_failure)
+
+            CardsUiEvent.AddCardSuccess -> context.showToast(R.string.cards_card_addition_success)
+
+            CardsUiEvent.None -> Unit
         }
+        cardsUiEvent = CardsUiEvent.None
+    }
 
     Scaffold(
         modifier = modifier,
@@ -74,25 +93,23 @@ fun CardsScreen(
 }
 
 @Composable
-private fun rememberCardAdditionLauncher(onCardAdded: (CardUiModel) -> Unit): ManagedActivityResultLauncher<Intent, ActivityResult> {
-    val context = LocalContext.current
-    return rememberLauncherForActivityResult(
+private fun rememberCardAdditionLauncher(
+    onCardAdded: (CardUiModel) -> Unit,
+    onEvent: (CardsUiEvent) -> Unit,
+): ManagedActivityResultLauncher<Intent, ActivityResult> =
+    rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
             card?.let { card ->
                 onCardAdded(card)
-                Toast
-                    .makeText(
-                        context,
-                        R.string.cards_card_addition_success,
-                        Toast.LENGTH_SHORT,
-                    ).show()
+                onEvent(CardsUiEvent.AddCardSuccess)
             }
+        } else {
+            onEvent(CardsUiEvent.AddCardFailure)
         }
     }
-}
 
 @Composable
 private fun CardsContent(
