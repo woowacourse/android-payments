@@ -12,23 +12,17 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpireDate
-import woowacourse.payments.domain.OwnerName
-import woowacourse.payments.domain.Password
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import java.time.YearMonth
 
-private val dummyPaymentCard =
-    PaymentCard(
-        CardNumber.create("1234123412341234").getOrThrow(),
-        ExpireDate.create(YearMonth.now().plusMonths(1)).getOrThrow(),
-        OwnerName("CREW"),
-        Password("1234"),
+val dummyPaymentCardUiModel =
+    PaymentCardUiModel(
+        "1234 - 1234 - 1234 - 1234",
+        "02 / 26",
+        "CREW",
     )
-private val dummyPaymentCardList1 = listOf(dummyPaymentCard)
-private val dummyPaymentCardList2 = List(2) { dummyPaymentCard }
+private val dummyPaymentCardList1 = listOf(dummyPaymentCardUiModel)
+private val dummyPaymentCardList2 = List(2) { dummyPaymentCardUiModel }
 
 class CardListScreenTest {
     @get:Rule
@@ -51,7 +45,7 @@ class CardListScreenTest {
         // when
         compose.setContent {
             AndroidpaymentsTheme {
-                CardListScreen(paymentCardList = emptyList(), onAddCard = {})
+                CardListScreen(cardUiModels = emptyList(), onAddCard = {})
             }
         }
 
@@ -65,7 +59,7 @@ class CardListScreenTest {
         // when
         compose.setContent {
             AndroidpaymentsTheme {
-                CardListScreen(paymentCardList = dummyPaymentCardList1, onAddCard = {})
+                CardListScreen(cardUiModels = dummyPaymentCardList1, onAddCard = {})
             }
         }
 
@@ -80,7 +74,7 @@ class CardListScreenTest {
         // when
         compose.setContent {
             AndroidpaymentsTheme {
-                CardListScreen(paymentCardList = dummyPaymentCardList2, onAddCard = {})
+                CardListScreen(cardUiModels = dummyPaymentCardList2, onAddCard = {})
             }
         }
 

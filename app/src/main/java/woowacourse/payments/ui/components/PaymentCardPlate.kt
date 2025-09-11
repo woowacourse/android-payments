@@ -20,30 +20,23 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpireDate
-import woowacourse.payments.domain.OwnerName
-import woowacourse.payments.domain.Password
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 @Composable
-fun PaymentCard(
+fun PaymentCardPlate(
     modifier: Modifier = Modifier,
-    paymentCard: PaymentCard? = null,
+    paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
-    val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
-
     val description =
-        if (paymentCard == null) {
+        if (paymentCardUiModel == null) {
             stringResource(R.string.payment_card_empty_description)
         } else {
             stringResource(
                 R.string.payment_card_full_description,
-                paymentCard.cardNumber.value,
-                paymentCard.ownerName.value ?: "",
-                paymentCard.expireDate.value.format(yearMonthFormatter),
+                paymentCardUiModel.maskedCardNumber,
+                paymentCardUiModel.ownerName,
+                paymentCardUiModel.formattedExpireDate,
             )
         }
 
@@ -70,9 +63,9 @@ fun PaymentCard(
                         shape = RoundedCornerShape(4.dp),
                     ),
         )
-        if (paymentCard != null) {
+        if (paymentCardUiModel != null) {
             Text(
-                paymentCard.cardNumber.toMaskedString(),
+                paymentCardUiModel.maskedCardNumber,
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 28.dp)
@@ -83,7 +76,7 @@ fun PaymentCard(
             )
 
             Text(
-                paymentCard.ownerName.value ?: "",
+                paymentCardUiModel.ownerName,
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 10.dp)
@@ -94,7 +87,7 @@ fun PaymentCard(
             )
 
             Text(
-                paymentCard.expireDate.value.format(yearMonthFormatter),
+                paymentCardUiModel.formattedExpireDate,
                 modifier =
                     Modifier
                         .padding(end = 14.dp, bottom = 10.dp)
@@ -117,7 +110,7 @@ fun CardNumber.toMaskedString(): String {
 @Composable
 fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard()
+        PaymentCardPlate()
     }
 }
 
@@ -125,13 +118,12 @@ fun PaymentCardPreview() {
 @Composable
 fun PaymentCardDetailPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(
-            paymentCard =
-                PaymentCard(
-                    CardNumber.create("1234123412341234").getOrThrow(),
-                    ExpireDate.create(YearMonth.now().plusMonths(1)).getOrThrow(),
-                    OwnerName("CREW"),
-                    Password("1234"),
+        PaymentCardPlate(
+            paymentCardUiModel =
+                PaymentCardUiModel(
+                    "1234 - 1234 - 1234 - 1234",
+                    "02 / 26",
+                    "CREW",
                 ),
         )
     }

@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.addcard.AddCardScreen
+import woowacourse.payments.ui.mapper.CardMapper.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddcardActivity : ComponentActivity() {
@@ -20,7 +21,7 @@ class AddcardActivity : ComponentActivity() {
                     onNavigateSave = { card: PaymentCard ->
                         val intent =
                             Intent().apply {
-                                putExtra(EXTRA_PAYMENT_CARD, card)
+                                putExtra(EXTRA_PAYMENT_CARD_UI_MODEL, card.toUiModel())
                             }
                         setResult(RESULT_OK, intent)
                         finish()
@@ -31,6 +32,6 @@ class AddcardActivity : ComponentActivity() {
     }
 
     companion object {
-        const val EXTRA_PAYMENT_CARD = "EXTRA_PAYMENT_CARD"
+        const val EXTRA_PAYMENT_CARD_UI_MODEL = "EXTRA_PAYMENT_CARD"
     }
 }

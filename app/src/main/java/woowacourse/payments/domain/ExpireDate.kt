@@ -1,15 +1,12 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import java.time.YearMonth
 
 @JvmInline
-@Parcelize
 value class ExpireDate private constructor(
     val value: YearMonth,
-) : Parcelable {
+) {
     init {
         if (value < YearMonth.now()) {
             throw ExpireDateValidationException(ExpireDateInvalidReason.EXPIRED)

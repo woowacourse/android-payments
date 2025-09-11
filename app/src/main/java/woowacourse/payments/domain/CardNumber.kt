@@ -1,14 +1,11 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.exception.CardNumberException
 
 @JvmInline
-@Parcelize
 value class CardNumber private constructor(
     val value: String,
-) : Parcelable {
+) {
     init {
         if (value.length != MAX_LENGTH_CARD_NUMBER) {
             throw CardNumberException.InvalidLength

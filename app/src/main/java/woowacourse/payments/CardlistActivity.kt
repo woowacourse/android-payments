@@ -14,8 +14,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
@@ -25,7 +25,7 @@ class CardlistActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cardList by remember { mutableStateOf<List<PaymentCard>>(emptyList()) }
+                var cardUiModels by remember { mutableStateOf<List<PaymentCardUiModel>>(emptyList()) }
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(
@@ -33,18 +33,18 @@ class CardlistActivity : ComponentActivity() {
                     ) { activityResult ->
                         if (activityResult.resultCode == Activity.RESULT_OK) {
                             val newCard =
-                                activityResult.data?.getParcelableExtraCompat<PaymentCard>(
-                                    AddcardActivity.EXTRA_PAYMENT_CARD,
+                                activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
+                                    AddcardActivity.EXTRA_PAYMENT_CARD_UI_MODEL,
                                 )
                             newCard?.let {
-                                cardList = cardList + it
+                                cardUiModels = cardUiModels + it
                                 showToast(this, R.string.card_list_card_added_alert)
                             }
                         }
                     }
 
                 CardListScreen(
-                    paymentCardList = cardList,
+                    cardUiModels = cardUiModels,
                     onAddCard = {
                         val intent = Intent(this, AddcardActivity::class.java)
                         cardAddLauncher.launch(intent)

@@ -8,8 +8,11 @@ import woowacourse.payments.domain.ExpireDateValidationException
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
 import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.ui.components.toMaskedString
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.features.addcard.ExpireDateUiState
+import woowacourse.payments.ui.model.PaymentCardUiModel
+import java.time.format.DateTimeFormatter
 
 object CardMapper {
     fun getExpireDateUiState(expireDate: String): ExpireDateUiState {
@@ -25,6 +28,16 @@ object CardMapper {
                 val reason = getExpireDateInvalidReason(throwable)
                 ExpireDateUiState.Invalid(reason)
             },
+        )
+    }
+
+    fun PaymentCard.toUiModel(): PaymentCardUiModel {
+        val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
+
+        return PaymentCardUiModel(
+            maskedCardNumber = this.cardNumber.toMaskedString(), // UI 포맷팅 확장 함수 사용
+            formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
+            ownerName = this.ownerName.value ?: "",
         )
     }
 

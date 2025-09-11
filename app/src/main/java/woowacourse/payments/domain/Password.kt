@@ -1,13 +1,9 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
 @JvmInline
-@Parcelize
 value class Password(
     val value: String,
-) : Parcelable {
+) {
     init {
         require(checkValidPassword(value)) {
             "비밀번호가 유효하지 않습니다."

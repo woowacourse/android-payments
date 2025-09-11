@@ -1,7 +1,5 @@
 package woowacourse.payments.domain
 
-import java.time.YearMonth
-
 sealed interface ExpireDateStatus {
     data class Invalid(
         val reason: ExpireDateInvalidReason,
