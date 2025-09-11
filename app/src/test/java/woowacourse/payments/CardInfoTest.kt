@@ -94,7 +94,7 @@ class CardInfoTest {
         val rawOwnerName = "12345678901234567890123456789012345678901234567890"
 
         // when
-        val result = CardInfo.formatExpireDate(rawOwnerName).length
+        val result = CardInfo.formatOwnerName(rawOwnerName).length
 
         // then
         assert(result <= 30)
