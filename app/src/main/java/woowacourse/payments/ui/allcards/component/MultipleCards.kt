@@ -12,7 +12,10 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 fun MultipleCards(cards: List<CardInfoUiState>) {
     Spacer(modifier = Modifier.height(12.dp))
     cards.forEach { cardInfoUiState ->
-        Card(cardInfoUiState = cardInfoUiState)
+        Card(
+            cardInfoUiState = cardInfoUiState,
+            showCardInfo = true,
+        )
         Spacer(modifier = Modifier.height(36.dp))
     }
 }

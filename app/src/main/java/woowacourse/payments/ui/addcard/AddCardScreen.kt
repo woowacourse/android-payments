@@ -35,7 +35,10 @@ fun AddCardScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Card(cardInfo)
+        Card(
+            cardInfoUiState = cardInfo,
+            showCardInfo = false,
+        )
         Column {
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberTextField(

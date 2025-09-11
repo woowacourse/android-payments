@@ -14,7 +14,10 @@ fun SingleCard(
     onPlusCardClick: () -> Unit = {},
 ) {
     Spacer(modifier = Modifier.height(12.dp))
-    Card(cardInfoUiState = cards.first())
+    Card(
+        cardInfoUiState = cards.first(),
+        showCardInfo = true,
+    )
     Spacer(modifier = Modifier.height(36.dp))
     PlusCard(
         onClick = onPlusCardClick,

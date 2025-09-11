@@ -30,43 +30,46 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
 
 @Composable
-fun Card(cardInfoUiState: CardInfoUiState) {
+fun Card(
+    cardInfoUiState: CardInfoUiState,
+    showCardInfo: Boolean = false,
+) {
     Box(
-        modifier = Modifier
-            .height(124.dp)
-            .shadow(8.dp)
-            .width(208.dp)
-            .background(
-                color = colorResource(id = R.color.payments_card_background),
-                shape = RoundedCornerShape(5.dp),
-            )
-
+        modifier =
+            Modifier
+                .height(124.dp)
+                .shadow(8.dp)
+                .width(208.dp)
+                .background(
+                    color = colorResource(id = R.color.payments_card_background),
+                    shape = RoundedCornerShape(5.dp),
+                ),
     ) {
         Box(
-            modifier = Modifier
-                .padding(
-                    start = 14.dp,
-                    end = 14.dp,
-                    bottom = 8.dp
-                )
-                .shadow(8.dp)
-                .align(Alignment.CenterStart)
-                .size(width = 40.dp, height = 26.dp)
-                .background(
-                    color = colorResource(id = R.color.payments_card_chip),
-                    shape = RoundedCornerShape(5.dp),
-                )
+            modifier =
+                Modifier
+                    .padding(
+                        start = 14.dp,
+                        end = 14.dp,
+                        bottom = 8.dp,
+                    ).shadow(8.dp)
+                    .align(Alignment.CenterStart)
+                    .size(width = 40.dp, height = 26.dp)
+                    .background(
+                        color = colorResource(id = R.color.payments_card_chip),
+                        shape = RoundedCornerShape(5.dp),
+                    ),
         )
-        if (!cardInfoUiState.isComplete()) return
+        if (!showCardInfo) return
         Column(
-            modifier = Modifier
-                .padding(
-                    start = 14.dp,
-                    end = 14.dp,
-                    bottom = 10.dp
-                )
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(
+                        start = 14.dp,
+                        end = 14.dp,
+                        bottom = 10.dp,
+                    ).align(Alignment.BottomCenter)
+                    .fillMaxWidth(),
         ) {
             Text(
                 color = colorResource(id = R.color.white),
@@ -76,10 +79,11 @@ fun Card(cardInfoUiState: CardInfoUiState) {
                 text = CardFormatter.formatCardNumber(cardInfoUiState.cardNumber),
             )
             Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     modifier = Modifier.width(90.dp),
@@ -110,9 +114,8 @@ private fun CardPreview() {
                 _cardNumber = "9999999999999999",
                 _expireDate = "12/25",
                 _ownerName = "홍길동홍길동홍길동홍길동홍길동",
-                _password = "1234"
-            )
+                _password = "1234",
+            ),
         )
     }
-
 }
