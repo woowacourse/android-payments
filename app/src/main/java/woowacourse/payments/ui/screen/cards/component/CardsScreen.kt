@@ -129,24 +129,19 @@ private fun EmptyView(
 
     Column(
         modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(R.string.cards_card_addition_notice),
             modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .semantics {
-                        contentDescription =
-                            context.getString(R.string.cards_card_addition_description)
-                    },
+                Modifier.semantics {
+                    contentDescription = context.getString(R.string.cards_card_addition_description)
+                },
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = modifier.height(32.dp))
-        AddCardButton(
-            modifier = modifier,
-            onClick = onAddClick,
-        )
+        Spacer(modifier = Modifier.height(32.dp))
+        AddCardButton(onClick = onAddClick)
     }
 }
 
@@ -158,16 +153,11 @@ private fun SingleCardView(
 ) {
     Column(
         modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        ExistingCard(
-            card = card,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-        )
-        Spacer(modifier = modifier.height(36.dp))
-        AddCardButton(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            onClick = onAddClick,
-        )
+        ExistingCard(card = card)
+        Spacer(modifier = Modifier.height(36.dp))
+        AddCardButton(onClick = onAddClick)
     }
 }
 
@@ -180,18 +170,11 @@ private fun MultipleCardsView(
 
     Column(
         modifier = modifier.verticalScroll(scrollState),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         cards.forEach { card: CardUiModel ->
-            ExistingCard(
-                card = card,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-            )
-            Spacer(
-                modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .height(36.dp),
-            )
+            ExistingCard(card = card)
+            Spacer(modifier = Modifier.height(36.dp))
         }
     }
 }
