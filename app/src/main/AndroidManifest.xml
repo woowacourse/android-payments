@@ -17,13 +17,11 @@
             android:theme="@style/Theme.Androidpayments">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.addcard.AddCardActivity"
-            android:exported="true" />
+            android:name=".ui.addcard.AddCardActivity" />
     </application>
 
 </manifest>
