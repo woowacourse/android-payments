@@ -40,11 +40,13 @@ data class CardInfo(
                     )
                 }.getOrNull()
 
-            if (formattedCardNumber.length != CARD_NUMBER_MAX_SIZE) return null
-            if (formattedExpireDateString.length != EXPIRE_DATE_MAX_SIZE) return null
-            if (formattedOwnerName.length > OWNER_NAME_MAX_SIZE) return null
-            if (formattedPassword.length != PASSWORD_MAX_SIZE) return null
-            if (parsedExpireDate == null) return null
+            when {
+                formattedCardNumber.length != CARD_NUMBER_MAX_SIZE -> return null
+                formattedExpireDateString.length != EXPIRE_DATE_MAX_SIZE -> return null
+                formattedOwnerName.length > OWNER_NAME_MAX_SIZE -> return null
+                formattedPassword.length != PASSWORD_MAX_SIZE -> return null
+                parsedExpireDate == null -> return null
+            }
 
             return CardInfo(
                 cardNumber = formattedCardNumber,
