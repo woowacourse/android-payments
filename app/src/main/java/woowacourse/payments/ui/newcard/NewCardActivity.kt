@@ -21,20 +21,23 @@ class NewCardActivity : ComponentActivity() {
                 NewCardScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card: Card ->
-                        val intent =
-                            Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
-                        setResult(Activity.RESULT_OK, intent)
-                        Toast
-                            .makeText(
-                                this,
-                                getString(R.string.card_added_message),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        saveCard(card)
+                        showToast(getString(R.string.card_added_message))
                         finish()
                     },
                 )
             }
         }
+    }
+
+    private fun saveCard(card: Card) {
+        val intent = Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     companion object {
