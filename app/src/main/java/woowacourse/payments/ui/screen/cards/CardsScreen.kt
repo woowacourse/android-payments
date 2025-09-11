@@ -17,6 +17,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,10 +42,10 @@ import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
+fun CardsScreen(viewModel: CardsScreenViewModel = rememberCardsScreenViewModel()) {
     val context = LocalContext.current
-    val uiState = viewModel.uiState
-    val uiEvent = viewModel.uiEvent
+    val uiState by viewModel.uiState.observeAsState(CardsUiState.EMPTY)
+    val uiEvent by viewModel.uiEvent.observeAsState(CardsScreenUiEvent.None)
     val cardAddLauncher = rememberCardAddLauncher(viewModel)
 
     LaunchedEffect(uiEvent) {
@@ -79,7 +81,7 @@ fun CardsScreen(viewModel: CardsViewModel = rememberCardsScreenViewModel()) {
 }
 
 @Composable
-private fun rememberCardAddLauncher(viewModel: CardsViewModel) =
+private fun rememberCardAddLauncher(viewModel: CardsScreenViewModel) =
     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         result.data
@@ -94,9 +96,10 @@ private fun CardsScreenContent(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
         contentAlignment = Alignment.TopCenter,
     ) {
         when (cardsUiState) {
@@ -160,7 +163,7 @@ private fun CardsScreenPreview(
     @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: CardsUiState,
 ) {
     AndroidpaymentsTheme {
-        CardsScreen(viewModel = CardsViewModel(cards))
+        CardsScreen(viewModel = CardsScreenViewModel(cards))
     }
 }
 

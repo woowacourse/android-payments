@@ -1,25 +1,18 @@
 package woowacourse.payments.ui.screen.cards
 
-import android.content.Context
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.payments.R
 import woowacourse.payments.ui.fixture.PAYMENT_CARD
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-    private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Test
     fun `카드_목록이_빈_상태라면_안내_메시지와_등록_버튼이_보여진다`() {
@@ -30,12 +23,12 @@ class CardsScreenTest {
         assertAll(
             {
                 composeTestRule
-                    .onNodeWithText(context.getString(R.string.cards_screen_registration_message))
+                    .onNodeWithText("새로운 카드를 등록해주세요")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription(context.getString(R.string.cards_screen_registration_button_content_description))
+                    .onNodeWithContentDescription("카드 등록")
                     .assertIsDisplayed()
             },
         )
@@ -51,7 +44,7 @@ class CardsScreenTest {
             { composeTestRule.onNodeWithText("DICE").assertIsDisplayed() },
             {
                 composeTestRule
-                    .onNodeWithContentDescription(context.getString(R.string.cards_screen_registration_button_content_description))
+                    .onNodeWithContentDescription("카드 등록")
                     .assertIsDisplayed()
             },
         )
@@ -76,7 +69,7 @@ class CardsScreenTest {
 
     private fun setup(uiState: CardsUiState) {
         composeTestRule.setContent {
-            CardsScreen(viewModel = CardsViewModel(uiState))
+            CardsScreen(viewModel = CardsScreenViewModel(uiState))
         }
     }
 }

@@ -12,10 +12,10 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 data class CardRegistrationScreenUiState(
-    val cardNumber: CardNumberUiModel,
-    val cardExpirationDate: CardExpirationDateUiModel,
-    val cardholderName: CardholderNameUiModel,
-    val cardPassword: CardPasswordUiModel,
+    val cardNumber: CardNumberUiModel = CardNumberUiModel(),
+    val cardExpirationDate: CardExpirationDateUiModel = CardExpirationDateUiModel(),
+    val cardholderName: CardholderNameUiModel = CardholderNameUiModel(maxLength = 0),
+    val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
     val isSaveButtonEnabled: Boolean =
