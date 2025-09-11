@@ -28,8 +28,6 @@ class CardlistActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 var cardList by remember { mutableStateOf<List<PaymentCard>>(emptyList()) }
 
-                val context = LocalContext.current
-
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.StartActivityForResult(),
@@ -41,7 +39,7 @@ class CardlistActivity : ComponentActivity() {
                                 )
                             newCard?.let {
                                 cardList = cardList + it
-                                showToast(context, R.string.card_list_card_added_alert)
+                                showToast(this, R.string.card_list_card_added_alert)
                             }
                         }
                     }
