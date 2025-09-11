@@ -82,12 +82,15 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+        PaymentCard(
+            paymentCardUiModel = uiState.toPaymentCardUiModel(),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
         CardNumberTextField(
-            cardNumber = uiState.cardNumber.cardNumber,
+            cardNumber = uiState.cardNumber.number,
             onCardNumberChanged = onCardNumberChanged,
             errorMessage = uiState.cardNumberErrorMessageResId?.let { stringResource(it) },
             modifier = Modifier.fillMaxWidth(),
@@ -96,7 +99,7 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(24.dp))
 
         CardExpirationDateTextField(
-            cardExpirationDate = uiState.cardExpirationDate.cardExpirationDate,
+            cardExpirationDate = uiState.cardExpirationDate.expirationDate,
             onCardExpirationDateChanged = onCardExpirationDateChanged,
             errorMessage = uiState.cardExpirationDateErrorMessageResId?.let { stringResource(it) },
         )
@@ -104,7 +107,7 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         CardholderNameTextField(
-            cardholderName = uiState.cardholderName.cardholderName,
+            cardholderName = uiState.cardholderName.displayedName,
             onCardholderNameChanged = onCardholderNameChanged,
             maxLength = uiState.cardholderName.maxLength,
             errorMessage = uiState.cardholderNameErrorMessageResId?.let { stringResource(it) },
@@ -114,7 +117,7 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         CardPasswordTextField(
-            cardPassword = uiState.cardPassword.cardPassword,
+            cardPassword = uiState.cardPassword.password,
             onCardPasswordChanged = onCardPasswordChanged,
             errorMessage = uiState.cardPasswordErrorMessageResId?.let { stringResource(it) },
         )

@@ -1,14 +1,12 @@
 package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.SemanticsProperties
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.hasContentDescription
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
@@ -17,6 +15,7 @@ import woowacourse.payments.ui.fixture.VALIDATED_CARD_EXPIRATION_DATE
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_HOLDER_NAME
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_NUMBER
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_PASSWORD
+import woowacourse.payments.ui.util.onNodeWithRoleAndContentDescription
 
 class CardRegistrationScreenTest {
     @get:Rule
@@ -27,7 +26,7 @@ class CardRegistrationScreenTest {
         // given
         setup()
         val cardRegistrationButton =
-            composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "완료")
+            composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "카드 등록")
 
         // then
         assertAll(
@@ -48,15 +47,31 @@ class CardRegistrationScreenTest {
             ),
         )
         val cardRegistrationButton =
-            composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "완료")
+            composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "카드 등록")
         composeTestRule.waitForIdle()
 
         // then
         assertAll(
-            { composeTestRule.onNodeWithText("1234 - 1234 - 1234 - 1234").assertIsDisplayed() },
-            { composeTestRule.onNodeWithText("12 / 34").assertIsDisplayed() },
-            { composeTestRule.onNodeWithText("DICE").assertIsDisplayed() },
-            { composeTestRule.onNodeWithText("••••").assertIsDisplayed() },
+            {
+                composeTestRule
+                    .onNodeWithContentDescription("카드 번호 입력란", useUnmergedTree = true)
+                    .assertTextEquals("1234 - 1234 - 1234 - 1234")
+            },
+            {
+                composeTestRule
+                    .onNodeWithContentDescription("카드 만료일 입력란", useUnmergedTree = true)
+                    .assertTextEquals("12 / 34")
+            },
+            {
+                composeTestRule
+                    .onNodeWithContentDescription("카드 소유자 이름 입력란", useUnmergedTree = true)
+                    .assertTextEquals("DICE")
+            },
+            {
+                composeTestRule
+                    .onNodeWithText("••••")
+                    .assertIsDisplayed()
+            },
             { cardRegistrationButton.assertIsDisplayed() },
             { cardRegistrationButton.assertIsEnabled() },
         )
@@ -74,13 +89,4 @@ class CardRegistrationScreenTest {
             )
         }
     }
-
-    private fun ComposeContentTestRule.onNodeWithRoleAndContentDescription(
-        role: Role,
-        contentDescription: String,
-    ) = onNode(
-        SemanticsMatcher.expectValue(SemanticsProperties.Role, role)
-            and
-            hasContentDescription(contentDescription),
-    )
 }

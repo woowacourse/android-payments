@@ -83,7 +83,7 @@ class CardRegistrationScreenViewModel(
             is CardNumber.CardNumberError.InsufficientLength -> {
                 val newCardNumber =
                     _uiState.cardNumber.copy(
-                        cardNumber = cardNumber,
+                        number = cardNumber,
                         state = CardNumberUiModel.State.NOT_FILLED,
                     )
                 _uiState = _uiState.copy(cardNumber = newCardNumber)
@@ -103,7 +103,7 @@ class CardRegistrationScreenViewModel(
             is CardExpirationDate.CardExpirationDateError.InsufficientLength -> {
                 val newExpirationDate =
                     _uiState.cardExpirationDate.copy(
-                        cardExpirationDate = cardExpirationDate,
+                        expirationDate = cardExpirationDate,
                         state = CardExpirationDateUiModel.State.NOT_FILLED,
                     )
                 _uiState = _uiState.copy(cardExpirationDate = newExpirationDate)
@@ -112,7 +112,7 @@ class CardRegistrationScreenViewModel(
             is CardExpirationDate.CardExpirationDateError.UnsupportedDate -> {
                 val newExpirationDate =
                     _uiState.cardExpirationDate.copy(
-                        cardExpirationDate = cardExpirationDate,
+                        expirationDate = cardExpirationDate,
                         state = CardExpirationDateUiModel.State.INVALID_FORMAT,
                     )
                 _uiState = _uiState.copy(cardExpirationDate = newExpirationDate)
@@ -143,7 +143,7 @@ class CardRegistrationScreenViewModel(
             is CardPassword.CardPasswordError.InsufficientLength -> {
                 val newCardPassword =
                     _uiState.cardPassword.copy(
-                        cardPassword = cardPassword,
+                        password = cardPassword,
                         state = CardPasswordUiModel.State.NOT_FILLED,
                     )
 

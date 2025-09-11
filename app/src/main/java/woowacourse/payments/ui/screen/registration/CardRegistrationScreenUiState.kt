@@ -8,6 +8,7 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 data class CardRegistrationScreenUiState(
@@ -48,4 +49,11 @@ data class CardRegistrationScreenUiState(
             CardPasswordUiModel.State.INVALID -> R.string.common_invalid_format_error_message
             else -> null
         }
+
+    fun toPaymentCardUiModel(): PaymentCardUiModel =
+        PaymentCardUiModel(
+            number = cardNumber,
+            expirationDate = cardExpirationDate,
+            cardholderName = cardholderName,
+        )
 }
