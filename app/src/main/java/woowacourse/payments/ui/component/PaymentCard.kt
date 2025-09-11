@@ -92,7 +92,7 @@ private fun PaymentCardInfoBlock(
         verticalArrangement = Arrangement.Bottom,
     ) {
         PaymentCardText(
-            text = paymentCard.maskedNumber(),
+            text = paymentCard.displayCardNumber(),
         )
 
         Row(
@@ -103,7 +103,7 @@ private fun PaymentCardInfoBlock(
                 text = paymentCard.upperCardholderName,
                 modifier = Modifier.weight(1f),
             )
-            PaymentCardText(text = paymentCard.formattedExpirationDate())
+            PaymentCardText(text = paymentCard.displayExpirationDate())
         }
     }
 }

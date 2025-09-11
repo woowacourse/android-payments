@@ -1,7 +1,9 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.extension.coerceAtMost
 
 @Parcelize
 data class PaymentCardUiModel(
@@ -9,24 +11,27 @@ data class PaymentCardUiModel(
     private val expirationDate: CardExpirationDateUiModel,
     private val cardholderName: CardholderNameUiModel,
 ) : Parcelable {
-    fun maskedNumber(mask: String = DEFAULT_MASK): String =
-        number.cardNumber
+    fun displayCardNumber(
+        mask: String = DEFAULT_MASK,
+        maskingRange: IntRange = DEFAULT_MASKING_RANGE,
+    ): String {
+        val safeRange = maskingRange.coerceAtMost(number.number.length)
+        return number.number
+            .replaceRange(safeRange, mask.repeat(safeRange.count()))
             .chunked(4)
-            .mapIndexed { index, chunk ->
-                when (index) {
-                    0, 1 -> chunk
-                    else -> mask
-                }
-            }.joinToString(DEFAULT_NUMBER_SEPARATOR)
+            .joinToString(DEFAULT_NUMBER_SEPARATOR)
+    }
 
-    fun formattedExpirationDate(separator: String = DEFAULT_EXPIRATION_DATE_SEPARATOR): String =
-        expirationDate.cardExpirationDate.chunked(2).joinToString(separator)
+    fun displayExpirationDate(separator: String = DEFAULT_EXPIRATION_DATE_SEPARATOR): String =
+        expirationDate.expirationDate.chunked(2).joinToString(separator)
 
-    val upperCardholderName: String = cardholderName.cardholderName.uppercase()
+    @IgnoredOnParcel
+    val upperCardholderName: String = cardholderName.displayedName.uppercase()
 
     companion object {
         private const val DEFAULT_EXPIRATION_DATE_SEPARATOR = " / "
         private const val DEFAULT_NUMBER_SEPARATOR = " - "
-        private const val DEFAULT_MASK = "****"
+        private const val DEFAULT_MASK = "*"
+        private val DEFAULT_MASKING_RANGE = 8..15
     }
 }

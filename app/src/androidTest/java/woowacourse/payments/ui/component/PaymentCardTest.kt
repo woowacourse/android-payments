@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.component
 
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -27,10 +25,7 @@ class PaymentCardTest {
             )
 
         composeTestRule.setContent {
-            PaymentCard(
-                paymentCardUiModel = paymentCard,
-                modifier = Modifier.testTag(TEST_TAG),
-            )
+            PaymentCard(paymentCardUiModel = paymentCard)
         }
     }
 
@@ -53,9 +48,5 @@ class PaymentCardTest {
         composeTestRule
             .onNodeWithText("JOHN DOE")
             .assertIsDisplayed()
-    }
-
-    companion object {
-        private const val TEST_TAG = "PaymentCard"
     }
 }
