@@ -32,15 +32,17 @@ class AddCardActivity : ComponentActivity() {
                     topBar = {
                         AddCardTopbar(
                             onBackClick = { finish() },
-                            onCheckedClick = { saveCard(cardInfo) }
+                            onCheckedClick = { saveCard(cardInfo) },
                         )
-                    }
+                    },
                 ) { padding ->
                     AddCardScreen(
-                        cardInfo, modifier = Modifier
-                            .padding(padding)
-                            .padding(horizontal = 24.dp)
-                            .fillMaxWidth()
+                        modifier =
+                            Modifier
+                                .padding(padding)
+                                .padding(horizontal = 24.dp)
+                                .fillMaxWidth(),
+                        cardInfo = cardInfo,
                     )
                 }
             }
@@ -49,12 +51,16 @@ class AddCardActivity : ComponentActivity() {
 
     private fun saveCard(cardInfo: CardInfoUiState) {
         if (cardInfo.isComplete()) {
-            setResult(RESULT_OK, Intent().apply {
-                putExtra(CARD_INFO_KEY, cardInfo)
-            })
+            setResult(
+                RESULT_OK,
+                Intent().apply {
+                    putExtra(CARD_INFO_KEY, cardInfo)
+                },
+            )
             finish()
         } else {
-            Toast.makeText(this, getString(R.string.addcard_failed_to_add_card), Toast.LENGTH_SHORT)
+            Toast
+                .makeText(this, getString(R.string.addcard_failed_to_add_card), Toast.LENGTH_SHORT)
                 .show()
         }
     }
