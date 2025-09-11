@@ -20,7 +20,7 @@ val VALIDATED_CARD_EXPIRATION_DATE =
 
 val VALIDATED_CARD_HOLDER_NAME =
     CardholderNameUiModel(
-        cardholderNameValue = "DICE",
+        name = "DICE",
         maxLength = 30,
         state = CardholderNameUiModel.State.VALID,
     )
