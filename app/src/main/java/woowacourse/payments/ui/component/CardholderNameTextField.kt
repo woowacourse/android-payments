@@ -39,7 +39,9 @@ fun CardholderNameTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.cardholder_name_text_field_placeholder)) },
         value = cardholderName,
-        onValueChange = onCardholderNameChanged,
+        onValueChange = { newValue ->
+            if (newValue.length <= maxLength) onCardholderNameChanged(newValue)
+        },
         isError = errorMessage != null,
         trailingIcon = {
             errorMessage?.let {

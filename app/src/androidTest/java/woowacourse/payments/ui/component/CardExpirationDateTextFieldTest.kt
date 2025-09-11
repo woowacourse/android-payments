@@ -7,101 +7,132 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
+import androidx.compose.ui.test.requestFocus
+import androidx.compose.ui.text.input.VisualTransformation
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import org.junit.jupiter.api.assertAll
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 
 class CardExpirationDateTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setup() {
+    @Test
+    fun `입력과_포커스가_없으면_라벨만_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "만료일"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsNotFocused() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `입력이_없고_포커스가_있으면_라벨과_플레이스홀더가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.requestFocus()
+
+        // then
+        val labelText = "만료일"
+        val placeholderText = "MM / YY"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsFocused() },
+            { textField.assertTextEquals(labelText, placeholderText, editableText) },
+        )
+    }
+
+    @Test
+    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+        // given
+        setup(errorMessage = "만료일 형식이 올바르지 않습니다.")
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "만료일"
+        val editableText = ""
+        val errorMessage = "만료일 형식이 올바르지 않습니다."
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText, errorMessage) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하면_만료일이_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234")
+
+        // then
+        val labelText = "만료일"
+        val editableText = "1234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하고_VisualTransformation을_적용하면_포맷팅된_만료일이_보인다`() {
+        // given
+        setup(visualTransformation = GroupedVisualTransformation(groupSize = 2, separator = " / "))
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        val testInput = "1234"
+        textField.performTextInput(testInput)
+
+        // then
+        val labelText = "만료일"
+        val editableText = "12 / 34"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    private fun setup(
+        initialCardExpirationDate: String = "",
+        errorMessage: String? = null,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+    ) {
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel("")) }
+            var cardExpirationDate by remember { mutableStateOf(initialCardExpirationDate) }
             CardExpirationDateTextField(
-                cardExpirationDate = expirationDate,
-                onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
+                cardExpirationDate = cardExpirationDate,
+                onCardExpirationDateChanged = { cardExpirationDate = it },
+                errorMessage = errorMessage,
                 modifier = Modifier.testTag(TEST_TAG),
+                visualTransformation = visualTransformation,
             )
         }
-    }
-
-    @Test
-    fun `카드_만료일은_숫자만_입력_가능하다`() {
-        // when
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
-        textField.performTextInput("1")
-        textField.performTextInput("a")
-        textField.performTextInput("2")
-
-        // then
-        composeTestRule
-            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("12")
-    }
-
-    @Test
-    fun `만료일의_월이_1-12_사이가_아닌_경우_에러_메시지가_보여진다`() {
-        // when
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
-        textField.performTextInput("1")
-        textField.performTextInput("3")
-        textField.performTextInput("2")
-        textField.performTextInput("5")
-
-        // then
-        composeTestRule
-            .onNodeWithText("유효하지 않은 만료일입니다.")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `만료일은_3자리가_될_때_슬래시_기호가_붙는다`() {
-        // given
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-
-        // when
-        textField
-            .performTextInput("123")
-
-        // then
-        textField.assertTextEquals("12 / 3")
-    }
-
-    @Test
-    fun `입력한_값이_만료된_일자라면_에러_메시지가_보여진다`() {
-        // given
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-
-        // when
-        textField.performTextInput("0924")
-
-        // then
-        composeTestRule
-            .onNodeWithText("만료된 카드는 등록할 수 없습니다.")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
-        // given
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-
-        // when
-        textField.performClick()
-
-        // then
-        composeTestRule
-            .onNodeWithText("MM / YY")
-            .assertIsDisplayed()
     }
 
     companion object {

@@ -23,7 +23,7 @@ class PaymentCardTest {
             PaymentCardUiModel(
                 number = CardNumberUiModel("1234567812345678"),
                 expirationDate = CardExpirationDateUiModel("1224"),
-                cardholderName = CardholderNameUiModel("JOHN DOE"),
+                cardholderName = CardholderNameUiModel("JOHN DOE", 30),
             )
 
         composeTestRule.setContent {

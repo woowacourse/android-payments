@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import woowacourse.payments.R
+import woowacourse.payments.ui.fixture.PAYMENT_CARD
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
@@ -19,12 +20,6 @@ class CardsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
     private val context: Context = InstrumentationRegistry.getInstrumentation().targetContext
-    private val dummyCard =
-        PaymentCardUiModel(
-            number = CardNumberUiModel("1234567812345678"),
-            expirationDate = CardExpirationDateUiModel("0301"),
-            cardholderName = CardholderNameUiModel("DICE"),
-        )
 
     @Test
     fun `카드_목록이_빈_상태라면_안내_메시지와_등록_버튼이_보여진다`() {
@@ -49,7 +44,7 @@ class CardsScreenTest {
     @Test
     fun `카드_목록이_단일_카드_상태라면_카드_정보와_등록_버튼이_보여진다`() {
         // given
-        setup(CardsUiState.SINGLE(dummyCard))
+        setup(CardsUiState.SINGLE(PAYMENT_CARD))
 
         // then
         assertAll(
@@ -66,7 +61,10 @@ class CardsScreenTest {
     fun `카드_목록이_다중_카드_상태라면_모든_카드_정보가_보여진다`() {
         // given
         val cards =
-            listOf(dummyCard, dummyCard.copy(cardholderName = CardholderNameUiModel("BICE")))
+            listOf(
+                PAYMENT_CARD,
+                PAYMENT_CARD.copy(cardholderName = CardholderNameUiModel("BICE", 30)),
+            )
         setup(CardsUiState.MULTIPLE(cards))
 
         // then

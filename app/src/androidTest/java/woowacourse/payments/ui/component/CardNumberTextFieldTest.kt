@@ -6,89 +6,132 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
+import androidx.compose.ui.test.requestFocus
+import androidx.compose.ui.text.input.VisualTransformation
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 
 class CardNumberTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setUp() {
-        composeTestRule.setContent {
-            var cardNumber by remember { mutableStateOf(CardNumberUiModel("")) }
-            CardNumberTextField(
-                cardNumber = cardNumber,
-                onCardNumberChanged = { newValue -> cardNumber = newValue },
-                modifier = Modifier.testTag(TEST_TAG),
-            )
-        }
+    @Test
+    fun `입력과_포커스가_없으면_라벨만_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsNotFocused() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
     }
 
     @Test
-    fun `카드_번호는_숫자만_입력_가능해야_한다`() {
+    fun `입력이_없고_포커스가_있으면_라벨과_플레이스홀더가_보인다`() {
         // given
+        setup()
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)
 
         // when
-        textField.performTextInput("1")
-        textField.performTextInput("a")
-        textField.performTextInput("2")
+        textField.requestFocus()
 
         // then
-        composeTestRule
-            .onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("12")
-    }
-
-    @Test
-    fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
-        // given
-        val textField =
-            composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-
-        // when
-        repeat(17) { textField.performTextInput("1") }
-
-        // then
-        textField.assertTextEquals("1111 - 1111 - 1111 - 1111")
-    }
-
-    @Test
-    fun `카드_번호는_4자리가_될_때_마다_대시_기호가_붙는다`() {
-        // given
-        val textField =
-            composeTestRule.onNodeWithTag(TEST_TAG, useUnmergedTree = true)
-        val testCases =
-            listOf(
-                "1111" to "1111",
-                "11111" to "1111 - 1",
-                "123456789" to "1234 - 5678 - 9",
-                "1234567890123" to "1234 - 5678 - 9012 - 3",
-                "1234567890123456" to "1234 - 5678 - 9012 - 3456",
-            )
+        val labelText = "카드 번호"
+        val placeholderText = "0000 – 0000 – 0000 – 0000"
+        val editableText = ""
 
         assertAll(
-            "카드 번호 포맷 테스트",
-            testCases.map { (input, expected) ->
-                {
-                    // when
-                    textField.performTextInput(input)
-
-                    // then
-                    textField.assertTextEquals(expected)
-                    textField.performTextClearance()
-                }
-            },
+            { textField.assertIsDisplayed() },
+            { textField.assertIsFocused() },
+            { textField.assertTextEquals(labelText, placeholderText, editableText) },
         )
+    }
+
+    @Test
+    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+        // given
+        setup(errorMessage = "형식이 올바르지 않습니다.")
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = ""
+        val errorMessage = "형식이 올바르지 않습니다."
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText, errorMessage) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하면_카드번호가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234123412341234")
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = "1234123412341234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하고_VisualTransformation을_적용하면_포맷팅된_카드번호가_보인다`() {
+        // given
+        setup(visualTransformation = GroupedVisualTransformation(groupSize = 4, separator = " - "))
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234123412341234")
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = "1234 - 1234 - 1234 - 1234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    private fun setup(
+        initialCardNumber: String = "",
+        errorMessage: String? = null,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+    ) {
+        composeTestRule.setContent {
+            var cardNumber by remember { mutableStateOf(initialCardNumber) }
+            CardNumberTextField(
+                cardNumber = cardNumber,
+                onCardNumberChanged = { newValue -> cardNumber = newValue },
+                errorMessage = errorMessage,
+                modifier = Modifier.testTag(TEST_TAG),
+                visualTransformation = visualTransformation,
+            )
+        }
     }
 
     companion object {
