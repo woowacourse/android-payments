@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.component.cards
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api

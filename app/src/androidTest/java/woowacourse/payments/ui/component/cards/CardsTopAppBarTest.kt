@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.component.cards
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed

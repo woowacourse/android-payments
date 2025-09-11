@@ -17,12 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.component.CardExpirationDateTextField
-import woowacourse.payments.ui.component.CardNumberTextField
-import woowacourse.payments.ui.component.CardPasswordTextField
-import woowacourse.payments.ui.component.CardRegistrationTopAppBar
-import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.registration.CardExpirationDateTextField
+import woowacourse.payments.ui.component.registration.CardNumberTextField
+import woowacourse.payments.ui.component.registration.CardPasswordTextField
+import woowacourse.payments.ui.component.registration.CardRegistrationTopAppBar
+import woowacourse.payments.ui.component.registration.CardholderNameTextField
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel

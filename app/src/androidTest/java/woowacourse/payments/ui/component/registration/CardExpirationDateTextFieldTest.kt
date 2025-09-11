@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.component.registration
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -107,7 +107,7 @@ class CardExpirationDateTextFieldTest {
     }
 
     @Test
-    fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
+    fun 만료일_입력_값이_없는_경우_입력창에_대한_설명이_보여진다() {
         // given
         setup()
 
