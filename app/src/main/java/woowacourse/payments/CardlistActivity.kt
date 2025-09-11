@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.domain.PaymentCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
