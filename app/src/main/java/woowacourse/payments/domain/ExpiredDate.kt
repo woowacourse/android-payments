@@ -21,6 +21,13 @@ class ExpiredDate private constructor(
             return null
         }
 
+        fun of(mmyy: String): ExpiredDate? {
+            if (mmyy.all { it.isDigit() } && mmyy.length == 4) {
+                return of(mmyy.take(2).toInt(), mmyy.takeLast(2).toInt())
+            }
+            return null
+        }
+
         private const val MIN_MONTH = 1
         private const val MAX_MONTH = 12
         private const val YEAR_TWO_THOUSAND = 2000
