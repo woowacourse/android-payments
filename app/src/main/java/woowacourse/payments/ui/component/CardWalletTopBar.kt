@@ -17,9 +17,9 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWalletTopBar(
+    modifier: Modifier = Modifier,
     isAddable: Boolean = false,
     onAddCardClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
         title = {
