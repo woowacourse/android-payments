@@ -57,7 +57,7 @@ private fun BoxScope.ShowRegistrationButton(onRegistrationClick: () -> Unit) {
                 .align(Alignment.CenterEnd),
     ) {
         Text(
-            text = "추가",
+            text = stringResource(R.string.cards_top_app_bar_add),
             lineHeight = 28.sp,
             fontSize = 18.sp,
             fontWeight = FontWeight.W700,
