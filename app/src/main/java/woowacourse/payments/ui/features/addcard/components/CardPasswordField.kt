@@ -44,7 +44,7 @@ fun CardPasswordField(
             },
         labelText = stringResource(R.string.add_card_password_field_title),
         placeholderText = stringResource(R.string.add_card_password_field_hint),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         isError = showError,
         supportingText = {
             if (showError) {
