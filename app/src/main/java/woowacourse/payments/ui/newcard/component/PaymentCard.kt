@@ -50,10 +50,7 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
                 text = "${card.number.value.take(4)} - ${
-                    card.number.value.substring(
-                        4,
-                        8
-                    )
+                    card.number.value.drop(4).take(4)
                 } - **** - ****",
                 color = Color.White,
             )
