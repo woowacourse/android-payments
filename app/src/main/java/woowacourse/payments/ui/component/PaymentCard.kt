@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,42 +28,29 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun PaymentCard(
+    paymentCardUiModel: PaymentCardUiModel,
     modifier: Modifier = Modifier,
-    paymentCardUiModel: PaymentCardUiModel? = null,
+    backgroundColor: Color = Color.DarkGray,
+    cornerRadius: Int = 5,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
             modifier
-                .shadow(8.dp)
+                .shadow(8.dp, RoundedCornerShape(cornerRadius.dp))
                 .size(width = 208.dp, height = 124.dp)
-                .background(
-                    color = Color.DarkGray,
-                    shape = RoundedCornerShape(5.dp),
-                ).padding(16.dp),
+                .background(backgroundColor, RoundedCornerShape(cornerRadius.dp))
+                .padding(16.dp),
     ) {
         Column(
-            modifier = Modifier.matchParentSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             PaymentCardText("")
             PaymentCardChip()
-            PaymentCardInfo(paymentCardUiModel)
+            PaymentCardInfoBlock(paymentCard = paymentCardUiModel)
         }
     }
-}
-
-@Composable
-private fun PaymentCardChip(modifier: Modifier = Modifier) {
-    Box(
-        modifier =
-            modifier
-                .size(width = 40.dp, height = 26.dp)
-                .background(
-                    color = Color(0xFFCBBA64),
-                    shape = RoundedCornerShape(4.dp),
-                ),
-    )
 }
 
 @Composable
@@ -75,7 +63,6 @@ private fun PaymentCardText(
         color = Color.White,
         fontSize = 12.sp,
         fontWeight = FontWeight.W500,
-        maxLines = 1,
         letterSpacing = 1.sp,
         lineHeight = 1.em,
         modifier = modifier,
@@ -83,37 +70,74 @@ private fun PaymentCardText(
 }
 
 @Composable
-private fun PaymentCardInfo(
-    paymentCardUiModel: PaymentCardUiModel?,
+private fun PaymentCardChip(
+    modifier: Modifier = Modifier,
+    color: Color = Color(0xFFCBBA64),
+) {
+    Box(
+        modifier =
+            modifier
+                .size(width = 40.dp, height = 26.dp)
+                .background(color, RoundedCornerShape(4.dp)),
+    )
+}
+
+@Composable
+private fun PaymentCardInfoBlock(
+    paymentCard: PaymentCardUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        PaymentCardText(paymentCardUiModel?.maskedNumber().orEmpty())
+        PaymentCardText(
+            text = paymentCard.maskedNumber(),
+        )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             PaymentCardText(
-                text = paymentCardUiModel?.upperCardholderName.orEmpty(),
+                text = paymentCard.upperCardholderName,
                 modifier = Modifier.weight(1f),
             )
-            PaymentCardText(paymentCardUiModel?.formattedExpirationDate().orEmpty())
+            PaymentCardText(text = paymentCard.formattedExpirationDate())
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true, backgroundColor = 0xFF333333)
 @Composable
-fun PaymentCardPreview() {
+private fun PaymentCardPreview() {
     val paymentCardUiModel =
         PaymentCardUiModel(
             number = CardNumberUiModel("1234567812345678"),
             expirationDate = CardExpirationDateUiModel("1224"),
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
+
     PaymentCard(paymentCardUiModel = paymentCardUiModel)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaymentCardChipPreview() {
+    PaymentCardChip()
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF333333)
+@Composable
+private fun PaymentCardInfoBlockPreview() {
+    val paymentCardUiModel =
+        PaymentCardUiModel(
+            number = CardNumberUiModel("1234567812345678"),
+            expirationDate = CardExpirationDateUiModel("1224"),
+            cardholderName = CardholderNameUiModel("JOHN DOE", 30),
+        )
+    PaymentCardInfoBlock(
+        paymentCard = paymentCardUiModel,
+        modifier = Modifier.padding(12.dp),
+    )
 }
