@@ -20,18 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardDigit
-import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.domain.CardHolderName
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardPassword
-import java.time.YearMonth
+import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: Card? = null,
+    card: CardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.BottomStart,
@@ -56,7 +50,7 @@ fun PaymentCard(
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = card?.number?.toMaskedString() ?: "",
+                text = card?.number ?: "",
                 fontSize = 12.sp,
                 letterSpacing = 2.sp,
                 color = Color.White,
@@ -67,13 +61,13 @@ fun PaymentCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = card?.holderName?.name ?: "",
+                    text = card?.holderName ?: "",
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
                 )
                 Text(
-                    text = card?.expirationDate?.toDisplayString() ?: "",
+                    text = card?.expirationDate ?: "",
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
@@ -81,20 +75,6 @@ fun PaymentCard(
             }
         }
     }
-}
-
-private fun CardNumber.toMaskedString(): String =
-    numbers
-        .map { it.value }
-        .joinToString("")
-        .chunked(4)
-        .mapIndexed { index, chunk -> if (index < 2) chunk else "****" }
-        .joinToString(" - ")
-
-private fun CardExpirationDate.toDisplayString(): String {
-    val month: String = date.monthValue.toString().padStart(2, '0')
-    val year: String = (date.year % 100).toString().padStart(2, '0')
-    return "$month / $year"
 }
 
 @Preview(name = "카드 정보 없음")
@@ -108,15 +88,10 @@ private fun PaymentCardPreview1() {
 private fun PaymentCardPreview2() {
     PaymentCard(
         card =
-            Card(
-                number =
-                    CardNumber(
-                        listOf(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4)
-                            .map(::CardDigit),
-                    ),
-                expirationDate = CardExpirationDate(YearMonth.of(2025, 9)),
-                password = CardPassword("0000"),
-                holderName = CardHolderName("CREW"),
+            CardUiModel(
+                number = "1111 - 2222 - 3333 - 4444",
+                expirationDate = "09 / 25",
+                holderName = "CREW",
             ),
     )
 }

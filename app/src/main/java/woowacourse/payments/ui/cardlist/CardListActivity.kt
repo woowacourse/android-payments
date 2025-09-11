@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
@@ -15,7 +15,7 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cards: MutableList<Card> = rememberSaveable { mutableStateListOf() }
+                val cards: MutableList<CardUiModel> = rememberSaveable { mutableStateListOf() }
                 CardListScreen(
                     cards = cards,
                     onCardAdded = { cards.add(it) },

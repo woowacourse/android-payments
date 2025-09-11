@@ -23,30 +23,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardDigit
-import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.domain.CardHolderName
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.cardlist.components.CardListTopBar
 import woowacourse.payments.ui.common.components.PaymentCard
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.util.getParcelableCompat
-import java.time.YearMonth
 
 @Composable
 fun CardListScreen(
-    cards: List<Card> = emptyList(),
-    onCardAdded: (Card) -> Unit = {},
+    cards: List<CardUiModel> = emptyList(),
+    onCardAdded: (CardUiModel) -> Unit = {},
 ) {
     val context = LocalContext.current
     val newCardLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data
-                    ?.getParcelableCompat<Card>(NewCardActivity.INTENT_NEW_CARD_KEY)
+                    ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_NEW_CARD_KEY)
                     ?.let(onCardAdded)
             }
         }
@@ -76,7 +70,7 @@ fun CardListScreen(
                     fontWeight = FontWeight.Bold,
                 )
             }
-            cards.forEach { card: Card ->
+            cards.forEach { card: CardUiModel ->
                 PaymentCard(card = card)
             }
             if (cards.size <= 1) {
@@ -98,15 +92,10 @@ private fun CardListScreenPreview2() {
     CardListScreen(
         cards =
             listOf(
-                Card(
-                    number =
-                        CardNumber(
-                            listOf(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4)
-                                .map(::CardDigit),
-                        ),
-                    expirationDate = CardExpirationDate(YearMonth.of(2025, 9)),
-                    password = CardPassword("0000"),
-                    holderName = CardHolderName("CREW"),
+                CardUiModel(
+                    number = "1111 - 2222 - 3333 - 4444",
+                    expirationDate = "09 / 25",
+                    holderName = "CREW",
                 ),
             ),
     )
@@ -118,15 +107,10 @@ private fun CardListScreenPreview3() {
     CardListScreen(
         cards =
             List(3) {
-                Card(
-                    number =
-                        CardNumber(
-                            listOf(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4)
-                                .map(::CardDigit),
-                        ),
-                    expirationDate = CardExpirationDate(YearMonth.of(2025, 9)),
-                    password = CardPassword("0000"),
-                    holderName = CardHolderName("CREW"),
+                CardUiModel(
+                    number = "1111 - 2222 - 3333 - 4444",
+                    expirationDate = "09 / 25",
+                    holderName = "CREW",
                 )
             },
     )

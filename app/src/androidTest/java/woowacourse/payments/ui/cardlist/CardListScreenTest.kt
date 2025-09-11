@@ -13,6 +13,7 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.ui.common.model.CardUiModel
 import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
@@ -67,14 +68,10 @@ class CardListScreenTest {
 
     companion object {
         private val CARD =
-            Card(
-                number =
-                    CardNumber(
-                        listOf(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4).map(::CardDigit),
-                    ),
-                expirationDate = CardExpirationDate(YearMonth.of(2025, 9)),
-                password = CardPassword("0000"),
-                holderName = CardHolderName("CREW"),
+            CardUiModel(
+                number = "1111 - 2222 - 3333 - 4444",
+                expirationDate = "09 / 25",
+                holderName = "CREW",
             )
     }
 }
