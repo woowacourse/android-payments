@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.extension.semanticsContentDescription
 import woowacourse.payments.ui.model.CardholderNameUiModel
 
 private const val INPUT_TEXT_COUNT_SEPARATOR = "%d/%d"
@@ -65,7 +66,7 @@ fun CardholderNameTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.cardholder_name_text_field_content_description),
     )
 }
 

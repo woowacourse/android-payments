@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.GroupedVisualTransformation
+import woowacourse.payments.ui.extension.semanticsContentDescription
 
 @Composable
 fun CardNumberTextField(
@@ -55,7 +56,7 @@ fun CardNumberTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.card_number_text_field_content_description),
     )
 }
 

@@ -15,18 +15,22 @@
     <!-- card_number_text_field -->
     <string name="card_number_text_field_label">카드 번호</string>
     <string name="card_number_text_field_placeholder">0000 – 0000 – 0000 – 0000</string>
+    <string name="card_number_text_field_content_description">카드 번호 입력란</string>
 
     <!-- card_password_text_field -->
     <string name="card_password_text_field_label">비밀번호</string>
     <string name="card_password_text_field_placeholder">0000</string>
+    <string name="card_password_text_field_content_description">카드 비밀번호 입력란</string>
 
     <!-- card_expiration_date_text_field -->
     <string name="card_expiration_date_text_field_label">만료일</string>
     <string name="card_expiration_date_text_field_placeholder">MM / YY</string>
+    <string name="card_expiration_date_text_field_content_description">카드 만료일 입력란</string>
 
     <!-- cardholder_name_text_field -->
     <string name="cardholder_name_text_field_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_text_field_placeholder">카드에 표시된 이름을 입력하세요.</string>
+    <string name="cardholder_name_text_field_content_description">카드 소유자 이름 입력란</string>
 
     <!-- ========================================================= -->
     <!-- SCREEN -->
@@ -39,7 +43,7 @@
     <!-- card_registration_top_bar -->
     <string name="card_registration_bar_title">카드 추가</string>
     <string name="icon_previous_content_description">뒤로 가기</string>
-    <string name="icon_save_content_description">완료</string>
+    <string name="registration_button_content_description">카드 등록</string>
 
     <!-- cards_screen -->
     <string name="cards_screen_card_registered_message">카드가 추가되었습니다</string>
