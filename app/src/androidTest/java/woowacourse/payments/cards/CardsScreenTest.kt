@@ -25,7 +25,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(paymentCards = cards)
+            CardsScreen()
         }
 
         // then
@@ -39,7 +39,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(paymentCards = cards)
+            CardsScreen()
         }
 
         // then
@@ -51,9 +51,14 @@ class CardsScreenTest {
         // given
         val cards: List<Card> = listOf(CARD_CREAM, CARD_UNNAMED, CARD_YAGUBOGU)
 
-        // when
+        // given & when
         composeTestRule.setContent {
-            CardsScreen(paymentCards = cards)
+            CardsScreen(
+                cardsStateHolder =
+                    CardsStateHolder().apply {
+                        cards.forEach { card -> add(card) }
+                    },
+            )
         }
 
         // then
