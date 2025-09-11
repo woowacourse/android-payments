@@ -1,7 +1,6 @@
 package woowacourse.payments
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -38,7 +37,7 @@ class CardlistActivity : ComponentActivity() {
                 CardListScreen(
                     cardUiModels = cardUiModels,
                     onAddCard = {
-                        val intent = Intent(this, AddcardActivity::class.java)
+                        val intent = AddcardActivity.newIntent(this)
                         cardAddLauncher.launch(intent)
                     },
                 )

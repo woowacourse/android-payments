@@ -1,6 +1,6 @@
 package woowacourse.payments
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -38,8 +38,10 @@ class AddcardActivity : ComponentActivity() {
     companion object {
         private const val EXTRA_PAYMENT_CARD_UI_MODEL = "EXTRA_PAYMENT_CARD"
 
+        fun newIntent(context: Context): Intent = Intent(context, AddcardActivity::class.java)
+
         fun getPaymentCardUiModel(activityResult: ActivityResult): PaymentCardUiModel? {
-            if (activityResult.resultCode != Activity.RESULT_OK) {
+            if (activityResult.resultCode != RESULT_OK) {
                 return null
             }
             return activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
