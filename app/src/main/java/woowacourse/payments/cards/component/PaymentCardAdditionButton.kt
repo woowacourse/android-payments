@@ -13,10 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Gray1
 import woowacourse.payments.ui.theme.Gray2
 
@@ -25,6 +27,8 @@ fun PaymentCardAdditionButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardAdditionButtonContentDescription: String =
+        stringResource(R.string.cards_top_app_bar_add_action_content_description)
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -34,9 +38,11 @@ fun PaymentCardAdditionButton(
                 .background(
                     color = Gray1,
                     shape = RoundedCornerShape(5.dp),
-                ).semantics {
-                    contentDescription = "새 카드 등록 버튼"
-                }.clickable {
+                )
+                .semantics {
+                    contentDescription = cardAdditionButtonContentDescription
+                }
+                .clickable {
                     onClick()
                 },
     ) {
