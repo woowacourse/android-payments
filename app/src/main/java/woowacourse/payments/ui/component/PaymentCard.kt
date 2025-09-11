@@ -40,24 +40,22 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Column(
             modifier =
-                if (card != null) {
-                    Modifier.align(Alignment.BottomCenter)
-                } else {
-                    Modifier.align(Alignment.CenterStart)
-                },
+                Modifier
+                    .padding(start = 14.dp, end = 14.dp)
+                    .then(
+                        if (card != null) Modifier.align(Alignment.BottomCenter) else Modifier,
+                    ),
         ) {
             Box(
                 modifier =
                     Modifier
-                        .padding(start = 14.dp)
                         .size(width = 40.dp, height = 26.dp)
-                        .align(Alignment.Start)
                         .background(
                             color = Color(0xFFCBBA64),
                             shape = RoundedCornerShape(4.dp),
@@ -66,10 +64,7 @@ fun PaymentCard(
 
             if (card != null) {
                 Column(
-                    modifier =
-                        Modifier
-                            .semantics { contentDescription = "카드 정보" }
-                            .padding(start = 14.dp, end = 14.dp),
+                    modifier = Modifier.semantics { contentDescription = "카드 정보" },
                 ) {
                     Text(
                         text = card.formattedCardNumber(),
