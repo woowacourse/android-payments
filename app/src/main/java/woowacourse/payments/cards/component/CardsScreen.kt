@@ -1,7 +1,6 @@
 package woowacourse.payments.cards.component
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -43,13 +42,15 @@ fun CardsScreen(
                 addCard(card)
             }
         }
+    val addCard: () -> Unit =
+        { cardAddLauncher.launch(Intent(context, CardAdditionActivity::class.java)) }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
                 isAddActionVisible = cards.size > 1,
-                addCard = { cardAddLauncher.launch(context) },
+                addCard = addCard,
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -63,14 +64,14 @@ fun CardsScreen(
             when (cards.size) {
                 0 ->
                     NoCardContent(
-                        addCard = { cardAddLauncher.launch(context) },
+                        addCard = addCard,
                         modifier = Modifier.fillMaxSize(),
                     )
 
                 1 ->
                     OneCardContent(
                         card = cards.first(),
-                        addCard = { cardAddLauncher.launch(context) },
+                        addCard = addCard,
                         modifier = Modifier.fillMaxSize(),
                     )
 
@@ -82,15 +83,6 @@ fun CardsScreen(
             }
         }
     }
-}
-
-private fun ManagedActivityResultLauncher<Intent, ActivityResult>.launch(context: Context) {
-    launch(
-        Intent(
-            context,
-            CardAdditionActivity::class.java,
-        ),
-    )
 }
 
 @Preview
