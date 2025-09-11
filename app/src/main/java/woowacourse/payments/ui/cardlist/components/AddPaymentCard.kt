@@ -22,7 +22,7 @@ import woowacourse.payments.R
 @Composable
 fun AddPaymentCard(
     modifier: Modifier = Modifier,
-    onAddClick: () -> Unit = {},
+    onClick: () -> Unit = {},
 ) {
     val addCardDescription: String = stringResource(R.string.add_card_button_description)
 
@@ -34,8 +34,7 @@ fun AddPaymentCard(
                 .background(
                     color = Color.LightGray,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable { onAddClick() }
+                ).clickable { onClick() }
                 .semantics { contentDescription = addCardDescription },
     ) {
         Icon(
