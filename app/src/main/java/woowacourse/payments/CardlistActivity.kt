@@ -10,10 +10,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -25,7 +23,7 @@ class CardlistActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cardUiModels by remember { mutableStateOf<List<PaymentCardUiModel>>(emptyList()) }
+                val cardUiModels = remember { mutableStateListOf<PaymentCardUiModel>() }
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(
@@ -37,7 +35,7 @@ class CardlistActivity : ComponentActivity() {
                                     AddcardActivity.EXTRA_PAYMENT_CARD_UI_MODEL,
                                 )
                             newCard?.let {
-                                cardUiModels = cardUiModels + it
+                                cardUiModels.add(it)
                                 showToast(this, R.string.card_list_card_added_alert)
                             }
                         }
