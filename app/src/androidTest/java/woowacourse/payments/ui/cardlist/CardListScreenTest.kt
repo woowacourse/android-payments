@@ -1,20 +1,12 @@
 package woowacourse.payments.ui.cardlist
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardDigit
-import woowacourse.payments.domain.CardExpirationDate
-import woowacourse.payments.domain.CardHolderName
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.common.model.CardUiModel
-import java.time.YearMonth
 
 @Suppress("ktlint:standard:function-naming")
 class CardListScreenTest {
@@ -63,7 +55,7 @@ class CardListScreenTest {
         // then
         composeTestRule
             .onNode(hasContentDescription("카드 등록하기"))
-            .assertIsNotDisplayed()
+            .assertDoesNotExist()
     }
 
     companion object {
