@@ -1,6 +1,5 @@
 package woowacourse.payments.cards.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -44,8 +43,6 @@ fun CardsTopAppBar(
                             Modifier
                                 .semantics {
                                     contentDescription = addActionContentDescription
-                                }.clickable {
-                                    addCard()
                                 },
                         color = Color.Black,
                         fontSize = 18.sp,
