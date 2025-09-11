@@ -57,7 +57,7 @@ fun CardsScreen(
     val launcher =
         rememberCardAdditionLauncher(
             onCardAdded = { newCard -> cardsUiState = cardsUiState.addCard(newCard) },
-            onEvent = { event -> cardsUiEvent = event },
+            onEvent = { newEvent -> cardsUiEvent = newEvent },
         )
 
     LaunchedEffect(cardsUiEvent) {
