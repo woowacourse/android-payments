@@ -20,6 +20,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
@@ -80,38 +82,26 @@ fun CardListScreen(
     }
 }
 
-@Preview(name = "카드 0개")
+@Preview
 @Composable
-private fun CardListScreenPreview1() {
-    CardListScreen()
+private fun CardListScreenPreview(
+    @PreviewParameter(CardListScreenPreviewParameterProvider::class) cards: List<CardUiModel>,
+) {
+    CardListScreen(cards = cards)
 }
 
-@Preview(name = "카드 1개")
-@Composable
-private fun CardListScreenPreview2() {
-    CardListScreen(
-        cards =
-            listOf(
-                CardUiModel(
-                    number = "1111 - 2222 - 3333 - 4444",
-                    expirationDate = "09 / 25",
-                    holderName = "CREW",
-                ),
-            ),
-    )
-}
+private class CardListScreenPreviewParameterProvider : PreviewParameterProvider<List<CardUiModel>> {
+    private val card: CardUiModel =
+        CardUiModel(
+            number = "1111 - 2222 - 3333 - 4444",
+            expirationDate = "09 / 25",
+            holderName = "CREW",
+        )
 
-@Preview(name = "카드 n개")
-@Composable
-private fun CardListScreenPreview3() {
-    CardListScreen(
-        cards =
-            List(3) {
-                CardUiModel(
-                    number = "1111 - 2222 - 3333 - 4444",
-                    expirationDate = "09 / 25",
-                    holderName = "CREW",
-                )
-            },
-    )
+    override val values: Sequence<List<CardUiModel>> =
+        sequenceOf(
+            emptyList(),
+            listOf(card),
+            List(3) { card },
+        )
 }
