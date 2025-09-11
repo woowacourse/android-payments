@@ -12,7 +12,7 @@ class CardsTopAppBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun isVisibleRegistrationButton이_true면_추가_버튼이_활성화된다() {
+    fun 추가_버튼을_활성화할_수_있다() {
         // given && when
         val isVisibleRegistrationButton = true
         composeTestRule.setContent {
@@ -29,7 +29,7 @@ class CardsTopAppBarTest {
     }
 
     @Test
-    fun isVisibleRegistrationButton이_false면_추가_버튼이_비활성화된다() {
+    fun 추가_버튼을_비활성화할_수_있다() {
         // given && when
         val isVisibleRegistrationButton = false
         composeTestRule.setContent {
