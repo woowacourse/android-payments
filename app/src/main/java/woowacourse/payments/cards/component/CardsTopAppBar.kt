@@ -20,8 +20,7 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopAppBar(
-    isAddActionVisible: Boolean,
-    addCard: () -> Unit,
+    addAction: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -33,8 +32,8 @@ fun CardsTopAppBar(
         },
         modifier = modifier,
         actions = {
-            if (isAddActionVisible) {
-                TextButton(onClick = addCard) {
+            if (addAction != null) {
+                TextButton(onClick = addAction) {
                     val addActionContentDescription =
                         stringResource(R.string.cards_top_app_bar_add_action_content_description)
                     Text(
@@ -57,14 +56,13 @@ fun CardsTopAppBar(
 @Preview
 @Composable
 private fun CardsTopAppBarPreview(
-    @PreviewParameter(CardsTopAppBarPreviewParameterProvider::class) isAddActionVisible: Boolean,
+    @PreviewParameter(CardsTopAppBarPreviewParameterProvider::class) addAction: (() -> Unit)?,
 ) {
     CardsTopAppBar(
-        isAddActionVisible = isAddActionVisible,
-        addCard = {},
+        addAction = addAction,
     )
 }
 
-private class CardsTopAppBarPreviewParameterProvider : PreviewParameterProvider<Boolean> {
-    override val values: Sequence<Boolean> = sequenceOf(true, false)
+private class CardsTopAppBarPreviewParameterProvider : PreviewParameterProvider<(() -> Unit)?> {
+    override val values: Sequence<(() -> Unit)?> = sequenceOf(null, { })
 }
