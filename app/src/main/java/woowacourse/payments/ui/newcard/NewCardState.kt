@@ -20,9 +20,27 @@ class NewCardState {
     var cardPassword: String by mutableStateOf("")
         private set
 
-    val card: Card?
+    val isCardNumberValid: Boolean
+        get() = runCatching { CardNumber.from(cardNumber) }.isSuccess
+
+    val isCardExpirationDateValid: Boolean
         get() =
             runCatching {
+                CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER)
+            }.fold(
+                onSuccess = { !it.isExpired() },
+                onFailure = { false },
+            )
+
+    val isCardHolderNameValid: Boolean
+        get() = cardHolderName.isBlank() || runCatching { CardHolderName(cardHolderName.trim()) }.isSuccess
+
+    val isCardPasswordValid: Boolean
+        get() = runCatching { CardPassword(cardPassword) }.isSuccess
+
+    val card: Card?
+        get() =
+            if (isCardNumberValid && isCardExpirationDateValid && isCardHolderNameValid && isCardPasswordValid) {
                 Card(
                     number = CardNumber.from(cardNumber),
                     expirationDate =
@@ -30,7 +48,9 @@ class NewCardState {
                     holderName = cardHolderName.takeIf { it.isNotBlank() }?.let(::CardHolderName),
                     password = CardPassword(cardPassword),
                 )
-            }.getOrNull()
+            } else {
+                null
+            }
 
     fun onCardNumberChange(value: String) {
         cardNumber = value
