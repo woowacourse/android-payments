@@ -23,12 +23,13 @@ class CardWalletActivity : ComponentActivity() {
                     cardList = cardList,
                     onCardAddResult = { newCard ->
                         cardList.add(newCard)
-                        Toast.makeText(
-                            context,
-                            context.getString(R.string.add_card_confirm),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.add_card_confirm),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    },
                 )
             }
         }

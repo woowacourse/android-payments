@@ -26,50 +26,52 @@ fun RegisteredCard(
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
-        modifier = modifier
-            .shadow(8.dp)
-            .size(width = 208.dp, height = 124.dp)
-            .background(
-                color = Color(0xFF333333),
-                shape = RoundedCornerShape(5.dp),
-            )
+        modifier =
+            modifier
+                .shadow(8.dp)
+                .size(width = 208.dp, height = 124.dp)
+                .background(
+                    color = Color(0xFF333333),
+                    shape = RoundedCornerShape(5.dp),
+                ),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
         ) {
             Box(
-                modifier = Modifier
-                    .padding(start = 14.dp, bottom = 10.dp)
-                    .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = Color(0xFFCBBA64),
-                        shape = RoundedCornerShape(4.dp),
-                    )
+                modifier =
+                    Modifier
+                        .padding(start = 14.dp, bottom = 10.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .background(
+                            color = Color(0xFFCBBA64),
+                            shape = RoundedCornerShape(4.dp),
+                        ),
             )
             Text(
                 text = cardUiModel.maskedCardNumber(),
                 color = Color.White,
-                modifier = Modifier.padding(start = 12.dp)
+                modifier = Modifier.padding(start = 12.dp),
             )
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(
                     text = cardUiModel.cardHolderName,
                     color = Color.White,
-                    modifier = Modifier.padding(start = 12.dp)
+                    modifier = Modifier.padding(start = 12.dp),
                 )
                 Text(
                     text = cardUiModel.formattedExpiryDate(),
                     color = Color.White,
-                    modifier = Modifier
-                        .padding(end = 12.dp)
-                        .padding(top = 3.dp)
+                    modifier =
+                        Modifier
+                            .padding(end = 12.dp)
+                            .padding(top = 3.dp),
                 )
             }
         }
-
     }
 }
 
@@ -77,12 +79,12 @@ fun RegisteredCard(
 @Preview(showBackground = true)
 fun RegisteredCardPreview() {
     RegisteredCard(
-        cardUiModel = CardUiModel(
-            cardNumber = "1234567890123456",
-            cardHolderName = "홍길동",
-            cardExpiryDate = "1224",
-            cardPassword = "1234"
-        )
+        cardUiModel =
+            CardUiModel(
+                cardNumber = "1234567890123456",
+                cardHolderName = "홍길동",
+                cardExpiryDate = "1224",
+                cardPassword = "1234",
+            ),
     )
 }
-

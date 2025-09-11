@@ -17,9 +17,8 @@ import woowacourse.payments.ui.theme.Grey10
 fun CardHolderName(
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     OutlinedTextField(
         value = value,
         onValueChange = { if (it.length <= CARD_HOLDER_NAME_MAX_LENGTH) onValueChange(it) },
@@ -37,11 +36,10 @@ fun CardHolderName(
             Text(
                 "${value.length}/$CARD_HOLDER_NAME_MAX_LENGTH",
                 textAlign = TextAlign.End,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         },
     )
-
 }
 
 @Composable
@@ -49,7 +47,7 @@ fun CardHolderName(
 private fun CardHolderNamePreview() {
     CardHolderName(
         value = "이든존예",
-        onValueChange = {}
+        onValueChange = {},
     )
 }
 

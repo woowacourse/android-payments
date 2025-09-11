@@ -8,7 +8,7 @@ data class CardUiModel(
     val cardNumber: String,
     val cardHolderName: String,
     val cardExpiryDate: String,
-    val cardPassword: String
+    val cardPassword: String,
 ) : Parcelable {
     fun maskedCardNumber(): String {
         val visibleText = cardNumber.take(8)
@@ -18,11 +18,10 @@ data class CardUiModel(
         return result.chunked(4).joinToString(" - ")
     }
 
-    fun formattedExpiryDate(): String {
-        return if (cardExpiryDate.length == 4) {
+    fun formattedExpiryDate(): String =
+        if (cardExpiryDate.length == 4) {
             "${cardExpiryDate.substring(0, 2)} / ${cardExpiryDate.substring(2, 4)}"
         } else {
             cardExpiryDate
         }
-    }
 }

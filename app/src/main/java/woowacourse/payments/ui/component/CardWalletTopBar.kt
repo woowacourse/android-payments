@@ -21,7 +21,6 @@ fun CardWalletTopBar(
     onAddCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
     CenterAlignedTopAppBar(
         title = {
             Text("Payments")
@@ -33,8 +32,7 @@ fun CardWalletTopBar(
                         modifier
                             .clickable {
                                 onAddCardClick()
-                            }
-                            .padding(end = 20.dp),
+                            }.padding(end = 20.dp),
                     text = stringResource(R.string.add),
                     fontWeight = FontWeight.W700,
                     fontSize = 18.sp,
@@ -49,6 +47,6 @@ fun CardWalletTopBar(
 fun CardWalletTopBarPreview() {
     CardWalletTopBar(
         isAddable = true,
-        onAddCardClick = {}
+        onAddCardClick = {},
     )
 }

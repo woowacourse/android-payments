@@ -24,28 +24,34 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.component.CardWalletTopBar
 import woowacourse.payments.ui.component.EmptyCard
 import woowacourse.payments.ui.component.RegisteredCard
-import woowacourse.payments.ui.newcard.NewCardScreenActivity
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.newcard.NewCardScreenActivity
 
 @Composable
 fun CardWalletScreen(
     cardList: List<CardUiModel>,
-    onCardAddResult: (CardUiModel) -> Unit
+    onCardAddResult: (CardUiModel) -> Unit,
 ) {
     val context = LocalContext.current
 
-    val cardAddLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
-                ?.let {
-                    onCardAddResult(it)
-                    Toast.makeText(context,
-                        context.getString(R.string.add_card_confirm), Toast.LENGTH_SHORT).show()
-                }
+    val cardAddLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data
+                    ?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
+                    ?.let {
+                        onCardAddResult(it)
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.add_card_confirm),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    }
+            }
         }
-    }
 
     Scaffold(
         topBar = {
@@ -54,34 +60,41 @@ fun CardWalletScreen(
                 onAddCardClick = {
                     val intent = NewCardScreenActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
-                }
+                },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(innerPadding)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding),
         ) {
             when {
                 cardList.isEmpty() -> {
                     Spacer(
-                        modifier = Modifier
-                            .height(32.dp)
-                            .fillMaxSize()
+                        modifier =
+                            Modifier
+                                .height(32.dp)
+                                .fillMaxSize(),
                     )
-                    Text(stringResource(R.string.add_new_card_description), fontSize = 18.sp, fontWeight = FontWeight.W700)
+                    Text(
+                        stringResource(R.string.add_new_card_description),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.W700,
+                    )
                     Spacer(
-                        modifier = Modifier
-                            .height(32.dp)
-                            .fillMaxSize()
+                        modifier =
+                            Modifier
+                                .height(32.dp)
+                                .fillMaxSize(),
                     )
                     EmptyCard(
                         onClick = {
                             val intent = NewCardScreenActivity.newIntent(context)
                             cardAddLauncher.launch(intent)
-                        }
+                        },
                     )
                 }
 
@@ -93,7 +106,7 @@ fun CardWalletScreen(
                         onClick = {
                             val intent = NewCardScreenActivity.newIntent(context)
                             cardAddLauncher.launch(intent)
-                        }
+                        },
                     )
                 }
 

@@ -30,8 +30,7 @@ import woowacourse.payments.ui.model.CardUiModel
 fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
-
-    ) {
+) {
     var cardNumber by remember { mutableStateOf("") }
     var cardExpiryDate by remember { mutableStateOf("") }
     var cardHolderName by remember { mutableStateOf("") }
@@ -43,7 +42,6 @@ fun NewCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     onSaveClick(
@@ -51,53 +49,56 @@ fun NewCardScreen(
                             cardNumber = cardNumber,
                             cardHolderName = cardHolderName,
                             cardExpiryDate = cardExpiryDate,
-                            cardPassword = cardPassword
-                        )
+                            cardPassword = cardPassword,
+                        ),
                     )
                     Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
                 },
             )
-        }
+        },
     ) { innerPadding ->
         Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(horizontal = 24.dp)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .padding(horizontal = 24.dp)
+                    .fillMaxWidth(),
         ) {
             Spacer(modifier = Modifier.height(14.dp))
             PaymentCard(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally),
             )
 
             Spacer(modifier = Modifier.height(40.dp))
             CardNumber(
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(30.dp))
             CardExpiryDate(
                 value = cardExpiryDate,
                 onValueChange = { cardExpiryDate = it },
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.fillMaxWidth(0.5f),
             )
 
             Spacer(modifier = Modifier.height(30.dp))
             CardHolderName(
                 value = cardHolderName,
                 onValueChange = { cardHolderName = it },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(10.dp))
             CardPassword(
                 value = cardPassword,
                 onValueChange = { cardPassword = it },
-                modifier = Modifier.fillMaxWidth(0.5f)
+                modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
     }

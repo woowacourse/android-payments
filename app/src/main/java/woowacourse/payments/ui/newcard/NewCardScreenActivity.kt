@@ -28,8 +28,6 @@ class NewCardScreenActivity : ComponentActivity() {
     companion object {
         const val ADD_NEW_CARD = "ADD_NEW_CARD"
 
-        fun newIntent(context: Context): Intent {
-            return Intent(context, NewCardScreenActivity::class.java)
-        }
+        fun newIntent(context: Context): Intent = Intent(context, NewCardScreenActivity::class.java)
     }
 }

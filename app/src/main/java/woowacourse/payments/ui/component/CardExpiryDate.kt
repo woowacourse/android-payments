@@ -8,21 +8,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.transformation.CardExpiryDateVisualTransformation
 import woowacourse.payments.R
+import woowacourse.payments.ui.transformation.CardExpiryDateVisualTransformation
 
 @Composable
 fun CardExpiryDate(
     value: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-
     OutlinedTextField(
         value = value,
         onValueChange = {
-            if (it.length <= CARD_EXPIRY_DATE_MAX_LENGTH && it.all { it.isDigit() })
+            if (it.length <= CARD_EXPIRY_DATE_MAX_LENGTH && it.all { it.isDigit() }) {
                 onValueChange(it)
+            }
         },
         modifier = modifier,
         label = { Text(stringResource(R.string.card_expiry_date)) },
@@ -42,7 +42,7 @@ fun CardExpiryDate(
 private fun CardExpiryDatePreview() {
     CardExpiryDate(
         value = "0723",
-        onValueChange = {}
+        onValueChange = {},
     )
 }
 
