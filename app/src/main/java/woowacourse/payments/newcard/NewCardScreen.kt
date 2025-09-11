@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,17 +32,17 @@ import woowacourse.payments.util.PaymentCard
 @Preview
 @Composable
 fun NewCardScreen(
+    modifier: Modifier = Modifier,
+    newCardStateHolder: NewCardStateHolder = rememberSaveable { NewCardStateHolder() },
     onBackClick: () -> Unit = {},
     onSaveClick: (CardParcelable) -> Unit = {},
 ) {
     val context = LocalContext.current
 
-    var cardNumber: String by rememberSaveable { mutableStateOf("") }
-    var expiredDate: String by rememberSaveable { mutableStateOf("") }
-    var ownerName: String by rememberSaveable { mutableStateOf("") }
-    var password: String by rememberSaveable { mutableStateOf("") }
-
-    val card: Card? = makeCard(cardNumber, expiredDate, ownerName, password)
+    val card: Card? =
+        with(newCardStateHolder) {
+            makeCard(cardNumber, expiredDate, ownerName, password)
+        }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -79,41 +76,27 @@ fun NewCardScreen(
                         .padding(vertical = 24.dp, horizontal = 40.dp),
             ) {
                 CardNumberTextField(
-                    value = cardNumber,
-                    onValueChange = { cardNumber = it },
+                    value = newCardStateHolder.cardNumber,
+                    onValueChange = newCardStateHolder::updateCardNumber,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 ExpiredDateTextField(
-                    value = expiredDate,
-                    onValueChange = { expiredDate = it },
+                    value = newCardStateHolder.expiredDate,
+                    onValueChange = newCardStateHolder::updateExpiredDate,
                 )
                 OwnerNameTextField(
-                    value = ownerName,
-                    onValueChange = { ownerName = it },
+                    value = newCardStateHolder.ownerName,
+                    onValueChange = newCardStateHolder::updateOwnerName,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 PasswordTextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = newCardStateHolder.password,
+                    onValueChange = newCardStateHolder::updatePassword,
                 )
             }
         }
     }
 }
-
-private fun String.extractMonth(): Int? =
-    if (length < 2) {
-        null
-    } else {
-        take(2).toIntOrNull()
-    }
-
-private fun String.extractYear(): Int? =
-    if (length < 4) {
-        null
-    } else {
-        takeLast(2).toIntOrNull()
-    }
 
 private fun makeCard(
     cardNumber: String,
@@ -123,9 +106,7 @@ private fun makeCard(
 ): Card? {
     return try {
         val cardNumber = CardNumber(cardNumber)
-        val expiredMonth = expiredDate.extractMonth() ?: return null
-        val expiredYear = expiredDate.extractYear() ?: return null
-        val expiredDate = ExpiredDate.of(expiredMonth, expiredYear) ?: return null
+        val expiredDate = ExpiredDate.of(expiredDate) ?: return null
         val ownerName = OwnerName(ownerName)
         val password = Password(password)
 
