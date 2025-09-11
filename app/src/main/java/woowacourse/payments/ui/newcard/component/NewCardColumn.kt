@@ -1,7 +1,9 @@
 package woowacourse.payments.ui.newcard.component
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,37 +37,46 @@ fun NewCardColumn(
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 14.dp, bottom = 28.dp)
         )
-        CardNumberTextField(
-            number = newCardUiState.number,
-            numberErrorMessage = numberErrorMessage,
-            onNumberChange = onNumberChange,
-            modifier = Modifier
-                .fillMaxWidth()
+        Box(
+            modifier = Modifier.height(86.dp)
+        ) {
+            CardNumberTextField(
+                number = newCardUiState.number,
+                numberErrorMessage = numberErrorMessage,
+                onNumberChange = onNumberChange,
+                modifier = Modifier
+                    .fillMaxWidth()
 
-        )
+            )
+        }
+        Box(
+            modifier = Modifier.height(86.dp)
+        ) {
         ExpiredDateTextField(
             expiredDate = newCardUiState.expirationDate,
             expirationDateErrorMessage = expirationDateErrorMessage,
             onExpirationDateChange = onExpirationDateChange,
-            modifier = Modifier
-                .padding(top = 18.dp)
-        )
+        )}
+        Box(
+            modifier = Modifier.height(86.dp)
+        ) {
         CardOwnerNameTextField(
             ownerName = newCardUiState.ownerName,
             ownerNameErrorMessage = ownerNameErrorMessage,
             onOwnerNameChange = onOwnerNameChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 18.dp)
-        )
+        )}
+        Box(
+            modifier = Modifier.height(86.dp)
+        ) {
         PasswordTextField(
             password = newCardUiState.password,
             passwordErrorMessage = passwordErrorMessage,
             onPasswordChange = onPasswordChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 18.dp)
-        )
+        )}
     }
 }
 
