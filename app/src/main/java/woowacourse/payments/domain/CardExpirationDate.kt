@@ -4,10 +4,11 @@ import androidx.core.text.isDigitsOnly
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class CardExpirationDate private constructor(
-    val yearMonth: YearMonth,
+@JvmInline
+value class CardExpirationDate private constructor(
+    val value: YearMonth,
 ) {
-    fun isExpired(now: YearMonth = YearMonth.now()): Boolean = yearMonth < now
+    fun isExpired(now: YearMonth = YearMonth.now()): Boolean = value < now
 
     sealed class CardExpirationDateError(
         message: String,
