@@ -41,7 +41,7 @@ fun NewCardScreen(
     var cardHolderName: String by rememberSaveable { mutableStateOf("") }
     var cardPassword: String by rememberSaveable { mutableStateOf("") }
 
-    fun buildCardOrNull(): Card? =
+    val card: Card? =
         runCatching {
             Card(
                 number = CardNumber.from(cardNumber),
@@ -54,10 +54,9 @@ fun NewCardScreen(
     Scaffold(
         topBar = {
             NewCardTopBar(
+                canSave = card != null,
                 onBackClick = onBackClick,
-                onSaveClick = {
-                    buildCardOrNull()?.let { card: Card -> onSaveClick(card) }
-                },
+                onSaveClick = { card?.let { card: Card -> onSaveClick(card) } },
             )
         },
     ) { innerPadding: PaddingValues ->
