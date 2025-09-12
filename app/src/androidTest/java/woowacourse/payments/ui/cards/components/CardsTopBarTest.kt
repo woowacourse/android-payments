@@ -17,30 +17,6 @@ class CardsTopBarTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val fakeLauncher =
-        object : ActivityResultLauncher<Intent>() {
-            override val contract: ActivityResultContract<Intent, *>
-                get() =
-                    object : ActivityResultContract<Intent, ActivityResult>() {
-                        override fun createIntent(
-                            context: Context,
-                            input: Intent,
-                        ): Intent = input
-
-                        override fun parseResult(
-                            resultCode: Int,
-                            intent: Intent?,
-                        ): ActivityResult = ActivityResult(resultCode, intent)
-                    }
-
-            override fun launch(
-                input: Intent,
-                options: ActivityOptionsCompat?,
-            ) = Unit
-
-            override fun unregister() = Unit
-        }
-
     @Test
     fun `카드를_추가할_수_있으면_추가_버튼이_뜬다`() {
         // when
