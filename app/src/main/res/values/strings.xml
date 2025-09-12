@@ -48,5 +48,6 @@
     <string name="payment_card_information_description">카드 정보</string>
 
     <!-- registration_box -->
-    <string name="registration_box_add_icon_description">추가 아이콘</string>
+    <string name="registration_box_add_icon_description">추가</string>
+    <string name="registration_box_registration_box_description">추가 박스 영역</string>
 </resources>
