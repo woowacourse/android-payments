@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertAll
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.screen.cardList.CardListScreen
 
@@ -19,8 +20,8 @@ class CardListScreenTest {
 
     @Before
     fun setUp() {
-        card1 = CardUiModel("1234-5678-8765-4321", "1221", "aaaa")
-        card2 = CardUiModel("8765-4321-1234-5678", "1122", "bbbb")
+        card1 = CardUiModel("1234567887654321", "1221", "aaaa")
+        card2 = CardUiModel("8765432112345678", "1122", "bbbb")
     }
 
     @Test
@@ -37,8 +38,10 @@ class CardListScreenTest {
         }
 
         // then
-        composeTestRule.onNodeWithContentDescription("새로운 카드 등록 텍스트").assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed()
+        assertAll(
+            { composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertIsDisplayed() },
+            { composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed() },
+        )
     }
 
     @Test
@@ -55,10 +58,12 @@ class CardListScreenTest {
         }
 
         // then
-        composeTestRule.onNodeWithText(card1.number).assertIsDisplayed()
-        composeTestRule.onNodeWithText(card1.expired).assertIsDisplayed()
-        composeTestRule.onNodeWithText(card1.owner).assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed()
+        assertAll(
+            { composeTestRule.onNodeWithText(card1.maskedNumber).assertIsDisplayed() },
+            { composeTestRule.onNodeWithText(card1.formattedExpired).assertIsDisplayed() },
+            { composeTestRule.onNodeWithText(card1.owner).assertIsDisplayed() },
+            { composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed() },
+        )
     }
 
     @Test
@@ -76,9 +81,11 @@ class CardListScreenTest {
 
         // then
         cards.forEach { card ->
-            composeTestRule.onNodeWithText(card.number).assertIsDisplayed()
-            composeTestRule.onNodeWithText(card.expired).assertIsDisplayed()
-            composeTestRule.onNodeWithText(card.owner).assertIsDisplayed()
+            assertAll(
+                { composeTestRule.onNodeWithText(card.maskedNumber).assertIsDisplayed() },
+                { composeTestRule.onNodeWithText(card.formattedExpired).assertIsDisplayed() },
+                { composeTestRule.onNodeWithText(card.owner).assertIsDisplayed() },
+            )
         }
         composeTestRule.onNodeWithContentDescription("카드 추가").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("카드 목록 상단 추가 텍스트").assertIsDisplayed()
