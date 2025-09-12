@@ -11,10 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.components.PaymentCards
 import woowacourse.payments.ui.components.PaymentTopBar
-import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
