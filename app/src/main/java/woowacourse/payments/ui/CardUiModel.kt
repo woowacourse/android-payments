@@ -17,5 +17,5 @@ fun Card.toPresentation(): CardUiModel =
     CardUiModel(
         number = formatCardNumber(this.number),
         expired = formatExpired(this.expired),
-        owner = this.owner?.value ?: "",
+        owner = this.owner.value,
     )
