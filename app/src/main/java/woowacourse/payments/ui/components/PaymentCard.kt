@@ -61,7 +61,7 @@ fun PaymentCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 fontWeight = FontWeight.W500,
-                text = card?.cardNumber.toString(),
+                text = card?.cardNumber.orEmpty(),
                 color = Color.White,
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
@@ -74,7 +74,7 @@ fun PaymentCard(
             ) {
                 Text(
                     lineHeight = 10.sp,
-                    text = card?.userName.toString(),
+                    text = card?.userName.orEmpty(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -83,7 +83,7 @@ fun PaymentCard(
                 Spacer(Modifier.height(2.dp))
                 Text(
                     lineHeight = 10.sp,
-                    text = card?.expirationDate.toString(),
+                    text = card?.expirationDate.orEmpty(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
