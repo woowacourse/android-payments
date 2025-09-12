@@ -3,6 +3,7 @@ package woowacourse.payments.ui.newcard.components
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -31,13 +32,12 @@ fun CardNumberTextField(
                 imeAction = ImeAction.Next,
             ),
         visualTransformation =
-            GroupedVisualTransformation(
-                List(4) { CARD_NUMBER_GROUP_SIZE },
-                " - ",
-            ),
+            remember {
+                GroupedVisualTransformation(CARD_NUMBER_GROUPS, " - ")
+            },
         inputFilter = { it.filter(Char::isDigit) },
         modifier = modifier,
     )
 }
 
-private const val CARD_NUMBER_GROUP_SIZE = 4
+private val CARD_NUMBER_GROUPS = listOf(4, 4, 4, 4)

@@ -29,8 +29,8 @@ fun CardListTopBar(
         actions = {
             if (showAddButton) {
                 TextButton(
-                    onClick = { onAddClick() },
-                    modifier = modifier.semantics { contentDescription = addCardDescription },
+                    onClick = onAddClick,
+                    modifier = Modifier.semantics { contentDescription = addCardDescription },
                 ) {
                     Text(text = stringResource(R.string.add), color = Color.Black)
                 }

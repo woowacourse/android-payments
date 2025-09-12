@@ -25,7 +25,7 @@ fun NewCardTopBar(
     TopAppBar(
         title = { Text(stringResource(R.string.add_card)) },
         navigationIcon = {
-            IconButton(onClick = { onBackClick() }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back_button_description),
@@ -34,7 +34,7 @@ fun NewCardTopBar(
         },
         actions = {
             IconButton(
-                onClick = { onSaveClick() },
+                onClick = onSaveClick,
                 enabled = canSave,
             ) {
                 Icon(
