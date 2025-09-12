@@ -18,9 +18,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun ExpiredInputField(
-    expired: Expired?,
     modifier: Modifier = Modifier,
-    onExpiredChange: (Expired?) -> Unit,
+    expired: Expired? = null,
+    onExpiredChange: (Expired) -> Unit,
     showValidationError: Boolean = false,
 ) {
     val transformation =
@@ -30,7 +30,7 @@ fun ExpiredInputField(
         value = expired?.value ?: "",
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(4)
-            onExpiredChange(if (filteredText.isEmpty()) null else Expired(filteredText))
+            onExpiredChange(Expired(filteredText))
         },
         modifier =
             modifier.semantics {
@@ -43,7 +43,7 @@ fun ExpiredInputField(
                 color = Color.LightGray,
             )
         },
-        isError = showValidationError && (expired?.isValid != true),
+        isError = showValidationError && (expired?.isValid == false),
         visualTransformation = transformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )

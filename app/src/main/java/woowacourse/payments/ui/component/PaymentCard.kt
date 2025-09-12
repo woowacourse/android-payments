@@ -19,14 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.domain.Expired
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun PaymentCard(
@@ -63,7 +57,7 @@ fun PaymentCard(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Text(
-                text = card.number,
+                text = card.maskedNumber,
                 color = Color.White,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
@@ -81,7 +75,7 @@ fun PaymentCard(
                 )
 
                 Text(
-                    text = card.expired,
+                    text = card.formattedExpired,
                     color = Color.White,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
@@ -97,12 +91,11 @@ fun PaymentPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
-                Card(
-                    number = CardNumber("1234567887654321"),
-                    expired = Expired("0826"),
-                    owner = CardOwner("으어 글씨가 너무 크다."),
-                    password = Password("1234"),
-                ).toPresentation(),
+                CardUiModel(
+                    number = "1234567887654321",
+                    expired = "0826",
+                    owner = "으어 글씨가 너무 크다.",
+                ),
         )
     }
 }

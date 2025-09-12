@@ -11,11 +11,14 @@ data class CardUiModel(
     val number: String,
     val expired: String,
     val owner: String,
-) : Parcelable
+) : Parcelable {
+    val maskedNumber get() = formatCardNumber(number)
+    val formattedExpired get() = formatExpired(expired)
+}
 
 fun Card.toPresentation(): CardUiModel =
     CardUiModel(
-        number = formatCardNumber(this.number),
-        expired = formatExpired(this.expired),
-        owner = this.owner.value,
+        number = number.value,
+        expired = expired.value,
+        owner = owner.value,
     )

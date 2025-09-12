@@ -18,19 +18,19 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardNumberInputField(
-    cardNumber: CardNumber?,
     modifier: Modifier = Modifier,
-    onCardNumberChange: (CardNumber?) -> Unit,
+    cardNumber: CardNumber? = null,
+    onCardNumberChange: (CardNumber) -> Unit,
     showValidationError: Boolean = false,
 ) {
     val transformation =
         remember { CardNumberVisualTransformation(groupSize = 4, delimiter = " - ") }
 
     OutlinedTextField(
-        value = cardNumber?.value ?: "",
+        value = cardNumber?.value.orEmpty(),
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(16)
-            onCardNumberChange(if (filteredText.isEmpty()) null else CardNumber(filteredText))
+            onCardNumberChange(CardNumber(filteredText))
         },
         modifier =
             modifier.semantics {
@@ -43,7 +43,7 @@ fun CardNumberInputField(
                 color = Color.LightGray,
             )
         },
-        isError = showValidationError && (cardNumber?.isValid != true),
+        isError = showValidationError && cardNumber?.isValid == false,
         visualTransformation = transformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )

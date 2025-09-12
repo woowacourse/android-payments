@@ -1,24 +1,15 @@
 package woowacourse.payments.ui.util
 
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.Expired
+fun formatCardNumber(cardNumber: String): String {
+    val front = cardNumber.take(8).chunked(4).joinToString(" - ")
 
-fun formatCardNumber(cardNumber: CardNumber?): String {
-    val raw = cardNumber?.value.orEmpty()
-    if (raw.isEmpty()) return ""
-
-    val front = raw.take(8).chunked(4).joinToString(" - ")
-
-    return if (raw.length <= 8) {
+    return if (cardNumber.length <= 8) {
         front
     } else {
-        val maskedCount = raw.length - 8
+        val maskedCount = (cardNumber.length - 8).coerceAtLeast(0)
         val masked = "*".repeat(maskedCount).chunked(4).joinToString(" - ")
         "$front - $masked"
     }
 }
 
-fun formatExpired(expired: Expired?): String {
-    if (expired == null || expired.value.isEmpty()) return ""
-    return expired.value.chunked(2).joinToString(" / ")
-}
+fun formatExpired(expired: String): String = expired.chunked(2).joinToString(" / ")

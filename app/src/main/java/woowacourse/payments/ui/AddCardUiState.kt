@@ -17,3 +17,10 @@ data class AddCardUiState(
             (cardNumber?.isValid == true) &&
                 (expired?.isValid == true) && cardOwner.isValid && (password?.isValid == true)
 }
+
+fun AddCardUiState.toCardUiModel(): CardUiModel =
+    CardUiModel(
+        number = cardNumber?.value.orEmpty(),
+        expired = expired?.value.orEmpty(),
+        owner = cardOwner.value,
+    )

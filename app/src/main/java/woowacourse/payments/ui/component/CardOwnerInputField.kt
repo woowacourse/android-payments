@@ -18,13 +18,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardOwnerInputField(
-    cardOwner: CardOwner,
     modifier: Modifier = Modifier,
+    cardOwner: CardOwner? = null,
     onOwnerChange: (CardOwner) -> Unit,
     showValidationError: Boolean = false,
 ) {
     OutlinedTextField(
-        value = cardOwner.value,
+        value = cardOwner?.value.orEmpty(),
         onValueChange = { newText ->
             if (newText.length <= 20) {
                 val newCardOwner = CardOwner(newText)
@@ -46,7 +46,7 @@ fun CardOwnerInputField(
                 text =
                     stringResource(
                         id = R.string.card_owner_length,
-                        cardOwner.value.length,
+                        cardOwner?.value?.length ?: 0,
                     ),
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.Gray,
@@ -55,7 +55,7 @@ fun CardOwnerInputField(
             )
         },
         label = { Text(text = stringResource(R.string.card_owner_label)) },
-        isError = showValidationError && !cardOwner.isValid,
+        isError = showValidationError && cardOwner?.isValid == false,
     )
 }
 

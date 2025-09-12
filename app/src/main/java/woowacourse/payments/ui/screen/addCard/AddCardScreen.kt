@@ -34,13 +34,12 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.toCardUiModel
 import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
 import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
 import woowacourse.payments.ui.util.BundleKeys.PASSWORD_KEY
 import woowacourse.payments.ui.util.BundleKeys.VALIDATION_ERROR_KEY
-import woowacourse.payments.ui.util.formatCardNumber
-import woowacourse.payments.ui.util.formatExpired
 
 @Composable
 fun AddCardScreen(
@@ -82,13 +81,7 @@ fun AddCardScreen(
                 onSaveClick = {
                     uiState = uiState.copy(showValidationError = !uiState.isFormValid)
                     if (uiState.isFormValid) {
-                        val cardUiModel =
-                            CardUiModel(
-                                number = formatCardNumber(uiState.cardNumber),
-                                expired = formatExpired(uiState.expired),
-                                owner = uiState.cardOwner.value,
-                            )
-                        onCardSaved(cardUiModel)
+                        onCardSaved(uiState.toCardUiModel())
                     }
                 },
             )
@@ -109,13 +102,7 @@ fun AddCardScreen(
                         .padding(vertical = 12.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                val cardUiModel =
-                    CardUiModel(
-                        number = formatCardNumber(uiState.cardNumber),
-                        expired = formatExpired(uiState.expired),
-                        owner = uiState.cardOwner.value,
-                    )
-                PaymentCard(card = cardUiModel)
+                PaymentCard(card = uiState.toCardUiModel())
             }
 
             CardNumberInputField(
