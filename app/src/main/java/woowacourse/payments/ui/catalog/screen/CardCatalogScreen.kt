@@ -2,7 +2,6 @@ package woowacourse.payments.ui.catalog.screen
 
 import android.app.Activity
 import android.content.Intent
-import androidx.compose.runtime.getValue
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -17,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
 import woowacourse.payments.R
 import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
 import woowacourse.payments.ui.catalog.CardUiState
@@ -40,7 +41,10 @@ import woowacourse.payments.ui.payments.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardCatalogScreen(cardViewModel: CardViewModel = CardViewModel()) {
+fun CardCatalogScreen(
+    modifier: Modifier = Modifier,
+    cardViewModel: CardViewModel = CardViewModel()
+) {
     val context = LocalContext.current
     val uiState: CardUiState by cardViewModel.cardUiState.observeAsState(CardUiState.Empty)
 
@@ -71,7 +75,7 @@ fun CardCatalogScreen(cardViewModel: CardViewModel = CardViewModel()) {
     ) { innerPadding ->
         CardCatalogScreenContent(
             uiState = uiState,
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             onAddNewCardClick = {
                 val intent = CardRegistrationActivity.newIntent(context)
                 cardCatalogLauncher.launch(intent)
@@ -96,7 +100,6 @@ fun CardCatalogScreenContent(
         when (uiState) {
             CardUiState.Empty ->
                 EmptyCardCatalogScreenContent(
-                    modifier = modifier,
                     onAddNewCardClick = onAddNewCardClick,
                 )
 
@@ -119,17 +122,18 @@ private fun EmptyCardCatalogScreenContent(
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = stringResource(R.string.CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD),
-        fontWeight = FontWeight.W700,
-        fontSize = 18.sp,
-        modifier = modifier,
-    )
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = stringResource(R.string.CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD),
+            fontWeight = FontWeight.W700,
+            fontSize = 18.sp,
+        )
 
-    AddCardButton(
-        onClick = { onAddNewCardClick() },
-        modifier = Modifier.padding(top = 32.dp),
-    )
+        AddCardButton(
+            onClick = onAddNewCardClick,
+            modifier = Modifier.padding(top = 32.dp),
+        )
+    }
 }
 
 @Composable
@@ -138,17 +142,19 @@ private fun SingleCardCatalogScreenContent(
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = modifier)
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+        PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = Modifier)
 
-    AddCardButton(
-        onClick = { onAddNewCardClick() },
-        modifier = Modifier.padding(top = 32.dp),
-    )
+        AddCardButton(
+            onClick = { onAddNewCardClick() },
+            modifier = Modifier.padding(top = 32.dp),
+        )
+    }
 }
 
 @Composable
 private fun MultipleCardCatalogScreenContent(
-    paymentCardUiModels: List<PaymentCardUiModel>,
+    paymentCardUiModels: ImmutableList<PaymentCardUiModel>,
     modifier: Modifier = Modifier,
 ) {
     paymentCardUiModels.forEach { paymentCard ->
@@ -159,7 +165,7 @@ private fun MultipleCardCatalogScreenContent(
 
 @Preview(showBackground = true)
 @Composable
-fun CardCatalogScreenPreView() {
+private fun CardCatalogScreenPreView() {
     AndroidpaymentsTheme {
         CardCatalogScreen(
             cardViewModel =

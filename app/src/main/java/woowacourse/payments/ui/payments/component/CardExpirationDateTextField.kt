@@ -23,11 +23,11 @@ private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDate
 
 @Composable
 fun CardExpirationDateTextField(
-    modifier: Modifier = Modifier,
     cardExpirationDate: String,
     onCardExpirationDateChanged: (String) -> Unit,
-    errorMessage: String? = null,
     maxLength: Int,
+    modifier: Modifier = Modifier,
+    errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit,
 ) {
     val isError = errorMessage != null
@@ -82,7 +82,7 @@ private fun isValidYearMonth(cardExpirationDate: String): Boolean {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
+private fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardExpirationDateTextField(
             cardExpirationDate = "1226",

@@ -45,7 +45,7 @@ fun AddCardButton(
 
 @Preview(showBackground = true)
 @Composable
-fun AddCardButtonPreview() {
+private fun AddCardButtonPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         AndroidpaymentsTheme {
             AddCardButton(onClick = {})

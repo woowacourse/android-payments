@@ -60,4 +60,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.ui.test.manifest)
     implementation(libs.androidx.runtime.livedata)
+    lintChecks(libs.compose.lint.checks)
+    implementation(libs.kotlinx.collections.immutable)
 }

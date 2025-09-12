@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

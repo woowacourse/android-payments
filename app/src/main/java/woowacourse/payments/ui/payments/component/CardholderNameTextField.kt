@@ -25,9 +25,9 @@ private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField
 
 @Composable
 fun CardholderNameTextField(
-    modifier: Modifier = Modifier,
     cardholderName: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     onCardholderNameChanged: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -64,7 +64,7 @@ fun CardholderNameTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardholderNameTextFieldPreview() {
+private fun CardholderNameTextFieldPreview() {
     var cardholderName by remember { mutableStateOf("") }
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(

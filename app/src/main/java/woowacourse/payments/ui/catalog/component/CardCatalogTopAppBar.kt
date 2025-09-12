@@ -51,7 +51,7 @@ fun CardCatalogTopAppBar(
 
 @Preview(showBackground = true, backgroundColor = 0xAAAAAAAA)
 @Composable
-fun CardCatalogTopAppBarPreView() {
+private fun CardCatalogTopAppBarPreView() {
     Column(modifier = Modifier.padding(12.dp)) {
         AndroidpaymentsTheme {
             CardCatalogTopAppBar(onCardAddClick = {})

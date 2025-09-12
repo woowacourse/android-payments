@@ -25,9 +25,9 @@ private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
 
 @Composable
 fun CardPasswordTextField(
-    modifier: Modifier = Modifier,
     cardPassword: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     onCardPasswordChanged: (String) -> Unit,
 ) {
     val visualTransformation = remember { PasswordVisualTransformation() }
@@ -58,7 +58,7 @@ fun CardPasswordTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardPasswordTextFieldPreview() {
+private fun CardPasswordTextFieldPreview() {
     var cardPassword by remember { mutableStateOf("1234") }
 
     Box(modifier = Modifier.padding(12.dp)) {

@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.catalog
 
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 sealed class CardUiState {
@@ -10,7 +12,7 @@ sealed class CardUiState {
     ) : CardUiState()
 
     data class Multiple(
-        val paymentCards: List<PaymentCardUiModel>,
+        val paymentCards: ImmutableList<PaymentCardUiModel>,
     ) : CardUiState()
 
     val isAddCardButtonVisible: Boolean = this is Multiple
@@ -18,7 +20,7 @@ sealed class CardUiState {
     fun addCard(newCard: PaymentCardUiModel): CardUiState =
         when (this) {
             Empty -> Single(newCard)
-            is Single -> Multiple(listOf(paymentCard, newCard))
-            is Multiple -> Multiple(paymentCards + newCard)
+            is Single -> Multiple(persistentListOf(paymentCard, newCard))
+            is Multiple -> Multiple((paymentCards + newCard) as ImmutableList<PaymentCardUiModel>)
         }
 }

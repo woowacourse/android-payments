@@ -36,8 +36,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardRegistrationScreen(
-    paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator(),
     onCardRegistered: (PaymentCardUiModel) -> Unit,
+    modifier: Modifier = Modifier,
+    paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator(),
     onBackPressed: () -> Unit,
 ) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
@@ -66,7 +67,7 @@ fun CardRegistrationScreen(
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             uiState = uiState,
             onUiStateChanged = { newUiState -> uiState = newUiState },
             paymentCardValidator = paymentCardValidator,
@@ -77,11 +78,11 @@ fun CardRegistrationScreen(
 
 @Composable
 private fun CardRegistrationScreenContent(
-    modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
@@ -152,7 +153,7 @@ private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: Pa
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(onBackPressed = {}, onCardRegistered = {})
     }

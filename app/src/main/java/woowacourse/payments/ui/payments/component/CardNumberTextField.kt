@@ -21,9 +21,9 @@ private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
 
 @Composable
 fun CardNumberTextField(
-    modifier: Modifier = Modifier,
     cardNumber: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     onCardNumberChanged: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -57,7 +57,7 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     Box(modifier = Modifier.padding(16.dp)) {
         CardNumberTextField(cardNumber = "", maxLength = 16) {}
     }
