@@ -31,7 +31,7 @@ fun PaymentCardsScreen(
     Scaffold(
         topBar = {
             PaymentCardsTopBar(
-                paymentCards.size,
+                paymentCards.size >= 2,
                 Modifier,
                 onAddClick = onAddCard,
             )

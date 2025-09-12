@@ -17,14 +17,14 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentCardsTopBar(
-    cardCount: Int,
+    showAddButton: Boolean,
     modifier: Modifier = Modifier,
     onAddClick: () -> Unit = {},
 ) {
     CenterAlignedTopAppBar(
         title = { Text(stringResource(R.string.title_payment_cards)) },
         actions = {
-            if (cardCount >= 2) {
+            if (showAddButton) {
                 Text(
                     text = stringResource(R.string.payment_card_top_bar_add_card),
                     fontSize = 18.sp,
@@ -43,11 +43,11 @@ fun PaymentCardsTopBar(
 @Preview
 @Composable
 private fun MultiPaymentCardsTopBarPreview() {
-    PaymentCardsTopBar(2)
+    PaymentCardsTopBar(true)
 }
 
 @Preview
 @Composable
 private fun SinglePaymentCardsTopBarPreview() {
-    PaymentCardsTopBar(1)
+    PaymentCardsTopBar(false)
 }
