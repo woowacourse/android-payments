@@ -40,15 +40,16 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 onRegistrationClick = {},
-                uiState = CardsScreenUiState(
-                    listOf(
-                        CardUiModel(
-                            cardholderNameUiModel = CardholderNameUiModel("ABC"),
-                            cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                            cardExpirationDateUiModel = CardExpirationDateUiModel("0999")
-                        )
-                    )
-                ),
+                uiState =
+                    CardsScreenUiState(
+                        listOf(
+                            CardUiModel(
+                                cardholderNameUiModel = CardholderNameUiModel("ABC"),
+                                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                                cardExpirationDateUiModel = CardExpirationDateUiModel("0999"),
+                            ),
+                        ),
+                    ),
             )
         }
 
@@ -65,20 +66,21 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 onRegistrationClick = {},
-                uiState = CardsScreenUiState(
-                    listOf(
-                        CardUiModel(
-                            cardholderNameUiModel = CardholderNameUiModel("ABC"),
-                            cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                            cardExpirationDateUiModel = CardExpirationDateUiModel("0999")
+                uiState =
+                    CardsScreenUiState(
+                        listOf(
+                            CardUiModel(
+                                cardholderNameUiModel = CardholderNameUiModel("ABC"),
+                                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                                cardExpirationDateUiModel = CardExpirationDateUiModel("0999"),
+                            ),
+                            CardUiModel(
+                                cardholderNameUiModel = CardholderNameUiModel("ABC2"),
+                                cardNumberUiModel = CardNumberUiModel("1111222233335555"),
+                                cardExpirationDateUiModel = CardExpirationDateUiModel("0888"),
+                            ),
                         ),
-                        CardUiModel(
-                            cardholderNameUiModel = CardholderNameUiModel("ABC2"),
-                            cardNumberUiModel = CardNumberUiModel("1111222233335555"),
-                            cardExpirationDateUiModel = CardExpirationDateUiModel("0888")
-                        )
-                    )
-                ),
+                    ),
             )
         }
 
@@ -90,5 +92,4 @@ class CardsScreenTest {
             onNodeWithContentDescription("카드 목록 앱 바 추가").assertIsDisplayed()
         }
     }
-
 }
