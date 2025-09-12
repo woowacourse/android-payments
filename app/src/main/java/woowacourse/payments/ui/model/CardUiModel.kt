@@ -9,4 +9,14 @@ data class CardUiModel(
     val expirationDate: String,
     val userName: String?,
     val password: String,
-) : Parcelable
+) : Parcelable {
+    companion object {
+        val EMPTY =
+            CardUiModel(
+                cardNumber = "",
+                expirationDate = "",
+                userName = "",
+                password = "",
+            )
+    }
+}
