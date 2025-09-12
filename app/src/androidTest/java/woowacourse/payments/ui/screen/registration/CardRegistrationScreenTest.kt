@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.screen
+package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -8,7 +8,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.screen.registration.CardRegistrationScreen
 
 class CardRegistrationScreenTest {
     @get:Rule
@@ -37,7 +36,7 @@ class CardRegistrationScreenTest {
         composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료 버튼")).assertIsEnabled()
+        composeTestRule.onNode(hasContentDescription("완료")).assertIsEnabled()
     }
 
     @Test
@@ -53,7 +52,7 @@ class CardRegistrationScreenTest {
         composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료 버튼")).assertIsNotEnabled()
+        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
     }
 
     @Test
@@ -69,7 +68,7 @@ class CardRegistrationScreenTest {
         composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료 버튼")).assertIsNotEnabled()
+        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
     }
 
     @Test
@@ -85,6 +84,6 @@ class CardRegistrationScreenTest {
         composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료 버튼")).assertIsNotEnabled()
+        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
     }
 }

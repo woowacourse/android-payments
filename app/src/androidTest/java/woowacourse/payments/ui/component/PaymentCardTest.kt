@@ -16,7 +16,7 @@ class PaymentCardTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun 카드_정보가_존재하는_경우_정보를_확인할_수_있다() {
+    fun `카드_정보가_존재하는_경우_정보를_확인할_수_있다`() {
         // given && when
         val paymentCardInformation =
             CardUiModel(
@@ -33,7 +33,7 @@ class PaymentCardTest {
     }
 
     @Test
-    fun 카드_정보가_없다면_정보_영역은_보여지지_않는다() {
+    fun `카드_정보가_없다면_정보_영역은_보여지지_않는다`() {
         // given && when
         val paymentCardInformation = null
         composeTestRule.setContent { PaymentCard(card = paymentCardInformation) }

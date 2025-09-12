@@ -12,7 +12,7 @@ class CardsTopAppBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun 추가_버튼을_활성화할_수_있다() {
+    fun `추가_버튼을_활성화할_수_있다`() {
         // given && when
         val isVisibleRegistrationButton = true
         composeTestRule.setContent {
@@ -24,12 +24,12 @@ class CardsTopAppBarTest {
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("카드 목록 앱 바 추가 버튼"))
+            .onNode(hasContentDescription("카드 목록 앱 바 추가"))
             .assertIsDisplayed()
     }
 
     @Test
-    fun 추가_버튼을_비활성화할_수_있다() {
+    fun `추가_버튼을_비활성화할_수_있다`() {
         // given && when
         val isVisibleRegistrationButton = false
         composeTestRule.setContent {
@@ -41,7 +41,7 @@ class CardsTopAppBarTest {
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("카드 목록 앱 바 추가 버튼"))
+            .onNode(hasContentDescription("카드 목록 앱 바 추가"))
             .assertIsNotDisplayed()
     }
 }
