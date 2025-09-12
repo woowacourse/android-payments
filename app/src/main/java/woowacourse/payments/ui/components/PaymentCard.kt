@@ -22,8 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.model.Card
-import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -102,7 +100,7 @@ fun PaymentCard(
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
         val sampleCard =
-            Card(
+            CardUiModel(
                 cardNumber = "1111222233334444",
                 expirationDate = "0421",
                 userName = "KIMGAHYUN",
@@ -110,7 +108,7 @@ private fun PaymentCardPreview() {
             )
         PaymentCard(
             modifier = Modifier,
-            card = sampleCard.toUiModel(),
+            card = sampleCard,
         )
     }
 }

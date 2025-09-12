@@ -56,7 +56,7 @@ private fun PaymentScreenPreview() {
                 PaymentScreen(
                     cards =
                         listOf(
-                            Card("1111222233334444", "0421", "CREW", "1234").toUiModel(),
+                            CardUiModel("1111222233334444", "0421", "CREW", "1234"),
                         ),
                     onAddCardClick = {},
                 )
@@ -65,10 +65,10 @@ private fun PaymentScreenPreview() {
                 PaymentScreen(
                     cards =
                         listOf(
-                            Card("1111222233334444", "0421", "CREW", "1234"),
-                            Card("5555666677778888", "0522", "GAHYUN", "5678"),
-                            Card("9999000011112222", "0623", "ANDY", "9012"),
-                        ).map { it.toUiModel() },
+                            CardUiModel("1111222233334444", "0421", "CREW", "1234"),
+                            CardUiModel("5555666677778888", "0522", "GAHYUN", "5678"),
+                            CardUiModel("9999000011112222", "0623", "ANDY", "9012"),
+                        ),
                     onAddCardClick = {},
                 )
             }

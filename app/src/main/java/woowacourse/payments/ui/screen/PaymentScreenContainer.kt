@@ -26,7 +26,7 @@ fun PaymentScreenContainer() {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = activityResult.data?.getParcelableExtra<CardUiModel>("card")
+                val newCard = AddCardActivity.parseResult(activityResult.data)
                 if (newCard != null) {
                     cards = cards + newCard
                 }
@@ -47,8 +47,7 @@ fun PaymentScreenContainer() {
     PaymentScreen(
         cards = cards,
         onAddCardClick = {
-            val intent = Intent(context, AddCardActivity::class.java)
-            cardAddLauncher.launch(intent)
+            cardAddLauncher.launch(AddCardActivity.createIntent(context))
         },
     )
 }

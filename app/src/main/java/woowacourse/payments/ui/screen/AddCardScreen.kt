@@ -20,7 +20,7 @@ import woowacourse.payments.ui.components.NewCardTopBar
 import woowacourse.payments.ui.components.PasswordField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.UserNameField
-import woowacourse.payments.ui.mapper.toUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.strings.getErrorMessage
 
 @Composable
@@ -49,43 +49,43 @@ fun AddCardScreen(
             Spacer(Modifier.height(14.dp))
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                card = Card("", "", "", "").toUiModel(),
+                card = CardUiModel.EMPTY,
             )
 
             Spacer(Modifier.height(40.dp))
             CardNumberField(
-                value = stateHolder.number,
+                value = stateHolder.state.number,
                 onValueChange = { stateHolder.onNumberChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                isError = stateHolder.numberErrorType != null,
-                errorMessage = stateHolder.numberErrorType?.let { getErrorMessage(it) },
+                isError = stateHolder.state.numberErrorType != null,
+                errorMessage = stateHolder.state.numberErrorType?.let { getErrorMessage(it) },
             )
 
             Spacer(Modifier.height(30.dp))
             ExpirationDateField(
-                value = stateHolder.expiration,
+                value = stateHolder.state.expiration,
                 onValueChange = { stateHolder.onExpirationChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                isError = stateHolder.expirationErrorType != null,
-                errorMessage = stateHolder.expirationErrorType?.let { getErrorMessage(it) },
+                isError = stateHolder.state.expirationErrorType != null,
+                errorMessage = stateHolder.state.expirationErrorType?.let { getErrorMessage(it) },
             )
 
             Spacer(Modifier.height(30.dp))
             UserNameField(
-                value = stateHolder.userName,
+                value = stateHolder.state.userName,
                 onValueChange = { stateHolder.onUserNameChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                isError = stateHolder.userNameErrorType != null,
-                errorMessage = stateHolder.userNameErrorType?.let { getErrorMessage(it) },
+                isError = stateHolder.state.userNameErrorType != null,
+                errorMessage = stateHolder.state.userNameErrorType?.let { getErrorMessage(it) },
             )
 
             Spacer(Modifier.height(18.dp))
             PasswordField(
-                value = stateHolder.password,
+                value = stateHolder.state.password,
                 onValueChange = { stateHolder.onPasswordChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                isError = stateHolder.passwordErrorType != null,
-                errorMessage = stateHolder.passwordErrorType?.let { getErrorMessage(it) },
+                isError = stateHolder.state.passwordErrorType != null,
+                errorMessage = stateHolder.state.passwordErrorType?.let { getErrorMessage(it) },
             )
         }
     }
