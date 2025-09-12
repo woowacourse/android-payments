@@ -11,7 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.getParcelableExtraCompat
@@ -24,7 +24,7 @@ class CardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var cardScreenUiState: CardsScreenUiState by remember {
+            var cardScreenUiState: CardsScreenUiState by rememberSaveable {
                 mutableStateOf(CardsScreenUiState())
             }
 
