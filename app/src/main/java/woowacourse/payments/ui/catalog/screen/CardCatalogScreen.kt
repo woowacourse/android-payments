@@ -24,9 +24,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import woowacourse.payments.R
 import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
 import woowacourse.payments.ui.catalog.CardUiState
@@ -43,7 +46,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardCatalogScreen(
     modifier: Modifier = Modifier,
-    cardViewModel: CardViewModel = CardViewModel()
+    cardViewModel: CardViewModel = CardViewModel(),
 ) {
     val context = LocalContext.current
     val uiState: CardUiState by cardViewModel.cardUiState.observeAsState(CardUiState.Empty)
@@ -165,19 +168,40 @@ private fun MultipleCardCatalogScreenContent(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardCatalogScreenPreView() {
+private fun CardCatalogScreenPreView(
+    @PreviewParameter(CardCatalogScreenPreviewParameterProvider::class) cardUiState: CardUiState,
+) {
     AndroidpaymentsTheme {
         CardCatalogScreen(
-            cardViewModel =
-                CardViewModel(
-                    CardUiState.Single(
-                        PaymentCardUiModel(
-                            number = "1234123412341234",
-                            expirationDate = "1234",
-                            cardholderName = "CREW",
-                        ),
-                    ),
-                ),
+            cardViewModel = CardViewModel(cardUiState),
         )
     }
+}
+
+private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvider<CardUiState> {
+    override val values: Sequence<CardUiState> =
+        sequenceOf(
+            CardUiState.Empty,
+            CardUiState.Single(
+                PaymentCardUiModel(
+                    number = "1234123412341234",
+                    expirationDate = "1234",
+                    cardholderName = "CREW",
+                ),
+            ),
+            CardUiState.Multiple(
+                persistentListOf(
+                    PaymentCardUiModel(
+                        number = "1234123412341234",
+                        expirationDate = "1234",
+                        cardholderName = "CREW",
+                    ),
+                    PaymentCardUiModel(
+                        number = "1234123412341231",
+                        expirationDate = "1234",
+                        cardholderName = "CREW",
+                    ),
+                ),
+            ),
+        )
 }

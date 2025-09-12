@@ -107,7 +107,7 @@ fun PaymentCardField(
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentCardFieldPreview(
+private fun PaymentCardFieldPreview(
     @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel?,
 ) {
     Column(
