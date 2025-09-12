@@ -11,6 +11,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.validator.ValidationErrorType
+import woowacourse.payments.ui.strings.getErrorMessage
 import woowacourse.payments.ui.text.SeparatedVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
@@ -20,9 +22,9 @@ fun ExpirationDateField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isError: Boolean = false,
-    errorMessage: String? = null,
+    error: ValidationErrorType? = null,
 ) {
+    val errorText = error?.let { getErrorMessage(it) }
     val expirationDateVisualTransformation =
         remember {
             SeparatedVisualTransformation(
@@ -49,13 +51,9 @@ fun ExpirationDateField(
                 color = Grey40,
             )
         },
-        isError = isError,
+        isError = errorText != null,
+        supportingText = { errorText?.let { Text(it) } },
         singleLine = true,
-        supportingText = {
-            if (isError && errorMessage != null) {
-                Text(text = errorMessage)
-            }
-        },
     )
 }
 

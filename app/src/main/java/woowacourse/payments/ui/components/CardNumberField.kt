@@ -12,6 +12,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.CardNumber.Companion.CARD_NUMBER_LENGTH
+import woowacourse.payments.domain.validator.ValidationErrorType
+import woowacourse.payments.ui.strings.getErrorMessage
 import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_CHUNK_SIZE
 import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_SEPARATOR
 import woowacourse.payments.ui.text.SeparatedVisualTransformation
@@ -23,9 +25,9 @@ fun CardNumberField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isError: Boolean = false,
-    errorMessage: String? = null,
+    error: ValidationErrorType? = null,
 ) {
+    val errorText = error?.let { getErrorMessage(it) }
     val cardNumberVisualTransformation =
         remember {
             SeparatedVisualTransformation(
@@ -53,12 +55,8 @@ fun CardNumberField(
             )
         },
         singleLine = true,
-        isError = isError,
-        supportingText = {
-            if (isError && errorMessage != null) {
-                Text(text = errorMessage)
-            }
-        },
+        isError = error != null,
+        supportingText = { errorText?.let { Text(it) } },
     )
 }
 

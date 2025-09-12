@@ -57,8 +57,7 @@ fun AddCardScreen(
                 value = stateHolder.state.number,
                 onValueChange = { stateHolder.onNumberChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                isError = stateHolder.state.numberErrorType != null,
-                errorMessage = stateHolder.state.numberErrorType?.let { getErrorMessage(it) },
+                error = stateHolder.state.numberErrorType,
             )
 
             Spacer(Modifier.height(30.dp))
@@ -66,8 +65,7 @@ fun AddCardScreen(
                 value = stateHolder.state.expiration,
                 onValueChange = { stateHolder.onExpirationChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                isError = stateHolder.state.expirationErrorType != null,
-                errorMessage = stateHolder.state.expirationErrorType?.let { getErrorMessage(it) },
+                error = stateHolder.state.expirationErrorType,
             )
 
             Spacer(Modifier.height(30.dp))
@@ -75,8 +73,7 @@ fun AddCardScreen(
                 value = stateHolder.state.userName,
                 onValueChange = { stateHolder.onUserNameChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                isError = stateHolder.state.userNameErrorType != null,
-                errorMessage = stateHolder.state.userNameErrorType?.let { getErrorMessage(it) },
+                error = stateHolder.state.userNameErrorType,
             )
 
             Spacer(Modifier.height(18.dp))
@@ -84,8 +81,7 @@ fun AddCardScreen(
                 value = stateHolder.state.password,
                 onValueChange = { stateHolder.onPasswordChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                isError = stateHolder.state.passwordErrorType != null,
-                errorMessage = stateHolder.state.passwordErrorType?.let { getErrorMessage(it) },
+                error = stateHolder.state.passwordErrorType,
             )
         }
     }
