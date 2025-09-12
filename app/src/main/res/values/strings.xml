@@ -17,4 +17,5 @@
     <string name="message_card_added">카드가 추가되었습니다.</string>
     <string name="text_no_card">새로운 카드를 등록해주세요.</string>
     <string name="card_save_failed">입력란을 다시 확인해주세요.</string>
+    <string name="cards_topbar_title">Payments</string>
 </resources>

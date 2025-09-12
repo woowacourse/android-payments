@@ -26,7 +26,11 @@ fun CardsTopBar(
         actions = {
             if (isAddable) {
                 TextButton(onClick = { onAddClick() }) {
-                    Text(text = stringResource(R.string.add), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = stringResource(R.string.add),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
             }
         },
