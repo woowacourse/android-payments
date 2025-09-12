@@ -45,7 +45,11 @@ class NewCardState {
                     number = CardNumber.from(cardNumber),
                     expirationDate =
                         CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER),
-                    holderName = cardHolderName.takeIf { it.isNotBlank() }?.let(::CardHolderName),
+                    holderName =
+                        cardHolderName
+                            .trim()
+                            .takeIf { it.isNotBlank() }
+                            ?.let(::CardHolderName),
                     password = CardPassword(cardPassword),
                 )
             } else {
