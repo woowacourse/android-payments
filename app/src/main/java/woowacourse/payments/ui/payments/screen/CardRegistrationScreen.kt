@@ -110,7 +110,10 @@ private fun CardRegistrationScreenContent(
             cardExpirationDate = uiState.cardExpirationDate,
             onCardExpirationDateChanged = { newValue ->
                 val isValid =
-                    newValue.length != 4 || paymentCardValidator.validateCardExpirationDate(newValue)
+                    newValue.length != InputType.ExpiryDate.maxLength ||
+                        paymentCardValidator.validateCardExpirationDate(
+                            newValue,
+                        )
                 onUiStateChanged(
                     uiState.copy(
                         cardExpirationDate = newValue,

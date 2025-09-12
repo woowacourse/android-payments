@@ -35,4 +35,8 @@
     <string name="card_catalog_screen_already_registered">이미 등록된 카드입니다.</string>
     <string name="card_catalog_screen_add_canceled">카드 추가가 취소 되었습니다.</string>
     <string name="card_catalog_screen_registration_card_success">카드가 추가되었습니다</string>
+
+    <!-- card_catalog_top_app_bar -->
+    <string name="card_catalog_top_app_bar_payments">Payments</string>
+    <string name="card_catalog_top_app_bar_add">추가</string>
 </resources>
