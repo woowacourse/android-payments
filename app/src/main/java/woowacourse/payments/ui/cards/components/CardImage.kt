@@ -102,7 +102,7 @@ fun CardImage(
 }
 
 private fun formatCardNumber(cardNumber: String): String {
-    val digits = cardNumber.filter { it.isDigit() }.take(16)
+    val digits = cardNumber.take(16)
 
     val chunks = digits.chunked(4)
 
@@ -117,7 +117,7 @@ private fun formatCardNumber(cardNumber: String): String {
 }
 
 private fun formatExpirationDate(expirationDate: String): String {
-    val digits = expirationDate.filter { it.isDigit() }.take(4)
+    val digits = expirationDate.take(4)
 
     val chunks = digits.chunked(2)
 
