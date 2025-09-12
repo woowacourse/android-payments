@@ -16,7 +16,7 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardsRoute(
+                CardsScreen(
                     onAddCardClick = { launcher ->
                         launcher.launch(NewCardActivity.newIntent(this))
                     }

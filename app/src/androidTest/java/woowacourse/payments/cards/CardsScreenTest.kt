@@ -13,6 +13,7 @@ import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
+import woowacourse.payments.ui.view.cards.CardsUiState
 
 class CardsScreenTest {
     @get:Rule
@@ -23,7 +24,7 @@ class CardsScreenTest {
         // given
         composeTestRule.setContent {
             CardsScreen(
-                cards = emptyList(),
+                uiState = CardsUiState.EMPTY,
                 uiEvent = Event(CardScreenUiEvent.Idle),
                 onClickCard = {},
             )
@@ -42,7 +43,7 @@ class CardsScreenTest {
     @Test
     fun `등록된_카드가_한장_있으면_새로운_카드를_등록해주세요가_보이지_않고_실물_카드와_기본카드가_하나보인다`() {
         // given
-        val cards = listOf(
+        val uiState =  CardsUiState.SINGLE(
             Card(
                 number = "1111222233334444",
                 expireDate = "0421",
@@ -53,7 +54,7 @@ class CardsScreenTest {
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
         }
 
         // then
@@ -73,30 +74,32 @@ class CardsScreenTest {
     @Test
     fun `등록된_카드가_한장_초과면_새로운_카드를_등록해주세요와_기본_카드가_보이지_않고_실물_카드_이미지만_보인다`() {
         // given
-        val cards = listOf(
-            Card(
-                number = "1111222233334444",
-                expireDate = "0908",
-                ownerName = "peto",
-                password = ""
-            ),
-            Card(
-                number = "2222333344445555",
-                expireDate = "0908",
-                ownerName = "peto",
-                password = ""
-            ),
-            Card(
-                number = "3333444455556666",
-                expireDate = "0908",
-                ownerName = "peto",
-                password = ""
+        val uiState = CardsUiState.MULTIPLE(
+            listOf(
+                Card(
+                    number = "1111222233334444",
+                    expireDate = "0908",
+                    ownerName = "peto",
+                    password = ""
+                ),
+                Card(
+                    number = "2222333344445555",
+                    expireDate = "0908",
+                    ownerName = "peto",
+                    password = ""
+                ),
+                Card(
+                    number = "3333444455556666",
+                    expireDate = "0908",
+                    ownerName = "peto",
+                    password = ""
+                )
             )
         )
 
         // when
         composeTestRule.setContent {
-            CardsScreen(cards, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
         }
 
         // then
@@ -127,7 +130,7 @@ class CardsScreenTest {
         var clickedType: CardType? = null
         composeTestRule.setContent {
             CardsScreen(
-                emptyList(),
+                CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
                 onClickCard = { clickedType = it })
         }
