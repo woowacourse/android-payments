@@ -1,6 +1,6 @@
 package woowacourse.payments.domain.model
 
-import woowacourse.payments.domain.exception.InvalidPinException
+import woowacourse.payments.domain.exception.InvalidCardException
 
 @JvmInline
 value class Pin private constructor(
@@ -11,6 +11,6 @@ value class Pin private constructor(
 
         fun from(raw: String): Pin? = if (raw.length == PIN_LENGTH) Pin(raw) else null
 
-        fun require(raw: String): Pin = from(raw) ?: throw InvalidPinException()
+        fun require(raw: String): Pin = from(raw) ?: throw InvalidCardException.InvalidPin()
     }
 }

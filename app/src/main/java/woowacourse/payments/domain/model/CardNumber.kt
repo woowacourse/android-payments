@@ -1,6 +1,6 @@
 package woowacourse.payments.domain.model
 
-import woowacourse.payments.domain.exception.InvalidCardNumberException
+import woowacourse.payments.domain.exception.InvalidCardException
 
 @JvmInline
 value class CardNumber private constructor(
@@ -11,6 +11,6 @@ value class CardNumber private constructor(
 
         fun from(raw: String): CardNumber? = if (raw.length == CARD_NUMBER_LENGTH) CardNumber(raw) else null
 
-        fun require(raw: String): CardNumber = from(raw) ?: throw InvalidCardNumberException()
+        fun require(raw: String): CardNumber = from(raw) ?: throw InvalidCardException.InvalidCardNumber()
     }
 }

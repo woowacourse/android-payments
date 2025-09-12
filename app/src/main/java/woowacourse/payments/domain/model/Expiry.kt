@@ -1,6 +1,6 @@
 package woowacourse.payments.domain.model
 
-import woowacourse.payments.domain.exception.InvalidExpiryException
+import woowacourse.payments.domain.exception.InvalidCardException
 
 @JvmInline
 value class Expiry private constructor(
@@ -21,6 +21,6 @@ value class Expiry private constructor(
             return Expiry(raw)
         }
 
-        fun require(raw: String): Expiry = from(raw) ?: throw InvalidExpiryException()
+        fun require(raw: String): Expiry = from(raw) ?: throw InvalidCardException.InvalidExpiry()
     }
 }
