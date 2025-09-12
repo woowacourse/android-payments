@@ -2,10 +2,10 @@ package woowacourse.payments.domain
 
 @JvmInline
 value class CardHolderName(
-    val name: String,
+    val value: String,
 ) {
     init {
-        require(name.length in MIN_NAME_LENGTH..MAX_NAME_LENGTH) { ERROR_INVALID_NAME_LENGTH }
+        require(value.length in MIN_NAME_LENGTH..MAX_NAME_LENGTH) { ERROR_INVALID_NAME_LENGTH }
     }
 
     companion object {

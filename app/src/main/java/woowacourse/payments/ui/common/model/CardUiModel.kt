@@ -17,7 +17,7 @@ fun Card.toUiModel(): CardUiModel =
     CardUiModel(
         number = number.toMaskedString(),
         expirationDate = expirationDate.toDisplayString(),
-        holderName = holderName?.name,
+        holderName = holderName?.value,
     )
 
 private fun CardNumber.toMaskedString(): String =

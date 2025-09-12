@@ -4,7 +4,7 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @JvmInline
-value class CardExpirationDate(
+value class CardExpirationDate private constructor(
     val date: YearMonth,
 ) {
     fun isExpired(now: YearMonth = YearMonth.now()): Boolean = date.isBefore(now)

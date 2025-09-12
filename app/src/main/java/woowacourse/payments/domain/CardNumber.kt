@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
 @JvmInline
-value class CardNumber(
+value class CardNumber private constructor(
     val numbers: List<CardDigit>,
 ) {
     init {

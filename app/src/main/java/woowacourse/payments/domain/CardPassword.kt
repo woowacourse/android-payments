@@ -2,11 +2,11 @@ package woowacourse.payments.domain
 
 @JvmInline
 value class CardPassword(
-    val password: String,
+    val value: String,
 ) {
     init {
-        require(password.length == CARD_PASSWORD_LENGTH) { ERROR_INVALID_CARD_PASSWORD_LENGTH }
-        require(password.all(Char::isDigit)) { ERROR_INVALID_CARD_PASSWORD_FORMAT }
+        require(value.length == CARD_PASSWORD_LENGTH) { ERROR_INVALID_CARD_PASSWORD_LENGTH }
+        require(value.all(Char::isDigit)) { ERROR_INVALID_CARD_PASSWORD_FORMAT }
     }
 
     companion object {
