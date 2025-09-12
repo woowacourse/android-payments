@@ -35,25 +35,26 @@ fun <T> LiveData<T>.getOrAwaitValue(
 fun <T> SingleLiveData<T>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
-): Event<T> {
-    var data: Event<T>? = null
+): T {
+    var data: T? = null
     val latch = CountDownLatch(1)
-    val observer =
-        object : Observer<Event<T>> {
-            override fun onChanged(value: Event<T>) {
-                data = value
-                latch.countDown()
-                this@getOrAwaitValue.removeObserver(this)
-            }
+
+    val observer: Observer<Event<T>> =
+        this.observeForever {
+            data = it
+            latch.countDown()
         }
 
-    this.observeForever(observer)
-
-    // Don't wait indefinitely if the LiveData is not set.
-    if (!latch.await(time, timeUnit)) {
-        throw TimeoutException("LiveData value was never set.")
+    try {
+        // Don't wait indefinitely
+        if (!latch.await(time, timeUnit)) {
+            throw TimeoutException("SingleLiveData value was never set.")
+        }
+    } finally {
+        // 테스트가 끝나면 반드시 관찰자를 제거
+        this.removeObserver(observer)
     }
 
     @Suppress("UNCHECKED_CAST")
-    return data as Event<T>
+    return data as T
 }

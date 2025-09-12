@@ -32,9 +32,10 @@ abstract class SingleLiveData<T> {
 
     fun removeObserver(observer: Observer<Event<T>>) = liveData.removeObserver(observer)
 
-    fun observeForever(onChanged: (T) -> Unit) {
+    fun observeForever(onChanged: (T) -> Unit): Observer<Event<T>> {
         val observer = Observer<Event<T>> { it.getContentIfNotHandled()?.let(onChanged) }
         liveData.observeForever(observer)
+        return observer
     }
 }
 

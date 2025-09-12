@@ -32,8 +32,6 @@ class CardsViewModelTest {
         viewModel.addCard(CARD)
 
         // then
-        assertThat(viewModel.event.getOrAwaitValue().getContentIfNotHandled()).isEqualTo(
-            CardsUiEvent.AddCardSuccess,
-        )
+        assertThat(viewModel.event.getOrAwaitValue()).isEqualTo(CardsUiEvent.AddCardSuccess)
     }
 }
