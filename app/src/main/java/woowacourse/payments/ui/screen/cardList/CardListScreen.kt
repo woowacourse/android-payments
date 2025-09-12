@@ -50,6 +50,7 @@ fun CardListScreen(
     navigateToAddCard: () -> Unit,
 ) {
     val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
+    val shouldEnableScroll by remember { derivedStateOf { cards.size > 1 } }
 
     Scaffold(
         topBar = {
@@ -59,7 +60,10 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        CardListContent(modifier = Modifier.padding(innerPadding)) {
+        CardListContent(
+            modifier = Modifier.padding(innerPadding),
+            enableScroll = shouldEnableScroll,
+        ) {
             if (cards.isEmpty()) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
@@ -84,6 +88,7 @@ fun CardListScreen(
 
 @Composable
 private fun CardListContent(
+    enableScroll: Boolean,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -94,11 +99,19 @@ private fun CardListContent(
             modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .verticalScroll(scrollState),
+                .let { baseModifier ->
+                    if (enableScroll) {
+                        baseModifier.verticalScroll(scrollState)
+                    } else {
+                        baseModifier
+                    }
+                },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         content()
-        Spacer(modifier = Modifier.height(40.dp))
+        if (enableScroll) {
+            Spacer(modifier = Modifier.height(40.dp))
+        }
     }
 }
 
