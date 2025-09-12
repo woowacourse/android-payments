@@ -19,13 +19,13 @@ class NewCardActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 NewCardScreen(
                     onBackClick = { finish() },
-                    onSaveClick = { card -> moveToCardsActivity(card) }
+                    onSaveClick = { card -> moveToCards(card) }
                 )
             }
         }
     }
 
-    private fun moveToCardsActivity(card: Card) {
+    private fun moveToCards(card: Card) {
         val intent =
             CardsActivity.newIntent(this, card.toSerializationCard())
         setResult(RESULT_OK, intent)
