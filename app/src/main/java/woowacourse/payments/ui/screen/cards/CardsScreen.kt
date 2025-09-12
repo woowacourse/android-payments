@@ -46,7 +46,7 @@ fun CardsScreen(viewModel: CardsScreenViewModel = rememberCardsScreenViewModel()
     val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(CardsUiState.EMPTY)
     val uiEvent by viewModel.uiEvent.observeAsState(CardsScreenUiEvent.None)
-    val cardAddLauncher = rememberCardAddLauncher(viewModel)
+    val cardAddLauncher = rememberCardAddLauncher(viewModel::addCard)
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
@@ -81,12 +81,12 @@ fun CardsScreen(viewModel: CardsScreenViewModel = rememberCardsScreenViewModel()
 }
 
 @Composable
-private fun rememberCardAddLauncher(viewModel: CardsScreenViewModel) =
+private fun rememberCardAddLauncher(onCardAdded: (PaymentCardUiModel) -> Unit) =
     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
         result.data
             ?.getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_NEW_CARD)
-            ?.let(viewModel::addCard)
+            ?.let(onCardAdded)
     }
 
 @Composable
