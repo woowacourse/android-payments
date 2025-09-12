@@ -1,9 +1,10 @@
 package woowacourse.payments.cards
 
+import androidx.compose.runtime.mutableStateListOf
 import woowacourse.payments.domain.Card
 
 class CardsStateHolder {
-    private val _cards = mutableListOf<Card>()
+    private val _cards = mutableStateListOf<Card>()
     val cards get() = _cards.toList()
 
     fun add(card: Card) {
