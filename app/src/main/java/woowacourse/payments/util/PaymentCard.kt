@@ -47,7 +47,7 @@ fun PaymentCard(
     ) {
         Box(
             modifier =
-                modifier
+                Modifier
                     .padding(start = 14.dp, bottom = 10.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
