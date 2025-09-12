@@ -7,8 +7,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.IntentCompat.putParcelableCompat
-import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
