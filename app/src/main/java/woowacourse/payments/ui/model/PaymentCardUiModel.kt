@@ -9,5 +9,3 @@ data class PaymentCardUiModel(
     val expiry: String,
     val owner: String,
 ) : Parcelable
-
-const val EXTRA_CARD = "extra_card"

@@ -1,7 +1,5 @@
 package woowacourse.payments.ui
 
-import android.app.Activity
-import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +15,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -29,15 +26,16 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.StringTextField
-import woowacourse.payments.ui.model.EXTRA_CARD
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
 @Composable
-fun AddPaymentCardScreen() {
-    val context = LocalContext.current
-
+fun AddPaymentCardScreen(
+    onBack: () -> Unit,
+    onSave: (PaymentCardUiModel) -> Unit,
+) {
     var cardNumber by rememberSaveable { mutableStateOf("") }
     var expiry by rememberSaveable { mutableStateOf("") }
     var owner by rememberSaveable { mutableStateOf("") }
@@ -47,13 +45,10 @@ fun AddPaymentCardScreen() {
         topBar = {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
-                onBackClick = { (context as? Activity)?.finish() },
+                onBackClick = onBack,
                 onSaveClick = {
-                    val paymentCard = PaymentCard(cardNumber, expiry, owner, pin).toUiModel()
-                    (context as? Activity)?.apply {
-                        setResult(Activity.RESULT_OK, Intent().putExtra(EXTRA_CARD, paymentCard))
-                        finish()
-                    }
+                    val paymentCard = PaymentCard(cardNumber, expiry, owner, pin)
+                    onSave(paymentCard.toUiModel())
                 },
             )
         },
@@ -126,6 +121,9 @@ private fun RememberNumberVisualTransformation(
 @Composable
 private fun AddPaymentCardScreenPreview() {
     AndroidpaymentsTheme {
-        AddPaymentCardScreen()
+        AddPaymentCardScreen(
+            onBack = {},
+            onSave = {},
+        )
     }
 }
