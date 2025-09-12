@@ -3,11 +3,6 @@ package woowacourse.payments.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.component.PaymentCardsContent
@@ -17,17 +12,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCardsScreen(
-    registerOnCardAdded: ((PaymentCardUiModel) -> Unit) -> Unit,
+    paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
 ) {
-    var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCardUiModel>()) }
-
-    LaunchedEffect(Unit) {
-        registerOnCardAdded { newCard ->
-            paymentCards = paymentCards + newCard
-        }
-    }
-
     Scaffold(
         topBar = {
             PaymentCardsTopBar(
@@ -51,6 +38,6 @@ fun PaymentCardsScreen(
 @Composable
 private fun PaymentCardsPreview() {
     AndroidpaymentsTheme {
-        PaymentCardsScreen({}, {})
+        PaymentCardsScreen(emptyList(), {})
     }
 }

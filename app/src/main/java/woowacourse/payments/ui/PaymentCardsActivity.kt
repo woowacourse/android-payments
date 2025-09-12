@@ -8,6 +8,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.model.PaymentCardUiModel
@@ -29,15 +33,22 @@ class PaymentCardsActivity : ComponentActivity() {
                             ?: return@registerForActivityResult
                     onCardAdded?.invoke(newCard)
                     Toast
-                        .makeText(this, getString(R.string.toast_card_add), Toast.LENGTH_SHORT)
-                        .show()
+                        .makeText(
+                            this,
+                            getString(R.string.toast_card_add),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
 
         setContent {
             AndroidpaymentsTheme {
+                var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCardUiModel>()) }
+
+                onCardAdded = { newCard -> paymentCards = paymentCards + newCard }
+
                 PaymentCardsScreen(
-                    registerOnCardAdded = { callback -> onCardAdded = callback },
+                    paymentCards = paymentCards,
                     onAddCard = { navigateToAddPaymentCard() },
                 )
             }
