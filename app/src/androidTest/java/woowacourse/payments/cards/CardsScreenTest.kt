@@ -1,7 +1,6 @@
 package woowacourse.payments.cards
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -62,7 +61,7 @@ class CardsScreenTest {
         }
 
         // then
-        composeTestRule.onNodeWithTag("카드 추가").assertIsNotDisplayed()
+        composeTestRule.onNodeWithTag("카드 추가").assertDoesNotExist()
         composeTestRule.onNode(hasClickAction() and hasText("추가")).assertIsDisplayed()
     }
 }
