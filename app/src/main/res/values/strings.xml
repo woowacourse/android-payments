@@ -16,6 +16,9 @@
     <string name="card_number_separator">&#160;-&#160;</string>
     <string name="expiry_separator">&#160;/&#160;</string>
     <string name="supporting_text_owner">%d / %d</string>
+    <string name="error_card_number_invalid">카드번호를 정확하게 입력해주세요.</string>
+    <string name="error_expiry_invalid">유효기간을 MMYY 형식으로 입력해주세요.</string>
+    <string name="error_pin_invalid">비밀번호 4자리를 입력해주세요.</string>
 
     <!-- PaymentCards-->
     <string name="title_payment_cards">Payments</string>

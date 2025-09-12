@@ -27,6 +27,8 @@ fun NumberTextField(
     maxLength: Int,
     modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    isError: Boolean = false,
+    supportingText: (@Composable (() -> Unit))? = null,
 ) {
     val textFieldValue =
         remember(value) {
@@ -43,6 +45,8 @@ fun NumberTextField(
         placeholder = { Text(stringResource(placeholder), color = Gray100) },
         visualTransformation = visualTransformation,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+        isError = isError,
+        supportingText = supportingText,
         modifier =
             modifier
                 .padding(bottom = 30.dp)

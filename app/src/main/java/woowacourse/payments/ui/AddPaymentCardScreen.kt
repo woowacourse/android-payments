@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +23,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.model.CardNumber
+import woowacourse.payments.domain.model.Expiry
+import woowacourse.payments.domain.model.PaymentCard
+import woowacourse.payments.domain.model.Pin
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.NumberTextField
 import woowacourse.payments.ui.component.PaymentCard
@@ -41,14 +46,33 @@ fun AddPaymentCardScreen(
     var owner by rememberSaveable { mutableStateOf("") }
     var pin by rememberSaveable { mutableStateOf("") }
 
+    val isCardNumberValid = cardNumber.isValid(CardNumber::from)
+    val isExpiryValid = expiry.isValid(Expiry::from)
+    val isPinValid = pin.isValid(Pin::from)
+
+    val canSave = listOf(isCardNumberValid, isExpiryValid, isPinValid).all { it }
+
+    val cardVisualTransformation =
+        RememberNumberVisualTransformation(4, stringResource(R.string.card_number_separator))
+    val expiryVisualTransformation =
+        RememberNumberVisualTransformation(2, stringResource(R.string.expiry_separator))
+
     Scaffold(
         topBar = {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = onBack,
                 onSaveClick = {
-                    val paymentCard = PaymentCard(cardNumber, expiry, owner, pin)
-                    onSave(paymentCard.toUiModel())
+                    if (!canSave) return@NewCardTopBar
+                    PaymentCard
+                        .create(
+                            cardNumber = cardNumber,
+                            expiry = expiry,
+                            owner = owner,
+                            pin = pin,
+                        ).onSuccess { paymentCard ->
+                            onSave(paymentCard.toUiModel())
+                        }
                 },
             )
         },
@@ -70,10 +94,12 @@ fun AddPaymentCardScreen(
                 value = cardNumber,
                 onValueChange = { cardNumber = it },
                 maxLength = 16,
-                visualTransformation =
-                    RememberNumberVisualTransformation(
-                        4,
-                        stringResource(R.string.card_number_separator),
+                visualTransformation = cardVisualTransformation,
+                isError = cardNumber.isNotEmpty() && !isCardNumberValid,
+                supportingText =
+                    ErrorTextOrNull(
+                        show = cardNumber.isNotEmpty() && !isCardNumberValid,
+                        resId = R.string.error_card_number_invalid,
                     ),
             )
             NumberTextField(
@@ -83,10 +109,12 @@ fun AddPaymentCardScreen(
                 value = expiry,
                 onValueChange = { expiry = it },
                 maxLength = 4,
-                visualTransformation =
-                    RememberNumberVisualTransformation(
-                        2,
-                        stringResource(R.string.expiry_separator),
+                visualTransformation = expiryVisualTransformation,
+                isError = expiry.isNotEmpty() && !isExpiryValid,
+                supportingText =
+                    ErrorTextOrNull(
+                        show = expiry.isNotEmpty() && !isExpiryValid,
+                        resId = R.string.error_expiry_invalid,
                     ),
             )
             StringTextField(
@@ -103,6 +131,12 @@ fun AddPaymentCardScreen(
                 onValueChange = { pin = it },
                 maxLength = 4,
                 visualTransformation = PasswordVisualTransformation(),
+                isError = pin.isNotEmpty() && !isPinValid,
+                supportingText =
+                    ErrorTextOrNull(
+                        show = pin.isNotEmpty() && !isPinValid,
+                        resId = R.string.error_pin_invalid,
+                    ),
             )
         }
     }
@@ -116,6 +150,19 @@ private fun RememberNumberVisualTransformation(
     remember(chunkSize, separator) {
         NumberVisualTransformation(chunkSize, separator)
     }
+
+@Composable
+private fun ErrorTextOrNull(
+    show: Boolean,
+    resId: Int,
+): (@Composable () -> Unit)? =
+    if (!show) {
+        null
+    } else {
+        { Text(text = stringResource(resId), color = MaterialTheme.colorScheme.error) }
+    }
+
+private inline fun String.isValid(validator: (String) -> Any?): Boolean = isNotEmpty() && validator(this) != null
 
 @Preview(showBackground = true)
 @Composable
