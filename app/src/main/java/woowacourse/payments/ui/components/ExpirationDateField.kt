@@ -39,7 +39,7 @@ fun ExpirationDateField(
         modifier = modifier,
         value = value,
         onValueChange = {
-            onValueChange(it.filter(Char::isDigit).take(EXPIRATION_DATE_MAX_LENGTH))
+            onValueChange(it.filter(Char::isDigit).take(EXPIRATION_DATE_LENGTH))
         },
         visualTransformation = expirationDateVisualTransformation,
         label = { Text(stringResource(R.string.expiration_date_label)) },
@@ -71,6 +71,6 @@ private fun ExpirationDateFieldPreview() {
     }
 }
 
-private const val EXPIRATION_DATE_MAX_LENGTH = 4
+private const val EXPIRATION_DATE_LENGTH = 4
 private const val EXPIRATION_DATE_CHUNK_SIZE = 2
 private const val EXPIRATION_DATE_SEPARATOR = " / "

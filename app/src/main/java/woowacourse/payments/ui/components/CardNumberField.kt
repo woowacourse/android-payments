@@ -11,6 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.model.CardNumber.Companion.CARD_NUMBER_LENGTH
+import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_CHUNK_SIZE
+import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_SEPARATOR
 import woowacourse.payments.ui.text.SeparatedVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
@@ -39,7 +42,7 @@ fun CardNumberField(
         modifier = modifier,
         value = value,
         onValueChange = {
-            onValueChange(it.filter(Char::isDigit).take(CARD_NUMBER_MAX_LENGTH))
+            onValueChange(it.filter(Char::isDigit).take(CARD_NUMBER_LENGTH))
         },
         visualTransformation = cardNumberVisualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
@@ -70,7 +73,3 @@ private fun CardNumberFieldPreview() {
         )
     }
 }
-
-private const val CARD_NUMBER_MAX_LENGTH = 16
-private const val CARD_NUMBER_CHUNK_SIZE = 4
-private const val CARD_NUMBER_SEPARATOR = " - "

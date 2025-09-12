@@ -10,7 +10,7 @@ value class CardNumber private constructor(
     }
 
     companion object {
-        private const val CARD_NUMBER_LENGTH = 16
+        const val CARD_NUMBER_LENGTH = 16
 
         fun from(value: String): CardNumber = CardNumber(value)
     }

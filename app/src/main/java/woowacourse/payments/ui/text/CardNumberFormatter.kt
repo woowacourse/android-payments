@@ -18,8 +18,8 @@ object CardNumberFormatter {
         return maskedValue.chunked(CARD_NUMBER_CHUNK_SIZE).joinToString(CARD_NUMBER_SEPARATOR)
     }
 
-    private const val CARD_NUMBER_CHUNK_SIZE = 4
-    private const val CARD_NUMBER_SEPARATOR = " - "
+    const val CARD_NUMBER_CHUNK_SIZE = 4
+    const val CARD_NUMBER_SEPARATOR = " - "
 
     private const val START_MASK_INDEX = 8
     private const val END_MASK_INDEX = 16
