@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.new
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
