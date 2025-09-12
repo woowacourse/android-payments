@@ -1,11 +1,14 @@
 package woowacourse.payments
 
 import io.kotest.matchers.shouldBe
+import kotlinx.collections.immutable.persistentListOf
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 import woowacourse.payments.ui.catalog.CardUiState
 import woowacourse.payments.ui.catalog.CardViewModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
+@ExtendWith(InstantTaskExecutorExtension::class)
 class CardViewModelTest {
     @Test
     fun `처음 기본 상태는 Empty이다`() {
@@ -13,7 +16,7 @@ class CardViewModelTest {
         val cardViewModel = CardViewModel()
 
         // when
-        val actual = cardViewModel.cardUiState
+        val actual = cardViewModel.cardUiState.value
         val expected = CardUiState.Empty
 
         // then
@@ -33,7 +36,7 @@ class CardViewModelTest {
 
         // when
         cardViewModel.addCard(newCard)
-        val actual = cardViewModel.cardUiState
+        val actual = cardViewModel.cardUiState.value
         val expected = CardUiState.Single(newCard)
 
         // then
@@ -62,8 +65,8 @@ class CardViewModelTest {
 
         // when
         cardViewModel.addCard(anotherNewCard)
-        val actual = cardViewModel.cardUiState
-        val expected = CardUiState.Multiple(listOf(newCard, anotherNewCard))
+        val actual = cardViewModel.cardUiState.value
+        val expected = CardUiState.Multiple(persistentListOf(newCard, anotherNewCard))
 
         // then
         actual shouldBe expected
@@ -99,8 +102,8 @@ class CardViewModelTest {
 
         // when
         cardViewModel.addCard(threeNewCard)
-        val actual = cardViewModel.cardUiState
-        val expected = CardUiState.Multiple(listOf(oneNewCard, twoNewCard, threeNewCard))
+        val actual = cardViewModel.cardUiState.value
+        val expected = CardUiState.Multiple(persistentListOf(oneNewCard, twoNewCard, threeNewCard))
 
         // then
         actual shouldBe expected

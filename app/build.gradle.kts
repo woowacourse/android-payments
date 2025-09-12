@@ -62,4 +62,5 @@ dependencies {
     implementation(libs.androidx.runtime.livedata)
     lintChecks(libs.compose.lint.checks)
     implementation(libs.kotlinx.collections.immutable)
+    testImplementation(libs.androidx.core.testing)
 }

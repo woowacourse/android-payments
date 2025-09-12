@@ -2,6 +2,7 @@ package woowacourse.payments.ui.catalog
 
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 sealed class CardUiState {
@@ -21,6 +22,6 @@ sealed class CardUiState {
         when (this) {
             Empty -> Single(newCard)
             is Single -> Multiple(persistentListOf(paymentCard, newCard))
-            is Multiple -> Multiple((paymentCards + newCard) as ImmutableList<PaymentCardUiModel>)
+            is Multiple -> Multiple((paymentCards + newCard).toImmutableList())
         }
 }
