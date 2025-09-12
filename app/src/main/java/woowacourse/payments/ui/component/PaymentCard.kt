@@ -37,6 +37,9 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel? = null,
 ) {
+    val paymentCardInformationDescription =
+        stringResource(R.string.payment_card_information_description)
+
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -68,7 +71,10 @@ fun PaymentCard(
 
             if (card != null) {
                 Column(
-                    modifier = Modifier.semantics { contentDescription = "카드 정보" },
+                    modifier =
+                        Modifier.semantics {
+                            contentDescription = paymentCardInformationDescription
+                        },
                 ) {
                     Text(
                         text = card.formattedCardNumber(),

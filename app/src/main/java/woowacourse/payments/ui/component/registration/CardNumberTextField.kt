@@ -24,8 +24,10 @@ fun CardNumberTextField(
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardNumberTextFieldDescription = stringResource(R.string.card_number_text_field_description)
+
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "카드 번호" },
+        modifier = modifier.semantics { contentDescription = cardNumberTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_number_text_field_label))
         },

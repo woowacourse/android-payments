@@ -23,6 +23,9 @@ fun CardsTopAppBar(
     isVisibleRegistrationButton: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val registrationButtonDescription =
+        stringResource(R.string.cards_top_app_bar_add_button_description)
+
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -39,7 +42,8 @@ fun CardsTopAppBar(
             if (isVisibleRegistrationButton) {
                 TextButton(
                     onClick = onRegistrationClick,
-                    modifier = Modifier.semantics { contentDescription = "카드 목록 앱 바 추가 버튼" },
+                    modifier =
+                        Modifier.semantics { contentDescription = registrationButtonDescription },
                 ) {
                     Text(
                         text = stringResource(R.string.cards_top_app_bar_add),

@@ -50,9 +50,7 @@ fun CardsScreen(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val newCard: CardUiModel? =
-                    activityResult.data?.getParcelableExtraCompat(
-                        EXTRA_CARDS_REGISTER_NEW_CARD,
-                    )
+                    activityResult.data?.getParcelableExtraCompat(EXTRA_CARDS_REGISTER_NEW_CARD)
                 newCard?.let {
                     uiState = uiState.copyWithAddCard(newCard)
                     Toast

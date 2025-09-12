@@ -24,11 +24,16 @@ fun CardRegistrationTopAppBar(
     modifier: Modifier = Modifier,
     isSaveButtonEnabled: Boolean = false,
 ) {
+    val previousButtonDescription =
+        stringResource(R.string.card_registration_top_app_bar_previous_button_description)
+    val saveButtonDescription =
+        stringResource(R.string.card_registration_top_app_bar_save_icon_description)
+
     TopAppBar(
         title = { Text(stringResource(R.string.card_registration_top_app_bar_title)) },
         navigationIcon = {
             IconButton(
-                modifier = Modifier.semantics { contentDescription = "뒤로 가기 버튼" },
+                modifier = Modifier.semantics { contentDescription = previousButtonDescription },
                 onClick = onBackClick,
             ) {
                 Icon(
@@ -39,13 +44,13 @@ fun CardRegistrationTopAppBar(
         },
         actions = {
             IconButton(
-                modifier = Modifier.semantics { contentDescription = "완료 버튼" },
+                modifier = Modifier.semantics { contentDescription = saveButtonDescription },
                 onClick = onSaveClick,
                 enabled = isSaveButtonEnabled,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.card_registration_top_app_bar_save_content_description),
+                    contentDescription = saveButtonDescription,
                 )
             }
         },

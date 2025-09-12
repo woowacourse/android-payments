@@ -28,8 +28,11 @@ fun CardPasswordTextField(
     onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardPasswordTextFieldDescription =
+        stringResource(R.string.card_password_text_field_description)
+
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "비밀번호" },
+        modifier = modifier.semantics { contentDescription = cardPasswordTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_password_text_field_label))
         },

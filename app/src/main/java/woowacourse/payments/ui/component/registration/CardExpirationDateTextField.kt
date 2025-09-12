@@ -26,11 +26,15 @@ fun CardExpirationDateTextField(
     modifier: Modifier = Modifier,
     errorMessage: String? = null,
 ) {
+    val cardExpirationDateTextFieldDescription =
+        stringResource(R.string.card_expiration_date_text_field_description)
+
     val isError = errorMessage != null
     if (cardExpirationDate.isError) onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))
 
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "만료일" },
+        modifier =
+            modifier.semantics { contentDescription = cardExpirationDateTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_expiration_date_text_field_label))
         },

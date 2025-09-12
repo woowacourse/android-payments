@@ -29,9 +29,11 @@ fun CardholderNameTextField(
     onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardholderNameTextFieldDescription =
+        stringResource(R.string.cardholder_name_text_field_description)
     OutlinedTextField(
         modifier =
-            modifier.semantics { contentDescription = "카드 소유자 이름" },
+            modifier.semantics { contentDescription = cardholderNameTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.cardholder_name_text_field_label))
         },
