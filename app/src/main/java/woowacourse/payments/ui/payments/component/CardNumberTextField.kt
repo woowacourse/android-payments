@@ -39,10 +39,10 @@ fun CardNumberTextField(
         },
         value = cardNumber,
         onValueChange = { newValue ->
+            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardNumberChanged(newValue.take(maxLength))
             }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

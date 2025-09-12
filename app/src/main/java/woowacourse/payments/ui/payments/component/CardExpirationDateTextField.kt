@@ -53,12 +53,12 @@ fun CardExpirationDateTextField(
         },
         value = cardExpirationDate,
         onValueChange = { newValue ->
+            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardExpirationDateChanged(
                     newValue.take(maxLength),
                 )
             }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onErrorMessageChanged(null)
             onCardExpirationDateChanged(newValue)
         },

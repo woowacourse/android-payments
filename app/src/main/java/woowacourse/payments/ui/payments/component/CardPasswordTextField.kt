@@ -45,10 +45,10 @@ fun CardPasswordTextField(
         },
         value = cardPassword,
         onValueChange = { newValue ->
+            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardPasswordChanged(newValue.take(maxLength))
             }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardPasswordChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

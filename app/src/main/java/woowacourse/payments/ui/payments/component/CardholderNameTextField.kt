@@ -43,17 +43,22 @@ fun CardholderNameTextField(
         },
         value = cardholderName,
         onValueChange = { newValue ->
+            if (newValue.any { it.isLetter().not() }) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardholderNameChanged(
                     newValue.take(maxLength),
                 )
             }
-            if (newValue.any { it !in 'a'..'z' && it !in 'A'..'Z' }) return@OutlinedTextField
             onCardholderNameChanged(newValue.uppercase())
         },
         supportingText = {
             Text(
-                text = stringResource(R.string.cardholder_name_text_field_name_length, cardholderName.length, maxLength),
+                text =
+                    stringResource(
+                        R.string.cardholder_name_text_field_name_length,
+                        cardholderName.length,
+                        maxLength,
+                    ),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
