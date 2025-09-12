@@ -38,7 +38,7 @@ import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.common.getParcelableExtraCompat
-import woowacourse.payments.ui.common.showToast
+import woowacourse.payments.ui.common.showShortToast
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -62,7 +62,7 @@ fun CardCatalogScreen(
                     )
                 paymentCardUiModel?.let { cardViewModel.addCard(it) }
             } else {
-                context.showToast(context.getString(R.string.card_catalog_screen_add_canceled))
+                context.showShortToast(context.getString(R.string.card_catalog_screen_add_canceled))
             }
         }
     Scaffold(
