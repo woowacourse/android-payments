@@ -30,7 +30,8 @@ fun RegistrationCard(
                 .background(
                     color = FFE5E5E5,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable { onRegistrationClick() },
+                )
+                .clickable { onRegistrationClick() },
     ) {
         Text(
             text = stringResource(R.string.add_button),

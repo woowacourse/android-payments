@@ -31,9 +31,12 @@ class CardRegisterActivity : ComponentActivity() {
                         finish()
                     },
                     isNotValidInput = {
-                        Toast.makeText(context,
-                            getString(R.string.card_input_not_valid_message),
-                            Toast.LENGTH_SHORT).show()
+                        Toast
+                            .makeText(
+                                context,
+                                getString(R.string.card_input_not_valid_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     },
                 )
             }

@@ -47,7 +47,8 @@ fun PaymentCard(
                 .background(
                     color = FF333333,
                     shape = RoundedCornerShape(5.dp),
-                ).padding(bottom = 16.dp)
+                )
+                .padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
