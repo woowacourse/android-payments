@@ -127,7 +127,7 @@ private fun EmptyCardCatalogScreenContent(
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            text = stringResource(R.string.CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD),
+            text = stringResource(R.string.card_catalog_screen_registration_new_card),
             fontWeight = FontWeight.W700,
             fontSize = 18.sp,
         )
