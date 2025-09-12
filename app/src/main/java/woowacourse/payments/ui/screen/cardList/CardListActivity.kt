@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.R
-import woowacourse.payments.ui.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.addCard.AddCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableExtraCompat

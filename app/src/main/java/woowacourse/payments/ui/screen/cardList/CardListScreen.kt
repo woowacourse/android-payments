@@ -33,16 +33,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.domain.Expired
-import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.toPresentation
 
 @Composable
 fun CardListScreen(

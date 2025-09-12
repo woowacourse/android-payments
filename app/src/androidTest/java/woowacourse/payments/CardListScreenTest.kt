@@ -8,7 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.payments.ui.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardList.CardListScreen
 
 class CardListScreenTest {
