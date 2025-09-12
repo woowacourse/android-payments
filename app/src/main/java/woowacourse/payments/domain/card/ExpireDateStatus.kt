@@ -1,4 +1,4 @@
-package woowacourse.payments.domain
+package woowacourse.payments.domain.card
 
 sealed interface ExpireDateStatus {
     data class Invalid(

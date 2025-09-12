@@ -1,7 +1,7 @@
 package woowacourse.payments.ui.mapper
 
-import woowacourse.payments.domain.ExpireDateStatus
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.card.ExpireDateStatus
+import woowacourse.payments.domain.card.PaymentCard
 
 sealed class CardCreationResult {
     data class Success(

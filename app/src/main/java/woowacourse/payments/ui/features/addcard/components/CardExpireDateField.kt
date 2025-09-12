@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.ExpireDate.Companion.MAX_LENGTH_EXPIRE_DATE
+import woowacourse.payments.domain.card.values.ExpireDate.Companion.MAX_LENGTH_EXPIRE_DATE
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.features.addcard.ExpireDateUiState
 import woowacourse.payments.ui.mapper.messageResId

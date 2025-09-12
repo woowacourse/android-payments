@@ -1,7 +1,7 @@
 package woowacourse.payments.ui.features.addcard
 
-import woowacourse.payments.domain.ExpireDate
-import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
+import woowacourse.payments.domain.card.ExpireDateStatus.Invalid.ExpireDateInvalidReason
+import woowacourse.payments.domain.card.values.ExpireDate
 
 sealed interface ExpireDateUiState {
     data class Valid(

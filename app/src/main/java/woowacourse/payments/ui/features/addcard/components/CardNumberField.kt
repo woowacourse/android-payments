@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardNumber.Companion.MAX_LENGTH_CARD_NUMBER
+import woowacourse.payments.domain.card.values.CardNumber.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation

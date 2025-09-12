@@ -1,4 +1,4 @@
-package woowacourse.payments.domain.exception
+package woowacourse.payments.domain.card.exception
 
 sealed class PasswordException : IllegalArgumentException() {
     data object InvalidLength : PasswordException()

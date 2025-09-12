@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.features.addcard.AddCardScreen
 import woowacourse.payments.ui.mapper.CardMapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel

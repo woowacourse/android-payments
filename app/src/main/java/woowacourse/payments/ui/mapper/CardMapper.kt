@@ -1,13 +1,13 @@
 package woowacourse.payments.ui.mapper
 
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpireDate
-import woowacourse.payments.domain.ExpireDateStatus
-import woowacourse.payments.domain.ExpireDateStatus.Invalid.ExpireDateInvalidReason
-import woowacourse.payments.domain.ExpireDateValidationException
-import woowacourse.payments.domain.OwnerName
-import woowacourse.payments.domain.Password
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.card.ExpireDateStatus
+import woowacourse.payments.domain.card.ExpireDateStatus.Invalid.ExpireDateInvalidReason
+import woowacourse.payments.domain.card.PaymentCard
+import woowacourse.payments.domain.card.exception.ExpireDateException
+import woowacourse.payments.domain.card.values.CardNumber
+import woowacourse.payments.domain.card.values.ExpireDate
+import woowacourse.payments.domain.card.values.OwnerName
+import woowacourse.payments.domain.card.values.Password
 import woowacourse.payments.ui.components.toMaskedString
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.features.addcard.ExpireDateUiState
@@ -35,7 +35,7 @@ object CardMapper {
         val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
         return PaymentCardUiModel(
-            maskedCardNumber = this.cardNumber.toMaskedString(), // UI 포맷팅 확장 함수 사용
+            maskedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
             ownerName = this.ownerName.value ?: "",
         )
@@ -87,7 +87,7 @@ object CardMapper {
     }
 
     private fun getExpireDateInvalidReason(throwable: Throwable): ExpireDateInvalidReason =
-        if (throwable is ExpireDateValidationException) {
+        if (throwable is ExpireDateException) {
             throwable.reason
         } else {
             ExpireDateInvalidReason.INVALID_FORMAT

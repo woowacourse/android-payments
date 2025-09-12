@@ -1,6 +1,6 @@
-package woowacourse.payments.domain
+package woowacourse.payments.domain.card.values
 
-import woowacourse.payments.domain.exception.CardNumberException
+import woowacourse.payments.domain.card.exception.CardNumberException
 
 @JvmInline
 value class CardNumber private constructor(

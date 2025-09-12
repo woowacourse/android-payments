@@ -22,7 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCard
+import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField

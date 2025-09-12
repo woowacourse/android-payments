@@ -1,6 +1,6 @@
-package woowacourse.payments.domain
+package woowacourse.payments.domain.card.values
 
-import woowacourse.payments.domain.exception.PasswordException
+import woowacourse.payments.domain.card.exception.PasswordException
 
 @JvmInline
 value class Password private constructor(

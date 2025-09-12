@@ -1,6 +1,6 @@
-package woowacourse.payments.domain
+package woowacourse.payments.domain.card.values
 
-import woowacourse.payments.domain.exception.OwnerNamerException
+import woowacourse.payments.domain.card.exception.OwnerNamerException
 
 @JvmInline
 value class OwnerName private constructor(
