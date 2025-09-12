@@ -56,7 +56,7 @@ fun CardsScreen(
                 if (card != null) {
                     cardsStateHolder.add(card)
                 }
-                onCardAdded
+                onCardAdded()
             }
         }
 

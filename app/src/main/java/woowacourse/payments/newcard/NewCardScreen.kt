@@ -46,7 +46,7 @@ fun NewCardScreen(
                         .onSuccess {
                             onSaveClick(cardResult.getOrThrow().toParcelable())
                         }.onFailure {
-                            onCardSaveFailed
+                            onCardSaveFailed()
                         }
                 },
             )
