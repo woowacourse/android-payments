@@ -1,9 +1,10 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.addCard
 
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.CardUiModel
 
 data class AddCardUiState(
     val cardNumber: CardNumber? = null,

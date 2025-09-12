@@ -25,7 +25,6 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.AddCardUiState
 import woowacourse.payments.ui.CardUiModel
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
@@ -34,7 +33,6 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.toCardUiModel
 import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
 import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
