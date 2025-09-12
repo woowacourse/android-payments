@@ -135,26 +135,23 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
         sequenceOf(
             emptyList(),
             listOf(
-                Card(
-                    number = CardNumber("1234567887654321"),
-                    expired = Expired("1221"),
-                    owner = CardOwner("aaaa"),
-                    password = Password("1234"),
-                ).toPresentation(),
+                CardUiModel(
+                    number = "1234567887654321",
+                    expired = "1221",
+                    owner = "HamBeomJoon",
+                ),
             ),
             listOf(
-                Card(
-                    number = CardNumber("1234567887654321"),
-                    expired = Expired("1221"),
-                    owner = CardOwner("aaaa"),
-                    password = Password("1234"),
-                ).toPresentation(),
-                Card(
-                    number = CardNumber("8765432112345678"),
-                    expired = Expired("1122"),
-                    owner = CardOwner("bbbb"),
-                    password = Password("5678"),
-                ).toPresentation(),
+                CardUiModel(
+                    number = "1234567887654321",
+                    expired = "1221",
+                    owner = "moondev03",
+                ),
+                CardUiModel(
+                    number = "8734578233123212",
+                    expired = "0729",
+                    owner = "Meeple",
+                ),
             ),
         )
 }

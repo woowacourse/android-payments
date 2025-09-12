@@ -1,0 +1,70 @@
+package woowacourse.payments.ui.screen.addCard
+
+import android.os.Bundle
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.setValue
+import androidx.core.os.bundleOf
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardOwner
+import woowacourse.payments.domain.Expired
+import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
+import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
+import woowacourse.payments.ui.util.BundleKeys.PASSWORD_KEY
+import woowacourse.payments.ui.util.BundleKeys.VALIDATION_ERROR_KEY
+
+class AddCardStateHolder(
+    initialState: AddCardUiState,
+) {
+    var uiState by mutableStateOf(initialState)
+        private set
+
+    fun updateCardNumber(newNumber: CardNumber?) {
+        uiState = uiState.copy(cardNumber = newNumber)
+    }
+
+    fun updateExpired(newExpired: Expired?) {
+        uiState = uiState.copy(expired = newExpired)
+    }
+
+    fun updateCardOwner(newOwner: CardOwner) {
+        uiState = uiState.copy(cardOwner = newOwner)
+    }
+
+    fun updatePassword(newPassword: Password?) {
+        uiState = uiState.copy(password = newPassword)
+    }
+
+    fun showValidationError(isError: Boolean) {
+        uiState = uiState.copy(showValidationError = isError)
+    }
+
+    companion object {
+        val saver: Saver<AddCardStateHolder, Bundle> =
+            Saver(
+                save = { holder ->
+                    bundleOf(
+                        CARD_NUMBER_KEY to holder.uiState.cardNumber?.value,
+                        EXPIRED_KEY to holder.uiState.expired?.value,
+                        CARD_OWNER_KEY to holder.uiState.cardOwner.value,
+                        PASSWORD_KEY to holder.uiState.password?.value,
+                        VALIDATION_ERROR_KEY to holder.uiState.showValidationError,
+                    )
+                },
+                restore = { bundle ->
+                    val restoredState =
+                        AddCardUiState(
+                            cardNumber = bundle.getString(CARD_NUMBER_KEY)?.let(::CardNumber),
+                            expired = bundle.getString(EXPIRED_KEY)?.let(::Expired),
+                            cardOwner = CardOwner(bundle.getString(CARD_OWNER_KEY) ?: ""),
+                            password = bundle.getString(PASSWORD_KEY)?.let(::Password),
+                            showValidationError = bundle.getBoolean(VALIDATION_ERROR_KEY),
+                        )
+                    AddCardStateHolder(restoredState)
+                },
+            )
+    }
+}
