@@ -19,8 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.format.formattedExpiry
-import woowacourse.payments.ui.format.maskedCardNumber
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.CardTextStyle
 
@@ -55,7 +53,7 @@ fun PaymentCard(
             )
             if (paymentCard != null) {
                 Text(
-                    text = paymentCard.cardNumber.maskedCardNumber(stringResource(R.string.card_number_separator)),
+                    text = paymentCard.maskedCardNumber(stringResource(R.string.card_number_separator)),
                     style = CardTextStyle,
                     color = Color.White,
                     modifier = Modifier.padding(top = 8.dp),
@@ -76,7 +74,7 @@ fun PaymentCard(
                     )
                     Text(
                         text =
-                            paymentCard.expiry.formattedExpiry(stringResource(R.string.expiry_separator)),
+                            paymentCard.formattedExpiry(stringResource(R.string.expiry_separator)),
                         style = CardTextStyle,
                         color = Color.White,
                     )
