@@ -1,10 +1,7 @@
 package woowacourse.payments.ui.screen
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -42,34 +39,39 @@ fun PaymentScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(name = "카드가 없는 경우")
 @Composable
-private fun PaymentScreenPreview() {
+private fun PaymentScreenEmptyPreview() {
     AndroidpaymentsTheme {
-        Column {
-            Box(Modifier.height(300.dp)) {
-                PaymentScreen(cards = emptyList(), onAddCardClick = {})
-            }
-            Box(Modifier.height(300.dp)) {
-                PaymentScreen(
-                    cards =
-                        listOf(
-                            CardUiModel("1111222233334444", "0421", "CREW", "1234"),
-                        ),
-                    onAddCardClick = {},
-                )
-            }
-            Box(Modifier.height(400.dp)) {
-                PaymentScreen(
-                    cards =
-                        listOf(
-                            CardUiModel("1111222233334444", "0421", "CREW", "1234"),
-                            CardUiModel("5555666677778888", "0522", "GAHYUN", "5678"),
-                            CardUiModel("9999000011112222", "0623", "ANDY", "9012"),
-                        ),
-                    onAddCardClick = {},
-                )
-            }
-        }
+        PaymentScreen(cards = emptyList(), onAddCardClick = {})
+    }
+}
+
+@Preview(name = "카드가 한개 존재하는 경우")
+@Composable
+private fun PaymentScreenOneCardPreview() {
+    AndroidpaymentsTheme {
+        val sampleCard =
+            CardUiModel(
+                cardNumber = "1111 - 2222 - 3333 - 4444",
+                expirationDate = "04 / 21",
+                userName = "CREW",
+                password = "1234",
+            )
+        PaymentScreen(cards = listOf(sampleCard), onAddCardClick = {})
+    }
+}
+
+@Preview(name = "카드가 3개 이상 존재하는 경우")
+@Composable
+private fun PaymentScreenThreeCardsPreview() {
+    AndroidpaymentsTheme {
+        val cards =
+            listOf(
+                CardUiModel("1111 - 2222 - 3333 - 4444", "04 / 21", "CREW", "1234"),
+                CardUiModel("5555 - 6666 - 7777 - 8888", "05 / 22", "GAHYUN", "5678"),
+                CardUiModel("9999 - 0000 - 1111 - 2222", "06 / 23", "ANDY", "9012"),
+            )
+        PaymentScreen(cards = cards, onAddCardClick = {})
     }
 }
