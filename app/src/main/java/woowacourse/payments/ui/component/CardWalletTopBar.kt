@@ -23,7 +23,7 @@ fun CardWalletTopBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Text("Payments")
+            Text(stringResource(R.string.topbar_title_payments))
         },
         actions = {
             if (isAddable) {

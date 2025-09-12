@@ -14,4 +14,5 @@
     <string name="add_new_card_description">새로운 카드를 등록해주세요</string>
     <string name="add_card_confirm">카드가 추가되었습니다.</string>
     <string name="add">추가</string>
+    <string name="topbar_title_payments">Payments</string>
 </resources>
