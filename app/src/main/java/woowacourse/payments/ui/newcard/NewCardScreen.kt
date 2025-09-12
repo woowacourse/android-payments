@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,7 +51,6 @@ fun NewCardScreen(
                             cardPassword = cardPassword,
                         ),
                     )
-                    Toast.makeText(context, "카드가 추가되었습니다", Toast.LENGTH_SHORT).show()
                 },
             )
         },

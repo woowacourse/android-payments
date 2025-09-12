@@ -43,12 +43,6 @@ fun CardWalletScreen(
                     ?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
                     ?.let {
                         onCardAddResult(it)
-                        Toast
-                            .makeText(
-                                context,
-                                context.getString(R.string.add_card_confirm),
-                                Toast.LENGTH_SHORT,
-                            ).show()
                     }
             }
         }
