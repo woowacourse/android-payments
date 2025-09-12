@@ -2,8 +2,8 @@ package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
@@ -31,12 +31,14 @@ class CardRegistrationScreenTest {
         val cardPassword = "1234"
 
         // when
-        composeTestRule.onNode(hasContentDescription("카드 번호")).performTextInput(cardNumber)
-        composeTestRule.onNode(hasContentDescription("만료일")).performTextInput(cardExpirationDate)
-        composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
+        composeTestRule.run {
+            onNodeWithContentDescription("카드 번호").performTextInput(cardNumber)
+            onNodeWithContentDescription("만료일").performTextInput(cardExpirationDate)
+            onNodeWithContentDescription("비밀번호").performTextInput(cardPassword)
+        }
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료")).assertIsEnabled()
+        composeTestRule.onNodeWithContentDescription("완료").assertIsEnabled()
     }
 
     @Test
@@ -47,12 +49,14 @@ class CardRegistrationScreenTest {
         val cardPassword = "1234"
 
         // when
-        composeTestRule.onNode(hasContentDescription("카드 번호")).performTextInput(cardNumber)
-        composeTestRule.onNode(hasContentDescription("만료일")).performTextInput(cardExpirationDate)
-        composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
+        composeTestRule.run {
+            onNodeWithContentDescription("카드 번호").performTextInput(cardNumber)
+            onNodeWithContentDescription("만료일").performTextInput(cardExpirationDate)
+            onNodeWithContentDescription("비밀번호").performTextInput(cardPassword)
+        }
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
+        composeTestRule.onNodeWithContentDescription("완료").assertIsNotEnabled()
     }
 
     @Test
@@ -63,12 +67,14 @@ class CardRegistrationScreenTest {
         val cardPassword = "1234"
 
         // when
-        composeTestRule.onNode(hasContentDescription("카드 번호")).performTextInput(cardNumber)
-        composeTestRule.onNode(hasContentDescription("만료일")).performTextInput(cardExpirationDate)
-        composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
+        composeTestRule.run {
+            onNodeWithContentDescription("카드 번호").performTextInput(cardNumber)
+            onNodeWithContentDescription("만료일").performTextInput(cardExpirationDate)
+            onNodeWithContentDescription("비밀번호").performTextInput(cardPassword)
+        }
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
+        composeTestRule.onNodeWithContentDescription("완료").assertIsNotEnabled()
     }
 
     @Test
@@ -79,11 +85,13 @@ class CardRegistrationScreenTest {
         val cardPassword = "1"
 
         // when
-        composeTestRule.onNode(hasContentDescription("카드 번호")).performTextInput(cardNumber)
-        composeTestRule.onNode(hasContentDescription("만료일")).performTextInput(cardExpirationDate)
-        composeTestRule.onNode(hasContentDescription("비밀번호")).performTextInput(cardPassword)
+        composeTestRule.run {
+            onNodeWithContentDescription("카드 번호").performTextInput(cardNumber)
+            onNodeWithContentDescription("만료일").performTextInput(cardExpirationDate)
+            onNodeWithContentDescription("비밀번호").performTextInput(cardPassword)
+        }
 
         // then
-        composeTestRule.onNode(hasContentDescription("완료")).assertIsNotEnabled()
+        composeTestRule.onNodeWithContentDescription("완료").assertIsNotEnabled()
     }
 }

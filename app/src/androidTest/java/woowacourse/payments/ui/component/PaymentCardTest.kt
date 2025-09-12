@@ -2,8 +2,8 @@ package woowacourse.payments.ui.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
@@ -28,7 +28,7 @@ class PaymentCardTest {
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("카드 정보"))
+            .onNodeWithContentDescription("카드 정보")
             .assertIsDisplayed()
     }
 
@@ -40,7 +40,7 @@ class PaymentCardTest {
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("카드 정보"))
+            .onNodeWithContentDescription("카드 정보")
             .assertIsNotDisplayed()
     }
 }

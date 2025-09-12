@@ -2,8 +2,8 @@ package woowacourse.payments.ui.component.cards
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,9 +23,7 @@ class CardsTopAppBarTest {
         }
 
         // then
-        composeTestRule
-            .onNode(hasContentDescription("카드 목록 앱 바 추가"))
-            .assertIsDisplayed()
+        composeTestRule.onNodeWithContentDescription("카드 목록 앱 바 추가").assertIsDisplayed()
     }
 
     @Test
@@ -40,8 +38,6 @@ class CardsTopAppBarTest {
         }
 
         // then
-        composeTestRule
-            .onNode(hasContentDescription("카드 목록 앱 바 추가"))
-            .assertIsNotDisplayed()
+        composeTestRule.onNodeWithContentDescription("카드 목록 앱 바 추가").assertIsNotDisplayed()
     }
 }
