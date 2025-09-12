@@ -48,16 +48,16 @@ fun PaymentCardField(
                     .background(
                         color = Color(0xFFCBBA64),
                         shape = RoundedCornerShape(4.dp),
-                    )
-                    .align(Alignment.CenterStart)
+                    ).align(Alignment.CenterStart),
         )
 
         if (paymentCardUiModel != null) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 8.dp),
             ) {
                 Text(
                     text = paymentCardUiModel.formatNumber(),
@@ -66,16 +66,18 @@ fun PaymentCardField(
                     fontSize = 13.sp,
                     letterSpacing = 3.5.sp,
                     lineHeight = 1.em,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(bottom = 2.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(bottom = 2.dp),
                 )
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 14.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 14.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
                         text = paymentCardUiModel.cardholderName,
@@ -83,10 +85,11 @@ fun PaymentCardField(
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
                         lineHeight = 1.em,
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 2.dp),
-                        maxLines = 1
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .padding(end = 2.dp),
+                        maxLines = 1,
                     )
 
                     Text(
@@ -108,17 +111,17 @@ fun PaymentCardFieldPreview(
     @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel?,
 ) {
     Column(
-        modifier = Modifier.padding(20.dp)
+        modifier = Modifier.padding(20.dp),
     ) {
         PaymentCardField(paymentCardUiModel = paymentCardUiModel)
     }
 }
 
-private class PaymentCardFieldPreviewParameterProvider() :
-    PreviewParameterProvider<PaymentCardUiModel?> {
-    override val values: Sequence<PaymentCardUiModel?> = sequenceOf(
-        null,
-        PaymentCardUiModel("1111111111111111", "0421", "CREW"),
-        PaymentCardUiModel("2222222222222222", "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
-    )
+private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
+    override val values: Sequence<PaymentCardUiModel?> =
+        sequenceOf(
+            null,
+            PaymentCardUiModel("1111111111111111", "0421", "CREW"),
+            PaymentCardUiModel("2222222222222222", "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
+        )
 }

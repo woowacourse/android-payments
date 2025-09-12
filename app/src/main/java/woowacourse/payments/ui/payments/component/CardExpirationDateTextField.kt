@@ -65,11 +65,12 @@ fun CardExpirationDateTextField(
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = GroupedVisualTransformation(
-            maxLength = maxLength,
-            groupSize = 2,
-            separator = " / "
-        ),
+        visualTransformation =
+            GroupedVisualTransformation(
+                maxLength = maxLength,
+                groupSize = 2,
+                separator = " / ",
+            ),
     )
 }
 
@@ -87,7 +88,7 @@ fun CardExpirationDateTextFieldPreview() {
             cardExpirationDate = "1226",
             onCardExpirationDateChanged = {},
             onErrorMessageChanged = {},
-            maxLength = 4
+            maxLength = 4,
         )
 
         CardExpirationDateTextField(
@@ -95,7 +96,7 @@ fun CardExpirationDateTextFieldPreview() {
             onCardExpirationDateChanged = {},
             errorMessage = "유효하지 않은 만료일 입니다.",
             onErrorMessageChanged = {},
-            maxLength = 4
+            maxLength = 4,
         )
     }
 }

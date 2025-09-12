@@ -65,6 +65,6 @@ fun CardPasswordTextFieldPreview() {
         CardPasswordTextField(
             cardPassword = cardPassword,
             maxLength = 4,
-        ){ newValue -> cardPassword = newValue }
+        ) { newValue -> cardPassword = newValue }
     }
 }

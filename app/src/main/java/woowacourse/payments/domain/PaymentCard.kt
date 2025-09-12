@@ -10,7 +10,7 @@ data class PaymentCard(
     constructor(number: String, expirationDate: String, cardholderName: String) : this(
         number.toLong(),
         parseExpirationDate(expirationDate),
-        cardholderName
+        cardholderName,
     )
 
     override fun equals(other: Any?): Boolean {

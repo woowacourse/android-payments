@@ -23,13 +23,13 @@ class CardRegistrationActivity : ComponentActivity() {
                         val intent = CardCatalogActivity.newIntent(this, paymentCardUiModel)
                         setResult(RESULT_OK, intent)
                         finish()
-                    })
+                    },
+                )
             }
         }
     }
 
     companion object {
-        fun newIntent(context: Context): Intent =
-            Intent(context, CardRegistrationActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, CardRegistrationActivity::class.java)
     }
 }

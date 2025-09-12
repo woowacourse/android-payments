@@ -1,8 +1,8 @@
 package woowacourse.payments.ui.catalog.screen
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import androidx.compose.runtime.getValue
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -17,10 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,45 +27,33 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCards
 import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
+import woowacourse.payments.ui.catalog.CardUiState
+import woowacourse.payments.ui.catalog.CardViewModel
 import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.showToast
-import woowacourse.payments.ui.mapper.toDomain
-import woowacourse.payments.ui.mapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardCatalogScreen() {
-    var cardList by remember { mutableStateOf(PaymentCards(setOf())) }
+fun CardCatalogScreen(cardViewModel: CardViewModel = CardViewModel()) {
     val context = LocalContext.current
+    val uiState: CardUiState by cardViewModel.cardUiState.observeAsState(CardUiState.Empty)
+
     val cardCatalogLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
+            ActivityResultContracts.StartActivityForResult(),
         ) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
                 val paymentCardUiModel =
                     activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
-                        PAYMENT_CARD_UI_MODEL_KEY
+                        PAYMENT_CARD_UI_MODEL_KEY,
                     )
-
-                paymentCardUiModel?.toDomain()?.let { card ->
-                    when {
-                        cardList.isContain(card) -> {
-                            context.showToast(context.getString(R.string.card_catalog_screen_already_registered))
-                        }
-
-                        else -> {
-                            context.showToast(context.getString(R.string.card_catalog_screen_registration_card_success))
-                            cardList = cardList.add(card)
-                        }
-                    }
-                }
+                paymentCardUiModel?.let { cardViewModel.addCard(it) }
             } else {
                 context.showToast(context.getString(R.string.card_catalog_screen_add_canceled))
             }
@@ -76,61 +61,99 @@ fun CardCatalogScreen() {
     Scaffold(
         topBar = {
             CardCatalogTopAppBar(
-                isAddButtonVisible = cardList.cards.size >= 3,
+                isAddButtonVisible = uiState.isAddCardButtonVisible,
                 onCardAddClick = {
                     val intent = CardRegistrationActivity.newIntent(context)
                     cardCatalogLauncher.launch(intent)
-                }
+                },
             )
         },
     ) { innerPadding ->
         CardCatalogScreenContent(
-            cardCatalogLauncher = cardCatalogLauncher,
-            context = context,
-            cardList = cardList,
+            uiState = uiState,
             modifier = Modifier.padding(innerPadding),
-            maxCardCount = 3,
+            onAddNewCardClick = {
+                val intent = CardRegistrationActivity.newIntent(context)
+                cardCatalogLauncher.launch(intent)
+            },
         )
     }
 }
 
 @Composable
 fun CardCatalogScreenContent(
-    cardCatalogLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>,
-    context: Context,
+    uiState: CardUiState,
     modifier: Modifier = Modifier,
-    cardList: PaymentCards = PaymentCards(setOf()),
-    maxCardCount: Int,
+    onAddNewCardClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (cardList.cards.isEmpty()) {
-            Text(
-                text = stringResource(R.string.CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD),
-                fontWeight = FontWeight.W700,
-                fontSize = 18.sp,
-                modifier = modifier.align(Alignment.CenterHorizontally),
-            )
-        }
+        when (uiState) {
+            CardUiState.Empty ->
+                EmptyCardCatalogScreenContent(
+                    modifier = modifier,
+                    onAddNewCardClick = onAddNewCardClick,
+                )
 
-        cardList.cards.forEach { paymentCard ->
-            Spacer(modifier = Modifier.height(36.dp))
-            PaymentCardField(paymentCardUiModel = paymentCard.toUiModel(), modifier = Modifier)
-        }
+            is CardUiState.Single ->
+                SingleCardCatalogScreenContent(
+                    paymentCardUiModel = uiState.paymentCard,
+                    onAddNewCardClick = onAddNewCardClick,
+                )
 
-        if (cardList.cards.size < maxCardCount) {
-            AddCardButton(
-                onClick = {
-                    val intent = CardRegistrationActivity.newIntent(context)
-                    cardCatalogLauncher.launch(intent)
-                },
-                modifier = Modifier.padding(top = 32.dp)
-            )
+            is CardUiState.Multiple ->
+                MultipleCardCatalogScreenContent(
+                    paymentCardUiModels = uiState.paymentCards,
+                )
         }
+    }
+}
+
+@Composable
+private fun EmptyCardCatalogScreenContent(
+    onAddNewCardClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = stringResource(R.string.CARD_CATALOG_SCREEN_REGISTRATION_NEW_CARD),
+        fontWeight = FontWeight.W700,
+        fontSize = 18.sp,
+        modifier = modifier,
+    )
+
+    AddCardButton(
+        onClick = { onAddNewCardClick() },
+        modifier = Modifier.padding(top = 32.dp),
+    )
+}
+
+@Composable
+private fun SingleCardCatalogScreenContent(
+    paymentCardUiModel: PaymentCardUiModel,
+    onAddNewCardClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = modifier)
+
+    AddCardButton(
+        onClick = { onAddNewCardClick() },
+        modifier = Modifier.padding(top = 32.dp),
+    )
+}
+
+@Composable
+private fun MultipleCardCatalogScreenContent(
+    paymentCardUiModels: List<PaymentCardUiModel>,
+    modifier: Modifier = Modifier,
+) {
+    paymentCardUiModels.forEach { paymentCard ->
+        Spacer(modifier = Modifier.height(36.dp))
+        PaymentCardField(paymentCardUiModel = paymentCard, modifier = modifier)
     }
 }
 
@@ -138,6 +161,17 @@ fun CardCatalogScreenContent(
 @Composable
 fun CardCatalogScreenPreView() {
     AndroidpaymentsTheme {
-        CardCatalogScreen()
+        CardCatalogScreen(
+            cardViewModel =
+                CardViewModel(
+                    CardUiState.Single(
+                        PaymentCardUiModel(
+                            number = "1234123412341234",
+                            expirationDate = "1234",
+                            cardholderName = "CREW",
+                        ),
+                    ),
+                ),
+        )
     }
 }

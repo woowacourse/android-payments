@@ -10,16 +10,17 @@ class GroupedVisualTransformation(
     private val groupSize: Int,
     private val separator: String,
 ) : VisualTransformation {
-    private val offsetMapping = object : OffsetMapping{
-        override fun originalToTransformed(offset: Int): Int =
-            if (offset in 1..maxLength) offset + ((offset - 1) / groupSize) * separator.length else offset
+    private val offsetMapping =
+        object : OffsetMapping {
+            override fun originalToTransformed(offset: Int): Int =
+                if (offset in 1..maxLength) offset + ((offset - 1) / groupSize) * separator.length else offset
 
-        override fun transformedToOriginal(offset: Int): Int {
-            val group = offset / (groupSize + separator.length)
-            val posInGroup = offset % (groupSize + separator.length)
-            return (group * groupSize + posInGroup.coerceAtMost(groupSize)).coerceAtMost(maxLength)
+            override fun transformedToOriginal(offset: Int): Int {
+                val group = offset / (groupSize + separator.length)
+                val posInGroup = offset % (groupSize + separator.length)
+                return (group * groupSize + posInGroup.coerceAtMost(groupSize)).coerceAtMost(maxLength)
+            }
         }
-    }
 
     override fun filter(text: AnnotatedString): TransformedText {
         val trimmed = text.text.take(maxLength)

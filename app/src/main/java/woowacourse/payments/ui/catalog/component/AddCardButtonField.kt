@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
+fun AddCardButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -29,13 +32,13 @@ fun AddCardButton(onClick: () -> Unit,modifier: Modifier = Modifier) {
                 .background(
                     color = Color.LightGray,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable(onClick = onClick)
+                ).clickable(onClick = onClick),
     ) {
         Text(
             text = "+",
             fontSize = 34.sp,
             color = Color.DarkGray,
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(12.dp),
         )
     }
 }

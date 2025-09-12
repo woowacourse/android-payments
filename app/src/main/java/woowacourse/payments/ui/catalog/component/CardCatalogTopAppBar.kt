@@ -31,17 +31,17 @@ fun CardCatalogTopAppBar(
             Text(
                 text = "Payments",
                 fontSize = 22.sp,
-                modifier = Modifier
+                modifier = Modifier,
             )
         },
         actions = {
-            if (isAddButtonVisible){
+            if (isAddButtonVisible) {
                 Text(
                     text = "추가",
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
-                    modifier = Modifier.clickable { onCardAddClick() }.padding(end = 20.dp)
+                    modifier = Modifier.clickable { onCardAddClick() }.padding(end = 20.dp),
                 )
             }
         },

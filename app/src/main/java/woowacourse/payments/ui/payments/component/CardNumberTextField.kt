@@ -46,11 +46,12 @@ fun CardNumberTextField(
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = GroupedVisualTransformation(
-            maxLength = maxLength,
-            groupSize = 4,
-            separator = " - "
-        ),
+        visualTransformation =
+            GroupedVisualTransformation(
+                maxLength = maxLength,
+                groupSize = 4,
+                separator = " - ",
+            ),
     )
 }
 

@@ -3,19 +3,16 @@ package woowacourse.payments.domain
 import java.time.YearMonth
 
 class DefaultPaymentCardValidator : PaymentCardValidator {
-
-    override fun validateCardNumber(cardNumber: String): Boolean =
-        cardNumber.length == InputType.CardNumber.maxLength
+    override fun validateCardNumber(cardNumber: String): Boolean = cardNumber.length == InputType.CardNumber.maxLength
 
     override fun validateCardExpirationDate(cardExpirationDate: String): Boolean =
         cardExpirationDate.length == InputType.ExpiryDate.maxLength &&
-                isValidCardExpirationDate(cardExpirationDate)
+            isValidCardExpirationDate(cardExpirationDate)
 
     override fun validateCardholderName(cardholderName: String): Boolean =
         cardholderName.isNotBlank() && cardholderName.length <= InputType.CardholderName.maxLength
 
-    override fun validateCardPassword(cardPassword: String): Boolean =
-        cardPassword.length == InputType.Password.maxLength
+    override fun validateCardPassword(cardPassword: String): Boolean = cardPassword.length == InputType.Password.maxLength
 
     private fun isValidCardExpirationDate(cardExpirationDate: String): Boolean {
         val month = cardExpirationDate.substring(0, 2).toIntOrNull() ?: return false

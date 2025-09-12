@@ -24,9 +24,8 @@ data class PaymentCardUiModel(
             ).chunked(chunkSize)
             .joinToString(separator)
 
-    fun formatExpirationDate(chunkSize: Int = CARD_EXPIRATION_GROUP_SIZE): String {
-        return expirationDate.chunked(chunkSize).joinToString(CARD_EXPIRATION_BASE_SEPARATOR)
-    }
+    fun formatExpirationDate(chunkSize: Int = CARD_EXPIRATION_GROUP_SIZE): String =
+        expirationDate.chunked(chunkSize).joinToString(CARD_EXPIRATION_BASE_SEPARATOR)
 
     companion object {
         private const val CARD_NUMBER_GROUP_SIZE = 4
@@ -38,4 +37,3 @@ data class PaymentCardUiModel(
         private const val CARD_EXPIRATION_GROUP_SIZE = 2
     }
 }
-

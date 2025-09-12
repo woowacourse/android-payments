@@ -69,7 +69,7 @@ fun CardholderNameTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(
             cardholderName = cardholderName,
-            maxLength = 30
-        ){ newValue -> cardholderName = newValue }
+            maxLength = 30,
+        ) { newValue -> cardholderName = newValue }
     }
 }
