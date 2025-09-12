@@ -130,6 +130,7 @@ private fun EmptyCardCatalogScreenContent(
             text = stringResource(R.string.card_catalog_screen_registration_new_card),
             fontWeight = FontWeight.W700,
             fontSize = 18.sp,
+            modifier = Modifier.padding(top = 32.dp),
         )
 
         AddCardButton(
