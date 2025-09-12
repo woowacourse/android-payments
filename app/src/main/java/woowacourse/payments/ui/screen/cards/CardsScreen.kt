@@ -1,9 +1,5 @@
 package woowacourse.payments.ui.screen.cards
 
-import android.app.Activity
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,13 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -26,7 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.cards.CardsTopAppBar
 import woowacourse.payments.ui.component.cards.RegistrationBox
@@ -34,52 +24,25 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.screen.cards.CardsActivity.Companion.EXTRA_CARDS_REGISTER_NEW_CARD
-import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
+    onRegistrationClick: () -> Unit,
+    uiState: CardsScreenUiState,
     modifier: Modifier = Modifier,
-    cardsScreenUiState: CardsScreenUiState = CardsScreenUiState(),
 ) {
-    var uiState: CardsScreenUiState by remember { mutableStateOf(cardsScreenUiState) }
-    val context = LocalContext.current
-
-    val cardAddLauncher =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard: CardUiModel? =
-                    activityResult.data?.getParcelableExtraCompat(EXTRA_CARDS_REGISTER_NEW_CARD)
-                newCard?.let {
-                    uiState = uiState.copyWithAddCard(newCard)
-                    Toast
-                        .makeText(
-                            context,
-                            context.getString(R.string.cards_screen_registration_toast),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                }
-            }
-        }
-
     Scaffold(
         topBar = {
             CardsTopAppBar(
-                onRegistrationClick = {
-                    val intent = CardRegistrationActivity.newIntent(context)
-                    cardAddLauncher.launch(intent)
-                },
+                onRegistrationClick = onRegistrationClick,
                 isVisibleRegistrationButton = uiState.isVisibleRegistrationButtonInTopBar(),
             )
         },
     ) { innerPadding ->
         CardsScreenContent(
             uiState = uiState,
-            onClickRegistration = {
-                val intent = CardRegistrationActivity.newIntent(context)
-                cardAddLauncher.launch(intent)
-            },
+            onRegistrationClick = onRegistrationClick,
             modifier = modifier.padding(innerPadding),
         )
     }
@@ -88,7 +51,7 @@ fun CardsScreen(
 @Composable
 private fun CardsScreenContent(
     uiState: CardsScreenUiState,
-    onClickRegistration: () -> Unit,
+    onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -108,7 +71,7 @@ private fun CardsScreenContent(
         }
 
         if (uiState.isVisibleRegistrationBoxInContent()) {
-            RegistrationBox(onClickRegistration)
+            RegistrationBox(onRegistrationClick)
             Spacer(modifier = Modifier.height(16.dp))
         }
     }
@@ -128,16 +91,17 @@ private fun RegistrationGuideText() {
 @Preview(showBackground = true, name = "데이터 존재 X")
 @Composable
 private fun NoContentPreview() {
-    val uiState: CardsScreenUiState = CardsScreenUiState(emptyList())
+    val uiState = CardsScreenUiState(emptyList())
     CardsScreen(
-        cardsScreenUiState = uiState,
+        onRegistrationClick = {},
+        uiState = uiState,
     )
 }
 
 @Preview(showBackground = true, name = "데이터 1개 존재")
 @Composable
 private fun HasOneContentPreview() {
-    val uiState: CardsScreenUiState =
+    val uiState =
         CardsScreenUiState(
             listOf(
                 CardUiModel(
@@ -150,7 +114,8 @@ private fun HasOneContentPreview() {
 
     AndroidpaymentsTheme {
         CardsScreen(
-            cardsScreenUiState = uiState,
+            onRegistrationClick = {},
+            uiState = uiState,
         )
     }
 }
@@ -158,7 +123,7 @@ private fun HasOneContentPreview() {
 @Preview(showBackground = true, name = "데이터 2개 이상 존재")
 @Composable
 private fun HasMultipleContentPreview() {
-    val uiState: CardsScreenUiState =
+    val uiState =
         CardsScreenUiState(
             listOf(
                 CardUiModel(
@@ -175,7 +140,8 @@ private fun HasMultipleContentPreview() {
         )
     AndroidpaymentsTheme {
         CardsScreen(
-            cardsScreenUiState = uiState,
+            onRegistrationClick = {},
+            uiState = uiState,
         )
     }
 }
