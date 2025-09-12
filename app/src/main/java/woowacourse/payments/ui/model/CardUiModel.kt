@@ -2,7 +2,6 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.domain.Card
 
 @Parcelize
 data class CardUiModel(
@@ -27,10 +26,3 @@ fun formatCardNumber(cardNumber: String): String {
 }
 
 fun formatExpired(expired: String): String = expired.chunked(2).joinToString(" / ")
-
-fun Card.toPresentation(): CardUiModel =
-    CardUiModel(
-        number = number.value,
-        expired = expired.value,
-        owner = owner.value,
-    )

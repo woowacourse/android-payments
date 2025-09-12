@@ -18,8 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,25 +38,24 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardListScreen(
-    cards: List<CardUiModel>,
+    stateHolder: CardListStateHolder = remember { CardListStateHolder() },
     navigateToAddCard: () -> Unit,
 ) {
-    val showAddButtonInTopBar by remember { derivedStateOf { cards.size > 1 } }
-    val shouldEnableScroll by remember { derivedStateOf { cards.size > 1 } }
+    val uiState = stateHolder.uiState
 
     Scaffold(
         topBar = {
             CardListTopBar(
-                showAddButton = showAddButtonInTopBar,
+                showAddButton = uiState.showAddButton,
                 onAddClick = navigateToAddCard,
             )
         },
     ) { innerPadding ->
         CardListContent(
             modifier = Modifier.padding(innerPadding),
-            enableScroll = shouldEnableScroll,
+            enableScroll = uiState.enableScroll,
         ) {
-            if (cards.isEmpty()) {
+            if (uiState.cards.isEmpty()) {
                 Spacer(modifier = Modifier.height(32.dp))
                 Text(
                     text = stringResource(R.string.card_list_add_new_card),
@@ -67,12 +64,12 @@ fun CardListScreen(
                 )
             }
 
-            for (card in cards) {
+            for (card in uiState.cards) {
                 Spacer(modifier = Modifier.height(32.dp))
                 PaymentCard(card = card)
             }
 
-            if (cards.size <= 1) {
+            if (uiState.cards.size <= 1) {
                 Spacer(modifier = Modifier.height(32.dp))
                 AddCardBox(onClick = navigateToAddCard)
             }
@@ -157,7 +154,7 @@ fun CardListScreenPreview(
 ) {
     AndroidpaymentsTheme {
         CardListScreen(
-            cards = cards,
+            stateHolder = CardListStateHolder(CardListUiState(cards = cards)),
             navigateToAddCard = { },
         )
     }
