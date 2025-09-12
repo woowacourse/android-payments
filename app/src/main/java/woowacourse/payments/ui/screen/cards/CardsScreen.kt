@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +34,8 @@ fun CardsScreen(
     uiState: CardsScreenUiState,
     modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
+
     Scaffold(
         topBar = {
             CardsTopAppBar(
@@ -43,7 +47,10 @@ fun CardsScreen(
         CardsScreenContent(
             uiState = uiState,
             onRegistrationClick = onRegistrationClick,
-            modifier = modifier.padding(innerPadding),
+            modifier =
+                modifier
+                    .padding(innerPadding)
+                    .verticalScroll(scrollState),
         )
     }
 }
