@@ -1,16 +1,20 @@
 package woowacourse.payments.newcard
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+
 class NewCardStateHolder {
-    var cardNumber: String = ""
+    var cardNumber: String by mutableStateOf("")
         private set
 
-    var expiredDate: String = ""
+    var expiredDate: String by mutableStateOf("")
         private set
 
-    var ownerName: String = ""
+    var ownerName: String by mutableStateOf("")
         private set
 
-    var password: String = ""
+    var password: String by mutableStateOf("")
         private set
 
     fun updateCardNumber(value: String) {
