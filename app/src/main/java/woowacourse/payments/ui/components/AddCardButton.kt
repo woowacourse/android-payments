@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardComponent(
+fun AddCardButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -29,8 +29,7 @@ fun AddCardComponent(
                 .background(
                     color = Color(0xFFE5E5E5),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = onClick),
+                ).clickable(onClick = onClick),
     ) {
         Text(
             text = "+",
@@ -43,9 +42,9 @@ fun AddCardComponent(
 
 @Preview(showBackground = true)
 @Composable
-private fun EmptyCardPreview() {
+private fun AddCardButtonPreview() {
     AndroidpaymentsTheme {
-        AddCardComponent(
+        AddCardButton(
             modifier = Modifier,
             onClick = {},
         )

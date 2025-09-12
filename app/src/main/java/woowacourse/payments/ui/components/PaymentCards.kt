@@ -33,7 +33,7 @@ fun PaymentCards(
                 fontWeight = FontWeight.W700,
             )
             Spacer(Modifier.height(32.dp))
-            AddCardComponent(onClick = onAddCardClick)
+            AddCardButton(onClick = onAddCardClick)
         } else {
             cards.forEachIndexed { index, card ->
                 PaymentCard(card = card)
@@ -43,7 +43,7 @@ fun PaymentCards(
             }
             if (cards.size < 3) {
                 Spacer(Modifier.height(24.dp))
-                AddCardComponent(onClick = onAddCardClick)
+                AddCardButton(onClick = onAddCardClick)
             }
         }
     }
