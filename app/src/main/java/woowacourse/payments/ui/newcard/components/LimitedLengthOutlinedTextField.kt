@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.components
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -15,6 +15,7 @@ fun LimitedLengthOutlinedTextField(
     label: @Composable (() -> Unit)? = null,
     placeholder: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null,
+    isError: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     inputFilter: (String) -> String = { it },
@@ -28,6 +29,7 @@ fun LimitedLengthOutlinedTextField(
         label = label,
         placeholder = placeholder,
         supportingText = supportingText,
+        isError = isError,
         keyboardOptions = keyboardOptions,
         visualTransformation = visualTransformation,
         modifier = modifier,

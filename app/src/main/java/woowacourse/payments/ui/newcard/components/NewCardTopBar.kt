@@ -17,6 +17,7 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
+    canSave: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -24,7 +25,7 @@ fun NewCardTopBar(
     TopAppBar(
         title = { Text(stringResource(R.string.add_card)) },
         navigationIcon = {
-            IconButton(onClick = { onBackClick() }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back_button_description),
@@ -32,7 +33,10 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(
+                onClick = onSaveClick,
+                enabled = canSave,
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.save_button_description),
@@ -46,5 +50,5 @@ fun NewCardTopBar(
 @Preview
 @Composable
 private fun NewCardTopBarPreview() {
-    NewCardTopBar(onBackClick = {}, onSaveClick = {})
+    NewCardTopBar(canSave = true, onBackClick = {}, onSaveClick = {})
 }
