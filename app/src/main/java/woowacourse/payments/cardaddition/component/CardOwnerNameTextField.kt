@@ -1,16 +1,15 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -19,15 +18,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
-fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
-    var name: String by remember { mutableStateOf("") }
-
+fun CardOwnerNameTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    maxLength: Int,
+    modifier: Modifier = Modifier,
+) {
     OutlinedTextField(
-        value = name,
-        onValueChange = { newName: String ->
-            name = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
-        },
-        modifier = modifier,
+        value = value,
+        onValueChange = onValueChange,
+        modifier = modifier.testTag("CardOwnerNameTextField"),
         label = {
             Text(text = stringResource(R.string.card_owner_name_label))
         },
@@ -42,8 +42,8 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
                 text =
                     stringResource(
                         R.string.card_owner_name_supporting_text,
-                        name.length,
-                        CARD_OWNER_NAME_LENGTH_MAX,
+                        value.length,
+                        maxLength,
                     ),
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End,
@@ -60,7 +60,11 @@ fun CardOwnerNameTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardOwnerNameTextFieldPreview() {
-    CardOwnerNameTextField()
-}
+    val (ownerName: String, setOwnerName: (String) -> Unit) = remember { mutableStateOf("") }
 
-private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
+    CardOwnerNameTextField(
+        value = ownerName,
+        onValueChange = setOwnerName,
+        maxLength = 30,
+    )
+}

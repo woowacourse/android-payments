@@ -1,5 +1,7 @@
-package woowacourse.payments.ui
+package woowacourse.payments.cardaddition.component
 
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -15,26 +17,14 @@ class CardOwnerNameTextFieldTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardOwnerNameTextField()
+            val (ownerName: String, setOwnerName: (String) -> Unit) = remember { mutableStateOf("") }
+
+            CardOwnerNameTextField(
+                value = ownerName,
+                onValueChange = setOwnerName,
+                maxLength = 30,
+            )
         }
-    }
-
-    @Test
-    fun `카드_소유자_이름의_경우_입력_글자_제한이_30자이다`() {
-        // given
-        composeRule
-            .onNodeWithText("")
-            .performTextInput("모".repeat(30))
-
-        // when
-        composeRule
-            .onNodeWithText("모".repeat(30))
-            .performTextInput("모찌")
-
-        // then
-        composeRule
-            .onNodeWithText("모".repeat(30))
-            .assertIsDisplayed()
     }
 
     @Test

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -57,10 +58,13 @@ dependencies {
     implementation(libs.androidx.material3)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.assertj.core)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation(libs.junit.jupiter)
+    androidTestImplementation(libs.assertj.core)
+    androidTestImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.mannodermaus.junit5.core)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
