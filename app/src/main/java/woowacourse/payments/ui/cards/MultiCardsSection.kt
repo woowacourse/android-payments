@@ -19,7 +19,6 @@ fun MultiCardsSection(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(36.dp),
         modifier = modifier,
     ) {
