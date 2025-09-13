@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,30 +13,30 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.ui.component.CardNumberInputField
+import woowacourse.payments.domain.Expired
+import woowacourse.payments.ui.component.ExpiredInputField
 
-class CardNumberInputTest {
+class ExpiredInputTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            var cardNumber by remember { mutableStateOf("") }
+            var expired by remember { mutableStateOf("") }
 
-            CardNumberInputField(
-                cardNumber = CardNumber(cardNumber),
-                onCardNumberChange = { cardNumber = it?.value ?: "" },
+            ExpiredInputField(
+                expired = Expired(expired),
+                onExpiredChange = { expired = it?.value ?: "" },
             )
         }
     }
 
     @Test
-    fun 초기_화면에_카드_번호_텍스트가_표시된다() {
+    fun 초기_화면에_만료일_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("Expired Input Field")
             .assertIsDisplayed()
     }
 
@@ -44,29 +44,29 @@ class CardNumberInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("Expired Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("Expired Input Field")
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("0000 – 0000 – 0000 – 0000")
+            .onNodeWithText("MM / YY")
             .assertIsDisplayed()
     }
 
     @Test
-    fun 카드_번호를_입력하면_4글자_기준으로_기호가_삽입된다() {
+    fun 만료일을_입력하면_2글자_기준으로_기호가_삽입된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
-            .performTextInput("1234567887654321")
+            .onNodeWithContentDescription("Expired Input Field")
+            .performTextInput("1029")
 
         // then
         composeTestRule
-            .onNodeWithText("1234 - 5678 - 8765 - 4321")
+            .onNodeWithText("10 / 29")
             .assertIsDisplayed()
     }
 }

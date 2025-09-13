@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

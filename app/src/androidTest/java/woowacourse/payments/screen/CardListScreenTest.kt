@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.screen
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,6 +10,8 @@ import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardList.CardListScreen
+import woowacourse.payments.ui.screen.cardList.CardListStateHolder
+import woowacourse.payments.ui.screen.cardList.CardListUiState
 
 class CardListScreenTest {
     @get:Rule
@@ -27,12 +29,17 @@ class CardListScreenTest {
     @Test
     fun 카드가_0개일_때_새로운_카드_등록_텍스트와_카드_추가_박스가_표시된다() {
         // given
-        val cards = emptyList<CardUiModel>()
+        val testStateHolder =
+            CardListStateHolder(
+                CardListUiState(
+                    cards = emptyList(),
+                ),
+            )
 
         // when
         composeTestRule.setContent {
             CardListScreen(
-                cards = cards,
+                stateHolder = testStateHolder,
                 navigateToAddCard = {},
             )
         }
@@ -47,12 +54,17 @@ class CardListScreenTest {
     @Test
     fun 카드가_1개일_때_카드_정보와_카드_추가_박스가_표시된다() {
         // given
-        val cards = listOf(card1)
+        val testStateHolder =
+            CardListStateHolder(
+                CardListUiState(
+                    cards = listOf(card1),
+                ),
+            )
 
         // when
         composeTestRule.setContent {
             CardListScreen(
-                cards = cards,
+                stateHolder = testStateHolder,
                 navigateToAddCard = {},
             )
         }
@@ -70,11 +82,17 @@ class CardListScreenTest {
     fun 카드가_2개이상일_때_카드_정보와_TopBar에_추가_텍스트가_표시된다() {
         // given
         val cards = listOf(card1, card2)
+        val testStateHolder =
+            CardListStateHolder(
+                CardListUiState(
+                    cards = cards,
+                ),
+            )
 
         // when
         composeTestRule.setContent {
             CardListScreen(
-                cards = cards,
+                stateHolder = testStateHolder,
                 navigateToAddCard = {},
             )
         }
