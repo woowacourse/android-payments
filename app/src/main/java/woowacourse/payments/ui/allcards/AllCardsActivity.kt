@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,12 +34,6 @@ class AllCardsActivity : ComponentActivity() {
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getCardInfoCompat()?.let {
                             allCards.addCard(it)
-                            Toast
-                                .makeText(
-                                    this,
-                                    getString(R.string.allcards_card_added),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
                         }
                     }
                 }
@@ -56,6 +51,14 @@ class AllCardsActivity : ComponentActivity() {
                         )
                     },
                 ) { padding ->
+                    LaunchedEffect(allCards.cards.size) {
+                        Toast
+                            .makeText(
+                                this@AllCardsActivity,
+                                getString(R.string.allcards_card_added),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    }
                     AllCardsScreen(
                         allCards = allCards,
                         modifier =
