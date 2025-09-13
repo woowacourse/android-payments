@@ -1,6 +1,7 @@
-package woowacourse.payments.ui.model
+package woowacourse.payments.ui.model.mapper
 
 import woowacourse.payments.domain.model.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 fun PaymentCard.toUiModel(): PaymentCardUiModel =
     PaymentCardUiModel(

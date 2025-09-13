@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.add
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,18 +24,16 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PinTextField
 import woowacourse.payments.ui.component.StringTextField
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.model.mapper.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddPaymentCardScreen(
     onBack: () -> Unit,
     onSave: (PaymentCardUiModel) -> Unit,
+    stateHolder: AddPaymentCardStateHolder = rememberAddPaymentCardStateHolder(),
 ) {
-    var cardNumber by rememberSaveable { mutableStateOf("") }
-    var expiry by rememberSaveable { mutableStateOf("") }
-    var owner by rememberSaveable { mutableStateOf("") }
-    var pin by rememberSaveable { mutableStateOf("") }
+    val state = stateHolder.state
 
     Scaffold(
         topBar = {
@@ -43,16 +41,10 @@ fun AddPaymentCardScreen(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = onBack,
                 onSaveClick = {
-                    PaymentCard
-                        .create(
-                            cardNumber = cardNumber,
-                            expiry = expiry,
-                            owner = owner,
-                            pin = pin,
-                        ).onSuccess { paymentCard ->
-                            onSave(paymentCard.toUiModel())
-                        }
+                    if (!stateHolder.canSave) return@NewCardTopBar
+                    stateHolder.buildResult().onSuccess(onSave)
                 },
+                saveEnabled = stateHolder.canSave,
             )
         },
     ) { innerPadding ->
@@ -67,27 +59,27 @@ fun AddPaymentCardScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             CardNumberTextField(
-                value = cardNumber,
-                onValueChange = { cardNumber = it },
+                value = state.cardNumber,
+                onValueChange = stateHolder::onCardNumberChange,
                 modifier = Modifier.fillMaxWidth(),
             )
 
             ExpiryTextField(
-                value = expiry,
-                onValueChange = { expiry = it },
+                value = state.expiry,
+                onValueChange = stateHolder::onExpiryChange,
                 modifier = Modifier.fillMaxWidth(0.6f),
             )
 
             StringTextField(
                 modifier = Modifier.fillMaxWidth(),
-                value = owner,
-                onValueChange = { owner = it },
+                value = state.owner,
+                onValueChange = stateHolder::onOwnerChange,
                 maxLength = 30,
             )
 
             PinTextField(
-                value = pin,
-                onValueChange = { pin = it },
+                value = state.pin,
+                onValueChange = stateHolder::onPinChange,
                 modifier = Modifier.fillMaxWidth(0.6f),
             )
         }

@@ -12,12 +12,12 @@
         android:theme="@style/Theme.Androidpayments">
 
         <activity
-            android:name=".ui.AddPaymentCardActivity"
+            android:name=".ui.add.AddPaymentCardActivity"
             android:exported="false"
             android:label="@string/app_name" />
 
         <activity
-            android:name=".ui.PaymentCardsActivity"
+            android:name=".ui.cards.PaymentCardsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
