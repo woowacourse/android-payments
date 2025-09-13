@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,67 +8,66 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import woowacourse.payments.R
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.domain.DefaultPaymentCardValidator
 import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
+import woowacourse.payments.ui.common.component.PaymentCardField
+import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
+import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
+import woowacourse.payments.ui.payments.component.CardNumberTextField
+import woowacourse.payments.ui.payments.component.CardPasswordTextField
+import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
+import woowacourse.payments.ui.payments.component.CardholderNameTextField
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator()) {
-    val scope = rememberCoroutineScope()
-    val focusManager = LocalFocusManager.current
-    val snackBarState = remember { SnackbarHostState() }
+fun CardRegistrationScreen(
+    onCardRegistered: (PaymentCardUiModel) -> Unit,
+    modifier: Modifier = Modifier,
+    paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator(),
+    onBackPressed: () -> Unit,
+) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
     val isRegistrableCard by remember {
         derivedStateOf { uiState.isRegistrable(paymentCardValidator) }
     }
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
-    val navigatePreviousMessage = stringResource(R.string.common_navigate_previous)
-    val registerCardMessage =
-        stringResource(R.string.card_registration_screen_registration_card_success)
-
-    LaunchedEffect(uiState.snackBarMessage) {
-        if (uiState.snackBarMessage.isNullOrBlank()) return@LaunchedEffect
-        scope.launch {
-            snackBarState.showSnackbar(uiState.snackBarMessage.orEmpty())
-            uiState = uiState.copy(snackBarMessage = null)
-        }
-    }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackBarState) },
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = { uiState = uiState.copy(snackBarMessage = navigatePreviousMessage) },
+                onBackClick = {
+                    onBackPressed()
+                },
                 onSaveClick = {
-                    focusManager.clearFocus()
-                    uiState = uiState.copy(snackBarMessage = registerCardMessage)
+                    onCardRegistered(
+                        PaymentCardUiModel(
+                            number = uiState.cardNumber,
+                            expirationDate = uiState.cardExpirationDate,
+                            cardholderName = uiState.cardholderName,
+                        ),
+                    )
                 },
                 isSaveButtonEnabled = isRegistrableCard,
             )
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             uiState = uiState,
             onUiStateChanged = { newUiState -> uiState = newUiState },
             paymentCardValidator = paymentCardValidator,
@@ -79,11 +78,11 @@ fun CardRegistrationScreen(paymentCardValidator: PaymentCardValidator = DefaultP
 
 @Composable
 private fun CardRegistrationScreenContent(
-    modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
@@ -94,7 +93,7 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+        PaymentCardField(modifier = Modifier.align(Alignment.CenterHorizontally))
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -111,7 +110,10 @@ private fun CardRegistrationScreenContent(
             cardExpirationDate = uiState.cardExpirationDate,
             onCardExpirationDateChanged = { newValue ->
                 val isValid =
-                    newValue.length != 4 || paymentCardValidator.validateCardExpirationDate(newValue)
+                    newValue.length != InputType.ExpiryDate.maxLength ||
+                        paymentCardValidator.validateCardExpirationDate(
+                            newValue,
+                        )
                 onUiStateChanged(
                     uiState.copy(
                         cardExpirationDate = newValue,
@@ -154,8 +156,8 @@ private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: Pa
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen()
+        CardRegistrationScreen(onBackPressed = {}, onCardRegistered = {})
     }
 }

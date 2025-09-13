@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -21,9 +21,9 @@ private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
 
 @Composable
 fun CardNumberTextField(
-    modifier: Modifier = Modifier,
     cardNumber: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     onCardNumberChanged: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -39,24 +39,25 @@ fun CardNumberTextField(
         },
         value = cardNumber,
         onValueChange = { newValue ->
+            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardNumberChanged(newValue.take(maxLength))
             }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onCardNumberChanged(newValue)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = GroupedVisualTransformation(
-            maxLength = maxLength,
-            groupSize = 4,
-            separator = " - "
-        ),
+        visualTransformation =
+            GroupedVisualTransformation(
+                maxLength = maxLength,
+                groupSize = 4,
+                separator = " - ",
+            ),
     )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     Box(modifier = Modifier.padding(16.dp)) {
         CardNumberTextField(cardNumber = "", maxLength = 16) {}
     }

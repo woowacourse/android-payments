@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,9 +25,9 @@ private const val CARDHOLDER_NAME_TEXT_FIELD_TEST_TAG = "CardholderNameTextField
 
 @Composable
 fun CardholderNameTextField(
-    modifier: Modifier = Modifier,
     cardholderName: String,
     maxLength: Int,
+    modifier: Modifier = Modifier,
     onCardholderNameChanged: (String) -> Unit,
 ) {
     OutlinedTextField(
@@ -43,17 +43,22 @@ fun CardholderNameTextField(
         },
         value = cardholderName,
         onValueChange = { newValue ->
+            if (newValue.any { it.isLetter().not() }) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardholderNameChanged(
                     newValue.take(maxLength),
                 )
             }
-            if (newValue.any { it !in 'a'..'z' && it !in 'A'..'Z' }) return@OutlinedTextField
             onCardholderNameChanged(newValue.uppercase())
         },
         supportingText = {
             Text(
-                text = stringResource(R.string.cardholder_name_text_field_name_length, cardholderName.length, maxLength),
+                text =
+                    stringResource(
+                        R.string.cardholder_name_text_field_name_length,
+                        cardholderName.length,
+                        maxLength,
+                    ),
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -64,12 +69,12 @@ fun CardholderNameTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardholderNameTextFieldPreview() {
+private fun CardholderNameTextFieldPreview() {
     var cardholderName by remember { mutableStateOf("") }
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(
             cardholderName = cardholderName,
-            maxLength = 30
-        ){ newValue -> cardholderName = newValue }
+            maxLength = 30,
+        ) { newValue -> cardholderName = newValue }
     }
 }

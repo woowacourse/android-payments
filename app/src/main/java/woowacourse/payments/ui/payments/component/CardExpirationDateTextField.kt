@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.payments.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -23,11 +23,11 @@ private const val CARD_EXPIRATION_DATE_TEXT_FIELD_TEST_TAG = "CardExpirationDate
 
 @Composable
 fun CardExpirationDateTextField(
-    modifier: Modifier = Modifier,
     cardExpirationDate: String,
     onCardExpirationDateChanged: (String) -> Unit,
-    errorMessage: String? = null,
     maxLength: Int,
+    modifier: Modifier = Modifier,
+    errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit,
 ) {
     val isError = errorMessage != null
@@ -53,23 +53,24 @@ fun CardExpirationDateTextField(
         },
         value = cardExpirationDate,
         onValueChange = { newValue ->
+            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             if (newValue.length > maxLength) {
                 return@OutlinedTextField onCardExpirationDateChanged(
                     newValue.take(maxLength),
                 )
             }
-            if (newValue.isDigitsOnly().not()) return@OutlinedTextField
             onErrorMessageChanged(null)
             onCardExpirationDateChanged(newValue)
         },
         isError = isError,
         supportingText = { if (isError) Text(text = errorMessage) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        visualTransformation = GroupedVisualTransformation(
-            maxLength = maxLength,
-            groupSize = 2,
-            separator = " / "
-        ),
+        visualTransformation =
+            GroupedVisualTransformation(
+                maxLength = maxLength,
+                groupSize = 2,
+                separator = " / ",
+            ),
     )
 }
 
@@ -81,13 +82,13 @@ private fun isValidYearMonth(cardExpirationDate: String): Boolean {
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
+private fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardExpirationDateTextField(
             cardExpirationDate = "1226",
             onCardExpirationDateChanged = {},
             onErrorMessageChanged = {},
-            maxLength = 4
+            maxLength = 4,
         )
 
         CardExpirationDateTextField(
@@ -95,7 +96,7 @@ fun CardExpirationDateTextFieldPreview() {
             onCardExpirationDateChanged = {},
             errorMessage = "유효하지 않은 만료일 입니다.",
             onErrorMessageChanged = {},
-            maxLength = 4
+            maxLength = 4,
         )
     }
 }
