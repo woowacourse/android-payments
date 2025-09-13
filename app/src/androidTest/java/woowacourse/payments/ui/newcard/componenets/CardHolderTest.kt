@@ -17,7 +17,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.newcard.components.NameTextField
 
-class NameTest {
+class CardHolderTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
