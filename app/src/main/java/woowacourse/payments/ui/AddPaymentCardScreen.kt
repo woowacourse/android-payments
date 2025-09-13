@@ -50,8 +50,6 @@ fun AddPaymentCardScreen(
     val isExpiryValid = expiry.isValid(Expiry::from)
     val isPinValid = pin.isValid(Pin::from)
 
-    val canSave = listOf(isCardNumberValid, isExpiryValid, isPinValid).all { it }
-
     val cardVisualTransformation =
         RememberNumberVisualTransformation(4, stringResource(R.string.card_number_separator))
     val expiryVisualTransformation =
@@ -63,7 +61,6 @@ fun AddPaymentCardScreen(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = onBack,
                 onSaveClick = {
-                    if (!canSave) return@NewCardTopBar
                     PaymentCard
                         .create(
                             cardNumber = cardNumber,
