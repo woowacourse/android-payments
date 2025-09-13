@@ -174,30 +174,21 @@ fun AddNewCard(onAddClick: () -> Unit) {
 
 @Composable
 fun AddNewCardText() {
-    Text(text = stringResource(R.string.add_new_card_prompt), fontSize = 18.sp, fontWeight = FontWeight.Bold)
+    Text(
+        text = stringResource(R.string.add_new_card_prompt),
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold
+    )
 }
 
 @Preview(name = "카드가 없을 때")
 @Composable
 private fun EmptyCardListPreview() {
     AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-        ) { innerPadding ->
-            Column(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-            ) {
-                CardListScreen(
+        CardListScreen(
                     emptyList(),
                     onAddClick = {},
                 )
-            }
-        }
     }
 }
 
@@ -205,30 +196,17 @@ private fun EmptyCardListPreview() {
 @Composable
 private fun AddOneCardListPreview() {
     AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-        ) { innerPadding ->
-            Column(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-            ) {
-                CardListScreen(
-                    listOf(
-                        Card(
-                            "0000000000000000",
-                            "0925",
-                            "1234",
-                            "PARK JIWON",
-                        ),
-                    ),
-                    onAddClick = {},
-                )
-            }
-        }
+        CardListScreen(
+            listOf(
+                Card(
+                    "0000000000000000",
+                    "0925",
+                    "1234",
+                    "PARK JIWON",
+                ),
+            ),
+            onAddClick = {},
+        )
     }
 }
 
@@ -236,35 +214,22 @@ private fun AddOneCardListPreview() {
 @Composable
 private fun AddTwoOrMoreCardListPreview() {
     AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-        ) { innerPadding ->
-            Column(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(18.dp),
-            ) {
-                CardListScreen(
-                    listOf(
-                        Card(
-                            "0000000000000000",
-                            "1225",
-                            "1234",
-                            "PARK JIWON",
-                        ),
-                        Card(
-                            "1234123412341234",
-                            "0999",
-                            "9999",
-                            "TOMATO BASIL ADE",
-                        ),
-                    ),
-                    onAddClick = {},
-                )
-            }
-        }
+        CardListScreen(
+            listOf(
+                Card(
+                    "0000000000000000",
+                    "1225",
+                    "1234",
+                    "PARK JIWON",
+                ),
+                Card(
+                    "1234123412341234",
+                    "0999",
+                    "9999",
+                    "TOMATO BASIL ADE",
+                ),
+            ),
+            onAddClick = {},
+        )
     }
 }
