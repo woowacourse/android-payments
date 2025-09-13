@@ -32,10 +32,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentToolbar
+import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.core.getParcelableCompat
@@ -45,27 +45,27 @@ import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
-fun CardsScreen(
-    onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit
-) {
-    val cardUiStateHolder = rememberSaveable(saver = CardUiStateHolder.Saver) {
-        CardUiStateHolder()
-    }
+fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit) {
+    val cardUiStateHolder =
+        rememberSaveable(saver = CardUiStateHolder.Saver) {
+            CardUiStateHolder()
+        }
     var uiEvent by remember {
         mutableStateOf<Event<CardScreenUiEvent>>(
-            Event(CardScreenUiEvent.Idle)
+            Event(CardScreenUiEvent.Idle),
         )
     }
-    val activityResultLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let { newCard ->
-                cardUiStateHolder.addCard(newCard)
-                uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
+    val activityResultLauncher =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let { newCard ->
+                    cardUiStateHolder.addCard(newCard)
+                    uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
+                }
             }
         }
-    }
 
     Scaffold(
         topBar = {
@@ -73,9 +73,9 @@ fun CardsScreen(
                 onAddClick = {
                     onAddCardClick(activityResultLauncher)
                 },
-                addButtonVisible = cardUiStateHolder.toolbarActionButtonVisibility
+                addButtonVisible = cardUiStateHolder.toolbarActionButtonVisibility,
             )
-        }
+        },
     ) { innerPadding ->
         CardsScreen(
             uiState = cardUiStateHolder.uiState,
@@ -85,7 +85,7 @@ fun CardsScreen(
                     onAddCardClick(activityResultLauncher)
                 }
             },
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
@@ -101,7 +101,7 @@ fun CardsScreen(
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
     onClickCard: (CardType) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val toastMessage = stringResource(R.string.card_list_add_new_card)
@@ -121,7 +121,7 @@ fun CardsScreen(
 
     Column(
         modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (uiState) {
             CardsUiState.EMPTY -> EmptyCardContent(onClickCard)
@@ -132,13 +132,11 @@ fun CardsScreen(
 }
 
 @Composable
-fun EmptyCardContent(
-    onClickCard: (CardType) -> Unit,
-) {
+fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
     Text(
         text = stringResource(R.string.card_list_empty),
         fontSize = 22.sp,
-        modifier = Modifier.padding(top = 50.dp)
+        modifier = Modifier.padding(top = 50.dp),
     )
 
     PaymentCard(
@@ -150,8 +148,9 @@ fun EmptyCardContent(
                 contentDescription = stringResource(R.string.content_description_card_list_empty),
             )
         },
-        modifier = Modifier
-            .padding(top = 18.dp)
+        modifier =
+            Modifier
+                .padding(top = 18.dp),
     )
 }
 
@@ -170,12 +169,13 @@ fun SingleCardComponent(
                 CARD_NUMBER_SEPARATOR,
                 CARD_MASKING_CHAR,
                 CARD_EXPIRE_DATE_GROUP_SIZE,
-                CARD_EXPIRE_DATE_SEPARATOR
+                CARD_EXPIRE_DATE_SEPARATOR,
             )
         },
-        modifier = Modifier
-            .padding(top = 30.dp)
-            .shadow(8.dp),
+        modifier =
+            Modifier
+                .padding(top = 30.dp)
+                .shadow(8.dp),
     )
     PaymentCard(
         cardType = CardType.EMPTY,
@@ -186,8 +186,9 @@ fun SingleCardComponent(
                 contentDescription = stringResource(R.string.content_description_card_list_empty),
             )
         },
-        modifier = Modifier
-            .padding(top = 30.dp)
+        modifier =
+            Modifier
+                .padding(top = 30.dp),
     )
 }
 
@@ -207,12 +208,13 @@ fun MultipleCardContent(
                     CARD_NUMBER_SEPARATOR,
                     CARD_MASKING_CHAR,
                     CARD_EXPIRE_DATE_GROUP_SIZE,
-                    CARD_EXPIRE_DATE_SEPARATOR
+                    CARD_EXPIRE_DATE_SEPARATOR,
                 )
             },
-            modifier = Modifier
-                .padding(top = 30.dp)
-                .shadow(8.dp),
+            modifier =
+                Modifier
+                    .padding(top = 30.dp)
+                    .shadow(8.dp),
         )
     }
 }
@@ -222,14 +224,15 @@ fun MultipleCardContent(
 fun CardScreenPreview() {
     CardsScreen(
         CardsUiState.EMPTY,
-        Event(CardScreenUiEvent.Idle), {}
+        Event(CardScreenUiEvent.Idle),
+        {},
     )
 }
 
 @Composable
 @Preview(showBackground = true)
 fun OneCardScreenPreview(
-    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
+    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     CardsScreen(CardsUiState.SINGLE(card), Event(CardScreenUiEvent.Idle), {})
 }
@@ -237,8 +240,7 @@ fun OneCardScreenPreview(
 @Composable
 @Preview(showBackground = true)
 fun CardsScreenPreview(
-    @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>
+    @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>,
 ) {
     CardsScreen(CardsUiState.MULTIPLE(cards), Event(CardScreenUiEvent.Idle), {})
 }
-

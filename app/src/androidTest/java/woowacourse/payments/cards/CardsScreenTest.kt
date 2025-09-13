@@ -43,14 +43,15 @@ class CardsScreenTest {
     @Test
     fun `등록된_카드가_한장_있으면_새로운_카드를_등록해주세요가_보이지_않고_실물_카드와_기본카드가_하나보인다`() {
         // given
-        val uiState =  CardsUiState.SINGLE(
-            Card(
-                number = "1111222233334444",
-                expireDate = "0421",
-                ownerName = "peto",
-                password = ""
+        val uiState =
+            CardsUiState.SINGLE(
+                Card(
+                    number = "1111222233334444",
+                    expireDate = "0421",
+                    ownerName = "peto",
+                    password = "",
+                ),
             )
-        )
 
         // when
         composeTestRule.setContent {
@@ -74,28 +75,29 @@ class CardsScreenTest {
     @Test
     fun `등록된_카드가_한장_초과면_새로운_카드를_등록해주세요와_기본_카드가_보이지_않고_실물_카드_이미지만_보인다`() {
         // given
-        val uiState = CardsUiState.MULTIPLE(
-            listOf(
-                Card(
-                    number = "1111222233334444",
-                    expireDate = "0908",
-                    ownerName = "peto",
-                    password = ""
+        val uiState =
+            CardsUiState.MULTIPLE(
+                listOf(
+                    Card(
+                        number = "1111222233334444",
+                        expireDate = "0908",
+                        ownerName = "peto",
+                        password = "",
+                    ),
+                    Card(
+                        number = "2222333344445555",
+                        expireDate = "0908",
+                        ownerName = "peto",
+                        password = "",
+                    ),
+                    Card(
+                        number = "3333444455556666",
+                        expireDate = "0908",
+                        ownerName = "peto",
+                        password = "",
+                    ),
                 ),
-                Card(
-                    number = "2222333344445555",
-                    expireDate = "0908",
-                    ownerName = "peto",
-                    password = ""
-                ),
-                Card(
-                    number = "3333444455556666",
-                    expireDate = "0908",
-                    ownerName = "peto",
-                    password = ""
-                )
             )
-        )
 
         // when
         composeTestRule.setContent {
@@ -132,7 +134,8 @@ class CardsScreenTest {
             CardsScreen(
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
-                onClickCard = { clickedType = it })
+                onClickCard = { clickedType = it },
+            )
         }
 
         // when

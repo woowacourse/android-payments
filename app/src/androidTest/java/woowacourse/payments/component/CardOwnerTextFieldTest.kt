@@ -21,7 +21,7 @@ class CardOwnerTextFieldTest {
             CardOwnerTextField(
                 ownerName = ownerName,
                 maxLength = 10,
-                onChangeOwnerName = {}
+                onChangeOwnerName = {},
             )
         }
 
@@ -36,7 +36,7 @@ class CardOwnerTextFieldTest {
             CardOwnerTextField(
                 ownerName = "",
                 maxLength = 10,
-                onChangeOwnerName = {}
+                onChangeOwnerName = {},
             )
         }
 

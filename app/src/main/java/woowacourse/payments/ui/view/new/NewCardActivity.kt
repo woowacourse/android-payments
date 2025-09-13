@@ -19,7 +19,7 @@ class NewCardActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 NewCardScreen(
                     onBackClick = { finish() },
-                    onSaveClick = { card -> moveToCards(card) }
+                    onSaveClick = { card -> moveToCards(card) },
                 )
             }
         }

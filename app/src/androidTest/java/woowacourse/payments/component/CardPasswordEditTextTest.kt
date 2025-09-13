@@ -3,9 +3,9 @@ package woowacourse.payments.component
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.performTextInput
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 import woowacourse.payments.ui.component.CardPasswordTextField
 
 class CardPasswordEditTextTest {
@@ -20,7 +20,7 @@ class CardPasswordEditTextTest {
             CardPasswordTextField(
                 maxLength = 4,
                 password = password,
-                onPasswordChange = { password = it }
+                onPasswordChange = { password = it },
             )
         }
 

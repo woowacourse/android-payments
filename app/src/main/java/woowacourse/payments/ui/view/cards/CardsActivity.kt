@@ -19,7 +19,7 @@ class CardsActivity : ComponentActivity() {
                 CardsScreen(
                     onAddCardClick = { launcher ->
                         launcher.launch(NewCardActivity.newIntent(this))
-                    }
+                    },
                 )
             }
         }
@@ -28,9 +28,10 @@ class CardsActivity : ComponentActivity() {
     companion object {
         fun newIntent(
             context: Context,
-            card: SerializationCard
-        ): Intent = Intent(context, CardsActivity::class.java)
-            .apply { putExtra(EXTRA_CARD, card) }
+            card: SerializationCard,
+        ): Intent =
+            Intent(context, CardsActivity::class.java)
+                .apply { putExtra(EXTRA_CARD, card) }
 
         const val EXTRA_CARD = "extra_card"
     }

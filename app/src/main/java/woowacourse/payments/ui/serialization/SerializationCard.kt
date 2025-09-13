@@ -11,17 +11,19 @@ data class SerializationCard(
     val ownerName: String,
     val password: String,
 ) : Parcelable {
-    fun toDomain(): Card = Card(
+    fun toDomain(): Card =
+        Card(
+            number = number,
+            expireDate = expireDate,
+            ownerName = ownerName,
+            password = password,
+        )
+}
+
+fun Card.toSerializationCard(): SerializationCard =
+    SerializationCard(
         number = number,
         expireDate = expireDate,
         ownerName = ownerName,
         password = password,
     )
-}
-
-fun Card.toSerializationCard(): SerializationCard = SerializationCard(
-    number = number,
-    expireDate = expireDate,
-    ownerName = ownerName,
-    password = password,
-)

@@ -16,20 +16,22 @@ class RegisteredCardTest {
 
     @Before
     fun setUp() {
-        card = Card(
-            number = "1111222233334444",
-            expireDate = "0421",
-            ownerName = "peto",
-            password = ""
-        )
+        card =
+            Card(
+                number = "1111222233334444",
+                expireDate = "0421",
+                ownerName = "peto",
+                password = "",
+            )
 
         composeTestRule.setContent {
             RegisteredCard(
-                card, 4,
+                card,
+                4,
                 " - ",
                 "*",
                 2,
-                " / "
+                " / ",
             )
         }
     }

@@ -24,32 +24,35 @@ fun RegisteredCard(
     numberMaskingChar: String,
     expireDateGroupSize: Int,
     expireDateSeparator: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .padding(top = 20.dp)
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .padding(top = 20.dp)
+                .fillMaxWidth(),
     ) {
         CardChip()
 
         Text(
-            text = formatCardNumber(
-                card.number,
-                numberGroupSize,
-                numberSeparator,
-                numberMaskingChar
-            ),
+            text =
+                formatCardNumber(
+                    card.number,
+                    numberGroupSize,
+                    numberSeparator,
+                    numberMaskingChar,
+                ),
             fontSize = 12.sp,
             color = Color.White,
-            modifier = Modifier.padding(horizontal = 13.dp)
+            modifier = Modifier.padding(horizontal = 13.dp),
         )
 
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 13.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 13.dp),
         ) {
             Text(
                 text = card.ownerName,
@@ -58,11 +61,12 @@ fun RegisteredCard(
             )
 
             Text(
-                text = formatExpireDate(
-                    card.expireDate,
-                    expireDateGroupSize,
-                    expireDateSeparator
-                ),
+                text =
+                    formatExpireDate(
+                        card.expireDate,
+                        expireDateGroupSize,
+                        expireDateSeparator,
+                    ),
                 fontSize = 12.sp,
                 color = Color.White,
             )
@@ -74,7 +78,7 @@ private fun formatCardNumber(
     cardNumber: String,
     groupSize: Int,
     separator: String,
-    cardMaskChar: String
+    cardMaskChar: String,
 ): String {
     val visibleLength = Card.CARD_NUMBER_MASKING_LENGTH
     val visiblePart = cardNumber.take(visibleLength)
@@ -87,13 +91,13 @@ private fun formatCardNumber(
 private fun formatExpireDate(
     expireDate: String,
     groupSize: Int,
-    separator: String
+    separator: String,
 ): String = expireDate.chunked(groupSize).joinToString(separator)
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
 fun RegisteredCardPreview(
-    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card
+    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     RegisteredCard(
         card,
@@ -101,6 +105,6 @@ fun RegisteredCardPreview(
         numberSeparator = " - ",
         numberMaskingChar = "*",
         expireDateGroupSize = 2,
-        expireDateSeparator = " / "
+        expireDateSeparator = " / ",
     )
 }

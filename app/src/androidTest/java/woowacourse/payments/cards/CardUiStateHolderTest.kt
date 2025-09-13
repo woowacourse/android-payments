@@ -2,17 +2,16 @@ package woowacourse.payments.cards
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.view.cards.CardUiStateHolder
 import woowacourse.payments.ui.view.cards.CardsUiState
 
 class CardUiStateHolderTest {
-
     private val saver: Saver<CardUiStateHolder, Any> = CardUiStateHolder.Saver
 
     @Test
@@ -50,11 +49,14 @@ class CardUiStateHolderTest {
     @Test
     fun `Saver로_EMPTY_상태를_저장하고_복원한다`() {
         val holder = CardUiStateHolder(CardsUiState.EMPTY)
-        val saved = with(object : SaverScope {
-            override fun canBeSaved(value: Any): Boolean = true
-        }) {
-            saver.run { save(holder) }
-        } ?: throw IllegalArgumentException("상태 저장 실패")
+        val saved =
+            with(
+                object : SaverScope {
+                    override fun canBeSaved(value: Any): Boolean = true
+                },
+            ) {
+                saver.run { save(holder) }
+            } ?: throw IllegalArgumentException("상태 저장 실패")
 
         saver.restore(saved)?.let {
             assertEquals(CardsUiState.EMPTY, it.uiState)
@@ -65,11 +67,14 @@ class CardUiStateHolderTest {
     fun `Saver로_SINGLE_상태를_저장하고_복원한다`() {
         val card = Card("1111", "12/34", "페토", "1234")
         val holder = CardUiStateHolder(CardsUiState.SINGLE(card))
-        val saved = with(object : SaverScope {
-            override fun canBeSaved(value: Any): Boolean = true
-        }) {
-            saver.run { save(holder) }
-        } ?: throw IllegalArgumentException("상태 저장 실패")
+        val saved =
+            with(
+                object : SaverScope {
+                    override fun canBeSaved(value: Any): Boolean = true
+                },
+            ) {
+                saver.run { save(holder) }
+            } ?: throw IllegalArgumentException("상태 저장 실패")
         val restored = saver.restore(saved)
 
         assertTrue(restored!!.uiState is CardsUiState.SINGLE)
@@ -83,11 +88,14 @@ class CardUiStateHolderTest {
         val card2 = Card("2222", "56/78", "정페토", "1234")
         val holder = CardUiStateHolder(CardsUiState.MULTIPLE(listOf(card1, card2)))
 
-        val saved = with(object : SaverScope {
-            override fun canBeSaved(value: Any): Boolean = true
-        }) {
-            saver.run { save(holder) }
-        } ?: throw IllegalArgumentException("상태 저장 실패")
+        val saved =
+            with(
+                object : SaverScope {
+                    override fun canBeSaved(value: Any): Boolean = true
+                },
+            ) {
+                saver.run { save(holder) }
+            } ?: throw IllegalArgumentException("상태 저장 실패")
 
         val restored = saver.restore(saved)
 

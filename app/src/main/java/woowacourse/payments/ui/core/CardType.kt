@@ -11,5 +11,5 @@ enum class CardType(
 ) {
     EMPTY(Alignment.Companion.Center, GrayE5),
     PENDING(Alignment.Companion.CenterStart, Black33),
-    REGISTERED(Alignment.Companion.CenterStart, Black33)
+    REGISTERED(Alignment.Companion.CenterStart, Black33),
 }

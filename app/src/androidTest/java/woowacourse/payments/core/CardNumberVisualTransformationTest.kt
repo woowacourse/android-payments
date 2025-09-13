@@ -1,19 +1,20 @@
 package woowacourse.payments.core
 
 import androidx.compose.ui.text.AnnotatedString
-import org.junit.jupiter.api.Assertions
 import org.junit.Test
+import org.junit.jupiter.api.Assertions
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
 
 class CardNumberVisualTransformationTest {
-    private val transformation = CardNumberVisualTransformation(
-        groupSize = 4,
-        separator = " - ",
-        maxLength = 16,
-    )
+    private val transformation =
+        CardNumberVisualTransformation(
+            groupSize = 4,
+            separator = " - ",
+            maxLength = 16,
+        )
 
     @Test
-    fun 입력한_카드번호가_구분자에_따라_포맷팅된다() {
+    fun `입력한_카드번호가_구분자에_따라_포맷팅된다`() {
         // given
         val input = AnnotatedString("1234123412341234")
         val transformed = transformation.filter(input)

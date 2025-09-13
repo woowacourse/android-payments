@@ -23,7 +23,7 @@ fun CardNumberTextField(
     visualTransformation: VisualTransformation,
     onCardNumberChange: (String) -> Unit,
     onComplete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = cardNumber,
@@ -35,10 +35,11 @@ fun CardNumberTextField(
                 onComplete()
             }
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
         visualTransformation = visualTransformation,
         placeholder = {
             TextFieldPlaceHolder(textResourceId = R.string.credit_card_place_holder)
@@ -46,13 +47,14 @@ fun CardNumberTextField(
         label = {
             Text(
                 text = stringResource(R.string.card_number),
-                color = Black49
+                color = Black49,
             )
         },
         singleLine = true,
-        modifier = modifier
-            .padding(top = 14.dp)
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .padding(top = 14.dp)
+                .fillMaxWidth(),
     )
 }
 
@@ -64,6 +66,6 @@ private fun CardNumberTextFieldPreview() {
         onCardNumberChange = {},
         onComplete = {},
         visualTransformation = VisualTransformation.None,
-        maxLength = 16
+        maxLength = 16,
     )
 }

@@ -19,13 +19,13 @@ fun PaymentCard(
 ) {
     Box(
         contentAlignment = cardType.parentAlignment,
-        modifier = modifier
-            .size(width = 208.dp, height = 124.dp)
-            .background(
-                color = cardType.backgroundColor,
-                shape = RoundedCornerShape(5.dp),
-            )
-            .clickable(onClick = { onClick(cardType) })
+        modifier =
+            modifier
+                .size(width = 208.dp, height = 124.dp)
+                .background(
+                    color = cardType.backgroundColor,
+                    shape = RoundedCornerShape(5.dp),
+                ).clickable(onClick = { onClick(cardType) }),
     ) {
         content()
     }
