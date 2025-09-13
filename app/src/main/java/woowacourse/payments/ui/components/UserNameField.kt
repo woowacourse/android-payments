@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,6 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.validator.ValidationErrorType
+import woowacourse.payments.ui.strings.getErrorMessage
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
 
@@ -17,7 +20,9 @@ fun UserNameField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    error: ValidationErrorType? = null,
 ) {
+    val errorText = error?.let { getErrorMessage(it) }
     OutlinedTextField(
         modifier = modifier,
         value = value,
@@ -32,17 +37,22 @@ fun UserNameField(
             )
         },
         supportingText = {
-            Text(
-                text =
-                    stringResource(
-                        R.string.user_name_counter,
-                        value.length,
-                        USER_NAME_MAX_LENGTH,
-                    ),
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.End,
-            )
+            if (errorText != null) {
+                Text(text = errorText, color = MaterialTheme.colorScheme.error)
+            } else {
+                Text(
+                    text =
+                        stringResource(
+                            R.string.user_name_counter,
+                            value.length,
+                            USER_NAME_MAX_LENGTH,
+                        ),
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
+                )
+            }
         },
+        isError = errorText != null,
         singleLine = true,
     )
 }

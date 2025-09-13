@@ -1,94 +1,44 @@
 package woowacourse.payments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.components.CardNumberField
-import woowacourse.payments.ui.components.ExpirationDateField
-import woowacourse.payments.ui.components.NewCardTopBar
-import woowacourse.payments.ui.components.PasswordField
-import woowacourse.payments.ui.components.PaymentCard
-import woowacourse.payments.ui.components.UserNameField
+import woowacourse.payments.IntentCompat.putParcelableCompat
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.screen.AddCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { AddCardScreen() }
-    }
-}
-
-@Preview
-@Composable
-fun AddCardScreen() {
-    AndroidpaymentsTheme {
-        var number by remember { mutableStateOf("") }
-        var expiration by remember { mutableStateOf("") }
-        var userName by remember { mutableStateOf("") }
-        var password by remember { mutableStateOf("") }
-
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
-        ) { innerPadding ->
-            Column(
-                modifier =
-                    Modifier
-                        .padding(innerPadding)
-                        .padding(horizontal = 24.dp)
-                        .fillMaxSize(),
-            ) {
-                Spacer(Modifier.height(14.dp))
-                PaymentCard(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                )
-
-                Spacer(Modifier.height(40.dp))
-                CardNumberField(
-                    value = number,
-                    onValueChange = { number = it },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-
-                Spacer(Modifier.height(30.dp))
-                ExpirationDateField(
-                    value = expiration,
-                    onValueChange = { expiration = it },
-                    modifier = Modifier.fillMaxWidth(0.5f),
-                )
-
-                Spacer(Modifier.height(30.dp))
-                UserNameField(
-                    value = userName,
-                    onValueChange = { userName = it },
-                    modifier = Modifier.fillMaxWidth(),
-                )
-
-                Spacer(Modifier.height(18.dp))
-                PasswordField(
-                    value = password,
-                    onValueChange = { password = it },
-                    modifier = Modifier.fillMaxWidth(0.5f),
+        setContent {
+            AndroidpaymentsTheme {
+                AddCardScreen(
+                    onBackPressed = {
+                        finish()
+                    },
+                    onAddCard = { card ->
+                        val resultIntent =
+                            Intent()
+                                .putParcelableCompat(EXTRA_RESULT_CARD, card.toUiModel())
+                        setResult(RESULT_OK, resultIntent)
+                        finish()
+                    },
                 )
             }
         }
+    }
+
+    companion object {
+        private const val EXTRA_RESULT_CARD = "RESULT_CARD"
+
+        fun createIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
+
+        fun parseResult(data: Intent?): CardUiModel? = data?.let { IntentCompat.getParcelableExtra<CardUiModel>(it, EXTRA_RESULT_CARD) }
     }
 }

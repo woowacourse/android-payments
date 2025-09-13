@@ -5,27 +5,36 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.model.CardNumber.Companion.CARD_NUMBER_LENGTH
+import woowacourse.payments.domain.validator.ValidationErrorType
+import woowacourse.payments.ui.strings.getErrorMessage
+import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_CHUNK_SIZE
+import woowacourse.payments.ui.text.CardNumberFormatter.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.text.SeparatedVisualTransformation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey40
-import woowacourse.payments.ui.transformation.SeparatedTransformation
 
 @Composable
 fun CardNumberField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    error: ValidationErrorType? = null,
 ) {
+    val errorText = error?.let { getErrorMessage(it) }
     val cardNumberVisualTransformation =
-        SeparatedTransformation(
-            maxLength = CARD_NUMBER_MAX_LENGTH,
-            groupSize = CARD_NUMBER_CHUNK_SIZE,
-            separator = CARD_NUMBER_SEPARATOR,
-        )
+        remember {
+            SeparatedVisualTransformation(
+                groupSize = CARD_NUMBER_CHUNK_SIZE,
+                separator = CARD_NUMBER_SEPARATOR,
+            )
+        }
 
     OutlinedTextField(
         keyboardOptions =
@@ -35,7 +44,7 @@ fun CardNumberField(
         modifier = modifier,
         value = value,
         onValueChange = {
-            onValueChange(it.filter(Char::isDigit).take(CARD_NUMBER_MAX_LENGTH))
+            onValueChange(it.filter(Char::isDigit).take(CARD_NUMBER_LENGTH))
         },
         visualTransformation = cardNumberVisualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
@@ -46,6 +55,8 @@ fun CardNumberField(
             )
         },
         singleLine = true,
+        isError = error != null,
+        supportingText = { errorText?.let { Text(it) } },
     )
 }
 
@@ -60,7 +71,3 @@ private fun CardNumberFieldPreview() {
         )
     }
 }
-
-private const val CARD_NUMBER_MAX_LENGTH = 16
-private const val CARD_NUMBER_CHUNK_SIZE = 4
-private const val CARD_NUMBER_SEPARATOR = " - "
