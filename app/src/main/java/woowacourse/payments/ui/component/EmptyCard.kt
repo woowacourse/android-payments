@@ -30,9 +30,10 @@ fun EmptyCard(
                 .background(
                     color = Grey20,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable { onClick() },
+                )
+                .clickable { onClick() },
     ) {
-        Icon(imageVector = Icons.Default.Add, contentDescription = null)
+        Icon(imageVector = Icons.Default.Add, contentDescription = "AddCardIcon")
     }
 }
 
