@@ -32,7 +32,7 @@ class ListActivity : ComponentActivity() {
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
-                            val newCard = activityResult.data?.parcelable<Card>("card")
+                            val newCard = activityResult.data?.parcelable<CardUiModel>("card")
                             newCard?.let {
                                 list = ListUiState(list.cards + it)
                                 Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
@@ -69,7 +69,7 @@ private fun AddOneCardListPreview() {
     AndroidpaymentsTheme {
         CardListScreen(
             listOf(
-                Card(
+                CardUiModel(
                     "0000000000000000",
                     "0925",
                     "1234",
@@ -87,13 +87,13 @@ private fun AddTwoOrMoreCardListPreview() {
     AndroidpaymentsTheme {
         CardListScreen(
             listOf(
-                Card(
+                CardUiModel(
                     "0000000000000000",
                     "1225",
                     "1234",
                     "PARK JIWON",
                 ),
-                Card(
+                CardUiModel(
                     "1234123412341234",
                     "0999",
                     "9999",

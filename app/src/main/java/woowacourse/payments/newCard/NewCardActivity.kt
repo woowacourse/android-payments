@@ -25,6 +25,7 @@ import woowacourse.payments.ExpiryValidator
 import woowacourse.payments.InputMask
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
 import woowacourse.payments.ui.PaymentCard
@@ -53,7 +54,7 @@ class NewCardActivity : ComponentActivity() {
                                     Intent().apply {
                                         putExtra(
                                             "card",
-                                            Card(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName),
+                                            CardUiModel(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName),
                                         )
                                     }
                                 setResult(RESULT_OK, data)

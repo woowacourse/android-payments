@@ -16,11 +16,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
 
 @Composable
 fun CardListScreen(
-    cards: List<Card>,
+    cards: List<CardUiModel>,
     onAddClick: () -> Unit,
 ) {
     Scaffold(

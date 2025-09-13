@@ -20,12 +20,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
+import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: Card? = null,
+    card: CardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -96,7 +97,7 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(card = Card("0000000000000000", "1025", "1234", "CREW"))
+        PaymentCard(card = CardUiModel("0000000000000000", "1025", "1234", "CREW"))
     }
 }
 

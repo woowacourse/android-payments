@@ -5,6 +5,6 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.PaymentCard
 
 @Composable
-fun CardList(cards: List<Card>) {
-    cards.forEach { card: Card -> PaymentCard(card = card) }
+fun CardList(cards: List<CardUiModel>) {
+    cards.forEach { card: CardUiModel -> PaymentCard(card = card) }
 }
