@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -19,7 +20,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["runnerBuilder"] =
             "de.mannodermaus.junit5.AndroidJUnit5Builder"
-
     }
     packaging {
         resources {
@@ -31,7 +31,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -64,6 +64,7 @@ dependencies {
     androidTestImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.mannodermaus.junit5.core)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)

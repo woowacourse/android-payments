@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
 import woowacourse.payments.newcard.transformation.cardNumberVisualTransformation
@@ -32,7 +33,11 @@ fun CardNumberTextField(
             )
         },
         visualTransformation = cardNumberVisualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
         modifier = modifier,
     )
 }

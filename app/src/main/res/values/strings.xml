@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">android-payments</string>
+
+    <string name="title_activity_new_card">NewCardActivity</string>
+
     <string name="card_number">카드 번호</string>
     <string name="expired_date">만료일</string>
     <string name="invalid_expired_date_type">유효하지 않은 만료일자 형식입니다.</string>
+    <string name="add">추가</string>
     <string name="add_card">카드 추가</string>
     <string name="back">뒤로 가기</string>
     <string name="check">완료</string>
     <string name="owner_name">카드 소유자 이름(선택)</string>
     <string name="owner_name_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="password">비밀번호</string>
+    <string name="ic_plus">추가 아이콘</string>
+    <string name="message_card_added">카드가 추가되었습니다.</string>
+    <string name="text_no_card">새로운 카드를 등록해주세요.</string>
+    <string name="card_save_failed">입력란을 다시 확인해주세요.</string>
+    <string name="cards_topbar_title">Payments</string>
 </resources>
