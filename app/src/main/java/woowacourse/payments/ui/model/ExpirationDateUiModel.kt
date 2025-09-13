@@ -9,6 +9,7 @@ data class ExpirationDateUiModel(
     val value: String,
 ) : Parcelable {
     fun isValidMonth(): Boolean {
+        if (value.length < 2) return true
         val mm = value.take(2)
         val month = mm.toIntOrNull() ?: return false
         return month in Month.JANUARY.value..Month.DECEMBER.value
