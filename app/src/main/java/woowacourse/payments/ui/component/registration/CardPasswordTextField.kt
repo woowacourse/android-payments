@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.component.registration
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -24,12 +24,15 @@ import woowacourse.payments.ui.model.CardPasswordUiModel
 
 @Composable
 fun CardPasswordTextField(
-    modifier: Modifier = Modifier,
     cardPassword: CardPasswordUiModel,
     onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val cardPasswordTextFieldDescription =
+        stringResource(R.string.card_password_text_field_description)
+
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "비밀번호" },
+        modifier = modifier.semantics { contentDescription = cardPasswordTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_password_text_field_label))
         },
@@ -54,7 +57,7 @@ fun CardPasswordTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardPasswordTextFieldPreview() {
+private fun CardPasswordTextFieldPreview() {
     var cardPassword by remember { mutableStateOf(CardPasswordUiModel("1234")) }
 
     Box(modifier = Modifier.padding(12.dp)) {

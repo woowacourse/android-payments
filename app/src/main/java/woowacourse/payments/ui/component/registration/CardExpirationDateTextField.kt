@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.component.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,17 +20,21 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 
 @Composable
 fun CardExpirationDateTextField(
-    modifier: Modifier = Modifier,
     cardExpirationDate: CardExpirationDateUiModel,
     onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
-    errorMessage: String? = null,
     onErrorMessageChanged: (String?) -> Unit,
+    modifier: Modifier = Modifier,
+    errorMessage: String? = null,
 ) {
+    val cardExpirationDateTextFieldDescription =
+        stringResource(R.string.card_expiration_date_text_field_description)
+
     val isError = errorMessage != null
     if (cardExpirationDate.isError) onErrorMessageChanged(stringResource(R.string.card_expiration_date_text_field_invalid_format))
 
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "만료일" },
+        modifier =
+            modifier.semantics { contentDescription = cardExpirationDateTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_expiration_date_text_field_label))
         },
@@ -58,7 +62,7 @@ fun CardExpirationDateTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
+private fun CardExpirationDateTextFieldPreview() {
     Column(modifier = Modifier.padding(12.dp)) {
         CardExpirationDateTextField(
             cardExpirationDate = CardExpirationDateUiModel("1226"),

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.component.registration
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -20,12 +20,14 @@ import woowacourse.payments.ui.model.CardNumberUiModel
 
 @Composable
 fun CardNumberTextField(
-    modifier: Modifier = Modifier,
     cardNumber: CardNumberUiModel,
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val cardNumberTextFieldDescription = stringResource(R.string.card_number_text_field_description)
+
     OutlinedTextField(
-        modifier = modifier.semantics { contentDescription = "카드 번호" },
+        modifier = modifier.semantics { contentDescription = cardNumberTextFieldDescription },
         label = {
             Text(text = stringResource(R.string.card_number_text_field_label))
         },
@@ -49,8 +51,8 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     Box(modifier = Modifier.padding(16.dp)) {
-        CardNumberTextField(cardNumber = CardNumberUiModel()) {}
+        CardNumberTextField(cardNumber = CardNumberUiModel(), onCardNumberChanged = {})
     }
 }

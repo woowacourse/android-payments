@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.component.registration
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,14 +6,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertTextEquals
-import androidx.compose.ui.test.hasContentDescription
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.payments.CardExpirationDateTextField
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 
 class CardExpirationDateTextFieldTest {
     @get:Rule
@@ -21,7 +21,7 @@ class CardExpirationDateTextFieldTest {
 
     private fun setup() {
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel()) }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
@@ -36,14 +36,15 @@ class CardExpirationDateTextFieldTest {
         setup()
 
         // when
-        val textField = composeTestRule.onNode(hasContentDescription("만료일"))
-        textField.performTextInput("1")
-        textField.performTextInput("a")
-        textField.performTextInput("2")
+        composeTestRule.onNodeWithContentDescription("만료일").run {
+            performTextInput("1")
+            performTextInput("a")
+            performTextInput("2")
+        }
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
+            .onNodeWithContentDescription("만료일", useUnmergedTree = true)
             .assertTextEquals("12")
     }
 
@@ -51,7 +52,7 @@ class CardExpirationDateTextFieldTest {
     fun `만료일의_월이_1-12_사이가_아닌_경우_예외가_발생한다`() {
         // given
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel("")) }
             var errorMessage by remember { mutableStateOf("") }
             CardExpirationDateTextField(
                 cardExpirationDate = expirationDate,
@@ -62,16 +63,15 @@ class CardExpirationDateTextFieldTest {
         }
 
         // when
-        val textField = composeTestRule.onNode(hasContentDescription("만료일"))
-        textField.performTextInput("1")
-        textField.performTextInput("3")
-        textField.performTextInput("2")
-        textField.performTextInput("5")
+        composeTestRule.onNodeWithContentDescription("만료일").run {
+            performTextInput("1")
+            performTextInput("3")
+            performTextInput("2")
+            performTextInput("5")
+        }
 
         // then
-        composeTestRule
-            .onNodeWithText("유효하지 않은 만료일 입니다.")
-            .assertIsDisplayed()
+        composeTestRule.onNodeWithText("유효하지 않은 만료일 입니다.").assertIsDisplayed()
     }
 
     @Test
@@ -80,14 +80,12 @@ class CardExpirationDateTextFieldTest {
         setup()
 
         // when
-        composeTestRule
-            .onNode(hasContentDescription("만료일"))
-            .performTextInput("123")
+        composeTestRule.onNodeWithContentDescription("만료일").performTextInput("123")
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
-            .assertTextEquals("12 / 3")
+            .onNodeWithContentDescription("만료일", useUnmergedTree = true)
+            .performTextInput("12 / 3")
     }
 
     @Test
@@ -97,23 +95,23 @@ class CardExpirationDateTextFieldTest {
 
         // when
         composeTestRule
-            .onNode(hasContentDescription("만료일"))
+            .onNodeWithContentDescription("만료일")
             .performTextInput("0925")
 
         // then
         composeTestRule
-            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
-            .assertTextEquals("09 / 25")
+            .onNodeWithContentDescription("만료일", useUnmergedTree = true)
+            .performTextInput("09 / 25")
     }
 
     @Test
-    fun `만료일_입력_값이_없는_경우_Placeholder가_보여진다`() {
+    fun 만료일_입력_값이_없는_경우_입력창에_대한_설명이_보여진다() {
         // given
         setup()
 
         // when
         composeTestRule
-            .onNode(hasContentDescription("만료일"), useUnmergedTree = true)
+            .onNodeWithContentDescription("만료일", useUnmergedTree = true)
             .performClick()
         // then
         composeTestRule

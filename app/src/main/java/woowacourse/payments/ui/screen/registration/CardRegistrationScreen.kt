@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.payments
+package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,61 +8,57 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
+import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.registration.CardExpirationDateTextField
+import woowacourse.payments.ui.component.registration.CardNumberTextField
+import woowacourse.payments.ui.component.registration.CardPasswordTextField
+import woowacourse.payments.ui.component.registration.CardRegistrationTopAppBar
+import woowacourse.payments.ui.component.registration.CardholderNameTextField
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen() {
-    val focusManager = LocalFocusManager.current
-    val snackbarState = remember { SnackbarHostState() }
+fun CardRegistrationScreen(
+    onBackPressed: () -> Unit,
+    onCardRegistered: (CardUiModel) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
 
-    val navigatePreviousMessage = stringResource(R.string.common_navigate_previous)
-    val registerCardMessage =
-        stringResource(R.string.card_registration_screen_registration_card_success)
-
-    LaunchedEffect(uiState.snackbarMessage) {
-        if (uiState.snackbarMessage.isNullOrBlank()) return@LaunchedEffect
-        snackbarState.showSnackbar(uiState.snackbarMessage.orEmpty())
-        uiState = uiState.copy(snackbarMessage = null)
-    }
-
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = {
-                    uiState = uiState.copy(snackbarMessage = navigatePreviousMessage)
+                    onBackPressed()
                 },
                 onSaveClick = {
-                    focusManager.clearFocus()
-                    uiState = uiState.copy(snackbarMessage = registerCardMessage)
+                    onCardRegistered(
+                        CardUiModel(
+                            cardholderNameUiModel = uiState.cardholderName,
+                            cardNumberUiModel = uiState.cardNumber,
+                            cardExpirationDateUiModel = uiState.cardExpirationDate,
+                        ),
+                    )
                 },
                 isSaveButtonEnabled = uiState.isRegistrableCard,
             )
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
-            modifier = Modifier.padding(innerPadding),
+            modifier = modifier.padding(innerPadding),
             uiState = uiState,
             onCardNumberChanged = { newCardNumber ->
                 uiState = uiState.copy(cardNumber = newCardNumber)
@@ -88,13 +84,13 @@ fun CardRegistrationScreen() {
 
 @Composable
 private fun CardRegistrationScreenContent(
-    modifier: Modifier,
     uiState: CardRegistrationScreenUiState,
     onCardNumberChanged: (CardNumberUiModel) -> Unit,
     onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
     onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
     onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
     onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
@@ -143,8 +139,11 @@ private fun CardRegistrationScreenContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen()
+        CardRegistrationScreen(
+            onBackPressed = {},
+            onCardRegistered = {},
+        )
     }
 }
