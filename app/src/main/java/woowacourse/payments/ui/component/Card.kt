@@ -28,7 +28,6 @@ import woowacourse.payments.ui.allcards.util.CardFormatter
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
-import woowacourse.payments.ui.uimodel.isComplete
 
 @Composable
 fun Card(
@@ -61,47 +60,61 @@ fun Card(
                         shape = RoundedCornerShape(5.dp),
                     ),
         )
-        if (!showCardInfo) return
-        Column(
+        if (showCardInfo) {
+            UserInfo(
+                cardInfoUiState = cardInfoUiState,
+                modifier =
+                    Modifier
+                        .padding(
+                            start = 14.dp,
+                            end = 14.dp,
+                            bottom = 10.dp,
+                        ).align(Alignment.BottomCenter)
+                        .fillMaxWidth(),
+            )
+        } else {
+            Unit
+        }
+    }
+}
+
+@Composable
+private fun UserInfo(
+    cardInfoUiState: CardInfoUiState,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            color = colorResource(id = R.color.white),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+            style = TextStyle(letterSpacing = 2.sp),
+            text = CardFormatter.formatCardNumber(cardInfoUiState.cardNumber),
+        )
+        Row(
             modifier =
                 Modifier
-                    .padding(
-                        start = 14.dp,
-                        end = 14.dp,
-                        bottom = 10.dp,
-                    ).align(Alignment.BottomCenter)
                     .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
+            Text(
+                modifier = Modifier.width(90.dp),
+                color = colorResource(id = R.color.white),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                text = cardInfoUiState.ownerName,
+            )
             Text(
                 color = colorResource(id = R.color.white),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
-                style = TextStyle(letterSpacing = 2.sp),
-                text = CardFormatter.formatCardNumber(cardInfoUiState.cardNumber),
+                text = CardFormatter.formatExpirationDate(cardInfoUiState.expireDate),
             )
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    modifier = Modifier.width(90.dp),
-                    color = colorResource(id = R.color.white),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    text = cardInfoUiState.ownerName,
-                )
-                Text(
-                    color = colorResource(id = R.color.white),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    text = CardFormatter.formatExpirationDate(cardInfoUiState.expireDate),
-                )
-            }
         }
     }
 }
