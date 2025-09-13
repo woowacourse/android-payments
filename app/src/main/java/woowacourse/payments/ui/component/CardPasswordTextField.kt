@@ -1,8 +1,13 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -13,33 +18,36 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
-
-private const val CARD_PASSWORD_LENGTH = 4
+import woowacourse.payments.ui.extension.semanticsContentDescription
 
 @Composable
 fun CardPasswordTextField(
     cardPassword: String,
     onCardPasswordChanged: (String) -> Unit,
+    errorMessage: String?,
     modifier: Modifier = Modifier,
-    errorMessage: String? = null
+    visualTransformation: VisualTransformation = rememberDefaultCardExpirationDateVisualTransformation(),
 ) {
-    val visualTransformation = remember { PasswordVisualTransformation() }
-
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_password_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.card_password_text_field_placeholder)) },
         value = cardPassword,
-        onValueChange = { newValue ->
-            val newPassword = newValue.take(CARD_PASSWORD_LENGTH)
-            if (newPassword.isDigitsOnly().not()) return@OutlinedTextField
-
-            onCardPasswordChanged(newPassword)
-        },
+        onValueChange = onCardPasswordChanged,
         isError = errorMessage != null,
+        trailingIcon = {
+            errorMessage?.let {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                )
+            }
+        },
         supportingText = { errorMessage?.let { message -> Text(text = message) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = visualTransformation,
@@ -48,28 +56,43 @@ fun CardPasswordTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.card_password_text_field_content_description),
     )
 }
 
+@Composable
+private fun rememberDefaultCardExpirationDateVisualTransformation(): VisualTransformation = remember { PasswordVisualTransformation() }
+
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardPasswordTextFieldPreview() {
-    Column(modifier = Modifier.padding(12.dp)) {
+private fun CardPasswordTextFieldPreview(
+    @PreviewParameter(CardPasswordTextFieldPreviewParameterProvider::class) case:
+        CardPasswordTextFieldPreviewParameterProvider.CardPasswordPreviewCase,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Preview Case: ${case.caseName}")
+        HorizontalDivider()
         CardPasswordTextField(
-            cardPassword = "1234",
+            cardPassword = case.cardPassword,
             onCardPasswordChanged = {},
-        )
-
-        CardPasswordTextField(
-            cardPassword = "",
-            onCardPasswordChanged = {},
-        )
-
-        CardPasswordTextField(
-            cardPassword = "",
-            onCardPasswordChanged = {},
-            errorMessage = "유효하지 않은 비밀번호입니다.",
+            errorMessage = case.errorMessage,
+            modifier = Modifier.padding(12.dp),
         )
     }
+}
+
+private class CardPasswordTextFieldPreviewParameterProvider :
+    PreviewParameterProvider<CardPasswordTextFieldPreviewParameterProvider.CardPasswordPreviewCase> {
+    data class CardPasswordPreviewCase(
+        val caseName: String,
+        val cardPassword: String,
+        val errorMessage: String?,
+    )
+
+    override val values =
+        sequenceOf(
+            CardPasswordPreviewCase("빈 값", "", null),
+            CardPasswordPreviewCase("정상", "1234", null),
+            CardPasswordPreviewCase("오류", "ABCD", "유효하지 않은 형식입니다."),
+        )
 }

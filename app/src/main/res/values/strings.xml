@@ -1,35 +1,56 @@
 <resources>
     <string name="app_name">android-payments</string>
 
-    <!-- common -->
-    <string name="common_navigate_previous">뒤로 가기</string>
+    <!-- ========================================================= -->
+    <!-- COMMON -->
+    <!-- ========================================================= -->
+
+    <!-- error message -->
+    <string name="common_invalid_format_error_message">유효하지 않은 형식입니다.</string>
+
+    <!-- ========================================================= -->
+    <!-- COMPONENT -->
+    <!-- ========================================================= -->
 
     <!-- card_number_text_field -->
     <string name="card_number_text_field_label">카드 번호</string>
     <string name="card_number_text_field_placeholder">0000 – 0000 – 0000 – 0000</string>
+    <string name="card_number_text_field_content_description">카드 번호 입력란</string>
 
     <!-- card_password_text_field -->
     <string name="card_password_text_field_label">비밀번호</string>
     <string name="card_password_text_field_placeholder">0000</string>
+    <string name="card_password_text_field_content_description">카드 비밀번호 입력란</string>
 
     <!-- card_expiration_date_text_field -->
     <string name="card_expiration_date_text_field_label">만료일</string>
     <string name="card_expiration_date_text_field_placeholder">MM / YY</string>
-    <string name="card_expiration_date_text_invalid_format">유효하지 않은 만료일입니다.</string>
+    <string name="card_expiration_date_text_field_content_description">카드 만료일 입력란</string>
 
     <!-- cardholder_name_text_field -->
     <string name="cardholder_name_text_field_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_text_field_placeholder">카드에 표시된 이름을 입력하세요.</string>
+    <string name="cardholder_name_text_field_content_description">카드 소유자 이름 입력란</string>
+
+    <!-- ========================================================= -->
+    <!-- SCREEN -->
+    <!-- ========================================================= -->
+
+    <!-- card_registration_screen -->
+    <string name="card_expiration_date_invalid_date_error_message">유효하지 않은 만료일입니다.</string>
+    <string name="card_expiration_date_expired_error_message">만료된 카드는 등록할 수 없습니다.</string>
 
     <!-- card_registration_top_bar -->
     <string name="card_registration_bar_title">카드 추가</string>
     <string name="icon_previous_content_description">뒤로 가기</string>
-    <string name="icon_save_content_description">완료</string>
+    <string name="registration_button_content_description">카드 등록</string>
 
-    <!-- card_registration_screen: 유효성 관련 및 상태 메시지 -->
-    <string name="card_registration_screen_error_card_number_invalid">유효하지 않은 카드 번호입니다.</string>
-    <string name="card_registration_screen_error_card_password_invalid">비밀번호 형식이 잘못되었습니다.</string>
-    <string name="card_registration_screen_error_card_expired">만료된 카드입니다.</string>
-    <string name="card_registration_screen_error_cardholder_name_invalid">이름을 다시 입력해주세요.</string>
-    <string name="card_registration_screen_registration_card_success">추가 완료</string>
+    <!-- cards_screen -->
+    <string name="cards_screen_card_registered_message">카드가 추가되었습니다</string>
+    <string name="cards_screen_registration_message">새로운 카드를 등록해주세요</string>
+    <string name="cards_screen_registration_button_content_description">카드 등록</string>
+
+    <!-- cards_screen_top_app_bar -->
+    <string name="cards_screen_top_app_bar_title">Payments</string>
+    <string name="cards_screen_top_app_bar_registration_button_text">추가</string>
 </resources>

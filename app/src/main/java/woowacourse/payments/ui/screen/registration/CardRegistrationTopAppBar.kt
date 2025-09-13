@@ -40,7 +40,7 @@ fun CardRegistrationTopAppBar(
             ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.icon_save_content_description),
+                    contentDescription = stringResource(R.string.registration_button_content_description),
                 )
             }
         },

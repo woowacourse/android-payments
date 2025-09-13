@@ -8,49 +8,49 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
-import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.component.CardExpirationDateTextField
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen(viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel()) {
+fun CardRegistrationScreen(
+    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
+    onRegistrationComplete: (PaymentCardUiModel) -> Unit,
+    onBackClick: () -> Unit,
+) {
     val focusManager = LocalFocusManager.current
-    val snackbarState = remember { SnackbarHostState() }
-    val context = LocalContext.current
-    val uiState = viewModel.uiState
-    val uiEvent = viewModel.uiEvent
+    val uiState by viewModel.uiState.observeAsState(CardRegistrationScreenUiState())
+    val uiEvent by viewModel.uiEvent.observeAsState(CardRegistrationScreenUiEvent.None)
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            null -> Unit
-            is CardRegistrationScreenUiEvent.ShowSnackbar -> {
-                snackbarState.showSnackbar(uiEvent.message.asString(context))
+            is CardRegistrationScreenUiEvent.None -> Unit
+            is CardRegistrationScreenUiEvent.RegisteredCard -> {
+                (uiEvent as? CardRegistrationScreenUiEvent.RegisteredCard)
+                    ?.paymentCard
+                    ?.let(onRegistrationComplete)
             }
         }
     }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarState) },
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = { },
+                onBackClick = onBackClick,
                 onSaveClick = {
                     focusManager.clearFocus()
                     viewModel.registerCard()
@@ -88,64 +88,44 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+        PaymentCard(
+            paymentCardUiModel = uiState.toPaymentCardUiModel(),
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
         CardNumberTextField(
-            cardNumber = uiState.cardNumber,
+            cardNumber = uiState.cardNumber.number,
             onCardNumberChanged = onCardNumberChanged,
+            errorMessage = uiState.cardNumberErrorMessageResId?.let { stringResource(it) },
             modifier = Modifier.fillMaxWidth(),
-            errorMessage =
-                when (uiState.cardNumberValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_number_invalid)
-
-                    else -> null
-                },
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         CardExpirationDateTextField(
-            cardExpirationDate = uiState.cardExpirationDate,
+            cardExpirationDate = uiState.cardExpirationDate.expirationDate,
             onCardExpirationDateChanged = onCardExpirationDateChanged,
-            errorMessage =
-                when (uiState.cardExpirationDateValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_expired)
-
-                    else -> null
-                },
+            errorMessage = uiState.cardExpirationDateErrorMessageResId?.let { stringResource(it) },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         CardholderNameTextField(
-            cardholderName = uiState.cardholderName,
+            cardholderName = uiState.cardholderName.displayedName,
             onCardholderNameChanged = onCardholderNameChanged,
+            maxLength = uiState.cardholderName.maxLength,
+            errorMessage = uiState.cardholderNameErrorMessageResId?.let { stringResource(it) },
             modifier = Modifier.fillMaxWidth(),
-            errorMessage =
-                when (uiState.cardholderNameValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_cardholder_name_invalid)
-
-                    else -> null
-                },
         )
 
         Spacer(modifier = Modifier.height(12.dp))
 
         CardPasswordTextField(
-            cardPassword = uiState.cardPassword,
+            cardPassword = uiState.cardPassword.password,
             onCardPasswordChanged = onCardPasswordChanged,
-            errorMessage =
-                when (uiState.cardPasswordValidationResult) {
-                    PaymentCardValidator.PaymentCardValidationResult.INVALID,
-                    -> stringResource(R.string.card_registration_screen_error_card_password_invalid)
-
-                    else -> null
-                },
+            errorMessage = uiState.cardPasswordErrorMessageResId?.let { stringResource(it) },
         )
     }
 }
@@ -154,6 +134,9 @@ private fun CardRegistrationScreenContent(
 @Composable
 fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen()
+        CardRegistrationScreen(
+            onBackClick = {},
+            onRegistrationComplete = {},
+        )
     }
 }

@@ -1,96 +1,140 @@
 package woowacourse.payments.ui.component
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
+import androidx.compose.ui.test.requestFocus
+import androidx.compose.ui.text.input.VisualTransformation
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertAll
+import woowacourse.payments.ui.common.GroupedVisualTransformation
 
 class CardNumberTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setUp() {
+    @Test
+    fun `입력과_포커스가_없으면_라벨만_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsNotFocused() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `입력이_없고_포커스가_있으면_라벨과_플레이스홀더가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.requestFocus()
+
+        // then
+        val labelText = "카드 번호"
+        val placeholderText = "0000 – 0000 – 0000 – 0000"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsFocused() },
+            { textField.assertTextEquals(labelText, placeholderText, editableText) },
+        )
+    }
+
+    @Test
+    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+        // given
+        setup(errorMessage = "형식이 올바르지 않습니다.")
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = ""
+        val errorMessage = "형식이 올바르지 않습니다."
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText, errorMessage) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하면_카드번호가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234123412341234")
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = "1234123412341234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하고_VisualTransformation을_적용하면_포맷팅된_카드번호가_보인다`() {
+        // given
+        setup(visualTransformation = GroupedVisualTransformation(groupSize = 4, separator = " - "))
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234123412341234")
+
+        // then
+        val labelText = "카드 번호"
+        val editableText = "1234 - 1234 - 1234 - 1234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    private fun setup(
+        initialCardNumber: String = "",
+        errorMessage: String? = null,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+    ) {
         composeTestRule.setContent {
-            var state by remember { mutableStateOf("") }
+            var cardNumber by remember { mutableStateOf(initialCardNumber) }
             CardNumberTextField(
-                cardNumber = state,
-                onCardNumberChanged = { newValue -> state = newValue },
-                modifier = Modifier.testTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG),
+                cardNumber = cardNumber,
+                onCardNumberChanged = { newValue -> cardNumber = newValue },
+                errorMessage = errorMessage,
+                modifier = Modifier.testTag(TEST_TAG),
+                visualTransformation = visualTransformation,
             )
-        }
-    }
-
-    @Test
-    fun `카드_번호는_숫자만_입력_가능해야_한다`() {
-        // when
-        val textField = composeTestRule.onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
-        textField.performTextInput("1")
-        textField.performTextInput("a")
-        textField.performTextInput("2")
-
-        // then
-        composeTestRule
-            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("12")
-    }
-
-    @Test
-    fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
-        // when
-        composeTestRule
-            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
-            .performTextInput("1".repeat(17))
-
-        // then
-        composeTestRule
-            .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("1111 - 1111 - 1111 - 1111")
-    }
-
-    @Test
-    fun `카드_번호는_4자리가_될_때_마다_대시_기호가_붙는다`() {
-        val csvSource =
-            arrayOf(
-                "1111,1111",
-                "11111,1111 - 1",
-                "123456789,1234 - 5678 - 9",
-                "1234567890123,1234 - 5678 - 9012 - 3",
-                "1234567890123456,1234 - 5678 - 9012 - 3456",
-            )
-
-        csvSource.forEach { csv ->
-            val (input, expected) = csv.split(",")
-            Log.e("TAG", "$input, $expected")
-
-            // when
-            composeTestRule
-                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
-                .performTextInput(input)
-
-            // then
-            composeTestRule
-                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-                .assertTextEquals(expected)
-
-            composeTestRule
-                .onNodeWithTag(CARD_NUMBER_TEXT_FIELD_TEST_TAG)
-                .performTextClearance()
         }
     }
 
     companion object {
-        private const val CARD_NUMBER_TEXT_FIELD_TEST_TAG = "CardNumberTextField"
+        private const val TEST_TAG = "CardNumberTextField"
     }
 }

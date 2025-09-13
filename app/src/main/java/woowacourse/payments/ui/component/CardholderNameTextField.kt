@@ -1,49 +1,57 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.extension.semanticsContentDescription
+import woowacourse.payments.ui.model.CardholderNameUiModel
 
-private const val CARDHOLDER_NAME_DEFAULT_MAX_LENGTH = 30
 private const val INPUT_TEXT_COUNT_SEPARATOR = "%d/%d"
-private val CARDHOLDER_NAME_VALIDATION_REGEX = Regex("^[A-Za-z]+$")
 
 @Composable
 fun CardholderNameTextField(
     cardholderName: String,
     onCardholderNameChanged: (String) -> Unit,
+    maxLength: Int,
+    errorMessage: String?,
     modifier: Modifier = Modifier,
-    maxLength: Int = CARDHOLDER_NAME_DEFAULT_MAX_LENGTH,
-    errorMessage: String? = null,
 ) {
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.cardholder_name_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.cardholder_name_text_field_placeholder)) },
         value = cardholderName,
         onValueChange = { newValue ->
-            val newName = newValue.take(maxLength)
-            if (CARDHOLDER_NAME_VALIDATION_REGEX.matches(newName).not()) return@OutlinedTextField
-
-            onCardholderNameChanged(newName.uppercase())
+            if (newValue.length <= maxLength) onCardholderNameChanged(newValue)
         },
         isError = errorMessage != null,
+        trailingIcon = {
+            errorMessage?.let {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                )
+            }
+        },
         supportingText = {
             errorMessage?.let { message -> Text(text = message) }
             Text(
@@ -58,24 +66,41 @@ fun CardholderNameTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.cardholder_name_text_field_content_description),
     )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardholderNameTextFieldPreview() {
-    var cardholderName by remember { mutableStateOf("") }
-    Column(modifier = Modifier.padding(12.dp)) {
+private fun CardholderNameTextFieldPreview(
+    @PreviewParameter(CardholderNameTextFieldPreviewParameterProvider::class) case:
+        CardholderNameTextFieldPreviewParameterProvider.CardholderNamePreviewCase,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Preview Case: ${case.caseName}")
+        HorizontalDivider()
         CardholderNameTextField(
-            cardholderName = cardholderName,
-            onCardholderNameChanged = { newValue -> cardholderName = newValue },
-        )
-
-        CardholderNameTextField(
-            cardholderName = cardholderName,
-            onCardholderNameChanged = { newValue -> cardholderName = newValue },
-            errorMessage = "유효하지 않은 이름입니다.",
+            cardholderName = case.cardholderName,
+            onCardholderNameChanged = {},
+            maxLength = 30,
+            errorMessage = case.errorMessage,
+            modifier = Modifier.padding(horizontal = 12.dp),
         )
     }
+}
+
+private class CardholderNameTextFieldPreviewParameterProvider :
+    PreviewParameterProvider<CardholderNameTextFieldPreviewParameterProvider.CardholderNamePreviewCase> {
+    data class CardholderNamePreviewCase(
+        val caseName: String,
+        val cardholderName: String,
+        val errorMessage: String?,
+    )
+
+    override val values =
+        sequenceOf(
+            CardholderNamePreviewCase("빈 값", "", null),
+            CardholderNamePreviewCase("정상", "DICE", null),
+            CardholderNamePreviewCase("오류", "1234", "유효하지 않은 형식입니다."),
+        )
 }

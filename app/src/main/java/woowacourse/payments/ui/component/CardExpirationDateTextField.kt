@@ -1,67 +1,53 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.GroupedVisualTransformation
-import java.time.YearMonth
-
-private const val CARD_EXPIRATION_DATE_LENGTH = 4
-private const val CENTURY_PREFIX = "20"
-private const val CARD_EXPIRATION_DATE_GROUP_SIZE = 2
-private const val CARD_EXPIRATION_DATE_SEPARATOR = " / "
+import woowacourse.payments.ui.extension.semanticsContentDescription
 
 @Composable
 fun CardExpirationDateTextField(
     cardExpirationDate: String,
     onCardExpirationDateChanged: (String) -> Unit,
+    errorMessage: String?,
     modifier: Modifier = Modifier,
-    errorMessage: String? = null,
+    visualTransformation: VisualTransformation = rememberDefaultCardExpirationDateVisualTransformation(),
 ) {
-    var isValidYearMonth by rememberSaveable { mutableStateOf(true) }
-    val visualTransformation =
-        remember {
-            GroupedVisualTransformation(
-                CARD_EXPIRATION_DATE_GROUP_SIZE,
-                CARD_EXPIRATION_DATE_SEPARATOR,
-            )
-        }
-
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_expiration_date_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.card_expiration_date_text_field_placeholder)) },
         value = cardExpirationDate,
-        onValueChange = { newValue ->
-            val newExpirationDate = newValue.take(CARD_EXPIRATION_DATE_LENGTH)
-            if (newExpirationDate.isDigitsOnly().not()) return@OutlinedTextField
-
-            isValidYearMonth = isValidYearMonth(newExpirationDate)
-            onCardExpirationDateChanged(newExpirationDate)
-        },
+        onValueChange = onCardExpirationDateChanged,
         isError = errorMessage != null,
-        supportingText = {
-            if (isValidYearMonth.not()) {
-                Text(text = stringResource(R.string.card_expiration_date_text_invalid_format))
-                return@OutlinedTextField
+        supportingText = { errorMessage?.let { message -> Text(text = message) } },
+        trailingIcon = {
+            errorMessage?.let {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                )
             }
-            errorMessage?.let { message -> Text(text = message) }
         },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -71,36 +57,49 @@ fun CardExpirationDateTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.card_expiration_date_text_field_content_description),
     )
 }
 
-private fun isValidYearMonth(cardExpirationDate: String): Boolean {
-    if (cardExpirationDate.length != CARD_EXPIRATION_DATE_LENGTH) return true
-
-    val month = cardExpirationDate.take(2).toInt()
-    val year = (CENTURY_PREFIX + cardExpirationDate.takeLast(2)).toInt()
-    return runCatching { YearMonth.of(year, month) }.isSuccess
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardExpirationDateTextFieldPreview() {
-    Column(modifier = Modifier.padding(12.dp)) {
-        CardExpirationDateTextField(
-            cardExpirationDate = "",
-            onCardExpirationDateChanged = {},
-        )
-
-        CardExpirationDateTextField(
-            cardExpirationDate = "1226",
-            onCardExpirationDateChanged = {},
-        )
-
-        CardExpirationDateTextField(
-            cardExpirationDate = "1326",
-            onCardExpirationDateChanged = {},
-            errorMessage = "유효하지 않은 만료일 입니다.",
+private fun rememberDefaultCardExpirationDateVisualTransformation(): VisualTransformation =
+    remember {
+        GroupedVisualTransformation(
+            groupSize = 2,
+            separator = " / ",
         )
     }
+
+@Preview(showBackground = true)
+@Composable
+private fun CardExpirationDateTextFieldPreview(
+    @PreviewParameter(CardExpirationDatePreviewParameterProvider::class) case:
+        CardExpirationDatePreviewParameterProvider.CardExpirationDatePreviewCase,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Preview Case: ${case.caseName}")
+        HorizontalDivider()
+        CardExpirationDateTextField(
+            cardExpirationDate = case.cardExpirationDate,
+            onCardExpirationDateChanged = {},
+            errorMessage = case.errorMessage,
+            modifier = Modifier.padding(horizontal = 12.dp),
+        )
+    }
+}
+
+private class CardExpirationDatePreviewParameterProvider :
+    PreviewParameterProvider<CardExpirationDatePreviewParameterProvider.CardExpirationDatePreviewCase> {
+    data class CardExpirationDatePreviewCase(
+        val caseName: String,
+        val cardExpirationDate: String,
+        val errorMessage: String?,
+    )
+
+    override val values: Sequence<CardExpirationDatePreviewCase> =
+        sequenceOf(
+            CardExpirationDatePreviewCase("빈 값", "", null),
+            CardExpirationDatePreviewCase("정상", "1233", null),
+            CardExpirationDatePreviewCase("오류", "1333", "만료일 형식이 올바르지 않습니다."),
+        )
 }

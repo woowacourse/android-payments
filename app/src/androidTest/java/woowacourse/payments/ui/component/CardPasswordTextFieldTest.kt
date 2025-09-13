@@ -7,73 +7,135 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertIsNotFocused
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
+import androidx.compose.ui.test.requestFocus
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertAll
 
 class CardPasswordTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Before
-    fun setup() {
+    @Test
+    fun `입력과_포커스가_없으면_라벨만_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "비밀번호"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsNotFocused() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `입력이_없고_포커스가_있으면_라벨과_플레이스홀더가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.requestFocus()
+
+        // then
+        val labelText = "비밀번호"
+        val placeholderText = "0000"
+        val editableText = ""
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertIsFocused() },
+            { textField.assertTextEquals(labelText, placeholderText, editableText) },
+        )
+    }
+
+    @Test
+    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+        // given
+        setup(errorMessage = "형식이 올바르지 않습니다.")
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // then
+        val labelText = "비밀번호"
+        val editableText = ""
+        val errorMessage = "형식이 올바르지 않습니다."
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText, errorMessage) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하면_비밀번호가_보인다`() {
+        // given
+        setup()
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        textField.performTextInput("1234")
+
+        // then
+        val labelText = "비밀번호"
+        val editableText = "1234"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    @Test
+    fun `값을_입력하고_VisualTransformation을_적용하면_포맷팅된_비밀번호가_보인다`() {
+        // given
+        setup(visualTransformation = PasswordVisualTransformation())
+        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
+
+        // when
+        val testInput = "1234"
+        textField.performTextInput(testInput)
+
+        // then
+        val labelText = "비밀번호"
+        val editableText = "••••"
+
+        assertAll(
+            { textField.assertIsDisplayed() },
+            { textField.assertTextEquals(labelText, editableText) },
+        )
+    }
+
+    private fun setup(
+        initialCardPassword: String = "",
+        errorMessage: String? = null,
+        visualTransformation: VisualTransformation = VisualTransformation.None,
+    ) {
         composeTestRule.setContent {
-            var cardPassword by remember { mutableStateOf("") }
+            var cardPassword by remember { mutableStateOf(initialCardPassword) }
             CardPasswordTextField(
                 cardPassword = cardPassword,
                 onCardPasswordChanged = { newValue -> cardPassword = newValue },
-                modifier = Modifier.testTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG),
+                errorMessage = errorMessage,
+                modifier = Modifier.testTag(TEST_TAG),
+                visualTransformation = visualTransformation,
             )
         }
     }
 
-    @Test
-    fun `비밀번호는_숫자만_입력_가능해야_한다`() {
-        // when
-        val textField = composeTestRule.onNodeWithTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG)
-        textField.performTextInput("1")
-        textField.performTextInput("a")
-        textField.performTextInput("2")
-
-        // then
-        composeTestRule
-            .onNodeWithTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("••")
-    }
-
-    @Test
-    fun `비밀번호_입력_값이_없는_경우_Placeholder가_보여진다`() {
-        // when
-        composeTestRule
-            .onNodeWithTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .performClick()
-
-        // then
-        composeTestRule
-            .onNodeWithText("0000")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `비밀번호는_길이가_4자를_넘어갈_수_없다`() {
-        // when
-        composeTestRule
-            .onNodeWithTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG)
-            .performTextInput("12345")
-
-        // then
-        composeTestRule
-            .onNodeWithTag(CARD_PASSWORD_TEXT_FIELD_TEST_TAG, useUnmergedTree = true)
-            .assertTextEquals("••••")
-    }
-
     companion object {
-        private const val CARD_PASSWORD_TEXT_FIELD_TEST_TAG = "CardPasswordTextField"
+        private const val TEST_TAG = "CardPasswordTextField"
     }
 }

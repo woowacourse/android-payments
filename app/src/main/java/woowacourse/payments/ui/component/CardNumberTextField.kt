@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -13,37 +17,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import androidx.core.text.isDigitsOnly
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.GroupedVisualTransformation
-
-private const val CARD_NUMBER_LENGTH = 16
-private const val CARD_NUMBER_GROUP_SIZE = 4
-private const val CARD_NUMBER_SEPARATOR = " - "
+import woowacourse.payments.ui.extension.semanticsContentDescription
 
 @Composable
 fun CardNumberTextField(
     cardNumber: String,
     onCardNumberChanged: (String) -> Unit,
+    errorMessage: String?,
     modifier: Modifier = Modifier,
-    errorMessage: String? = null,
+    visualTransformation: VisualTransformation = rememberDefaultCardExpirationDateVisualTransformation(),
 ) {
-    val visualTransformation =
-        remember { GroupedVisualTransformation(CARD_NUMBER_GROUP_SIZE, CARD_NUMBER_SEPARATOR) }
-
     OutlinedTextField(
         label = { Text(text = stringResource(R.string.card_number_text_field_label)) },
         placeholder = { Text(text = stringResource(R.string.card_number_text_field_placeholder)) },
         value = cardNumber,
-        onValueChange = { newValue ->
-            val newCardNumber = newValue.take(CARD_NUMBER_LENGTH)
-            if (newCardNumber.isDigitsOnly().not()) return@OutlinedTextField
-
-            onCardNumberChanged(newCardNumber)
-        },
+        onValueChange = onCardNumberChanged,
         isError = errorMessage != null,
+        trailingIcon = {
+            errorMessage?.let {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                )
+            }
+        },
         supportingText = { errorMessage?.let { message -> Text(text = message) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = visualTransformation,
@@ -52,29 +56,46 @@ fun CardNumberTextField(
                 focusedPlaceholderColor = Color.Gray,
                 unfocusedPlaceholderColor = Color.Gray,
             ),
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.card_number_text_field_content_description),
     )
 }
 
+@Composable
+private fun rememberDefaultCardExpirationDateVisualTransformation(): VisualTransformation =
+    remember {
+        GroupedVisualTransformation(groupSize = 4, separator = " - ")
+    }
+
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardNumberTextFieldPreview() {
-    Column(
-        modifier = Modifier.padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-    ) {
+private fun CardNumberTextFieldPreview(
+    @PreviewParameter(CardNumberTextFieldPreviewParameterProvider::class) case:
+        CardNumberTextFieldPreviewParameterProvider.CardNumberTextFieldPreviewCase,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("Preview Case: ${case.caseName}")
+        HorizontalDivider()
         CardNumberTextField(
-            cardNumber = "",
+            cardNumber = case.cardNumber,
             onCardNumberChanged = {},
-        )
-        CardNumberTextField(
-            cardNumber = "1234123412341234",
-            onCardNumberChanged = {},
-        )
-        CardNumberTextField(
-            cardNumber = "1234123412341234",
-            onCardNumberChanged = {},
-            errorMessage = "유효하지 않은 카드번호입니다.",
+            errorMessage = case.errorMessage,
+            modifier = Modifier.padding(12.dp),
         )
     }
+}
+
+private class CardNumberTextFieldPreviewParameterProvider :
+    PreviewParameterProvider<CardNumberTextFieldPreviewParameterProvider.CardNumberTextFieldPreviewCase> {
+    data class CardNumberTextFieldPreviewCase(
+        val caseName: String,
+        val cardNumber: String,
+        val errorMessage: String?,
+    )
+
+    override val values =
+        sequenceOf(
+            CardNumberTextFieldPreviewCase("빈 값", "", null),
+            CardNumberTextFieldPreviewCase("정상", "1234123412341234", null),
+            CardNumberTextFieldPreviewCase("오류", "ABC", "유효하지 않은 형식입니다."),
+        )
 }
