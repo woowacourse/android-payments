@@ -42,7 +42,8 @@ fun AllCardsTopbar(
                         fontSize = 18.sp,
                     )
                 }
-                else -> Unit
+                AllCardsUiState.ViewType.SINGLE -> Unit
+                AllCardsUiState.ViewType.EMPTY -> Unit
             }
         },
     )
