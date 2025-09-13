@@ -57,9 +57,14 @@ fun CardNumberInputField(
         error?.let {
             Text(
                 text = stringResource(R.string.card_number_invalid),
+                modifier =
+                    Modifier
+                        .padding(top = 4.dp)
+                        .semantics {
+                            this.contentDescription = "Card Number Input Error"
+                        },
                 color = Color.Red,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }

@@ -88,9 +88,14 @@ fun PasswordInputField(
         error?.let {
             Text(
                 text = stringResource(R.string.password_invalid),
+                modifier =
+                    Modifier
+                        .padding(top = 4.dp)
+                        .semantics {
+                            this.contentDescription = "Password Input Error"
+                        },
                 color = Color.Red,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }

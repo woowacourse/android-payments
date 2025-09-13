@@ -57,9 +57,14 @@ fun ExpiredInputField(
         error?.let {
             Text(
                 text = stringResource(R.string.expired_invalid),
+                modifier =
+                    Modifier
+                        .padding(top = 4.dp)
+                        .semantics {
+                            this.contentDescription = "Expired Input Error"
+                        },
                 color = Color.Red,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(top = 4.dp),
             )
         }
     }
