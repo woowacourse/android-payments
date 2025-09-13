@@ -38,8 +38,8 @@ class AddCardStateHolder(
         uiState = uiState.copy(password = newPassword)
     }
 
-    fun showValidationError(isError: Boolean) {
-        uiState = uiState.copy(showValidationError = isError)
+    fun validateAll() {
+        uiState = uiState.validate()
     }
 
     companion object {
@@ -51,17 +51,23 @@ class AddCardStateHolder(
                         EXPIRED_KEY to holder.uiState.expired?.value,
                         CARD_OWNER_KEY to holder.uiState.cardOwner.value,
                         PASSWORD_KEY to holder.uiState.password?.value,
-                        VALIDATION_ERROR_KEY to holder.uiState.showValidationError,
+                        VALIDATION_ERROR_KEY to ArrayList(holder.uiState.errors.map { it.name }),
                     )
                 },
                 restore = { bundle ->
+                    val errors =
+                        bundle
+                            .getStringArrayList(VALIDATION_ERROR_KEY)
+                            ?.mapNotNull { runCatching { AddCardError.valueOf(it) }.getOrNull() }
+                            ?.toSet() ?: emptySet()
+
                     val restoredState =
                         AddCardUiState(
                             cardNumber = bundle.getString(CARD_NUMBER_KEY)?.let(::CardNumber),
                             expired = bundle.getString(EXPIRED_KEY)?.let(::Expired),
                             cardOwner = CardOwner(bundle.getString(CARD_OWNER_KEY) ?: ""),
                             password = bundle.getString(PASSWORD_KEY)?.let(::Password),
-                            showValidationError = bundle.getBoolean(VALIDATION_ERROR_KEY),
+                            errors = errors,
                         )
                     AddCardStateHolder(restoredState)
                 },

@@ -39,7 +39,7 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    stateHolder.showValidationError(!stateHolder.uiState.isFormValid)
+                    stateHolder.validateAll()
                     if (stateHolder.uiState.isFormValid) {
                         onCardSaved(stateHolder.uiState.toCardUiModel())
                     }
@@ -69,28 +69,28 @@ fun AddCardScreen(
                 modifier = Modifier.fillMaxWidth(),
                 cardNumber = stateHolder.uiState.cardNumber,
                 onCardNumberChange = { stateHolder.updateCardNumber(it) },
-                showValidationError = stateHolder.uiState.showValidationError,
+                error = stateHolder.uiState.cardNumberError,
             )
 
             ExpiredInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
                 expired = stateHolder.uiState.expired,
                 onExpiredChange = { stateHolder.updateExpired(it) },
-                showValidationError = stateHolder.uiState.showValidationError,
+                error = stateHolder.uiState.expiredError,
             )
 
             CardOwnerInputField(
                 modifier = Modifier.fillMaxWidth(),
                 cardOwner = stateHolder.uiState.cardOwner,
                 onOwnerChange = { stateHolder.updateCardOwner(it) },
-                showValidationError = stateHolder.uiState.showValidationError,
+                error = stateHolder.uiState.ownerError,
             )
 
             PasswordInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
                 password = stateHolder.uiState.password,
                 onPasswordChange = { stateHolder.updatePassword(it) },
-                showValidationError = stateHolder.uiState.showValidationError,
+                error = stateHolder.uiState.passwordError,
             )
         }
     }
