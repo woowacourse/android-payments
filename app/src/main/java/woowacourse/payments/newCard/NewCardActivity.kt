@@ -61,6 +61,12 @@ class NewCardActivity : ComponentActivity() {
                                 setResult(RESULT_OK, data)
                                 finish()
                             },
+                            isSaveEnabled = runCatching { Card(
+                                CardNumber(newCardStateHolder.cardNumber),
+                                CardExpiry.fromString(newCardStateHolder.cardExpiry),
+                                password = CardPassword(newCardStateHolder.cardPassword),
+                                name = CardName(newCardStateHolder.cardName),
+                            ) }.isSuccess,
                         )
                     },
                 ) { innerPadding ->
