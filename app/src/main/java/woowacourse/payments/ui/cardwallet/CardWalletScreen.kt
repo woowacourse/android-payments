@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.cardwallet
 
 import android.app.Activity
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -50,7 +49,7 @@ fun CardWalletScreen(
     Scaffold(
         topBar = {
             CardWalletTopBar(
-                isAddable = cardList.size > 1,
+                isAddable = cardList.size > MIN_CARDS_FOR_ADD_BUTTON,
                 onAddCardClick = {
                     val intent = NewCardScreenActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
@@ -115,3 +114,5 @@ fun CardWalletScreen(
         }
     }
 }
+
+private const val MIN_CARDS_FOR_ADD_BUTTON = 2
