@@ -1,7 +1,6 @@
 package woowacourse.payments.list
 
 import androidx.compose.runtime.Composable
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.PaymentCard
 
 @Composable
