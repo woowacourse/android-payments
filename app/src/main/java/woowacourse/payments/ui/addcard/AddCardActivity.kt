@@ -2,7 +2,6 @@ package woowacourse.payments.ui.addcard
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -14,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -31,8 +29,9 @@ class AddCardActivity : ComponentActivity() {
                 Scaffold(
                     topBar = {
                         AddCardTopbar(
+                            isAddCardEnabled = cardInfo.isComplete(),
+                            onAddCardSucceeded = { saveCard(cardInfo) },
                             onBackClick = { finish() },
-                            onCheckedClick = { saveCard(cardInfo) },
                         )
                     },
                 ) { padding ->
@@ -50,18 +49,12 @@ class AddCardActivity : ComponentActivity() {
     }
 
     private fun saveCard(cardInfo: CardInfoUiState) {
-        if (cardInfo.isComplete()) {
-            setResult(
-                RESULT_OK,
-                Intent().apply {
-                    putExtra(CARD_INFO_KEY, cardInfo)
-                },
-            )
-            finish()
-        } else {
-            Toast
-                .makeText(this, getString(R.string.addcard_failed_to_add_card), Toast.LENGTH_SHORT)
-                .show()
-        }
+        setResult(
+            RESULT_OK,
+            Intent().apply {
+                putExtra(CARD_INFO_KEY, cardInfo)
+            },
+        )
+        finish()
     }
 }
