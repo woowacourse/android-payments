@@ -57,13 +57,7 @@ fun PaymentCard(
 
             if (card != null) {
                 Text(
-                    text =
-                        card.number.chunked(4).mapIndexed {
-                                index,
-                                element,
-                            ->
-                            if (index < 2) element else "*".repeat(element.length)
-                        }.joinToString(" - "),
+                    text = card.number,
                     color = Color.White,
                     fontSize = 12.sp,
                     letterSpacing = 1.5.sp,
@@ -80,7 +74,7 @@ fun PaymentCard(
                         letterSpacing = 2.sp,
                     )
                     Text(
-                        text = card.expiry.chunked(2).joinToString(" / "),
+                        text = card.expiry,
                         color = Color.White,
                         fontSize = 12.sp,
                         lineHeight = 12.sp,
