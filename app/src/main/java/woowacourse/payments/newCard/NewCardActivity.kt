@@ -88,9 +88,9 @@ class NewCardActivity : ComponentActivity() {
                             modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 16,
                             mask = InputMask.CardNumber,
-                            errorMessage = getString(R.string.card_number_error_message),
+                            errorMessage = runCatching { CardNumber(newCardStateHolder.cardNumber) }.exceptionOrNull()?.message ?: "",
                             imeAction = ImeAction.Next,
-                            isError = newCardStateHolder.cardNumber.length < 16 && newCardStateHolder.cardNumber.isNotEmpty(),
+                            isError = if (newCardStateHolder.cardNumber.isNotEmpty()) runCatching { CardNumber(newCardStateHolder.cardNumber) }.isFailure else false,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
@@ -104,9 +104,9 @@ class NewCardActivity : ComponentActivity() {
                                     .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Expiry,
-                            errorMessage = getString(R.string.card_expiry_error_message),
+                            errorMessage = runCatching { CardExpiry.fromString(newCardStateHolder.cardExpiry) }.exceptionOrNull()?.message ?: "",
                             imeAction = ImeAction.Next,
-                            isError = newCardStateHolder.cardExpiry.length < 4 && newCardStateHolder.cardExpiry.isNotEmpty(),
+                            isError = if (newCardStateHolder.cardExpiry.isNotEmpty()) runCatching { CardExpiry.fromString(newCardStateHolder.cardExpiry) }.isFailure else false,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedUppercaseTextField(
@@ -130,8 +130,8 @@ class NewCardActivity : ComponentActivity() {
                                     .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Password,
-                            errorMessage = getString(R.string.card_password_error_message),
-                            isError = newCardStateHolder.cardPassword.length < 4 && newCardStateHolder.cardPassword.isNotEmpty(),
+                            errorMessage = runCatching { CardPassword(newCardStateHolder.cardPassword) }.exceptionOrNull()?.message ?: "",
+                            isError = if (newCardStateHolder.cardPassword.isNotEmpty()) runCatching { CardPassword(newCardStateHolder.cardPassword) }.isFailure else false,
                         )
                     }
                 }

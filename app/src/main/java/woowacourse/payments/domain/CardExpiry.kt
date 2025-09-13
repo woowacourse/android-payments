@@ -5,7 +5,7 @@ import java.time.YearMonth
 @JvmInline
 value class CardExpiry(val value: YearMonth) {
     init {
-        require(value.isAfter(MINIMUM_VALID_EXPIRY) || value == MINIMUM_VALID_EXPIRY) { "카드 만료일은 $MINIMUM_VALID_EXPIRY 이후여야 합니다." }
+        require(value.isAfter(MINIMUM_VALID_EXPIRY) || value == MINIMUM_VALID_EXPIRY) { "카드 만료일은 ${MINIMUM_VALID_EXPIRY.year}년 ${MINIMUM_VALID_EXPIRY.monthValue}월 이후여야 합니다." }
     }
 
     companion object {
