@@ -22,8 +22,8 @@ class AddOneCardListTest {
                 cards =
                     listOf(
                         CardUiModel(
-                            "1234123412341234",
-                            "1234",
+                            "1234 - 1234 - **** - ****",
+                            "12 / 34",
                             "9999",
                             "PARK JIWON",
                         ),
@@ -48,7 +48,7 @@ class AddOneCardListTest {
     }
 
     @Test
-    fun 추가된_카드가_하나면_추가된_카드의_일부가_마스킹된_번호가_보인다() {
+    fun 추가된_카드가_하나면_추가된_카드의_번호가_보인다() {
         composeTestRule
             .onNodeWithText("1234 - 1234 - **** - ****")
             .assertIsDisplayed()

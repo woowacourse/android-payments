@@ -7,7 +7,6 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Card
 import woowacourse.payments.list.CardListScreen
 import woowacourse.payments.list.CardUiModel
 
@@ -23,14 +22,14 @@ class AddTwoOrMoreCardListTest {
                 cards =
                     listOf(
                         CardUiModel(
-                            "1234123412341234",
-                            "1234",
+                            "1234 - 1234 - **** - ****",
+                            "12 / 34",
                             "9999",
                             "PARK JIWON",
                         ),
                         CardUiModel(
-                            "7890789078907890",
-                            "0999",
+                            "7890 - 7890 - **** - ****",
+                            "09 / 99",
                             "1234",
                             "TOMATO BASIL ADE",
                         ),
