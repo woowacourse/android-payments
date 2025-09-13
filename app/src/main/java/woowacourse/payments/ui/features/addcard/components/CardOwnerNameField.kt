@@ -15,9 +15,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card.Companion.MAX_LENGTH_OWNER_NAME
+import woowacourse.payments.domain.card.values.OwnerName.Companion.MAX_LENGTH_OWNER_NAME
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +28,10 @@ fun CardOwnerNameField(
 ) {
     AppTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { newValue ->
+            val filteredValue = newValue.take(MAX_LENGTH_OWNER_NAME)
+            onValueChange(filteredValue)
+        },
         modifier = modifier,
         labelText = stringResource(R.string.add_card_owner_name_field_title),
         placeholderText = stringResource(R.string.add_card_owner_name_field_hint),
@@ -37,7 +39,7 @@ fun CardOwnerNameField(
             Text(
                 text =
                     stringResource(
-                        R.string.add_card_expire_date_field_counter_format,
+                        R.string.add_card_owner_name_field_counter_format,
                         value.length,
                         MAX_LENGTH_OWNER_NAME,
                     ),
@@ -57,7 +59,20 @@ fun CardOwnerNameFieldPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
         CardOwnerNameField(
             value = text,
-            onValueChange = { text = CardUiState().withOwnerName(it).ownerName },
+            onValueChange = { text = it },
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CardOwnerNameFieldTypingPreview() {
+    var text by remember { mutableStateOf("메다") }
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        CardOwnerNameField(
+            value = text,
+            onValueChange = { text = it },
         )
     }
 }
