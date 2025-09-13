@@ -32,13 +32,33 @@ class AddCardTopbarTest {
     }
 
     @Test
-    fun 체크_버튼을_누르면_완료_동작을_수행한다() {
+    fun 카드_추가가_가능할때_체크_버튼을_누르면_성공_동작을_수행한다() {
         // given
         var isCompleteClicked = false
         composeTestRule.setContent {
             AddCardTopbar(
-                onBackClick = {},
-                onCheckedClick = { isCompleteClicked = true },
+                isAddCardEnabled = true,
+                onAddCardSucceeded = { isCompleteClicked = true },
+            )
+        }
+
+        // when
+        composeTestRule
+            .onNodeWithContentDescription("확인")
+            .performClick()
+
+        // then
+        assert(isCompleteClicked == true)
+    }
+
+    @Test
+    fun 카드_추가가_불가능할때_체크_버튼을_누르면_실패_동작을_수행한다() {
+        // given
+        var isCompleteClicked = false
+        composeTestRule.setContent {
+            AddCardTopbar(
+                isAddCardEnabled = false,
+                onAddCardFailed = { isCompleteClicked = true },
             )
         }
 
