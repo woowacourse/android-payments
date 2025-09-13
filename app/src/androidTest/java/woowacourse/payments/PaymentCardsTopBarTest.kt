@@ -16,10 +16,10 @@ class PaymentCardsTopBarTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun 카드가_1개면_추가버튼이_보이지_않는다() {
+    fun 카드가_2개_미만이면_추가버튼이_보이지_않는다() {
         composeRule.setContent {
             PaymentCardsTopBar(
-                cardCount = 1,
+                showAddButton = false,
                 modifier = Modifier.testTag(Tags.TOPBAR_ADD),
                 onAddClick = {},
             )
@@ -29,10 +29,10 @@ class PaymentCardsTopBarTest {
     }
 
     @Test
-    fun 카드가_2개면_추가버튼이_보인다() {
+    fun 카드가_2개_이상이면_추가버튼이_보인다() {
         composeRule.setContent {
             PaymentCardsTopBar(
-                cardCount = 2,
+                showAddButton = true,
                 modifier = Modifier.testTag(Tags.TOPBAR_ADD),
                 onAddClick = {},
             )
@@ -47,7 +47,7 @@ class PaymentCardsTopBarTest {
 
         composeRule.setContent {
             PaymentCardsTopBar(
-                cardCount = 2,
+                showAddButton = true,
                 modifier = Modifier.testTag(Tags.TOPBAR_ADD),
                 onAddClick = { clicked = true },
             )

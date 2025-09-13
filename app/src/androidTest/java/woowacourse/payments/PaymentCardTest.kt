@@ -10,8 +10,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.format.formattedExpiry
-import woowacourse.payments.ui.format.maskedCardNumber
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class PaymentCardTest {
@@ -29,11 +27,11 @@ class PaymentCardTest {
                 expiry = "0511",
                 owner = "minjeong",
             )
-        val cardSep = context.getString(R.string.card_number_separator)
-        val expirySep = context.getString(R.string.expiry_separator)
+        val cardSep = context.getString(R.string.card_number_separator) // 예: " - "
+        val expirySep = context.getString(R.string.expiry_separator) // 예: " / "
 
-        val expectedCardNumber = "1234567812341234".maskedCardNumber(cardSep)
-        val expectedExpiry = "0511".formattedExpiry(expirySep)
+        val expectedCardNumber = uiModel.maskedCardNumber(cardSep)
+        val expectedExpiry = uiModel.formattedExpiry(expirySep)
 
         // when
         composeRule.setContent {
