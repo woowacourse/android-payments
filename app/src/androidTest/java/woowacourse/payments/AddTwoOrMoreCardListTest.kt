@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.list.CardListScreen
+import woowacourse.payments.list.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class AddTwoOrMoreCardListTest {
@@ -21,13 +22,13 @@ class AddTwoOrMoreCardListTest {
             CardListScreen(
                 cards =
                     listOf(
-                        Card(
+                        CardUiModel(
                             "1234123412341234",
                             "1234",
                             "9999",
                             "PARK JIWON",
                         ),
-                        Card(
+                        CardUiModel(
                             "7890789078907890",
                             "0999",
                             "1234",

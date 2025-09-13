@@ -13,18 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ExpiryValidator
 import woowacourse.payments.InputMask
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
@@ -37,10 +31,7 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cardNumber by remember { mutableStateOf("") }
-                var cardExpriy by remember { mutableStateOf("") }
-                var cardName by remember { mutableStateOf("") }
-                var cardPassword by remember { mutableStateOf("") }
+                val newCardStateHolder = NewCardStateHolder()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -54,7 +45,7 @@ class NewCardActivity : ComponentActivity() {
                                     Intent().apply {
                                         putExtra(
                                             "card",
-                                            CardUiModel(number = cardNumber, expiry = cardExpriy, password = cardPassword, name = cardName),
+                                            CardUiModel(number = newCardStateHolder.cardNumber, expiry = newCardStateHolder.cardExpiry, password = newCardStateHolder.cardPassword, name = newCardStateHolder.cardName),
                                         )
                                     }
                                 setResult(RESULT_OK, data)
@@ -80,8 +71,8 @@ class NewCardActivity : ComponentActivity() {
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            text = cardNumber,
-                            onValueChange = { cardNumber = it },
+                            text = newCardStateHolder.cardNumber,
+                            onValueChange = { newCardStateHolder.cardNumber = it },
                             label = getString(R.string.card_number_label),
                             hint = "0000 - 0000 - 0000 - 0000",
                             modifier = Modifier.padding(horizontal = 24.dp),
@@ -89,12 +80,12 @@ class NewCardActivity : ComponentActivity() {
                             mask = InputMask.CardNumber,
                             errorMessage = getString(R.string.card_number_error_message),
                             imeAction = ImeAction.Next,
-                            isError = cardNumber.length < 16 && cardNumber.isNotEmpty(),
+                            isError = newCardStateHolder.cardNumber.length < 16 && newCardStateHolder.cardNumber.isNotEmpty(),
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            text = cardExpriy,
-                            onValueChange = { cardExpriy = it },
+                            text = newCardStateHolder.cardExpiry,
+                            onValueChange = { newCardStateHolder.cardExpiry = it },
                             label = getString(R.string.card_expiry_label),
                             hint = "MM / YY",
                             modifier =
@@ -105,12 +96,12 @@ class NewCardActivity : ComponentActivity() {
                             mask = InputMask.Expiry,
                             errorMessage = getString(R.string.card_expiry_error_message),
                             imeAction = ImeAction.Next,
-                            isError = cardExpriy.length < 4 && !ExpiryValidator.isValidExpiry(cardExpriy) && cardExpriy.isNotEmpty(),
+                            isError = newCardStateHolder.cardExpiry.length < 4 && newCardStateHolder.cardExpiry.isNotEmpty(),
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedUppercaseTextField(
-                            text = cardName,
-                            onValueChange = { cardName = it },
+                            text = newCardStateHolder.cardName,
+                            onValueChange = { newCardStateHolder.cardName = it },
                             label = getString(R.string.card_owner_label),
                             hint = getString(R.string.card_owner_hint),
                             modifier = Modifier.padding(horizontal = 24.dp),
@@ -119,8 +110,8 @@ class NewCardActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(15.dp))
                         DigitTextField(
-                            text = cardPassword,
-                            onValueChange = { cardPassword = it },
+                            text = newCardStateHolder.cardPassword,
+                            onValueChange = { newCardStateHolder.cardPassword = it },
                             label = getString(R.string.card_password_label),
                             hint = "0000",
                             modifier =
@@ -130,7 +121,7 @@ class NewCardActivity : ComponentActivity() {
                             maxLength = 4,
                             mask = InputMask.Password,
                             errorMessage = getString(R.string.card_password_error_message),
-                            isError = cardPassword.length < 4 && cardPassword.isNotEmpty(),
+                            isError = newCardStateHolder.cardPassword.length < 4 && newCardStateHolder.cardPassword.isNotEmpty(),
                         )
                     }
                 }
