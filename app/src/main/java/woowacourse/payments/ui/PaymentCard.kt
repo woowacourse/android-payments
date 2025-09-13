@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.Card
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

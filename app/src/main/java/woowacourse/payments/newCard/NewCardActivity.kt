@@ -19,7 +19,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.InputMask
 import woowacourse.payments.R
-import woowacourse.payments.list.CardUiModel
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardExpiry
+import woowacourse.payments.domain.CardName
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.list.toUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
 import woowacourse.payments.ui.PaymentCard
@@ -45,7 +50,12 @@ class NewCardActivity : ComponentActivity() {
                                     Intent().apply {
                                         putExtra(
                                             "card",
-                                            CardUiModel(number = newCardStateHolder.cardNumber, expiry = newCardStateHolder.cardExpiry, password = newCardStateHolder.cardPassword, name = newCardStateHolder.cardName),
+                                            Card(
+                                                CardNumber(newCardStateHolder.cardNumber),
+                                                CardExpiry.fromString(newCardStateHolder.cardExpiry),
+                                                password = CardPassword(newCardStateHolder.cardPassword),
+                                                name = CardName(newCardStateHolder.cardName),
+                                            ).toUiModel()
                                         )
                                     }
                                 setResult(RESULT_OK, data)

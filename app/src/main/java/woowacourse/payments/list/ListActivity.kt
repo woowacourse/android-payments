@@ -15,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.domain.Card
 import woowacourse.payments.newCard.NewCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
