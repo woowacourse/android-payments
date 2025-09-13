@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.addcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -9,15 +9,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.CardInfoUiState
-import woowacourse.payments.ui.addcard.util.ExpirationDateTransformation
+import woowacourse.payments.ui.addcard.util.ExpirationDateFieldTransformation
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
+import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 fun ExpireDateTextField(
     cardInfo: CardInfoUiState,
     modifier: Modifier = Modifier,
-    ) {
+) {
     OutlinedTextField(
         modifier = modifier,
         singleLine = true,
@@ -36,6 +36,6 @@ fun ExpireDateTextField(
         visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
             placeholder = stringResource(R.string.addcard_expire_date_placeholder),
             textColor = colorResource(R.color.payments_placeholder_color)
-        ) else ExpirationDateTransformation(),
+        ) else ExpirationDateFieldTransformation(),
     )
 }

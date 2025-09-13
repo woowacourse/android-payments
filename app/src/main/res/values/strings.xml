@@ -1,21 +1,29 @@
 <resources>
     <string name="app_name">android-payments</string>
-    <string name="payments_topbar_add_card">카드 추가</string>
+    <string name="payments_addcard_topbar_add_card">카드 추가</string>
+    <string name="payments_allcards_topbar_all_cards">Payments</string>
+    <string name="payments_allcards_topbar_add_cards">추가</string>
+
 
     <!--addcard -->
     <string name="addcard_card_number_label">카드 번호</string>
     <string name="addcard_card_number_placeholder">0000-0000-0000-0000</string>
     <string name="addcard_expire_date_label">만료일</string>
     <string name="addcard_expire_date_placeholder">MM / YY</string>
-    <string name="addcard_expire_date_error">유효하지 않은 날짜입니다"></string>
+    <string name="addcard_expire_date_error">유효하지 않은 날짜입니다</string>
     <string name="addcard_owner_name_label">카드 소유자 이름(선택)</string>
     <string name="addcard_owner_name_placeholder">카드에 표시된 이름을 입력하세요</string>
     <string name="addcard_password_label">비밀번호</string>
     <string name="addcard_password_placeholder">0000</string>
+    <string name="addcard_failed_to_add_card">카드 정보를 전부 입력해주세요</string>
+
+    <!--allcards-->
+    <string name="allcards_request_add_card">새로운 카드를 등록해주세요</string>
+    <string name="allcards_card_added">카드가 추가되었습니다</string>
 
 
     <!--content description-->
     <string name="payments_topbar_back_icon_description">뒤로 가기</string>
     <string name="payments_topbar_checked_icon_description">확인</string>
-
+    <string name="payments_topbar_add_card_icon_description">추가</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-class CardNumberTransformation : VisualTransformation {
+class CardNumberFieldTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val cardNumberWithHyphens = text.chunked(4).joinToString("-")
         return TransformedText(
