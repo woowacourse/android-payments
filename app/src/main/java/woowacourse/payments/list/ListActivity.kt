@@ -1,7 +1,6 @@
 package woowacourse.payments.list
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,42 +8,15 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.newCard.NewCardActivity
-import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
 
@@ -78,109 +50,6 @@ class ListActivity : ComponentActivity() {
             }
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CardListTopBar(
-    modifier: Modifier = Modifier,
-    actions: @Composable (RowScope.() -> Unit) = {},
-) {
-    CenterAlignedTopAppBar(
-        title = { Text(text = "Payments") },
-        actions = actions,
-        modifier = modifier,
-    )
-}
-
-@Composable
-fun CardListScreen(
-    cards: List<Card>,
-    onAddClick: () -> Unit,
-) {
-    Scaffold(
-        topBar = {
-            CardListTopBar(
-                actions = {
-                    if (cards.size >= 2) {
-                        TextButton(
-                            onClick = onAddClick,
-                            content = {
-                                Text(
-                                    text = stringResource(R.string.add_new_card_button),
-                                    fontSize = 18.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.Black,
-                                )
-                            },
-                        )
-                    }
-                },
-            )
-        },
-    ) { innerPadding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(18.dp),
-        ) {
-            when (cards.size) {
-                0 -> {
-                    AddNewCardText()
-                    AddNewCard(
-                        onAddClick = onAddClick,
-                    )
-                }
-
-                1 -> {
-                    CardList(cards)
-                    AddNewCard(
-                        onAddClick = onAddClick,
-                    )
-                }
-
-                else -> {
-                    CardList(cards)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun CardList(cards: List<Card>) {
-    cards.forEach { card: Card -> PaymentCard(card = card) }
-}
-
-@Composable
-fun AddNewCard(onAddClick: () -> Unit) {
-    Box(
-        modifier =
-            Modifier
-                .height(124.dp)
-                .width(208.dp)
-                .clickable(onClick = onAddClick)
-                .background(color = Color(0xFFE5E5E5)),
-        content = {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = stringResource(R.string.content_description_add_new_card),
-                modifier = Modifier.align(alignment = Alignment.Center),
-            )
-        },
-    )
-}
-
-@Composable
-fun AddNewCardText() {
-    Text(
-        text = stringResource(R.string.add_new_card_prompt),
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold
-    )
 }
 
 @Preview(name = "카드가 없을 때")
