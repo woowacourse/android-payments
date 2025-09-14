@@ -28,7 +28,7 @@ import woowacourse.payments.ui.cardlist.util.navigateToAddCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun GenerateCardListView() {
+fun GenerateCardListView(modifier: Modifier = Modifier) {
     val cards: MutableList<Card> = remember { mutableStateListOf() }
     val context = LocalContext.current
     val addCardLauncher =
@@ -57,7 +57,7 @@ fun GenerateCardListView() {
     AndroidpaymentsTheme {
         Scaffold(
             topBar = { CardListTopBar(context, addCardLauncher, cards.size >= 2) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = modifier.fillMaxWidth(),
         ) { padding ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
