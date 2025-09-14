@@ -27,7 +27,7 @@ fun CardListTopBar(
                     Text(
                         stringResource(R.string.card_list_add_card_button),
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
             }

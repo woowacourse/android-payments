@@ -9,8 +9,8 @@ data class Card(
     val expirationDate: CardExpirationDate = CardExpirationDate(),
     val ownerName: OwnerName = OwnerName(),
     val password: Password = Password(),
-) : Parcelable{
-    fun isValid() :Boolean{
+) : Parcelable {
+    fun isValid(): Boolean {
         return number.isValid() && expirationDate.isValid() && password.isValid()
     }
 }
