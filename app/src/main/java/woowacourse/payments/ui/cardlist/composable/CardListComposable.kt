@@ -56,7 +56,7 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
         }
     AndroidpaymentsTheme {
         Scaffold(
-            topBar = { CardListTopBar(context, addCardLauncher, cards.size >= 2) },
+            topBar = { CardListTopBar(showAddCardBtn = cards.size < 10, onAddCardClick = { navigateToAddCard(context, addCardLauncher) }) },
             modifier = modifier.fillMaxWidth(),
         ) { padding ->
             Column(
