@@ -5,14 +5,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.data.BankRepository
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardHolderUiModel.Companion.CARD_HOLDER_MAX_LENGTH
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -27,6 +31,7 @@ import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.components.PasswordField
 import woowacourse.payments.ui.newcard.components.PaymentCardBox
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
@@ -34,6 +39,15 @@ fun NewCardScreen(
     onSaved: (PaymentCardUiModel) -> Unit = {},
 ) {
     val context = LocalContext.current
+
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(
+            confirmValueChange = { false },
+        )
+
+    LaunchedEffect(Unit) {
+        modalBottomSheetState.show()
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -56,6 +70,14 @@ fun NewCardScreen(
             )
         },
     ) { innerPadding ->
+        BankBottomSheet(
+            sheetState = modalBottomSheetState,
+            banks = BankRepository.getCompanies(),
+            onClick = {
+                newCardStateHolder.bank = it
+            },
+        )
+
         Column(
             modifier =
                 Modifier

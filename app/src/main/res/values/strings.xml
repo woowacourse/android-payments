@@ -23,4 +23,6 @@
 
     <string name="new_card_password_label">비밀번호</string>
     <string name="new_card_password_placeholder">0000</string>
+
+    <string name="new_card_bank_icon_description">%s 로고</string>
 </resources>

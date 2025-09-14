@@ -17,29 +17,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.Company
+import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.Bank
 
 @Composable
-fun CompanyItem(
-    company: Company,
-    onClick: (Company) -> Unit,
+fun BankItem(
+    bank: Bank,
+    onClick: (Bank) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
             modifier.clickable {
-                onClick(company)
+                onClick(bank)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             modifier = Modifier.size(37.dp),
-            painter = painterResource(id = company.icon),
-            contentDescription = stringResource(R.string.new_card_company_icon_description, company.name),
+            painter = painterResource(id = bank.icon),
+            contentDescription = stringResource(R.string.new_card_bank_icon_description, bank.type.value),
         )
         Spacer(modifier = Modifier.size(10.dp))
         Text(
-            text = company.name,
+            text = bank.type.value,
             fontWeight = W500,
             fontSize = 16.sp,
             lineHeight = 16.sp,
@@ -50,12 +51,12 @@ fun CompanyItem(
 
 @Preview(showBackground = true)
 @Composable
-private fun CompanyItemPreview() {
-    CompanyItem(
-        company =
-            Company(
+private fun BankoItemPreview() {
+    BankItem(
+        bank =
+            Bank(
+                type = BankType.BC,
                 icon = R.drawable.ic_bc,
-                name = "BC카드",
             ),
         onClick = {},
     )
