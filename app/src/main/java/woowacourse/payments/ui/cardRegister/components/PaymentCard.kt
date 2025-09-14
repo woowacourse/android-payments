@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.FF333333
-import woowacourse.payments.ui.theme.FFCBBA64
-import woowacourse.payments.ui.theme.FFFFFFFF
+import woowacourse.payments.ui.theme.GrayFF333333
+import woowacourse.payments.ui.theme.YellowFFCBBA64
+import woowacourse.payments.ui.theme.WhiteFF000000
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
@@ -45,7 +45,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = FF333333,
+                    color = GrayFF333333,
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(bottom = 16.dp)
@@ -57,14 +57,14 @@ fun PaymentCard(
                     Modifier
                         .size(width = 40.dp, height = 26.dp)
                         .background(
-                            color = FFCBBA64,
+                            color = YellowFFCBBA64,
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
             if (card != null) {
                 Text(
                     text = formattedNumber,
-                    color = FFFFFFFF,
+                    color = WhiteFF000000,
                     style = Typography.labelMedium,
                     modifier = Modifier.padding(top = 8.dp),
                 )
@@ -77,14 +77,14 @@ fun PaymentCard(
                 ) {
                     Text(
                         text = card.ownerName ?: "",
-                        color = FFFFFFFF,
+                        color = WhiteFF000000,
                         style = Typography.labelMedium,
                         textAlign = TextAlign.Start,
                     )
 
                     Text(
                         text = formattedDate,
-                        color = FFFFFFFF,
+                        color = WhiteFF000000,
                         style = Typography.labelMedium,
                         textAlign = TextAlign.End,
                         modifier = Modifier.weight(1f),

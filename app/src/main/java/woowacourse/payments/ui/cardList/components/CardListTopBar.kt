@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.FF000000
-import woowacourse.payments.ui.theme.FFFFFFFF
+import woowacourse.payments.ui.theme.BlackFF000000
+import woowacourse.payments.ui.theme.WhiteFF000000
 import woowacourse.payments.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,7 +39,7 @@ fun CardListTopBar(
                     Text(
                         text = stringResource(R.string.add_title),
                         style = Typography.displayLarge,
-                        color = FF000000,
+                        color = BlackFF000000,
                         modifier =
                             Modifier
                                 .padding(end = 20.dp)
@@ -47,7 +47,7 @@ fun CardListTopBar(
                     )
                 }
             },
-        modifier = modifier.background(FFFFFFFF),
+        modifier = modifier.background(WhiteFF000000),
     )
 }
 

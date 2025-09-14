@@ -30,7 +30,7 @@ import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.FFFF0000
+import woowacourse.payments.ui.theme.RedFFFF0000
 
 @Composable
 fun CardRegisterScreen(
@@ -87,7 +87,7 @@ fun CardRegisterScreen(
                         if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
                             Text(
                                 text = stringResource(R.string.card_number_supporting_text),
-                                color = FFFF0000,
+                                color = RedFFFF0000,
                             )
                         }
                     },
@@ -110,7 +110,7 @@ fun CardRegisterScreen(
                         if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
                             Text(
                                 text = stringResource(R.string.card_expired_date_supporting_text),
-                                color = FFFF0000,
+                                color = RedFFFF0000,
                             )
                         }
                     },
@@ -155,7 +155,7 @@ fun CardRegisterScreen(
                         if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
                             Text(
                                 text = stringResource(R.string.card_password_supporting_text),
-                                color = FFFF0000,
+                                color = RedFFFF0000,
                             )
                         }
                     },

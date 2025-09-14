@@ -10,7 +10,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.FFAAAAAA
+import woowacourse.payments.ui.theme.GrayFFAAAAAA
 
 @Composable
 fun PaymentTextField(
@@ -36,7 +36,7 @@ fun PaymentTextField(
             }
         },
         label = { Text(text = label) },
-        placeholder = { Text(text = placeholder, color = FFAAAAAA) },
+        placeholder = { Text(text = placeholder, color = GrayFFAAAAAA) },
         enabled = true,
         singleLine = true,
         keyboardOptions = keyboardOptions,

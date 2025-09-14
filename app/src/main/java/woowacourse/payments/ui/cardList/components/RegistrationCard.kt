@@ -15,8 +15,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.theme.FF575757
-import woowacourse.payments.ui.theme.FFE5E5E5
+import woowacourse.payments.ui.theme.GrayFF575757
+import woowacourse.payments.ui.theme.GrayFFE5E5E5
 
 @Composable
 fun RegistrationCard(
@@ -29,13 +29,13 @@ fun RegistrationCard(
             modifier
                 .size(208.dp, 124.dp)
                 .background(
-                    color = FFE5E5E5,
+                    color = GrayFFE5E5E5,
                     shape = RoundedCornerShape(5.dp),
                 ).clickable { onRegistrationClick() },
     ) {
         Icon(
             imageVector = Icons.Filled.Add,
-            tint = FF575757,
+            tint = GrayFF575757,
             contentDescription = stringResource(R.string.registration_card_plus_icon_description),
         )
     }

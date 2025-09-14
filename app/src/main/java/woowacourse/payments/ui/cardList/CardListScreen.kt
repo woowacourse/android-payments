@@ -22,8 +22,8 @@ import woowacourse.payments.ui.cardList.components.RegistrationCard
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.FF000000
-import woowacourse.payments.ui.theme.FF333333
+import woowacourse.payments.ui.theme.BlackFF000000
+import woowacourse.payments.ui.theme.GrayFF333333
 import woowacourse.payments.ui.theme.Typography
 
 @Composable
@@ -41,7 +41,7 @@ fun CardListScreen(
         modifier =
             Modifier
                 .fillMaxSize()
-                .background(color = FF000000),
+                .background(color = BlackFF000000),
     ) { innerPadding ->
         Column(
             modifier =
@@ -55,7 +55,7 @@ fun CardListScreen(
                 Text(
                     text = stringResource(R.string.add_new_card_title),
                     textAlign = TextAlign.Center,
-                    color = FF333333,
+                    color = GrayFF333333,
                     style = Typography.displayLarge,
                     modifier = Modifier.fillMaxWidth(),
                 )
