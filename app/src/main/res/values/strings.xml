@@ -18,4 +18,5 @@
     <string name="card_list_card_registered_toast">카드가 등록되었습니다.</string>
     <string name="card_list_add_card_description">Add Card</string>
     <string name="card_list_add_card_button">추가</string>
+    <string name="add_card_plus_sign">+</string>
 </resources>

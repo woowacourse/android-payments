@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import woowacourse.payments.R
 
 @Composable
 fun AddCardBtn(
@@ -19,6 +21,6 @@ fun AddCardBtn(
         modifier = modifier.fillMaxSize().clickable { onClick() },
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = "+", fontSize = 34.sp, color = Color(0xFF575757))
+        Text(text = stringResource(R.string.add_card_plus_sign), fontSize = 34.sp, color = Color(0xFF575757))
     }
 }
