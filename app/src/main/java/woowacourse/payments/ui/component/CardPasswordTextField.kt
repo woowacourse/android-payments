@@ -1,4 +1,4 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -18,7 +18,7 @@ fun CardPasswordTextField(
     maxLength: Int,
     password: String,
     onPasswordChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = password,
@@ -33,16 +33,17 @@ fun CardPasswordTextField(
         label = {
             Text(
                 text = stringResource(R.string.card_password),
-                color = Black49
+                color = Black49,
             )
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.NumberPassword,
-            imeAction = ImeAction.Done
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Done,
+            ),
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -52,7 +53,6 @@ private fun CardPasswordTextFieldPreview() {
     CardPasswordTextField(
         maxLength = 4,
         password = "1234",
-        onPasswordChange = {}
+        onPasswordChange = {},
     )
 }
-

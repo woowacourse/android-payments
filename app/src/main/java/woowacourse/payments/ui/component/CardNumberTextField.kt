@@ -1,10 +1,7 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
-import woowacourse.payments.R
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -13,57 +10,62 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.core.ExpireDateVisualTransformation
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.Black49
 
 @Composable
-fun ExpireDateTextField(
+fun CardNumberTextField(
     maxLength: Int,
-    expireDate: String,
-    onExpireDateChange: (String) -> Unit,
+    cardNumber: String,
+    visualTransformation: VisualTransformation,
+    onCardNumberChange: (String) -> Unit,
     onComplete: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val expireDateVisualTransformation = ExpireDateVisualTransformation()
-
     OutlinedTextField(
-        value = expireDate,
+        value = cardNumber,
         onValueChange = { newText ->
             if (newText.length <= maxLength && newText.all { it.isDigit() }) {
-                onExpireDateChange(newText)
+                onCardNumberChange(newText)
             }
             if (newText.length == maxLength) {
                 onComplete()
             }
         },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
+            ),
+        visualTransformation = visualTransformation,
         placeholder = {
-            TextFieldPlaceHolder(textResourceId = R.string.expire_date_place_holder)
+            TextFieldPlaceHolder(textResourceId = R.string.credit_card_place_holder)
         },
         label = {
             Text(
-                text = stringResource(R.string.expire_date),
-                color = Black49
+                text = stringResource(R.string.card_number),
+                color = Black49,
             )
         },
         singleLine = true,
-        visualTransformation = expireDateVisualTransformation,
-        modifier = modifier
+        modifier =
+            modifier
+                .padding(top = 14.dp)
+                .fillMaxWidth(),
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun ExpireDateTextFieldPreview() {
-    ExpireDateTextField(
-        maxLength = 4,
-        expireDate = "",
+private fun CardNumberTextFieldPreview() {
+    CardNumberTextField(
+        cardNumber = "",
+        onCardNumberChange = {},
         onComplete = {},
-        onExpireDateChange = {},
+        visualTransformation = VisualTransformation.None,
+        maxLength = 16,
     )
 }

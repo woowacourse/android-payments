@@ -1,6 +1,5 @@
-package woowacourse.payments.component
+package woowacourse.payments.ui.component
 
-import woowacourse.payments.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -13,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,7 +27,7 @@ fun NewCardTopBar(
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         },
@@ -39,7 +39,7 @@ fun NewCardTopBar(
                 )
             }
         },
-        modifier = modifier
+        modifier = modifier,
     )
 }
 
@@ -48,6 +48,6 @@ fun NewCardTopBar(
 private fun NewCardTopBarPreview() {
     NewCardTopBar(
         onBackClick = {},
-        onSaveClick = {}
+        onSaveClick = {},
     )
 }
