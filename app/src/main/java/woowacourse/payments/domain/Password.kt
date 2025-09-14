@@ -1,12 +1,18 @@
 package woowacourse.payments.domain
 
 import android.os.Parcelable
+import androidx.core.text.isDigitsOnly
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Password(
     val password: String = "",
 ) : Parcelable {
+    init {
+        require(password.isDigitsOnly())
+        require(password.length <= CARD_PASSWORD_MAX_LENGTH)
+    }
+
     override fun toString(): String = password
 
     fun isValid(): Boolean = password.length == CARD_PASSWORD_MAX_LENGTH
