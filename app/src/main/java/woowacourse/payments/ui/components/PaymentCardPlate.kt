@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.values.CardNumber
-import woowacourse.payments.ui.model.CardCompany
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.UnknownCard
@@ -38,7 +38,7 @@ fun PaymentCardPlate(
         } else {
             stringResource(
                 R.string.payment_card_full_description,
-                paymentCardUiModel.maskedCardNumber,
+                paymentCardUiModel.formattedCardNumber,
                 paymentCardUiModel.ownerName,
                 paymentCardUiModel.formattedExpireDate,
             )
@@ -51,7 +51,7 @@ fun PaymentCardPlate(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = paymentCardUiModel?.cardCompany?.plateColor ?: UnknownCard,
+                    color = paymentCardUiModel?.cardCompanyUiModel?.plateColor ?: UnknownCard,
                     shape = RoundedCornerShape(5.dp),
                 ).semantics {
                     contentDescription = description
@@ -69,24 +69,26 @@ fun PaymentCardPlate(
         )
         if (paymentCardUiModel != null) {
             Text(
-                paymentCardUiModel.cardCompany.companyName,
+                paymentCardUiModel.cardCompanyUiModel.companyName,
                 modifier =
                     Modifier
                         .padding(start = 14.dp, top = 10.dp)
                         .align(Alignment.TopStart),
-                style = LocalTextStyle.current.copy(
-                    lineHeightStyle = LineHeightStyle(
-                        alignment = LineHeightStyle.Alignment.Center,
-                        trim = LineHeightStyle.Trim.Both
-                    )
-                ),
+                style =
+                    LocalTextStyle.current.copy(
+                        lineHeightStyle =
+                            LineHeightStyle(
+                                alignment = LineHeightStyle.Alignment.Center,
+                                trim = LineHeightStyle.Trim.Both,
+                            ),
+                    ),
                 fontSize = 12.sp,
                 letterSpacing = 0.1.em,
                 color = Color.White,
             )
 
             Text(
-                paymentCardUiModel.maskedCardNumber,
+                paymentCardUiModel.formattedCardNumber,
                 modifier =
                     Modifier
                         .padding(start = 13.dp, bottom = 28.dp)
@@ -142,7 +144,7 @@ fun PaymentCardDetailPreview() {
         PaymentCardPlate(
             paymentCardUiModel =
                 PaymentCardUiModel(
-                    CardCompany.BC,
+                    CardCompanyUiModel.BC,
                     "1234 - 1234 - 1234 - 1234",
                     "02 / 26",
                     "CREW",

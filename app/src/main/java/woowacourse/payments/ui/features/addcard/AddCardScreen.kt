@@ -37,7 +37,8 @@ import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
-import woowacourse.payments.ui.model.CardCompany
+import woowacourse.payments.ui.mapper.CardMapper.toPaymentCardUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
@@ -53,6 +54,10 @@ fun AddCardScreen(
     val expireDateUiState by remember(cardUiState.expireDate) {
         derivedStateOf { getExpireDateUiState(cardUiState.expireDate) }
     }
+    val paymentCardUiModel by remember(cardUiState) {
+        derivedStateOf { cardUiState.toPaymentCardUiModel() }
+    }
+
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -77,7 +82,7 @@ fun AddCardScreen(
         BottomSheetScreen(
             sheetState = sheetState,
             onDismiss = { showBottomSheet = false },
-            onItemClick = { selectedCard: CardCompany ->
+            onItemClick = { selectedCard: CardCompanyUiModel ->
                 cardUiState = cardUiState.updateCardCompany(selectedCard)
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     if (!sheetState.isVisible) {
@@ -123,7 +128,10 @@ fun AddCardScreen(
                     .fillMaxSize(),
         ) {
             Spacer(modifier = Modifier.height(14.dp))
-            PaymentCardPlate(modifier = Modifier.align(Alignment.CenterHorizontally))
+            PaymentCardPlate(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                paymentCardUiModel = paymentCardUiModel,
+            )
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
                 value = cardUiState.cardNumber,

@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.components.PaymentCardPlate
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -15,6 +16,7 @@ class PaymentCardPlateTest {
 
     val dummyPaymentCardUiModel =
         PaymentCardUiModel(
+            CardCompanyUiModel.UNKNOWN,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
             "CREW",
@@ -30,7 +32,7 @@ class PaymentCardPlateTest {
         }
 
         // then
-        compose.onNodeWithText(dummyPaymentCardUiModel.maskedCardNumber).assertDoesNotExist()
+        compose.onNodeWithText(dummyPaymentCardUiModel.formattedCardNumber).assertDoesNotExist()
         compose.onNodeWithText(dummyPaymentCardUiModel.formattedExpireDate).assertDoesNotExist()
         compose.onNodeWithText(dummyPaymentCardUiModel.ownerName).assertDoesNotExist()
     }
@@ -45,7 +47,7 @@ class PaymentCardPlateTest {
         }
 
         // then
-        compose.onNodeWithText(dummyPaymentCardUiModel.maskedCardNumber).assertIsDisplayed()
+        compose.onNodeWithText(dummyPaymentCardUiModel.formattedCardNumber).assertIsDisplayed()
         compose.onNodeWithText(dummyPaymentCardUiModel.formattedExpireDate).assertIsDisplayed()
         compose.onNodeWithText(dummyPaymentCardUiModel.ownerName).assertIsDisplayed()
     }

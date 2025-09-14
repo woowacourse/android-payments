@@ -24,6 +24,9 @@ import woowacourse.payments.ui.components.AppTextField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation
 
+const val CARD_NUMBER_CHUNK_SIZE = 4
+const val CARD_NUMBER_SEPARATOR = " - "
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardNumberField(
@@ -36,7 +39,7 @@ fun CardNumberField(
     val isIncomplete = value.isNotEmpty() && value.length < MAX_LENGTH_CARD_NUMBER
     val showError = isIncomplete && !isFocused
 
-    val visualTransformation = remember { SeparatorVisualTransformation(4, " - ") }
+    val visualTransformation = remember { SeparatorVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR) }
 
     AppTextField(
         value = value,

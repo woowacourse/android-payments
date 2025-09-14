@@ -2,12 +2,12 @@ package woowacourse.payments.ui.model
 
 import androidx.compose.ui.graphics.Color
 
-enum class CardCompany(
+enum class CardCompanyUiModel(
     val companyName: String,
     val plateColor: Color,
 ) {
     UNKNOWN(
-        companyName = "알 수 없음",
+        companyName = "",
         plateColor = woowacourse.payments.ui.theme.UnknownCard,
     ),
     BC(

@@ -26,6 +26,9 @@ import woowacourse.payments.ui.mapper.messageResId
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation
 
+const val EXPIRE_DATE_CHUNK_SIZE = 2
+const val EXPIRE_DATE_SEPARATOR = " / "
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardExpireDateField(
@@ -38,7 +41,7 @@ fun CardExpireDateField(
     var isFocused by remember { mutableStateOf(false) }
     val showError =
         expireDateUiState is ExpireDateUiState.Invalid || expireDateUiState is ExpireDateUiState.Typing && !isFocused
-    val visualTransformation = remember { SeparatorVisualTransformation(2, " / ") }
+    val visualTransformation = remember { SeparatorVisualTransformation(EXPIRE_DATE_CHUNK_SIZE, EXPIRE_DATE_SEPARATOR) }
 
     AppTextField(
         value = value,

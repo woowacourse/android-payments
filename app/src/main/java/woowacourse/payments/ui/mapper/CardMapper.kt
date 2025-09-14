@@ -11,7 +11,11 @@ import woowacourse.payments.domain.card.values.Password
 import woowacourse.payments.ui.components.toMaskedString
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.features.addcard.ExpireDateUiState
-import woowacourse.payments.ui.model.CardCompany
+import woowacourse.payments.ui.features.addcard.components.CARD_NUMBER_CHUNK_SIZE
+import woowacourse.payments.ui.features.addcard.components.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_CHUNK_SIZE
+import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_SEPARATOR
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import java.time.format.DateTimeFormatter
 
@@ -37,12 +41,26 @@ object CardMapper {
 
         return PaymentCardUiModel(
             // TODO : 카드사 도메인 추가 민 변환 필요
-            cardCompany = CardCompany.UNKNOWN,
-            maskedCardNumber = this.cardNumber.toMaskedString(),
+            cardCompanyUiModel = CardCompanyUiModel.UNKNOWN,
+            formattedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
             ownerName = this.ownerName.value ?: "",
         )
     }
+
+    fun CardUiState.toPaymentCardUiModel(): PaymentCardUiModel =
+        PaymentCardUiModel(
+            cardCompanyUiModel = cardCompanyUiModel,
+            formattedCardNumber =
+                cardNumber
+                    .chunked(CARD_NUMBER_CHUNK_SIZE)
+                    .joinToString(CARD_NUMBER_SEPARATOR),
+            formattedExpireDate =
+                expireDate
+                    .chunked(EXPIRE_DATE_CHUNK_SIZE)
+                    .joinToString(EXPIRE_DATE_SEPARATOR),
+            ownerName = ownerName,
+        )
 
     fun CardUiState.toDomainCard(): CardCreationResult {
         val cardNumber =

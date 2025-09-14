@@ -22,7 +22,7 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.components.PaymentCardPlate
 import woowacourse.payments.ui.features.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.features.cardlist.components.PaymentsTopBar
-import woowacourse.payments.ui.model.CardCompany
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Black700
@@ -92,7 +92,7 @@ fun CardListScreenEmptyPreview() {
 fun CardListScreenOneCardPreview() {
     val dummyPaymentCardUiModel =
         PaymentCardUiModel(
-            CardCompany.BC,
+            CardCompanyUiModel.BC,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
             "CREW",
@@ -109,7 +109,7 @@ fun CardListScreenOneCardPreview() {
 fun CardListScreenManyCardPreview() {
     val dummyPaymentCardUiModel =
         PaymentCardUiModel(
-            CardCompany.BC,
+            CardCompanyUiModel.BC,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
             "CREW",
