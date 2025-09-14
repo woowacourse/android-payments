@@ -33,12 +33,7 @@ fun CardListTopBar(
     onAddCard: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = stringResource(R.string.card_list_title),
-                textAlign = TextAlign.Center,
-            )
-        },
+        title = { Text(stringResource(R.string.card_list_title)) },
         actions = {
             if (cards.size > 1) {
                 Text(
