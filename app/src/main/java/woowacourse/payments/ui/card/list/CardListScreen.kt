@@ -56,7 +56,7 @@ fun CardListScreen(
                 }
 
                 else -> {
-                    MultipleCardsScreen(cards = cards, onAddNewCardClick = onAddNewCardClick)
+                    MultipleCardsScreen(cards = cards)
                 }
             }
         }
