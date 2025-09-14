@@ -58,7 +58,7 @@ fun AddCardScreen(
         derivedStateOf { cardUiState.toPaymentCardUiModel() }
     }
 
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
