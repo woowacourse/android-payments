@@ -1,5 +1,6 @@
 package woowacourse.payments.domain.card
 
+import woowacourse.payments.domain.card.values.CardCompany
 import woowacourse.payments.domain.card.values.CardNumber
 import woowacourse.payments.domain.card.values.ExpireDate
 import woowacourse.payments.domain.card.values.OwnerName
@@ -10,4 +11,5 @@ data class PaymentCard(
     val expireDate: ExpireDate,
     val ownerName: OwnerName,
     val password: Password,
+    val cardCompany: CardCompany,
 )

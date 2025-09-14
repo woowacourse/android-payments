@@ -4,6 +4,7 @@ import woowacourse.payments.domain.card.ExpireDateStatus
 import woowacourse.payments.domain.card.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.domain.card.exception.ExpireDateException
+import woowacourse.payments.domain.card.values.CardCompany
 import woowacourse.payments.domain.card.values.CardNumber
 import woowacourse.payments.domain.card.values.ExpireDate
 import woowacourse.payments.domain.card.values.OwnerName
@@ -40,8 +41,7 @@ object CardMapper {
         val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
         return PaymentCardUiModel(
-            // TODO : 카드사 도메인 추가 민 변환 필요
-            cardCompanyUiModel = CardCompanyUiModel.UNKNOWN,
+            cardCompanyUiModel = cardCompany.toUiModel(),
             formattedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
             ownerName = this.ownerName.value ?: "",
@@ -103,9 +103,24 @@ object CardMapper {
                 expireDate = expireDate,
                 ownerName = ownerName,
                 password = password,
+                cardCompany = cardCompanyUiModel.toDomain(),
             ),
         )
     }
+
+    fun CardCompanyUiModel.toDomain(): CardCompany =
+        runCatching {
+            enumValueOf<CardCompany>(this.name)
+        }.getOrElse {
+            CardCompany.UNKNOWN
+        }
+
+    fun CardCompany.toUiModel(): CardCompanyUiModel =
+        runCatching {
+            enumValueOf<CardCompanyUiModel>(this.name)
+        }.getOrElse {
+            CardCompanyUiModel.UNKNOWN
+        }
 
     private fun getExpireDateInvalidReason(throwable: Throwable): ExpireDateInvalidReason =
         if (throwable is ExpireDateException) {
