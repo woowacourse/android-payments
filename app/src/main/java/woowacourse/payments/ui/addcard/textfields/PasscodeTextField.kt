@@ -73,7 +73,7 @@ fun PasscodeTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun PasscodeTextFieldPreview() {
+private fun PasscodeTextFieldPreview() {
     PasscodeTextField(
         card =
             remember {
@@ -92,7 +92,7 @@ fun PasscodeTextFieldPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun PasscodeTextFieldWithErrorPreview() {
+private fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
         card =
             remember {

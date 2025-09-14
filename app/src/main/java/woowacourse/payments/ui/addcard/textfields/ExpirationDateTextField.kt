@@ -82,7 +82,7 @@ fun ExpirationDateTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun ExpirationDateTextFieldPreview() {
+private fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
         card =
             remember {
@@ -101,7 +101,7 @@ fun ExpirationDateTextFieldPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun ExpirationDateTextFieldWithErrorPreview() {
+private fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(
         card =
             remember {

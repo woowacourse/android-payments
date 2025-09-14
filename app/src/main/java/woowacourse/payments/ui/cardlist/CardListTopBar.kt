@@ -54,7 +54,7 @@ fun CardListTopBar(
 
 @Preview(showBackground = true)
 @Composable
-fun CardListTopBarWithNoCardPreview() {
+private fun CardListTopBarWithNoCardPreview() {
     AndroidpaymentsTheme {
         CardListTopBar(remember { mutableStateListOf() }) {}
     }
@@ -62,7 +62,7 @@ fun CardListTopBarWithNoCardPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListTopBarWithTwoCardsPreview() {
+private fun CardListTopBarWithTwoCardsPreview() {
     AndroidpaymentsTheme {
         CardListTopBar(
             remember {

@@ -73,7 +73,7 @@ fun CardNumberTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberTextFieldPreview() {
+private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         card =
             remember {
@@ -92,7 +92,7 @@ fun CardNumberTextFieldPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CardNumberTextFieldWithErrorPreview() {
+private fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
         card =
             remember {

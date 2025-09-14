@@ -85,7 +85,7 @@ fun AddCardScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun AddCardScreenPreview() {
+private fun AddCardScreenPreview() {
     AddCardScreen(
         onSaveSuccess = { _ -> },
         onSaveFailure = {},

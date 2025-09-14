@@ -75,7 +75,7 @@ fun CardListScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun CardListScreenWithNoCardsPreview() {
+private fun CardListScreenWithNoCardsPreview() {
     CardListScreen(
         cards = remember { mutableStateListOf() },
         navigateToAddCard = {},
@@ -84,7 +84,7 @@ fun CardListScreenWithNoCardsPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListScreenWithOneCardPreview() {
+private fun CardListScreenWithOneCardPreview() {
     CardListScreen(
         cards =
             remember {
@@ -103,7 +103,7 @@ fun CardListScreenWithOneCardPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListScreenWithTwoCardsPreview() {
+private fun CardListScreenWithTwoCardsPreview() {
     CardListScreen(
         cards =
             remember {

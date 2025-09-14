@@ -80,7 +80,7 @@ fun PaymentCard(
 
 @Preview(showBackground = true)
 @Composable
-fun BlankPaymentCardPreview() {
+private fun BlankPaymentCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard()
     }
@@ -88,7 +88,7 @@ fun BlankPaymentCardPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentCardWithDetailPreview() {
+private fun PaymentCardWithDetailPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
