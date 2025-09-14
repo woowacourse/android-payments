@@ -17,7 +17,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun MultipleCardsScreen(
     cards: List<CardUiModel>,
-    onAddNewCardClick: () -> Unit,
 ) {
     Column(
         modifier =
@@ -61,7 +60,6 @@ fun MultipleCardsScreenPreview() {
     AndroidpaymentsTheme {
         MultipleCardsScreen(
             cards = cards,
-            onAddNewCardClick = {},
         )
     }
 }
