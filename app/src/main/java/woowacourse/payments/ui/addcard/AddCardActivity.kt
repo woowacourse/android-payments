@@ -10,26 +10,29 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AddCardScreen(
-                onSaveSuccess = { card: CardUiModel ->
-                    Toast
-                        .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
-                        .show()
-                    submitAddedCard(card)
-                },
-                onSaveFailure = {
-                    Toast
-                        .makeText(this, R.string.add_card_failure_message, Toast.LENGTH_SHORT)
-                        .show()
-                },
-                onBackClick = { finish() },
-            )
+            AndroidpaymentsTheme {
+                AddCardScreen(
+                    onSaveSuccess = { card: CardUiModel ->
+                        Toast
+                            .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
+                            .show()
+                        submitAddedCard(card)
+                    },
+                    onSaveFailure = {
+                        Toast
+                            .makeText(this, R.string.add_card_failure_message, Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    onBackClick = { finish() },
+                )
+            }
         }
     }
 

@@ -6,15 +6,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardListScreen(
-                remember { mutableStateListOf() },
-            )
+            AndroidpaymentsTheme {
+                CardListScreen(
+                    remember { mutableStateListOf() },
+                )
+            }
         }
     }
 }

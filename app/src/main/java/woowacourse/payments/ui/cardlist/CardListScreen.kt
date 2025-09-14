@@ -38,7 +38,6 @@ import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
 @Composable
@@ -57,38 +56,36 @@ fun CardListScreen(cards: SnapshotStateList<CardUiModel>) {
         launcher.launch(AddCardActivity.intent(context))
     }
 
-    AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = { CardListTopBar(cards) { navigateToAddCard() } },
-        ) { innerPadding: PaddingValues ->
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = { CardListTopBar(cards) { navigateToAddCard() } },
+    ) { innerPadding: PaddingValues ->
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(36.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding),
+        ) {
+            if (cards.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.card_list_add_card_guide_text),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 32.dp),
+                )
+            }
+
             Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(36.dp),
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(innerPadding),
             ) {
-                if (cards.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.card_list_add_card_guide_text),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(top = 32.dp),
-                    )
+                cards.forEach { card: CardUiModel ->
+                    PaymentCard(card = card)
                 }
+            }
 
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(36.dp),
-                ) {
-                    cards.forEach { card: CardUiModel ->
-                        PaymentCard(card = card)
-                    }
-                }
-
-                if (cards.size <= 1) {
-                    AddCardButton { navigateToAddCard() }
-                }
+            if (cards.size <= 1) {
+                AddCardButton { navigateToAddCard() }
             }
         }
     }

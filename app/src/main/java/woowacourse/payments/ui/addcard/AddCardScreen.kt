@@ -21,7 +21,6 @@ import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddCardScreen(
@@ -53,31 +52,29 @@ fun AddCardScreen(
         }
     }
 
-    AndroidpaymentsTheme {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                AddCardTopBar(
-                    onBackClick = onBackClick,
-                    onSaveClick = { saveAddedCard() },
-                )
-            },
-        ) { innerPadding: PaddingValues ->
-            Column(Modifier.fillMaxSize().padding(innerPadding)) {
-                PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            AddCardTopBar(
+                onBackClick = onBackClick,
+                onSaveClick = { saveAddedCard() },
+            )
+        },
+    ) { innerPadding: PaddingValues ->
+        Column(Modifier.fillMaxSize().padding(innerPadding)) {
+            PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
 
-                Column(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    CardNumberTextField(card, isCardNumberError)
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                CardNumberTextField(card, isCardNumberError)
 
-                    ExpirationDateTextField(card, isExpirationDateError)
+                ExpirationDateTextField(card, isExpirationDateError)
 
-                    CardHolderNameTextField(card)
+                CardHolderNameTextField(card)
 
-                    PasscodeTextField(card, isPasscodeError)
-                }
+                PasscodeTextField(card, isPasscodeError)
             }
         }
     }
