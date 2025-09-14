@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
-import woowacourse.payments.ui.common.model.Card
+import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

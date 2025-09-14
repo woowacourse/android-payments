@@ -7,7 +7,7 @@ import androidx.compose.ui.test.performClick
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.common.model.Card
+import woowacourse.payments.domain.model.Card
 
 class CardListScreenTest {
     @get:Rule

@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.common.model.Card
+import woowacourse.payments.domain.model.Card
 
 class PaymentCardTest {
     @get:Rule

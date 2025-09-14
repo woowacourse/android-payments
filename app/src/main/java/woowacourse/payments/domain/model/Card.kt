@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.common.model
+package woowacourse.payments.domain.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
