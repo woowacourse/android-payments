@@ -3,6 +3,7 @@ package woowacourse.payments.ui.cardlist
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
@@ -47,7 +48,7 @@ class CardListScreenTest {
         composeTestRule.setContent { CardListScreen(cards) }
 
         // then
-        composeTestRule.onNodeWithText("+").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("카드 추가 버튼").assertIsDisplayed()
         composeTestRule.onNodeWithText("추가").assertDoesNotExist()
     }
 
@@ -60,7 +61,7 @@ class CardListScreenTest {
         composeTestRule.setContent { CardListScreen(cards) }
 
         // then
-        composeTestRule.onNodeWithText("+").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("카드 추가 버튼").assertIsDisplayed()
         composeTestRule.onNodeWithText("추가").assertDoesNotExist()
     }
 
