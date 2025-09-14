@@ -15,7 +15,3 @@ val Gray = Color(0xFFAAAAAA)
 val CardBackground = Color(0xFF333333)
 
 val CardEmvChip = Color(0xFFCBBA64)
-
-val AddCardButtonBackground = Color(0xFFE5E5E5)
-
-val AddCardButtonText = Color(0xFF575757)
