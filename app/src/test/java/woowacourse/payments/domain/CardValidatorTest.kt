@@ -42,7 +42,7 @@ class CardValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = ["0133", "0230", "4545"])
+    @ValueSource(strings = ["1333", "1430", "4545"])
     fun `만료일이 실제로 존재하지 않는 날이면 유효하지 않다고 판단해 false 값을 반환한다`(expiredDate: String) {
         // given
         // when
