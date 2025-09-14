@@ -16,17 +16,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.newCard.CardScreenUiState
 
 @Composable
 fun CardListScreen(
-    cards: List<CardUiModel>,
+    cards: CardScreenUiState,
     onAddClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CardListTopBar(
                 actions = {
-                    if (cards.size >= 2) {
+                    if (cards is CardScreenUiState.MultipleCard) {
                         TextButton(
                             onClick = onAddClick,
                             content = {
@@ -51,23 +52,19 @@ fun CardListScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            when (cards.size) {
-                0 -> {
+            when (cards) {
+                is CardScreenUiState.Empty -> {
                     AddNewCardText()
-                    AddNewCard(
-                        onAddClick = onAddClick,
-                    )
+                    AddNewCard(onAddClick = onAddClick)
                 }
 
-                1 -> {
-                    CardList(cards)
-                    AddNewCard(
-                        onAddClick = onAddClick,
-                    )
+                is CardScreenUiState.SingleCard -> {
+                    CardList(listOf(cards.card))
+                    AddNewCard(onAddClick = onAddClick)
                 }
 
-                else -> {
-                    CardList(cards)
+                is CardScreenUiState.MultipleCard -> {
+                    CardList(cards.cards)
                 }
             }
         }

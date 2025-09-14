@@ -42,7 +42,7 @@ class ListActivity : ComponentActivity() {
                     }
 
                 CardListScreen(
-                    cards = cardState.cards(),
+                    cards = cardState,
                     onAddClick = {
                         val intent = Intent(context, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
@@ -58,9 +58,9 @@ class ListActivity : ComponentActivity() {
 private fun EmptyCardListPreview() {
     AndroidpaymentsTheme {
         CardListScreen(
-                    emptyList(),
-                    onAddClick = {},
-                )
+            CardScreenUiState.from(emptyList()),
+            onAddClick = {},
+        )
     }
 }
 
@@ -69,13 +69,15 @@ private fun EmptyCardListPreview() {
 private fun AddOneCardListPreview() {
     AndroidpaymentsTheme {
         CardListScreen(
-            listOf(
-                CardUiModel(
-                    "0000000000000000",
-                    "0925",
-                    "1234",
-                    "PARK JIWON",
-                ),
+            CardScreenUiState.from(
+                listOf(
+                    CardUiModel(
+                        "0000000000000000",
+                        "0925",
+                        "1234",
+                        "PARK JIWON",
+                    ),
+                )
             ),
             onAddClick = {},
         )
@@ -87,19 +89,21 @@ private fun AddOneCardListPreview() {
 private fun AddTwoOrMoreCardListPreview() {
     AndroidpaymentsTheme {
         CardListScreen(
-            listOf(
-                CardUiModel(
-                    "0000000000000000",
-                    "1225",
-                    "1234",
-                    "PARK JIWON",
-                ),
-                CardUiModel(
-                    "1234123412341234",
-                    "0999",
-                    "9999",
-                    "TOMATO BASIL ADE",
-                ),
+            CardScreenUiState.from(
+                listOf(
+                    CardUiModel(
+                        "0000000000000000",
+                        "1225",
+                        "1234",
+                        "PARK JIWON",
+                    ),
+                    CardUiModel(
+                        "1234123412341234",
+                        "0999",
+                        "9999",
+                        "TOMATO BASIL ADE",
+                    ),
+                )
             ),
             onAddClick = {},
         )

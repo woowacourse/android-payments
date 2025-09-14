@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.list.CardListScreen
 import woowacourse.payments.list.CardUiModel
+import woowacourse.payments.newCard.CardScreenUiState
 
 @Suppress("ktlint:standard:function-naming")
 class AddTwoOrMoreCardListTest {
@@ -20,7 +21,7 @@ class AddTwoOrMoreCardListTest {
         composeTestRule.setContent {
             CardListScreen(
                 cards =
-                    listOf(
+                    CardScreenUiState.from(listOf(
                         CardUiModel(
                             "1234 - 1234 - **** - ****",
                             "12 / 34",
@@ -33,6 +34,7 @@ class AddTwoOrMoreCardListTest {
                             "1234",
                             "TOMATO BASIL ADE",
                         ),
+                    ),
                     ),
                 onAddClick = {},
             )

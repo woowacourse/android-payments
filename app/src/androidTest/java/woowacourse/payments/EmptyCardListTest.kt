@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.list.CardListScreen
+import woowacourse.payments.newCard.CardScreenUiState
 
 @Suppress("ktlint:standard:function-naming")
 class EmptyCardListTest {
@@ -17,7 +18,7 @@ class EmptyCardListTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardListScreen(cards = emptyList(), onAddClick = {})
+            CardListScreen(cards = CardScreenUiState.from(emptyList()), onAddClick = {})
         }
     }
 
