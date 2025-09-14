@@ -55,18 +55,21 @@ class NewCardActivity : ComponentActivity() {
                                                 CardExpiry.fromString(newCardState.cardExpiry),
                                                 password = CardPassword(newCardState.cardPassword),
                                                 name = CardName(newCardState.cardName),
-                                            ).toUiModel()
+                                            ).toUiModel(),
                                         )
                                     }
                                 setResult(RESULT_OK, data)
                                 finish()
                             },
-                            isSaveEnabled = runCatching { Card(
-                                CardNumber(newCardState.cardNumber),
-                                CardExpiry.fromString(newCardState.cardExpiry),
-                                password = CardPassword(newCardState.cardPassword),
-                                name = CardName(newCardState.cardName),
-                            ) }.isSuccess,
+                            isSaveEnabled =
+                                runCatching {
+                                    Card(
+                                        CardNumber(newCardState.cardNumber),
+                                        CardExpiry.fromString(newCardState.cardExpiry),
+                                        password = CardPassword(newCardState.cardPassword),
+                                        name = CardName(newCardState.cardName),
+                                    )
+                                }.isSuccess,
                         )
                     },
                 ) { innerPadding ->

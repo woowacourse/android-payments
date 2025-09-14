@@ -21,20 +21,21 @@ class AddTwoOrMoreCardListTest {
         composeTestRule.setContent {
             CardListScreen(
                 cards =
-                    CardScreenUiState.from(listOf(
-                        CardUiModel(
-                            "1234 - 1234 - **** - ****",
-                            "12 / 34",
-                            "9999",
-                            "PARK JIWON",
+                    CardScreenUiState.from(
+                        listOf(
+                            CardUiModel(
+                                "1234 - 1234 - **** - ****",
+                                "12 / 34",
+                                "9999",
+                                "PARK JIWON",
+                            ),
+                            CardUiModel(
+                                "7890 - 7890 - **** - ****",
+                                "09 / 99",
+                                "1234",
+                                "TOMATO BASIL ADE",
+                            ),
                         ),
-                        CardUiModel(
-                            "7890 - 7890 - **** - ****",
-                            "09 / 99",
-                            "1234",
-                            "TOMATO BASIL ADE",
-                        ),
-                    ),
                     ),
                 onAddClick = {},
             )

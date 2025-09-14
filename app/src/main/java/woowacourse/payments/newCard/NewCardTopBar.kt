@@ -37,7 +37,7 @@ fun NewCardTopBar(
             IconButton(
                 onClick = { onSaveClick() },
                 enabled = isSaveEnabled,
-                ) {
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.add_new_card_top_bar_check_button),
@@ -55,7 +55,7 @@ private fun NewCardTopBarPreview() {
         NewCardTopBar(
             onBackClick = { },
             onSaveClick = { },
-            isSaveEnabled = false
+            isSaveEnabled = false,
         )
     }
 }

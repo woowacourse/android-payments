@@ -12,6 +12,6 @@ fun AddNewCardText() {
     Text(
         text = stringResource(R.string.add_new_card_prompt),
         fontSize = 18.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
     )
 }

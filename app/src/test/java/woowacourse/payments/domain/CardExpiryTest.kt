@@ -18,7 +18,7 @@ class CardExpiryTest {
         // then
         assertAll(
             { assertDoesNotThrow { CardExpiry(thisMonth) } },
-            { assertDoesNotThrow { CardExpiry(nextMonth) } }
+            { assertDoesNotThrow { CardExpiry(nextMonth) } },
         )
     }
 

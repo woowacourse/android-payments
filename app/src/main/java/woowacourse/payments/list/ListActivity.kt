@@ -77,7 +77,7 @@ private fun AddOneCardListPreview() {
                         "1234",
                         "PARK JIWON",
                     ),
-                )
+                ),
             ),
             onAddClick = {},
         )
@@ -103,7 +103,7 @@ private fun AddTwoOrMoreCardListPreview() {
                         "9999",
                         "TOMATO BASIL ADE",
                     ),
-                )
+                ),
             ),
             onAddClick = {},
         )

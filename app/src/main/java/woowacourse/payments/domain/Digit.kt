@@ -1,11 +1,11 @@
 package woowacourse.payments.domain
 
 @JvmInline
-value class Digit (
+value class Digit(
     val value: Int,
 ) {
     init {
-        require(value in MINIMUM_VALUE .. MAXIMUM_VALUE) { "숫자는 ${MINIMUM_VALUE}부터 ${MAXIMUM_VALUE}여야 합니다." }
+        require(value in MINIMUM_VALUE..MAXIMUM_VALUE) { "숫자는 ${MINIMUM_VALUE}부터 ${MAXIMUM_VALUE}여야 합니다." }
     }
 
     companion object {
