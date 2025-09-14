@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.common.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.GrayFF333333
-import woowacourse.payments.ui.theme.YellowFFCBBA64
-import woowacourse.payments.ui.theme.WhiteFF000000
 import woowacourse.payments.ui.theme.Typography
+import woowacourse.payments.ui.theme.WhiteFF000000
+import woowacourse.payments.ui.theme.YellowFFCBBA64
 
 @Composable
 fun PaymentCard(
@@ -47,8 +47,7 @@ fun PaymentCard(
                 .background(
                     color = GrayFF333333,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(bottom = 16.dp)
+                ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -100,12 +99,7 @@ private fun formatCardNumber(number: String): String {
     return "$visibleNumber - **** - ****"
 }
 
-private fun formatExpiredDate(date: String): String =
-    if (date.length == 4) {
-        "${date.take(2)} / ${date.takeLast(2)}"
-    } else {
-        date
-    }
+private fun formatExpiredDate(date: String): String = "${date.take(2)} / ${date.takeLast(2)}"
 
 @Preview(showBackground = true)
 @Composable
