@@ -30,9 +30,9 @@ fun CardAdditionScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
-    val stateHolder = rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
-    val uiState = stateHolder.uiState
-    val isCompletable = remember { derivedStateOf { uiState.isValidCard } }
+    val stateHolder =
+        rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
+    val isCompletable = remember { derivedStateOf { stateHolder.uiState.isValidCard } }
     val focusManager = LocalFocusManager.current
 
     Scaffold(
@@ -40,7 +40,7 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(uiState.toUiModel()) },
+                onSaveClick = { onSaveClick(stateHolder.uiState.toUiModel()) },
                 isCompletable = isCompletable.value,
             )
         },
@@ -61,7 +61,7 @@ fun CardAdditionScreen(
                 cardContent = { CardChip(modifier = Modifier.padding(start = 14.dp)) },
             )
             CardNumberTextField(
-                value = uiState.cardNumber.value,
+                value = stateHolder.uiState.cardNumber.value,
                 onCardNumberChange = { newCardNumber: String ->
                     stateHolder.updateCardNumber(newCardNumber)
                 },
@@ -73,13 +73,13 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             ExpiredDateTextField(
-                value = uiState.expiredDate.value,
+                value = stateHolder.uiState.expiredDate.value,
                 onDateChange = { newExpiredDate: String ->
                     stateHolder.updateExpiredDate(newExpiredDate)
                 },
                 modifier = Modifier.padding(top = 18.dp),
                 errorMessage =
-                    if (uiState.isDateError) {
+                    if (stateHolder.uiState.isDateError) {
                         stringResource(
                             R.string.expired_date_error,
                         )
@@ -87,7 +87,7 @@ fun CardAdditionScreen(
                         null
                     },
                 onComplete = {
-                    if (uiState.expiredDate.isValid) {
+                    if (stateHolder.uiState.expiredDate.isValid) {
                         focusManager.moveFocus(
                             FocusDirection.Next,
                         )
@@ -96,7 +96,7 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             CardOwnerNameTextField(
-                value = uiState.ownerName,
+                value = stateHolder.uiState.ownerName,
                 onNameChange = { newOwnerName: String ->
                     stateHolder.updateCardOwnerName(newOwnerName)
                 },
@@ -108,7 +108,7 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             PasswordTextField(
-                value = uiState.password.value,
+                value = stateHolder.uiState.password.value,
                 onPasswordChange = { newPassword: String ->
                     stateHolder.updatePassword(newPassword)
                 },
