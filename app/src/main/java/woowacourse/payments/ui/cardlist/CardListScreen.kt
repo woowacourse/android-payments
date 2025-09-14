@@ -73,7 +73,7 @@ fun CardListScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 목록 (0개)")
 @Composable
 private fun CardListScreenWithNoCardsPreview() {
     CardListScreen(
@@ -82,7 +82,7 @@ private fun CardListScreenWithNoCardsPreview() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 목록 (1개)")
 @Composable
 private fun CardListScreenWithOneCardPreview() {
     CardListScreen(
@@ -101,7 +101,7 @@ private fun CardListScreenWithOneCardPreview() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 목록 (2개)")
 @Composable
 private fun CardListScreenWithTwoCardsPreview() {
     CardListScreen(

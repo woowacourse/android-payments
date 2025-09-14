@@ -58,7 +58,7 @@ fun CardHolderNameTextField(
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 소유자 이름 입력란")
 @Composable
 private fun CardHolderNameTextFieldPreview() {
     remember { mutableStateOf("디랙") }

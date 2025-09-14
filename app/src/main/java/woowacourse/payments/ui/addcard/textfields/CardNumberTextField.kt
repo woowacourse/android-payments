@@ -71,7 +71,7 @@ fun CardNumberTextField(
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 번호 입력란 (일반)")
 @Composable
 private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
@@ -90,7 +90,7 @@ private fun CardNumberTextFieldPreview() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 번호 입력란 (오류)")
 @Composable
 private fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(

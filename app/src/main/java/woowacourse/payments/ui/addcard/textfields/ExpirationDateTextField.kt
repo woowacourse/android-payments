@@ -80,7 +80,7 @@ fun ExpirationDateTextField(
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "만료일 입력란 (일반)")
 @Composable
 private fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
@@ -99,7 +99,7 @@ private fun ExpirationDateTextFieldPreview() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "만료일 입력란 (오류)")
 @Composable
 private fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(

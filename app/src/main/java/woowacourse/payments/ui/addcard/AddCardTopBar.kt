@@ -43,7 +43,7 @@ fun AddCardTopBar(
     )
 }
 
-@Preview
+@Preview(showBackground = true, name = "카드 추가 상단 바")
 @Composable
 private fun AddCardTopBarPreview() {
     AddCardTopBar(

@@ -39,7 +39,7 @@ fun AddCardButton(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 추가 버튼")
 @Composable
 private fun AddCardButtonPreview() {
     AddCardButton {}

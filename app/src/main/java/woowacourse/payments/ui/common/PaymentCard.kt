@@ -78,7 +78,7 @@ fun PaymentCard(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 (내용 없음)")
 @Composable
 private fun BlankPaymentCardPreview() {
     AndroidpaymentsTheme {
@@ -86,7 +86,7 @@ private fun BlankPaymentCardPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 (내용 있음)")
 @Composable
 private fun PaymentCardWithDetailPreview() {
     AndroidpaymentsTheme {

@@ -52,7 +52,7 @@ fun CardListTopBar(
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 목록 상단 바 (카드 1개 이하)")
 @Composable
 private fun CardListTopBarWithNoCardPreview() {
     AndroidpaymentsTheme {
@@ -60,7 +60,7 @@ private fun CardListTopBarWithNoCardPreview() {
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 목록 상단 바 (카드 2개 이상)")
 @Composable
 private fun CardListTopBarWithTwoCardsPreview() {
     AndroidpaymentsTheme {

@@ -71,7 +71,7 @@ fun PasscodeTextField(
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "비밀번호 입력란 (일반)")
 @Composable
 private fun PasscodeTextFieldPreview() {
     PasscodeTextField(
@@ -90,7 +90,7 @@ private fun PasscodeTextFieldPreview() {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "비밀번호 입력란 (오류)")
 @Composable
 private fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(

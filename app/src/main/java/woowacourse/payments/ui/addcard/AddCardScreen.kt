@@ -83,7 +83,7 @@ fun AddCardScreen(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, name = "카드 추가 화면")
 @Composable
 private fun AddCardScreenPreview() {
     AddCardScreen(
