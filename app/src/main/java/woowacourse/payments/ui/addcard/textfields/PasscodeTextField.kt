@@ -28,6 +28,7 @@ import woowacourse.payments.ui.theme.Gray
 fun PasscodeTextField(
     card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
 

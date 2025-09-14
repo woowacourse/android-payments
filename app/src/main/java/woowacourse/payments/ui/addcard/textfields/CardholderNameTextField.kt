@@ -20,7 +20,10 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
-fun CardHolderNameTextField(card: MutableState<CardUiModel>) {
+fun CardHolderNameTextField(
+    card: MutableState<CardUiModel>,
+    modifier: Modifier = Modifier,
+) {
     LocalFocusManager.current
 
     fun updateValue(newValue: String) {

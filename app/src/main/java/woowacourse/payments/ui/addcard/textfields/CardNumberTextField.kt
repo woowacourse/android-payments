@@ -28,6 +28,7 @@ import woowacourse.payments.ui.theme.Gray
 fun CardNumberTextField(
     card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
 

@@ -29,6 +29,7 @@ import java.time.YearMonth
 fun ExpirationDateTextField(
     card: MutableState<CardUiModel>,
     isError: MutableState<Boolean>,
+    modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
 
