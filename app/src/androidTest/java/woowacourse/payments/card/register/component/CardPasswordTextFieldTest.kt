@@ -2,6 +2,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -30,6 +32,7 @@ class CardPasswordTextFieldTest {
             CardPasswordTextField(
                 value = password,
                 onValueChange = { password = it },
+                modifier = Modifier.testTag("CardPasswordTextField"),
             )
         }
         composeTestRule.onNodeWithTag("CardPasswordTextField").performTextInput(text)
@@ -50,6 +53,7 @@ class CardPasswordTextFieldTest {
             CardPasswordTextField(
                 value = password,
                 onValueChange = { password = it },
+                modifier = Modifier.testTag("CardPasswordTextField"),
             )
         }
         composeTestRule.onNodeWithTag("CardPasswordTextField").performTextInput(text)
