@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.cardlist.composable
 
 import android.app.Activity
-import android.os.Build
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,8 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.cardlist.util.navigateToAddCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 @Composable
 fun GenerateCardListView(modifier: Modifier = Modifier) {
@@ -36,13 +37,7 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val card =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        result.data?.getParcelableExtra("card", Card::class.java)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        result.data?.getParcelableExtra<Card>("card")
-                    }
+                val card = result.data?.getParcelableExtraCompat<Card>(AddCardActivity.EXTRA_CARD)
                 if (card != null) {
                     cards.add(card)
                     Toast
