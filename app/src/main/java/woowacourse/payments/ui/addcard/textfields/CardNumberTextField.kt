@@ -58,7 +58,7 @@ fun CardNumberTextField(
         },
         supportingText = {
             Box(Modifier.height(20.dp)) {
-                if (isError.value) Text(stringResource(R.string.card_number_error_message)) else null
+                if (isError.value) Text(stringResource(R.string.card_number_error_message))
             }
         },
         isError = isError.value,

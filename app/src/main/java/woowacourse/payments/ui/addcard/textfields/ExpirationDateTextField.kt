@@ -67,7 +67,7 @@ fun ExpirationDateTextField(
         },
         supportingText = {
             Box(Modifier.height(20.dp)) {
-                if (isError.value) Text(stringResource(R.string.expiration_date_error_message)) else null
+                if (isError.value) Text(stringResource(R.string.expiration_date_error_message))
             }
         },
         isError = isError.value,
