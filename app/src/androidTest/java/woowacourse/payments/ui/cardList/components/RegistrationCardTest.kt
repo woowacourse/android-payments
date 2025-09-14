@@ -1,7 +1,7 @@
 package woowacourse.payments.ui.cardList.components
 
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
@@ -20,7 +20,7 @@ class RegistrationCardTest {
 
         // then:
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .assertExists()
     }
 
@@ -34,7 +34,7 @@ class RegistrationCardTest {
 
         // when:
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .performClick()
 
         // then:
