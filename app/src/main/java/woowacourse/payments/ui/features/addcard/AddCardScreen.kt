@@ -28,12 +28,12 @@ import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
-import woowacourse.payments.ui.features.addcard.components.BottomSheetScreen
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField
 import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
 import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
+import woowacourse.payments.ui.features.addcard.components.bottomsheet.BottomSheetScreen
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
