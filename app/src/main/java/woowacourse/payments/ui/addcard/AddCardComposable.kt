@@ -27,7 +27,7 @@ import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
 import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 
 @Composable
-fun GenerateCardView(modifier: Modifier = Modifier) {
+fun CardCreationScreen(modifier: Modifier = Modifier) {
     var card by remember { mutableStateOf(Card()) }
     val context = LocalContext.current
     AndroidpaymentsTheme {
@@ -111,5 +111,5 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun GenerateCardPreview() {
-    GenerateCardView()
+    CardCreationScreen()
 }

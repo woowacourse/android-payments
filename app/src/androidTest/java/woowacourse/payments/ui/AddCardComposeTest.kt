@@ -9,16 +9,16 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.GenerateCardView
+import woowacourse.payments.ui.addcard.CardCreationScreen
 
-class GenerateCardViewTest {
+class CardCreationScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            GenerateCardView()
+            CardCreationScreen()
         }
     }
 

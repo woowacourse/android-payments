@@ -10,7 +10,7 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GenerateCardView()
+            CardCreationScreen()
         }
     }
 }
