@@ -22,6 +22,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.card.values.CardNumber
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.UnknownCard
 
 @Composable
 fun PaymentCardPlate(
@@ -47,7 +48,7 @@ fun PaymentCardPlate(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = UnknownCard,
                     shape = RoundedCornerShape(5.dp),
                 ).semantics {
                     contentDescription = description

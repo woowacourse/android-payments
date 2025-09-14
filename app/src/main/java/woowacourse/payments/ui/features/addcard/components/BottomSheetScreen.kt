@@ -10,13 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.model.CardCompany
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheetScreen(
     sheetState: SheetState,
     onDismiss: () -> Unit,
-    onItemClick: (String) -> Unit,
+    onItemClick: (CardCompany) -> Unit,
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -24,8 +25,12 @@ fun BottomSheetScreen(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "임시 옵션",
-                modifier = Modifier.clickable { },
+                text = "BC카드(테스트)",
+                modifier = Modifier.clickable { onItemClick(CardCompany.BC) },
+            )
+            Text(
+                text = "신한카드(테스트)",
+                modifier = Modifier.clickable { onItemClick(CardCompany.SHINHAN) },
             )
         }
     }

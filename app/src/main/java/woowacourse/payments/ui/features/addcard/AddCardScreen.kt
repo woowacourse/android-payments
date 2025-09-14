@@ -37,6 +37,7 @@ import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
+import woowacourse.payments.ui.model.CardCompany
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
@@ -76,7 +77,8 @@ fun AddCardScreen(
         BottomSheetScreen(
             sheetState = sheetState,
             onDismiss = { showBottomSheet = false },
-            onItemClick = { selectedItem ->
+            onItemClick = { selectedCard: CardCompany ->
+                cardUiState = cardUiState.updateCardCompany(selectedCard)
                 scope.launch { sheetState.hide() }.invokeOnCompletion {
                     if (!sheetState.isVisible) {
                         showBottomSheet = false
