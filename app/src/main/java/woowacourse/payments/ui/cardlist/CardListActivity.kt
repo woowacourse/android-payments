@@ -17,6 +17,7 @@ import woowacourse.payments.domain.Passcode
 import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.format.ExpirationDateFormat
+import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
@@ -45,21 +46,16 @@ class CardListActivity : ComponentActivity() {
 
     private fun Intent.toCardOrNull(): Card? =
         runCatching {
-            val cardNumber: String = getStringExtra(ExtraKeys.CARD_NUMBER_KEY) ?: return null
-            val cardholderName: String =
-                getStringExtra(ExtraKeys.CARDHOLDER_NAME_KEY) ?: return null
-            val expirationDate: YearMonth =
-                getStringExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY)?.let { yearMonth: String ->
-                    YearMonth.parse(yearMonth, ExpirationDateFormat.formatPattern)
-                } ?: return null
-            val passcode: String = getStringExtra(ExtraKeys.CARD_PASSCODE_KEY) ?: return null
-
-            Card(
-                CardNumber(cardNumber),
-                ExpirationDate(expirationDate),
-                CardholderName(cardholderName),
-                Passcode(passcode),
-            )
+            getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let { card: CardUiModel ->
+                val yearMonth =
+                    YearMonth.parse(card.expirationDate, ExpirationDateFormat.formatPattern)
+                Card(
+                    CardNumber(card.cardNumber),
+                    ExpirationDate(yearMonth),
+                    CardholderName(card.cardholderName),
+                    Passcode(card.passcode),
+                )
+            }
         }.getOrNull()
 
     private fun handleAddCardResult(result: ActivityResult) {

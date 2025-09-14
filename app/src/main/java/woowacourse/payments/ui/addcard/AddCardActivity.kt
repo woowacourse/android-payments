@@ -34,13 +34,8 @@ class AddCardActivity : ComponentActivity() {
     }
 
     private fun submitAddedCard(card: CardUiModel) {
-        Intent()
-            .apply {
-                putExtra(ExtraKeys.CARD_NUMBER_KEY, card.cardNumber)
-                putExtra(ExtraKeys.CARD_EXPIRATION_DATE_KEY, card.expirationDate)
-                putExtra(ExtraKeys.CARDHOLDER_NAME_KEY, card.cardholderName)
-                putExtra(ExtraKeys.CARD_PASSCODE_KEY, card.passcode)
-            }.let { result: Intent -> setResult(RESULT_OK, result) }
+        val result: Intent = Intent().putExtra(ExtraKeys.CARD_KEY, card)
+        setResult(RESULT_OK, result)
         finish()
     }
 
