@@ -18,7 +18,7 @@ class CardCreationScreenTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardCreationScreen()
+            CardCreationScreen(onBackClick = {}, onSaveClick = {})
         }
     }
 
