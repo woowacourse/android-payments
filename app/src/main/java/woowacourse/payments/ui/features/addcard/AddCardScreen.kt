@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.features.addcard
 
-import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -9,22 +8,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
+import woowacourse.payments.ui.features.addcard.components.BottomSheetScreen
 import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
 import woowacourse.payments.ui.features.addcard.components.CardNumberField
 import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
@@ -38,6 +42,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
@@ -47,6 +52,10 @@ fun AddCardScreen(
     val expireDateUiState by remember(cardUiState.expireDate) {
         derivedStateOf { getExpireDateUiState(cardUiState.expireDate) }
     }
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val scope = rememberCoroutineScope()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
 
     @StringRes
@@ -57,6 +66,24 @@ fun AddCardScreen(
             Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show()
             toastMessageResId = null
         }
+    }
+
+    LaunchedEffect(Unit) {
+        showBottomSheet = true
+    }
+
+    if (showBottomSheet) {
+        BottomSheetScreen(
+            sheetState = sheetState,
+            onDismiss = { showBottomSheet = false },
+            onItemClick = { selectedItem ->
+                scope.launch { sheetState.hide() }.invokeOnCompletion {
+                    if (!sheetState.isVisible) {
+                        showBottomSheet = false
+                    }
+                }
+            },
+        )
     }
 
     Scaffold(
