@@ -17,10 +17,7 @@ data class CardNumber(
 
     fun isValid(): Boolean {
         val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
-        for(part in parts){
-            if(part.length != CARD_NUMBER_PART_LENGTH) return false
-        }
-        return true
+        return !parts.any { it.length != CARD_NUMBER_PART_LENGTH }
     }
 
     fun toFormattedString(): String {
