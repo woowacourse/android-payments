@@ -39,7 +39,7 @@ class CardListContentsTest {
     }
 
     @Test
-    fun 카드가_한_개_이하일_때는_카드_추가_버튼이_기호로_표시된다_1() {
+    fun 카드가_0개일_때_카드_추가_버튼이_기호로_표시된다() {
         // given
         val cards = mutableStateListOf<CardUiModel>()
 
@@ -52,7 +52,7 @@ class CardListContentsTest {
     }
 
     @Test
-    fun 카드가_한_개_이하일_때는_카드_추가_버튼이_기호로_표시된다_2() {
+    fun 카드가_1개일_때_카드_추가_버튼이_기호로_표시된다() {
         // given
         val cards = mutableStateListOf(CARD_FIXTURE)
 
