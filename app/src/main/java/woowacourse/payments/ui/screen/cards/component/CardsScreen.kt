@@ -1,14 +1,11 @@
 package woowacourse.payments.ui.screen.cards.component
 
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,12 +47,14 @@ fun CardsScreen(
     modifier: Modifier = Modifier,
     initialState: CardsUiState = CardsUiState.Empty,
 ) {
-    var cardsUiState by rememberSaveable { mutableStateOf(initialState) }
+    val stateHolder =
+        rememberSaveable(saver = CardsUiStateHolder.Saver) { CardsUiStateHolder(initialState) }
+    val uiState = stateHolder.uiState
     var cardsUiEvent by rememberSaveable { mutableStateOf<CardsUiEvent>(CardsUiEvent.None) }
     val context = LocalContext.current
     val launcher =
         rememberCardAdditionLauncher(
-            onCardAdded = { newCard -> cardsUiState = cardsUiState.addCard(newCard) },
+            onCardAdded = { newCard -> stateHolder.update(newCard) },
             onEvent = { newEvent -> cardsUiEvent = newEvent },
         )
 
@@ -76,12 +74,12 @@ fun CardsScreen(
         topBar = {
             CardsTopBar(
                 onAddClick = { launcher.launch(CardAdditionActivity.newIntent(context)) },
-                isAddButtonVisible = cardsUiState is CardsUiState.MultipleCards,
+                isAddButtonVisible = uiState is CardsUiState.MultipleCards,
             )
         },
     ) { paddingValues: PaddingValues ->
         CardsContent(
-            state = cardsUiState,
+            state = uiState,
             modifier =
                 Modifier
                     .fillMaxSize()
