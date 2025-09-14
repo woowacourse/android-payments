@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,12 +15,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.values.CardNumber
+import woowacourse.payments.ui.model.CardCompany
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.UnknownCard
@@ -48,7 +51,7 @@ fun PaymentCardPlate(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = UnknownCard,
+                    color = paymentCardUiModel?.cardCompany?.plateColor ?: UnknownCard,
                     shape = RoundedCornerShape(5.dp),
                 ).semantics {
                     contentDescription = description
@@ -65,6 +68,23 @@ fun PaymentCardPlate(
                     ),
         )
         if (paymentCardUiModel != null) {
+            Text(
+                paymentCardUiModel.cardCompany.companyName,
+                modifier =
+                    Modifier
+                        .padding(start = 14.dp, top = 10.dp)
+                        .align(Alignment.TopStart),
+                style = LocalTextStyle.current.copy(
+                    lineHeightStyle = LineHeightStyle(
+                        alignment = LineHeightStyle.Alignment.Center,
+                        trim = LineHeightStyle.Trim.Both
+                    )
+                ),
+                fontSize = 12.sp,
+                letterSpacing = 0.1.em,
+                color = Color.White,
+            )
+
             Text(
                 paymentCardUiModel.maskedCardNumber,
                 modifier =
@@ -122,6 +142,7 @@ fun PaymentCardDetailPreview() {
         PaymentCardPlate(
             paymentCardUiModel =
                 PaymentCardUiModel(
+                    CardCompany.BC,
                     "1234 - 1234 - 1234 - 1234",
                     "02 / 26",
                     "CREW",

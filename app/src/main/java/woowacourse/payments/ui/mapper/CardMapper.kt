@@ -11,6 +11,7 @@ import woowacourse.payments.domain.card.values.Password
 import woowacourse.payments.ui.components.toMaskedString
 import woowacourse.payments.ui.features.addcard.CardUiState
 import woowacourse.payments.ui.features.addcard.ExpireDateUiState
+import woowacourse.payments.ui.model.CardCompany
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import java.time.format.DateTimeFormatter
 
@@ -35,6 +36,8 @@ object CardMapper {
         val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
         return PaymentCardUiModel(
+            // TODO : 카드사 도메인 추가 민 변환 필요
+            cardCompany = CardCompany.UNKNOWN,
             maskedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
             ownerName = this.ownerName.value ?: "",
