@@ -8,11 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -21,10 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.CardAdditionUiStateSaver
 import woowacourse.payments.ui.common.component.CardChip
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
+import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
 import woowacourse.payments.ui.screen.cardAddition.toUiModel
 import woowacourse.payments.ui.theme.Gray20
 
@@ -34,10 +30,9 @@ fun CardAdditionScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
-    var cardAdditionUiState by rememberSaveable(stateSaver = CardAdditionUiStateSaver) {
-        mutableStateOf(CardAdditionUiState.EMPTY_CARD)
-    }
-    val isCompletable = remember { derivedStateOf { cardAdditionUiState.isValidCard } }
+    val stateHolder = rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
+    val uiState = stateHolder.uiState
+    val isCompletable = remember { derivedStateOf { uiState.isValidCard } }
     val focusManager = LocalFocusManager.current
 
     Scaffold(
@@ -45,7 +40,7 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(cardAdditionUiState.toUiModel()) },
+                onSaveClick = { onSaveClick(uiState.toUiModel()) },
                 isCompletable = isCompletable.value,
             )
         },
@@ -66,9 +61,9 @@ fun CardAdditionScreen(
                 cardContent = { CardChip(modifier = Modifier.padding(start = 14.dp)) },
             )
             CardNumberTextField(
-                value = cardAdditionUiState.cardNumber.value,
+                value = uiState.cardNumber.value,
                 onCardNumberChange = { newCardNumber: String ->
-                    cardAdditionUiState = cardAdditionUiState.update(newCardNumber = newCardNumber)
+                    stateHolder.updateCardNumber(newCardNumber)
                 },
                 modifier =
                     Modifier
@@ -78,13 +73,13 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             ExpiredDateTextField(
-                value = cardAdditionUiState.expiredDate.value,
-                onDateChange = { newDate: String ->
-                    cardAdditionUiState = cardAdditionUiState.update(newExpiredDate = newDate)
+                value = uiState.expiredDate.value,
+                onDateChange = { newExpiredDate: String ->
+                    stateHolder.updateExpiredDate(newExpiredDate)
                 },
                 modifier = Modifier.padding(top = 18.dp),
                 errorMessage =
-                    if (cardAdditionUiState.isDateError) {
+                    if (uiState.isDateError) {
                         stringResource(
                             R.string.expired_date_error,
                         )
@@ -92,7 +87,7 @@ fun CardAdditionScreen(
                         null
                     },
                 onComplete = {
-                    if (cardAdditionUiState.expiredDate.isValid) {
+                    if (uiState.expiredDate.isValid) {
                         focusManager.moveFocus(
                             FocusDirection.Next,
                         )
@@ -101,9 +96,9 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             CardOwnerNameTextField(
-                value = cardAdditionUiState.ownerName,
-                onNameChange = { newName: String ->
-                    cardAdditionUiState = cardAdditionUiState.update(newOwnerName = newName)
+                value = uiState.ownerName,
+                onNameChange = { newOwnerName: String ->
+                    stateHolder.updateCardOwnerName(newOwnerName)
                 },
                 modifier =
                     Modifier
@@ -113,9 +108,9 @@ fun CardAdditionScreen(
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
             PasswordTextField(
-                value = cardAdditionUiState.password.value,
+                value = uiState.password.value,
                 onPasswordChange = { newPassword: String ->
-                    cardAdditionUiState = cardAdditionUiState.update(newPassword = newPassword)
+                    stateHolder.updatePassword(newPassword)
                 },
                 onComplete = { focusManager.clearFocus() },
                 onKeyboardActionClick = { focusManager.clearFocus() },
