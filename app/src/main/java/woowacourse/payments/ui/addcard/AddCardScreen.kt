@@ -24,7 +24,7 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardContents(
+fun AddCardScreen(
     onSaveSuccess: (card: CardUiModel) -> Unit,
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
@@ -85,8 +85,8 @@ fun AddCardContents(
 
 @Preview(showBackground = true)
 @Composable
-fun AddCardContentsPreview() {
-    AddCardContents(
+fun AddCardScreenPreview() {
+    AddCardScreen(
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},

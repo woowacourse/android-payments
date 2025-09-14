@@ -33,7 +33,7 @@ class CardListActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardListContents(
+            CardListScreen(
                 cards = cards,
                 navigateToAddCard = { navigateToAddCard() },
             )

@@ -10,7 +10,7 @@ import woowacourse.payments.CARD_FIXTURE
 import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
-class CardListContentsTest {
+class CardListScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -20,7 +20,7 @@ class CardListContentsTest {
         val cards = mutableStateListOf<CardUiModel>()
 
         // when
-        composeTestRule.setContent { CardListContents(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards) {} }
 
         // then
         composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertIsDisplayed()
@@ -32,7 +32,7 @@ class CardListContentsTest {
         val cards = mutableStateListOf(CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListContents(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards) {} }
 
         // then
         composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertDoesNotExist()
@@ -44,7 +44,7 @@ class CardListContentsTest {
         val cards = mutableStateListOf<CardUiModel>()
 
         // when
-        composeTestRule.setContent { CardListContents(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards) {} }
 
         // then
         composeTestRule.onNodeWithText("+").assertIsDisplayed()
@@ -57,7 +57,7 @@ class CardListContentsTest {
         val cards = mutableStateListOf(CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListContents(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards) {} }
 
         // then
         composeTestRule.onNodeWithText("+").assertIsDisplayed()
@@ -70,7 +70,7 @@ class CardListContentsTest {
         val cards = mutableStateListOf(CARD_FIXTURE, CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListContents(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards) {} }
 
         // then
         composeTestRule.onNodeWithText("추가").assertIsDisplayed()

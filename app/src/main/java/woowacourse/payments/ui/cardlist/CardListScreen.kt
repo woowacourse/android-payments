@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardlist
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -33,7 +32,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import java.time.YearMonth
 
 @Composable
-fun CardListContents(
+fun CardListScreen(
     cards: SnapshotStateList<CardUiModel>,
     navigateToAddCard: () -> Unit,
 ) {
@@ -76,8 +75,8 @@ fun CardListContents(
 
 @Preview(showBackground = true)
 @Composable
-fun CardListContentsWithNoCardsPreview() {
-    CardListContents(
+fun CardListScreenWithNoCardsPreview() {
+    CardListScreen(
         cards = remember { mutableStateListOf() },
         navigateToAddCard = {},
     )
@@ -85,42 +84,44 @@ fun CardListContentsWithNoCardsPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListContentsWithOneCardPreview() {
-    CardListContents(
-        cards = remember {
-            mutableStateListOf(
-                Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                ).toUiModel(),
-            )
-        },
+fun CardListScreenWithOneCardPreview() {
+    CardListScreen(
+        cards =
+            remember {
+                mutableStateListOf(
+                    Card(
+                        CardNumber("1234123412341234"),
+                        ExpirationDate(YearMonth.of(2034, 12)),
+                        CardholderName("디랙"),
+                        Passcode("1234"),
+                    ).toUiModel(),
+                )
+            },
         navigateToAddCard = {},
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CardListContentsWithTwoCardsPreview() {
-    CardListContents(
-        cards = remember {
-            mutableStateListOf(
-                Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                ).toUiModel(),
-                Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                ).toUiModel(),
-            )
-        },
+fun CardListScreenWithTwoCardsPreview() {
+    CardListScreen(
+        cards =
+            remember {
+                mutableStateListOf(
+                    Card(
+                        CardNumber("1234123412341234"),
+                        ExpirationDate(YearMonth.of(2034, 12)),
+                        CardholderName("디랙"),
+                        Passcode("1234"),
+                    ).toUiModel(),
+                    Card(
+                        CardNumber("1234123412341234"),
+                        ExpirationDate(YearMonth.of(2034, 12)),
+                        CardholderName("디랙"),
+                        Passcode("1234"),
+                    ).toUiModel(),
+                )
+            },
         navigateToAddCard = {},
     )
 }

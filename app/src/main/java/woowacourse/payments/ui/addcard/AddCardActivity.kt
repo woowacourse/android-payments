@@ -16,7 +16,7 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AddCardContents(
+            AddCardScreen(
                 onSaveSuccess = { card: CardUiModel ->
                     Toast
                         .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
