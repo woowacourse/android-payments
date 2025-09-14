@@ -109,7 +109,7 @@ private fun formatExpiredDate(date: String): String =
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentCardPreview1() {
+private fun PaymentCardPreview_FullInfo() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
@@ -125,7 +125,7 @@ private fun PaymentCardPreview1() {
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentCardPreview2() {
+private fun PaymentCardPreview_Default() {
     AndroidpaymentsTheme {
         PaymentCard()
     }
@@ -133,7 +133,7 @@ private fun PaymentCardPreview2() {
 
 @Preview(showBackground = true)
 @Composable
-private fun PaymentCardPreview3() {
+private fun PaymentCardPreview_MissingOwnerInfo() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =

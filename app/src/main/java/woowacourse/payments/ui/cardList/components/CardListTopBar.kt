@@ -53,7 +53,7 @@ fun CardListTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListTopBarPreview() {
+private fun CardListTopBarPreview_WithRegistrationButton() {
     AndroidpaymentsTheme {
         CardListTopBar({})
     }
@@ -61,7 +61,7 @@ private fun CardListTopBarPreview() {
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListTopBarPreview2() {
+private fun CardListTopBarPreview_WithoutRegistrationButton() {
     AndroidpaymentsTheme {
         CardListTopBar(isShowRegistrationButton = false, onRegistrationClick = {})
     }

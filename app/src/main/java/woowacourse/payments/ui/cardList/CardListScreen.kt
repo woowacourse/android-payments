@@ -76,7 +76,7 @@ fun CardListScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListScreenPreview1() {
+private fun CardListScreenPreview_EmptyCard() {
     AndroidpaymentsTheme {
         CardListScreen(onRegistrationClick = {})
     }
@@ -84,7 +84,7 @@ private fun CardListScreenPreview1() {
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListScreenPreview2() {
+private fun CardListScreenPreview_SingleCard() {
     AndroidpaymentsTheme {
         CardListScreen(
             cards =
@@ -103,7 +103,7 @@ private fun CardListScreenPreview2() {
 
 @Preview(showBackground = true)
 @Composable
-private fun CardListScreenPreview3() {
+private fun CardListScreenPreview_MultipleCard() {
     AndroidpaymentsTheme {
         CardListScreen(
             cards =
