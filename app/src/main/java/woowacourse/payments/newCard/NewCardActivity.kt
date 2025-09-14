@@ -36,7 +36,7 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val newCardStateHolder = NewCardStateHolder()
+                val newCardState = NewCardState()
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -51,10 +51,10 @@ class NewCardActivity : ComponentActivity() {
                                         putExtra(
                                             "card",
                                             Card(
-                                                CardNumber(newCardStateHolder.cardNumber),
-                                                CardExpiry.fromString(newCardStateHolder.cardExpiry),
-                                                password = CardPassword(newCardStateHolder.cardPassword),
-                                                name = CardName(newCardStateHolder.cardName),
+                                                CardNumber(newCardState.cardNumber),
+                                                CardExpiry.fromString(newCardState.cardExpiry),
+                                                password = CardPassword(newCardState.cardPassword),
+                                                name = CardName(newCardState.cardName),
                                             ).toUiModel()
                                         )
                                     }
@@ -62,10 +62,10 @@ class NewCardActivity : ComponentActivity() {
                                 finish()
                             },
                             isSaveEnabled = runCatching { Card(
-                                CardNumber(newCardStateHolder.cardNumber),
-                                CardExpiry.fromString(newCardStateHolder.cardExpiry),
-                                password = CardPassword(newCardStateHolder.cardPassword),
-                                name = CardName(newCardStateHolder.cardName),
+                                CardNumber(newCardState.cardNumber),
+                                CardExpiry.fromString(newCardState.cardExpiry),
+                                password = CardPassword(newCardState.cardPassword),
+                                name = CardName(newCardState.cardName),
                             ) }.isSuccess,
                         )
                     },
@@ -87,21 +87,21 @@ class NewCardActivity : ComponentActivity() {
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            text = newCardStateHolder.cardNumber,
-                            onValueChange = { newCardStateHolder.cardNumber = it },
+                            text = newCardState.cardNumber,
+                            onValueChange = { newCardState.onNumberChange(it) },
                             label = getString(R.string.card_number_label),
                             hint = "0000 - 0000 - 0000 - 0000",
                             modifier = Modifier.padding(horizontal = 24.dp),
                             maxLength = 16,
                             mask = InputMask.CardNumber,
-                            errorMessage = runCatching { CardNumber(newCardStateHolder.cardNumber) }.exceptionOrNull()?.message ?: "",
+                            errorMessage = newCardState.numberErrorMessage,
                             imeAction = ImeAction.Next,
-                            isError = if (newCardStateHolder.cardNumber.isNotEmpty()) runCatching { CardNumber(newCardStateHolder.cardNumber) }.isFailure else false,
+                            isError = newCardState.isNumberError,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
-                            text = newCardStateHolder.cardExpiry,
-                            onValueChange = { newCardStateHolder.cardExpiry = it },
+                            text = newCardState.cardExpiry,
+                            onValueChange = { newCardState.onExpiryChange(it) },
                             label = getString(R.string.card_expiry_label),
                             hint = "MM / YY",
                             modifier =
@@ -110,14 +110,14 @@ class NewCardActivity : ComponentActivity() {
                                     .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Expiry,
-                            errorMessage = runCatching { CardExpiry.fromString(newCardStateHolder.cardExpiry) }.exceptionOrNull()?.message ?: "",
+                            errorMessage = newCardState.expiryErrorMessage,
                             imeAction = ImeAction.Next,
-                            isError = if (newCardStateHolder.cardExpiry.isNotEmpty()) runCatching { CardExpiry.fromString(newCardStateHolder.cardExpiry) }.isFailure else false,
+                            isError = newCardState.isExpiryError,
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                         LimitedUppercaseTextField(
-                            text = newCardStateHolder.cardName,
-                            onValueChange = { newCardStateHolder.cardName = it },
+                            text = newCardState.cardName,
+                            onValueChange = { newCardState.onNameChange(it) },
                             label = getString(R.string.card_owner_label),
                             hint = getString(R.string.card_owner_hint),
                             modifier = Modifier.padding(horizontal = 24.dp),
@@ -126,8 +126,8 @@ class NewCardActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(15.dp))
                         DigitTextField(
-                            text = newCardStateHolder.cardPassword,
-                            onValueChange = { newCardStateHolder.cardPassword = it },
+                            text = newCardState.cardPassword,
+                            onValueChange = { newCardState.onPasswordChange(it) },
                             label = getString(R.string.card_password_label),
                             hint = "0000",
                             modifier =
@@ -136,8 +136,8 @@ class NewCardActivity : ComponentActivity() {
                                     .padding(horizontal = 24.dp),
                             maxLength = 4,
                             mask = InputMask.Password,
-                            errorMessage = runCatching { CardPassword(newCardStateHolder.cardPassword) }.exceptionOrNull()?.message ?: "",
-                            isError = if (newCardStateHolder.cardPassword.isNotEmpty()) runCatching { CardPassword(newCardStateHolder.cardPassword) }.isFailure else false,
+                            errorMessage = newCardState.passwordErrorMessage,
+                            isError = newCardState.isPasswordError,
                         )
                     }
                 }
