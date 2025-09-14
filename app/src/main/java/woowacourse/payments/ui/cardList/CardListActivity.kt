@@ -7,10 +7,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
@@ -24,7 +22,7 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cards by rememberSaveable { mutableStateOf<List<Card>>(emptyList()) }
+                val cards = rememberSaveable { mutableStateListOf<Card>() }
                 val context = LocalContext.current
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
