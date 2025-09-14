@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.screen
+package woowacourse.payments.ui.screen.addCard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,17 +21,28 @@ import woowacourse.payments.ui.component.ExpiredInputField
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() }) {
+fun AddCardScreen(
+    onBackPressed: () -> Unit,
+    onCardSaved: (CardUiModel) -> Unit,
+) {
+    val stateHolder =
+        rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder(AddCardUiState()) }
+    val scrollState = rememberScrollState()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-                onBackClick = {},
+                onBackClick = onBackPressed,
                 onSaveClick = {
-                    viewModel.validateAll()
+                    stateHolder.validateAll()
+                    if (stateHolder.uiState.isFormValid) {
+                        onCardSaved(stateHolder.uiState.toCardUiModel())
+                    }
                 },
             )
         },
@@ -38,7 +51,8 @@ fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() })
             modifier =
                 Modifier
                     .padding(innerPadding)
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             Box(
@@ -48,35 +62,35 @@ fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() })
                         .padding(vertical = 12.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                PaymentCard()
+                PaymentCard(card = stateHolder.uiState.toCardUiModel())
             }
 
             CardNumberInputField(
-                cardNumber = viewModel.cardNumber,
-                onCardNumberChange = { viewModel.onCardNumberChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                showValidationError = viewModel.showValidationError,
+                cardNumber = stateHolder.uiState.cardNumber,
+                onCardNumberChange = { stateHolder.updateCardNumber(it) },
+                error = stateHolder.uiState.cardNumberError,
             )
 
             ExpiredInputField(
-                expired = viewModel.expired,
-                onExpiredChange = { viewModel.onExpiredChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                showValidationError = viewModel.showValidationError,
+                expired = stateHolder.uiState.expired,
+                onExpiredChange = { stateHolder.updateExpired(it) },
+                error = stateHolder.uiState.expiredError,
             )
 
             CardOwnerInputField(
-                cardOwner = viewModel.cardOwner,
-                onOwnerChange = { viewModel.onCardOwnerChange(it) },
                 modifier = Modifier.fillMaxWidth(),
-                showValidationError = viewModel.showValidationError,
+                cardOwner = stateHolder.uiState.cardOwner,
+                onOwnerChange = { stateHolder.updateCardOwner(it) },
+                error = stateHolder.uiState.ownerError,
             )
 
             PasswordInputField(
-                password = viewModel.password,
-                onPasswordChange = { viewModel.onPasswordChange(it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
-                showValidationError = viewModel.showValidationError,
+                password = stateHolder.uiState.password,
+                onPasswordChange = { stateHolder.updatePassword(it) },
+                error = stateHolder.uiState.passwordError,
             )
         }
     }
@@ -86,6 +100,9 @@ fun AddCardScreen(viewModel: AddCardViewModel = remember { AddCardViewModel() })
 @Preview(showBackground = true)
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardScreen()
+        AddCardScreen(
+            onBackPressed = {},
+            onCardSaved = {},
+        )
     }
 }

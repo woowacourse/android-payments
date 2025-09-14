@@ -1,18 +1,35 @@
 <resources>
     <string name="app_name">android-payments</string>
 
-    <string name="card_number_label">카드 번호</string>
-    <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>
+    <!-- CardListScreen -->
+    <string name="card_list_add_new_card">새로운 카드를 등록해주세요</string>
+    <string name="card_list_add_card_toast">새 카드가 추가되었습니다</string>
 
+    <!-- NewCardTopBar -->
+    <string name="new_card_top_bar_title">카드 추가</string>
+
+    <!-- CardListTopBar -->
+    <string name="card_list_top_bar_title">Payments</string>
+    <string name="card_list_top_bar_add_card">추가</string>
+
+    <!-- CardNumberInputField -->
+    <string name="card_number_label">카드 번호</string>
+    <string name="card_number_placeholder">0000 – 0000 – 0000 – 0000</string>
+    <string name="card_number_invalid">올바른 카드 번호가 아닙니다</string>
+
+    <!-- ExpiredInputField -->
     <string name="expired_label">만료일</string>
     <string name="expired_placeholder">MM / YY</string>
+    <string name="expired_invalid">올바른 만료일이 아닙니다</string>
 
+    <!-- CardOwnerInputField -->
     <string name="card_owner_label">카드 소유자 이름(선택)</string>
     <string name="card_owner_placeholder">카드에 표시된 이름을 입력하세요.</string>
-    <string name="card_owner_length">%s / 30</string>
+    <string name="card_owner_length">%s / 20</string>
+    <string name="card_owner_invalid">올바른 카드 소유자가 아닙니다</string>
 
+    <!-- PasswordInputField -->
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
-
-    <string name="top_bar_title">카드 추가</string>
+    <string name="password_invalid">올바른 비밀번호가 아닙니다</string>
 </resources>
