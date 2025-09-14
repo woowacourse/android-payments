@@ -71,7 +71,6 @@ fun PaymentCard(
                     text = card.expirationDate,
                     color = Color.White,
                     fontSize = 12.sp,
-                    textAlign = TextAlign.End,
                 )
             }
         }
