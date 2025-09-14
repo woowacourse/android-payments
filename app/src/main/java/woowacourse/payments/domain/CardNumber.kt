@@ -1,6 +1,7 @@
 package woowacourse.payments.domain
 
-data class CardNumber(
+@JvmInline
+value class CardNumber(
     val value: String,
 ) {
     init {

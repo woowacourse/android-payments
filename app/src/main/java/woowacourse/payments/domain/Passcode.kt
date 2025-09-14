@@ -1,6 +1,7 @@
 package woowacourse.payments.domain
 
-data class Passcode(
+@JvmInline
+value class Passcode(
     val value: String,
 ) {
     init {
