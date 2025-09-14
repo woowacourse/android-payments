@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,14 +38,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 private val SupportingTextHeight = 20.dp
 private val FormFieldSpacing = 30.dp
 
-private fun showToast(
-    context: Context,
-    @StringRes
-    message: Int,
-) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
 @Composable
 fun AddCardScreen(
     onNavigateBack: () -> Unit,
@@ -56,6 +49,16 @@ fun AddCardScreen(
     }
     val context = LocalContext.current
 
+    @StringRes
+    var toastMessageResId by remember { mutableStateOf<Int?>(null) }
+
+    LaunchedEffect(toastMessageResId) {
+        toastMessageResId?.let { messageId ->
+            Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show()
+            toastMessageResId = null
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -65,22 +68,16 @@ fun AddCardScreen(
                     val cardDomainResult = cardUiState.toDomainCard()
                     when (cardDomainResult) {
                         CardCreationResult.InvalidCardNumber ->
-                            showToast(
-                                context,
-                                R.string.card_list_incomplete_card_number_field_alert,
-                            )
+                            toastMessageResId =
+                                R.string.card_list_incomplete_card_number_field_alert
 
                         is CardCreationResult.InvalidExpireDate ->
-                            showToast(
-                                context,
-                                R.string.card_list_incomplete_expire_date_field_alert,
-                            )
+                            toastMessageResId =
+                                R.string.card_list_incomplete_expire_date_field_alert
 
                         CardCreationResult.InvalidPassword ->
-                            showToast(
-                                context,
-                                R.string.card_list_incomplete_card_password_field_alert,
-                            )
+                            toastMessageResId =
+                                R.string.card_list_incomplete_card_password_field_alert
 
                         is CardCreationResult.Success -> onNavigateSave(cardDomainResult.paymentCard)
                         CardCreationResult.InvalidOwnerName -> return@NewCardTopBar
