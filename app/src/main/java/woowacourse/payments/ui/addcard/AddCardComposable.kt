@@ -33,7 +33,7 @@ fun CardCreationScreen(
     AndroidpaymentsTheme {
         Scaffold(
             topBar = {
-                NewCardTopBar(
+                AddCardTopBar(
                     onBackClick = onBackClick,
                     onSaveClick = { onSaveClick(card) },
                     isOnSaveClickable = card.isValid(),

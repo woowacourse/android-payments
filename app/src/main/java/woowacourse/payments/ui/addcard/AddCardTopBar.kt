@@ -15,7 +15,7 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardTopBar(
+fun AddCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     isOnSaveClickable: Boolean,
