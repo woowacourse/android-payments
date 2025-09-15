@@ -17,11 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
@@ -29,6 +33,11 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel? = null,
 ) {
+    val cardCompanyDescription = stringResource(R.string.card_company_description)
+    val cardNumberDescription = stringResource(R.string.card_number_description)
+    val cardHolderNameDescription = stringResource(R.string.card_holder_name_description)
+    val cardExpirationDateDescription = stringResource(R.string.card_expiration_date_description)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -38,7 +47,8 @@ fun PaymentCard(
                 .background(
                     color = Color(card?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 12.dp),
+                )
+                .padding(horizontal = 12.dp),
     ) {
         Column {
             Text(
@@ -46,6 +56,7 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 color = Color.White,
                 letterSpacing = 2.sp,
+                modifier = Modifier.semantics { contentDescription = cardCompanyDescription },
             )
             Spacer(modifier = Modifier.height(4.dp))
             Box(
@@ -63,6 +74,7 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 letterSpacing = 2.sp,
                 color = Color.White,
+                modifier = Modifier.semantics { contentDescription = cardNumberDescription },
             )
             Spacer(modifier = Modifier.height(2.dp))
             Row(
@@ -74,12 +86,16 @@ fun PaymentCard(
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
+                    modifier =
+                        Modifier.semantics { contentDescription = cardHolderNameDescription },
                 )
                 Text(
                     text = card?.expirationDate?.toDisplayString() ?: "",
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
+                    modifier =
+                        Modifier.semantics { contentDescription = cardExpirationDateDescription },
                 )
             }
         }

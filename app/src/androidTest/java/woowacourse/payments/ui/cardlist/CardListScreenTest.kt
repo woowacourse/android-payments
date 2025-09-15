@@ -104,8 +104,8 @@ class CardListScreenTest {
             CardUiModel(
                 companyName = "BC카드",
                 color = 0xFFF04651,
-                number = "1111 - 2222 - 3333 - 4444",
-                expirationDate = "09 / 25",
+                number = "1111222233334444",
+                expirationDate = "0925",
                 holderName = "CREW",
             )
     }

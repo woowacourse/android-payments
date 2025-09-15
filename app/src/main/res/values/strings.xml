@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">android-payments</string>
 
+    <string name="card_company_description">카드사</string>
+    <string name="card_number_description">카드 번호</string>
+    <string name="card_holder_name_description">카드 소유자</string>
+    <string name="card_expiration_date_description">만료일</string>
+
     <string name="add">추가</string>
     <string name="add_card_message">새로운 카드를 등록해주세요</string>
     <string name="add_button_description">카드 추가하기</string>
