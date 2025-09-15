@@ -41,6 +41,7 @@ import woowacourse.payments.ui.screen.cardAddition.CardAdditionActivity
 import woowacourse.payments.ui.screen.cards.CardsActivity.Companion.EXTRA_CARD
 import woowacourse.payments.ui.screen.cards.CardsUiEvent
 import woowacourse.payments.ui.screen.cards.CardsUiState
+import woowacourse.payments.ui.screen.cards.CardsUiStateHolder
 
 @Composable
 fun CardsScreen(

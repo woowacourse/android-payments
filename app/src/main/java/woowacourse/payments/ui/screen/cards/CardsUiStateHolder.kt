@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.screen.cards.component
+package woowacourse.payments.ui.screen.cards
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,7 +6,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.screen.cards.CardsUiState
 
 class CardsUiStateHolder(
     initialState: CardsUiState = CardsUiState.Empty,
