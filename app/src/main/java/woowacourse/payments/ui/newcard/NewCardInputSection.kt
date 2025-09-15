@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcreate
+package woowacourse.payments.ui.newcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +17,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardcreate.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
+import woowacourse.payments.ui.newcard.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
+import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
@@ -34,8 +34,8 @@ private val KEYBOARD_OPTIONS_NUMBER = KeyboardOptions(keyboardType = KeyboardTyp
 private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
 
 @Composable
-fun CreateCardInputSection(
-    createCardUiState: CreateCardUiState,
+fun NewCardInputSection(
+    newCardUiState: NewCardUiState,
     onCardNumbersChange: (String) -> Unit,
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
@@ -56,7 +56,7 @@ fun CreateCardInputSection(
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = createCardUiState.cardNumber,
+            value = newCardUiState.cardNumber,
             onValueChange = onCardNumbersChange,
             modifier =
                 Modifier
@@ -69,10 +69,10 @@ fun CreateCardInputSection(
         )
 
         val expiryDateErrorTextRes =
-            createCardUiState.expiryDateErrorTextRes?.let { stringResource(it) }
+            newCardUiState.expiryDateErrorTextRes?.let { stringResource(it) }
 
         OutlinedTextField(
-            value = createCardUiState.expiryDate,
+            value = newCardUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
             modifier =
                 Modifier
@@ -93,7 +93,7 @@ fun CreateCardInputSection(
         )
 
         OutlinedTextField(
-            value = createCardUiState.ownerName,
+            value = newCardUiState.ownerName,
             onValueChange = onCardOwnerNameChange,
             modifier =
                 Modifier
@@ -103,7 +103,7 @@ fun CreateCardInputSection(
             placeholder = { Text(stringResource(R.string.owner_placeholder)) },
             supportingText = {
                 Text(
-                    "${createCardUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
+                    "${newCardUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
                 )
@@ -111,7 +111,7 @@ fun CreateCardInputSection(
         )
 
         OutlinedTextField(
-            value = createCardUiState.password,
+            value = newCardUiState.password,
             onValueChange = onCardPasswordChange,
             modifier =
                 Modifier

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcreate
+package woowacourse.payments.ui.newcard
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.derivedStateOf
@@ -8,21 +8,21 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
-import woowacourse.payments.ui.cardcreate.model.CreateCardUiState
+import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.utils.ext.formatCardExpiryException
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 
-class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiState> {
-    override fun SaverScope.save(value: CreateCardStateHolder): CreateCardUiState? =
+class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, NewCardUiState> {
+    override fun SaverScope.save(value: CreateCardStateHolder): NewCardUiState? =
         value.cardCreateState
 
-    override fun restore(value: CreateCardUiState): CreateCardStateHolder? =
+    override fun restore(value: NewCardUiState): CreateCardStateHolder? =
         CreateCardStateHolder(value)
 }
 
 class CreateCardStateHolder(
-    initial: CreateCardUiState = CreateCardUiState()
+    initial: NewCardUiState = NewCardUiState()
 ) {
     var cardCreateState by mutableStateOf(initial)
         private set

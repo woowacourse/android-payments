@@ -1,6 +1,5 @@
-package woowacourse.payments.ui.cardcreate
+package woowacourse.payments.ui.newcard
 
-import android.app.Activity.RESULT_OK
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.cards.CardsActivity
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
@@ -23,7 +21,7 @@ private val ScreenSectionSpacing = 40.dp
 private val ScreenSidePadding = 24.dp
 
 @Composable
-fun CreateCardScreen(
+fun NewCardScreen(
     onSaveClick: (PaymentCardUiModel) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -50,8 +48,8 @@ fun CreateCardScreen(
             Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
             PaymentCard(null, Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = Modifier.height(ScreenSectionSpacing))
-            CreateCardInputSection(
-                createCardUiState = stateHolder.cardCreateState,
+            NewCardInputSection(
+                newCardUiState = stateHolder.cardCreateState,
                 onCardNumbersChange = stateHolder::updateCardNumber,
                 onCardExpiryDateChange = stateHolder::updateExpiryDate,
                 onCardOwnerNameChange = stateHolder::updateOwnerName,

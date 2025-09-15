@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardcreate.CreateCardActivity
+import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
 import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
@@ -32,7 +32,7 @@ fun CardsScreen(
     val localContext = LocalContext.current
     val cardAddLauncher = cardAddLauncher(cardsStateHolder, localContext)
     val onAddClick = {
-        val intent = CreateCardActivity.instance(localContext)
+        val intent = NewCardActivity.instance(localContext)
         cardAddLauncher.launch(intent)
     }
     Scaffold(
