@@ -22,6 +22,7 @@ import woowacourse.payments.ui.model.IssuingBank
 @Composable
 fun BankSelectBottomSheet(
     onBankSelected: (IssuingBank) -> Unit,
+    onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState(confirmValueChange = { false })
@@ -30,11 +31,13 @@ fun BankSelectBottomSheet(
     LaunchedEffect(selectedBank) {
         if (selectedBank != IssuingBank.NOT_SELECTED) {
             sheetState.hide()
+            onBankSelected(selectedBank)
+            onDismissRequest()
         }
     }
 
     ModalBottomSheet(
-        onDismissRequest = { onBankSelected(selectedBank) },
+        onDismissRequest = onDismissRequest,
         modifier = modifier,
         sheetState = sheetState,
     ) {
@@ -58,5 +61,6 @@ fun BankSelectBottomSheet(
 private fun BankSelectBottomSheetPreview() {
     BankSelectBottomSheet(
         onBankSelected = {},
+        onDismissRequest = {},
     )
 }

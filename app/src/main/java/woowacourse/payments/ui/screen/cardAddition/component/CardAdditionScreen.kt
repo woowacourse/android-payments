@@ -115,6 +115,14 @@ fun CardAdditionScreen(
                 onComplete = { focusManager.clearFocus() },
                 onKeyboardActionClick = { focusManager.clearFocus() },
             )
+            if (!stateHolder.hasShownSheet) {
+                BankSelectBottomSheet(
+                    onBankSelected = { issuingBank ->
+                        stateHolder.updateIssuingBank(issuingBank)
+                    },
+                    onDismissRequest = { stateHolder.updateSheetVisible() },
+                )
+            }
         }
     }
 }
