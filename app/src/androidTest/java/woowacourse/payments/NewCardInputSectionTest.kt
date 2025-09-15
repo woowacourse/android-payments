@@ -72,7 +72,7 @@ class NewCardInputSectionTest {
                 expiryDate = "13/22",
                 ownerName = "",
                 password = "",
-                expiryDateErrorTextRes = R.string.error_card_expiry_invalid_month,
+                expiryDateErrorTextRes = R.string.validate_card_expiry_invalid_month,
             )
         setContentWithState(initial)
 

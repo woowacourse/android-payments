@@ -8,10 +8,11 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import woowacourse.payments.domain.CardExpiryValidator
 import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.utils.ext.formatCardExpiryException
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
+import java.time.YearMonth
 
 class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, NewCardUiState> {
     override fun SaverScope.save(value: CreateCardStateHolder): NewCardUiState? =
@@ -52,7 +53,7 @@ class CreateCardStateHolder(
         val value = expiryDate.trim()
         if (!isExpiryDateAcceptable(value)) return
         cardCreateState = cardCreateState.copy(expiryDate = value)
-        val error = cardCreateState.expiryDate.formatCardExpiryException()
+        val error = validateExpiryDate(cardCreateState.expiryDate)
         cardCreateState = cardCreateState.copy(expiryDateErrorTextRes = error?.toErrorResourceId())
     }
 
@@ -93,6 +94,21 @@ class CreateCardStateHolder(
 
     private fun isPasswordCreatable(password: String): Boolean =
         password.length == CARD_PASSWORD_MAX && password.isDigitsOnly()
+
+
+    private fun validateExpiryDate(expiry: String): CardExpiryValidator? {
+        val digits = expiry.filter(Char::isDigit)
+
+        if (digits.length != 4) return null
+        val mm = digits.substring(0, 2).toIntOrNull() ?: return CardExpiryValidator.InvalidMonth
+        val yy = digits.substring(2, 4).toIntOrNull() ?: return CardExpiryValidator.InvalidYear
+        if (mm !in 1..12) return CardExpiryValidator.InvalidMonth
+
+        val now = YearMonth.now()
+        val exp = YearMonth.of(2000 + yy, mm)
+        if (exp.isBefore(now)) return CardExpiryValidator.Expired
+        return null
+    }
 
     companion object {
         private const val CARD_NUMBERS_MAX = 16
