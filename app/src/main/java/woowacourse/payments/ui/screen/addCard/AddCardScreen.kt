@@ -30,7 +30,7 @@ fun AddCardScreen(
     onCardSaved: (CardUiModel) -> Unit,
 ) {
     val stateHolder =
-        rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder(AddCardUiState()) }
+        rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
     val scrollState = rememberScrollState()
 
     Scaffold(

@@ -17,16 +17,16 @@ import woowacourse.payments.ui.util.BundleKeys.PASSWORD_KEY
 import woowacourse.payments.ui.util.BundleKeys.VALIDATION_ERROR_KEY
 
 class AddCardStateHolder(
-    initialState: AddCardUiState,
+    initialState: AddCardUiState = AddCardUiState(),
 ) {
     var uiState by mutableStateOf(initialState)
         private set
 
-    fun updateCardNumber(newNumber: CardNumber?) {
+    fun updateCardNumber(newNumber: CardNumber) {
         uiState = uiState.copy(cardNumber = newNumber)
     }
 
-    fun updateExpired(newExpired: Expired?) {
+    fun updateExpired(newExpired: Expired) {
         uiState = uiState.copy(expired = newExpired)
     }
 
@@ -34,7 +34,7 @@ class AddCardStateHolder(
         uiState = uiState.copy(cardOwner = newOwner)
     }
 
-    fun updatePassword(newPassword: Password?) {
+    fun updatePassword(newPassword: Password) {
         uiState = uiState.copy(password = newPassword)
     }
 
@@ -47,10 +47,10 @@ class AddCardStateHolder(
             Saver(
                 save = { holder ->
                     bundleOf(
-                        CARD_NUMBER_KEY to holder.uiState.cardNumber?.value,
-                        EXPIRED_KEY to holder.uiState.expired?.value,
+                        CARD_NUMBER_KEY to holder.uiState.cardNumber.value,
+                        EXPIRED_KEY to holder.uiState.expired.value,
                         CARD_OWNER_KEY to holder.uiState.cardOwner.value,
-                        PASSWORD_KEY to holder.uiState.password?.value,
+                        PASSWORD_KEY to holder.uiState.password.value,
                         VALIDATION_ERROR_KEY to ArrayList(holder.uiState.errors.map { it.name }),
                     )
                 },
@@ -63,10 +63,10 @@ class AddCardStateHolder(
 
                     val restoredState =
                         AddCardUiState(
-                            cardNumber = bundle.getString(CARD_NUMBER_KEY)?.let(::CardNumber),
-                            expired = bundle.getString(EXPIRED_KEY)?.let(::Expired),
+                            cardNumber = CardNumber(bundle.getString(CARD_NUMBER_KEY) ?: ""),
+                            expired = Expired(bundle.getString(EXPIRED_KEY) ?: ""),
                             cardOwner = CardOwner(bundle.getString(CARD_OWNER_KEY) ?: ""),
-                            password = bundle.getString(PASSWORD_KEY)?.let(::Password),
+                            password = Password(bundle.getString(PASSWORD_KEY) ?: ""),
                             errors = errors,
                         )
                     AddCardStateHolder(restoredState)
