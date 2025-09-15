@@ -2,6 +2,7 @@ package woowacourse.payments.ui.cardcatalog
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,12 +31,19 @@ fun CardCatalogScreen(
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
             if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = activityResult.data?.getParcelableExtra<Card>("newCard")
+                val newCard: Card? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    activityResult.data?.getParcelableExtra("newCard", Card::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    activityResult.data?.getParcelableExtra<Card>("newCard")
+                }
                 newCard?.let {
                     cards.add(newCard)
                 }
             }
         }
+
+
 
     fun openAddCardWithResult() {
         val intent = Intent(context, NewCardActivity::class.java)
