@@ -1,13 +1,16 @@
 package woowacourse.payments.ui.company.model
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 
+@Parcelize
 data class CompanyUiModel(
     val name: String,
     @DrawableRes val logo: Int,
-)
+) : Parcelable
 
 fun CardCompany.toUiModel(): CompanyUiModel {
     @DrawableRes
