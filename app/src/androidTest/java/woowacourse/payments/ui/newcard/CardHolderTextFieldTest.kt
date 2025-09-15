@@ -57,11 +57,19 @@ class CardHolderTextFieldTest {
         val field = composeRule.onNode(hasText("카드 소유자 이름(선택)") and hasSetTextAction())
 
         // when
-        field.performTextInput("공백")
+        field.performTextInput("공 ")
 
         // then
         composeRule
-            .onNodeWithText("공백")
+            .onNodeWithText("공 ")
+            .assertIsDisplayed()
+
+        // when
+        field.performTextInput("백")
+
+        // then
+        composeRule
+            .onNodeWithText("공 백")
             .assertIsDisplayed()
     }
 
@@ -75,7 +83,7 @@ class CardHolderTextFieldTest {
         val field = composeRule.onNode(hasText("카드 소유자 이름(선택)") and hasSetTextAction())
 
         // when
-        val long = "1234567890123456789012345678901234567890"
+        val long = "abcdeabcdeabcdeabcdeabcdeabcdeabcde"
         field.performTextInput(long)
 
         // then
