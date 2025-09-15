@@ -1,6 +1,7 @@
 package woowacourse.payments.domain.model
 
-data class UserName(
+@JvmInline
+value class UserName private constructor(
     val value: String,
 ) {
     init {
@@ -11,5 +12,7 @@ data class UserName(
 
     companion object {
         const val CARDHOLDER_NAME_MAX_LENGTH = 30
+
+        fun from(value: String): UserName = UserName(value)
     }
 }
