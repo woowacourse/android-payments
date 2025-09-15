@@ -36,4 +36,14 @@
     <!--    PaymentScreen-->
     <string name="payment_add_new_card_prompt">새로운 카드를 등록해주세요</string>
     <string name="payment_toast_card_added">카드가 추가되었습니다</string>
+
+    <!--    BankTitle-->
+    <string name="bank_bc">BC카드</string>
+    <string name="bank_shinhan">신한카드</string>
+    <string name="bank_kakao">카카오뱅크</string>
+    <string name="bank_hyundai">현대카드</string>
+    <string name="bank_woori">우리카드</string>
+    <string name="bank_lotte">롯데카드</string>
+    <string name="bank_hana">하나카드</string>
+    <string name="bank_kb">국민카드</string>
 </resources>
