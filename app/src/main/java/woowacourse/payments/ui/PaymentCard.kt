@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,15 +37,67 @@ fun PaymentCard(
                 .background(
                     color = Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                )
+                .padding(horizontal = 16.dp),
     ) {
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .padding(top = 28.dp),
-        ) {
+        if (card != null) {
+            Column(
+                modifier =
+                    Modifier
+                        .fillMaxSize(),
+            ) {
+                Box(modifier = Modifier.height(44.dp),
+                    contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "BC카드",
+                        fontSize = 12.sp,
+                        color = Color.White,
+                    )
+                }
+                Box(
+                    modifier =
+                        modifier
+                            .size(40.dp, 28.dp)
+                            .background(
+                                color = Color(0xFFCBBA64),
+                                shape = RoundedCornerShape(5.dp),
+                            ),
+                )
+                Box(modifier = Modifier.height(54.dp)) {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = card.number,
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            letterSpacing = 2.sp,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = card.name ?: "",
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                lineHeight = 12.sp,
+                                letterSpacing = 2.sp,
+                            )
+                            Text(
+                                text = card.expiry,
+                                color = Color.White,
+                                fontSize = 12.sp,
+                                lineHeight = 12.sp,
+                                letterSpacing = 1.sp,
+                            )
+                        }
+                    }
+                }
+            }
+
+        } else {
             Box(
                 modifier =
                     modifier
@@ -54,34 +107,6 @@ fun PaymentCard(
                             shape = RoundedCornerShape(5.dp),
                         ),
             )
-
-            if (card != null) {
-                Text(
-                    text = card.number,
-                    color = Color.White,
-                    fontSize = 12.sp,
-                    letterSpacing = 1.5.sp,
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Text(
-                        text = card.name ?: "",
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        lineHeight = 12.sp,
-                        letterSpacing = 2.sp,
-                    )
-                    Text(
-                        text = card.expiry,
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        lineHeight = 12.sp,
-                        letterSpacing = 1.sp,
-                    )
-                }
-            }
         }
     }
 }
@@ -90,7 +115,7 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(card = CardUiModel("0000000000000000", "1025", "1234", "CREW"))
+        PaymentCard(card = CardUiModel("0000 - 0000 - **** - ****", "1025", "1234", "CREW"))
     }
 }
 
