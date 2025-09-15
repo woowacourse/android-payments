@@ -8,9 +8,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,16 +20,13 @@ import woowacourse.payments.ui.model.toUiModel
 @Composable
 fun CardCompanyBottomSheet(
     companies: List<CardCompanyUiModel>,
-    isDisplayed: MutableState<Boolean>,
     onDismissed: () -> Unit,
     onCompanySelected: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val sheetState = rememberModalBottomSheetState { false }
-
     ModalBottomSheet(
         modifier = modifier,
-        sheetState = sheetState,
+        sheetState = rememberModalBottomSheetState { false },
         onDismissRequest = onDismissed,
     ) {
         FlowRow(
@@ -47,10 +41,7 @@ fun CardCompanyBottomSheet(
             companies.forEach { company: CardCompanyUiModel ->
                 CardCompanyButton(
                     company,
-                    {
-                        onCompanySelected(company)
-                        isDisplayed.value = false
-                    },
+                    { onCompanySelected(company) },
                 )
             }
         }
@@ -63,7 +54,6 @@ fun CardCompanyBottomSheet(
 fun CardCompanyBottomSheetPreview() {
     CardCompanyBottomSheet(
         CardCompany.entries.map(CardCompany::toUiModel),
-        remember { mutableStateOf(true) },
         {},
         {},
     )
