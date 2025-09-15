@@ -11,7 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.company.model.toUiModel
+import woowacourse.payments.ui.newcard.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {

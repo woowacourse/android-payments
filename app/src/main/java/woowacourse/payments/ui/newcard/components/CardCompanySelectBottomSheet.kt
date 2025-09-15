@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.company
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,9 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.company.components.CompanySelectRow
-import woowacourse.payments.ui.company.model.CompanyUiModel
-import woowacourse.payments.ui.company.model.toUiModel
+import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -26,14 +26,14 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.company.CompanySelectBottomSheet
-import woowacourse.payments.ui.company.model.CompanyUiModel
-import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CardPasswordTextField
+import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
+import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

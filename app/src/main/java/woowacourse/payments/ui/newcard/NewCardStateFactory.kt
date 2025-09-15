@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.core.os.bundleOf
-import woowacourse.payments.ui.company.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.CompanyUiModel
 import woowacourse.payments.ui.util.getParcelableCompat
 
 @Composable
