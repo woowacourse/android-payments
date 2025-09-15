@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">android-payments</string>
 
+    <!-- All-->
+    <string name="bc_card_name">BC카드</string>
+    <string name="shinhan_card_name">신한카드</string>
+    <string name="kakao_card_name">카카오뱅크</string>
+    <string name="hyundae_card_name">현대카드</string>
+    <string name="woori_card_name">우리카드</string>
+    <string name="lotte_card_name">롯데카드</string>
+    <string name="hana_card_name">하나카드</string>
+    <string name="kb_card_name">국민카드</string>
+
     <!-- AddPaymentCard-->
     <string name="title_add_card">카드 추가</string>
     <string name="label_card_number">카드 번호</string>
