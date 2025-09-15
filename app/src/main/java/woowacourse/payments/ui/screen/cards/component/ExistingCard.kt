@@ -15,7 +15,6 @@ import woowacourse.payments.ui.common.component.CardChip
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.component.PaymentCard
-import woowacourse.payments.ui.theme.Gray20
 
 @Composable
 fun ExistingCard(
@@ -24,7 +23,7 @@ fun ExistingCard(
 ) {
     PaymentCard(
         modifier = modifier,
-        backgroundColor = Gray20,
+        issuingBank = card.issuingBank,
         cardContent = {
             Column(
                 modifier =
