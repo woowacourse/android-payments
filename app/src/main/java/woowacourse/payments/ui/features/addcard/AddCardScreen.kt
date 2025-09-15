@@ -17,14 +17,12 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
@@ -59,7 +57,6 @@ fun AddCardScreen(
     }
 
     val sheetState = rememberModalBottomSheetState(confirmValueChange = { false })
-    val scope = rememberCoroutineScope()
     var showBottomSheet by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
@@ -84,11 +81,7 @@ fun AddCardScreen(
             onDismiss = { showBottomSheet = false },
             onItemClick = { selectedCard: CardCompanyUiModel ->
                 cardUiState = cardUiState.updateCardCompany(selectedCard)
-                scope.launch { sheetState.hide() }.invokeOnCompletion {
-                    if (!sheetState.isVisible) {
-                        showBottomSheet = false
-                    }
-                }
+                showBottomSheet = false
             },
         )
     }
