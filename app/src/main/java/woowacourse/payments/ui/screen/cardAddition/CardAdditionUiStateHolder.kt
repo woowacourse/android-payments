@@ -7,11 +7,14 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.model.IssuingBank
 
 class CardAdditionUiStateHolder(
     initialState: CardAdditionUiState = CardAdditionUiState.EMPTY_CARD,
 ) {
     var uiState by mutableStateOf(initialState)
+        private set
+    var hasShownSheet by mutableStateOf(false)
         private set
 
     fun updateCardNumber(newCardNumber: String) {
@@ -30,6 +33,14 @@ class CardAdditionUiStateHolder(
         uiState = uiState.update(newPassword = newPassword)
     }
 
+    fun updateIssuingBank(issuingBank: IssuingBank) {
+        uiState = uiState.update(issuingBank = issuingBank)
+    }
+
+    fun updateSheetVisible() {
+        hasShownSheet = true
+    }
+
     companion object {
         val Saver: Saver<CardAdditionUiStateHolder, *> =
             Saver(
@@ -39,16 +50,18 @@ class CardAdditionUiStateHolder(
                         holder.uiState.expiredDate.value,
                         holder.uiState.ownerName,
                         holder.uiState.password.value,
+                        holder.uiState.issuingBank,
                     )
                 },
                 restore = { saver ->
-                    val (number, date, owner, password) = saver
+                    val (number, date, owner, password, issuingBank) = saver
                     CardAdditionUiStateHolder(
                         CardAdditionUiState(
-                            cardNumber = CardNumber(number),
-                            expiredDate = ExpiredDate(date),
-                            ownerName = owner,
-                            password = CardPassword(password),
+                            cardNumber = CardNumber(number as String),
+                            expiredDate = ExpiredDate(date as String),
+                            ownerName = owner as String,
+                            password = CardPassword(password as String),
+                            issuingBank = issuingBank as IssuingBank,
                         ),
                     )
                 },
