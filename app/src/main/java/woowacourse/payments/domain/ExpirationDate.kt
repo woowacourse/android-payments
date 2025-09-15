@@ -13,7 +13,7 @@ value class ExpirationDate(
 ) : Parcelable {
     init {
         require(value.monthValue in JANUARY..DECEMBER) { ExpirationDateException.ExpirationDateMonthException.message }
-        require(value.year >= LocalDate.now().year) { ExpirationDateException.ExpirationDateYearAfterNowException.message }
+        require(value.year >= LocalDate.now().year && value.monthValue >= LocalDate.now().monthValue) { ExpirationDateException.ExpirationDateYearAfterNowException.message }
         require(value.year <= LocalDate.now().year + COMMERCIAL_DEBT_LIMITED_YEAR) { ExpirationDateException.ExpirationDateYearBeforeFiveYearsException.message }
     }
 
