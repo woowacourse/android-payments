@@ -16,25 +16,26 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardCompanyUiModel
 
 @Composable
-fun CardCompanyButton(cardCompany: CardCompanyUiModel) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+fun CardCompanyButton(
+    company: CardCompanyUiModel,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Image(
-            painter = painterResource(cardCompany.logo),
+            painter = painterResource(company.logoId),
             contentDescription = "",
             modifier = Modifier.size(37.dp),
         )
         Spacer(Modifier.height(9.dp))
-        Text(cardCompany.name)
+        Text(company.name)
     }
 }
 
 @Preview(showBackground = true, name = "BC카드")
 @Composable
 fun CardCompanyBoxPreview() {
-    CardCompanyButton(
-        CardCompanyUiModel(
-            "BC카드",
-            R.drawable.icon_bc_card,
-        ),
-    )
+    CardCompanyButton(CardCompanyUiModel("BC카드", R.drawable.icon_bc_card))
 }
