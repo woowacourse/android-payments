@@ -23,9 +23,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardNumberInputField(
+    onCardNumberChange: (CardNumber) -> Unit,
     modifier: Modifier = Modifier,
     cardNumber: CardNumber? = null,
-    onCardNumberChange: (CardNumber) -> Unit,
     error: AddCardError? = null,
 ) {
     val transformation =
@@ -75,7 +75,6 @@ fun CardNumberInputField(
 fun CardNumberInputPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
-            cardNumber = CardNumber(""),
             onCardNumberChange = { },
         )
     }
@@ -86,7 +85,6 @@ fun CardNumberInputPreview() {
 fun CardNumberInputErrorPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
-            cardNumber = CardNumber(""),
             onCardNumberChange = { },
             error = AddCardError.CARD_NUMBER_INVALID,
         )

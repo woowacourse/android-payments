@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -23,9 +24,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun ExpiredInputField(
+    onExpiredChange: (Expired) -> Unit,
     modifier: Modifier = Modifier,
     expired: Expired? = null,
-    onExpiredChange: (Expired) -> Unit,
     error: AddCardError? = null,
 ) {
     val transformation =
@@ -39,7 +40,7 @@ fun ExpiredInputField(
                 onExpiredChange(Expired(filteredText))
             },
             modifier =
-                modifier.semantics {
+                Modifier.semantics {
                     this.contentDescription = "Expired Input Field"
                 },
             label = { Text(text = stringResource(R.string.expired_label)) },
@@ -75,7 +76,6 @@ fun ExpiredInputField(
 fun ExpiredInputPreview() {
     AndroidpaymentsTheme {
         ExpiredInputField(
-            expired = null,
             onExpiredChange = { },
         )
     }
@@ -86,7 +86,6 @@ fun ExpiredInputPreview() {
 fun ExpiredInputErrorPreview() {
     AndroidpaymentsTheme {
         ExpiredInputField(
-            expired = null,
             onExpiredChange = { },
             error = AddCardError.EXPIRED_INVALID,
         )

@@ -38,8 +38,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardListScreen(
-    stateHolder: CardListStateHolder = remember { CardListStateHolder() },
     navigateToAddCard: () -> Unit,
+    stateHolder: CardListStateHolder = remember { CardListStateHolder() },
 ) {
     val uiState = stateHolder.uiState
 
@@ -154,8 +154,8 @@ fun CardListScreenPreview(
 ) {
     AndroidpaymentsTheme {
         CardListScreen(
-            stateHolder = CardListStateHolder(CardListUiState(cards = cards)),
             navigateToAddCard = { },
+            stateHolder = CardListStateHolder(CardListUiState(cards = cards)),
         )
     }
 }

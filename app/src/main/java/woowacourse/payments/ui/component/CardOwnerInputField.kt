@@ -21,9 +21,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardOwnerInputField(
+    onOwnerChange: (CardOwner) -> Unit,
     modifier: Modifier = Modifier,
     cardOwner: CardOwner? = null,
-    onOwnerChange: (CardOwner) -> Unit,
     error: AddCardError? = null,
 ) {
     Column {
@@ -81,7 +81,6 @@ fun CardOwnerInputField(
 fun CardOwnerInputPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
-            cardOwner = CardOwner(""),
             onOwnerChange = { },
         )
     }
@@ -92,7 +91,6 @@ fun CardOwnerInputPreview() {
 fun CardOwnerInputErrorPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
-            cardOwner = CardOwner(""),
             onOwnerChange = { },
             error = AddCardError.OWNER_INVALID,
         )

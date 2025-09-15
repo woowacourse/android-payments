@@ -34,9 +34,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PasswordInputField(
+    onPasswordChange: (Password) -> Unit,
     modifier: Modifier = Modifier,
     password: Password? = null,
-    onPasswordChange: (Password) -> Unit,
     error: AddCardError? = null,
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -106,7 +106,6 @@ fun PasswordInputField(
 fun PasswordInputPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
-            password = null,
             onPasswordChange = { },
         )
     }
@@ -117,7 +116,6 @@ fun PasswordInputPreview() {
 fun PasswordInputErrorPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
-            password = null,
             onPasswordChange = { },
             error = AddCardError.PASSWORD_INVALID,
         )

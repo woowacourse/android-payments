@@ -19,9 +19,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
-    modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(stringResource(R.string.new_card_top_bar_title)) },
