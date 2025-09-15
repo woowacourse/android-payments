@@ -1,0 +1,13 @@
+package woowacourse.payments.ui
+
+import android.content.Intent
+import android.os.Build
+import android.os.Parcelable
+
+@Suppress("DEPRECATION")
+inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(name, T::class.java)
+    } else {
+        getParcelableExtra(name)
+    }

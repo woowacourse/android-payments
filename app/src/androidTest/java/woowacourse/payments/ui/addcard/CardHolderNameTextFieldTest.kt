@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.addcard
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.SemanticsNodeInteraction
@@ -9,7 +9,8 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.newcard.textfields.CardHolderNameTextField
+import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
+import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class CardHolderNameTextFieldTest {
@@ -18,7 +19,7 @@ class CardHolderNameTextFieldTest {
 
     @Before
     fun setUp() {
-        composeTestRule.setContent { CardHolderNameTextField(mutableStateOf("")) }
+        composeTestRule.setContent { CardHolderNameTextField(mutableStateOf(CardUiModel.EMPTY)) }
     }
 
     @Test
