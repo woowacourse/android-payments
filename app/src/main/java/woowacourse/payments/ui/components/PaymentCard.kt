@@ -18,18 +18,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.model.BankCatalog
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.CardDefault
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel?,
 ) {
+    val bankInfo = BankCatalog.byType[card?.bankType ?: BankType.NOT_SELECTED]
+
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -37,7 +43,9 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color =
+                        BankCatalog.byType[card?.bankType ?: BankType.NOT_SELECTED]
+                            ?.background ?: CardDefault,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -49,6 +57,14 @@ fun PaymentCard(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.Start,
         ) {
+            Text(
+                fontWeight = FontWeight.W500,
+                text = bankInfo?.let { stringResource(id = it.label) }.orEmpty(),
+                color = Color.White,
+                lineHeight = 12.sp,
+                fontSize = 12.sp,
+            )
+            Spacer(modifier = Modifier.height(15.dp))
             Box(
                 modifier =
                     Modifier
@@ -95,16 +111,42 @@ fun PaymentCard(
     Spacer(modifier = Modifier.height(8.dp))
 }
 
-@Preview(showBackground = true)
+@Preview(
+    name = "BC카드",
+    showBackground = true,
+)
 @Composable
-private fun PaymentCardPreview() {
+private fun PaymentCardPreview_BC() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
-                cardNumber = "1111222233334444",
-                expirationDate = "0421",
+                cardNumber = "1111 - 2222 - 3333 - 4444",
+                expirationDate = "04 / 21",
                 userName = "KIMGAHYUN",
                 password = "1234",
+                bankType = BankType.BC,
+            )
+        PaymentCard(
+            modifier = Modifier,
+            card = sampleCard,
+        )
+    }
+}
+
+@Preview(
+    name = "국민카드",
+    showBackground = true,
+)
+@Composable
+private fun PaymentCardPreview_Kakao() {
+    AndroidpaymentsTheme {
+        val sampleCard =
+            CardUiModel(
+                cardNumber = "1111 - 2222 - 3333 - 4444",
+                expirationDate = "04 / 21",
+                userName = "KIMGAHYUN",
+                password = "1234",
+                bankType = BankType.KB,
             )
         PaymentCard(
             modifier = Modifier,
