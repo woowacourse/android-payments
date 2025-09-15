@@ -69,7 +69,7 @@ fun PaymentCardPlate(
         )
         if (paymentCardUiModel != null) {
             Text(
-                paymentCardUiModel.cardCompanyUiModel.companyName,
+                stringResource(paymentCardUiModel.cardCompanyUiModel.companyNameResId),
                 modifier =
                     Modifier
                         .padding(start = 14.dp, top = 10.dp)
