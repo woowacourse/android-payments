@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,16 +37,24 @@ fun AddPaymentCardScreen(
 ) {
     val state = stateHolder.state
 
+    val canSave by remember(state.cardNumber, state.expiry, state.pin) {
+        derivedStateOf {
+            stateHolder.isCardNumberValid &&
+                stateHolder.isExpiryValid &&
+                stateHolder.isPinValid
+        }
+    }
+
     Scaffold(
         topBar = {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = onBack,
                 onSaveClick = {
-                    if (!stateHolder.canSave) return@NewCardTopBar
+                    if (!canSave) return@NewCardTopBar
                     stateHolder.buildResult().onSuccess(onSave)
                 },
-                saveEnabled = stateHolder.canSave,
+                saveEnabled = canSave,
             )
         },
     ) { innerPadding ->

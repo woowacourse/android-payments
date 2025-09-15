@@ -32,9 +32,6 @@ class AddPaymentCardStateHolder private constructor(
     val isPinValid: Boolean
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
 
-    val canSave: Boolean
-        get() = isCardNumberValid && isExpiryValid && isPinValid
-
     fun buildResult(): Result<PaymentCardUiModel> =
         PaymentCard
             .create(state.cardNumber, state.expiry, state.owner, state.pin)
