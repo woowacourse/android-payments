@@ -87,7 +87,7 @@ fun PasswordInputField(
 
         error?.let {
             Text(
-                text = stringResource(R.string.password_invalid),
+                text = stringResource(error.messageRes),
                 modifier =
                     Modifier
                         .padding(top = 4.dp)

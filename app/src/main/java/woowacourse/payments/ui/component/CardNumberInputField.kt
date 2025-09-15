@@ -56,7 +56,7 @@ fun CardNumberInputField(
 
         error?.let {
             Text(
-                text = stringResource(R.string.card_number_invalid),
+                text = stringResource(error.messageRes),
                 modifier =
                     Modifier
                         .padding(top = 4.dp)

@@ -56,7 +56,7 @@ fun ExpiredInputField(
 
         error?.let {
             Text(
-                text = stringResource(R.string.expired_invalid),
+                text = stringResource(error.messageRes),
                 modifier =
                     Modifier
                         .padding(top = 4.dp)

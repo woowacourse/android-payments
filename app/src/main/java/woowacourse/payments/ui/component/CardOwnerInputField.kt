@@ -64,7 +64,7 @@ fun CardOwnerInputField(
 
         error?.let {
             Text(
-                text = stringResource(R.string.card_owner_invalid),
+                text = stringResource(error.messageRes),
                 modifier =
                     Modifier.semantics {
                         this.contentDescription = "Card Owner Input Error"
