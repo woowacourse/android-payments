@@ -5,21 +5,38 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import woowacourse.payments.InputMask
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpiry
 import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
@@ -31,12 +48,33 @@ import woowacourse.payments.ui.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
                 val newCardState = NewCardState()
+
+                val modalBottomSheetState = rememberModalBottomSheetState(
+                    confirmValueChange = { false }
+                )
+                var selectedCardCompany by remember { mutableStateOf(CardCompany.NOT_SELECTED) }
+
+
+                var isShow by remember { mutableStateOf(true) }
+                CardCompanySelectBottomSheet(
+                    modalBottomSheetState,
+                    onClick = { selectedCardCompany = it.company},
+                    isShow = isShow,
+                )
+
+                LaunchedEffect(key1 = selectedCardCompany) {
+                    if (selectedCardCompany != CardCompany.NOT_SELECTED) {
+                        isShow = false
+                        modalBottomSheetState.hide()
+                    }
+                }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -51,8 +89,9 @@ class NewCardActivity : ComponentActivity() {
                                         putExtra(
                                             "card",
                                             Card(
-                                                CardNumber(newCardState.cardNumber),
-                                                CardExpiry.fromString(newCardState.cardExpiry),
+                                                company = selectedCardCompany,
+                                                number = CardNumber(newCardState.cardNumber),
+                                                expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                                 password = CardPassword(newCardState.cardPassword),
                                                 name = CardName(newCardState.cardName),
                                             ).toUiModel(),
@@ -64,8 +103,9 @@ class NewCardActivity : ComponentActivity() {
                             isSaveEnabled =
                                 runCatching {
                                     Card(
-                                        CardNumber(newCardState.cardNumber),
-                                        CardExpiry.fromString(newCardState.cardExpiry),
+                                        company = selectedCardCompany,
+                                        number = CardNumber(newCardState.cardNumber),
+                                        expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                         password = CardPassword(newCardState.cardPassword),
                                         name = CardName(newCardState.cardName),
                                     )
@@ -148,3 +188,69 @@ class NewCardActivity : ComponentActivity() {
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CardCompanySelectBottomSheet(
+    modalBottomSheetState: SheetState,
+    onClick: (CardCompanyUiModel) -> Unit,
+    isShow: Boolean = true,
+    ) {
+    if (isShow) {
+        ModalBottomSheet(
+            sheetState = modalBottomSheetState,
+            onDismissRequest = { },
+        ) {
+            Box(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 70.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CardCompanySelectRow(onClick)
+            }
+        }
+    }
+}
+
+private const val COLUMN_COUNT = 4
+
+@Composable
+fun CardCompanySelectRow(
+    onClick: (CardCompanyUiModel) -> Unit,
+) {
+    val companies = CardCompany.entries
+        .filter { it != CardCompany.NOT_SELECTED }
+        .map { it.toUiModel() }
+
+    FlowRow(
+        modifier = Modifier.padding(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        maxItemsInEachRow = COLUMN_COUNT
+    ) {
+        companies.forEach { company ->
+            CardCompanyItem(
+                company,
+                onClick = { onClick(company) },
+            )
+        }
+    }
+}
+
+@Composable
+fun CardCompanyItem(
+    cardCompanyUiModel: CardCompanyUiModel,
+    onClick: (CardCompanyUiModel) -> Unit
+) {
+    Box(modifier = Modifier
+        .height(65.dp).clickable { onClick(cardCompanyUiModel) }
+    ) {
+        Column(
+            modifier = Modifier.align(alignment = Alignment.Center)
+        ) {
+            Text(text = cardCompanyUiModel.displayName,
+                fontSize = 16.sp,
+                color = Color(0xFF525252)
+            )
+        }
+    }
+}
+
