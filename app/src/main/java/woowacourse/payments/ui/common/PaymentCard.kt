@@ -21,8 +21,6 @@ import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.CardBackground
-import woowacourse.payments.ui.theme.CardEmvChip
 
 @Composable
 fun PaymentCard(
@@ -34,7 +32,7 @@ fun PaymentCard(
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
             .background(
-                color = CardBackground,
+                color = Color(0xFF333333),
                 shape = RoundedCornerShape(5.dp),
             ),
     ) {
@@ -47,7 +45,7 @@ fun PaymentCard(
                 Modifier
                     .size(width = 40.dp, height = 26.dp)
                     .background(
-                        color = CardEmvChip,
+                        color = Color(0xFFCBBA64),
                         shape = RoundedCornerShape(4.dp),
                     ),
             )
