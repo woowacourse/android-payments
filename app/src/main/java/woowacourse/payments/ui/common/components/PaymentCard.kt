@@ -21,24 +21,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.company.model.CompanyUiModel
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
+    company: CompanyUiModel? = null,
     card: CardUiModel? = null,
 ) {
     Box(
-        contentAlignment = Alignment.BottomStart,
+        contentAlignment = Alignment.Center,
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = Color(company?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 14.dp, vertical = 16.dp),
+                ).padding(horizontal = 12.dp),
     ) {
         Column {
+            Text(
+                text = company?.name ?: "",
+                fontSize = 12.sp,
+                color = Color.White,
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             Box(
                 modifier =
                     Modifier
@@ -48,7 +56,7 @@ fun PaymentCard(
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = card?.number ?: "",
                 fontSize = 12.sp,
@@ -89,7 +97,7 @@ private fun PaymentCardPreview2() {
     PaymentCard(
         card =
             CardUiModel(
-                number = "1111 - 2222 - 3333 - 4444",
+                number = "1111 - 2222 - **** - ****",
                 expirationDate = "09 / 25",
                 holderName = "CREW",
             ),

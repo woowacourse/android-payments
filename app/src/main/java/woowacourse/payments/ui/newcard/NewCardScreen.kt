@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
+import woowacourse.payments.ui.common.model.toUiModel
 import woowacourse.payments.ui.company.CompanySelectBottomSheet
+import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -61,7 +63,7 @@ fun NewCardScreen(
     Scaffold(
         topBar = {
             NewCardTopBar(
-                canSave = state.card != null,
+                canSave = state.isCardValid,
                 onBackClick = onBackClick,
                 onSaveClick = { state.card?.let { card: Card -> onSaveClick(card) } },
             )
@@ -76,7 +78,11 @@ fun NewCardScreen(
                     .padding(horizontal = 24.dp, vertical = 20.dp)
                     .verticalScroll(scrollState),
         ) {
-            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+            PaymentCard(
+                company = state.cardCompany?.toUiModel(),
+                card = state.card?.toUiModel(),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             CardNumberTextField(
