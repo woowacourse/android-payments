@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,7 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CardOwnerNameTextFieldTest {
+class ExpiredDateTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
@@ -24,44 +24,53 @@ class CardOwnerNameTextFieldTest {
     fun setUp() {
         composeRule.setContent {
             var value by remember { mutableStateOf("") }
-            CardOwnerNameTextField(
+            ExpiredDateTextField(
                 value = value,
-                onNameChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                onDateChange = { value = it },
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
 
     @Test
-    fun `카드_소유자_이름의_길이는_30자를_넘을_수_없다`() {
-        // given
-        composeRule
-            .onNodeWithTag(TEST_TAG)
-            .performTextInput("모".repeat(30))
-
+    fun `만료일의_달과_년도는_구분자로_구분된다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("모찌")
+            .performTextInput("1225")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("모".repeat(30)))
+            .assert(hasText("12 / 25"))
             .assertIsDisplayed()
     }
 
     @Test
-    fun `입력된_이름의_길이가_출력된다`() {
+    fun `만료일은_4글자이다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .performTextInput("모찌")
+            .performTextInput("12255")
 
         // then
         composeRule
             .onNodeWithTag(TEST_TAG)
-            .assert(hasText("2/30"))
+            .assert(hasText("12 / 25"))
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `만료일에_숫자가_아닌_값을_입력할_수_없다`() {
+        // when
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .performTextInput("12a!25")
+
+        // then
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .assert(hasText("12 / 25"))
             .assertIsDisplayed()
     }
 

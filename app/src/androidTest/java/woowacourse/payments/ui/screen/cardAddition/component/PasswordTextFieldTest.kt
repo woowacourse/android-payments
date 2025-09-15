@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,9 +25,9 @@ class PasswordTextFieldTest {
         composeRule.setContent {
             var value by remember { mutableStateOf("") }
             PasswordTextField(
-                value = value, 
+                value = value,
                 onPasswordChange = { value = it },
-                modifier = Modifier.testTag(TEST_TAG)
+                modifier = Modifier.testTag(TEST_TAG),
             )
         }
     }
@@ -47,7 +47,7 @@ class PasswordTextFieldTest {
     }
 
     @Test
-    fun 비밀번호는_4글자이다() {
+    fun `비밀번호는_4글자이다`() {
         // when
         composeRule
             .onNodeWithTag(TEST_TAG)
@@ -59,7 +59,21 @@ class PasswordTextFieldTest {
             .assert(hasText("\u2022".repeat(4)))
             .assertIsDisplayed()
     }
-    
+
+    @Test
+    fun `비밀번호는_숫자만_입력할_수_있다`() {
+        // when
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .performTextInput("a1b2c3")
+
+        // then
+        composeRule
+            .onNodeWithTag(TEST_TAG)
+            .assert(hasText("\u2022".repeat(3)))
+            .assertIsDisplayed()
+    }
+
     companion object {
         private const val TEST_TAG = "TEST_TAG"
     }
