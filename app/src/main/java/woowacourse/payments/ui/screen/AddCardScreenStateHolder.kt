@@ -9,6 +9,7 @@ import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
 import woowacourse.payments.domain.model.UserName
 import woowacourse.payments.domain.validator.ValidationErrorType
+import woowacourse.payments.ui.text.ExpirationDateInputParser
 import java.time.format.DateTimeParseException
 
 class AddCardScreenStateHolder {
@@ -26,7 +27,8 @@ class AddCardScreenStateHolder {
 
         val expirationError =
             try {
-                ExpirationDate.from(state.expiration)
+                val yearMonth = ExpirationDateInputParser.parse(state.expiration)
+                ExpirationDate.from(yearMonth)
                 null
             } catch (_: IllegalArgumentException) {
                 ValidationErrorType.ExpiredDate
@@ -36,7 +38,7 @@ class AddCardScreenStateHolder {
 
         val userNameError =
             try {
-                UserName(state.userName)
+                UserName.from(state.userName)
                 null
             } catch (_: IllegalArgumentException) {
                 ValidationErrorType.InvalidUserNameLength
@@ -80,11 +82,12 @@ class AddCardScreenStateHolder {
         validateAllFields()
         if (!state.isSaveEnabled) return
 
+        val yearMonth = ExpirationDateInputParser.parse(state.expiration)
         val card =
             Card(
                 cardNumber = CardNumber.from(state.number),
-                expirationDate = ExpirationDate.from(state.expiration),
-                userName = UserName(state.userName),
+                expirationDate = ExpirationDate.from(yearMonth),
+                userName = UserName.from(state.userName),
                 password = Password.from(state.password),
             )
         onAddCard(card)
