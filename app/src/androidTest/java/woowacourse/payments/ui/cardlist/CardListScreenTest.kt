@@ -102,6 +102,8 @@ class CardListScreenTest {
     companion object {
         private val CARD =
             CardUiModel(
+                companyName = "BC카드",
+                color = 0xFFF04651,
                 number = "1111 - 2222 - 3333 - 4444",
                 expirationDate = "09 / 25",
                 holderName = "CREW",
