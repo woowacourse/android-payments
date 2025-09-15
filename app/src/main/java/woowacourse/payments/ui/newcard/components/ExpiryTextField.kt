@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.transformation.GroupedVisualTransformation
+import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
 
 private const val MAX_EXPIRY_LENGTH = 4
 private const val EXPIRY_GROUP_SIZE = 2

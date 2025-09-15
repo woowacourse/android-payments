@@ -15,7 +15,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.transformation.GroupedVisualTransformation
+import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
 
 const val CARD_NUMBER_SEPARATOR = " - "
 private const val MAX_CARD_NUMBER_LENGTH = 16
