@@ -16,12 +16,7 @@ class CardWalletUiStateHolder(
         get() = _cards.size
 
     val cardWalletState: CardWalletState
-        get() =
-            when (_cards.size) {
-                0 -> CardWalletState.EMPTY
-                1 -> CardWalletState.SINGLE
-                else -> CardWalletState.MULTIPLE
-            }
+        get() = CardWalletState.from(cardCount)
 
     fun onCardAdded(card: CardUiModel?): Boolean {
         if (card == null) return false
