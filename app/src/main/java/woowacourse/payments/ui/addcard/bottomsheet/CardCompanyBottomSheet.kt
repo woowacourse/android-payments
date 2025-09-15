@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +25,12 @@ fun CardCompanyBottomSheet(
 ) {
     ModalBottomSheet(
         modifier = modifier,
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { sheetValue: SheetValue ->
+                    sheetValue != SheetValue.Hidden
+                },
+            ),
         onDismissRequest = {},
     ) {
         FlowRow(
