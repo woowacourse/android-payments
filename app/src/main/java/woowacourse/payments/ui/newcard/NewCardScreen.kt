@@ -29,12 +29,12 @@ import woowacourse.payments.designsystem.theme.Black
 import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
+import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.components.CardHolderTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpiryTextField
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.common.model.components.PaymentCard
 import woowacourse.payments.ui.newcard.components.PinTextField
 
 @Composable
