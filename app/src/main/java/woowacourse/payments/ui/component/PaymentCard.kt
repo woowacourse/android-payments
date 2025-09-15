@@ -57,7 +57,7 @@ fun PaymentCard(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Text(
-                text = card.maskedNumber,
+                text = card.formattedNumber,
                 color = Color.White,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,

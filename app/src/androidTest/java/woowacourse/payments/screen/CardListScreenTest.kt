@@ -71,7 +71,7 @@ class CardListScreenTest {
 
         // then
         assertAll(
-            { composeTestRule.onNodeWithText(card1.maskedNumber).assertIsDisplayed() },
+            { composeTestRule.onNodeWithText(card1.formattedNumber).assertIsDisplayed() },
             { composeTestRule.onNodeWithText(card1.formattedExpired).assertIsDisplayed() },
             { composeTestRule.onNodeWithText(card1.owner).assertIsDisplayed() },
             { composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed() },
@@ -100,7 +100,7 @@ class CardListScreenTest {
         // then
         cards.forEach { card ->
             assertAll(
-                { composeTestRule.onNodeWithText(card.maskedNumber).assertIsDisplayed() },
+                { composeTestRule.onNodeWithText(card.formattedNumber).assertIsDisplayed() },
                 { composeTestRule.onNodeWithText(card.formattedExpired).assertIsDisplayed() },
                 { composeTestRule.onNodeWithText(card.owner).assertIsDisplayed() },
             )
