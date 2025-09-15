@@ -21,12 +21,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.company.model.CompanyUiModel
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    company: CompanyUiModel? = null,
     card: CardUiModel? = null,
 ) {
     Box(
@@ -36,13 +34,14 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(company?.color ?: 0xFF333333),
+                    color = Color(card?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 12.dp),
+                )
+                .padding(horizontal = 12.dp),
     ) {
         Column {
             Text(
-                text = company?.name ?: "",
+                text = card?.companyName ?: "",
                 fontSize = 12.sp,
                 color = Color.White,
             )
@@ -58,7 +57,7 @@ fun PaymentCard(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = card?.number ?: "",
+                text = card?.number?.toMaskedString() ?: "",
                 fontSize = 12.sp,
                 letterSpacing = 2.sp,
                 color = Color.White,
@@ -75,7 +74,7 @@ fun PaymentCard(
                     color = Color.White,
                 )
                 Text(
-                    text = card?.expirationDate ?: "",
+                    text = card?.expirationDate?.toDisplayString() ?: "",
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
@@ -84,6 +83,17 @@ fun PaymentCard(
         }
     }
 }
+
+private fun String.toMaskedString(): String =
+    this
+        .chunked(4)
+        .mapIndexed { index, chunk -> if (index < 2) chunk else "****" }
+        .joinToString(" - ")
+
+private fun String.toDisplayString(): String =
+    this
+        .chunked(2)
+        .joinToString(" / ")
 
 @Preview(name = "카드 정보 없음")
 @Composable
@@ -97,8 +107,10 @@ private fun PaymentCardPreview2() {
     PaymentCard(
         card =
             CardUiModel(
-                number = "1111 - 2222 - **** - ****",
-                expirationDate = "09 / 25",
+                companyName = "BC카드",
+                color = 0xFFF04651,
+                number = "1111222233334444",
+                expirationDate = "0925",
                 holderName = "CREW",
             ),
     )

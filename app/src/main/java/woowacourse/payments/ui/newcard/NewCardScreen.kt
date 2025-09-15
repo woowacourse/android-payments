@@ -23,12 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
-import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.company.CompanySelectBottomSheet
-import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -40,7 +38,7 @@ import woowacourse.payments.ui.newcard.components.NewCardTopBar
 fun NewCardScreen(
     companies: List<CardCompany> = emptyList(),
     onBackClick: () -> Unit = {},
-    onSaveClick: (Card) -> Unit = {},
+    onSaveClick: (CardUiModel) -> Unit = {},
     state: NewCardState = rememberNewCardState(),
 ) {
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
@@ -65,7 +63,7 @@ fun NewCardScreen(
             NewCardTopBar(
                 canSave = state.isCardValid,
                 onBackClick = onBackClick,
-                onSaveClick = { state.card?.let { card: Card -> onSaveClick(card) } },
+                onSaveClick = { state.card?.let { onSaveClick(it) } },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -79,8 +77,7 @@ fun NewCardScreen(
                     .verticalScroll(scrollState),
         ) {
             PaymentCard(
-                company = state.cardCompany?.toUiModel(),
-                card = state.card?.toUiModel(),
+                card = state.card,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.height(20.dp))

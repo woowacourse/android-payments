@@ -3,12 +3,13 @@ package woowacourse.payments.ui.newcard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.common.model.color
 import java.time.format.DateTimeFormatter
 
 class NewCardState {
@@ -47,23 +48,15 @@ class NewCardState {
     val isCardValid: Boolean
         get() = isCardCompanySelected && isCardNumberValid && isCardExpirationDateValid && isCardHolderNameValid && isCardPasswordValid
 
-    val card: Card?
+    val card: CardUiModel?
         get() =
-            cardCompany?.takeIf { isCardValid }?.let { company: CardCompany ->
-                Card(
-                    company = company,
-                    number = CardNumber.from(cardNumber),
-                    expirationDate =
-                        CardExpirationDate.from(
-                            cardExpirationDate,
-                            DATE_TIME_FORMATTER,
-                        ),
-                    password = CardPassword(cardPassword),
-                    holderName =
-                        cardHolderName
-                            .trim()
-                            .takeIf { it.isNotBlank() }
-                            ?.let(::CardHolderName),
+            cardCompany?.takeIf { isCardCompanySelected }?.let { company: CardCompany ->
+                CardUiModel(
+                    companyName = company.companyName,
+                    number = cardNumber,
+                    expirationDate = cardExpirationDate,
+                    holderName = cardHolderName.trim(),
+                    color = company.color(),
                 )
             }
 
