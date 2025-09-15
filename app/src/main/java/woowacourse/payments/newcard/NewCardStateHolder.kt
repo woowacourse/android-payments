@@ -3,6 +3,7 @@ package woowacourse.payments.newcard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.CardCompany
 
 class NewCardStateHolder {
     var cardNumber: String by mutableStateOf("")
@@ -16,6 +17,10 @@ class NewCardStateHolder {
 
     var password: String by mutableStateOf("")
         private set
+
+    var selectedCardCompany: CardCompany by mutableStateOf(CardCompany.NONE)
+
+    val isCardSelected: Boolean get() = selectedCardCompany != CardCompany.NONE
 
     fun updateCardNumber(value: String) {
         cardNumber = value
