@@ -22,7 +22,6 @@ import woowacourse.payments.ui.common.component.CardChip
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
 import woowacourse.payments.ui.screen.cardAddition.toUiModel
-import woowacourse.payments.ui.theme.Gray20
 
 @Composable
 fun CardAdditionScreen(
@@ -57,7 +56,7 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp),
-                backgroundColor = Gray20,
+                issuingBank = stateHolder.uiState.issuingBank,
                 cardContent = { CardChip(modifier = Modifier.padding(start = 14.dp)) },
             )
             CardNumberTextField(
