@@ -1,7 +1,10 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.newcard.component
 
+import android.R.attr.label
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -22,17 +26,25 @@ import woowacourse.payments.ui.theme.Gray79
 import java.lang.Character.isDigit
 
 @Composable
-fun CardNumberTextField(modifier: Modifier = Modifier) {
-    var cardNumber by remember { mutableStateOf("") }
+fun CardNumberTextField(
+    number: String,
+    numberErrorMessage: String? = null,
+    onNumberChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var isFocused by remember { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = cardNumber,
+        value = number,
         onValueChange = { newValue: String ->
             val newNumbers = newValue.filter(::isDigit)
-            cardNumber =
+            onNumberChange(
                 newNumbers.take(newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
+            )
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = {
             Text(text = stringResource(R.string.card_number_label))
         },
@@ -42,6 +54,15 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
                 color = Gray79,
             )
         },
+        isError = !isFocused && numberErrorMessage != null,
+        supportingText = {
+            if (!isFocused && numberErrorMessage != null) {
+                Text(
+                    text = numberErrorMessage,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = ::creditCardFilter
     )
@@ -50,7 +71,8 @@ fun CardNumberTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun CardNumberTextFieldPreview() {
-    CardNumberTextField(modifier = Modifier.fillMaxWidth())
+    var number by remember { mutableStateOf("") }
+    CardNumberTextField(onNumberChange = { number = it }, number = number)
 }
 
 private fun creditCardFilter(text: AnnotatedString): TransformedText {

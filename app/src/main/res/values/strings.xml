@@ -20,4 +20,8 @@
     <string name="add_card_title">카드 추가</string>
     <string name="content_description_icon_back">뒤로 가기</string>
     <string name="content_description_icon_check">완료</string>
+    <string name="payments_title">Payments</string>
+    <string name="content_description_add_card">카드를 추가합니다</string>
+    <string name="payments_enroll_new_card">새로운 카드를 등록해주세요</string>
+    <string name="payments_top_bar_icon_name">추가</string>
 </resources>

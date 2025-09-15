@@ -1,6 +1,7 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -20,22 +22,38 @@ import woowacourse.payments.R
 import java.lang.Character.isDigit
 
 @Composable
-fun ExpiredDateTextField(modifier: Modifier = Modifier) {
-    var expiredDate by remember { mutableStateOf("") }
+fun ExpiredDateTextField(
+    expiredDate: String,
+    expirationDateErrorMessage: String? = null,
+    onExpirationDateChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var isFocused by remember { mutableStateOf(false) }
 
     OutlinedTextField(
         value = expiredDate,
         onValueChange = { newValue: String ->
             val newDate = newValue.filter(::isDigit)
-            expiredDate = newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX))
+            onExpirationDateChange(newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX)))
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = { Text(text = stringResource(R.string.expired_date_label)) },
         placeholder = {
             Text(
                 text = stringResource(R.string.expired_date_placeholder),
                 color = Color.Gray
             )
+        },
+        isError = !isFocused && expirationDateErrorMessage != null,
+        supportingText = {
+            if (!isFocused && expirationDateErrorMessage != null) {
+                Text(
+                    text = expirationDateErrorMessage,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = { text: AnnotatedString ->
@@ -65,7 +83,11 @@ fun ExpiredDateTextField(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun ExpiredDateTextFieldPreview() {
-    ExpiredDateTextField()
+    var expiredDate by remember { mutableStateOf("") }
+    ExpiredDateTextField(
+        expiredDate = expiredDate,
+        onExpirationDateChange = { expiredDate = it },
+    )
 }
 
 private const val EXPIRED_DATE_LENGTH_MAX: Int = 4
