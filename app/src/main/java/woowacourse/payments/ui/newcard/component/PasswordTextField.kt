@@ -50,7 +50,7 @@ fun PasswordTextField(
                 )
             }
         },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = PasswordVisualTransformation(),
     )
 }
