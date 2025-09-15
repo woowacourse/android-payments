@@ -10,7 +10,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -20,6 +22,7 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    companies = CardCompany.entries.map { it.toUiModel() },
                     onBackClick = { finish() },
                     onSaveClick = { card: Card ->
                         saveCard(card)
