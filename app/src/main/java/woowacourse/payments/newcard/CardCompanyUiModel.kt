@@ -10,7 +10,7 @@ class CardCompanyUiModel(
     @DrawableRes val imageResId: Int,
 ) {
     companion object {
-        fun from(cardCompany: CardCompany): CardCompanyUiModel =
+        fun from(cardCompany: CardCompany): CardCompanyUiModel? =
             when (cardCompany) {
                 CardCompany.BC -> CardCompanyUiModel(R.string.card_bc, R.drawable.bc)
                 CardCompany.SHINHAN -> CardCompanyUiModel(R.string.card_shinhan, R.drawable.shinhan)
@@ -25,6 +25,7 @@ class CardCompanyUiModel(
                 CardCompany.LOTTE -> CardCompanyUiModel(R.string.card_lotte, R.drawable.lotte)
                 CardCompany.HANA -> CardCompanyUiModel(R.string.card_hana, R.drawable.hana)
                 CardCompany.KB -> CardCompanyUiModel(R.string.card_kb, R.drawable.kb)
+                CardCompany.NONE -> null
             }
     }
 }
