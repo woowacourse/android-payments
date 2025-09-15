@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.Gray20
 
 @Parcelize
 enum class IssuingBank : Parcelable {
@@ -20,7 +21,7 @@ enum class IssuingBank : Parcelable {
 
     fun getColor(): Color =
         when (this) {
-            NOT_SELECTED -> Color.Black
+            NOT_SELECTED -> Gray20
             BC -> Color(0xFFFA3246)
             SHINHAN -> Color(0xFF0046FF)
             KAKAO -> Color(0xFFFEE500)
@@ -31,9 +32,9 @@ enum class IssuingBank : Parcelable {
             KB -> Color(0xFFFFCC00)
         }
 
-    fun getNameResId(): Int =
+    fun getNameResId(): Int? =
         when (this) {
-            NOT_SELECTED -> 0
+            NOT_SELECTED -> null
             BC -> R.string.issuing_bank_bc
             SHINHAN -> R.string.issuing_bank_shinhan
             KAKAO -> R.string.issuing_bank_kakao
