@@ -37,7 +37,6 @@ class NewCardActivity : ComponentActivity() {
     private fun saveCard(card: Card) {
         val intent = Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card.toUiModel()) }
         setResult(Activity.RESULT_OK, intent)
-        finish()
     }
 
     private fun showToast(message: String) {
