@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -9,13 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.screen.addCard.AddCardError
@@ -30,44 +29,44 @@ fun CardNumberInputField(
 ) {
     val transformation =
         remember { CardNumberVisualTransformation(groupSize = 4, delimiter = " - ") }
+    val context = LocalContext.current
 
-    Column {
-        OutlinedTextField(
-            value = cardNumber?.value.orEmpty(),
-            onValueChange = { newText ->
-                val filteredText = newText.filter { it.isDigit() }.take(16)
-                onCardNumberChange(CardNumber(filteredText))
+    OutlinedTextField(
+        value = cardNumber?.value.orEmpty(),
+        onValueChange = { newText ->
+            val filteredText = newText.filter { it.isDigit() }.take(16)
+            onCardNumberChange(CardNumber(filteredText))
+        },
+        modifier =
+            modifier.semantics {
+                contentDescription = context.getString(R.string.card_number_content_description)
             },
-            modifier =
-                modifier.semantics {
-                    this.contentDescription = "Card Number Input Field"
-                },
-            label = { Text(text = stringResource(R.string.card_number_label)) },
-            placeholder = {
-                Text(
-                    text = stringResource(R.string.card_number_placeholder),
-                    color = Color.LightGray,
-                )
-            },
-            isError = error != null,
-            visualTransformation = transformation,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        )
-
-        error?.let {
+        label = { Text(text = stringResource(R.string.card_number_label)) },
+        placeholder = {
             Text(
-                text = stringResource(error.messageRes),
-                modifier =
-                    Modifier
-                        .padding(top = 4.dp)
-                        .semantics {
-                            this.contentDescription = "Card Number Input Error"
-                        },
-                color = Color.Red,
-                fontSize = 12.sp,
+                text = stringResource(R.string.card_number_placeholder),
+                color = Color.LightGray,
             )
-        }
-    }
+        },
+        supportingText = {
+            error?.let {
+                Text(
+                    text = stringResource(error.messageRes),
+                    modifier =
+                        Modifier
+                            .padding(top = 4.dp)
+                            .semantics {
+                                contentDescription =
+                                    context.getString(R.string.card_number_error_content_description)
+                            },
+                    color = Color.Red,
+                )
+            }
+        },
+        isError = error != null,
+        visualTransformation = transformation,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+    )
 }
 
 @Composable

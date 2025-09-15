@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -31,44 +30,45 @@ fun ExpiredInputField(
 ) {
     val transformation =
         remember { ExpiredVisualTransformation(groupSize = 2, delimiter = " / ") }
+    val context = LocalContext.current
 
-    Column {
-        OutlinedTextField(
-            value = expired?.value ?: "",
-            onValueChange = { newText ->
-                val filteredText = newText.filter { it.isDigit() }.take(4)
-                onExpiredChange(Expired(filteredText))
+    OutlinedTextField(
+        value = expired?.value ?: "",
+        onValueChange = { newText ->
+            val filteredText = newText.filter { it.isDigit() }.take(4)
+            onExpiredChange(Expired(filteredText))
+        },
+        modifier =
+            modifier.semantics {
+                contentDescription = context.getString(R.string.expired_content_description)
             },
-            modifier =
-                Modifier.semantics {
-                    this.contentDescription = "Expired Input Field"
-                },
-            label = { Text(text = stringResource(R.string.expired_label)) },
-            placeholder = {
-                Text(
-                    text = stringResource(R.string.expired_placeholder),
-                    color = Color.LightGray,
-                )
-            },
-            isError = error != null,
-            visualTransformation = transformation,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        )
-
-        error?.let {
+        label = { Text(text = stringResource(R.string.expired_label)) },
+        placeholder = {
             Text(
-                text = stringResource(error.messageRes),
-                modifier =
-                    Modifier
-                        .padding(top = 4.dp)
-                        .semantics {
-                            this.contentDescription = "Expired Input Error"
-                        },
-                color = Color.Red,
-                fontSize = 12.sp,
+                text = stringResource(R.string.expired_placeholder),
+                color = Color.LightGray,
             )
-        }
-    }
+        },
+        supportingText = {
+            error?.let {
+                Text(
+                    text = stringResource(error.messageRes),
+                    modifier =
+                        Modifier
+                            .padding(top = 4.dp)
+                            .semantics {
+                                contentDescription =
+                                    context.getString(R.string.expired_error_content_description)
+                            },
+                    color = Color.Red,
+                    fontSize = 12.sp,
+                )
+            }
+        },
+        isError = error != null,
+        visualTransformation = transformation,
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+    )
 }
 
 @Composable
