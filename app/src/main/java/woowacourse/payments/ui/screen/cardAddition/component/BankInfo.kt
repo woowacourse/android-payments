@@ -13,15 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.common.component.IssuingBankName
 import woowacourse.payments.ui.model.IssuingBank
 
 @Composable
@@ -47,15 +50,14 @@ fun BankInfo(
                     .size(36.dp),
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = stringResource(issuingBank.getNameResId()),
+        IssuingBankName(
+            issuingBank = issuingBank,
             modifier =
                 Modifier.semantics {
                     contentDescription =
                         context.getString(R.string.card_addition_issuing_bank_name_description)
                 },
-            fontSize = 16.sp,
-            maxLines = 1,
+            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
         )
     }
 }
