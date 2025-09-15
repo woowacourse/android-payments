@@ -19,9 +19,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
@@ -83,6 +85,7 @@ private fun PasscodeTextFieldPreview() {
                         "1234",
                         "CREW",
                         "0000",
+                        CardCompany.BC_CARD.toUiModel(),
                     ),
                 )
             },
@@ -102,6 +105,7 @@ private fun PasscodeTextFieldWithErrorPreview() {
                         "1234",
                         "CREW",
                         "00",
+                        CardCompany.BC_CARD.toUiModel(),
                     ),
                 )
             },

@@ -26,7 +26,7 @@ fun CardCompanyButton(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(company.logoId),
+            painter = painterResource(company.logo),
             contentDescription = "",
             modifier = Modifier.size(37.dp),
         )

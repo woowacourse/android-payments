@@ -19,9 +19,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.format.CardNumberFormat
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
@@ -83,6 +85,7 @@ private fun CardNumberTextFieldPreview() {
                         "1234",
                         "CREW",
                         "0000",
+                        CardCompany.BC_CARD.toUiModel(),
                     ),
                 )
             },
@@ -102,6 +105,7 @@ private fun CardNumberTextFieldWithErrorPreview() {
                         "1234",
                         "CREW",
                         "0000",
+                        CardCompany.BC_CARD.toUiModel(),
                     ),
                 )
             },

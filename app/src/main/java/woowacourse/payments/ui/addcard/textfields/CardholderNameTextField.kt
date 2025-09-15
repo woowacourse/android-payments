@@ -15,8 +15,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
@@ -70,6 +72,7 @@ private fun CardHolderNameTextFieldPreview() {
                     "1234",
                     "CREW",
                     "0000",
+                    CardCompany.BC_CARD.toUiModel(),
                 ),
             )
         },

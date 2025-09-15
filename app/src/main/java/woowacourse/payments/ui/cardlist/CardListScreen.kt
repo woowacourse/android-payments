@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
@@ -37,6 +38,7 @@ import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toCardCompanyOrNull
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
@@ -94,13 +96,17 @@ fun CardListScreen(cards: SnapshotStateList<CardUiModel>) {
 private fun Intent.toCardOrNull(): Card? =
     runCatching {
         getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let { card: CardUiModel ->
-            val yearMonth =
+            val yearMonth: YearMonth =
                 YearMonth.parse(card.expirationDate, ExpirationDateFormat.formatPattern)
+            val cardCompany: CardCompany =
+                card.cardCompany?.toCardCompanyOrNull() ?: return@runCatching null
+
             Card(
                 CardNumber(card.cardNumber),
                 ExpirationDate(yearMonth),
                 CardholderName(card.cardholderName),
                 Passcode(card.passcode),
+                cardCompany,
             )
         }
     }.getOrNull()
@@ -122,6 +128,7 @@ private fun CardListScreenWithOneCardPreview() {
                     ExpirationDate(YearMonth.of(2034, 12)),
                     CardholderName("디랙"),
                     Passcode("1234"),
+                    CardCompany.BC_CARD,
                 ).toUiModel(),
             )
         },
@@ -140,12 +147,14 @@ private fun CardListScreenWithTwoCardsPreview() {
                         ExpirationDate(YearMonth.of(2034, 12)),
                         CardholderName("디랙"),
                         Passcode("1234"),
+                        CardCompany.BC_CARD,
                     ).toUiModel(),
                     Card(
                         CardNumber("1234123412341234"),
                         ExpirationDate(YearMonth.of(2034, 12)),
                         CardholderName("디랙"),
                         Passcode("1234"),
+                        CardCompany.BC_CARD,
                     ).toUiModel(),
                 )
             },

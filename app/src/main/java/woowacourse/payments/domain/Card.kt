@@ -5,4 +5,5 @@ data class Card(
     val expirationDate: ExpirationDate,
     val cardholderName: CardholderName,
     val passcode: Passcode,
+    val cardCompany: CardCompany,
 )

@@ -12,11 +12,11 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
@@ -67,12 +67,14 @@ private fun CardListTopBarWithTwoCardsPreview() {
                         ExpirationDate(YearMonth.of(2034, 12)),
                         CardholderName("디랙"),
                         Passcode("1234"),
+                        CardCompany.BC_CARD,
                     ).toUiModel(),
                     Card(
                         CardNumber("1234123412341234"),
                         ExpirationDate(YearMonth.of(2034, 12)),
                         CardholderName("디랙"),
                         Passcode("1234"),
+                        CardCompany.BC_CARD,
                     ).toUiModel(),
                 )
             },
