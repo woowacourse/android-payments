@@ -24,12 +24,21 @@ import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
 import woowacourse.payments.ui.theme.Dimens.FIELD_HALF_WIDTH
 
 @Composable
-fun GenerateCardView(modifier: Modifier = Modifier) {
+fun CardCreationScreen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit,
+    onSaveClick: (Card) -> Unit,
+) {
     var card by remember { mutableStateOf(Card()) }
-
     AndroidpaymentsTheme {
         Scaffold(
-            topBar = { NewCardTopBar(onBackClick = {}, onSaveClick = {}) },
+            topBar = {
+                AddCardTopBar(
+                    onBackClick = onBackClick,
+                    onSaveClick = { onSaveClick(card) },
+                    isOnSaveClickable = card.isValid(),
+                )
+            },
             modifier = modifier.fillMaxSize(),
         ) { innerPadding ->
             Column(
@@ -95,5 +104,5 @@ fun GenerateCardView(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun GenerateCardPreview() {
-    GenerateCardView()
+    CardCreationScreen(onBackClick = {}, onSaveClick = {})
 }

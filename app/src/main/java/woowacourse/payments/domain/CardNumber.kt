@@ -1,14 +1,35 @@
 package woowacourse.payments.domain
 
+import android.os.Parcelable
+import androidx.core.text.isDigitsOnly
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class CardNumber(
     val firstNumber: String = "",
     val secondNumber: String = "",
     val thirdNumber: String = "",
     val fourthNumber: String = "",
-) {
+) : Parcelable {
+    init {
+        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        require(parts.all { it.isDigitsOnly() })
+        require(parts.all { it.length <= CARD_NUMBER_PART_LENGTH })
+    }
+
     override fun toString(): String {
         val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
         return parts.joinToString("")
+    }
+
+    fun isValid(): Boolean {
+        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        return !parts.any { it.length != CARD_NUMBER_PART_LENGTH }
+    }
+
+    fun toFormattedString(): String {
+        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        return parts.joinToString(" - ")
     }
 
     companion object {

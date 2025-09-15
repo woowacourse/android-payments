@@ -9,21 +9,21 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.GenerateCardView
+import woowacourse.payments.ui.addcard.CardCreationScreen
 
-class GenerateCardViewTest {
+class CardCreationScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            GenerateCardView()
+            CardCreationScreen(onBackClick = {}, onSaveClick = {})
         }
     }
 
     @Test
-    fun 카드_번호_입력_시_4글자당_하이픈이_생긴다() {
+    fun `카드_번호_입력_시_4글자당_하이픈이_생긴다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("카드 번호")
 
@@ -37,7 +37,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 카드_번호는_16자_까지만_입력할_수_있다() {
+    fun `카드_번호는_16자_까지만_입력할_수_있다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("카드 번호")
 
@@ -51,7 +51,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 카드_번호_입력_시_숫자_이외의_문자는_무시된다() {
+    fun `카드_번호_입력_시_숫자_이외의_문자는_무시된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("카드 번호")
 
@@ -65,7 +65,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일_입력_시_3번쨰_자리에_슬래시가_생긴다() {
+    fun `만료일_입력_시_3번쨰_자리에_슬래시가_생긴다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -79,7 +79,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일은_4자_이상_입력되지_않는다() {
+    fun `만료일은_4자_이상_입력되지_않는다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -93,7 +93,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일_입력_시_숫자가_아닌_문자열은_무시된다() {
+    fun `만료일_입력_시_숫자가_아닌_문자열은_무시된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -107,7 +107,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일이_유효하지_않으면_오류로_표시된다() {
+    fun `만료일이_유효하지_않으면_오류로_표시된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -124,7 +124,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 만료일이_과거_날짜이면_오류로_표시된다() {
+    fun `만료일이_과거_날짜이면_오류로_표시된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("만료일")
 
@@ -141,7 +141,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 카드_소유자_이름은_최대_30자_까지_작성된다() {
+    fun `카드_소유자_이름은_최대_30자_까지_작성된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("카드 소유자 이름(선택)")
 
@@ -155,7 +155,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 비밀번호는_자동_마스킹_처리된다() {
+    fun `비밀번호는_자동_마스킹_처리된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("비밀번호")
 
@@ -169,7 +169,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 비밀번호는_최대_4자까지_입력된다() {
+    fun `비밀번호는_최대_4자까지_입력된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("비밀번호")
 
@@ -183,7 +183,7 @@ class GenerateCardViewTest {
     }
 
     @Test
-    fun 비밀번호_입력_시_숫자_이외의_문자는_무시된다() {
+    fun `비밀번호_입력_시_숫자_이외의_문자는_무시된다`() {
         // given
         val inputField = composeTestRule.onNodeWithText("비밀번호")
 

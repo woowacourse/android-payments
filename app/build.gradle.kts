@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
+    alias(libs.plugins.ktlint)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -63,5 +65,4 @@ dependencies {
     lintChecks(libs.compose.lint.checks)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.androidx.ui.test.junit4)
-
 }

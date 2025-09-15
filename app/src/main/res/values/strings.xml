@@ -13,4 +13,10 @@
     <string name="add_card_card_owner_supporting_text">%d/%d</string>
     <string name="add_card_password_placeholder_text">0000</string>
     <string name="add_card_password_label_text">비밀번호</string>
+    <string name="card_list_title">Payments</string>
+    <string name="card_list_empty_prompt">새로운 카드를 등록해주세요</string>
+    <string name="card_list_card_registered_toast">카드가 등록되었습니다.</string>
+    <string name="card_list_add_card_description">Add Card</string>
+    <string name="card_list_add_card_button">추가</string>
+    <string name="add_card_plus_sign">+</string>
 </resources>

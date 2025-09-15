@@ -15,9 +15,10 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardTopBar(
+fun AddCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    isOnSaveClickable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -31,7 +32,7 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(enabled = isOnSaveClickable, onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.add_card_tool_bar_save_text),

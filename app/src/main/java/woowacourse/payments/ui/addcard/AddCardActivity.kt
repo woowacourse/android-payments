@@ -10,7 +10,19 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            GenerateCardView()
+            CardCreationScreen(
+                onBackClick = { finish() },
+                onSaveClick = {
+                    val resultIntent = android.content.Intent()
+                    resultIntent.putExtra(EXTRA_CARD, it)
+                    setResult(RESULT_OK, resultIntent)
+                    finish()
+                },
+            )
         }
+    }
+
+    companion object {
+        const val EXTRA_CARD = "card"
     }
 }
