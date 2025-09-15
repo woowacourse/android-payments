@@ -14,10 +14,10 @@ import woowacourse.payments.ui.common.model.CardUiModel
 @Composable
 fun CardWalletContent(
     cards: List<CardUiModel>,
-    state: CardWalletState,
+    cardWalletState: CardWalletState,
     navigateToNewCard: () -> Unit,
 ) {
-    when (state) {
+    when (cardWalletState) {
         CardWalletState.EMPTY -> {
             Spacer(Modifier.height(32.dp))
             EmptyGuide()
@@ -59,7 +59,7 @@ private fun CardWalletContentPreview() {
             )
         CardWalletContent(
             cards = cards,
-            state = CardWalletState.MULTIPLE,
+            cardWalletState = CardWalletState.MULTIPLE,
             navigateToNewCard = {},
         )
     }

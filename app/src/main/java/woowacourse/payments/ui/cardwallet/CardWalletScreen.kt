@@ -15,9 +15,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +25,8 @@ import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
-import woowacourse.payments.ui.cardwallet.model.CardWalletState
+import woowacourse.payments.ui.cardwallet.model.rememberCardWalletState
+import woowacourse.payments.ui.common.extensions.getParcelableExtraCompat
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 
@@ -37,8 +35,7 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    val cards: SnapshotStateList<CardUiModel> = rememberSaveable { mutableStateListOf() }
-    val state = CardWalletState.from(cards.size)
+    val holder = rememberCardWalletState()
 
     val launcher =
         rememberLauncherForActivityResult(
@@ -46,9 +43,9 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data = result.data
-                val newCard = data?.getParcelableExtra<CardUiModel>(NewCardActivity.EXTRA_NEW_CARD_RESULT)
-                if (newCard != null) {
-                    cards.add(newCard)
+                val newCard = data?.getParcelableExtraCompat<CardUiModel>(NewCardActivity.EXTRA_NEW_CARD_RESULT)
+                val added = holder.onCardAdded(newCard)
+                if (added) {
                     Toast.makeText(context, getString(context, R.string.new_card_success), Toast.LENGTH_SHORT).show()
                 }
             }
@@ -57,7 +54,7 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
     Scaffold(
         topBar = {
             CardWalletTopBar(
-                state = state,
+                cardCount = holder.cardCount,
                 onAddClick = { navigateToNewCard(launcher, context) },
             )
         },
@@ -76,8 +73,8 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             CardWalletContent(
-                cards = cards,
-                state = state,
+                cards = holder.cards,
+                cardWalletState = holder.cardWalletState,
                 navigateToNewCard = { navigateToNewCard(launcher, context) },
             )
         }

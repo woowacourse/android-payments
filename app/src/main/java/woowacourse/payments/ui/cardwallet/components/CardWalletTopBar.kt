@@ -15,19 +15,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.cardwallet.model.CardWalletState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardWalletTopBar(
-    state: CardWalletState,
+    cardCount: Int,
     onAddClick: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         title = { Text(text = "Payments") },
         modifier = Modifier.fillMaxWidth(),
         actions = {
-            if (state == CardWalletState.MULTIPLE) {
+            if (cardCount >= 2) {
                 Text(
                     text = stringResource(R.string.card_wallet_add),
                     fontSize = 18.sp,
@@ -48,7 +47,7 @@ fun CardWalletTopBar(
 private fun CardWalletTopBarPreview() {
     AndroidpaymentsTheme {
         CardWalletTopBar(
-            state = CardWalletState.MULTIPLE,
+            cardCount = 3,
             onAddClick = {},
         )
     }
