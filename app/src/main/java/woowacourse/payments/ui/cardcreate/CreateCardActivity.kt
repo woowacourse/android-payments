@@ -20,27 +20,14 @@ class CreateCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val stateHolder =
-                    rememberSaveable(saver = CreateCardStateHolderSaver()) { CreateCardStateHolder() }
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    topBar = {
-                        NewCardTopBar(
-                            onBackClick = { onBackPressedDispatcher.onBackPressed() },
-                            onSaveClick = {
-                                val intent = CardsActivity.intent(stateHolder.newCard())
-                                setResult(RESULT_OK, intent)
-                                finish()
-                            },
-                            isCreatable = stateHolder.isCardCreatable
-                        )
-                    },
-                ) { innerPadding ->
-                    CreateCardScreen(
-                        stateHolder,
-                        Modifier.Companion.padding(innerPadding),
-                    )
-                }
+                CreateCardScreen(
+                    onBackClick = { onBackPressedDispatcher.onBackPressed() },
+                    onSaveClick = { paymentCard ->
+                        val intent = CardsActivity.intent(paymentCard)
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                )
             }
         }
     }
