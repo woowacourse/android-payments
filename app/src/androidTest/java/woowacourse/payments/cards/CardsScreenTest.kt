@@ -8,8 +8,11 @@ import androidx.compose.ui.test.performClick
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Banks
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.core.BankType
 import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
@@ -24,9 +27,10 @@ class CardsScreenTest {
         // given
         composeTestRule.setContent {
             CardsScreen(
-                uiState = CardsUiState.EMPTY,
-                uiEvent = Event(CardScreenUiEvent.Idle),
-                onClickCard = {},
+                CompanyResourceProvider(),
+                CardsUiState.EMPTY,
+                Event(CardScreenUiEvent.Idle),
+                {},
             )
         }
 
@@ -50,12 +54,18 @@ class CardsScreenTest {
                     expireDate = "0421",
                     ownerName = "peto",
                     password = "",
+                    bank = BankType.Bank(Banks.BC),
                 ),
             )
 
         // when
         composeTestRule.setContent {
-            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(
+                resourceProvider = CompanyResourceProvider(),
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                {},
+            )
         }
 
         // then
@@ -83,25 +93,33 @@ class CardsScreenTest {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        BankType.Bank(Banks.BC),
                     ),
                     Card(
                         number = "2222333344445555",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        BankType.Bank(Banks.BC),
                     ),
                     Card(
                         number = "3333444455556666",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        BankType.Bank(Banks.BC),
                     ),
                 ),
             )
 
         // when
         composeTestRule.setContent {
-            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(
+                CompanyResourceProvider(),
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                {},
+            )
         }
 
         // then
@@ -132,9 +150,10 @@ class CardsScreenTest {
         var clickedType: CardType? = null
         composeTestRule.setContent {
             CardsScreen(
+                CompanyResourceProvider(),
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
-                onClickCard = { clickedType = it },
+                { clickedType = it },
             )
         }
 
@@ -144,6 +163,6 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        assertEquals(CardType.EMPTY, clickedType)
+        assertEquals(CardType.Empty, clickedType)
     }
 }

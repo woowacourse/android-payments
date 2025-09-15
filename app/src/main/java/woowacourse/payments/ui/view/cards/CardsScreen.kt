@@ -37,6 +37,7 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentToolbar
 import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
@@ -46,10 +47,13 @@ import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
 fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit) {
+    val resourceProvider = CompanyResourceProvider()
+
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) {
             CardUiStateHolder()
         }
+
     var uiEvent by remember {
         mutableStateOf<Event<CardScreenUiEvent>>(
             Event(CardScreenUiEvent.Idle),
@@ -78,10 +82,11 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
         },
     ) { innerPadding ->
         CardsScreen(
+            resourceProvider = resourceProvider,
             uiState = cardUiStateHolder.uiState,
             uiEvent = uiEvent,
             onClickCard = { cardType ->
-                if (cardType == CardType.EMPTY) {
+                if (cardType is CardType.Empty) {
                     onAddCardClick(activityResultLauncher)
                 }
             },
@@ -98,6 +103,7 @@ private const val CARD_MASKING_CHAR = "*"
 
 @Composable
 fun CardsScreen(
+    resourceProvider: CompanyResourceProvider,
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
     onClickCard: (CardType) -> Unit,
@@ -124,15 +130,23 @@ fun CardsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (uiState) {
-            CardsUiState.EMPTY -> EmptyCardContent(onClickCard)
-            is CardsUiState.SINGLE -> SingleCardComponent(uiState.state, onClickCard)
-            is CardsUiState.MULTIPLE -> MultipleCardContent(uiState.state, onClickCard)
+            CardsUiState.EMPTY ->
+                EmptyCardContent(resourceProvider, onClickCard)
+
+            is CardsUiState.SINGLE ->
+                SingleCardComponent(resourceProvider, uiState.state, onClickCard)
+
+            is CardsUiState.MULTIPLE ->
+                MultipleCardContent(resourceProvider, uiState.state, onClickCard)
         }
     }
 }
 
 @Composable
-fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
+fun EmptyCardContent(
+    resourceProvider: CompanyResourceProvider,
+    onClickCard: (CardType) -> Unit,
+) {
     Text(
         text = stringResource(R.string.card_list_empty),
         fontSize = 22.sp,
@@ -140,7 +154,8 @@ fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
     )
 
     PaymentCard(
-        cardType = CardType.EMPTY,
+        resourceProvider = resourceProvider,
+        cardType = CardType.Empty,
         onClick = onClickCard,
         content = {
             Icon(
@@ -156,12 +171,13 @@ fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
 
 @Composable
 fun SingleCardComponent(
+    resourceProvider: CompanyResourceProvider,
     card: Card,
     onClickCard: (CardType) -> Unit,
 ) {
     PaymentCard(
-        cardType = CardType.REGISTERED,
-        onClick = {},
+        resourceProvider = resourceProvider,
+        cardType = CardType.Registered(card.bank),
         content = {
             RegisteredCard(
                 card,
@@ -172,14 +188,16 @@ fun SingleCardComponent(
                 CARD_EXPIRE_DATE_SEPARATOR,
             )
         },
+        bank = card.bank,
         modifier =
             Modifier
                 .padding(top = 30.dp)
                 .shadow(8.dp),
     )
     PaymentCard(
-        cardType = CardType.EMPTY,
-        onClick = { onClickCard(CardType.EMPTY) },
+        resourceProvider = resourceProvider,
+        cardType = CardType.Empty,
+        onClick = { onClickCard(CardType.Empty) },
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -194,16 +212,20 @@ fun SingleCardComponent(
 
 @Composable
 fun MultipleCardContent(
+    resourceProvider: CompanyResourceProvider,
     cards: List<Card>,
     onClickCard: (CardType) -> Unit,
 ) {
-    repeat(cards.size) {
+    cards.forEach { card ->
+        val cardType = CardType.Registered(card.bank)
+
         PaymentCard(
-            cardType = CardType.REGISTERED,
-            onClick = {},
+            resourceProvider = resourceProvider,
+            cardType = cardType,
+            onClick = { onClickCard(cardType) },
             content = {
                 RegisteredCard(
-                    cards[it],
+                    card,
                     CARD_NUMBER_GROUP_SIZE,
                     CARD_NUMBER_SEPARATOR,
                     CARD_MASKING_CHAR,
@@ -211,6 +233,7 @@ fun MultipleCardContent(
                     CARD_EXPIRE_DATE_SEPARATOR,
                 )
             },
+            bank = card.bank,
             modifier =
                 Modifier
                     .padding(top = 30.dp)
@@ -223,6 +246,7 @@ fun MultipleCardContent(
 @Preview(showBackground = true)
 fun CardScreenPreview() {
     CardsScreen(
+        CompanyResourceProvider(),
         CardsUiState.EMPTY,
         Event(CardScreenUiEvent.Idle),
         {},
@@ -234,7 +258,12 @@ fun CardScreenPreview() {
 fun OneCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
-    CardsScreen(CardsUiState.SINGLE(card), Event(CardScreenUiEvent.Idle), {})
+    CardsScreen(
+        CompanyResourceProvider(),
+        CardsUiState.SINGLE(card),
+        Event(CardScreenUiEvent.Idle),
+        {},
+    )
 }
 
 @Composable
@@ -242,5 +271,10 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>,
 ) {
-    CardsScreen(CardsUiState.MULTIPLE(cards), Event(CardScreenUiEvent.Idle), {})
+    CardsScreen(
+        CompanyResourceProvider(),
+        CardsUiState.MULTIPLE(cards),
+        Event(CardScreenUiEvent.Idle),
+        {},
+    )
 }
