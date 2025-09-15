@@ -13,14 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.company.components.CompanySelectRow
-import woowacourse.payments.ui.company.model.CompanyUiModel
-import woowacourse.payments.ui.company.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompanySelectBottomSheet(
-    companies: List<CompanyUiModel>,
-    onCompanySelected: (CompanyUiModel) -> Unit,
+    companies: List<CardCompany>,
+    onCompanySelected: (CardCompany) -> Unit,
     showBottomSheet: Boolean = true,
     sheetState: SheetState = rememberModalBottomSheetState(),
 ) {
@@ -43,7 +41,7 @@ fun CompanySelectBottomSheet(
 @Composable
 private fun CompanySelectBottomSheetPreview() {
     CompanySelectBottomSheet(
-        companies = CardCompany.entries.map { it.toUiModel() },
+        companies = CardCompany.entries,
         onCompanySelected = {},
         sheetState =
             rememberStandardBottomSheetState(

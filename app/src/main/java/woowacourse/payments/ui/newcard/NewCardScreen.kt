@@ -27,8 +27,6 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.company.CompanySelectBottomSheet
-import woowacourse.payments.ui.company.model.CompanyUiModel
-import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -38,24 +36,23 @@ import woowacourse.payments.ui.newcard.components.NewCardTopBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
-    companies: List<CompanyUiModel> = emptyList(),
+    companies: List<CardCompany> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (Card) -> Unit = {},
     state: NewCardState = rememberNewCardState(),
 ) {
-    var selectedCompany: CompanyUiModel? by rememberSaveable { mutableStateOf(null) }
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
 
-    LaunchedEffect(key1 = selectedCompany) {
-        if (selectedCompany != null) {
+    LaunchedEffect(key1 = state.cardCompany) {
+        if (state.isCardCompanySelected) {
             showBottomSheet = false
         }
     }
 
     CompanySelectBottomSheet(
         companies = companies,
-        onCompanySelected = { selectedCompany = it },
+        onCompanySelected = { state.onCompanySelected(it) },
         sheetState = bottomSheetState,
         showBottomSheet = showBottomSheet,
     )
@@ -113,5 +110,5 @@ fun NewCardScreen(
 @Preview
 @Composable
 private fun NewCardScreenPreview() {
-    NewCardScreen(companies = CardCompany.entries.map { it.toUiModel() })
+    NewCardScreen(companies = CardCompany.entries)
 }

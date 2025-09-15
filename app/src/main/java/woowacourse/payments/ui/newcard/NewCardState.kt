@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
@@ -11,6 +12,8 @@ import woowacourse.payments.domain.CardPassword
 import java.time.format.DateTimeFormatter
 
 class NewCardState {
+    var cardCompany: CardCompany? by mutableStateOf(null)
+        private set
     var cardNumber: String by mutableStateOf("")
         private set
     var cardExpirationDate: String by mutableStateOf("")
@@ -19,6 +22,9 @@ class NewCardState {
         private set
     var cardPassword: String by mutableStateOf("")
         private set
+
+    val isCardCompanySelected: Boolean
+        get() = cardCompany != null
 
     val isCardNumberValid: Boolean
         get() = runCatching { CardNumber.from(cardNumber) }.isSuccess
@@ -38,23 +44,32 @@ class NewCardState {
     val isCardPasswordValid: Boolean
         get() = runCatching { CardPassword(cardPassword) }.isSuccess
 
+    val isCardValid: Boolean
+        get() = isCardCompanySelected && isCardNumberValid && isCardExpirationDateValid && isCardHolderNameValid && isCardPasswordValid
+
     val card: Card?
         get() =
-            if (isCardNumberValid && isCardExpirationDateValid && isCardHolderNameValid && isCardPasswordValid) {
+            cardCompany?.takeIf { isCardValid }?.let { company: CardCompany ->
                 Card(
+                    company = company,
                     number = CardNumber.from(cardNumber),
                     expirationDate =
-                        CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER),
+                        CardExpirationDate.from(
+                            cardExpirationDate,
+                            DATE_TIME_FORMATTER,
+                        ),
+                    password = CardPassword(cardPassword),
                     holderName =
                         cardHolderName
                             .trim()
                             .takeIf { it.isNotBlank() }
                             ?.let(::CardHolderName),
-                    password = CardPassword(cardPassword),
                 )
-            } else {
-                null
             }
+
+    fun onCompanySelected(company: CardCompany) {
+        cardCompany = company
+    }
 
     fun onCardNumberChange(value: String) {
         cardNumber = value
