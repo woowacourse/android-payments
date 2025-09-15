@@ -16,6 +16,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpirationDate
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -79,5 +84,11 @@ fun PaymentCard(
 @Preview
 @Composable
 private fun PaymentCardPreview() {
-    PaymentCard()
+    val card = Card(
+        number = CardNumber("1234567890123456"),
+        ownerName = OwnerName("Hwang Chaewon"),
+        expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
+        password = Password("1234")
+    )
+    PaymentCard(card)
 }
