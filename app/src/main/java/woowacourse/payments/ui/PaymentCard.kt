@@ -20,7 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.list.CardUiModel
+import woowacourse.payments.newCard.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -35,7 +37,7 @@ fun PaymentCard(
                 .size(208.dp, 124.dp)
                 .shadow(8.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = card?.company?.toUiModel()?.color ?: CardCompany.NOT_SELECTED.toUiModel().color,
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(horizontal = 16.dp),
@@ -49,7 +51,7 @@ fun PaymentCard(
                 Box(modifier = Modifier.height(44.dp),
                     contentAlignment = Alignment.Center) {
                     Text(
-                        text = "BC카드",
+                        text = card.company.toUiModel().displayName,
                         fontSize = 12.sp,
                         color = Color.White,
                     )
