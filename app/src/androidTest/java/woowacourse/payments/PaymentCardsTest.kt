@@ -12,17 +12,19 @@ import woowacourse.payments.domain.model.UserName
 import woowacourse.payments.ui.components.PaymentCards
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.text.ExpirationDateInputParser
 
 @Suppress("ktlint:standard:function-naming")
 class PaymentCardsTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val yearMonth = ExpirationDateInputParser.parse("1226")
     private val sampleCard =
         Card(
             cardNumber = CardNumber.from("1111222233334444"),
-            expirationDate = ExpirationDate.from("1226"),
-            userName = UserName("KIMGAHYUN"),
+            expirationDate = ExpirationDate.from(yearMonth),
+            userName = UserName.from("KIMGAHYUN"),
             password = Password.from("1234"),
         ).toUiModel()
 
@@ -63,8 +65,8 @@ class PaymentCardsTest {
     }
 
     @Test
-    fun 카드_목록에_카드가_여러_개_있을_때_카드_추가_UI는_상단바에_노출된다() {
-        val cards = listOf(sampleCard, sampleCard, sampleCard)
+    fun 카드_목록에_카드가_2개_이상_있을_때_카드_추가_UI는_상단바에_노출된다() {
+        val cards = listOf(sampleCard, sampleCard)
 
         composeTestRule.setContent {
             PaymentCards(
@@ -79,6 +81,6 @@ class PaymentCardsTest {
 
         composeTestRule
             .onNodeWithText("+")
-            .assertDoesNotExist()
+            .assertIsNotDisplayed()
     }
 }

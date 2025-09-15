@@ -17,17 +17,19 @@ import woowacourse.payments.domain.model.UserName
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.text.ExpirationDateInputParser
 
 @Suppress("ktlint:standard:function-naming")
 class PaymentCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val yearMonth = ExpirationDateInputParser.parse("1226")
     private val card =
         Card(
             cardNumber = CardNumber.from("1111222233334444"),
-            expirationDate = ExpirationDate.from("1226"),
-            userName = UserName("KIMGAHYUN"),
+            expirationDate = ExpirationDate.from(yearMonth),
+            userName = UserName.from("KIMGAHYUN"),
             password = Password.from("1234"),
         ).toUiModel()
 
