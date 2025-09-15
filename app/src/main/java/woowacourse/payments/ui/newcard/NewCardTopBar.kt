@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcreate
+package woowacourse.payments.ui.newcard
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,6 +18,7 @@ import woowacourse.payments.R
 fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    isCreatable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -31,7 +32,7 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = { onSaveClick() }, enabled = isCreatable) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.card_create_save),

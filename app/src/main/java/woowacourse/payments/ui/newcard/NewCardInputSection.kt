@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcreate
+package woowacourse.payments.ui.newcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,12 +17,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardcreate.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.model.CreateCardState
+import woowacourse.payments.ui.newcard.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
+import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
@@ -34,31 +34,34 @@ private val KEYBOARD_OPTIONS_NUMBER = KeyboardOptions(keyboardType = KeyboardTyp
 private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
 
 @Composable
-fun CreateCardInputSection(
-    createCardState: CreateCardState,
+fun NewCardInputSection(
+    newCardUiState: NewCardUiState,
     onCardNumbersChange: (String) -> Unit,
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
     onCardPasswordChange: (String) -> Unit,
     modifier: Modifier,
 ) {
-    val cardNumbersVisualTransformation = remember {
-        GroupedSeparatorVisualTransformation(CARD_GROUPS, SEPARATOR_CARD)
-    }
+    val cardNumbersVisualTransformation =
+        remember {
+            GroupedSeparatorVisualTransformation(CARD_GROUPS, SEPARATOR_CARD)
+        }
 
-    val expiryDateVisualTransformation = remember {
-        GroupedSeparatorVisualTransformation(EXPIRY_GROUPS, SEPARATOR_EXPIRY)
-    }
+    val expiryDateVisualTransformation =
+        remember {
+            GroupedSeparatorVisualTransformation(EXPIRY_GROUPS, SEPARATOR_EXPIRY)
+        }
     Column(
         verticalArrangement = Arrangement.spacedBy(30.dp),
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = createCardState.cardNumber,
+            value = newCardUiState.cardNumber,
             onValueChange = onCardNumbersChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag(CARD_NUMBERS_INPUT_TAG),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .testTag(CARD_NUMBERS_INPUT_TAG),
             label = { Text(stringResource(R.string.card_number_label)) },
             placeholder = { Text(stringResource(R.string.card_number_placeholder)) },
             visualTransformation = cardNumbersVisualTransformation,
@@ -66,14 +69,15 @@ fun CreateCardInputSection(
         )
 
         val expiryDateErrorTextRes =
-            createCardState.expiryDateErrorTextRes?.let { stringResource(it) }
+            newCardUiState.expiryDateErrorTextRes?.let { stringResource(it) }
 
         OutlinedTextField(
-            value = createCardState.expiryDate,
+            value = newCardUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
-            modifier = Modifier
-                .width(146.dp)
-                .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
+            modifier =
+                Modifier
+                    .width(146.dp)
+                    .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
             label = { Text(stringResource(R.string.expiry_label)) },
             isError = expiryDateErrorTextRes != null,
             placeholder = { Text(stringResource(R.string.expiry_placeholder)) },
@@ -81,7 +85,7 @@ fun CreateCardInputSection(
                 Text(
                     expiryDateErrorTextRes ?: "",
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
             },
             visualTransformation = expiryDateVisualTransformation,
@@ -89,28 +93,30 @@ fun CreateCardInputSection(
         )
 
         OutlinedTextField(
-            value = createCardState.ownerName,
+            value = newCardUiState.ownerName,
             onValueChange = onCardOwnerNameChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag(CARD_OWNER_NAME_INPUT_TAG),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .testTag(CARD_OWNER_NAME_INPUT_TAG),
             label = { Text(stringResource(R.string.owner_label)) },
             placeholder = { Text(stringResource(R.string.owner_placeholder)) },
             supportingText = {
                 Text(
-                    "${createCardState.ownerName.length}/$CARD_OWNER_NAME_MAX",
+                    "${newCardUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
                     modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.End
+                    textAlign = TextAlign.End,
                 )
-            }
+            },
         )
 
         OutlinedTextField(
-            value = createCardState.password,
+            value = newCardUiState.password,
             onValueChange = onCardPasswordChange,
-            modifier = Modifier
-                .width(146.dp)
-                .testTag(CARD_PASSWORD_INPUT_TAG),
+            modifier =
+                Modifier
+                    .width(146.dp)
+                    .testTag(CARD_PASSWORD_INPUT_TAG),
             label = { Text(stringResource(R.string.password_label)) },
             placeholder = { Text(stringResource(R.string.password_placeholder)) },
             visualTransformation = PasswordVisualTransformation(),

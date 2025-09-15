@@ -14,29 +14,28 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.payments.ui.cardcreate.CreateCardInputSection
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_NUMBERS_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_OWNER_NAME_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.CreateCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.cardcreate.model.CreateCardState
+import woowacourse.payments.ui.newcard.NewCardInputSection
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
+import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
+import woowacourse.payments.ui.newcard.model.NewCardUiState
 
 @RunWith(AndroidJUnit4::class)
-class CreateCardInputSectionTest {
-
+class NewCardInputSectionTest {
     @get:Rule
     val rule = createComposeRule()
 
-    private fun setContentWithState(initial: CreateCardState = CreateCardState()) {
+    private fun setContentWithState(initial: NewCardUiState = NewCardUiState()) {
         rule.setContent {
             var state by rememberSaveable { mutableStateOf(initial) }
-            CreateCardInputSection(
-                createCardState = state,
+            NewCardInputSection(
+                newCardUiState = state,
                 onCardNumbersChange = { state = state.copy(cardNumber = it) },
                 onCardExpiryDateChange = { state = state.copy(expiryDate = it) },
                 onCardOwnerNameChange = { state = state.copy(ownerName = it) },
                 onCardPasswordChange = { state = state.copy(password = it) },
-                modifier = Modifier
+                modifier = Modifier,
             )
         }
     }
@@ -45,10 +44,12 @@ class CreateCardInputSectionTest {
     fun 카드번호_입력시_구분자가_포맷된다() {
         setContentWithState()
 
-        rule.onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
             .performTextInput("1234567812345678")
 
-        rule.onNodeWithText("1234-5678-1234-5678")
+        rule
+            .onNodeWithText("1234-5678-1234-5678")
             .assertIsDisplayed()
     }
 
@@ -56,7 +57,8 @@ class CreateCardInputSectionTest {
     fun 만료일_입력시_구분자가_포맷된다() {
         setContentWithState()
 
-        rule.onNodeWithTag(CARD_EXPIRY_DATE_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_EXPIRY_DATE_INPUT_TAG)
             .performTextInput("1229")
 
         rule.onNodeWithText("12/29").assertIsDisplayed()
@@ -64,13 +66,14 @@ class CreateCardInputSectionTest {
 
     @Test
     fun 잘못된_만료일이면_에러메시지가_보인다() {
-        val initial = CreateCardState(
-            cardNumber = "",
-            expiryDate = "13/22",
-            ownerName = "",
-            password = "",
-            expiryDateErrorTextRes = R.string.error_card_expiry_invalid_month
-        )
+        val initial =
+            NewCardUiState(
+                cardNumber = "",
+                expiryDate = "13/22",
+                ownerName = "",
+                password = "",
+                expiryDateErrorTextRes = R.string.validate_card_expiry_invalid_month,
+            )
         setContentWithState(initial)
 
         val errorText = "월은 01~12여야 합니다"
@@ -88,7 +91,8 @@ class CreateCardInputSectionTest {
     @Test
     fun 비밀번호는_숫자입력이_가능하고_마스킹된다() {
         setContentWithState()
-        rule.onNodeWithTag(CARD_PASSWORD_INPUT_TAG)
+        rule
+            .onNodeWithTag(CARD_PASSWORD_INPUT_TAG)
             .performTextInput("123")
 
         rule.onNodeWithText("•••").assertIsDisplayed()
