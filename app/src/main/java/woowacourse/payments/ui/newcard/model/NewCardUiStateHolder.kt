@@ -11,8 +11,8 @@ import androidx.compose.runtime.setValue
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.common.model.CardUiModel
 
-private const val CARD_NUMBER_MAX: Int = 16
-private const val EXPIRY_MAX: Int = 4
+const val CARD_NUMBER_MAX: Int = 16
+const val EXPIRY_MAX: Int = 4
 const val CARD_HOLDER_MAX: Int = 30
 const val PIN_MAX: Int = 4
 

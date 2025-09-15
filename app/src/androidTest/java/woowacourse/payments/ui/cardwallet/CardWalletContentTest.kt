@@ -36,12 +36,11 @@ class CardWalletContentTest {
     }
 
     @Test
-    fun 카드가_2장_이하일_때_플러스_버튼을_출력한다() {
+    fun 카드가_1장_이하일_때_플러스_버튼을_출력한다() {
         // given
         val cards =
             listOf(
                 CardUiModel("1234123412341234", "0511", "공백"),
-                CardUiModel("4321432143214321", "0928", "비비"),
             )
 
         // when
@@ -60,13 +59,12 @@ class CardWalletContentTest {
     }
 
     @Test
-    fun 카드가_3장_이상일_경우_플러스_버튼을_출력하지_않는다() {
+    fun 카드가_1장_초과일_경우_플러스_버튼을_출력하지_않는다() {
         // given
         val cards =
             listOf(
                 CardUiModel("1234123412341234", "0511", "공백"),
                 CardUiModel("4321432143214321", "0928", "비비"),
-                CardUiModel("2345234523452345", "0611", "환노"),
             )
 
         // when

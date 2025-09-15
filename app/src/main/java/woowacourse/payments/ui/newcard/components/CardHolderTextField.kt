@@ -28,7 +28,10 @@ fun CardHolderTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { input ->
+            val onlyLettersAndSpace = input.filter { it.isLetterOrDigit() }.take(CARD_HOLDER_MAX)
+            onValueChange(onlyLettersAndSpace)
+        },
         modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_holder_name_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_holder_name_hint)) },

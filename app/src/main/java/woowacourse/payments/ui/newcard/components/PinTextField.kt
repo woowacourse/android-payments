@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.newcard.model.PIN_MAX
 
 @Composable
 fun PinTextField(
@@ -27,7 +28,10 @@ fun PinTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { input ->
+            val onlyDigits = input.filter { it.isDigit() }.take(PIN_MAX)
+            onValueChange(onlyDigits)
+        },
         modifier = modifier.fillMaxWidth(),
         label = { Text(stringResource(id = R.string.new_card_pin_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_pin_hint)) },

@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
+import woowacourse.payments.ui.newcard.model.EXPIRY_MAX
 
 private const val EXPIRY_GROUP_SIZE: Int = 2
 private const val EXPIRY_SEPARATOR: String = " / "
@@ -30,7 +31,10 @@ fun ExpiryTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = { input ->
+            val onlyDigits = input.filter { it.isDigit() }.take(EXPIRY_MAX)
+            onValueChange(onlyDigits)
+        },
         modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_expiry_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_expiry_hint)) },
