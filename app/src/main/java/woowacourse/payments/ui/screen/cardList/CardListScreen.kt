@@ -107,7 +107,7 @@ private fun CardListContent(
 }
 
 @Composable
-fun AddCardBox(onClick: () -> Unit) {
+private fun AddCardBox(onClick: () -> Unit) {
     Box(
         modifier =
             Modifier
