@@ -35,12 +35,13 @@ fun BottomSheetCardCompanyItem(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (value.iconResId != null) {
+            val companyName = stringResource(value.companyNameResId)
             Image(
                 painter = painterResource(value.iconResId),
                 contentDescription =
                     stringResource(
                         R.string.add_card_bottom_sheet_card_company_icon_description,
-                        value.companyNameResId,
+                        companyName,
                     ),
                 modifier = Modifier.size(width = 37.dp, height = 37.dp),
             )

@@ -19,8 +19,8 @@ class BottomSheetCardCompanyItemTest {
     fun 카드사_아이템에_아이콘_이미지와_카드사_명이_존재한다() {
         // given
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-
         val kakaoUiModel = CardCompanyUiModel.KAKAO
+        val kakaoCompanyName = context.getString(kakaoUiModel.companyNameResId)
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
                 BottomSheetCardCompanyItem(
@@ -34,7 +34,7 @@ class BottomSheetCardCompanyItemTest {
             .onNodeWithContentDescription(
                 context.getString(
                     R.string.add_card_bottom_sheet_card_company_icon_description,
-                    kakaoUiModel.companyNameResId,
+                    kakaoCompanyName,
                 ),
             ).assertIsDisplayed()
         compose.onNodeWithText(context.getString(kakaoUiModel.companyNameResId)).assertIsDisplayed()
