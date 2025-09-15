@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -15,13 +16,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModelOrNull
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
     onSaveSuccess: (card: CardUiModel) -> Unit,
@@ -61,6 +66,8 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
+        CardCompanyBottomSheet(CardCompany.ALL.mapNotNull(CardCompany::toUiModelOrNull))
+
         Column(Modifier.fillMaxSize().padding(innerPadding)) {
             PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
 
