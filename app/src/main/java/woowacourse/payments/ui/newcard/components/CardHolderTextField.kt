@@ -16,8 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-
-private const val MAX_CARD_HOLDER_LENGTH = 30
+import woowacourse.payments.ui.newcard.model.CARD_HOLDER_MAX
 
 @Composable
 fun CardHolderTextField(
@@ -29,11 +28,7 @@ fun CardHolderTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { input ->
-            val onlyLetters = input.filter { it.isLetterOrDigit() }
-            val limited = onlyLetters.take(MAX_CARD_HOLDER_LENGTH)
-            onValueChange(limited)
-        },
+        onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_holder_name_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_holder_name_hint)) },
@@ -45,7 +40,7 @@ fun CardHolderTextField(
         keyboardActions = KeyboardActions(onNext = { onImeAction() }),
         supportingText = {
             Text(
-                text = "${value.length}/$MAX_CARD_HOLDER_LENGTH",
+                text = "${value.length}/$CARD_HOLDER_MAX",
                 textAlign = TextAlign.End,
                 modifier = Modifier.fillMaxWidth(),
             )

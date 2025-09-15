@@ -16,10 +16,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
+import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
 
-const val CARD_NUMBER_SEPARATOR = " - "
-private const val MAX_CARD_NUMBER_LENGTH = 16
-private const val CARD_NUMBER_GROUP_SIZE = 4
+private const val CARD_NUMBER_GROUP_SIZE: Int = 4
 
 private val groupedVisualTransformation: VisualTransformation =
     GroupedVisualTransformation(
@@ -37,11 +36,7 @@ fun CardNumberTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { input ->
-            val onlyDigits = input.filter { it.isDigit() }
-            val limited = onlyDigits.take(MAX_CARD_NUMBER_LENGTH)
-            onValueChange(limited)
-        },
+        onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_number_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_number_hint)) },

@@ -17,8 +17,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 
-private const val MAX_PIN_LENGTH = 4
-
 @Composable
 fun PinTextField(
     value: String,
@@ -29,11 +27,7 @@ fun PinTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { input ->
-            val onlyDigits = input.filter { it.isDigit() }
-            val limited = onlyDigits.take(MAX_PIN_LENGTH)
-            onValueChange(limited)
-        },
+        onValueChange = onValueChange,
         modifier = modifier.fillMaxWidth(),
         label = { Text(stringResource(id = R.string.new_card_pin_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_pin_hint)) },

@@ -17,15 +17,8 @@ import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
 
-private const val MAX_EXPIRY_LENGTH = 4
-private const val EXPIRY_GROUP_SIZE = 2
-private const val EXPIRY_SEPARATOR = " / "
-
-private val expiryVisualTransformation: VisualTransformation =
-    GroupedVisualTransformation(
-        groupSize = EXPIRY_GROUP_SIZE,
-        separator = EXPIRY_SEPARATOR,
-    )
+private const val EXPIRY_GROUP_SIZE: Int = 2
+private const val EXPIRY_SEPARATOR: String = " / "
 
 @Composable
 fun ExpiryTextField(
@@ -37,11 +30,7 @@ fun ExpiryTextField(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = { input ->
-            val onlyDigits = input.filter { it.isDigit() }
-            val limited = onlyDigits.take(MAX_EXPIRY_LENGTH)
-            onValueChange(limited)
-        },
+        onValueChange = onValueChange,
         modifier = modifier,
         label = { Text(stringResource(id = R.string.new_card_expiry_label)) },
         placeholder = { Text(stringResource(id = R.string.new_card_expiry_hint)) },
@@ -55,6 +44,12 @@ fun ExpiryTextField(
         colors = colors,
     )
 }
+
+private val expiryVisualTransformation: VisualTransformation =
+    GroupedVisualTransformation(
+        groupSize = EXPIRY_GROUP_SIZE,
+        separator = EXPIRY_SEPARATOR,
+    )
 
 @Preview(showBackground = true)
 @Composable

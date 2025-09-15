@@ -26,7 +26,7 @@ import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.designsystem.theme.Yellow
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.components.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
 
 private const val MASKED_DIGITS = "****"
 
