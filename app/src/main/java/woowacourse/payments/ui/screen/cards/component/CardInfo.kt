@@ -22,12 +22,13 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
+import woowacourse.payments.ui.theme.cardTextStyle
 
 @Composable
 fun CardInfo(
     card: CardUiModel,
     modifier: Modifier = Modifier,
-    textStyle: TextStyle = CardTextStyle,
+    textStyle: TextStyle = cardTextStyle,
 ) {
     val context = LocalContext.current
     CompositionLocalProvider(LocalTextStyle provides textStyle) {
@@ -72,14 +73,6 @@ fun CardInfo(
         }
     }
 }
-
-private val CardTextStyle =
-    TextStyle(
-        color = Color.White,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.Medium,
-        lineHeight = 12.sp,
-    )
 
 @Preview
 @Composable
