@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.model.CardCompanyUiModel
-import woowacourse.payments.ui.model.toUiModelOrNull
+import woowacourse.payments.ui.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,6 +43,6 @@ fun CardCompanyBottomSheet(
 @Composable
 fun CardCompanyBottomSheetPreview() {
     CardCompanyBottomSheet(
-        CardCompany.ALL.mapNotNull(CardCompany::toUiModelOrNull),
+        CardCompany.entries.map(CardCompany::toUiModel),
     )
 }

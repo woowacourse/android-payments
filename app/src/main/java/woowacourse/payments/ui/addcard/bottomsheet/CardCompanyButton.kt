@@ -12,8 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.toUiModel
 
 @Composable
 fun CardCompanyButton(
@@ -37,5 +38,5 @@ fun CardCompanyButton(
 @Preview(showBackground = true, name = "BC카드")
 @Composable
 fun CardCompanyBoxPreview() {
-    CardCompanyButton(CardCompanyUiModel("BC카드", R.drawable.icon_bc_card))
+    CardCompanyButton(CardCompany.BC_CARD.toUiModel())
 }

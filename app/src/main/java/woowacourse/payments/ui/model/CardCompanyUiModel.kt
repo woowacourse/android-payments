@@ -9,15 +9,14 @@ data class CardCompanyUiModel(
     @DrawableRes val logoId: Int,
 )
 
-fun CardCompany.toUiModelOrNull(): CardCompanyUiModel? =
-    when (name) {
-        "BC카드" -> CardCompanyUiModel(name, R.drawable.icon_bc_card)
-        "신한카드" -> CardCompanyUiModel(name, R.drawable.icon_shinhan_card)
-        "카카오뱅크" -> CardCompanyUiModel(name, R.drawable.icon_kakao_bank)
-        "현대카드" -> CardCompanyUiModel(name, R.drawable.icon_hyundai_card)
-        "우리카드" -> CardCompanyUiModel(name, R.drawable.icon_woori_card)
-        "롯데카드" -> CardCompanyUiModel(name, R.drawable.icon_lotte_card)
-        "하나카드" -> CardCompanyUiModel(name, R.drawable.icon_hana_card)
-        "국민카드" -> CardCompanyUiModel(name, R.drawable.icon_kb_card)
-        else -> null
+fun CardCompany.toUiModel(): CardCompanyUiModel =
+    when (this) {
+        CardCompany.BC_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_bc_card)
+        CardCompany.SHINHAN_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_shinhan_card)
+        CardCompany.KAKAO_BANK -> CardCompanyUiModel(companyName, R.drawable.icon_kakao_bank)
+        CardCompany.HYUNDAI_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_hyundai_card)
+        CardCompany.WOORI_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_woori_card)
+        CardCompany.LOTTE_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_lotte_card)
+        CardCompany.HANA_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_hana_card)
+        CardCompany.KB_CARD -> CardCompanyUiModel(companyName, R.drawable.icon_kb_card)
     }

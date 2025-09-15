@@ -24,7 +24,7 @@ import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModelOrNull
+import woowacourse.payments.ui.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -66,7 +66,7 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        CardCompanyBottomSheet(CardCompany.ALL.mapNotNull(CardCompany::toUiModelOrNull))
+        CardCompanyBottomSheet(CardCompany.entries.map(CardCompany::toUiModel))
 
         Column(Modifier.fillMaxSize().padding(innerPadding)) {
             PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
