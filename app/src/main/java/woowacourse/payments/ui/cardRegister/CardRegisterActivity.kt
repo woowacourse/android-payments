@@ -1,9 +1,15 @@
 package woowacourse.payments.ui.cardRegister
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.platform.LocalContext
+import woowacourse.payments.R
+import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardRegisterActivity : ComponentActivity() {
@@ -12,8 +18,32 @@ class CardRegisterActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardRegisterScreen()
+                val context = LocalContext.current
+                CardRegisterScreen(
+                    onBackClick = { finish() },
+                    onSaveClick = { card: Card ->
+                        val intent =
+                            Intent().putExtra(
+                                "newCard",
+                                card,
+                            )
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    },
+                    isNotValidInput = {
+                        Toast
+                            .makeText(
+                                context,
+                                getString(R.string.card_input_not_valid_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    },
+                )
             }
         }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
     }
 }

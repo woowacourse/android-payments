@@ -6,11 +6,11 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.GrayFFAAAAAA
 
 @Composable
 fun PaymentTextField(
@@ -36,7 +36,7 @@ fun PaymentTextField(
             }
         },
         label = { Text(text = label) },
-        placeholder = { Text(text = placeholder, color = Color(0xFFAAAAAA)) },
+        placeholder = { Text(text = placeholder, color = GrayFFAAAAAA) },
         enabled = true,
         singleLine = true,
         keyboardOptions = keyboardOptions,
@@ -48,7 +48,7 @@ fun PaymentTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentTextFieldPreview() {
+private fun PaymentTextFieldPreview() {
     AndroidpaymentsTheme {
         PaymentTextField(
             label = "닉네임",
