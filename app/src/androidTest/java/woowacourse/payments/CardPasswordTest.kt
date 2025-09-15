@@ -1,5 +1,9 @@
 package woowacourse.payments
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -8,7 +12,9 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.DigitTextField
 
+@Suppress("ktlint:standard:function-naming")
 class CardPasswordTest {
     private val masking = '\u2022'.toString()
 
@@ -18,7 +24,10 @@ class CardPasswordTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
+            var text by remember { mutableStateOf("") }
             DigitTextField(
+                text = text,
+                onValueChange = { text = it },
                 label = "비밀번호",
                 hint = "0000",
                 maxLength = 4,

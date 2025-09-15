@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.newCard
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -18,23 +20,27 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    isSaveEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(text = "카드 추가") },
+        title = { Text(text = stringResource(R.string.add_new_card_top_bar_title)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "뒤로 가기",
+                    contentDescription = stringResource(R.string.add_new_card_top_bar_back_button),
                 )
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(
+                onClick = { onSaveClick() },
+                enabled = isSaveEnabled,
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = "완료",
+                    contentDescription = stringResource(R.string.add_new_card_top_bar_check_button),
                 )
             }
         },
@@ -49,6 +55,7 @@ private fun NewCardTopBarPreview() {
         NewCardTopBar(
             onBackClick = { },
             onSaveClick = { },
+            isSaveEnabled = false,
         )
     }
 }

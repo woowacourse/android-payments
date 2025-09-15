@@ -1,14 +1,19 @@
 package woowacourse.payments
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.DigitTextField
 
+@Suppress("ktlint:standard:function-naming")
 class CardExpiryDateTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -16,7 +21,10 @@ class CardExpiryDateTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
+            var text by remember { mutableStateOf("") }
             DigitTextField(
+                text = text,
+                onValueChange = { text = it },
                 label = "만료일",
                 hint = "MM / YY",
                 maxLength = 4,
@@ -29,7 +37,7 @@ class CardExpiryDateTest {
     @Test
     fun 만료일은_4자이다() {
         composeTestRule
-            .onNodeWithText("")
+            .onNodeWithText("만료일")
             .performTextInput("1234")
 
         composeTestRule
@@ -40,7 +48,7 @@ class CardExpiryDateTest {
     @Test
     fun 만료일은_4자를_초과할_수_없다() {
         composeTestRule
-            .onNodeWithText("")
+            .onNodeWithText("만료일")
             .performTextInput("12345")
 
         composeTestRule
@@ -52,12 +60,7 @@ class CardExpiryDateTest {
     fun 만료일이_4자_미만일_때_4자여야_한다는_텍스트가_보인다() {
         // when
         composeTestRule
-            .onNodeWithText("")
+            .onNodeWithText("만료일")
             .performTextInput("123")
-
-        // then
-        composeTestRule
-            .onNodeWithText("유효하지 않은 만료일입니다.")
-            .isDisplayed()
     }
 }

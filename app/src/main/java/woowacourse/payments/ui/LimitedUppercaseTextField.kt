@@ -1,40 +1,34 @@
-package woowacourse.payments
+package woowacourse.payments.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun LimitedTextField(
+fun LimitedUppercaseTextField(
+    text: String,
+    onValueChange: (String) -> Unit,
     label: String,
     hint: String,
     modifier: Modifier = Modifier,
     maxLength: Int = Int.MAX_VALUE,
     imeAction: ImeAction = ImeAction.Done,
 ) {
-    var text by remember { mutableStateOf("") }
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
-            val maxText = newText.take(maxLength)
-            text = maxText
+            onValueChange(newText.filter { it.isLetter() || it.isWhitespace() }.uppercase().take(maxLength))
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(imeAction = imeAction),
         supportingText = {
             Text(
@@ -43,15 +37,16 @@ fun LimitedTextField(
                 textAlign = TextAlign.End,
             )
         },
-
     )
 }
 
 @Preview
 @Composable
-private fun LimitedTextFieldPreview() {
+private fun LimitedUppercaseTextFieldPreview() {
     AndroidpaymentsTheme {
-        LimitedTextField(
+        LimitedUppercaseTextField(
+            text = "",
+            onValueChange = {},
             label = "카드 소유자 이름(선택)",
             hint = "카드에 표시된 이름을 입력하세요.",
             maxLength = 30,
