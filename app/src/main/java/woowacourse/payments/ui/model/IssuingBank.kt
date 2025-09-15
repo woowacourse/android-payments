@@ -47,7 +47,7 @@ enum class IssuingBank : Parcelable {
 
     fun getIconResId(): Int =
         when (this) {
-            NOT_SELECTED -> 0
+            NOT_SELECTED -> R.drawable.ic_launcher_foreground
             BC -> R.drawable.ic_bc
             SHINHAN -> R.drawable.ic_shinhan
             KAKAO -> R.drawable.ic_kakao
