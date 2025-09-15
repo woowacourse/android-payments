@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
@@ -30,6 +34,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -222,8 +228,9 @@ fun CardCompanySelectRow(
         .map { it.toUiModel() }
 
     FlowRow(
-        modifier = Modifier.padding(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(vertical = 30.dp, horizontal = 10.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
         maxItemsInEachRow = COLUMN_COUNT
     ) {
         companies.forEach { company ->
@@ -241,11 +248,21 @@ fun CardCompanyItem(
     onClick: (CardCompanyUiModel) -> Unit
 ) {
     Box(modifier = Modifier
-        .height(65.dp).clickable { onClick(cardCompanyUiModel) }
+        .height(65.dp)
+        .width(80.dp).clickable { onClick(cardCompanyUiModel)},
     ) {
         Column(
-            modifier = Modifier.align(alignment = Alignment.Center)
+            modifier = Modifier
+                .align(alignment = Alignment.Center)
+                .fillMaxHeight(),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Icon(
+                painter = painterResource(id = cardCompanyUiModel.iconRes),
+                tint = Color.Unspecified,
+                contentDescription = cardCompanyUiModel.displayName,
+                modifier = Modifier.size(37.dp),
+            )
             Text(text = cardCompanyUiModel.displayName,
                 fontSize = 16.sp,
                 color = Color(0xFF525252)
