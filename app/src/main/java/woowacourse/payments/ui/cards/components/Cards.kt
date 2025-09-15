@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.cards.CardsStateHolder
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -71,6 +72,7 @@ private fun CardsPreview_NoCards() {
 private fun CardsPreview_OneCard_AddButtonVisible() {
     val sampleCard =
         PaymentCardUiModel(
+            bankType = BankType.KAKAO,
             cardNumber = CardNumberUiModel("1234123412341234"),
             expirationDate = ExpirationDateUiModel("1225"),
             cardHolder = CardHolderUiModel("김환노"),
@@ -88,11 +90,13 @@ private fun CardsPreview_MultipleCards_AddButtonHidden() {
     val sampleCards =
         listOf(
             PaymentCardUiModel(
+                bankType = BankType.KAKAO,
                 cardNumber = CardNumberUiModel("1234123412341234"),
                 expirationDate = ExpirationDateUiModel("0611"),
                 cardHolder = CardHolderUiModel("김환노"),
             ),
             PaymentCardUiModel(
+                bankType = BankType.KB,
                 cardNumber = CardNumberUiModel("1234123412341234"),
                 expirationDate = ExpirationDateUiModel("0511"),
                 cardHolder = CardHolderUiModel("김공백"),

@@ -1,11 +1,11 @@
 package woowacourse.payments.data
 
 import woowacourse.payments.R
-import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.model.Bank
+import woowacourse.payments.domain.model.Bank
+import woowacourse.payments.domain.model.BankType
 
 object BankRepository {
-    fun getCompanies(): List<Bank> =
+    fun getBanks(): List<Bank> =
         listOf(
             Bank(BankType.BC, R.drawable.ic_bc),
             Bank(BankType.SHINHAN, R.drawable.ic_sinhan),

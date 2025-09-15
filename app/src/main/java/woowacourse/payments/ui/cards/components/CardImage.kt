@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.BankType.Companion.toColor
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.ExpirationDateUiModel
@@ -41,7 +43,7 @@ fun CardImage(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(R.color.card_background),
+                    color = Color(paymentCard.bankType.toColor()),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -129,6 +131,7 @@ private fun formatExpirationDate(expirationDate: String): String {
 private fun CardPreview() {
     CardImage(
         PaymentCardUiModel(
+            bankType = BankType.SHINHAN,
             cardNumber = CardNumberUiModel("1234567890123456"),
             cardHolder = CardHolderUiModel("홍길동"),
             expirationDate = ExpirationDateUiModel("1225"),

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
-import woowacourse.payments.domain.BankType.Companion.toColor
+import woowacourse.payments.domain.model.BankType.Companion.toColor
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardHolderUiModel.Companion.CARD_HOLDER_MAX_LENGTH
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -37,12 +38,12 @@ import woowacourse.payments.ui.newcard.components.PaymentCardBox
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
-    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
+    newCardStateHolder: NewCardStateHolder = rememberSaveable { NewCardStateHolder() },
     onBackPress: () -> Unit = {},
     onSaved: (PaymentCardUiModel) -> Unit = {},
 ) {
     val context = LocalContext.current
-    var isShowBottomSheet by remember { mutableStateOf(true) }
+    var isShowBottomSheet by rememberSaveable { mutableStateOf(true) }
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -58,6 +59,7 @@ fun NewCardScreen(
                     runCatching {
                         onSaved(
                             PaymentCardUiModel(
+                                bankType = newCardStateHolder.bank.type,
                                 cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
                                 cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),
                                 expirationDate = newCardStateHolder.expirationDateUiState.expirationDate,
@@ -73,7 +75,7 @@ fun NewCardScreen(
         if (isShowBottomSheet) {
             BankBottomSheet(
                 sheetState = modalBottomSheetState,
-                banks = BankRepository.getCompanies(),
+                banks = BankRepository.getBanks(),
                 onClick = {
                     newCardStateHolder.bank = it
                     isShowBottomSheet = false

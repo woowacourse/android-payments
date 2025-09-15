@@ -15,13 +15,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
-import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.model.Bank
+import woowacourse.payments.domain.model.Bank
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.newcard.components.BankItem
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -33,7 +34,7 @@ fun BankBottomSheet(
     onClick: (Bank) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedBank by remember {
+    var selectedBank by rememberSaveable {
         mutableStateOf(BankType.NOT_SELECTED)
     }
 
@@ -76,7 +77,7 @@ private fun BankBottomSheetPreview() {
     AndroidpaymentsTheme {
         BankBottomSheet(
             sheetState = rememberStandardBottomSheetState(),
-            banks = BankRepository.getCompanies(),
+            banks = BankRepository.getBanks(),
             onClick = {},
         )
     }
