@@ -22,7 +22,6 @@ import kotlin.jvm.java
 
 @Composable
 fun CardCatalogScreen(
-    onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -49,7 +48,6 @@ fun CardCatalogScreen(
             CardCatalogTopBar(
                 cardsSize = cards.size,
                 onAddNewCardClick = {
-                    onAddNewCardClick()
                     openAddCardWithResult()
                 })
         }
@@ -57,7 +55,6 @@ fun CardCatalogScreen(
         CardCatalogColumn(
             cards = cards,
             onClickAddCard = {
-                onAddNewCardClick()
                 openAddCardWithResult()
             },
             modifier = Modifier.padding(paddingValues)
@@ -69,5 +66,5 @@ fun CardCatalogScreen(
 @Preview
 @Composable
 private fun CardCatalogScreenPreview() {
-    CardCatalogScreen(onAddNewCardClick = {})
+    CardCatalogScreen()
 }

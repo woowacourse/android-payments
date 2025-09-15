@@ -14,15 +14,8 @@ class CardCatalogActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardCatalogScreen(
-                onAddNewCardClick = { ::navigateToCardAddition }
-            )
+            CardCatalogScreen()
         }
-    }
-
-    fun navigateToCardAddition() {
-        val intent = NewCardActivity.Companion.Intent(this)
-        startActivity(intent)
     }
 
     companion object {
