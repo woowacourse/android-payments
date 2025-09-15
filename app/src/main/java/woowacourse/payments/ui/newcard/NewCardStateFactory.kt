@@ -1,9 +1,11 @@
 package woowacourse.payments.ui.newcard
 
+import android.os.Bundle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.domain.CardCompany
+import androidx.core.os.bundleOf
+import woowacourse.payments.ui.company.model.CompanyUiModel
 
 @Composable
 fun rememberNewCardState(): NewCardState =
@@ -11,26 +13,24 @@ fun rememberNewCardState(): NewCardState =
         NewCardState()
     }
 
-private val NewCardStateSaver =
-    Saver<NewCardState, List<String?>>(
-        save = {
-            listOf(
-                it.cardCompany?.name,
-                it.cardNumber,
-                it.cardExpirationDate,
-                it.cardHolderName,
-                it.cardPassword,
+private val NewCardStateSaver: Saver<NewCardState, Bundle> =
+    Saver(
+        save = { state: NewCardState ->
+            bundleOf(
+                "company" to state.cardCompany,
+                "number" to state.cardNumber,
+                "expirationDate" to state.cardExpirationDate,
+                "holderName" to state.cardHolderName,
+                "password" to state.cardPassword,
             )
         },
-        restore = {
+        restore = { bundle: Bundle ->
             NewCardState().apply {
-                it[0]?.let { enumName ->
-                    onCompanySelected(CardCompany.valueOf(enumName))
-                }
-                onCardNumberChange(it[1] ?: "")
-                onCardExpirationDateChange(it[2] ?: "")
-                onCardHolderNameChange(it[3] ?: "")
-                onCardPasswordChange(it[4] ?: "")
+                bundle.getParcelable<CompanyUiModel>("company")?.let { onCompanySelected(it) }
+                bundle.getString("number")?.let { onCardNumberChange(it) }
+                bundle.getString("expirationDate")?.let { onCardExpirationDateChange(it) }
+                bundle.getString("holderName")?.let { onCardHolderNameChange(it) }
+                bundle.getString("password")?.let { onCardPasswordChange(it) }
             }
         },
     )

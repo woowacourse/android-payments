@@ -3,17 +3,16 @@ package woowacourse.payments.ui.newcard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.common.model.color
+import woowacourse.payments.ui.company.model.CompanyUiModel
 import java.time.format.DateTimeFormatter
 
 class NewCardState {
-    var cardCompany: CardCompany? by mutableStateOf(null)
+    var cardCompany: CompanyUiModel? by mutableStateOf(null)
         private set
     var cardNumber: String by mutableStateOf("")
         private set
@@ -50,17 +49,17 @@ class NewCardState {
 
     val card: CardUiModel?
         get() =
-            cardCompany?.takeIf { isCardCompanySelected }?.let { company: CardCompany ->
+            cardCompany?.takeIf { isCardCompanySelected }?.let { company: CompanyUiModel ->
                 CardUiModel(
-                    companyName = company.companyName,
+                    companyName = company.name,
                     number = cardNumber,
                     expirationDate = cardExpirationDate,
                     holderName = cardHolderName.trim(),
-                    color = company.color(),
+                    color = company.color,
                 )
             }
 
-    fun onCompanySelected(company: CardCompany) {
+    fun onCompanySelected(company: CompanyUiModel) {
         cardCompany = company
     }
 

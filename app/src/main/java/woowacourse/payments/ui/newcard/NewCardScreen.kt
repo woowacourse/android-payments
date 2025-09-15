@@ -27,6 +27,8 @@ import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.company.CompanySelectBottomSheet
+import woowacourse.payments.ui.company.model.CompanyUiModel
+import woowacourse.payments.ui.company.model.toUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -36,7 +38,7 @@ import woowacourse.payments.ui.newcard.components.NewCardTopBar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
-    companies: List<CardCompany> = emptyList(),
+    companies: List<CompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
     state: NewCardState = rememberNewCardState(),
@@ -113,5 +115,5 @@ fun NewCardScreen(
 @Preview
 @Composable
 private fun NewCardScreenPreview() {
-    NewCardScreen(companies = CardCompany.entries)
+    NewCardScreen(companies = CardCompany.entries.map(CardCompany::toUiModel))
 }

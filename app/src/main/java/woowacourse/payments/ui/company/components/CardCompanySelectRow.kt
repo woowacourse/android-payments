@@ -29,8 +29,8 @@ private const val COLUMN_COUNT = 4
 
 @Composable
 fun CompanySelectRow(
-    companies: List<CardCompany>,
-    onCompanySelected: (CardCompany) -> Unit,
+    companies: List<CompanyUiModel>,
+    onCompanySelected: (CompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -39,7 +39,7 @@ fun CompanySelectRow(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        companies.forEach { company: CardCompany ->
+        companies.forEach { company: CompanyUiModel ->
             CardCompanyItem(
                 company = company,
                 onClick = onCompanySelected,
@@ -50,18 +50,17 @@ fun CompanySelectRow(
 
 @Composable
 private fun CardCompanyItem(
-    company: CardCompany,
-    onClick: (CardCompany) -> Unit,
+    company: CompanyUiModel,
+    onClick: (CompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val companyUiModel: CompanyUiModel = company.toUiModel()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier.clickable { onClick(company) },
     ) {
         Image(
-            painter = painterResource(id = companyUiModel.logo),
+            painter = painterResource(id = company.logo),
             contentDescription = null,
             modifier =
                 Modifier
@@ -69,7 +68,7 @@ private fun CardCompanyItem(
                     .clip(CircleShape),
         )
         Text(
-            text = companyUiModel.name,
+            text = company.name,
             fontSize = 16.sp,
             color = Color.DarkGray,
             fontWeight = FontWeight.Medium,
@@ -83,7 +82,7 @@ private fun CardCompanyItem(
 @Composable
 private fun CompanySelectRowPreview() {
     CompanySelectRow(
-        companies = CardCompany.entries,
+        companies = CardCompany.entries.map(CardCompany::toUiModel),
         onCompanySelected = {},
     )
 }
