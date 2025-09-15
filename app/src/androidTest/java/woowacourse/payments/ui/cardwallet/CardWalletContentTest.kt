@@ -24,7 +24,7 @@ class CardWalletContentTest {
         composeRule.setContent {
             CardWalletContent(
                 cards = cards,
-                state = CardWalletState.EMPTY,
+                cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
             )
         }
@@ -48,7 +48,7 @@ class CardWalletContentTest {
         composeRule.setContent {
             CardWalletContent(
                 cards = cards,
-                state = CardWalletState.SINGLE,
+                cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
             )
         }
@@ -73,7 +73,7 @@ class CardWalletContentTest {
         composeRule.setContent {
             CardWalletContent(
                 cards = cards,
-                state = CardWalletState.MULTIPLE,
+                cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
             )
         }
