@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.common.model.CardUiModel
@@ -36,14 +38,14 @@ fun PaymentCard(
                 .background(
                     color = Color(card?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(horizontal = 12.dp),
+                ).padding(horizontal = 12.dp),
     ) {
         Column {
             Text(
                 text = card?.companyName ?: "",
                 fontSize = 12.sp,
                 color = Color.White,
+                letterSpacing = 2.sp,
             )
             Spacer(modifier = Modifier.height(4.dp))
             Box(
@@ -95,23 +97,27 @@ private fun String.toDisplayString(): String =
         .chunked(2)
         .joinToString(" / ")
 
-@Preview(name = "카드 정보 없음")
+@Preview
 @Composable
-private fun PaymentCardPreview1() {
-    PaymentCard()
+private fun PaymentCardPreview(
+    @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: CardUiModel?,
+) {
+    PaymentCard(card = card)
 }
 
-@Preview(name = "카드 정보 있음")
-@Composable
-private fun PaymentCardPreview2() {
-    PaymentCard(
-        card =
-            CardUiModel(
-                companyName = "BC카드",
-                color = 0xFFF04651,
-                number = "1111222233334444",
-                expirationDate = "0925",
-                holderName = "CREW",
-            ),
-    )
+private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<CardUiModel?> {
+    private val card: CardUiModel =
+        CardUiModel(
+            companyName = "BC카드",
+            color = 0xFFF04651,
+            number = "1111222233334444",
+            expirationDate = "0925",
+            holderName = "CREW",
+        )
+
+    override val values: Sequence<CardUiModel?> =
+        sequenceOf(
+            null,
+            card,
+        )
 }
