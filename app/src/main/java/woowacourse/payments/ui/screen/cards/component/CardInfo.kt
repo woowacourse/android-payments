@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.IssuingBank
 
 @Composable
 fun CardInfo(
@@ -89,6 +90,7 @@ private fun CardInfoPreview() {
                 "1234567812345678",
                 "0925",
                 "INHYEOP LEE",
+                IssuingBank.NOT_SELECTED,
             ),
     )
 }

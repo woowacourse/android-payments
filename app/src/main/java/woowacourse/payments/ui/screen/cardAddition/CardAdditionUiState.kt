@@ -51,4 +51,5 @@ fun CardAdditionUiState.toUiModel(): CardUiModel =
         number = cardNumber.value,
         expiredDate = expiredDate.value,
         ownerName = ownerName,
+        issuingBank = issuingBank,
     )
