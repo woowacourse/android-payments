@@ -8,21 +8,20 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
-import woowacourse.payments.ui.cardwallet.model.CardWalletState
 
 class CardWalletTopBarTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Test
-    fun 카드가_3장_이상일_때_추가_버튼을_출력한다() {
+    fun 카드가_1장_초과일_때_추가_버튼을_출력한다() {
         // given
-        val state = CardWalletState.MULTIPLE
+        val cardCount = 2
 
         // when
         composeRule.setContent {
             CardWalletTopBar(
-                state = state,
+                cardCount = cardCount,
                 onAddClick = {},
             )
         }
@@ -34,14 +33,14 @@ class CardWalletTopBarTest {
     }
 
     @Test
-    fun 카드가_3장_미만일_때는_추가_버튼을_출력하지_않는다() {
+    fun 카드가_1장_이하일_때는_추가_버튼을_출력하지_않는다() {
         // given
-        val state = CardWalletState.SINGLE
+        val cardCount = 1
 
         // when
         composeRule.setContent {
             CardWalletTopBar(
-                state = state,
+                cardCount = cardCount,
                 onAddClick = {},
             )
         }
