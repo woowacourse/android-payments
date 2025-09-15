@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardcatalog.component
 
+import android.R.attr.password
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,8 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.ExpirationDate
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.newcard.component.PaymentCard
 import woowacourse.payments.ui.theme.GrayE5
+import java.time.YearMonth
 
 @Composable
 fun CardCatalogColumn(
@@ -78,7 +84,34 @@ fun CardCatalogColumn(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardCatalogColumnPreview() {
+private fun CardCatalogColumnPreview1() {
+    val cards = listOf(
+        Card(
+            number = CardNumber("1234567890123456"),
+            ownerName = OwnerName("Hwang Chaewon"),
+            expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
+            password = Password("1234")
+        )
+    )
+    CardCatalogColumn(cards = cards, onClickAddCard = {})
+}
 
-    CardCatalogColumn(onClickAddCard = {})
+@Preview(name ="카드가 2개일 때", showBackground = true)
+@Composable
+private fun CardCatalogColumnPreview2() {
+    val cards = listOf(
+        Card(
+            number = CardNumber("1234567890123456"),
+            ownerName = OwnerName("Hwang Chaewon"),
+            expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
+            password = Password("1234")
+        ),
+        Card(
+            number = CardNumber("1234567890123456"),
+            ownerName = OwnerName("Hwang Chaewon"),
+            expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
+            password = Password("1234")
+        )
+    )
+    CardCatalogColumn(cards = cards, onClickAddCard = {})
 }
