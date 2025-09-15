@@ -32,10 +32,11 @@ class AddPaymentCardStateHolder private constructor(
     val isPinValid: Boolean
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
 
-    fun buildResult(): Result<PaymentCardUiModel> =
+    fun buildResult(): PaymentCardUiModel? =
         PaymentCard
             .create(state.cardNumber, state.expiry, state.owner, state.pin)
-            .map { it.toUiModel() }
+            .getOrNull()
+            ?.toUiModel()
 
     private inline fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {
         stateHolder.value = block(stateHolder.value)
