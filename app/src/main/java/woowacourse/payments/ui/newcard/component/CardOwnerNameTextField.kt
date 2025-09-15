@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -23,22 +24,26 @@ fun CardOwnerNameTextField(
     ownerNameErrorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     OutlinedTextField(
         value = ownerName,
         onValueChange = { newName: String ->
             onOwnerNameChange(
                 newName.take(newName.length.coerceAtMost(CARD_OWNER_NAME_LENGTH_MAX))
-                    .filter { it.isLetter() || it.isWhitespace() }.trim()
+                    .filter { it.isLetter() || it.isWhitespace() }
             )
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = {
             Text(text = stringResource(R.string.card_owner_name_label))
         },
         placeholder = {
             Text(text = stringResource(R.string.card_owner_name_placeholder), color = Color.Gray)
         },
-        isError = ownerNameErrorMessage != null,
+        isError = !isFocused && ownerNameErrorMessage != null,
         supportingText = {
             Text(
                 text = stringResource(
@@ -49,7 +54,7 @@ fun CardOwnerNameTextField(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
-            if (ownerNameErrorMessage != null) {
+            if (!isFocused && ownerNameErrorMessage != null) {
                 Text(
                     text = ownerNameErrorMessage,
                     color = MaterialTheme.colorScheme.error

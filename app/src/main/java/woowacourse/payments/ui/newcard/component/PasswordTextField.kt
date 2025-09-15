@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,6 +27,8 @@ fun PasswordTextField(
     passwordErrorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     OutlinedTextField(
         value = password,
         onValueChange = { newValue: String ->
@@ -34,16 +37,18 @@ fun PasswordTextField(
                     .take(newValue.length.coerceAtMost(PASSWORD_LENGTH_MAX))
             )
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = {
             Text(text = stringResource(R.string.password_label))
         },
         placeholder = {
             Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
         },
-        isError = passwordErrorMessage != null,
+        isError = !isFocused && passwordErrorMessage != null,
         supportingText = {
-            if (passwordErrorMessage != null) {
+            if (!isFocused && passwordErrorMessage != null) {
                 Text(
                     text = passwordErrorMessage,
                     color = MaterialTheme.colorScheme.error

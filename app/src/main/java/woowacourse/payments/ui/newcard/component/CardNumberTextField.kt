@@ -1,7 +1,9 @@
 package woowacourse.payments.ui.newcard.component
 
+import android.R.attr.label
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -11,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -29,6 +32,8 @@ fun CardNumberTextField(
     onNumberChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     OutlinedTextField(
         value = number,
         onValueChange = { newValue: String ->
@@ -37,7 +42,9 @@ fun CardNumberTextField(
                 newNumbers.take(newNumbers.length.coerceAtMost(CARD_NUMBER_LENGTH_MAX))
             )
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = {
             Text(text = stringResource(R.string.card_number_label))
         },
@@ -47,9 +54,9 @@ fun CardNumberTextField(
                 color = Gray79,
             )
         },
-        isError = numberErrorMessage != null,
+        isError = !isFocused && numberErrorMessage != null,
         supportingText = {
-            if (numberErrorMessage != null) {
+            if (!isFocused && numberErrorMessage != null) {
                 Text(
                     text = numberErrorMessage,
                     color = MaterialTheme.colorScheme.error

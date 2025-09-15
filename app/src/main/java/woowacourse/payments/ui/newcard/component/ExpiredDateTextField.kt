@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -27,13 +28,17 @@ fun ExpiredDateTextField(
     onExpirationDateChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     OutlinedTextField(
         value = expiredDate,
         onValueChange = { newValue: String ->
             val newDate = newValue.filter(::isDigit)
             onExpirationDateChange(newDate.take(newDate.length.coerceAtMost(EXPIRED_DATE_LENGTH_MAX)))
         },
-        modifier = modifier,
+        modifier = modifier.onFocusChanged{ state ->
+            isFocused = state.isFocused
+        },
         label = { Text(text = stringResource(R.string.expired_date_label)) },
         placeholder = {
             Text(
@@ -41,9 +46,9 @@ fun ExpiredDateTextField(
                 color = Color.Gray
             )
         },
-        isError = expirationDateErrorMessage != null,
+        isError = !isFocused && expirationDateErrorMessage != null,
         supportingText = {
-            if (expirationDateErrorMessage != null) {
+            if (!isFocused && expirationDateErrorMessage != null) {
                 Text(
                     text = expirationDateErrorMessage,
                     color = MaterialTheme.colorScheme.error
