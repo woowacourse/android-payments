@@ -19,7 +19,7 @@ import woowacourse.payments.ui.theme.Black1D
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCatalogTopBar(
-    cards: List<Card>,
+    cardsSize: Int,
     onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,7 +33,7 @@ fun CardCatalogTopBar(
             )
         },
         actions = {
-            if (cards.size >= 2) {
+            if (cardsSize >= 2) {
                 TextButton(onClick = {
                     onAddNewCardClick()
                 }) {
@@ -48,5 +48,11 @@ fun CardCatalogTopBar(
 @Preview
 @Composable
 fun CardCatalogTopBarPreview() {
-    CardCatalogTopBar(emptyList(), onAddNewCardClick = {})
+    CardCatalogTopBar(0, onAddNewCardClick = {})
+}
+
+@Preview
+@Composable
+fun CardCatalogTopBarPreview1() {
+    CardCatalogTopBar(2, onAddNewCardClick = {})
 }

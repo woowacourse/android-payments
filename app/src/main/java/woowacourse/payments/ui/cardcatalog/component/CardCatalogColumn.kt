@@ -79,5 +79,6 @@ fun CardCatalogColumn(
 @Preview(showBackground = true)
 @Composable
 private fun CardCatalogColumnPreview() {
+
     CardCatalogColumn(onClickAddCard = {})
 }

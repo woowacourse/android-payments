@@ -47,7 +47,7 @@ fun CardCatalogScreen(
         modifier = modifier,
         topBar = {
             CardCatalogTopBar(
-                cards = cards  ,
+                cardsSize = cards.size,
                 onAddNewCardClick = {
                     onAddNewCardClick()
                     openAddCardWithResult()
