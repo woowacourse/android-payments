@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardwallet.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -18,34 +19,48 @@ fun CardWalletContent(
     navigateToNewCard: () -> Unit,
 ) {
     when (cardWalletState) {
-        CardWalletState.EMPTY -> {
-            Spacer(Modifier.height(32.dp))
-            EmptyGuide()
-            Spacer(Modifier.height(32.dp))
-            NewCardPlaceholder(
-                modifier =
-                    Modifier
-                        .width(208.dp)
-                        .height(124.dp),
-                onClick = { navigateToNewCard() },
-            )
-        }
-
-        CardWalletState.SINGLE -> {
-            CardWalletCards(cards)
-            NewCardPlaceholder(
-                modifier =
-                    Modifier
-                        .width(208.dp)
-                        .height(124.dp),
-                onClick = { navigateToNewCard() },
-            )
-        }
-
-        CardWalletState.MULTIPLE -> {
-            CardWalletCards(cards)
-        }
+        CardWalletState.EMPTY -> EmptyWallet(onAdd = navigateToNewCard)
+        CardWalletState.SINGLE -> SingleCardWallet(cards = cards, onAdd = navigateToNewCard)
+        CardWalletState.MULTIPLE -> MultipleCardWallet(cards = cards)
     }
+}
+
+@Composable
+private fun EmptyWallet(onAdd: () -> Unit) {
+    Column {
+        Spacer(Modifier.height(32.dp))
+        EmptyGuide()
+        Spacer(Modifier.height(32.dp))
+        NewCardPlaceholder(
+            modifier =
+                Modifier
+                    .width(208.dp)
+                    .height(124.dp),
+            onClick = onAdd,
+        )
+    }
+}
+
+@Composable
+private fun SingleCardWallet(
+    cards: List<CardUiModel>,
+    onAdd: () -> Unit,
+) {
+    Column {
+        CardWalletCards(cards)
+        NewCardPlaceholder(
+            modifier =
+                Modifier
+                    .width(208.dp)
+                    .height(124.dp),
+            onClick = onAdd,
+        )
+    }
+}
+
+@Composable
+private fun MultipleCardWallet(cards: List<CardUiModel>) {
+    CardWalletCards(cards)
 }
 
 @Preview(showBackground = true)
@@ -53,7 +68,7 @@ fun CardWalletContent(
 private fun CardWalletContentPreview() {
     AndroidpaymentsTheme {
         val cards =
-            listOf<CardUiModel>(
+            listOf(
                 CardUiModel("1234123412341234", "0511", "공백"),
                 CardUiModel("4321432143214321", "0928", "비비"),
             )
