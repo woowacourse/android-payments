@@ -41,7 +41,7 @@ fun PaymentCards(
                     Spacer(Modifier.height(16.dp))
                 }
             }
-            if (cards.size < 3) {
+            if (cards.size < 2) {
                 Spacer(Modifier.height(24.dp))
                 AddCardButton(onClick = onAddCardClick)
             }
