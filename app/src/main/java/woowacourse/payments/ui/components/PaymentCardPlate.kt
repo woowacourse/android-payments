@@ -84,7 +84,7 @@ fun PaymentCardPlate(
                     ),
                 fontSize = 12.sp,
                 letterSpacing = 0.1.em,
-                color = Color.White,
+                color = paymentCardUiModel.cardCompanyUiModel.textColor,
             )
 
             Text(
@@ -95,7 +95,7 @@ fun PaymentCardPlate(
                         .align(Alignment.BottomStart),
                 fontSize = 12.sp,
                 letterSpacing = 0.17.em,
-                color = Color.White,
+                color = paymentCardUiModel.cardCompanyUiModel.textColor,
             )
 
             Text(
@@ -106,7 +106,7 @@ fun PaymentCardPlate(
                         .align(Alignment.BottomStart),
                 fontSize = 12.sp,
                 letterSpacing = 0.1.em,
-                color = Color.White,
+                color = paymentCardUiModel.cardCompanyUiModel.textColor,
             )
 
             Text(
@@ -117,7 +117,7 @@ fun PaymentCardPlate(
                         .align(Alignment.BottomEnd),
                 fontSize = 12.sp,
                 letterSpacing = 0.1.em,
-                color = Color.White,
+                color = paymentCardUiModel.cardCompanyUiModel.textColor,
             )
         }
     }
@@ -145,6 +145,22 @@ fun PaymentCardDetailPreview() {
             paymentCardUiModel =
                 PaymentCardUiModel(
                     CardCompanyUiModel.BC,
+                    "1234 - 1234 - 1234 - 1234",
+                    "02 / 26",
+                    "CREW",
+                ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PaymentCardDetailKakaoPreview() {
+    AndroidpaymentsTheme {
+        PaymentCardPlate(
+            paymentCardUiModel =
+                PaymentCardUiModel(
+                    CardCompanyUiModel.KAKAO,
                     "1234 - 1234 - 1234 - 1234",
                     "02 / 26",
                     "CREW",

@@ -9,6 +9,7 @@ enum class CardCompanyUiModel(
     val plateColor: Color,
     @DrawableRes
     val iconResId: Int? = null,
+    val textColor: Color = Color.White,
 ) {
     UNKNOWN(
         companyName = "",
@@ -29,6 +30,7 @@ enum class CardCompanyUiModel(
         companyName = "카카오뱅크",
         plateColor = woowacourse.payments.ui.theme.KAKAO,
         iconResId = R.drawable.ic_kakao,
+        textColor = Color.Black,
     ),
     HYUNDAI(
         companyName = "현대카드",
