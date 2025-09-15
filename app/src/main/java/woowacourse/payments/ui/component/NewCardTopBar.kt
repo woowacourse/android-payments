@@ -19,6 +19,7 @@ fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    saveEnabled: Boolean = true,
 ) {
     TopAppBar(
         title = { Text(stringResource(R.string.title_add_card)) },
@@ -31,7 +32,10 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(
+                onClick = onSaveClick,
+                enabled = saveEnabled,
+            ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.desc_done),

@@ -1,5 +1,6 @@
 package woowacourse.payments
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,11 +12,10 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.NumberTextField
+import woowacourse.payments.ui.component.PinTextField
 
 class PasswordTextFieldTest {
     @get:Rule
@@ -25,14 +25,14 @@ class PasswordTextFieldTest {
     fun setup() {
         composeRule.setContent {
             var pin by remember { mutableStateOf("") }
-            NumberTextField(
-                modifier = Modifier.testTag("password"),
-                label = R.string.label_pin,
-                placeholder = R.string.placeholder_pin,
+
+            PinTextField(
                 value = pin,
                 onValueChange = { pin = it },
-                maxLength = 4,
-                visualTransformation = PasswordVisualTransformation(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.6f)
+                        .testTag("password"),
             )
         }
     }
