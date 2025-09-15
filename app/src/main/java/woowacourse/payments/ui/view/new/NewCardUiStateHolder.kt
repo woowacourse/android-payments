@@ -2,13 +2,16 @@ package woowacourse.payments.ui.view.new
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.mapSaver
+import woowacourse.payments.domain.Banks
+import woowacourse.payments.ui.core.BankType
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.serialization.toSerializationCard
 
 class NewCardUiStateHolder(
-    initialUiState: NewCardUiState = NewCardUiState()
+    initialState: NewCardUiState = NewCardUiState(),
 ) {
-    private val _uiState = mutableStateOf(initialUiState)
+    private val _uiState = mutableStateOf(initialState)
     val uiState: NewCardUiState get() = _uiState.value
 
     fun updateCard(event: NewCardUiEvent) {
@@ -17,6 +20,7 @@ class NewCardUiStateHolder(
             is NewCardUiEvent.OnChangeExpireDate -> updateExpireDate(event.expireDate)
             is NewCardUiEvent.OnChangeOwnerName -> updateOwnerName(event.ownerName)
             is NewCardUiEvent.OnChangePassword -> updatePassword(event.password)
+            is NewCardUiEvent.OnChangeBankType -> updateCardBankType(event.banks)
         }
     }
 
@@ -37,10 +41,27 @@ class NewCardUiStateHolder(
         _uiState.value = _uiState.value.copy(card = _uiState.value.card.copy(password = password))
     }
 
+    private fun updateCardBankType(company: Banks) {
+        _uiState.value =
+            _uiState.value.copy(card = _uiState.value.card.copy(bank = BankType.Bank(company)))
+    }
+
     companion object {
-        val Saver: Saver<NewCardUiStateHolder, SerializationCard> = Saver(
-            save = { holder -> holder.uiState.card.toSerializationCard() },
-            restore = { NewCardUiStateHolder(NewCardUiState(it.toDomain())) }
-        )
+        private const val KEY_CARDS = "cards"
+
+        val Saver: Saver<NewCardUiStateHolder, Any> =
+            mapSaver(
+                save = { holder: NewCardUiStateHolder ->
+                    mapOf(
+                        KEY_CARDS to holder.uiState.card.toSerializationCard(),
+                    )
+                },
+                restore = { restored ->
+                    val card = (restored[KEY_CARDS] as SerializationCard).toDomain()
+                    NewCardUiStateHolder(
+                        NewCardUiState(card = card),
+                    )
+                },
+            )
     }
 }

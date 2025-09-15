@@ -9,8 +9,10 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Banks
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.view.new.BankTypeUiState
+import woowacourse.payments.ui.core.BankType
+import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.view.new.NewCardScreen
 import woowacourse.payments.ui.view.new.NewCardUiState
 
@@ -22,6 +24,7 @@ class NewCardScreenTest {
     fun setup() {
         composeTestRule.setContent {
             NewCardScreen(
+                resourceProvider = CompanyResourceProvider(),
                 uiState =
                     NewCardUiState(
                         card =
@@ -30,8 +33,8 @@ class NewCardScreenTest {
                                 expireDate = "0908",
                                 ownerName = "peto",
                                 password = "0908",
+                                BankType.Bank(Banks.BC),
                             ),
-                        selectedBank = BankTypeUiState.UnSelected,
                     ),
                 onCardChange = {},
             )

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
@@ -20,33 +21,39 @@ import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardOwnerTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.ExpireDateTextField
+import woowacourse.payments.ui.component.NewCardName
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.core.BankType
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.CompanyResourceProvider
 
 @Composable
 fun NewCardScreen(
     onBackClick: () -> Unit,
-    onSaveClick: (Card) -> Unit
+    onSaveClick: (Card) -> Unit,
 ) {
-    val newCardUiStateHolder = rememberSaveable(saver = NewCardUiStateHolder.Saver) {
-        NewCardUiStateHolder()
-    }
+    val companyResourceProvider = CompanyResourceProvider()
+    val newCardUiStateHolder =
+        rememberSaveable(saver = NewCardUiStateHolder.Saver) {
+            NewCardUiStateHolder()
+        }
 
     Scaffold(
         topBar = {
             NewCardTopBar(
                 onBackClick = { onBackClick() },
-                onSaveClick = { onSaveClick(newCardUiStateHolder.uiState.card) }
+                onSaveClick = { onSaveClick(newCardUiStateHolder.uiState.card) },
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
         NewCardScreen(
-            card = newCardUiStateHolder.uiState.card,
+            resourceProvider = companyResourceProvider,
+            uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
@@ -58,37 +65,53 @@ private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
 
 @Composable
 fun NewCardScreen(
-    card: Card,
+    resourceProvider: CompanyResourceProvider,
+    uiState: NewCardUiState,
     onCardChange: (NewCardUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
+    val card = uiState.card
     val focusManager = LocalFocusManager.current
-    val cardNumberVisualTransformation = CardNumberVisualTransformation(
-        groupSize = CARD_NUMBER_GROUP_SIZE,
-        separator = CARD_SEPARATOR,
-        maxLength = Card.CARD_MAX_LENGTH,
-    )
+    val cardNumberVisualTransformation =
+        CardNumberVisualTransformation(
+            groupSize = CARD_NUMBER_GROUP_SIZE,
+            separator = CARD_SEPARATOR,
+            maxLength = Card.CARD_MAX_LENGTH,
+        )
+
+    val companyName: String? =
+        resourceProvider.getCompanyName(card.bank)?.let {
+            stringResource(it)
+        }
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            cardType = CardType.PENDING,
-            content = { CardChip() },
-            modifier = Modifier
-                .padding(top = 18.dp)
-                .shadow(8.dp)
-                .align(alignment = Alignment.CenterHorizontally)
+            resourceProvider = resourceProvider,
+            cardType = CardType.Pending,
+            content = {
+                Column {
+                    NewCardName(companyName)
+                    CardChip()
+                }
+            },
+            modifier =
+                Modifier
+                    .padding(top = 18.dp)
+                    .shadow(8.dp)
+                    .align(alignment = Alignment.CenterHorizontally),
+            bank = uiState.card.bank,
         )
 
         CardNumberTextField(
             cardNumber = card.number,
             onCardNumberChange = { cardNumber ->
                 onCardChange(
-                    NewCardUiEvent.OnChangeCardNumber(cardNumber)
+                    NewCardUiEvent.OnChangeCardNumber(cardNumber),
                 )
             },
             onComplete = {
@@ -96,9 +119,10 @@ fun NewCardScreen(
             },
             maxLength = 16,
             visualTransformation = cardNumberVisualTransformation,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 28.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 28.dp),
         )
 
         ExpireDateTextField(
@@ -112,9 +136,10 @@ fun NewCardScreen(
             onComplete = {
                 focusManager.moveFocus(FocusDirection.Next)
             },
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(top = 18.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(top = 18.dp),
         )
 
         CardOwnerTextField(
@@ -123,8 +148,9 @@ fun NewCardScreen(
             onChangeOwnerName = { ownerName ->
                 onCardChange(NewCardUiEvent.OnChangeOwnerName(ownerName))
             },
-            modifier = Modifier
-                .padding(top = 18.dp)
+            modifier =
+                Modifier
+                    .padding(top = 18.dp),
         )
 
         CardPasswordTextField(
@@ -133,10 +159,20 @@ fun NewCardScreen(
             onPasswordChange = { password ->
                 onCardChange(NewCardUiEvent.OnChangePassword(password))
             },
-            modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(top = 18.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth(0.5f)
+                    .padding(top = 18.dp),
         )
+
+        if (uiState.card.bank is BankType.Empty) {
+            BankSelectBottomSheet(
+                resourceProvider = resourceProvider,
+                onBankSelect = { bankType ->
+                    onCardChange(NewCardUiEvent.OnChangeBankType(bankType))
+                },
+            )
+        }
     }
 }
 
@@ -144,7 +180,8 @@ fun NewCardScreen(
 @Composable
 fun NewCardScreenPreview() {
     NewCardScreen(
-        card = Card.EMPTY,
+        resourceProvider = CompanyResourceProvider(),
+        uiState = NewCardUiState(),
         onCardChange = {},
     )
 }

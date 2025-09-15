@@ -5,17 +5,15 @@ import androidx.compose.runtime.saveable.SaverScope
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.view.new.NewCardUiEvent
 import woowacourse.payments.ui.view.new.NewCardUiStateHolder
 
 class NewCardUiStateHolderTest {
-
     @Test
     fun `초기_상태는_카드가_비어있디`() {
         val holder = NewCardUiStateHolder()
 
-        assertEquals(holder.uiState.card, Card.EMPTY)
+        assertEquals(holder.uiState.card, Card.Empty)
     }
 
     @Test
@@ -74,18 +72,16 @@ class NewCardUiStateHolderTest {
         holder.updateCard(NewCardUiEvent.OnChangeOwnerName("페토"))
         holder.updateCard(NewCardUiEvent.OnChangePassword("1234"))
 
-        val saver: Saver<NewCardUiStateHolder, SerializationCard> = NewCardUiStateHolder.Saver
+        val saver: Saver<NewCardUiStateHolder, Any> = NewCardUiStateHolder.Saver
 
-        val saved: SerializationCard? = with(object : SaverScope {
-            override fun canBeSaved(value: Any): Boolean = true
-        }) {
-            saver.run { save(holder) }
-        }
-
-        assertEquals(saved?.number, "12345678")
-        assertEquals(saved?.expireDate, "0908")
-        assertEquals(saved?.ownerName, "페토")
-        assertEquals(saved?.password, "1234")
+        val saved: Any? =
+            with(
+                object : SaverScope {
+                    override fun canBeSaved(value: Any): Boolean = true
+                },
+            ) {
+                saver.run { save(holder) }
+            }
 
         // restore
         val restored = NewCardUiStateHolder.Saver.restore(saved!!)
@@ -96,4 +92,3 @@ class NewCardUiStateHolderTest {
         assertEquals(restored?.uiState?.card?.password, "1234")
     }
 }
-
