@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.addcard.bottomsheet
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -19,10 +20,11 @@ import woowacourse.payments.ui.model.toUiModel
 @Composable
 fun CardCompanyButton(
     company: CardCompanyUiModel,
+    onClick: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick(company) },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
@@ -38,5 +40,5 @@ fun CardCompanyButton(
 @Preview(showBackground = true, name = "BC카드")
 @Composable
 fun CardCompanyBoxPreview() {
-    CardCompanyButton(CardCompany.BC_CARD.toUiModel())
+    CardCompanyButton(CardCompany.BC_CARD.toUiModel(), {})
 }

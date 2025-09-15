@@ -23,6 +23,7 @@ import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.PaymentCard
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 
@@ -38,6 +39,8 @@ fun AddCardScreen(
     val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
+
+    val displayBottomSheet: MutableState<Boolean> = remember { mutableStateOf(true) }
 
     fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
@@ -66,10 +69,22 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        CardCompanyBottomSheet(CardCompany.entries.map(CardCompany::toUiModel))
+        if (displayBottomSheet.value) {
+            CardCompanyBottomSheet(
+                CardCompany.entries.map(CardCompany::toUiModel),
+                displayBottomSheet,
+                onBackClick,
+                { company: CardCompanyUiModel ->
+                    card.value = card.value.copy(cardCompany = company)
+                },
+            )
+        }
 
         Column(Modifier.fillMaxSize().padding(innerPadding)) {
-            PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
+            PaymentCard(
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp),
+                card.value,
+            )
 
             Column(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
