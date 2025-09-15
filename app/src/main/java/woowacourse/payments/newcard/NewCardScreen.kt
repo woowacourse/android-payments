@@ -47,7 +47,13 @@ fun NewCardScreen(
                 onSaveClick = {
                     val cardResult: Result<Card> =
                         with(newCardStateHolder) {
-                            Card.from(cardNumber, expiredDate, ownerName, password)
+                            Card.from(
+                                cardNumber,
+                                expiredDate,
+                                ownerName,
+                                password,
+                                selectedCardCompany,
+                            )
                         }
 
                     cardResult
