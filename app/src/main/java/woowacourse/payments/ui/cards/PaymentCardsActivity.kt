@@ -3,14 +3,10 @@ package woowacourse.payments.ui.cards
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.add.AddPaymentCardActivity
 import woowacourse.payments.ui.common.parcelable
@@ -24,21 +20,18 @@ class PaymentCardsActivity : ComponentActivity() {
 
         setContent {
             AndroidpaymentsTheme {
-                val context = LocalContext.current
-                var paymentCards by rememberSaveable { mutableStateOf(listOf<PaymentCardUiModel>()) }
+                val stateHolder = rememberPaymentCardsStateHolder()
 
                 val cardAddLauncher =
-                    androidx.activity.compose.rememberLauncherForActivityResult(
-                        contract = ActivityResultContracts.StartActivityForResult(),
-                    ) { result ->
+                    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                         if (result.resultCode == RESULT_OK) {
                             val newCard = result.data?.parcelable<PaymentCardUiModel>(EXTRA_CARD)
                             if (newCard != null) {
-                                paymentCards = paymentCards + newCard
+                                stateHolder.addCard(newCard)
                                 Toast
                                     .makeText(
-                                        context,
-                                        context.getString(R.string.toast_card_add),
+                                        this,
+                                        getString(R.string.toast_card_add),
                                         Toast.LENGTH_SHORT,
                                     ).show()
                             }
@@ -46,8 +39,8 @@ class PaymentCardsActivity : ComponentActivity() {
                     }
 
                 PaymentCardsScreen(
-                    paymentCards = paymentCards,
-                    onAddCard = { cardAddLauncher.launch(AddPaymentCardActivity.newIntent(context)) },
+                    paymentCards = stateHolder.state.cards,
+                    onAddCard = { cardAddLauncher.launch(AddPaymentCardActivity.newIntent(this)) },
                 )
             }
         }
