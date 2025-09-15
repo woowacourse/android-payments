@@ -12,7 +12,7 @@ value class OwnerName(
 ) : Parcelable {
     init {
         require(value.length in OWNER_NAME_MIN_LENGTH..OWNER_NAME_MAX_LENGTH) { OwnerNameException.OwnerNameMaxLengthException.message }
-        requireNotNull(value.all { it.isWhitespace() }) { OwnerNameException.OwnerNameWhitespaceException.message }
+        require(value.isNotBlank()) { OwnerNameException.OwnerNameWhitespaceException.message }
         require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { OwnerNameException.OwnerNameTypeException.message }
     }
 
