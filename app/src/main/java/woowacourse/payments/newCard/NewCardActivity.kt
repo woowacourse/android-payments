@@ -32,6 +32,7 @@ import woowacourse.payments.domain.CardExpiry
 import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.list.toUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
@@ -116,7 +117,13 @@ class NewCardActivity : ComponentActivity() {
                                     .fillMaxWidth(),
                             contentAlignment = Alignment.Center,
                         ) {
-                            PaymentCard()
+                            PaymentCard(card = CardUiModel(
+                                company = selectedCardCompany,
+                                number = "",
+                                name = null,
+                                expiry = "",
+                                password = ""
+                            ))
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
