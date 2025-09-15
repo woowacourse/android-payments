@@ -12,6 +12,16 @@
     <string name="card_password">비밀번호</string>
     <string name="card_password_place_holder">0000</string>
 
+    <!-- 카드사 !-->
+    <string name="bank_bc">BC카드</string>
+    <string name="bank_sinhan">신한카드</string>
+    <string name="bank_kakao">카카오뱅크</string>
+    <string name="bank_hyundae">현대카드</string>
+    <string name="bank_woori">우리카드</string>
+    <string name="bank_lotte">롯데카드</string>
+    <string name="bank_hana">하나카드</string>
+    <string name="bank_kb">국민카드</string>
+
     <!-- 카드 목록 화면 !-->
     <string name="card_list_title">Payments</string>
     <string name="card_list_empty">새로운 카드를 등록해주세요</string>
