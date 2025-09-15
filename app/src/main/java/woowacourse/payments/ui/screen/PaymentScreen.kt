@@ -23,7 +23,7 @@ fun PaymentScreen(
         topBar = {
             PaymentTopBar(
                 modifier = Modifier.fillMaxWidth(),
-                onAddClick = onAddCardClick.takeIf { cards.size >= 3 },
+                onAddClick = onAddCardClick.takeIf { cards.size >= 2 },
             )
         },
     ) { innerPadding ->
