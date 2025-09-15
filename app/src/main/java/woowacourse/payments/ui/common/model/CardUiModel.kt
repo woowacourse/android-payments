@@ -10,7 +10,7 @@ data class CardUiModel(
     val color: Long,
     val number: String,
     val expirationDate: String,
-    val holderName: String? = null,
+    val holderName: String,
 ) : Parcelable
 
 fun CardCompany.color(): Long =
