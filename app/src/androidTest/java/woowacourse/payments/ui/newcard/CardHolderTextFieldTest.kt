@@ -48,7 +48,7 @@ class CardHolderTextFieldTest {
     }
 
     @Test
-    fun 문자와_공백만_입력_가능하다() {
+    fun 문자와_숫자만_입력_가능하다() {
         // given
         var name by mutableStateOf("")
         composeRule.setContent {
@@ -57,19 +57,19 @@ class CardHolderTextFieldTest {
         val field = composeRule.onNode(hasText("카드 소유자 이름(선택)") and hasSetTextAction())
 
         // when
-        field.performTextInput("공 ")
+        field.performTextInput("공백")
 
         // then
         composeRule
-            .onNodeWithText("공 ")
+            .onNodeWithText("공백")
             .assertIsDisplayed()
 
         // when
-        field.performTextInput("백")
+        field.performTextInput("0511")
 
         // then
         composeRule
-            .onNodeWithText("공 백")
+            .onNodeWithText("공백0511")
             .assertIsDisplayed()
     }
 
