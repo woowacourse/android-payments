@@ -9,13 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 @Composable
-fun PaymentCardBox(modifier: Modifier = Modifier) {
+fun PaymentCardBox(
+    background: Int,
+    modifier: Modifier = Modifier,
+) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -23,7 +27,7 @@ fun PaymentCardBox(modifier: Modifier = Modifier) {
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(R.color.card_background),
+                    color = Color(background),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -44,6 +48,7 @@ fun PaymentCardBox(modifier: Modifier = Modifier) {
 @Composable
 private fun PaymentCardBoxPreview() {
     PaymentCardBox(
+        background = R.color.card_background,
         modifier =
             Modifier
                 .padding(top = 14.dp),

@@ -12,4 +12,20 @@ enum class BankType(
     HYUNDAE("현대카드"),
     LOTTE("롯데카드"),
     HANA("하나카드"),
+    ;
+
+    companion object {
+        fun BankType.toColor(): Int =
+            when (this) {
+                NOT_SELECTED -> (0xFFF04651).toInt()
+                BC -> (0xFFF04651).toInt()
+                KB -> (0xFF695F54).toInt()
+                WOORI -> (0xFF20C4F4).toInt()
+                SHINHAN -> (0xFF20C4F4).toInt()
+                KAKAO -> (0xFFFFE300).toInt()
+                HYUNDAE -> (0xFFFFFFFF).toInt()
+                LOTTE -> (0xFFDA291C).toInt()
+                HANA -> (0xFF008485).toInt()
+            }
+    }
 }

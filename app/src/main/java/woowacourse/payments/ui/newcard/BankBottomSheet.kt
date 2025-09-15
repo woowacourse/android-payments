@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +36,7 @@ fun BankBottomSheet(
     var selectedBank by remember {
         mutableStateOf(BankType.NOT_SELECTED)
     }
+
     LaunchedEffect(key1 = selectedBank) {
         if (selectedBank != BankType.NOT_SELECTED) {
             sheetState.hide()
@@ -74,7 +75,7 @@ fun BankBottomSheet(
 private fun BankBottomSheetPreview() {
     AndroidpaymentsTheme {
         BankBottomSheet(
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            sheetState = rememberStandardBottomSheetState(),
             banks = BankRepository.getCompanies(),
             onClick = {},
         )

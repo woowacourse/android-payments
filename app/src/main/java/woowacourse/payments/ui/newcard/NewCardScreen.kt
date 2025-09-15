@@ -9,14 +9,17 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
+import woowacourse.payments.domain.BankType.Companion.toColor
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardHolderUiModel.Companion.CARD_HOLDER_MAX_LENGTH
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -39,15 +42,12 @@ fun NewCardScreen(
     onSaved: (PaymentCardUiModel) -> Unit = {},
 ) {
     val context = LocalContext.current
+    var isShowBottomSheet by remember { mutableStateOf(true) }
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
-
-    LaunchedEffect(Unit) {
-        modalBottomSheetState.show()
-    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -70,13 +70,16 @@ fun NewCardScreen(
             )
         },
     ) { innerPadding ->
-        BankBottomSheet(
-            sheetState = modalBottomSheetState,
-            banks = BankRepository.getCompanies(),
-            onClick = {
-                newCardStateHolder.bank = it
-            },
-        )
+        if (isShowBottomSheet) {
+            BankBottomSheet(
+                sheetState = modalBottomSheetState,
+                banks = BankRepository.getCompanies(),
+                onClick = {
+                    newCardStateHolder.bank = it
+                    isShowBottomSheet = false
+                },
+            )
+        }
 
         Column(
             modifier =
@@ -85,6 +88,7 @@ fun NewCardScreen(
                     .fillMaxSize(),
         ) {
             PaymentCardBox(
+                background = newCardStateHolder.bank.type.toColor(),
                 modifier =
                     Modifier
                         .align(Alignment.CenterHorizontally)
