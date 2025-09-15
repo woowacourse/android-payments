@@ -6,6 +6,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.core.os.bundleOf
 import woowacourse.payments.ui.company.model.CompanyUiModel
+import woowacourse.payments.ui.util.getParcelableCompat
 
 @Composable
 fun rememberNewCardState(): NewCardState =
@@ -26,7 +27,7 @@ private val NewCardStateSaver: Saver<NewCardState, Bundle> =
         },
         restore = { bundle: Bundle ->
             NewCardState().apply {
-                bundle.getParcelable<CompanyUiModel>("company")?.let { onCompanySelected(it) }
+                bundle.getParcelableCompat<CompanyUiModel>("company")?.let { onCompanySelected(it) }
                 bundle.getString("number")?.let { onCardNumberChange(it) }
                 bundle.getString("expirationDate")?.let { onCardExpirationDateChange(it) }
                 bundle.getString("holderName")?.let { onCardHolderNameChange(it) }
