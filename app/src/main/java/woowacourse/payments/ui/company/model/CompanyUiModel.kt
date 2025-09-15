@@ -14,33 +14,20 @@ data class CompanyUiModel(
 ) : Parcelable
 
 fun CardCompany.toUiModel(): CompanyUiModel {
-    @DrawableRes
-    val logoResId: Int =
+    val (@DrawableRes logoResId: Int, color: Long) =
         when (this) {
-            CardCompany.BC -> R.drawable.bc
-            CardCompany.SHINHAN -> R.drawable.shinhan
-            CardCompany.KAKAO -> R.drawable.kakao
-            CardCompany.HYUNDAI -> R.drawable.hyundai
-            CardCompany.WOORI -> R.drawable.woori
-            CardCompany.LOTTE -> R.drawable.lotte
-            CardCompany.HANA -> R.drawable.hana
-            CardCompany.KB -> R.drawable.kb
+            CardCompany.BC -> R.drawable.bc to 0xFFF04651
+            CardCompany.SHINHAN -> R.drawable.shinhan to 0xFF293A94
+            CardCompany.KAKAO -> R.drawable.kakao to 0xFFFAE100
+            CardCompany.HYUNDAI -> R.drawable.hyundai to 0xFF000000
+            CardCompany.WOORI -> R.drawable.woori to 0xFF2371B3
+            CardCompany.LOTTE -> R.drawable.lotte to 0xFFE21E26
+            CardCompany.HANA -> R.drawable.hana to 0xFF00908F
+            CardCompany.KB -> R.drawable.kb to 0xFF695F54
         }
     return CompanyUiModel(
         name = companyName,
         logo = logoResId,
-        color = color(),
+        color = color,
     )
 }
-
-private fun CardCompany.color(): Long =
-    when (this) {
-        CardCompany.BC -> 0xFFF04651
-        CardCompany.SHINHAN -> 0xFF293A94
-        CardCompany.KAKAO -> 0xFFFAE100
-        CardCompany.HYUNDAI -> 0xFF000000
-        CardCompany.WOORI -> 0xFF2371B3
-        CardCompany.LOTTE -> 0xFFE21E26
-        CardCompany.HANA -> 0xFF00908F
-        CardCompany.KB -> 0xFF695F54
-    }
