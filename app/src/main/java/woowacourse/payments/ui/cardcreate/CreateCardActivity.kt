@@ -32,6 +32,7 @@ class CreateCardActivity : ComponentActivity() {
                                 setResult(RESULT_OK, intent)
                                 finish()
                             },
+                            isCreatable = stateHolder.isCardCreatable
                         )
                     },
                 ) { innerPadding ->

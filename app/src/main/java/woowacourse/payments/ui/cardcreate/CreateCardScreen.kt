@@ -31,10 +31,10 @@ fun CreateCardScreen(
         Spacer(modifier = Modifier.height(ScreenSectionSpacing))
         CreateCardInputSection(
             createCardUiState = stateHolder.cardCreateState,
-            onCardNumbersChange = stateHolder::updateCreateCardNumbers,
-            onCardExpiryDateChange = stateHolder::updateCreateCardExpiryDate,
-            onCardOwnerNameChange = stateHolder::updateCreateCardOwnerName,
-            onCardPasswordChange = stateHolder::updateCreateCardPassword,
+            onCardNumbersChange = stateHolder::updateCardNumber,
+            onCardExpiryDateChange = stateHolder::updateExpiryDate,
+            onCardOwnerNameChange = stateHolder::updateOwnerName,
+            onCardPasswordChange = stateHolder::updatePassword,
             modifier =
                 Modifier
                     .fillMaxWidth()
