@@ -8,6 +8,8 @@ sealed class CardCreationResult {
         val paymentCard: PaymentCard,
     ) : CardCreationResult()
 
+    object UnknownCardCompany : CardCreationResult()
+
     object InvalidCardNumber : CardCreationResult()
 
     data class InvalidExpireDate(

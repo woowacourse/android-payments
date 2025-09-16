@@ -2,6 +2,7 @@ package woowacourse.payments.ui.features.addcard
 
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,7 +58,9 @@ fun AddCardScreen(
     }
 
     val sheetState = rememberModalBottomSheetState(confirmValueChange = { false })
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showBottomSheet by remember { mutableStateOf(true) }
+
+    var isSavingInProgress by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -71,17 +74,55 @@ fun AddCardScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        showBottomSheet = true
+    val attemptSave = {
+        isSavingInProgress = true
+        val cardDomainResult = cardUiState.toDomainCard()
+        when (cardDomainResult) {
+            CardCreationResult.UnknownCardCompany -> showBottomSheet = true
+
+            is CardCreationResult.Success -> {
+                isSavingInProgress = false
+                onNavigateSave(cardDomainResult.paymentCard)
+            }
+
+            else -> {
+                isSavingInProgress = false
+                toastMessageResId =
+                    when (cardDomainResult) {
+                        CardCreationResult.InvalidCardNumber ->
+                            R.string.card_list_incomplete_card_number_field_alert
+
+                        is CardCreationResult.InvalidExpireDate ->
+                            R.string.card_list_incomplete_expire_date_field_alert
+
+                        CardCreationResult.InvalidPassword ->
+                            R.string.card_list_incomplete_card_password_field_alert
+
+                        else -> null
+                    }
+            }
+        }
+    }
+
+    LaunchedEffect(cardUiState.cardCompanyUiModel) {
+        if (isSavingInProgress && cardUiState.cardCompanyUiModel == CardCompanyUiModel.UNKNOWN) {
+            attemptSave()
+        }
     }
 
     if (showBottomSheet) {
         BottomSheetScreen(
             sheetState = sheetState,
-            onDismiss = { showBottomSheet = false },
+            onDismiss = {
+                showBottomSheet = false
+                isSavingInProgress = false
+            },
             onItemClick = { selectedCard: CardCompanyUiModel ->
                 cardUiState = cardUiState.updateCardCompany(selectedCard)
                 showBottomSheet = false
+                if (isSavingInProgress) {
+                    attemptSave()
+                }
             },
         )
     }
@@ -91,25 +132,7 @@ fun AddCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onNavigateBack,
-                onSaveClick = {
-                    val cardDomainResult = cardUiState.toDomainCard()
-                    when (cardDomainResult) {
-                        CardCreationResult.InvalidCardNumber ->
-                            toastMessageResId =
-                                R.string.card_list_incomplete_card_number_field_alert
-
-                        is CardCreationResult.InvalidExpireDate ->
-                            toastMessageResId =
-                                R.string.card_list_incomplete_expire_date_field_alert
-
-                        CardCreationResult.InvalidPassword ->
-                            toastMessageResId =
-                                R.string.card_list_incomplete_card_password_field_alert
-
-                        is CardCreationResult.Success -> onNavigateSave(cardDomainResult.paymentCard)
-                        CardCreationResult.InvalidOwnerName -> return@NewCardTopBar
-                    }
-                },
+                onSaveClick = attemptSave,
             )
         },
     ) { innerPadding ->
@@ -122,7 +145,10 @@ fun AddCardScreen(
         ) {
             Spacer(modifier = Modifier.height(14.dp))
             PaymentCardPlate(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .clickable { showBottomSheet = true },
                 paymentCardUiModel = paymentCardUiModel,
             )
             Spacer(modifier = Modifier.height(40.dp))

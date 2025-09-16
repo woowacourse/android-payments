@@ -97,6 +97,10 @@ object CardMapper {
                 onFailure = { return CardCreationResult.InvalidPassword },
             )
 
+        if (cardCompanyUiModel == CardCompanyUiModel.UNKNOWN) {
+            return CardCreationResult.UnknownCardCompany
+        }
+
         return CardCreationResult.Success(
             PaymentCard(
                 cardNumber = cardNumber,
