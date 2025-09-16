@@ -83,7 +83,11 @@ fun CardAdditionScreen(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
+                        .align(Alignment.CenterHorizontally)
+                        .semantics {
+                            contentDescription =
+                                context.getString(R.string.card_addition_card_number_field_description)
+                        },
                 onComplete = { focusManager.moveFocus(FocusDirection.Next) },
                 onKeyboardActionClick = { focusManager.moveFocus(FocusDirection.Next) },
             )
@@ -92,7 +96,13 @@ fun CardAdditionScreen(
                 onDateChange = { newExpiredDate: String ->
                     stateHolder.updateExpiredDate(newExpiredDate)
                 },
-                modifier = Modifier.padding(top = 18.dp),
+                modifier =
+                    Modifier
+                        .padding(top = 18.dp)
+                        .semantics {
+                            contentDescription =
+                                context.getString(R.string.card_addition_card_expired_date_field_description)
+                        },
                 errorMessage =
                     if (stateHolder.uiState.isDateError) {
                         stringResource(
@@ -127,6 +137,11 @@ fun CardAdditionScreen(
                 onPasswordChange = { newPassword: String ->
                     stateHolder.updatePassword(newPassword)
                 },
+                modifier =
+                    Modifier.semantics {
+                        contentDescription =
+                            context.getString(R.string.card_addition_card_password_field_description)
+                    },
                 onComplete = { focusManager.clearFocus() },
                 onKeyboardActionClick = { focusManager.clearFocus() },
             )

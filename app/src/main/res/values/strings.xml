@@ -16,6 +16,10 @@
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
     <string name="card_addition_fields_description">카드 정보 입력창</string>
+    <string name="card_addition_card_number_field_description">카드 번호 입력창</string>
+    <string name="card_addition_card_expired_date_field_description">카드 만료일 입력창</string>
+    <string name="card_addition_card_password_field_description">카드 비밀번호 입력창</string>
+    <string name="card_addition_complete_button_description">카드 추가 완료</string>
 
     <!--  카드사 선택  -->
     <string name="card_addition_issuing_bank_sheet_description">카드사 선택창</string>
