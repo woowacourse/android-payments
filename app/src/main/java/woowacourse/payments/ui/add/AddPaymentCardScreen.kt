@@ -27,6 +27,7 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PinTextField
 import woowacourse.payments.ui.component.StringTextField
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.mapper.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -65,7 +66,11 @@ fun AddPaymentCardScreen(
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
-            PaymentCard(selectedBank, modifier = Modifier.align(Alignment.CenterHorizontally), null)
+            PaymentCard(
+                state.bank.toUiModel(),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                null,
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -99,7 +104,7 @@ fun AddPaymentCardScreen(
     if (showBankSheet) {
         BankSelectBottomSheet(
             onSelect = { bank ->
-                selectedBank = bank
+                stateHolder.onBankChange(bank)
                 showBankSheet = false
             },
         )

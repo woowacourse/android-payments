@@ -1,11 +1,14 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcelable
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.ui.graphics.Color
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class BankUiModel(
     @DrawableRes val logoRes: Int,
     @StringRes val nameRes: Int,
-    val color: Color,
-)
+    @ColorInt val colorInt: Int,
+) : Parcelable

@@ -5,6 +5,7 @@ data class PaymentCard(
     val expiry: Expiry,
     val owner: String,
     val pin: Pin,
+    val bank: BankType,
 ) {
     companion object {
         fun create(
@@ -12,6 +13,7 @@ data class PaymentCard(
             expiry: String,
             owner: String,
             pin: String,
+            bank: BankType,
         ): Result<PaymentCard> =
             runCatching {
                 PaymentCard(
@@ -19,6 +21,7 @@ data class PaymentCard(
                     expiry = Expiry.require(expiry),
                     owner = owner,
                     pin = Pin.require(pin),
+                    bank = bank,
                 )
             }
     }

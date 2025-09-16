@@ -10,6 +10,7 @@
     <string name="lotte_card_name">롯데카드</string>
     <string name="hana_card_name">하나카드</string>
     <string name="kb_card_name">국민카드</string>
+    <string name="card_name_empty"> </string>
 
     <!-- AddPaymentCard-->
     <string name="title_add_card">카드 추가</string>

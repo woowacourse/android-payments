@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.Expiry
 import woowacourse.payments.domain.model.PaymentCard
@@ -13,9 +14,9 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 
 class AddPaymentCardStateHolder private constructor(
-    private val stateHolder: MutableState<AddPaymentCardUiState>,
+    private val uiState: MutableState<AddPaymentCardUiState>,
 ) {
-    val state: AddPaymentCardUiState get() = stateHolder.value
+    val state: AddPaymentCardUiState get() = uiState.value
 
     fun onCardNumberChange(new: String) = update { it.copy(cardNumber = new) }
 
@@ -24,6 +25,8 @@ class AddPaymentCardStateHolder private constructor(
     fun onOwnerChange(new: String) = update { it.copy(owner = new) }
 
     fun onPinChange(new: String) = update { it.copy(pin = new) }
+
+    fun onBankChange(new: BankType) = update { it.copy(bank = new) }
 
     val isCardNumberValid: Boolean
         get() = state.cardNumber.isNotEmpty() && CardNumber.from(state.cardNumber) != null
@@ -34,12 +37,12 @@ class AddPaymentCardStateHolder private constructor(
 
     fun buildResult(): PaymentCardUiModel? =
         PaymentCard
-            .create(state.cardNumber, state.expiry, state.owner, state.pin)
+            .create(state.cardNumber, state.expiry, state.owner, state.pin, state.bank)
             .getOrNull()
             ?.toUiModel()
 
     private inline fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {
-        stateHolder.value = block(stateHolder.value)
+        uiState.value = block(uiState.value)
     }
 
     companion object {

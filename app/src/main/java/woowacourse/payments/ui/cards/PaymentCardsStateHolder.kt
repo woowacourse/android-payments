@@ -8,9 +8,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class PaymentCardsStateHolder private constructor(
-    private val stateHolder: MutableState<PaymentCardsUiState>,
+    private val uiState: MutableState<PaymentCardsUiState>,
 ) {
-    val state: PaymentCardsUiState get() = stateHolder.value
+    val state: PaymentCardsUiState get() = uiState.value
 
     fun addCard(card: PaymentCardUiModel) =
         update {
@@ -18,7 +18,7 @@ class PaymentCardsStateHolder private constructor(
         }
 
     private inline fun update(block: (PaymentCardsUiState) -> PaymentCardsUiState) {
-        stateHolder.value = block(stateHolder.value)
+        uiState.value = block(uiState.value)
     }
 
     companion object {

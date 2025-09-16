@@ -8,6 +8,7 @@ data class PaymentCardUiModel(
     val cardNumber: String,
     val expiry: String,
     val owner: String,
+    val bank: BankUiModel,
 ) : Parcelable {
     fun maskedCardNumber(separator: String): String {
         if (cardNumber.length <= 8) return cardNumber

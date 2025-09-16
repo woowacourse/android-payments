@@ -20,39 +20,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 import woowacourse.payments.ui.theme.CardTextStyle
 
 @Composable
 fun PaymentCard(
-    bank: BankType,
+    bank: BankUiModel,
     modifier: Modifier = Modifier,
     paymentCard: PaymentCardUiModel?,
 ) {
-    val bankUiModel = bank.toUiModel()
-
     Box(
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankUiModel?.color ?: Color(0xFF333333),
+                    color = Color(bank.colorInt),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        if (bankUiModel != null) {
-            Text(
-                text = stringResource(bankUiModel.nameRes),
-                style = CardTextStyle,
-                color = Color.White,
-                modifier =
-                    Modifier
-                        .align(Alignment.TopStart)
-                        .padding(top = 15.dp, start = 14.dp),
-            )
-        }
+        Text(
+            text = stringResource(bank.nameRes),
+            style = CardTextStyle,
+            color = Color.White,
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = 15.dp, start = 14.dp),
+        )
 
         Column(
             modifier =
@@ -105,8 +102,8 @@ fun PaymentCard(
 @Composable
 private fun RegisteredPaymentCardPreview() {
     PaymentCard(
-        BankType.KB,
+        BankType.KB.toUiModel(),
         Modifier,
-        PaymentCardUiModel("1234567812345678", "0511", "minjeong"),
+        PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.KB.toUiModel()),
     )
 }
