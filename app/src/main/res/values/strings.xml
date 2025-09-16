@@ -8,6 +8,8 @@
     <string name="add_card_title">카드 추가</string>
     <string name="add_card_back_button_description">뒤로 가기</string>
     <string name="add_card_save_button_description">완료</string>
+    <string name="add_card_company_icon_description">카드사 아이콘</string>
+    <string name="add_card_button_description">카드 추가</string>
     <string name="add_card_failure_message">카드 정보를 다시 확인해주세요.</string>
     <string name="add_card_success_message">카드가 추가되었습니다.</string>
 
@@ -26,5 +28,4 @@
     <string name="passcode_label">비밀번호</string>
     <string name="passcode_placeholder">0000</string>
     <string name="passcode_error_message">비밀번호는 숫자 4자입니다.</string>
-    <string name="add_card_button_description">카드 추가</string>
 </resources>
