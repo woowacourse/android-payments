@@ -24,10 +24,10 @@ import woowacourse.payments.ui.component.ExpireDateTextField
 import woowacourse.payments.ui.component.NewCardName
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.core.BankType
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
-import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.CompanyResourceProvider
+import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardState
 
 @Composable
 fun NewCardScreen(
@@ -92,7 +92,7 @@ fun NewCardScreen(
     ) {
         PaymentCard(
             resourceProvider = resourceProvider,
-            cardType = CardType.Pending,
+            card = CardState.Pending,
             content = {
                 Column {
                     NewCardName(companyName)
@@ -165,7 +165,7 @@ fun NewCardScreen(
                     .padding(top = 18.dp),
         )
 
-        if (uiState.card.bank is BankType.Empty) {
+        if (uiState.card.bank is BankState.Empty) {
             BankSelectBottomSheet(
                 resourceProvider = resourceProvider,
                 onBankSelect = { bankType ->

@@ -3,6 +3,7 @@ package woowacourse.payments.ui.core
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
 import woowacourse.payments.domain.Banks
+import woowacourse.payments.ui.state.BankState
 import woowacourse.payments.ui.theme.SignatureBcRed
 import woowacourse.payments.ui.theme.SignatureHanaTeal
 import woowacourse.payments.ui.theme.SignatureHyundaiBlack
@@ -13,9 +14,9 @@ import woowacourse.payments.ui.theme.SignatureShinhanBlue
 import woowacourse.payments.ui.theme.SignatureWooriBlueWhite
 
 class CompanyResourceProvider {
-    fun getCompanyName(bank: BankType): Int? =
+    fun getCompanyName(bank: BankState): Int? =
         when (bank) {
-            is BankType.Bank -> {
+            is BankState.Bank -> {
                 when (bank.company) {
                     Banks.BC -> R.string.bank_bc
                     Banks.SHINHAN -> R.string.bank_sinhan
@@ -28,7 +29,7 @@ class CompanyResourceProvider {
                 }
             }
 
-            BankType.Empty -> null
+            BankState.Empty -> null
         }
 
     fun getSignatureColor(banks: Banks): Color =

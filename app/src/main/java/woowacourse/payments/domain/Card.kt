@@ -1,15 +1,15 @@
 package woowacourse.payments.domain
 
-import woowacourse.payments.ui.core.BankType
+import woowacourse.payments.ui.state.BankState
 
 data class Card(
     val number: String,
     val expireDate: String,
     val ownerName: String,
     val password: String,
-    val bank: BankType,
+    val bank: BankState,
 ) {
-    constructor(bank: BankType.Bank) : this(
+    constructor(bank: BankState.Bank) : this(
         number = EMPTY_NUMBER,
         expireDate = EMPTY_EXPIRE_DATE,
         ownerName = EMPTY_OWNER_NAME,
@@ -31,7 +31,7 @@ data class Card(
                 expireDate = EMPTY_EXPIRE_DATE,
                 ownerName = EMPTY_OWNER_NAME,
                 password = EMPTY_PASSWORD,
-                bank = BankType.Empty,
+                bank = BankState.Empty,
             )
     }
 }

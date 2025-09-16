@@ -10,10 +10,10 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Banks
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.core.BankType
-import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
+import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
 import woowacourse.payments.ui.view.cards.CardsUiState
@@ -54,7 +54,7 @@ class CardsScreenTest {
                     expireDate = "0421",
                     ownerName = "peto",
                     password = "",
-                    bank = BankType.Bank(Banks.BC),
+                    bank = BankState.Bank(Banks.BC),
                 ),
             )
 
@@ -93,21 +93,21 @@ class CardsScreenTest {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankType.Bank(Banks.BC),
+                        BankState.Bank(Banks.BC),
                     ),
                     Card(
                         number = "2222333344445555",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankType.Bank(Banks.BC),
+                        BankState.Bank(Banks.BC),
                     ),
                     Card(
                         number = "3333444455556666",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankType.Bank(Banks.BC),
+                        BankState.Bank(Banks.BC),
                     ),
                 ),
             )
@@ -147,7 +147,7 @@ class CardsScreenTest {
     @Test
     fun `빈_카드_클릭_시_onClickCard가_호출된다`() {
         // given
-        var clickedType: CardType? = null
+        var clickedType: CardState? = null
         composeTestRule.setContent {
             CardsScreen(
                 CompanyResourceProvider(),
@@ -163,6 +163,6 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        assertEquals(CardType.Empty, clickedType)
+        assertEquals(CardState.Empty, clickedType)
     }
 }

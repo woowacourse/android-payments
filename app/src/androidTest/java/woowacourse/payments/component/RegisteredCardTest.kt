@@ -9,7 +9,7 @@ import org.junit.Test
 import woowacourse.payments.domain.Banks
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.RegisteredCard
-import woowacourse.payments.ui.core.BankType
+import woowacourse.payments.ui.state.BankState
 
 class RegisteredCardTest {
     @get:Rule
@@ -24,7 +24,7 @@ class RegisteredCardTest {
                 expireDate = "0421",
                 ownerName = "peto",
                 password = "",
-                BankType.Bank(Banks.BC),
+                BankState.Bank(Banks.BC),
             )
 
         composeTestRule.setContent {

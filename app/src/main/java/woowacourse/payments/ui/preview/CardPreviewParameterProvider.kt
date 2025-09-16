@@ -3,7 +3,7 @@ package woowacourse.payments.ui.preview
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.domain.Banks
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.core.BankType
+import woowacourse.payments.ui.state.BankState
 
 class OneCardPreviewParameterProvider : PreviewParameterProvider<Card> {
     override val values: Sequence<Card>
@@ -14,7 +14,7 @@ class OneCardPreviewParameterProvider : PreviewParameterProvider<Card> {
                     expireDate = "0908",
                     ownerName = "peto",
                     password = "",
-                    bank = BankType.Bank(Banks.BC),
+                    bank = BankState.Bank(Banks.BC),
                 ),
             )
 }
@@ -29,7 +29,7 @@ class CardsPreviewParameterProvider : PreviewParameterProvider<List<Card>> {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        bank = BankType.Bank(company),
+                        bank = BankState.Bank(company),
                     )
                 },
             )

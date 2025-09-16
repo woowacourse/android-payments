@@ -36,13 +36,13 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentToolbar
 import woowacourse.payments.ui.component.RegisteredCard
-import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.serialization.SerializationCard
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
@@ -86,7 +86,7 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
             uiState = cardUiStateHolder.uiState,
             uiEvent = uiEvent,
             onClickCard = { cardType ->
-                if (cardType is CardType.Empty) {
+                if (cardType is CardState.Empty) {
                     onAddCardClick(activityResultLauncher)
                 }
             },
@@ -106,7 +106,7 @@ fun CardsScreen(
     resourceProvider: CompanyResourceProvider,
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
-    onClickCard: (CardType) -> Unit,
+    onClickCard: (CardState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -145,7 +145,7 @@ fun CardsScreen(
 @Composable
 fun EmptyCardContent(
     resourceProvider: CompanyResourceProvider,
-    onClickCard: (CardType) -> Unit,
+    onClickCard: (CardState) -> Unit,
 ) {
     Text(
         text = stringResource(R.string.card_list_empty),
@@ -155,7 +155,7 @@ fun EmptyCardContent(
 
     PaymentCard(
         resourceProvider = resourceProvider,
-        cardType = CardType.Empty,
+        card = CardState.Empty,
         onClick = onClickCard,
         content = {
             Icon(
@@ -173,11 +173,11 @@ fun EmptyCardContent(
 fun SingleCardComponent(
     resourceProvider: CompanyResourceProvider,
     card: Card,
-    onClickCard: (CardType) -> Unit,
+    onClickCard: (CardState) -> Unit,
 ) {
     PaymentCard(
         resourceProvider = resourceProvider,
-        cardType = CardType.Registered(card.bank),
+        card = CardState.Registered(card.bank),
         content = {
             RegisteredCard(
                 card,
@@ -196,8 +196,8 @@ fun SingleCardComponent(
     )
     PaymentCard(
         resourceProvider = resourceProvider,
-        cardType = CardType.Empty,
-        onClick = { onClickCard(CardType.Empty) },
+        card = CardState.Empty,
+        onClick = { onClickCard(CardState.Empty) },
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -214,15 +214,15 @@ fun SingleCardComponent(
 fun MultipleCardContent(
     resourceProvider: CompanyResourceProvider,
     cards: List<Card>,
-    onClickCard: (CardType) -> Unit,
+    onClickCard: (CardState) -> Unit,
 ) {
     cards.forEach { card ->
-        val cardType = CardType.Registered(card.bank)
+        val cardState = CardState.Registered(card.bank)
 
         PaymentCard(
             resourceProvider = resourceProvider,
-            cardType = cardType,
-            onClick = { onClickCard(cardType) },
+            card = cardState,
+            onClick = { onClickCard(cardState) },
             content = {
                 RegisteredCard(
                     card,

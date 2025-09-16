@@ -4,9 +4,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import woowacourse.payments.domain.Banks
-import woowacourse.payments.ui.core.BankType
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.serialization.toSerializationCard
+import woowacourse.payments.ui.state.BankState
 
 class NewCardUiStateHolder(
     initialState: NewCardUiState = NewCardUiState(),
@@ -43,7 +43,7 @@ class NewCardUiStateHolder(
 
     private fun updateCardBankType(company: Banks) {
         _uiState.value =
-            _uiState.value.copy(card = _uiState.value.card.copy(bank = BankType.Bank(company)))
+            _uiState.value.copy(card = _uiState.value.card.copy(bank = BankState.Bank(company)))
     }
 
     companion object {

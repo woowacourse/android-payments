@@ -1,14 +1,14 @@
-package woowacourse.payments.ui.core
+package woowacourse.payments.ui.state
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Banks
 
 @Parcelize
-sealed interface BankType : Parcelable {
-    data object Empty : BankType
+sealed interface BankState : Parcelable {
+    data object Empty : BankState
 
     data class Bank(
         val company: Banks,
-    ) : BankType
+    ) : BankState
 }
