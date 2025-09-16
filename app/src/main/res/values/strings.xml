@@ -46,4 +46,5 @@
     <string name="bank_lotte">롯데카드</string>
     <string name="bank_hana">하나카드</string>
     <string name="bank_kb">국민카드</string>
+    <string name="bank_not_selected"> </string>
 </resources>
