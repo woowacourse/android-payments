@@ -42,14 +42,14 @@ fun CardsScreen(
                 addCard(card)
             }
         }
-    val addCard: () -> Unit =
+    val navigateToCardAdditionActivity: () -> Unit =
         { cardAddLauncher.launch(Intent(context, CardAdditionActivity::class.java)) }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                addCardAction = if (cards.size > 1) addCard else null,
+                addCardAction = if (cards.size > 1) navigateToCardAdditionActivity else null,
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -63,14 +63,14 @@ fun CardsScreen(
             when (cards.size) {
                 0 ->
                     NoCardContent(
-                        addCard = addCard,
+                        addCard = navigateToCardAdditionActivity,
                         modifier = Modifier.fillMaxSize(),
                     )
 
                 1 ->
                     OneCardContent(
                         card = cards.first(),
-                        addCard = addCard,
+                        addCard = navigateToCardAdditionActivity,
                         modifier = Modifier.fillMaxSize(),
                     )
 
