@@ -11,4 +11,5 @@ data class BankUiModel(
     @DrawableRes val logoRes: Int,
     @StringRes val nameRes: Int,
     @ColorInt val colorInt: Int,
+    val isSelected: Boolean = true,
 ) : Parcelable

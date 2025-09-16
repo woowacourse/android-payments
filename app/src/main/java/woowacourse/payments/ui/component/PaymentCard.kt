@@ -95,15 +95,31 @@ fun PaymentCard(
                 }
             }
         }
+
+        if (!bank.isSelected) {
+            SelectBankHint(
+                modifier = Modifier.align(Alignment.Center),
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun RegisteredPaymentCardPreview() {
+private fun SelectedPaymentCardPreview() {
     PaymentCard(
         BankType.KB.toUiModel(),
         Modifier,
         PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.KB.toUiModel()),
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun NotSelectedPaymentCardPreview() {
+    PaymentCard(
+        BankType.NOT_SELECTED.toUiModel(),
+        Modifier,
+        PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.NOT_SELECTED.toUiModel()),
     )
 }

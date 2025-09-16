@@ -30,6 +30,7 @@ fun BankType.toUiModel(): BankUiModel =
                 R.drawable.ic_empty,
                 R.string.card_name_empty,
                 0xFF333333.toInt(),
+                false,
             )
 
         BankType.BC -> BankUiModel(R.drawable.bc, R.string.bc_card_name, BC.toArgb())

@@ -34,6 +34,8 @@ class AddPaymentCardStateHolder private constructor(
         get() = state.expiry.isNotEmpty() && Expiry.from(state.expiry) != null
     val isPinValid: Boolean
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
+    val isBankValid: Boolean
+        get() = (state.bank != BankType.NOT_SELECTED)
 
     fun buildResult(): PaymentCardUiModel? =
         PaymentCard
