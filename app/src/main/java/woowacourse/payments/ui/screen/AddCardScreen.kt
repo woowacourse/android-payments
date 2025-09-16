@@ -37,6 +37,10 @@ fun AddCardScreen(
 
     var showSheet by rememberSaveable { mutableStateOf(true) }
     var selectedBankType by rememberSaveable { mutableStateOf(BankType.NOT_SELECTED) }
+    val cardForPreview =
+        remember(selectedBankType) {
+            CardUiModel.EMPTY.copy(bankType = selectedBankType)
+        }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -63,7 +67,7 @@ fun AddCardScreen(
             Spacer(Modifier.height(14.dp))
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                card = CardUiModel.EMPTY.copy(bankType = selectedBankType),
+                card = cardForPreview,
             )
 
             Spacer(Modifier.height(40.dp))
