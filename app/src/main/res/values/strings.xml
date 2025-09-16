@@ -17,6 +17,7 @@
     <string name="password_placeholder">0000</string>
 
     <!--  카드사 선택  -->
+    <string name="card_addition_issuing_bank_sheet_description">카드사 선택창</string>
     <string name="card_addition_issuing_bank_icon_description">카드사 아이콘</string>
     <string name="card_addition_issuing_bank_name_description">카드사 이름</string>
     <string name="card_addition_issuing_bank_info_description">카드사 정보</string>
