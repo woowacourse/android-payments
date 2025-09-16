@@ -40,8 +40,6 @@ fun AddCardScreen(
     val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
-    val showBottomSheet: MutableState<Boolean> = remember { mutableStateOf(true) }
-
     fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
     fun checkEmptyFields() {
@@ -69,16 +67,13 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        if (showBottomSheet.value) {
-            CardCompanyBottomSheet(
-                CardCompany.entries.map(CardCompany::toUiModel),
-                onBackClick,
-                { company: CardCompanyUiModel ->
-                    card.value = card.value.copy(cardCompany = company)
-                    showBottomSheet.value = false
-                },
-            )
-        }
+        CardCompanyBottomSheet(
+            CardCompany.entries.map(CardCompany::toUiModel),
+            { cardCompany: CardCompanyUiModel ->
+                card.value = card.value.copy(cardCompany = cardCompany)
+            },
+            onBackClick,
+        )
 
         Column(Modifier.fillMaxSize().padding(innerPadding)) {
             PaymentCard(
