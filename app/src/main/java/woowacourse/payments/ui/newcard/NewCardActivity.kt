@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -45,7 +46,13 @@ class NewCardActivity : ComponentActivity() {
     }
 
     fun saveClick() {
-        val intent = Intent(context = this)
+        state.newCard()
+        val newCard = state.card
+        if (newCard == null) {
+            Toast.makeText(this, state.cardErrorMessage ?: "입력을 확인해 주세요.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val intent = Intent(context = this, newCard)
         setResult(RESULT_OK, intent)
         finish()
     }

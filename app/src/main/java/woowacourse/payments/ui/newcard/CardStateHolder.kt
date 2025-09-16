@@ -40,7 +40,7 @@ class CardStateHolder {
         private set
 
     fun newCard() {
-        bankTypeUiModel?.let { bankType ->
+        bankTypeUiModel.let { bankType ->
             runCatching {
                 Card.Companion.Card(
                     bankTypeUiModel = bankType,
@@ -60,59 +60,55 @@ class CardStateHolder {
     fun changeBankType(newBank: BankTypeUiModel) {
         if (newBank != BankTypeUiModel.NOT_SELECTED) {
             bankTypeUiModel = newBank
-            Log.d("test", "선택됨")
         }
     }
 
     fun changeNumber(newNumber: String) {
-        if (number.isNotEmpty())
-            runCatching {
-                CardNumber(value = number.removeSurrounding(" - ").take(16))
-            }.onSuccess {
-                numberErrorMessage = null
-            }.onFailure { e: Throwable ->
-                numberErrorMessage = e.message
-            }
+        number = newNumber
+        if (newNumber.isEmpty()) { numberErrorMessage = null; return }
+        runCatching {
+            CardNumber(
+                value = newNumber.filter { it.isDigit() }.take(16)
+            )
+        }.onSuccess { numberErrorMessage = null }
+            .onFailure { e -> numberErrorMessage = e.message }
     }
 
     fun changeExpirationDate(newExpirationDate: String) {
-        if (expirationDate.isNotEmpty()) {
-            runCatching {
-                ExpirationDate(
-                    value = YearMonth.parse(
-                        expirationDate.removeSurrounding("/").take(4),
-                        DateTimeFormatter.ofPattern("MMyy")
-                    )
-                )
-            }.onSuccess {
-                expirationDateErrorMessage = null
-            }.onFailure { e: Throwable ->
-                expirationDateErrorMessage = e.message
-            }
-        }
+        expirationDate = newExpirationDate
+        if (newExpirationDate.isEmpty()) { expirationDateErrorMessage = null; return }
+        runCatching {
+            val digits = newExpirationDate.filter { it.isDigit() }.take(4)
+            ExpirationDate(
+                value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy"))
+            )
+        }.onSuccess { expirationDateErrorMessage = null }
+            .onFailure { e -> expirationDateErrorMessage = e.message }
     }
 
     fun changeOwnerName(newOwnerName: String) {
-        if (ownerName.isNotEmpty()) {
-            runCatching {
-                OwnerName(ownerName.take(30))
-            }.onSuccess {
-                ownerNameErrorMessage = null
-            }.onFailure { e: Throwable ->
-                ownerNameErrorMessage = e.message
-            }
+        ownerName = newOwnerName
+
+        if (newOwnerName.isEmpty()) {
+            ownerNameErrorMessage = null
+            return
+        }
+
+        runCatching {
+            OwnerName(newOwnerName.take(30))
+        }.onSuccess {
+            ownerNameErrorMessage = null
+        }.onFailure { e ->
+            ownerNameErrorMessage = e.message
         }
     }
 
     fun changePassword(newPassword: String) {
-        if (password.isNotEmpty()) {
-            runCatching {
-                Password(password.take(4))
-            }.onSuccess {
-                passwordErrorMessage = null
-            }.onFailure { e: Throwable ->
-                passwordErrorMessage = e.message
-            }
-        }
+        password = newPassword
+        if (newPassword.isEmpty()) { passwordErrorMessage = null; return }
+        runCatching {
+            Password(newPassword.take(4))
+        }.onSuccess { passwordErrorMessage = null }
+            .onFailure { e -> passwordErrorMessage = e.message }
     }
 }
