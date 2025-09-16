@@ -31,6 +31,35 @@ class CardAdditionScreenTest {
     }
 
     @Test
+    fun `카드사를_선택하면_카드사_선택창이_사라진다`() {
+        // when
+        composeRule
+            .onNodeWithText("카카오뱅크")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithContentDescription("카드사 선택창")
+            .assertDoesNotExist()
+    }
+
+    @Test
+    fun `카드를_클릭하면_카드사_선택창이_출력된다`() {
+        // when
+        composeRule
+            .onNodeWithText("카카오뱅크")
+            .performClick()
+        composeRule
+            .onNodeWithContentDescription("카드 미리보기")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithContentDescription("카드사 선택창")
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun `외부_영역을_터치해도_카드사_선택창이_사라지지_않는다`() {
         // when
         composeRule
