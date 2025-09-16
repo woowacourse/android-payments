@@ -15,17 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.toBankUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 import woowacourse.payments.ui.theme.Gray33
 
 @Composable
-fun PaymentCard(
-    paymentCardUiModel: PaymentCardUiModel,
+fun CreateCard(
+    bankType: BankType,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = paymentCardUiModel.bankType.toBankUiModel()
+    val bankUiModel = bankType.toBankUiModel()
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -48,13 +49,12 @@ fun PaymentCard(
                 modifier = Modifier.padding(15.dp)
             )
             PaymentCardChip()
-            PaymentCardContent(paymentCardUiModel)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentCardPreview() {
-    PaymentCard(paymentCardUiModelSample)
+fun CreateCardPreview() {
+    CreateCard(BankType.BC)
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.ImageSource
 import woowacourse.payments.ui.model.toBankUiModel
 
 
@@ -26,12 +27,16 @@ fun Bank(bankType: BankType, onSelectedCard: (BankType) -> Unit, modifier: Modif
         modifier.clickable { onSelectedCard(bankType) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Icon(
-            painter = painterResource(bankUiModel.image),
-            contentDescription = null,
-            Modifier.size(37.dp, 37.dp),
-            tint = Color.Unspecified
-        )
+        when (val painter = bankUiModel.image) {
+            is ImageSource.Resource -> Icon(
+                painter = painterResource(painter.id),
+                contentDescription = bankUiModel.name,
+                modifier = Modifier.size(37.dp, 37.dp),
+                tint = Color.Unspecified
+            )
+
+            is ImageSource.Url -> TODO()
+        }
         Spacer(modifier.height(10.dp))
         Text(text = bankUiModel.name, fontSize = 16.sp, fontWeight = FontWeight.W500)
     }
