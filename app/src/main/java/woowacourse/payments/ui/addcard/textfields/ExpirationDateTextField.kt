@@ -29,7 +29,7 @@ import java.time.YearMonth
 
 @Composable
 fun ExpirationDateTextField(
-    card: MutableState<CardUiModel>,
+    expirationDate: MutableState<String>,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
@@ -38,7 +38,7 @@ fun ExpirationDateTextField(
     fun updateValue(newValue: String) {
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
-        card.value = card.value.copy(expirationDate = filteredValue)
+        expirationDate.value = filteredValue
 
         isError.value =
             runCatching {
@@ -57,7 +57,7 @@ fun ExpirationDateTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
-        value = card.value.expirationDate,
+        value = expirationDate.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = ExpirationDateFormat.visualTransformation,
@@ -86,18 +86,7 @@ fun ExpirationDateTextField(
 @Composable
 private fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "1234123412341234",
-                        "1234",
-                        "CREW",
-                        "0000",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
+        expirationDate = remember { mutableStateOf("1234") },
         isError = remember { mutableStateOf(false) },
     )
 }
@@ -106,18 +95,7 @@ private fun ExpirationDateTextFieldPreview() {
 @Composable
 private fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "1234123412341234",
-                        "9999",
-                        "CREW",
-                        "0000",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
+        expirationDate = remember { mutableStateOf("1234") },
         isError = remember { mutableStateOf(true) },
     )
 }

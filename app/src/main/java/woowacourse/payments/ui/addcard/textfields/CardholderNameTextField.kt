@@ -23,18 +23,18 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardHolderNameTextField(
-    card: MutableState<CardUiModel>,
+    cardholderName: MutableState<String>,
     modifier: Modifier = Modifier,
 ) {
     LocalFocusManager.current
 
     fun updateValue(newValue: String) {
-        card.value = card.value.copy(cardholderName = newValue.take(CARDHOLDER_NAME_MAX_LENGTH))
+        cardholderName.value = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
     }
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = card.value.cardholderName,
+        value = cardholderName.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         label = { Text(stringResource(R.string.cardholder_name_label)) },
@@ -49,7 +49,7 @@ fun CardHolderNameTextField(
                 text =
                     stringResource(
                         R.string.cardholder_name_entry_length,
-                        card.value.cardholderName.length,
+                        cardholderName.value.length,
                         CARDHOLDER_NAME_MAX_LENGTH,
                     ),
                 textAlign = TextAlign.End,
@@ -63,18 +63,5 @@ fun CardHolderNameTextField(
 @Preview(showBackground = true, name = "카드 소유자 이름 입력란")
 @Composable
 private fun CardHolderNameTextFieldPreview() {
-    remember { mutableStateOf("디랙") }
-    CardHolderNameTextField(
-        remember {
-            mutableStateOf(
-                CardUiModel(
-                    "1234123412341234",
-                    "1234",
-                    "CREW",
-                    "0000",
-                    CardCompany.BC_CARD.toUiModel(),
-                ),
-            )
-        },
-    )
+    CardHolderNameTextField(remember { mutableStateOf("CREW") })
 }

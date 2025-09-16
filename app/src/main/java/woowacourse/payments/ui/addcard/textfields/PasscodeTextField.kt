@@ -28,7 +28,7 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun PasscodeTextField(
-    card: MutableState<CardUiModel>,
+    passcode: MutableState<String>,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
@@ -38,8 +38,8 @@ fun PasscodeTextField(
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
 
-        card.value = card.value.copy(passcode = filteredValue)
-        isError.value = runCatching { Passcode(card.value.passcode) }.isFailure
+        passcode.value = filteredValue
+        isError.value = runCatching { Passcode(passcode.value) }.isFailure
 
         if (!isError.value && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
             focusManager.clearFocus()
@@ -48,7 +48,7 @@ fun PasscodeTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(0.5F),
-        value = card.value.passcode,
+        value = passcode.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
@@ -77,19 +77,8 @@ fun PasscodeTextField(
 @Composable
 private fun PasscodeTextFieldPreview() {
     PasscodeTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "1234123412341234",
-                        "1234",
-                        "CREW",
-                        "0000",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
-        isError = remember { mutableStateOf(false) },
+        passcode = remember { mutableStateOf("0000") },
+        isError = remember { mutableStateOf(true) },
     )
 }
 
@@ -97,18 +86,7 @@ private fun PasscodeTextFieldPreview() {
 @Composable
 private fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "1234123412341234",
-                        "1234",
-                        "CREW",
-                        "00",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
+        passcode = remember { mutableStateOf("00") },
         isError = remember { mutableStateOf(true) },
     )
 }

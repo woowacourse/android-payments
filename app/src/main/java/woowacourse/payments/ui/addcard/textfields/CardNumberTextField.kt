@@ -28,7 +28,7 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardNumberTextField(
-    card: MutableState<CardUiModel>,
+    cardNumber: MutableState<String>,
     isError: MutableState<Boolean>,
     modifier: Modifier = Modifier,
 ) {
@@ -38,8 +38,8 @@ fun CardNumberTextField(
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
 
-        card.value = card.value.copy(cardNumber = filteredValue)
-        isError.value = runCatching { CardNumber(card.value.cardNumber) }.isFailure
+        cardNumber.value = filteredValue
+        isError.value = runCatching { CardNumber(cardNumber.value) }.isFailure
 
         if (!isError.value && filteredValue.length == CardNumberFormat.REQUIRED_LENGTH) {
             focusManager.moveFocus(FocusDirection.Next)
@@ -48,7 +48,7 @@ fun CardNumberTextField(
 
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
-        value = card.value.cardNumber,
+        value = cardNumber.value,
         onValueChange = { newValue: String -> updateValue(newValue) },
         singleLine = true,
         visualTransformation = CardNumberFormat.visualTransformation,
@@ -77,18 +77,7 @@ fun CardNumberTextField(
 @Composable
 private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "1234123412341234",
-                        "1234",
-                        "CREW",
-                        "0000",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
+        cardNumber = remember { mutableStateOf("1234123412341234") },
         isError = remember { mutableStateOf(false) },
     )
 }
@@ -97,18 +86,7 @@ private fun CardNumberTextFieldPreview() {
 @Composable
 private fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
-        card =
-            remember {
-                mutableStateOf(
-                    CardUiModel(
-                        "12341234",
-                        "1234",
-                        "CREW",
-                        "0000",
-                        CardCompany.BC_CARD.toUiModel(),
-                    ),
-                )
-            },
+        cardNumber = remember { mutableStateOf("1234123412341234") },
         isError = remember { mutableStateOf(true) },
     )
 }

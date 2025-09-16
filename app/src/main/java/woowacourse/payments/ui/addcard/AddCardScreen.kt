@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,29 +32,22 @@ fun AddCardScreen(
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val card: MutableState<CardUiModel> = remember { mutableStateOf(CardUiModel.EMPTY) }
-
-    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
-
-    val selectedCardCompany = remember { mutableStateOf(CardCompany.NONE) }
-
-    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
-
-    fun checkEmptyFields() {
-        if (card.value.cardNumber.isEmpty()) isCardNumberError.value = true
-        if (card.value.expirationDate.isEmpty()) isExpirationDateError.value = true
-        if (card.value.passcode.isEmpty()) isPasscodeError.value = true
-    }
+    val uiState = remember { AddCardScreenUiStateHolder() }
 
     fun saveAddedCard() {
-        checkEmptyFields()
-        if (isError()) {
+        uiState.checkEmptyFields()
+        if (uiState.isError()) {
             onSaveFailure()
         } else {
-            onSaveSuccess(card.value)
-            card.value = CardUiModel.EMPTY
+            onSaveSuccess(
+                CardUiModel(
+                    uiState.cardNumber.value,
+                    uiState.expirationDate.value,
+                    uiState.cardholderName.value,
+                    uiState.passcode.value,
+                    uiState.cardCompany.value,
+                ),
+            )
         }
     }
 
@@ -75,28 +66,38 @@ fun AddCardScreen(
                     cardCompany != CardCompany.NONE
                 }.map(CardCompany::toUiModel),
             { cardCompany: CardCompanyUiModel ->
-                selectedCardCompany.value = cardCompany.company
+                uiState.cardCompany.value = cardCompany
             },
             onBackClick,
         )
 
-        Column(Modifier.fillMaxSize().padding(innerPadding)) {
+        Column(
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+        ) {
             PaymentCard(
-                modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp),
-                card = CardUiModel.EMPTY.copy(cardCompany = selectedCardCompany.value.toUiModel()),
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 30.dp),
+                card = CardUiModel.EMPTY.copy(cardCompany = uiState.cardCompany.value),
             )
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                CardNumberTextField(card, isCardNumberError)
+                CardNumberTextField(uiState.cardNumber, uiState.isCardNumberError)
 
-                ExpirationDateTextField(card, isExpirationDateError)
+                ExpirationDateTextField(uiState.expirationDate, uiState.isExpirationDateError)
 
-                CardHolderNameTextField(card)
+                CardHolderNameTextField(uiState.cardholderName)
 
-                PasscodeTextField(card, isPasscodeError)
+                PasscodeTextField(uiState.passcode, uiState.isPasscodeError)
             }
         }
     }
