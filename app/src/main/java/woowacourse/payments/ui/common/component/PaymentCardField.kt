@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -23,9 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Composable
 fun PaymentCardField(
+    bankUiModel: BankUiModel,
     modifier: Modifier = Modifier,
     paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
@@ -36,10 +40,18 @@ fun PaymentCardField(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = colorResource(bankUiModel.bankColor),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
+        Text(
+            text = bankUiModel.bankName,
+            color = Color.White,
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = 15.dp, start = 14.dp),
+        )
         Box(
             modifier =
                 Modifier
@@ -113,7 +125,10 @@ private fun PaymentCardFieldPreview(
     Column(
         modifier = Modifier.padding(20.dp),
     ) {
-        PaymentCardField(paymentCardUiModel = paymentCardUiModel)
+        PaymentCardField(
+            paymentCardUiModel = paymentCardUiModel,
+            bankUiModel = BankUiModel.KB,
+        )
     }
 }
 
