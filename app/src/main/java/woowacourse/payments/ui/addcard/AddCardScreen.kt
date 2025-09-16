@@ -40,6 +40,8 @@ fun AddCardScreen(
     val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
     val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
 
+    val selectedCardCompany = remember { mutableStateOf(CardCompany.NONE) }
+
     fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
     fun checkEmptyFields() {
@@ -73,7 +75,7 @@ fun AddCardScreen(
                     cardCompany != CardCompany.NONE
                 }.map(CardCompany::toUiModel),
             { cardCompany: CardCompanyUiModel ->
-                card.value = card.value.copy(cardCompany = cardCompany)
+                selectedCardCompany.value = cardCompany.company
             },
             onBackClick,
         )
@@ -81,7 +83,7 @@ fun AddCardScreen(
         Column(Modifier.fillMaxSize().padding(innerPadding)) {
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp),
-                card.value,
+                card = CardUiModel.EMPTY.copy(cardCompany = selectedCardCompany.value.toUiModel()),
             )
 
             Column(
