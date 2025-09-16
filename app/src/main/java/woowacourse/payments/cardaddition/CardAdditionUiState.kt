@@ -2,7 +2,6 @@ package woowacourse.payments.cardaddition
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.lang.Character.isDigit
 import java.time.Month
 
 @Parcelize
@@ -13,23 +12,6 @@ data class CardAdditionUiState(
     val holderMaxLength: Int = 30,
     val password: String = "",
 ) : Parcelable {
-    fun newCardNumber(newValue: String): CardAdditionUiState {
-        val newCardNumber: String = newValue.filter(::isDigit)
-        return copy(cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH))
-    }
-
-    fun newExpiredDate(newValue: String): CardAdditionUiState {
-        val newDate: String = newValue.filter(::isDigit)
-        return copy(expiredDate = newDate.take(EXPIRED_DATE_LENGTH))
-    }
-
-    fun newHolder(newValue: String): CardAdditionUiState = copy(holder = newValue.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase())
-
-    fun newPassword(newValue: String): CardAdditionUiState {
-        val newPassword: String = newValue.filter(::isDigit)
-        return copy(password = newPassword.take(PASSWORD_LENGTH))
-    }
-
     val isValid: Boolean get() = isValidCardNumber && isValidExpiredDate && isValidPassword
 
     val isValidCardNumber: Boolean get() = cardNumber.length == CARD_NUMBER_LENGTH
@@ -42,9 +24,9 @@ data class CardAdditionUiState(
     val isValidPassword: Boolean get() = password.length == PASSWORD_LENGTH
 
     companion object {
-        private const val CARD_NUMBER_LENGTH: Int = 16
-        private const val PASSWORD_LENGTH: Int = 4
-        private const val EXPIRED_DATE_LENGTH: Int = 4
-        private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
+        const val CARD_NUMBER_LENGTH: Int = 16
+        const val EXPIRED_DATE_LENGTH: Int = 4
+        const val PASSWORD_LENGTH: Int = 4
+        const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
     }
 }

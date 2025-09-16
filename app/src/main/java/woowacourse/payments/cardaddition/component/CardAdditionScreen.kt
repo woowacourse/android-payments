@@ -6,16 +6,13 @@ import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -28,12 +25,15 @@ import woowacourse.payments.ui.component.PaymentCard
 
 @Composable
 fun CardAdditionScreen(
+    state: CardAdditionUiState,
+    onCardNumberChange: (String) -> Unit,
+    onExpiredDateChange: (String) -> Unit,
+    onHolderChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    state: CardAdditionUiState = CardAdditionUiState(),
 ) {
     val activity: Activity? = LocalActivity.current
     val scrollState = rememberScrollState()
-    var state: CardAdditionUiState by rememberSaveable { mutableStateOf(state) }
 
     Scaffold(
         modifier = modifier.testTag("CardAdditionScreen"),
@@ -74,7 +74,7 @@ fun CardAdditionScreen(
             )
             CardNumberTextField(
                 value = state.cardNumber,
-                onValueChange = { value -> state = state.newCardNumber(value) },
+                onValueChange = onCardNumberChange,
                 isError = state.cardNumber.isNotBlank() && !state.isValidCardNumber,
                 modifier =
                     Modifier
@@ -83,7 +83,7 @@ fun CardAdditionScreen(
             )
             ExpiredDateTextField(
                 value = state.expiredDate,
-                onValueChange = { value -> state = state.newExpiredDate(value) },
+                onValueChange = onExpiredDateChange,
                 isError = state.expiredDate.isNotBlank() && !state.isValidExpiredDate,
                 modifier =
                     Modifier
@@ -91,7 +91,7 @@ fun CardAdditionScreen(
             )
             CardOwnerNameTextField(
                 value = state.holder,
-                onValueChange = { value -> state = state.newHolder(value) },
+                onValueChange = onHolderChange,
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -101,7 +101,7 @@ fun CardAdditionScreen(
             )
             PasswordTextField(
                 value = state.password,
-                onValueChange = { value -> state = state.newPassword(value) },
+                onValueChange = onPasswordChange,
                 isError = state.password.isNotBlank() && !state.isValidPassword,
             )
         }
@@ -111,5 +111,12 @@ fun CardAdditionScreen(
 @Preview
 @Composable
 private fun CardAdditionScreenPreview() {
-    CardAdditionScreen()
+    CardAdditionScreen(
+        state = CardAdditionUiState(),
+        onCardNumberChange = {},
+        onExpiredDateChange = {},
+        onHolderChange = {},
+        onPasswordChange = {},
+        modifier = Modifier.fillMaxSize(),
+    )
 }
