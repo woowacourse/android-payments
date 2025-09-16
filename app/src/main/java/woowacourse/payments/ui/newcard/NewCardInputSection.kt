@@ -5,10 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -16,7 +23,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import woowacourse.payments.R
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.newcard.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
@@ -33,6 +42,7 @@ private const val SEPARATOR_EXPIRY = "/"
 private val KEYBOARD_OPTIONS_NUMBER = KeyboardOptions(keyboardType = KeyboardType.Number)
 private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardInputSection(
     newCardUiState: NewCardUiState,
