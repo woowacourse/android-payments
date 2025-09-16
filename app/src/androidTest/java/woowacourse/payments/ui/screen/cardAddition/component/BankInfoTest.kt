@@ -18,7 +18,6 @@ class BankInfoTest {
         // given
         composeRule.setContent {
             BankInfo(
-                onBankSelect = {},
                 issuingBank = IssuingBank.KAKAO,
             )
         }
@@ -32,21 +31,6 @@ class BankInfoTest {
         composeRule
             .onNodeWithContentDescription("카드사 이름")
             .assert(hasText("카카오뱅크"))
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `카드사가_선택되지_않은_경우_이름은_빈_문자열이다`() {
-        // given
-        composeRule.setContent {
-            BankInfo(onBankSelect = {})
-        }
-
-        // when
-        // then
-        composeRule
-            .onNodeWithContentDescription("카드사 이름")
-            .assert(hasText(""))
             .assertIsDisplayed()
     }
 }

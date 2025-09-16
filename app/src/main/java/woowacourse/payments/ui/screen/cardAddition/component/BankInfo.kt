@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,15 +27,13 @@ import woowacourse.payments.ui.model.IssuingBank
 
 @Composable
 fun BankInfo(
-    onBankSelect: (IssuingBank) -> Unit,
     modifier: Modifier = Modifier,
     issuingBank: IssuingBank = IssuingBank.NOT_SELECTED,
 ) {
     val context = LocalContext.current
 
     Column(
-        modifier =
-            modifier.clickable(onClick = { onBankSelect(issuingBank) }),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -65,7 +62,6 @@ fun BankInfo(
 @Composable
 private fun BankInfoPreview() {
     BankInfo(
-        onBankSelect = {},
         issuingBank = IssuingBank.BC,
     )
 }

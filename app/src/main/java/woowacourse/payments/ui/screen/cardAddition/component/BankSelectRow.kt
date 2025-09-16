@@ -1,9 +1,10 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,19 +27,22 @@ fun BankSelectRow(
     val context = LocalContext.current
     FlowRow(
         modifier =
-            modifier.semantics {
-                contentDescription = context.getString(R.string.card_addition_issuing_banks_description)
-            },
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier
+                .fillMaxWidth()
+                .semantics {
+                    contentDescription =
+                        context.getString(R.string.card_addition_issuing_banks_description)
+                },
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalArrangement = Arrangement.spacedBy(24.dp),
         maxItemsInEachRow = column,
     ) {
         issuingBanks.forEach { issuingBank ->
             BankInfo(
-                onBankSelect = onBankSelect,
                 modifier =
                     Modifier
-                        .size(width = 80.dp, height = 70.dp)
+                        .weight(1f)
+                        .clickable(onClick = { onBankSelect(issuingBank) })
                         .semantics {
                             contentDescription =
                                 context.getString(R.string.card_addition_issuing_bank_info_description)
