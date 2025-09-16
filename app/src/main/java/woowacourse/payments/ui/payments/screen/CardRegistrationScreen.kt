@@ -151,7 +151,6 @@ private fun CardRegistrationScreenContent(
 private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: PaymentCardValidator): Boolean =
     paymentCardValidator.validateCardNumber(cardNumber) &&
         paymentCardValidator.validateCardExpirationDate(cardExpirationDate) &&
-        paymentCardValidator.validateCardholderName(cardholderName) &&
         paymentCardValidator.validateCardPassword(cardPassword)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
