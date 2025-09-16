@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,8 +40,10 @@ fun AddCardScreen(
     val stateHolder =
         rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
     val scrollState = rememberScrollState()
-    var isBankSheetVisible by remember { mutableStateOf(true) }
+    var showBottomSheetState by remember { mutableStateOf(false) }
     var selectedBank by remember { mutableStateOf(BankType.NOT_SELECTED) }
+
+    LaunchedEffect(Unit) { showBottomSheetState = true }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -104,20 +107,18 @@ fun AddCardScreen(
         }
     }
 
-    BankSelectBottomSheet(
-        isVisible = isBankSheetVisible,
-        selectedBank = selectedBank,
-        onBankSelected = { bank ->
-            selectedBank = bank
-            isBankSheetVisible = false
-
-            val cardCompany = bank.toCardCompanyUiModel()
-            stateHolder.updateCardCompany(cardCompany)
-        },
-        onDismiss = {
-            isBankSheetVisible = false
-        },
-    )
+    if (showBottomSheetState) {
+        BankSelectBottomSheet(
+            selectedBank = selectedBank,
+            onBankSelected = { bank ->
+                selectedBank = bank
+                val cardCompany = bank.toCardCompanyUiModel()
+                stateHolder.updateCardCompany(cardCompany)
+                showBottomSheetState = false
+            },
+            onDismiss = { showBottomSheetState = false },
+        )
+    }
 }
 
 @Composable
