@@ -39,15 +39,7 @@ fun AddCardScreen(
         if (uiState.isError) {
             onSaveFailure()
         } else {
-            onSaveSuccess(
-                CardUiModel(
-                    uiState.cardNumber.value,
-                    uiState.expirationDate.value,
-                    uiState.cardholderName.value,
-                    uiState.passcode.value,
-                    uiState.cardCompany.value,
-                ),
-            )
+            onSaveSuccess(uiState.card)
         }
     }
 
