@@ -14,7 +14,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 data class CardRegistrationScreenUiState(
     val cardNumber: CardNumberUiModel = CardNumberUiModel(),
     val cardExpirationDate: CardExpirationDateUiModel = CardExpirationDateUiModel(),
-    val cardholderName: CardholderNameUiModel = CardholderNameUiModel(maxLength = 0),
+    val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
@@ -25,7 +25,9 @@ data class CardRegistrationScreenUiState(
     val cardNumberErrorMessageResId: Int? =
         when (cardNumber.state) {
             CardNumberUiModel.State.INVALID -> R.string.common_invalid_format_error_message
-            else -> null
+            CardNumberUiModel.State.NOT_FILLED,
+            CardNumberUiModel.State.VALID,
+            -> null
         }
 
     @IgnoredOnParcel
@@ -33,21 +35,25 @@ data class CardRegistrationScreenUiState(
         when (cardExpirationDate.state) {
             CardExpirationDateUiModel.State.INVALID_FORMAT -> R.string.card_expiration_date_invalid_date_error_message
             CardExpirationDateUiModel.State.EXPIRED -> R.string.card_expiration_date_expired_error_message
-            else -> null
+            CardExpirationDateUiModel.State.NOT_FILLED,
+            CardExpirationDateUiModel.State.VALID,
+            -> null
         }
 
     @IgnoredOnParcel
     val cardholderNameErrorMessageResId: Int? =
         when (cardholderName.state) {
             CardholderNameUiModel.State.INVALID -> R.string.common_invalid_format_error_message
-            else -> null
+            CardholderNameUiModel.State.VALID -> null
         }
 
     @IgnoredOnParcel
     val cardPasswordErrorMessageResId: Int? =
         when (cardPassword.state) {
             CardPasswordUiModel.State.INVALID -> R.string.common_invalid_format_error_message
-            else -> null
+            CardPasswordUiModel.State.NOT_FILLED,
+            CardPasswordUiModel.State.VALID,
+            -> null
         }
 
     fun toPaymentCardUiModel(): PaymentCardUiModel =
