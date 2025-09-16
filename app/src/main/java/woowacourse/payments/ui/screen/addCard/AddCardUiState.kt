@@ -1,16 +1,20 @@
 package woowacourse.payments.ui.screen.addCard
 
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.util.toCardCompanyUiModel
 
 data class AddCardUiState(
     val cardNumber: CardNumber = CardNumber(""),
     val expired: Expired = Expired(""),
     val cardOwner: CardOwner = CardOwner(""),
     val password: Password = Password(""),
+    val cardCompanyUiModel: CardCompanyUiModel = BankType.NOT_SELECTED.toCardCompanyUiModel(),
     val errors: Set<AddCardError> = emptySet(),
 ) {
     val isFormValid: Boolean = errors.isEmpty()
@@ -30,6 +34,7 @@ data class AddCardUiState(
 
     fun toCardUiModel(): CardUiModel =
         CardUiModel(
+            cardCompanyUiModel = cardCompanyUiModel,
             number = cardNumber.value,
             expired = expired.value,
             owner = cardOwner.value,
