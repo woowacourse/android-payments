@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.registration
 
+import androidx.compose.runtime.saveable.Saver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import woowacourse.payments.domain.CardExpirationDate
@@ -11,7 +12,6 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardRegistrationScreenViewModel(
     initialUiState: CardRegistrationScreenUiState =
@@ -25,17 +25,16 @@ class CardRegistrationScreenViewModel(
     private var _uiState = MutableLiveData(initialUiState)
     val uiState: LiveData<CardRegistrationScreenUiState> get() = _uiState
 
-    private var _uiEvent =
-        MutableLiveData<CardRegistrationScreenUiEvent>(CardRegistrationScreenUiEvent.None)
-    val uiEvent: LiveData<CardRegistrationScreenUiEvent> =
-        _uiEvent.also { _uiEvent.value = CardRegistrationScreenUiEvent.None }
+    private var _uiEvent = MutableLiveData<CardRegistrationScreenUiEvent?>()
+    val uiEvent: LiveData<CardRegistrationScreenUiEvent?>
+        get() = _uiEvent.also { _uiEvent.value = null }
 
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }
             .onSuccess { newValue ->
                 _uiState.update { copy(cardNumber = CardNumberUiModel.from(newValue)) }
             }.onFailure { exception ->
-                if (exception !is CardNumber.CardNumberError) return@onFailure
+                if (exception !is CardNumber.CardNumberException) return@onFailure
                 handleCardNumberError(cardNumber, exception)
             }
     }
@@ -46,7 +45,7 @@ class CardRegistrationScreenViewModel(
                 val newExpirationDate = CardExpirationDateUiModel.from(newValue)
                 _uiState.update { copy(cardExpirationDate = newExpirationDate) }
             }.onFailure { exception ->
-                if (exception !is CardExpirationDate.CardExpirationDateError) return@onFailure
+                if (exception !is CardExpirationDate.CardExpirationDateException) return@onFailure
                 handleCardExpirationDateError(cardExpirationDate, exception)
             }
     }
@@ -57,7 +56,7 @@ class CardRegistrationScreenViewModel(
                 val newCardholderName = CardholderNameUiModel.from(newValue)
                 _uiState.update { copy(cardholderName = newCardholderName) }
             }.onFailure { exception ->
-                if (exception !is CardholderName.CardholderNameError) return@onFailure
+                if (exception !is CardholderName.CardholderNameException) return@onFailure
                 handleCardholderNameError(exception)
             }
     }
@@ -67,23 +66,24 @@ class CardRegistrationScreenViewModel(
             .onSuccess { newValue ->
                 _uiState.update { copy(cardPassword = CardPasswordUiModel.from(newValue)) }
             }.onFailure { exception ->
-                if (exception !is CardPassword.CardPasswordError) return@onFailure
+                if (exception !is CardPassword.CardPasswordException) return@onFailure
                 handleCardPasswordError(cardPassword, exception)
             }
     }
 
     fun registerCard() {
         if (_uiState.value?.isSaveButtonEnabled == false) return
-        val paymentCard = _uiState.value?.toPaymentCard() ?: return
-        _uiEvent.update { CardRegistrationScreenUiEvent.RegisteredCard(paymentCard) }
+        val paymentCard = _uiState.value?.toPaymentCardUiModel() ?: return
+        _uiEvent.value = CardRegistrationScreenUiEvent.RegisteredCard(paymentCard)
     }
 
     private fun handleCardNumberError(
         newCardNumber: String,
-        exception: CardNumber.CardNumberError,
+        exception: CardNumber.CardNumberException,
     ) {
         when (exception) {
-            is CardNumber.CardNumberError.InsufficientLength -> {
+            is CardNumber.CardNumberException.InvalidLengthException -> {
+                if (exception.kind == CardNumber.CardNumberException.InvalidLengthException.Kind.EXCEEDS) return
                 _uiState.update {
                     cardNumber
                         .copy(number = newCardNumber, state = CardNumberUiModel.State.NOT_FILLED)
@@ -91,18 +91,17 @@ class CardRegistrationScreenViewModel(
                 }
             }
 
-            is CardNumber.CardNumberError.ExceedsLength,
-            is CardNumber.CardNumberError.NonDigit,
-            -> Unit
+            is CardNumber.CardNumberException.NonDigitException -> Unit
         }
     }
 
     private fun handleCardExpirationDateError(
         newCardExpirationDate: String,
-        exception: CardExpirationDate.CardExpirationDateError,
+        exception: CardExpirationDate.CardExpirationDateException,
     ) {
         when (exception) {
-            is CardExpirationDate.CardExpirationDateError.InsufficientLength -> {
+            is CardExpirationDate.CardExpirationDateException.InvalidLengthException -> {
+                if (exception.kind == CardExpirationDate.CardExpirationDateException.InvalidLengthException.Kind.EXCEEDS) return
                 _uiState.update {
                     cardExpirationDate
                         .copy(
@@ -112,7 +111,7 @@ class CardRegistrationScreenViewModel(
                 }
             }
 
-            is CardExpirationDate.CardExpirationDateError.UnsupportedDate -> {
+            is CardExpirationDate.CardExpirationDateException.UnsupportedDateException -> {
                 _uiState.update {
                     cardExpirationDate
                         .copy(
@@ -122,26 +121,25 @@ class CardRegistrationScreenViewModel(
                 }
             }
 
-            is CardExpirationDate.CardExpirationDateError.ExceedsLength,
-            is CardExpirationDate.CardExpirationDateError.NonDigit,
-            -> Unit
+            is CardExpirationDate.CardExpirationDateException.NonDigitException -> Unit
         }
     }
 
-    private fun handleCardholderNameError(exception: CardholderName.CardholderNameError) {
+    private fun handleCardholderNameError(exception: CardholderName.CardholderNameException) {
         when (exception) {
-            is CardholderName.CardholderNameError.ExceedsLength,
-            is CardholderName.CardholderNameError.InvalidFormat,
+            is CardholderName.CardholderNameException.ExceedsLengthException,
+            is CardholderName.CardholderNameException.InvalidFormatException,
             -> Unit
         }
     }
 
     private fun handleCardPasswordError(
         newCardPassword: String,
-        exception: CardPassword.CardPasswordError,
+        exception: CardPassword.CardPasswordException,
     ) {
         when (exception) {
-            is CardPassword.CardPasswordError.InsufficientLength -> {
+            is CardPassword.CardPasswordException.InvalidLengthException -> {
+                if (exception.kind == CardPassword.CardPasswordException.InvalidLengthException.Kind.EXCEEDS) return
                 _uiState.update {
                     cardPassword
                         .copy(
@@ -151,16 +149,15 @@ class CardRegistrationScreenViewModel(
                 }
             }
 
-            is CardPassword.CardPasswordError.ExceedsLength,
-            is CardPassword.CardPasswordError.NonDigit,
-            -> Unit
+            is CardPassword.CardPasswordException.NonDigitException -> Unit
         }
     }
 
-    private fun CardRegistrationScreenUiState.toPaymentCard() =
-        PaymentCardUiModel(
-            number = cardNumber,
-            expirationDate = cardExpirationDate,
-            cardholderName = cardholderName,
-        )
+    companion object {
+        val saver: Saver<CardRegistrationScreenViewModel, CardRegistrationScreenUiState> =
+            Saver(
+                save = { viewModel -> viewModel.uiState.value },
+                restore = { uiState -> CardRegistrationScreenViewModel(uiState) },
+            )
+    }
 }
