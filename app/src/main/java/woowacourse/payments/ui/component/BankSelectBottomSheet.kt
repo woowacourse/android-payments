@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -33,20 +32,6 @@ import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.BankType.NOT_SELECTED
 import woowacourse.payments.ui.util.toCardCompanyUiModel
 
-private const val COLUMN_COUNT = 4
-private const val ROW_COUNT = 2
-val bankList =
-    listOf(
-        BankType.BC,
-        BankType.SHINHAN,
-        BankType.KAKAOBANK,
-        BankType.HYUNDAI,
-        BankType.WOORI,
-        BankType.LOTTE,
-        BankType.HANA,
-        BankType.KB,
-    )
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
@@ -54,10 +39,7 @@ fun BankSelectBottomSheet(
     onBankSelected: (BankType) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val modalBottomSheetState =
-        rememberModalBottomSheetState(
-            confirmValueChange = { false },
-        )
+    val modalBottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var selectedBank by remember { mutableStateOf(selectedBank) }
 
     LaunchedEffect(key1 = selectedBank) {
@@ -77,33 +59,18 @@ fun BankSelectBottomSheet(
                     .fillMaxWidth()
                     .padding(horizontal = 28.dp, vertical = 48.dp),
         ) {
-            BankSelectRow(
-                bankList = bankList,
-                onBankSelected = { bank ->
-                    selectedBank = bank
-                },
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun BankSelectRow(
-    bankList: List<BankType>,
-    onBankSelected: (BankType) -> Unit,
-) {
-    FlowRow(
-        modifier = Modifier.padding(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
-        maxItemsInEachRow = COLUMN_COUNT,
-    ) {
-        bankList.take(ROW_COUNT * COLUMN_COUNT).forEach { bank ->
-            BankSelectItem(
-                bankType = bank,
-                onClick = { onBankSelected(bank) },
-            )
+            FlowRow(
+                modifier = Modifier.padding(4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+            ) {
+                BankType.entries.filter { it != NOT_SELECTED }.forEach { bank ->
+                    BankSelectItem(
+                        bankType = bank,
+                        onClick = { onBankSelected(bank) },
+                    )
+                }
+            }
         }
     }
 }
@@ -159,9 +126,9 @@ fun BankSelectItemPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun BankSelectRowPreview() {
-    BankSelectRow(
-        bankList = BankType.entries,
+fun BankSelectBottomSheetPreview() {
+    BankSelectBottomSheet(
         onBankSelected = {},
+        onDismiss = { },
     )
 }
