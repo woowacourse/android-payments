@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
+import woowacourse.payments.CardUiModelFixture
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardList.CardListScreen
 import woowacourse.payments.ui.screen.cardList.CardListStateHolder
@@ -22,8 +23,8 @@ class CardListScreenTest {
 
     @Before
     fun setUp() {
-        card1 = CardUiModel("1234567887654321", "1221", "aaaa")
-        card2 = CardUiModel("8765432112345678", "1122", "bbbb")
+        card1 = CardUiModelFixture.card1
+        card2 = CardUiModelFixture.card2
     }
 
     @Test
