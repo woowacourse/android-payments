@@ -1,5 +1,5 @@
 package woowacourse.payments.cards
 
-sealed interface CardsUiEvent {
-    data object AddCardSuccess : CardsUiEvent
+enum class CardsUiEvent {
+    AddCardSuccess,
 }
