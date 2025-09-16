@@ -26,6 +26,7 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 fun AddCardScreen(
     cardInfo: CardInfoUiState,
     modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {},
 ) {
     Column(
         modifier =
@@ -38,6 +39,7 @@ fun AddCardScreen(
         Card(
             cardInfoUiState = cardInfo,
             showCardInfo = false,
+            onClick = onCardClick,
         )
         Column {
             Spacer(modifier = Modifier.height(40.dp))

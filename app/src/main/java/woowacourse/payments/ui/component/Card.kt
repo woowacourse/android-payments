@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,10 +34,12 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 fun Card(
     cardInfoUiState: CardInfoUiState,
     showCardInfo: Boolean = false,
+    onClick:()->Unit = {}
 ) {
     Box(
         modifier =
             Modifier
+                .clickable { onClick() }
                 .height(124.dp)
                 .shadow(8.dp)
                 .width(208.dp)

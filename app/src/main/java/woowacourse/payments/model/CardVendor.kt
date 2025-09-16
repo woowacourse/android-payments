@@ -1,6 +1,6 @@
 package woowacourse.payments.model
 
-enum class CardVendors {
+enum class CardVendor {
     BCCard,
     ShinHanCard,
     KakaoBank,

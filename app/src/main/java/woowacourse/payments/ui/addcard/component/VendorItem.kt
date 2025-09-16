@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.addcard.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,9 +21,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.VendorUiModel
 
 @Composable
-fun VendorItem(vendor: VendorUiModel) {
+fun VendorItem(
+    vendor: VendorUiModel,
+    modifier: Modifier = Modifier,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier,
     ) {
         Image(
             modifier =

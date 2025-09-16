@@ -21,18 +21,22 @@ data class CardInfoUiState(
         private set
     var isExpirationDateValid by mutableStateOf(CardInfo.checkIsValidMonth(expireDate))
         private set
+    var vendor by mutableStateOf(cardInfoUiModel.vendor)
+        private set
 
     fun updateCardInfo(
         cardNumber: String = this.cardNumber,
         expireDate: String = this.expireDate,
         ownerName: String = this.ownerName,
         password: String = this.password,
+        vendor: VendorUiModel? = this.vendor,
     ) {
         this.cardNumber = CardInfo.formatCardNumber(cardNumber)
         this.expireDate = CardInfo.formatExpireDate(expireDate)
         this.ownerName = CardInfo.formatOwnerName(ownerName)
         this.password = CardInfo.formatPassword(password)
         this.isExpirationDateValid = CardInfo.checkIsValidMonth(expireDate)
+        this.vendor = vendor
         cardInfoUiModel = CardInfoUiModel(cardNumber, expireDate, ownerName, password)
     }
 }
