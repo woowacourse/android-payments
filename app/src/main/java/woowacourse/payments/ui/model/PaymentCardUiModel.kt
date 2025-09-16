@@ -3,7 +3,6 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.extension.coerceInLength
 
 @Parcelize
 data class PaymentCardUiModel(
@@ -28,6 +27,8 @@ data class PaymentCardUiModel(
 
     @IgnoredOnParcel
     val upperCardholderName: String = cardholderName.displayedName.uppercase()
+
+    private fun IntRange.coerceInLength(length: Int): IntRange = (first.coerceAtMost(length)..last.coerceAtMost(length - 1))
 
     companion object {
         private const val DEFAULT_EXPIRATION_DATE_SEPARATOR = " / "
