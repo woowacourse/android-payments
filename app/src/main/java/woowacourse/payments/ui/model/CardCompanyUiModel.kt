@@ -21,7 +21,7 @@ fun CardCompany.toUiModel(): CardCompanyUiModel =
                 CardCompany.NONE,
                 "",
                 R.drawable.icon_no_icon,
-                0xFF000000,
+                0xFF333333,
             )
 
         CardCompany.BC_CARD ->
