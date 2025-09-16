@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cards.component
 
-import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -20,10 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -52,23 +48,17 @@ fun CardsScreen(
     val stateHolder =
         rememberSaveable(saver = CardsUiStateHolder.Saver) { CardsUiStateHolder(initialState) }
     val uiState = stateHolder.uiState
-    var cardsUiEvent by rememberSaveable { mutableStateOf<CardsUiEvent>(CardsUiEvent.None) }
     val context = LocalContext.current
-    val launcher =
-        rememberCardAdditionLauncher(
-            onCardAdded = { newCard -> stateHolder.update(newCard) },
-            onEvent = { newEvent -> cardsUiEvent = newEvent },
-        )
+    val launcher = rememberCardAdditionLauncher { newCard -> stateHolder.update(newCard) }
 
-    LaunchedEffect(cardsUiEvent) {
-        when (cardsUiEvent) {
+    LaunchedEffect(stateHolder.uiEvent) {
+        when (stateHolder.uiEvent) {
             CardsUiEvent.AddCardFailure -> context.showToast(R.string.cards_card_addition_failure)
 
             CardsUiEvent.AddCardSuccess -> context.showToast(R.string.cards_card_addition_success)
 
             CardsUiEvent.None -> Unit
         }
-        cardsUiEvent = CardsUiEvent.None
     }
 
     Scaffold(
@@ -93,24 +83,13 @@ fun CardsScreen(
 }
 
 @Composable
-private fun rememberCardAdditionLauncher(
-    onCardAdded: (CardUiModel) -> Unit,
-    onEvent: (CardsUiEvent) -> Unit,
-): ManagedActivityResultLauncher<Intent, ActivityResult> =
+private fun rememberCardAdditionLauncher(onCardAdded: (CardUiModel?) -> Unit): ManagedActivityResultLauncher<Intent, ActivityResult> =
     rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
     ) { result ->
-        when (result.resultCode) {
-            RESULT_OK -> {
-                val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
-                card?.let { card ->
-                    onCardAdded(card)
-                    onEvent(CardsUiEvent.AddCardSuccess)
-                } ?: onEvent(CardsUiEvent.AddCardFailure)
-            }
-
-            RESULT_CANCELED -> return@rememberLauncherForActivityResult
-            else -> onEvent(CardsUiEvent.AddCardFailure)
+        if (result.resultCode == RESULT_OK) {
+            val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
+            onCardAdded(card)
         }
     }
 
