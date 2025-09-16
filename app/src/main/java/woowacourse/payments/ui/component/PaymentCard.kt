@@ -19,8 +19,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.toCardCompanyUiModel
 
 @Composable
 fun PaymentCard(
@@ -33,7 +35,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = card.cardCompanyUiModel.backgroundColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
         contentAlignment = Alignment.CenterStart,
@@ -87,11 +89,28 @@ fun PaymentCard(
 
 @Composable
 @Preview(showBackground = true)
-fun PaymentPreview() {
+fun BCCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
                 CardUiModel(
+                    cardCompanyUiModel = BankType.WOORI.toCardCompanyUiModel(),
+                    number = "1234567887654321",
+                    expired = "0826",
+                    owner = "으어 글씨가 너무 크다.",
+                ),
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun WooriCardPreview() {
+    AndroidpaymentsTheme {
+        PaymentCard(
+            card =
+                CardUiModel(
+                    cardCompanyUiModel = BankType.KAKAOBANK.toCardCompanyUiModel(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
