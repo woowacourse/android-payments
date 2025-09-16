@@ -36,7 +36,7 @@ fun BankSelectRow(
             BankItem(
                 bank = bank,
                 onClick = { onSelect(bank) },
-                modifier = Modifier.width(80.dp),
+                modifier = Modifier.width(96.dp),
             )
         }
     }

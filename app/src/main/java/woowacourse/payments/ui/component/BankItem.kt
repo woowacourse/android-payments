@@ -21,27 +21,27 @@ import woowacourse.payments.ui.model.mapper.toUiModel
 @Composable
 fun BankItem(
     bank: BankType,
-    onClick: () -> Unit,
+    onClick: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bank = bank.toUiModel()
+    val bankUiModel = bank.toUiModel()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
             modifier
                 .padding(8.dp)
-                .clickable { onClick },
+                .clickable { onClick(bank) },
     ) {
-        if (bank != null) {
+        if (bankUiModel != null) {
             Image(
-                painter = painterResource(bank.logoRes),
-                contentDescription = stringResource(bank.nameRes),
+                painter = painterResource(bankUiModel.logoRes),
+                contentDescription = stringResource(bankUiModel.nameRes),
                 modifier = Modifier.size(36.dp),
             )
 
             Spacer(Modifier.height(4.dp))
 
-            Text(text = stringResource(bank.nameRes))
+            Text(text = stringResource(bankUiModel.nameRes))
         }
     }
 }
