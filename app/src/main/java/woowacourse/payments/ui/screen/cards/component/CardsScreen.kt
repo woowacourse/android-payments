@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.cards.component
 
+import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -99,14 +100,17 @@ private fun rememberCardAdditionLauncher(
     rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
     ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
-            card?.let { card ->
-                onCardAdded(card)
-                onEvent(CardsUiEvent.AddCardSuccess)
+        when (result.resultCode) {
+            RESULT_OK -> {
+                val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
+                card?.let { card ->
+                    onCardAdded(card)
+                    onEvent(CardsUiEvent.AddCardSuccess)
+                } ?: onEvent(CardsUiEvent.AddCardFailure)
             }
-        } else {
-            onEvent(CardsUiEvent.AddCardFailure)
+
+            RESULT_CANCELED -> return@rememberLauncherForActivityResult
+            else -> onEvent(CardsUiEvent.AddCardFailure)
         }
     }
 
