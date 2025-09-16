@@ -22,7 +22,11 @@ data class CardRegistrationScreenUiState(
 ) : Parcelable {
     @IgnoredOnParcel
     val canRegisterCard: Boolean =
-        cardNumber.isValid && cardExpirationDate.isValid && cardholderName.isValid && cardPassword.isValid
+        cardNumber.isValid &&
+            cardExpirationDate.isValid &&
+            cardholderName.isValid &&
+            cardPassword.isValid &&
+            bankType != BankTypeUiModel.NOT_SELECTED
 
     @IgnoredOnParcel
     val cardNumberErrorMessageResId: Int? =
