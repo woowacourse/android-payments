@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
@@ -27,6 +28,7 @@ class PaymentCardTest {
     private val yearMonth = ExpirationDateInputParser.parse("1226")
     private val card =
         Card(
+            type = BankType.BC,
             cardNumber = CardNumber.from("1111222233334444"),
             expirationDate = ExpirationDate.from(yearMonth),
             userName = UserName.from("KIMGAHYUN"),
@@ -43,6 +45,7 @@ class PaymentCardTest {
 
         composeTestRule.onNodeWithTag("PaymentCardContainer").assertIsDisplayed()
 
+        composeTestRule.onNodeWithText("BC카드")
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("12 / 26").assertIsDisplayed()
         composeTestRule.onNodeWithText("KIMGAHYUN").assertIsDisplayed()
