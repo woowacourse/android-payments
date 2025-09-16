@@ -26,8 +26,8 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.toBankUiModel
 
 @Composable
 fun AddCardScreen(
@@ -104,7 +104,7 @@ fun AddCardScreen(
     if (showBottomSheetState) {
         BankSelectBottomSheet(
             onBankSelected = { bank ->
-                stateHolder.updateBank(bank.toBankUiModel())
+                stateHolder.updateBank(bank.toPresentation())
                 showBottomSheetState = false
             },
             onDismiss = { showBottomSheetState = false },

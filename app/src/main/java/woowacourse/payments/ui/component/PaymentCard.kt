@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.GOLD
-import woowacourse.payments.ui.util.toBankUiModel
 
 @Composable
 fun PaymentCard(
@@ -44,7 +44,7 @@ fun PaymentCard(
             text = card.bankUiModel.name,
             modifier =
                 Modifier
-                    .padding(start = 12.dp, top = 12.dp)
+                    .padding(start = 14.dp, top = 12.dp)
                     .align(Alignment.TopStart),
             color = Color.White,
             fontSize = 12.sp,
@@ -59,8 +59,7 @@ fun PaymentCard(
                     .background(
                         color = GOLD,
                         shape = RoundedCornerShape(4.dp),
-                    )
-                    .align(Alignment.CenterStart),
+                    ).align(Alignment.CenterStart),
         )
 
         Column(
@@ -68,7 +67,7 @@ fun PaymentCard(
                 Modifier
                     .align(Alignment.BottomStart)
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 14.dp, vertical = 8.dp),
         ) {
             Text(
                 text = card.formattedNumber,
@@ -106,7 +105,7 @@ fun BCCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.WOORI.toBankUiModel(),
+                    bankUiModel = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
@@ -122,7 +121,7 @@ fun WooriCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.KAKAOBANK.toBankUiModel(),
+                    bankUiModel = BankType.KAKAOBANK.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

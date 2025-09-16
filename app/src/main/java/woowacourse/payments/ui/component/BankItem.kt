@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.util.toBankUiModel
+import woowacourse.payments.ui.model.toPresentation
 
 @Composable
 fun BankItem(
@@ -34,13 +34,13 @@ fun BankItem(
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Image(
-            painter = painterResource(id = bankType.toBankUiModel().logoRes),
+            painter = painterResource(id = bankType.toPresentation().logoRes),
             contentDescription = stringResource(R.string.bank_item_content_description),
             modifier = Modifier.size(48.dp),
         )
 
         Text(
-            text = bankType.toBankUiModel().name,
+            text = bankType.toPresentation().name,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
         )

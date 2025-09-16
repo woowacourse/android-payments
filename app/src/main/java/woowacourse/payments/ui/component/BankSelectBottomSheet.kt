@@ -24,8 +24,9 @@ fun BankSelectBottomSheet(
     val modalBottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
 
     ModalBottomSheet(
-        sheetState = modalBottomSheetState,
         onDismissRequest = { onDismiss() },
+        sheetState = modalBottomSheetState,
+        dragHandle = null,
     ) {
         Column(
             modifier =
