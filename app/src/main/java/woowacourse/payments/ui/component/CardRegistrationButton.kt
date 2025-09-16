@@ -44,7 +44,7 @@ fun CardRegistrationButton(
 
 @Preview
 @Composable
-fun CardRegistrationButtonPreview() {
+private fun CardRegistrationButtonPreview() {
     CardRegistrationButton(
         onClick = {},
     )
