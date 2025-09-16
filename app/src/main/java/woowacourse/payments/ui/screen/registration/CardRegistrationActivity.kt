@@ -15,7 +15,7 @@ class CardRegistrationActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardRegistrationScreen(
-                    onBackClick = { finish() },
+                    onBackClick = ::finish,
                     onRegistrationComplete = { newCard ->
                         setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, newCard))
                         finish()
