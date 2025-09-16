@@ -4,6 +4,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
@@ -56,16 +57,15 @@ class CardRegistrationScreenTest {
 
         // when
         composeTestRule
-            .onNode(
-                hasText("국민카드") and hasClickAction(),
-            ).performClick()
+            .onNode(hasText("국민카드") and hasClickAction())
+            .performClick()
 
         composeTestRule.waitForIdle()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("카드사 이름", useUnmergedTree = true)
-            .assertTextEquals("국민카드")
+            .onNodeWithContentDescription("카드")
+            .assertTextContains("국민카드")
     }
 
     @Test

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,14 +46,12 @@ fun PaymentCard(
                 .shadow(8.dp, RoundedCornerShape(cornerRadius.dp))
                 .size(width = 208.dp, height = 124.dp)
                 .background(backgroundColor, RoundedCornerShape(cornerRadius.dp))
-                .padding(12.dp),
+                .padding(12.dp)
+                .semanticsContentDescription(R.string.payment_card_content_description),
     ) {
         PaymentCardText(
             text = bankName,
-            modifier =
-                Modifier
-                    .align(Alignment.TopStart)
-                    .semanticsContentDescription(R.string.payment_card_bank_name_content_description),
+            modifier = Modifier.align(Alignment.TopStart),
         )
         PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
         PaymentCardInfoBlock(
@@ -115,7 +112,6 @@ private fun PaymentCardInfoBlock(
         PaymentCardText(
             text = number,
             letterSpacing = 2.sp,
-            modifier = Modifier.semanticsContentDescription(R.string.payment_card_number_content_description),
         )
 
         Row(
@@ -124,15 +120,9 @@ private fun PaymentCardInfoBlock(
         ) {
             PaymentCardText(
                 text = cardholderName,
-                modifier =
-                    Modifier
-                        .weight(1f)
-                        .semanticsContentDescription(R.string.payment_cardholder_name_content_description),
+                modifier = Modifier.weight(1f),
             )
-            PaymentCardText(
-                text = expirationDate,
-                modifier = Modifier.semanticsContentDescription(R.string.payment_card_expiration_date_content_description),
-            )
+            PaymentCardText(text = expirationDate)
         }
     }
 }
