@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -63,14 +64,19 @@ fun PaymentCard(
 private fun PaymentCardText(
     text: String,
     modifier: Modifier = Modifier,
+    color: Color = Color.White,
+    fontSize: TextUnit = 16.sp,
+    letterSpacing: TextUnit = 1.sp,
+    lineHeight: TextUnit = 1.em,
+    fontWeight: FontWeight = FontWeight.W500,
 ) {
     Text(
         text = text,
-        color = Color.White,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.W500,
-        letterSpacing = 1.sp,
-        lineHeight = 1.em,
+        color = color,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        letterSpacing = letterSpacing,
+        lineHeight = lineHeight,
         modifier = modifier,
     )
 }
