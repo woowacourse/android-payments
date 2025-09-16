@@ -10,16 +10,23 @@ value class CardExpirationDate private constructor(
 ) {
     fun isExpired(now: YearMonth = YearMonth.now()): Boolean = value < now
 
-    sealed class CardExpirationDateError(
+    sealed class CardExpirationDateException(
         message: String,
     ) : Exception(message) {
-        class ExceedsLength : CardExpirationDateError("만료일은 ${VALID_CARD_EXPIRATION_DATE_LENGTH}자리여야 합니다. (입력값이 너무 깁니다)")
+        class InvalidLengthException(
+            val kind: Kind,
+        ) : CardExpirationDateException("만료일은 ${VALID_CARD_EXPIRATION_DATE_LENGTH}자리여야 합니다.") {
+            enum class Kind { INSUFFICIENT, EXCEEDS }
+        }
 
-        class InsufficientLength : CardExpirationDateError("만료일은 ${VALID_CARD_EXPIRATION_DATE_LENGTH}자리여야 합니다. (입력값이 너무 짧습니다)")
+        data object NonDigitException : CardExpirationDateException("만료일은 숫자만 입력할 수 있습니다.") {
+            private fun readResolve(): Any = NonDigitException
+        }
 
-        class NonDigit : CardExpirationDateError("만료일은 숫자만 입력할 수 있습니다.")
-
-        class UnsupportedDate : CardExpirationDateError("존재하지 않거나 유효하지 않은 만료일입니다.")
+        data object UnsupportedDateException :
+            CardExpirationDateException("존재하지 않거나 유효하지 않은 만료일입니다.") {
+            private fun readResolve(): Any = UnsupportedDateException
+        }
     }
 
     companion object {
@@ -27,13 +34,19 @@ value class CardExpirationDate private constructor(
         private val formatter = DateTimeFormatter.ofPattern("MMyy")
 
         fun from(value: String): CardExpirationDate {
-            if (!value.isDigitsOnly()) throw CardExpirationDateError.NonDigit()
-            if (value.length < VALID_CARD_EXPIRATION_DATE_LENGTH) throw CardExpirationDateError.InsufficientLength()
-            if (value.length > VALID_CARD_EXPIRATION_DATE_LENGTH) throw CardExpirationDateError.ExceedsLength()
+            if (!value.isDigitsOnly()) throw CardExpirationDateException.NonDigitException
+            if (value.length < VALID_CARD_EXPIRATION_DATE_LENGTH) {
+                throw CardExpirationDateException.InvalidLengthException(
+                    CardExpirationDateException.InvalidLengthException.Kind.INSUFFICIENT,
+                )
+            }
+            if (value.length > VALID_CARD_EXPIRATION_DATE_LENGTH) {
+                throw CardExpirationDateException.InvalidLengthException(CardExpirationDateException.InvalidLengthException.Kind.EXCEEDS)
+            }
 
             return runCatching { YearMonth.parse(value, formatter) }
                 .mapCatching { yearMonth -> CardExpirationDate(yearMonth) }
-                .getOrElse { throw CardExpirationDateError.UnsupportedDate() }
+                .getOrElse { throw CardExpirationDateException.UnsupportedDateException }
         }
     }
 }
