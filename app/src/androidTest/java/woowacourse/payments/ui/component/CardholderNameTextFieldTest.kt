@@ -112,7 +112,7 @@ class CardholderNameTextFieldTest {
     }
 
     @Test
-    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+    fun `오류_메시지가_제공되면_오류_텍스트가_보인다`() {
         // given
         setup(errorMessage = "형식이 올바르지 않습니다.")
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)

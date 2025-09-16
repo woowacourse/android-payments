@@ -63,7 +63,7 @@ class CardPasswordTextFieldTest {
     }
 
     @Test
-    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+    fun `오류_메시지가_제공되면_오류_텍스트가_보인다`() {
         // given
         setup(errorMessage = "형식이 올바르지 않습니다.")
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)
@@ -80,7 +80,7 @@ class CardPasswordTextFieldTest {
     }
 
     @Test
-    fun `값을_입력하면_비밀번호가_보인다`() {
+    fun `카드_비밀번호_입력이_있으면_입력된_비밀번호가_보인다`() {
         // given
         setup()
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)
@@ -99,7 +99,7 @@ class CardPasswordTextFieldTest {
     }
 
     @Test
-    fun `값을_입력하고_VisualTransformation을_적용하면_포맷팅된_비밀번호가_보인다`() {
+    fun `입력이_있을_때_VisualTransformation을_적용하면_포맷팅된_비밀번호가_보인다`() {
         // given
         setup(visualTransformation = PasswordVisualTransformation())
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)

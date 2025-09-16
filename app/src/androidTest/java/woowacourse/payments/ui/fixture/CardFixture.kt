@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.fixture
 
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
@@ -31,8 +32,11 @@ val VALIDATED_CARD_PASSWORD =
         state = CardPasswordUiModel.State.VALID,
     )
 
+val KB_BANK = BankTypeUiModel.KB
+
 val PAYMENT_CARD =
     PaymentCardUiModel(
+        bankType = KB_BANK,
         number = VALIDATED_CARD_NUMBER,
         expirationDate = VALIDATED_CARD_EXPIRATION_DATE,
         cardholderName = VALIDATED_CARD_HOLDER_NAME,
