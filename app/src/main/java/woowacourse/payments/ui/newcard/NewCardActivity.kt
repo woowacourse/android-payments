@@ -24,11 +24,13 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             var bankSheetVisible by rememberSaveable { mutableStateOf(false) }
 
-            SelectedBankBottomSheet(
-                isVisible = bankSheetVisible,
-                state = state,
-                onDismissRequest = { true }
-            )
+            if (bankSheetVisible) {
+                SelectedBankBottomSheet(
+                    isVisible = true,
+                    state = state,
+                    onDismissRequest = { bankSheetVisible = false }
+                )
+            }
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
                 onSaveClick = { saveClick() },

@@ -9,8 +9,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.launch
 import woowacourse.payments.ui.newcard.CardStateHolder
 import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 
@@ -23,28 +25,33 @@ fun SelectedBankBottomSheet(
 ) {
     if (!isVisible) return
 
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        confirmValueChange = { false }
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
     )
+    val scope = rememberCoroutineScope()
 
     var selectedBank by remember { mutableStateOf<BankTypeUiModel?>(null) }
 
-    LaunchedEffect(selectedBank) {
-        if (selectedBank != null) {
-            modalBottomSheetState.hide()
-            onDismissRequest()
-            selectedBank = null
-        }
-    }
-
     ModalBottomSheet(
-        sheetState = modalBottomSheetState,
-        onDismissRequest = onDismissRequest,
+        sheetState = sheetState,
+        onDismissRequest ={
+            scope.launch {
+                sheetState.hide()
+            }.invokeOnCompletion {
+                onDismissRequest()
+            }
+        },
     ) {
         SelectedBankRow(
             selectedBank = { bank ->
                 state.changeBankType(bank)
                 selectedBank = bank
+                scope.launch {
+                    sheetState.hide()
+                }.invokeOnCompletion {
+                    onDismissRequest()
+                }
             },
         )
     }
