@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.model.BankCatalog
 import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private const val COLUMN_COUNT = 4
@@ -25,7 +25,12 @@ private const val ROW_COUNT = 2
 fun BankSelectRow(
     onSelect: (BankType) -> Unit,
     modifier: Modifier = Modifier,
-    banks: List<BankUiModel> = BankCatalog.banks,
+    banks: List<BankUiModel> =
+        remember {
+            BankType.entries
+                .filter { it != BankType.NOT_SELECTED }
+                .map { it.toUiModel() }
+        },
 ) {
     val maxItems = COLUMN_COUNT * ROW_COUNT
     val items = remember(banks, COLUMN_COUNT, ROW_COUNT) { banks.take(maxItems) }

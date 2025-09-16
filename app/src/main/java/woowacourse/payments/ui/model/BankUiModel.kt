@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.theme.BcRed
+import woowacourse.payments.ui.theme.CardDefault
 import woowacourse.payments.ui.theme.HanaGreen
 import woowacourse.payments.ui.theme.HyundaiBlack
 import woowacourse.payments.ui.theme.KakaoYellow
@@ -21,58 +22,77 @@ data class BankUiModel(
     val background: Color,
 )
 
-object BankCatalog {
-    val banks: List<BankUiModel> =
-        listOf(
+fun BankType.toUiModel(): BankUiModel =
+    when (this) {
+        BankType.BC ->
             BankUiModel(
-                BankType.BC,
+                this,
                 R.drawable.ic_bank_bc,
                 R.string.bank_bc,
                 BcRed,
-            ),
+            )
+
+        BankType.SHINHAN ->
             BankUiModel(
-                BankType.SHINHAN,
+                this,
                 R.drawable.ic_bank_shinhan,
                 R.string.bank_shinhan,
                 ShinhanBlue,
-            ),
+            )
+
+        BankType.KAKAO ->
             BankUiModel(
-                BankType.KAKAO,
+                this,
                 R.drawable.ic_bank_kakao,
                 R.string.bank_kakao,
                 KakaoYellow,
-            ),
+            )
+
+        BankType.HYUNDAI ->
             BankUiModel(
-                BankType.HYUNDAI,
+                this,
                 R.drawable.ic_bank_hyundai,
                 R.string.bank_hyundai,
                 HyundaiBlack,
-            ),
+            )
+
+        BankType.WOORI ->
             BankUiModel(
-                BankType.WOORI,
+                this,
                 R.drawable.ic_bank_woori,
                 R.string.bank_woori,
                 WooriBlue,
-            ),
+            )
+
+        BankType.LOTTE ->
             BankUiModel(
-                BankType.LOTTE,
+                this,
                 R.drawable.ic_bank_lotte,
                 R.string.bank_lotte,
                 LotteRed,
-            ),
+            )
+
+        BankType.HANA ->
             BankUiModel(
-                BankType.HANA,
+                this,
                 R.drawable.ic_bank_hana,
                 R.string.bank_hana,
                 HanaGreen,
-            ),
+            )
+
+        BankType.KB ->
             BankUiModel(
-                BankType.KB,
+                this,
                 R.drawable.ic_bank_kb,
                 R.string.bank_kb,
                 KbBrown,
-            ),
-        )
+            )
 
-    val byType: Map<BankType, BankUiModel> = banks.associateBy { it.type }
-}
+        BankType.NOT_SELECTED ->
+            BankUiModel(
+                this,
+                R.drawable.ic_bank_placeholder,
+                R.string.bank_not_selected,
+                CardDefault,
+            )
+    }
