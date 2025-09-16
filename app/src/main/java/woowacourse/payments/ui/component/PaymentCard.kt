@@ -47,18 +47,14 @@ fun PaymentCard(
                 .background(backgroundColor, RoundedCornerShape(cornerRadius.dp))
                 .padding(12.dp),
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween,
-        ) {
-            PaymentCardText(bankName)
-            PaymentCardChip()
-            PaymentCardInfoBlock(
-                number = number,
-                expirationDate = expirationDate,
-                cardholderName = cardholderName,
-            )
-        }
+        PaymentCardText(bankName, modifier = Modifier.align(Alignment.TopStart))
+        PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
+        PaymentCardInfoBlock(
+            number = number,
+            expirationDate = expirationDate,
+            cardholderName = cardholderName,
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
     }
 }
 
