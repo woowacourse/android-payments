@@ -1,3 +1,3 @@
 package woowacourse.payments.domain.extension
 
-fun String.isDigitsOnly(): Boolean = any { !it.isDigit() }
+fun String.isDigitsOnly(): Boolean = all { it.isDigit() }
