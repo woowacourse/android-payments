@@ -15,6 +15,7 @@
     <string name="expired_date_error">유효하지 않은 만료일입니다.</string>
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
+    <string name="card_addition_fields_description">카드 정보 입력창</string>
 
     <!--  카드사 선택  -->
     <string name="card_addition_issuing_bank_sheet_description">카드사 선택창</string>
