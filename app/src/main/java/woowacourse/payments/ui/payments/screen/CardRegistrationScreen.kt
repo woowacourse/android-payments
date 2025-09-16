@@ -27,6 +27,7 @@ import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
+import woowacourse.payments.ui.payments.component.BankSelectBottomSheet
 import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
 import woowacourse.payments.ui.payments.component.CardNumberTextField
 import woowacourse.payments.ui.payments.component.CardPasswordTextField
@@ -46,6 +47,8 @@ fun CardRegistrationScreen(
         derivedStateOf { uiState.isRegistrable(paymentCardValidator) }
     }
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
+
+    var bottomSheetState by rememberSaveable { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -69,6 +72,10 @@ fun CardRegistrationScreen(
         CardRegistrationScreenContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState,
+            onBottomSheetStateChanged = { newBottomSheetState ->
+                bottomSheetState = newBottomSheetState
+            },
+            bottomSheetState = bottomSheetState,
             onUiStateChanged = { newUiState -> uiState = newUiState },
             paymentCardValidator = paymentCardValidator,
             expiredCardMessage = expiredCardMessage,
@@ -79,11 +86,24 @@ fun CardRegistrationScreen(
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
+    bottomSheetState: Boolean,
+    onBottomSheetStateChanged: (Boolean) -> Unit,
     onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
     modifier: Modifier = Modifier,
 ) {
+    if (bottomSheetState) {
+        BankSelectBottomSheet(
+            onDismissRequest = {
+                onBottomSheetStateChanged(false)
+            },
+            onBankSelected = {
+                onBottomSheetStateChanged(false)
+            }
+        )
+    }
+
     Column(
         modifier =
             modifier
