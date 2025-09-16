@@ -38,7 +38,6 @@ import woowacourse.payments.ui.common.PaymentCard
 import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toCardCompanyOrNull
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
@@ -98,8 +97,7 @@ private fun Intent.toCardOrNull(): Card? =
         getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let { card: CardUiModel ->
             val yearMonth: YearMonth =
                 YearMonth.parse(card.expirationDate, ExpirationDateFormat.formatPattern)
-            val cardCompany: CardCompany =
-                card.cardCompany?.toCardCompanyOrNull() ?: return@runCatching null
+            val cardCompany: CardCompany = card.cardCompany?.company ?: return@runCatching null
 
             Card(
                 CardNumber(card.cardNumber),

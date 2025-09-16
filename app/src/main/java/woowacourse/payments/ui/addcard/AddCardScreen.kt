@@ -68,7 +68,10 @@ fun AddCardScreen(
         },
     ) { innerPadding: PaddingValues ->
         CardCompanyBottomSheet(
-            CardCompany.entries.map(CardCompany::toUiModel),
+            CardCompany.entries
+                .filter { cardCompany ->
+                    cardCompany != CardCompany.NONE
+                }.map(CardCompany::toUiModel),
             { cardCompany: CardCompanyUiModel ->
                 card.value = card.value.copy(cardCompany = cardCompany)
             },
