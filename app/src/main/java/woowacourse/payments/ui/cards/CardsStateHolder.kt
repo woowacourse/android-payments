@@ -21,18 +21,6 @@ class CardsStateHolder(
         private set
 
     fun addCard(cardUiModel: PaymentCardUiModel) {
-        val currentCardsUiState = cardsUiState
-        cardsUiState =
-            when (currentCardsUiState) {
-                is CardsUiState.Multiple -> CardsUiState.Multiple(currentCardsUiState.cards + cardUiModel)
-                CardsUiState.None -> CardsUiState.Single(cardUiModel)
-                is CardsUiState.Single ->
-                    CardsUiState.Multiple(
-                        listOf(
-                            currentCardsUiState.card,
-                            cardUiModel,
-                        ),
-                    )
-            }
+        cardsUiState = cardsUiState.addCard(cardUiModel)
     }
 }
