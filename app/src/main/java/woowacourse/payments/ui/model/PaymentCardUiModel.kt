@@ -3,7 +3,7 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.extension.coerceAtMost
+import woowacourse.payments.ui.extension.coerceInLength
 
 @Parcelize
 data class PaymentCardUiModel(
@@ -15,7 +15,7 @@ data class PaymentCardUiModel(
         mask: String = DEFAULT_MASK,
         maskingRange: IntRange = DEFAULT_MASKING_RANGE,
     ): String {
-        val safeRange = maskingRange.coerceAtMost(number.number.length)
+        val safeRange = maskingRange.coerceInLength(number.number.length)
         return number.number
             .replaceRange(safeRange, mask.repeat(safeRange.count()))
             .chunked(4)
