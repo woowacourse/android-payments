@@ -1,7 +1,5 @@
-package woowacourse.payments.ui.newcard.component
+package woowacourse.payments.ui.cardcatalog.component
 
-import android.R.attr.fontWeight
-import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -17,19 +15,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 import woowacourse.payments.ui.theme.Black
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun PaymentCard(
-    card: Card? = null,
+    card: Card?,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -37,7 +35,7 @@ fun PaymentCard(
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
             .background(
-                color = Black,
+                color = card?.bankTypeUiModel?.color ?: Black,
                 shape = RoundedCornerShape(5.dp),
             )
     ) {
@@ -58,7 +56,7 @@ fun PaymentCard(
                     .padding(start = 14.dp, top = 15.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = card.bankType.name,
+                text = card.bankTypeUiModel.displayName,
                 color = Color.White
             )
             Text(
@@ -98,7 +96,7 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     val card = Card(
-        bankType = BankType.NOT_SELECTED,
+        bankTypeUiModel = BankTypeUiModel.BC,
         number = CardNumber("1234567890123456"),
         ownerName = OwnerName("Hwang Chaewon"),
         expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),

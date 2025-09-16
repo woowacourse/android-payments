@@ -43,8 +43,6 @@ fun CardCatalogScreen(
             }
         }
 
-
-
     fun openAddCardWithResult() {
         val intent = Intent(context, NewCardActivity::class.java)
         cardAddLauncher.launch(intent)
@@ -70,8 +68,7 @@ fun CardCatalogScreen(
     }
 }
 
-
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CardCatalogScreenPreview() {
     CardCatalogScreen()

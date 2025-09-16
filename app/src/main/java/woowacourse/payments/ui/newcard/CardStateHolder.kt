@@ -1,17 +1,15 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.newcard
 
-import android.R
-import android.util.Log.e
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.Card.Companion.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
@@ -19,16 +17,16 @@ class CardStateHolder {
     var card by mutableStateOf<Card?>(null)
         private set
 
-    var bankType by mutableStateOf<BankType>(BankType.NOT_SELECTED)
+    var bankTypeUiModel by mutableStateOf(BankTypeUiModel.NOT_SELECTED)
         private set
 
-    var number by mutableStateOf<String>("")
+    var number by mutableStateOf("")
         private set
-    var expirationDate by mutableStateOf<String>("")
+    var expirationDate by mutableStateOf("")
         private set
-    var ownerName by mutableStateOf<String>("")
+    var ownerName by mutableStateOf("")
         private set
-    var password by mutableStateOf<String>("")
+    var password by mutableStateOf("")
         private set
 
     var cardErrorMessage by mutableStateOf<String?>(null)
@@ -42,26 +40,30 @@ class CardStateHolder {
         private set
 
     fun newCard() {
-        runCatching {
-            Card(
-                bankType = bankType,
-                number = number,
-                expirationDate = expirationDate,
-                ownerName = ownerName,
-                password = password,
-            )
-        }.onSuccess { newCard ->
-            card = newCard
-        }.onFailure { e ->
-            cardErrorMessage = e.message
+        bankTypeUiModel?.let { bankType ->
+            runCatching {
+                Card.Companion.Card(
+                    bankTypeUiModel = bankType,
+                    number = number,
+                    expirationDate = expirationDate,
+                    ownerName = ownerName,
+                    password = password,
+                )
+            }.onSuccess { newCard ->
+                card = newCard
+            }.onFailure { e ->
+                cardErrorMessage = e.message
+            }
         }
     }
 
-    fun changeBankType(newBank: BankType) {
-        if (newBank != BankType.NOT_SELECTED) {
-            bankType = newBank
+    fun changeBankType(newBank: BankTypeUiModel) {
+        if (newBank != BankTypeUiModel.NOT_SELECTED) {
+            bankTypeUiModel = newBank
+            Log.d("test", "선택됨")
         }
     }
+
     fun changeNumber(newNumber: String) {
         if (number.isNotEmpty())
             runCatching {
@@ -114,4 +116,3 @@ class CardStateHolder {
         }
     }
 }
-

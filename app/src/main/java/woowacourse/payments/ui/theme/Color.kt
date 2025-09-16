@@ -32,3 +32,5 @@ val Blue = Color(0xFF027BC8)
 val shinhanBlue = Color(0xFF0046FF)
 
 val LotteRed = Color(0xFFED1C23)
+
+val Gray52 = Color(0xFF525252)

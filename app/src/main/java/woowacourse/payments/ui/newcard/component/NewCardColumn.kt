@@ -11,7 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.CardStateHolder
+import woowacourse.payments.ui.newcard.CardStateHolder
+import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 
 @Composable
 fun NewCardColumn(
@@ -21,10 +22,11 @@ fun NewCardColumn(
     Column(
         modifier = modifier.padding(horizontal = 24.dp)
     ) {
-        PaymentCard(
+        BankTypeCard(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 14.dp, bottom = 28.dp)
+                .padding(top = 14.dp, bottom = 28.dp),
+            bankTypeUiModel = state.bankTypeUiModel
         )
         Box(
             modifier = Modifier.height(86.dp)
@@ -51,7 +53,8 @@ fun NewCardColumn(
             CardOwnerNameTextField(
                 ownerName = state.ownerName,
                 ownerNameErrorMessage = state.ownerNameErrorMessage,
-                onOwnerNameChange = { state.changeOwnerName(it)}
+                onOwnerNameChange = { state.changeOwnerName(it) },
+                modifier = Modifier.fillMaxWidth(),
             )
         }
         Box(

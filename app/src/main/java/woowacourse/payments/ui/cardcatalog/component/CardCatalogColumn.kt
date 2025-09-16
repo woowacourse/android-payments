@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardcatalog.component
 
-import android.R.attr.password
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,7 +28,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.component.PaymentCard
+import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 import woowacourse.payments.ui.theme.GrayE5
 import java.time.YearMonth
 
@@ -90,7 +89,8 @@ private fun CardCatalogColumnPreview1() {
             number = CardNumber("1234567890123456"),
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
-            password = Password("1234")
+            password = Password("1234"),
+            bankTypeUiModel = BankTypeUiModel.KB,
         )
     )
     CardCatalogColumn(cards = cards, onClickAddCard = {})
@@ -104,13 +104,15 @@ private fun CardCatalogColumnPreview2() {
             number = CardNumber("1234567890123456"),
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
-            password = Password("1234")
+            password = Password("1234"),
+            bankTypeUiModel = BankTypeUiModel.BC
         ),
         Card(
             number = CardNumber("1234567890123456"),
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
-            password = Password("1234")
+            password = Password("1234"),
+            bankTypeUiModel = BankTypeUiModel.BC
         )
     )
     CardCatalogColumn(cards = cards, onClickAddCard = {})
