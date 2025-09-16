@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
+import woowacourse.payments.ui.extension.semanticsContentDescription
 import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
@@ -47,13 +49,19 @@ fun PaymentCard(
                 .background(backgroundColor, RoundedCornerShape(cornerRadius.dp))
                 .padding(12.dp),
     ) {
-        PaymentCardText(bankName, modifier = Modifier.align(Alignment.TopStart))
+        PaymentCardText(
+            text = bankName,
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .semanticsContentDescription(R.string.payment_card_bank_name_content_description),
+        )
         PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
         PaymentCardInfoBlock(
             number = number,
             expirationDate = expirationDate,
             cardholderName = cardholderName,
-            modifier = Modifier.align(Alignment.BottomStart)
+            modifier = Modifier.align(Alignment.BottomStart),
         )
     }
 }
@@ -104,7 +112,11 @@ private fun PaymentCardInfoBlock(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        PaymentCardText(text = number, letterSpacing = 2.sp)
+        PaymentCardText(
+            text = number,
+            letterSpacing = 2.sp,
+            modifier = Modifier.semanticsContentDescription(R.string.payment_card_number_content_description),
+        )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -112,9 +124,15 @@ private fun PaymentCardInfoBlock(
         ) {
             PaymentCardText(
                 text = cardholderName,
-                modifier = Modifier.weight(1f),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .semanticsContentDescription(R.string.payment_cardholder_name_content_description),
             )
-            PaymentCardText(text = expirationDate)
+            PaymentCardText(
+                text = expirationDate,
+                modifier = Modifier.semanticsContentDescription(R.string.payment_card_expiration_date_content_description),
+            )
         }
     }
 }

@@ -12,6 +12,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.R
+import woowacourse.payments.ui.extension.semanticsContentDescription
 import woowacourse.payments.ui.model.BankTypeUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +34,7 @@ fun BankSelectBottomSheet(
     }
 
     ModalBottomSheet(
-        modifier = modifier,
+        modifier = modifier.semanticsContentDescription(R.string.issuing_bank_selector_bottom_sheet_content_description),
         sheetState = sheetState,
         onDismissRequest = {},
         containerColor = Color.White,
