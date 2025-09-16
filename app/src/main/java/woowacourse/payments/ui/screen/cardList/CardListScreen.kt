@@ -2,9 +2,9 @@ package woowacourse.payments.ui.screen.cardList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -54,39 +54,28 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        CardListContent(
-            modifier = Modifier.padding(innerPadding),
-            enableScroll = uiState.cards.size > 1,
-        ) {
-            if (uiState.cards.isEmpty()) {
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = stringResource(R.string.card_list_add_new_card),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            uiState.cards.forEach { card ->
-                Spacer(modifier = Modifier.height(32.dp))
-                PaymentCard(card = card)
-            }
-
-            if (uiState.cards.size <= 1) {
-                Spacer(modifier = Modifier.height(32.dp))
-                AddCardBox(onClick = navigateToAddCard)
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
+        if (uiState.cards.isEmpty()) {
+            EmptyCardListContent(
+                modifier = Modifier.padding(innerPadding),
+                onClick = navigateToAddCard,
+            )
+        } else {
+            CardListContent(
+                cards = uiState.cards,
+                enableScroll = uiState.cards.size > 1,
+                onClick = navigateToAddCard,
+                modifier = Modifier.padding(innerPadding),
+            )
         }
     }
 }
 
 @Composable
 private fun CardListContent(
+    cards: List<CardUiModel>,
     enableScroll: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -95,16 +84,40 @@ private fun CardListContent(
             modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .then(
-                    if (enableScroll) {
-                        Modifier.verticalScroll(scrollState)
-                    } else {
-                        Modifier
-                    },
-                ),
+                .then(if (enableScroll) Modifier.verticalScroll(scrollState) else Modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
-        content = content,
-    )
+    ) {
+        cards.forEach { card ->
+            Spacer(modifier = Modifier.height(20.dp))
+            PaymentCard(card = card)
+        }
+
+        if (cards.size <= 1) {
+            Spacer(modifier = Modifier.height(32.dp))
+            AddCardBox(onClick = onClick)
+        }
+    }
+}
+
+@Composable
+private fun EmptyCardListContent(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = stringResource(R.string.card_list_add_new_card),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        AddCardBox(onClick = onClick)
+    }
 }
 
 @Composable
