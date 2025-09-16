@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -20,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.cards.toParcelable
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.newcard.component.CardNumberTextField
 import woowacourse.payments.newcard.component.ExpiredDateTextField
 import woowacourse.payments.newcard.component.NewCardTopBar
@@ -32,29 +32,34 @@ import woowacourse.payments.util.PaymentCard
 @Preview
 @Composable
 fun NewCardScreen(
-    modifier: Modifier = Modifier,
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
-    sheetState: SheetState = rememberModalBottomSheetState(),
+    sheetState: SheetState =
+        rememberModalBottomSheetState(confirmValueChange = { false }),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardParcelable) -> Unit = {},
     onCardSaveFailed: () -> Unit = {},
 ) {
+    if (!newCardStateHolder.isCardSelected) {
+        ModalBottomSheet(
+            onDismissRequest = {},
+            sheetState = sheetState,
+            properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false),
+        ) {
+            CardCompanySelectionRow(
+                onItemClick = { cardCompany ->
+                    newCardStateHolder.selectedCardCompany = cardCompany
+                },
+            )
+        }
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
                 onSaveClick = {
-                    val cardResult: Result<Card> =
-                        with(newCardStateHolder) {
-                            Card.from(
-                                cardNumber,
-                                expiredDate,
-                                ownerName,
-                                password,
-                                selectedCardCompany,
-                            )
-                        }
+                    val cardResult: Result<Card> = newCardStateHolder.getCard()
 
                     cardResult
                         .onSuccess {
@@ -73,22 +78,10 @@ fun NewCardScreen(
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
-            if (!newCardStateHolder.isCardSelected) {
-                ModalBottomSheet(
-                    onDismissRequest = {
-                        newCardStateHolder.selectedCardCompany = CardCompany.NONE
-                    },
-                    sheetState = sheetState,
-                ) {
-                    CardCompanySelectionRow(
-                        onItemClick = { cardCompany ->
-                            newCardStateHolder.selectedCardCompany = cardCompany
-                        },
-                    )
-                }
-            }
-
-            PaymentCard(modifier = Modifier.padding(top = 14.dp))
+            PaymentCard(
+                modifier = Modifier.padding(top = 14.dp),
+                cardCompanyUiModel = CardCompanyUiModel.from(newCardStateHolder.selectedCardCompany),
+            )
             Column(
                 verticalArrangement = Arrangement.spacedBy(30.dp),
                 modifier =
