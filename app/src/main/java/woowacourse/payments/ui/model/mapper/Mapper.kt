@@ -8,7 +8,7 @@ import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.BC
 import woowacourse.payments.ui.theme.HANA
-import woowacourse.payments.ui.theme.HYUNDAE
+import woowacourse.payments.ui.theme.HYUNDAI
 import woowacourse.payments.ui.theme.KAKAO
 import woowacourse.payments.ui.theme.KB
 import woowacourse.payments.ui.theme.LOTTE
@@ -41,11 +41,11 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.KAKAO -> BankUiModel(R.drawable.kakao, R.string.kakao_card_name, KAKAO.toArgb())
-        BankType.HYUNDAE ->
+        BankType.HYUNDAI ->
             BankUiModel(
                 R.drawable.hyundae,
                 R.string.hyundae_card_name,
-                HYUNDAE.toArgb(),
+                HYUNDAI.toArgb(),
             )
 
         BankType.WOORI -> BankUiModel(R.drawable.woori, R.string.woori_card_name, WOORI.toArgb())

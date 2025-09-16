@@ -130,7 +130,7 @@ private fun MultiCardsPreview() {
                     "1111222233334444",
                     "1234",
                     "junseo",
-                    BankType.HYUNDAE.toUiModel(),
+                    BankType.HYUNDAI.toUiModel(),
                 ),
             ),
     )

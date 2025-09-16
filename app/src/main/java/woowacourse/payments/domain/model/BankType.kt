@@ -5,7 +5,7 @@ enum class BankType {
     BC,
     SHINHAN,
     KAKAO,
-    HYUNDAE,
+    HYUNDAI,
     WOORI,
     LOTTE,
     HANA,
