@@ -10,10 +10,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.BankType
+import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.ui.CardStateHolder
+import woowacourse.payments.ui.newcard.component.BankSelectRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BankSelectBottomSheet() {
+fun BankSelectBottomSheet(
+    state: CardStateHolder
+) {
     val modalBottomSheetState = rememberModalBottomSheetState(
         confirmValueChange = { false }
     )
@@ -30,6 +35,13 @@ fun BankSelectBottomSheet() {
         sheetState = modalBottomSheetState,
         onDismissRequest = { },
     ) {
-        BankSelectRow(onClick = { selectedBank = BankType.SHINHAN })
+        BankSelectRow(onClick = { state.changeBankType(it) })
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview
+@Composable
+fun BankSelectBottomSheetPreview() {
+    BankSelectBottomSheet(CardStateHolder())
 }

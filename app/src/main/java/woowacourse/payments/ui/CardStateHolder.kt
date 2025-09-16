@@ -57,6 +57,11 @@ class CardStateHolder {
         }
     }
 
+    fun changeBankType(newBank: BankType) {
+        if (newBank != BankType.NOT_SELECTED) {
+            bankType = newBank
+        }
+    }
     fun changeNumber(newNumber: String) {
         if (number.isNotEmpty())
             runCatching {

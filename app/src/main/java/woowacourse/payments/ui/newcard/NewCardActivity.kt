@@ -17,7 +17,7 @@ class NewCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            BankSelectBottomSheet()
+            BankSelectBottomSheet(state)
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
                 onSaveClick = { saveClick() },
