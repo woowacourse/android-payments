@@ -144,7 +144,11 @@ private fun CardsSingleContent(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        PaymentCard(paymentCardUiModel = card)
+        PaymentCard(
+            number = card.displayCardNumber(),
+            expirationDate = card.displayExpirationDate(),
+            cardholderName = card.upperCardholderName,
+        )
         CardRegistrationButton(onClick = onRegistrationButtonClick)
     }
 }
@@ -158,7 +162,13 @@ private fun CardsMultipleContent(
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        paymentCards.cards.forEach { card -> PaymentCard(paymentCardUiModel = card) }
+        paymentCards.cards.forEach { card ->
+            PaymentCard(
+                number = card.displayCardNumber(),
+                expirationDate = card.displayExpirationDate(),
+                cardholderName = card.upperCardholderName,
+            )
+        }
         Spacer(modifier = Modifier.height(12.dp))
     }
 }

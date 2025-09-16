@@ -28,7 +28,9 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun PaymentCard(
-    paymentCardUiModel: PaymentCardUiModel,
+    number: String,
+    expirationDate: String,
+    cardholderName: String,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.DarkGray,
     cornerRadius: Int = 5,
@@ -48,7 +50,11 @@ fun PaymentCard(
         ) {
             PaymentCardText("")
             PaymentCardChip()
-            PaymentCardInfoBlock(paymentCard = paymentCardUiModel)
+            PaymentCardInfoBlock(
+                number = number,
+                expirationDate = expirationDate,
+                cardholderName = cardholderName,
+            )
         }
     }
 }
@@ -84,26 +90,26 @@ private fun PaymentCardChip(
 
 @Composable
 private fun PaymentCardInfoBlock(
-    paymentCard: PaymentCardUiModel,
+    number: String,
+    expirationDate: String,
+    cardholderName: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        PaymentCardText(
-            text = paymentCard.displayCardNumber(),
-        )
+        PaymentCardText(text = number)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             PaymentCardText(
-                text = paymentCard.upperCardholderName,
+                text = cardholderName,
                 modifier = Modifier.weight(1f),
             )
-            PaymentCardText(text = paymentCard.displayExpirationDate())
+            PaymentCardText(text = expirationDate)
         }
     }
 }
@@ -118,7 +124,11 @@ private fun PaymentCardPreview() {
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
 
-    PaymentCard(paymentCardUiModel = paymentCardUiModel)
+    PaymentCard(
+        number = paymentCardUiModel.displayCardNumber(),
+        expirationDate = paymentCardUiModel.displayExpirationDate(),
+        cardholderName = paymentCardUiModel.upperCardholderName,
+    )
 }
 
 @Preview(showBackground = true)
@@ -137,7 +147,9 @@ private fun PaymentCardInfoBlockPreview() {
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
     PaymentCardInfoBlock(
-        paymentCard = paymentCardUiModel,
+        number = paymentCardUiModel.displayCardNumber(),
+        expirationDate = paymentCardUiModel.displayExpirationDate(),
+        cardholderName = paymentCardUiModel.upperCardholderName,
         modifier = Modifier.padding(12.dp),
     )
 }

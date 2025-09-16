@@ -91,8 +91,11 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
+        val paymentCard = uiState.toPaymentCardUiModel()
         PaymentCard(
-            paymentCardUiModel = uiState.toPaymentCardUiModel(),
+            number = paymentCard.displayCardNumber(),
+            expirationDate = paymentCard.displayExpirationDate(),
+            cardholderName = paymentCard.upperCardholderName,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 
