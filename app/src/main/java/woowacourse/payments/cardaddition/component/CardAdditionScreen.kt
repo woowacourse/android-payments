@@ -23,51 +23,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.Card
 import woowacourse.payments.EXTRA_CARD
+import woowacourse.payments.cardaddition.CardAdditionUiState
 import woowacourse.payments.ui.component.PaymentCard
-import java.lang.Character.isDigit
-import java.time.Month
-
-private const val CARD_NUMBER_LENGTH: Int = 16
-private const val PASSWORD_LENGTH: Int = 4
-private const val EXPIRED_DATE_LENGTH: Int = 4
-private const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
 
 @Composable
-fun CardAdditionScreen(modifier: Modifier = Modifier) {
+fun CardAdditionScreen(
+    modifier: Modifier = Modifier,
+    state: CardAdditionUiState = CardAdditionUiState(),
+) {
     val activity: Activity? = LocalActivity.current
     val scrollState = rememberScrollState()
-
-    var cardNumber: String by rememberSaveable { mutableStateOf("") }
-    val handleCardNumberInput: (String) -> Unit = { newValue: String ->
-        val newCardNumber: String = newValue.filter(::isDigit)
-        cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH)
-    }
-
-    var expiredDate: String by rememberSaveable { mutableStateOf("") }
-    val handleExpiredDateInput: (String) -> Unit = { newValue: String ->
-        val newDate: String = newValue.filter(::isDigit)
-        expiredDate = newDate.take(EXPIRED_DATE_LENGTH)
-    }
-
-    var ownerName: String by rememberSaveable { mutableStateOf("") }
-    val handleNameInput: (String) -> Unit = { newName: String ->
-        ownerName = newName.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase()
-    }
-
-    var password: String by rememberSaveable { mutableStateOf("") }
-    val handlePasswordInput = { newValue: String ->
-        val newPassword: String = newValue.filter(::isDigit)
-        password = newPassword.take(PASSWORD_LENGTH)
-    }
+    var state: CardAdditionUiState by rememberSaveable { mutableStateOf(state) }
 
     Scaffold(
         modifier = modifier.testTag("CardAdditionScreen"),
         topBar = {
             CardAdditionTopAppBar(
-                completable =
-                    cardNumber.isValidCardNumber &&
-                        expiredDate.isValidExpiredDate &&
-                        password.isValidPassword,
+                completable = state.isValid,
                 onBackClick = { activity?.finish() },
                 onSaveClick = {
                     activity?.setResult(
@@ -75,9 +47,9 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         Intent().putExtra(
                             EXTRA_CARD,
                             Card(
-                                number = cardNumber,
-                                owner = ownerName,
-                                expiredDate = expiredDate,
+                                number = state.cardNumber,
+                                owner = state.holder,
+                                expiredDate = state.expiredDate,
                             ),
                         ),
                     )
@@ -101,48 +73,40 @@ fun CardAdditionScreen(modifier: Modifier = Modifier) {
                         .padding(top = 14.dp, bottom = 28.dp),
             )
             CardNumberTextField(
-                value = cardNumber,
-                onValueChange = handleCardNumberInput,
-                isError = cardNumber.isNotBlank() && !cardNumber.isValidCardNumber,
+                value = state.cardNumber,
+                onValueChange = { value -> state = state.newCardNumber(value) },
+                isError = state.cardNumber.isNotBlank() && !state.isValidCardNumber,
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally),
             )
             ExpiredDateTextField(
-                value = expiredDate,
-                onValueChange = handleExpiredDateInput,
-                isError = expiredDate.isNotBlank() && !expiredDate.isValidExpiredDate,
+                value = state.expiredDate,
+                onValueChange = { value -> state = state.newExpiredDate(value) },
+                isError = state.expiredDate.isNotBlank() && !state.isValidExpiredDate,
                 modifier =
                     Modifier
                         .padding(top = 18.dp),
             )
             CardOwnerNameTextField(
-                value = ownerName,
-                onValueChange = handleNameInput,
+                value = state.holder,
+                onValueChange = { value -> state = state.newHolder(value) },
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 18.dp),
-                maxLength = CARD_OWNER_NAME_LENGTH_MAX,
+                maxLength = state.holderMaxLength,
             )
             PasswordTextField(
-                value = password,
-                onValueChange = handlePasswordInput,
-                isError = password.isNotBlank() && !password.isValidPassword,
+                value = state.password,
+                onValueChange = { value -> state = state.newPassword(value) },
+                isError = state.password.isNotBlank() && !state.isValidPassword,
             )
         }
     }
 }
-
-private val String.isValidCardNumber: Boolean get() = length == CARD_NUMBER_LENGTH
-private val String.isValidExpiredDate: Boolean
-    get() {
-        val month: Int = take(2).toIntOrNull() ?: return false
-        return length == EXPIRED_DATE_LENGTH && month in Month.entries.map(Month::getValue)
-    }
-private val String.isValidPassword: Boolean get() = length == PASSWORD_LENGTH
 
 @Preview
 @Composable
