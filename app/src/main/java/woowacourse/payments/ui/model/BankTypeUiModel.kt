@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.model
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -7,8 +9,8 @@ import woowacourse.payments.R
 
 enum class BankTypeUiModel(
     val bgColor: Color,
-    val nameResId: Int?,
-    val logoResId: Int?,
+    @StringRes val nameResId: Int?,
+    @DrawableRes val logoResId: Int?,
 ) {
     NOT_SELECTED(
         Color.DarkGray,
