@@ -110,7 +110,7 @@ fun PaymentCard(
 }
 
 @Preview(
-    name = "BC카드",
+    name = "BC Card",
     showBackground = true,
 )
 @Composable
@@ -132,11 +132,11 @@ private fun PaymentCardPreview_BC() {
 }
 
 @Preview(
-    name = "국민카드",
+    name = "KB Card",
     showBackground = true,
 )
 @Composable
-private fun PaymentCardPreview_Kakao() {
+private fun PaymentCardPreview_Kb() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
