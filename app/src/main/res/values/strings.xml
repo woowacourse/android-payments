@@ -32,6 +32,16 @@
     <string name="cardholder_name_text_field_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="cardholder_name_text_field_content_description">카드 소유자 이름 입력란</string>
 
+    <!-- Issuing Bank Selector Bottom Sheet -->
+    <string name="issuing_bank_selector_bc_card">BC카드</string>
+    <string name="issuing_bank_selector_hana_card">하나카드</string>
+    <string name="issuing_bank_selector_hyundai_card">현대카드</string>
+    <string name="issuing_bank_selector_kakao_card">카카오카드</string>
+    <string name="issuing_bank_selector_kb_card">국민카드</string>
+    <string name="issuing_bank_selector_lotte_card">롯데카드</string>
+    <string name="issuing_bank_selector_shinhan_card">신한카드</string>
+    <string name="issuing_bank_selector_woori_card">우리카드</string>
+
     <!-- ========================================================= -->
     <!-- SCREEN -->
     <!-- ========================================================= -->
