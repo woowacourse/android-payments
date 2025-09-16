@@ -22,7 +22,8 @@ class CardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var state by rememberSaveable { mutableStateOf(CardsUiState()) }
+            val stateHolder =
+                rememberSaveable(saver = CardsStateHolder.Saver) { CardsStateHolder() }
             var event by remember { mutableStateOf<CardsUiEvent?>(null) }
 
             LaunchedEffect(event) {
@@ -32,9 +33,9 @@ class CardsActivity : ComponentActivity() {
 
             AndroidpaymentsTheme {
                 CardsScreen(
-                    cards = state.cards,
+                    cards = stateHolder.uiState.cards,
                     addCard = { card ->
-                        state += card
+                        stateHolder.addCard(card)
                         event = CardsUiEvent.AddCardSuccess
                     },
                     modifier = Modifier.fillMaxSize(),
