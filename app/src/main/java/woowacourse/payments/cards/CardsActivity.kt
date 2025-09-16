@@ -7,55 +7,54 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import woowacourse.payments.Card
-import woowacourse.payments.PaymentsApplication
 import woowacourse.payments.R
 import woowacourse.payments.cards.component.CardsScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
-    private val viewModel: CardsViewModel by lazy { (application as PaymentsApplication).cardsViewModel }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cards: SnapshotStateList<Card> = remember { mutableStateListOf() }
-            LaunchedEffect(Unit) {
-                setUpObservers(cards)
+            var state by rememberSaveable { mutableStateOf(CardsUiState()) }
+            var event by remember { mutableStateOf<CardsUiEvent?>(null) }
+
+            LaunchedEffect(event) {
+                handleEvent(event)
+                event = null
             }
 
             AndroidpaymentsTheme {
                 CardsScreen(
-                    cards = cards,
-                    addCard = viewModel::addCard,
+                    cards = state.cards,
+                    addCard = { card ->
+                        state += card
+                        event = CardsUiEvent.AddCardSuccess
+                    },
                     modifier = Modifier.fillMaxSize(),
                 )
             }
         }
     }
 
-    private fun setUpObservers(cards: SnapshotStateList<Card>) {
-        viewModel.cards.observe(this) { newCards: List<Card> ->
-            cards.clear()
-            cards.addAll(newCards)
-        }
-
-        viewModel.event.observe(this) { event: CardsUiEvent ->
-            when (event) {
-                CardsUiEvent.AddCardSuccess -> {
-                    Toast
-                        .makeText(
-                            this,
-                            getString(R.string.cards_add_card_success_message),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                }
+    private fun handleEvent(event: CardsUiEvent?) {
+        when (event) {
+            CardsUiEvent.AddCardSuccess -> {
+                Toast
+                    .makeText(
+                        this,
+                        getString(R.string.cards_add_card_success_message),
+                        Toast.LENGTH_SHORT,
+                    ).show()
             }
+
+            null -> Unit
         }
     }
 }
