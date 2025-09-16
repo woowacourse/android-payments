@@ -30,18 +30,19 @@ import woowacourse.payments.ui.theme.Typography
 @Composable
 fun CardSelectionModal(
     modalBottomSheetState: SheetState,
-    onDismissRequest: (cardCompany: CardCompany) -> Unit,
+    onDismissRequest: () -> Unit,
+    onCardCompanyClick: (cardCompany: CardCompany) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ModalBottomSheet(
         sheetState = modalBottomSheetState,
-        onDismissRequest = { /* 카드 색상 업데이트 */ },
+        onDismissRequest = onDismissRequest,
         modifier = Modifier.fillMaxWidth(),
     ) {
         CardCompanyGrid(
             companies = CardCompany.entries,
             modifier = modifier.fillMaxWidth(),
-            onClickCardCompany = onDismissRequest,
+            onClickCardCompany = onCardCompanyClick,
         )
     }
 }
