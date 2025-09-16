@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
@@ -40,6 +43,15 @@ fun AddCardScreen(
             onSaveFailure()
         } else {
             onSaveSuccess(uiState.card)
+        }
+    }
+
+    val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(uiState.shouldMoveFocus.value) {
+        if (uiState.shouldMoveFocus.value) {
+            focusManager.moveFocus(FocusDirection.Next)
+            uiState.onFocusMoved()
         }
     }
 
@@ -83,13 +95,28 @@ fun AddCardScreen(
                         .padding(horizontal = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                CardNumberTextField(uiState.cardNumber, uiState.isCardNumberError)
+                CardNumberTextField(
+                    uiState.cardNumber,
+                    uiState.isCardNumberError,
+                    { newValue: String -> uiState.updateCardNumber(newValue) },
+                )
 
-                ExpirationDateTextField(uiState.expirationDate, uiState.isExpirationDateError)
+                ExpirationDateTextField(
+                    uiState.expirationDate,
+                    uiState.isExpirationDateError,
+                    { newValue: String -> uiState.updateExpirationDate(newValue) },
+                )
 
-                CardHolderNameTextField(uiState.cardholderName)
+                CardHolderNameTextField(
+                    uiState.cardholderName,
+                    { newValue: String -> uiState.updateCardholderName(newValue) },
+                )
 
-                PasscodeTextField(uiState.passcode, uiState.isPasscodeError)
+                PasscodeTextField(
+                    uiState.passcode,
+                    uiState.isPasscodeError,
+                    { newValue: String -> uiState.updatePasscode(newValue) },
+                )
             }
         }
     }

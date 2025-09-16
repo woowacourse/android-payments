@@ -11,7 +11,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -19,46 +18,22 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.ui.format.ExpirationDateFormat
-import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
-import java.time.YearMonth
 
 @Composable
 fun ExpirationDateTextField(
     expirationDate: MutableState<String>,
     isError: MutableState<Boolean>,
+    onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val focusManager = LocalFocusManager.current
-
-    fun updateValue(newValue: String) {
-        val filteredValue: String =
-            newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
-        expirationDate.value = filteredValue
-
-        isError.value =
-            runCatching {
-                ExpirationDate(
-                    YearMonth.parse(
-                        filteredValue,
-                        ExpirationDateFormat.formatPattern,
-                    ),
-                )
-            }.isFailure
-
-        if (!isError.value && filteredValue.length == ExpirationDateFormat.REQUIRED_LENGTH) {
-            focusManager.moveFocus(FocusDirection.Next)
-        }
-    }
+    LocalFocusManager.current
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(0.5F),
+        modifier = modifier.fillMaxWidth(0.5F),
         value = expirationDate.value,
-        onValueChange = { newValue: String -> updateValue(newValue) },
+        onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = ExpirationDateFormat.visualTransformation,
         label = { Text(stringResource(R.string.expiration_date_label)) },
@@ -88,6 +63,7 @@ private fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
         expirationDate = remember { mutableStateOf("1234") },
         isError = remember { mutableStateOf(false) },
+        onValueChange = {},
     )
 }
 
@@ -97,5 +73,6 @@ private fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(
         expirationDate = remember { mutableStateOf("1234") },
         isError = remember { mutableStateOf(true) },
+        onValueChange = {},
     )
 }

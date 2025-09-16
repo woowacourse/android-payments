@@ -19,37 +19,21 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.domain.Passcode
-import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
-import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun PasscodeTextField(
     passcode: MutableState<String>,
     isError: MutableState<Boolean>,
+    onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val focusManager = LocalFocusManager.current
-
-    fun updateValue(newValue: String) {
-        val filteredValue: String =
-            newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
-
-        passcode.value = filteredValue
-        isError.value = runCatching { Passcode(passcode.value) }.isFailure
-
-        if (!isError.value && filteredValue.length == PASSCODE_REQUIRED_LENGTH) {
-            focusManager.clearFocus()
-        }
-    }
+    LocalFocusManager.current
 
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(0.5F),
+        modifier = modifier.fillMaxWidth(0.5F),
         value = passcode.value,
-        onValueChange = { newValue: String -> updateValue(newValue) },
+        onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         label = { Text(stringResource(R.string.passcode_label)) },
@@ -79,6 +63,7 @@ private fun PasscodeTextFieldPreview() {
     PasscodeTextField(
         passcode = remember { mutableStateOf("0000") },
         isError = remember { mutableStateOf(true) },
+        onValueChange = {},
     )
 }
 
@@ -88,5 +73,6 @@ private fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
         passcode = remember { mutableStateOf("00") },
         isError = remember { mutableStateOf(true) },
+        onValueChange = {},
     )
 }

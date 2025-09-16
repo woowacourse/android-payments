@@ -11,45 +11,26 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.format.CardNumberFormat
-import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardNumberTextField(
     cardNumber: MutableState<String>,
     isError: MutableState<Boolean>,
+    onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val focusManager = LocalFocusManager.current
-
-    fun updateValue(newValue: String) {
-        val filteredValue: String =
-            newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
-
-        cardNumber.value = filteredValue
-        isError.value = runCatching { CardNumber(cardNumber.value) }.isFailure
-
-        if (!isError.value && filteredValue.length == CardNumberFormat.REQUIRED_LENGTH) {
-            focusManager.moveFocus(FocusDirection.Next)
-        }
-    }
-
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = cardNumber.value,
-        onValueChange = { newValue: String -> updateValue(newValue) },
+        onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = CardNumberFormat.visualTransformation,
         label = { Text(stringResource(R.string.card_number_label)) },
@@ -79,6 +60,7 @@ private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
         cardNumber = remember { mutableStateOf("1234123412341234") },
         isError = remember { mutableStateOf(false) },
+        onValueChange = {},
     )
 }
 
@@ -88,5 +70,6 @@ private fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
         cardNumber = remember { mutableStateOf("1234123412341234") },
         isError = remember { mutableStateOf(true) },
+        onValueChange = {},
     )
 }

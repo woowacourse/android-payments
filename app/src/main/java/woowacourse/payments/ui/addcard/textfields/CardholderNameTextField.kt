@@ -15,27 +15,21 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
-import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardHolderNameTextField(
     cardholderName: MutableState<String>,
+    onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LocalFocusManager.current
 
-    fun updateValue(newValue: String) {
-        cardholderName.value = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
-    }
-
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = cardholderName.value,
-        onValueChange = { newValue: String -> updateValue(newValue) },
+        onValueChange = onValueChange,
         singleLine = true,
         label = { Text(stringResource(R.string.cardholder_name_label)) },
         placeholder = {
@@ -63,5 +57,8 @@ fun CardHolderNameTextField(
 @Preview(showBackground = true, name = "카드 소유자 이름 입력란")
 @Composable
 private fun CardHolderNameTextFieldPreview() {
-    CardHolderNameTextField(remember { mutableStateOf("CREW") })
+    CardHolderNameTextField(
+        remember { mutableStateOf("CREW") },
+        onValueChange = {},
+    )
 }
