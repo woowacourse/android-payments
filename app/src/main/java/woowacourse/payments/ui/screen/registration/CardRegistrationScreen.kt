@@ -151,6 +151,10 @@ private fun CardRegistrationScreenPreview() {
         CardRegistrationScreen(
             onBackClick = {},
             onRegistrationComplete = {},
+            viewModel =
+                CardRegistrationScreenViewModel(
+                    CardRegistrationScreenUiState(openBankSelectorBottomSheet = false),
+                ),
         )
     }
 }
