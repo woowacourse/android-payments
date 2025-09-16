@@ -31,10 +31,12 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.toCardCompanyUiModel
 
 @Composable
 fun CardListScreen(
@@ -127,6 +129,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             emptyList(),
             listOf(
                 CardUiModel(
+                    cardCompanyUiModel = BankType.KAKAOBANK.toCardCompanyUiModel(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "HamBeomJoon",
@@ -134,14 +137,16 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             ),
             listOf(
                 CardUiModel(
+                    cardCompanyUiModel = BankType.LOTTE.toCardCompanyUiModel(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
+                    cardCompanyUiModel = BankType.HYUNDAI.toCardCompanyUiModel(),
                     number = "8734578233123212",
                     expired = "0729",
-                    owner = "Meeple",
+                    owner = "meeple",
                 ),
             ),
         )

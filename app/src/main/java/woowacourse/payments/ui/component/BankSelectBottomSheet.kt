@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -28,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.BankType.NOT_SELECTED
+import woowacourse.payments.ui.util.toCardCompanyUiModel
 
 private const val COLUMN_COUNT = 4
 private const val ROW_COUNT = 2
@@ -136,7 +136,7 @@ fun BankSelectItem(
                 .width(80.dp)
                 .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         val imageRes =
             when (bankType) {
@@ -153,14 +153,12 @@ fun BankSelectItem(
 
         Image(
             painter = painterResource(id = imageRes),
-            contentDescription = bankType.displayName,
+            contentDescription = stringResource(R.string.bank_item_content_description),
             modifier = Modifier.size(48.dp),
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
-
         Text(
-            text = bankType.displayName,
+            text = bankType.toCardCompanyUiModel().name,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
         )
