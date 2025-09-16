@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,15 +25,17 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardValidator
 import woowacourse.payments.domain.CardValidator.isValidCard
+import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.cardList.components.CardSelectionModal
 import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
-import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
@@ -42,6 +46,11 @@ fun CardRegisterScreen(
     var expiredDate by rememberSaveable { mutableStateOf("") }
     var ownerName by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(
+            confirmValueChange = { false },
+        )
 
     Scaffold(
         topBar = {
@@ -65,6 +74,9 @@ fun CardRegisterScreen(
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
+
+        CardSelectionModal(modalBottomSheetState, { })
+
         Column(
             modifier =
                 Modifier
