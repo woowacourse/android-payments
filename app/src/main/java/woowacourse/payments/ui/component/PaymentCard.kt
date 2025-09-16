@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
@@ -29,6 +30,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun PaymentCard(
+    bankName: String,
     number: String,
     expirationDate: String,
     cardholderName: String,
@@ -43,13 +45,13 @@ fun PaymentCard(
                 .shadow(8.dp, RoundedCornerShape(cornerRadius.dp))
                 .size(width = 208.dp, height = 124.dp)
                 .background(backgroundColor, RoundedCornerShape(cornerRadius.dp))
-                .padding(16.dp),
+                .padding(12.dp),
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
-            PaymentCardText("")
+            PaymentCardText(bankName)
             PaymentCardChip()
             PaymentCardInfoBlock(
                 number = number,
@@ -65,7 +67,7 @@ private fun PaymentCardText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = Color.White,
-    fontSize: TextUnit = 16.sp,
+    fontSize: TextUnit = 12.sp,
     letterSpacing: TextUnit = 0.sp,
     lineHeight: TextUnit = 1.em,
     fontWeight: FontWeight = FontWeight.W500,
@@ -106,7 +108,7 @@ private fun PaymentCardInfoBlock(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        PaymentCardText(text = number)
+        PaymentCardText(text = number, letterSpacing = 2.sp)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -126,12 +128,14 @@ private fun PaymentCardInfoBlock(
 private fun PaymentCardPreview() {
     val paymentCardUiModel =
         PaymentCardUiModel(
+            bankType = BankTypeUiModel.HYUNDAI,
             number = CardNumberUiModel("1234567812345678"),
             expirationDate = CardExpirationDateUiModel("1224"),
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
 
     PaymentCard(
+        bankName = "현대카드",
         number = paymentCardUiModel.displayCardNumber(),
         expirationDate = paymentCardUiModel.displayExpirationDate(),
         cardholderName = paymentCardUiModel.upperCardholderName,
@@ -149,6 +153,7 @@ private fun PaymentCardChipPreview() {
 private fun PaymentCardInfoBlockPreview() {
     val paymentCardUiModel =
         PaymentCardUiModel(
+            bankType = BankTypeUiModel.HYUNDAI,
             number = CardNumberUiModel("1234567812345678"),
             expirationDate = CardExpirationDateUiModel("1224"),
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
