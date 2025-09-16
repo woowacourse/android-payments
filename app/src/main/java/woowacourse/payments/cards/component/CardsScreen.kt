@@ -49,7 +49,7 @@ fun CardsScreen(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                addAction = if (cards.size > 1) addCard else null,
+                addCardAction = if (cards.size > 1) addCard else null,
             )
         },
     ) { innerPadding: PaddingValues ->
