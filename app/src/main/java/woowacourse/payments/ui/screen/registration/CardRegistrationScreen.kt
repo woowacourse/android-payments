@@ -38,11 +38,9 @@ fun CardRegistrationScreen(
     val uiEvent by viewModel.uiEvent.observeAsState()
 
     LaunchedEffect(uiEvent) {
-        when (uiEvent) {
+        when (val event = uiEvent) {
             is CardRegistrationScreenUiEvent.RegisteredCard -> {
-                (uiEvent as? CardRegistrationScreenUiEvent.RegisteredCard)
-                    ?.paymentCard
-                    ?.let(onRegistrationComplete)
+                event.paymentCard.let(onRegistrationComplete)
             }
 
             null -> Unit
