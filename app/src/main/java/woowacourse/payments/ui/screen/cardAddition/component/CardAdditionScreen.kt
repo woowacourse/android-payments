@@ -72,7 +72,11 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp)
-                        .clickable { stateHolder.updateSheetVisible() },
+                        .clickable { stateHolder.updateSheetVisible() }
+                        .semantics {
+                            contentDescription =
+                                context.getString(R.string.card_addition_card_description)
+                        },
                 issuingBank = stateHolder.uiState.issuingBank,
             )
             CardNumberTextField(
