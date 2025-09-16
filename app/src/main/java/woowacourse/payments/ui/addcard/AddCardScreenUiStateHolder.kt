@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
-import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
 import woowacourse.payments.domain.Passcode.Companion.PASSCODE_REQUIRED_LENGTH
 import woowacourse.payments.ui.format.CardNumberFormat
@@ -13,7 +12,6 @@ import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
-import java.time.YearMonth
 
 class AddCardScreenUiStateHolder {
     val cardNumber: MutableState<String> = mutableStateOf("")
@@ -56,15 +54,7 @@ class AddCardScreenUiStateHolder {
             newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
         expirationDate.value = filteredValue
 
-        isExpirationDateError.value =
-            runCatching {
-                ExpirationDate(
-                    YearMonth.parse(
-                        filteredValue,
-                        ExpirationDateFormat.formatPattern,
-                    ),
-                )
-            }.isFailure
+        isExpirationDateError.value = !ExpirationDateFormat.isValidFormat(filteredValue)
 
         shouldMoveFocus.value =
             (!isExpirationDateError.value && filteredValue.length == ExpirationDateFormat.REQUIRED_LENGTH)
@@ -86,20 +76,13 @@ class AddCardScreenUiStateHolder {
     }
 
     fun validate() {
-        isCardNumberError.value = (cardNumber.value.length != CardNumberFormat.REQUIRED_LENGTH)
+        isCardNumberError.value = cardNumber.value.length != CardNumberFormat.REQUIRED_LENGTH
+
         isExpirationDateError.value =
-            (
-                expirationDate.value.length != ExpirationDateFormat.REQUIRED_LENGTH ||
-                    runCatching {
-                        ExpirationDate(
-                            YearMonth.parse(
-                                expirationDate.value,
-                                ExpirationDateFormat.formatPattern,
-                            ),
-                        )
-                    }.isFailure
-            )
-        isPasscodeError.value = (passcode.value.length != PASSCODE_REQUIRED_LENGTH)
+            expirationDate.value.length != ExpirationDateFormat.REQUIRED_LENGTH ||
+            !ExpirationDateFormat.isValidFormat(expirationDate.value)
+
+        isPasscodeError.value = passcode.value.length != PASSCODE_REQUIRED_LENGTH
     }
 
     fun onFocusMoved() {
