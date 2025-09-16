@@ -10,6 +10,9 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_COLOR_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_NAME_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
 import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
@@ -38,6 +41,10 @@ class AddCardStateHolder(
         uiState = uiState.copy(password = newPassword)
     }
 
+    fun updateCardCompany(newCompany: CardCompanyUiModel) {
+        uiState = uiState.copy(cardCompanyUiModel = newCompany)
+    }
+
     fun validateAll() {
         uiState = uiState.validate()
     }
@@ -51,6 +58,8 @@ class AddCardStateHolder(
                         EXPIRED_KEY to holder.uiState.expired.value,
                         CARD_OWNER_KEY to holder.uiState.cardOwner.value,
                         PASSWORD_KEY to holder.uiState.password.value,
+                        CARD_COMPANY_NAME_KEY to holder.uiState.cardCompanyUiModel.name,
+                        CARD_COMPANY_COLOR_KEY to holder.uiState.cardCompanyUiModel.color,
                         VALIDATION_ERROR_KEY to ArrayList(holder.uiState.errors.map { it.name }),
                     )
                 },
@@ -67,6 +76,14 @@ class AddCardStateHolder(
                             expired = Expired(bundle.getString(EXPIRED_KEY) ?: ""),
                             cardOwner = CardOwner(bundle.getString(CARD_OWNER_KEY) ?: ""),
                             password = Password(bundle.getString(PASSWORD_KEY) ?: ""),
+                            cardCompanyUiModel =
+                                CardCompanyUiModel(
+                                    name =
+                                        bundle.getString(CARD_COMPANY_NAME_KEY)
+                                            ?: "",
+                                    color =
+                                        bundle.getInt(CARD_COMPANY_COLOR_KEY),
+                                ),
                             errors = errors,
                         )
                     AddCardStateHolder(restoredState)
