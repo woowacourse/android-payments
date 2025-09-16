@@ -11,7 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,13 +34,13 @@ fun CardRegistrationScreen(
     modifier: Modifier = Modifier,
     viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
 ) {
-    val uiState by viewModel.uiState.observeAsState(CardRegistrationScreenUiState())
-    val uiEvent by viewModel.uiEvent.observeAsState()
+    val uiState = viewModel.uiState.observeAsState().value ?: return
+    val uiEvent = viewModel.uiEvent.observeAsState().value
 
     LaunchedEffect(uiEvent) {
-        when (val event = uiEvent) {
+        when (uiEvent) {
             is CardRegistrationScreenUiEvent.RegisteredCard ->
-                event.paymentCard.let(onRegistrationComplete)
+                uiEvent.paymentCard.let(onRegistrationComplete)
 
             null -> Unit
         }

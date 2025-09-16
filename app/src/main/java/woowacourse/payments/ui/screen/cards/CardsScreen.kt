@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,8 +49,8 @@ fun CardsScreen(
     viewModel: CardsScreenViewModel = rememberCardsScreenViewModel(),
 ) {
     val context = LocalContext.current
-    val uiState by viewModel.uiState.observeAsState(CardsUiState.EMPTY)
-    val uiEvent by viewModel.uiEvent.observeAsState()
+    val uiState = viewModel.uiState.observeAsState().value ?: return
+    val uiEvent = viewModel.uiEvent.observeAsState().value
     val cardAddLauncher = rememberCardAddLauncher(viewModel::addCard)
 
     LaunchedEffect(uiEvent) {
