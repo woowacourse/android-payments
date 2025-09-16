@@ -12,11 +12,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.model.CardVendor
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
+import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
@@ -30,7 +30,7 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
-            var showBottomSheet by rememberSaveable { mutableStateOf(true) }
+            val vendorModal by rememberSaveable { mutableStateOf(VendorModalUiState()) }
 
             AndroidpaymentsTheme {
                 Scaffold(
@@ -49,18 +49,18 @@ class AddCardActivity : ComponentActivity() {
                                 .padding(horizontal = 24.dp)
                                 .fillMaxWidth(),
                         cardInfo = cardInfo,
-                        onCardClick = { showBottomSheet = true },
+                        onCardClick = { vendorModal.show() },
                     )
 
-                    if (showBottomSheet) {
+                    if (vendorModal.isVisible) {
                         AddCardVendorSelectionScreen(
                             vendors = CardVendor.entries.map { it.toUiModel() },
-                            onDismissRequest = { showBottomSheet = false },
+                            onDismissRequest = { vendorModal.hide() },
                             onVendorItemClick = { vendor ->
                                 cardInfo.updateCardInfo(
                                     vendor = vendor,
                                 )
-                                showBottomSheet = false
+                                vendorModal.hide()
                             },
                         )
                     }
