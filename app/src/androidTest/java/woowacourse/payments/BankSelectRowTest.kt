@@ -32,7 +32,7 @@ class BankSelectRowTest {
     }
 
     @Test
-    fun 신한카드를_클릭하면_onSelect에_SHINHAN이_전달된다() {
+    fun 은행_아이템을_클릭하면_onSelect에_해당_은행이_전달된다() {
         val banks = listOf(BankType.BC, BankType.SHINHAN, BankType.KAKAO).map { it.toUiModel() }
         var selected: BankType? = null
 
