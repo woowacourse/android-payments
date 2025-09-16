@@ -14,11 +14,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,19 +30,10 @@ import woowacourse.payments.ui.util.toCardCompanyUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
-    selectedBank: BankType = NOT_SELECTED,
     onBankSelected: (BankType) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
-    var selectedBank by remember { mutableStateOf(selectedBank) }
-
-    LaunchedEffect(key1 = selectedBank) {
-        if (selectedBank != NOT_SELECTED) {
-            modalBottomSheetState.hide()
-            onBankSelected(selectedBank)
-        }
-    }
 
     ModalBottomSheet(
         sheetState = modalBottomSheetState,
@@ -88,21 +74,8 @@ fun BankSelectItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        val imageRes =
-            when (bankType) {
-                BankType.BC -> R.drawable.img_bc
-                BankType.SHINHAN -> R.drawable.img_shinhan
-                BankType.KAKAOBANK -> R.drawable.img_kakaobank
-                BankType.HYUNDAI -> R.drawable.img_hyundai
-                BankType.WOORI -> R.drawable.img_woori
-                BankType.LOTTE -> R.drawable.img_lotte
-                BankType.HANA -> R.drawable.img_hana
-                BankType.KB -> R.drawable.img_kb
-                else -> R.drawable.ic_not_visible
-            }
-
         Image(
-            painter = painterResource(id = imageRes),
+            painter = painterResource(id = bankType.toCardCompanyUiModel().logoRes),
             contentDescription = stringResource(R.string.bank_item_content_description),
             modifier = Modifier.size(48.dp),
         )

@@ -7,5 +7,6 @@ object BundleKeys {
     const val PASSWORD_KEY = "password"
     const val CARD_COMPANY_NAME_KEY = "companyName"
     const val CARD_COMPANY_COLOR_KEY = "companyColor"
+    const val CARD_COMPANY_LOGO_KEY = "companyLogo"
     const val VALIDATION_ERROR_KEY = "showValidationError"
 }

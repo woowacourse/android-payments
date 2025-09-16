@@ -9,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 data class CardCompanyUiModel(
     val name: String,
     val color: Int,
+    val logoRes: Int,
 ) : Parcelable {
     val backgroundColor: Color
         get() = Color(color)
@@ -17,10 +18,12 @@ data class CardCompanyUiModel(
         fun create(
             name: String,
             color: Color,
+            logoRes: Int,
         ): CardCompanyUiModel =
             CardCompanyUiModel(
                 name = name,
                 color = color.toArgb(),
+                logoRes = logoRes,
             )
     }
 }

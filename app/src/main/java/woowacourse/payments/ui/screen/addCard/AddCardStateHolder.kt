@@ -12,6 +12,7 @@ import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_COLOR_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_LOGO_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_NAME_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
 import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
@@ -60,6 +61,7 @@ class AddCardStateHolder(
                         PASSWORD_KEY to holder.uiState.password.value,
                         CARD_COMPANY_NAME_KEY to holder.uiState.cardCompanyUiModel.name,
                         CARD_COMPANY_COLOR_KEY to holder.uiState.cardCompanyUiModel.color,
+                        CARD_COMPANY_LOGO_KEY to holder.uiState.cardCompanyUiModel.logoRes,
                         VALIDATION_ERROR_KEY to ArrayList(holder.uiState.errors.map { it.name }),
                     )
                 },
@@ -81,8 +83,8 @@ class AddCardStateHolder(
                                     name =
                                         bundle.getString(CARD_COMPANY_NAME_KEY)
                                             ?: "",
-                                    color =
-                                        bundle.getInt(CARD_COMPANY_COLOR_KEY),
+                                    color = bundle.getInt(CARD_COMPANY_COLOR_KEY),
+                                    logoRes = bundle.getInt(CARD_COMPANY_LOGO_KEY),
                                 ),
                             errors = errors,
                         )
