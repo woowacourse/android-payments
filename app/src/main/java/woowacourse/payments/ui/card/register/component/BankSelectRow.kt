@@ -2,6 +2,7 @@ package woowacourse.payments.ui.card.register.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,9 +19,12 @@ fun BankSelectRow(
     onBankSelected: (Bank) -> Unit,
 ) {
     FlowRow(
-        modifier = Modifier.padding(4.dp),
-        horizontalArrangement = Arrangement.spacedBy(20.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 40.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.spacedBy(24.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         banks.forEach { bank ->

@@ -16,8 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.Bank
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.card.component.PaymentCard
+import woowacourse.payments.ui.card.register.component.BankSelectBottomSheet
 import woowacourse.payments.ui.card.register.component.CardExpirationDateTextField
 import woowacourse.payments.ui.card.register.component.CardHolderNameTextField
 import woowacourse.payments.ui.card.register.component.CardNumberTextField
@@ -35,6 +38,9 @@ fun RegisterCardScreen(
     var expirationDate by remember { mutableStateOf("") }
     var cardHolderName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    var showBottomSheet by remember { mutableStateOf(true) }
+    var selectedBank: Bank? by remember { mutableStateOf(null) }
 
     val context = LocalContext.current
 
@@ -109,6 +115,28 @@ fun RegisterCardScreen(
                         .padding(top = 10.dp)
                         .fillMaxWidth(0.5f)
                         .defaultMinSize(minWidth = 200.dp),
+            )
+        }
+
+        if (showBottomSheet) {
+            val banks =
+                listOf(
+                    Bank(BankType.BC, "BC카드"),
+                    Bank(BankType.SHINHAN, "신한카드"),
+                    Bank(BankType.KAKAO, "카카오뱅크"),
+                    Bank(BankType.HYUNDAI, "현대카드"),
+                    Bank(BankType.WOORI, "우리카드"),
+                    Bank(BankType.LOTTE, "롯데카드"),
+                    Bank(BankType.HANA, "하나카드"),
+                    Bank(BankType.KB, "국민카드"),
+                )
+
+            BankSelectBottomSheet(
+                banks = banks,
+                onBankSelected = { bank ->
+                    selectedBank = bank
+                    showBottomSheet = false
+                },
             )
         }
     }
