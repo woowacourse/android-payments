@@ -38,7 +38,7 @@ class CardAdditionUiStateHolder(
     }
 
     fun updateSheetVisible() {
-        hasShownSheet = true
+        hasShownSheet = hasShownSheet.not()
     }
 
     companion object {

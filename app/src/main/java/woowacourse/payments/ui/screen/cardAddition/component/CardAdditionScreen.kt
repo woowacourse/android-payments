@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -73,9 +72,7 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp)
-                        .clickable(onClick = {
-                            Log.d("OnClick", "Clicked")
-                        }),
+                        .clickable { stateHolder.updateSheetVisible() },
                 issuingBank = stateHolder.uiState.issuingBank,
             )
             CardNumberTextField(
