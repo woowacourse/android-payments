@@ -46,7 +46,7 @@ fun PaymentScreenContainer() {
     PaymentScreen(
         cards = cards,
         onAddCardClick = {
-            cardAddLauncher.launch(AddCardActivity.createIntent(context))
+            cardAddLauncher.launch(AddCardActivity.newIntent(context))
         },
     )
 }

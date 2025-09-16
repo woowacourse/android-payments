@@ -15,9 +15,4 @@ object IntentCompat {
         } else {
             intent.getParcelableExtra(key)
         }
-
-    inline fun <reified T : Parcelable> Intent.putParcelableCompat(
-        key: String,
-        value: T?,
-    ): Intent = apply { putExtra(key, value) }
 }

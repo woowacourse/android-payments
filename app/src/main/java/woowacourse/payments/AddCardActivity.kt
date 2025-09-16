@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.IntentCompat.putParcelableCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardScreen
@@ -24,8 +23,9 @@ class AddCardActivity : ComponentActivity() {
                     },
                     onAddCard = { card ->
                         val resultIntent =
-                            Intent()
-                                .putParcelableCompat(EXTRA_RESULT_CARD, card.toUiModel())
+                            Intent().apply {
+                                putExtra(EXTRA_RESULT_CARD, card.toUiModel())
+                            }
                         setResult(RESULT_OK, resultIntent)
                         finish()
                     },
@@ -37,7 +37,7 @@ class AddCardActivity : ComponentActivity() {
     companion object {
         private const val EXTRA_RESULT_CARD = "RESULT_CARD"
 
-        fun createIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
         fun parseResult(data: Intent?): CardUiModel? = data?.let { IntentCompat.getParcelableExtra<CardUiModel>(it, EXTRA_RESULT_CARD) }
     }
