@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
-            android:name=".ui.newcard.NewCardActivity"
+            android:name=".ui.cardwallet.CardWalletActivity"
             android:exported="true"
             android:label="@string/new_card_add"
             android:theme="@style/Theme.Androidpayments">
@@ -21,6 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.newcard.NewCardActivity"
+            android:exported="false"
+            android:label="@string/new_card_add"
+            android:theme="@style/Theme.Androidpayments" />
     </application>
 
 </manifest>

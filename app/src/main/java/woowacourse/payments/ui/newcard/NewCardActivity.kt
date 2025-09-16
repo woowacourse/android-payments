@@ -1,15 +1,12 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.newcard.components.NewCardTopBar
 
 class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,21 +14,21 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                Scaffold(
-                    topBar = {
-                        NewCardTopBar(
-                            onBackClick = { finish() },
-                            onSaveClick = { /* TODO: 저장 기능 추가 */ },
-                        )
+                NewCardScreen(
+                    onSaved = { card ->
+                        val intent = Intent().putExtra(EXTRA_NEW_CARD_RESULT, card)
+                        setResult(RESULT_OK, intent)
+                        finish()
                     },
-                    modifier = Modifier.fillMaxSize(),
-                ) { innerPadding ->
-                    NewCardScreen(
-                        onSaved = { /* TODO: 저장 기능 추가 */ },
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
+                    onFinish = { finish() },
+                )
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_NEW_CARD_RESULT: String = "EXTRA_NEW_CARD_RESULT"
+
+        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }

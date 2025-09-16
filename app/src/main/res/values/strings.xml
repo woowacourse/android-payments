@@ -12,4 +12,9 @@
     <string name="new_card_holder_name_hint">카드에 표시된 이름을 입력하세요.</string>
     <string name="new_card_pin_label">비밀번호</string>
     <string name="new_card_pin_hint">0000</string>
+
+    <string name="card_wallet">카드 지갑</string>
+    <string name="new_card_guide">새로운 카드를 등록해주세요</string>
+    <string name="new_card_success">카드가 추가되었습니다</string>
+    <string name="card_wallet_add">추가</string>
 </resources>

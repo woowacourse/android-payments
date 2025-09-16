@@ -1,0 +1,81 @@
+package woowacourse.payments.ui.cardwallet.components
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.cardwallet.model.CardWalletState
+import woowacourse.payments.ui.common.model.CardUiModel
+
+@Composable
+fun CardWalletContent(
+    cards: List<CardUiModel>,
+    cardWalletState: CardWalletState,
+    navigateToNewCard: () -> Unit,
+) {
+    when (cardWalletState) {
+        CardWalletState.EMPTY -> EmptyWallet(onAdd = navigateToNewCard)
+        CardWalletState.SINGLE -> SingleCardWallet(cards = cards, onAdd = navigateToNewCard)
+        CardWalletState.MULTIPLE -> MultipleCardWallet(cards = cards)
+    }
+}
+
+@Composable
+private fun EmptyWallet(onAdd: () -> Unit) {
+    Column {
+        Spacer(Modifier.height(32.dp))
+        EmptyGuide()
+        Spacer(Modifier.height(32.dp))
+        NewCardPlaceholder(
+            modifier =
+                Modifier
+                    .width(208.dp)
+                    .height(124.dp),
+            onClick = onAdd,
+        )
+    }
+}
+
+@Composable
+private fun SingleCardWallet(
+    cards: List<CardUiModel>,
+    onAdd: () -> Unit,
+) {
+    Column {
+        CardWalletCards(cards)
+        NewCardPlaceholder(
+            modifier =
+                Modifier
+                    .width(208.dp)
+                    .height(124.dp),
+            onClick = onAdd,
+        )
+    }
+}
+
+@Composable
+private fun MultipleCardWallet(cards: List<CardUiModel>) {
+    CardWalletCards(cards)
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardWalletContentPreview() {
+    AndroidpaymentsTheme {
+        val cards =
+            listOf(
+                CardUiModel("1234123412341234", "0511", "공백"),
+                CardUiModel("4321432143214321", "0928", "비비"),
+            )
+        CardWalletContent(
+            cards = cards,
+            cardWalletState = CardWalletState.MULTIPLE,
+            navigateToNewCard = {},
+        )
+    }
+}
