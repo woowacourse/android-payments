@@ -26,8 +26,7 @@ class CardRegistrationScreenViewModel(
     val uiState: LiveData<CardRegistrationScreenUiState> get() = _uiState
 
     private var _uiEvent = MutableLiveData<CardRegistrationScreenUiEvent?>()
-    val uiEvent: LiveData<CardRegistrationScreenUiEvent?>
-        get() = _uiEvent.also { _uiEvent.value = null }
+    val uiEvent: LiveData<CardRegistrationScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }
@@ -127,7 +126,7 @@ class CardRegistrationScreenViewModel(
 
     private fun handleCardholderNameError(exception: CardholderName.CardholderNameException) {
         when (exception) {
-            is CardholderName.CardholderNameException.ExceedsLengthException,
+            is CardholderName.CardholderNameException.LengthExceededException,
             is CardholderName.CardholderNameException.InvalidFormatException,
             -> Unit
         }

@@ -13,7 +13,7 @@ class CardsScreenViewModel(
     val uiState: LiveData<CardsUiState> = _uiState
 
     private val _uiEvent = MutableLiveData<CardsScreenUiEvent?>()
-    val uiEvent: LiveData<CardsScreenUiEvent?> get() = _uiEvent.also { _uiEvent.value = null }
+    val uiEvent: LiveData<CardsScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun addCard(newCard: PaymentCardUiModel) {
         _uiState.update { addCard(newCard) }
