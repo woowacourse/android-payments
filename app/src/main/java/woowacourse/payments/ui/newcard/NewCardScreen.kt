@@ -44,7 +44,7 @@ fun NewCardScreen(
     state: NewCardState = rememberNewCardState(),
 ) {
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
-    val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
+    val bottomSheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(key1 = state.cardCompany) {
         if (state.isCardCompanySelected) {
@@ -57,6 +57,7 @@ fun NewCardScreen(
         onCompanySelected = { state.onCompanySelected(it) },
         sheetState = bottomSheetState,
         showBottomSheet = showBottomSheet,
+        onDisMiss = onBackClick,
     )
 
     val scrollState = rememberScrollState()

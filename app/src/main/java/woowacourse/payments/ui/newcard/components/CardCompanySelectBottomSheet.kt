@@ -22,11 +22,12 @@ fun CompanySelectBottomSheet(
     onCompanySelected: (CompanyUiModel) -> Unit,
     showBottomSheet: Boolean = true,
     sheetState: SheetState = rememberModalBottomSheetState(),
+    onDisMiss: () -> Unit = {},
 ) {
     if (showBottomSheet) {
         ModalBottomSheet(
             sheetState = sheetState,
-            onDismissRequest = { },
+            onDismissRequest = onDisMiss,
         ) {
             CompanySelectRow(
                 companies = companies,
