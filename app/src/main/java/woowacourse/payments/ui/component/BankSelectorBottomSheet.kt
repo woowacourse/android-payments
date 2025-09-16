@@ -2,7 +2,6 @@ package woowacourse.payments.ui.component
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,13 +18,17 @@ import woowacourse.payments.ui.model.BankTypeUiModel
 @Composable
 fun BankSelectBottomSheet(
     onBankSelected: (BankTypeUiModel) -> Unit,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var selectedBank by remember { mutableStateOf(BankTypeUiModel.NOT_SELECTED) }
 
     LaunchedEffect(selectedBank) {
-        if (selectedBank != BankTypeUiModel.NOT_SELECTED) sheetState.hide()
+        if (selectedBank != BankTypeUiModel.NOT_SELECTED) {
+            sheetState.hide()
+            onDismiss()
+        }
     }
 
     ModalBottomSheet(
@@ -46,5 +49,8 @@ fun BankSelectBottomSheet(
 @Preview(showBackground = true)
 @Composable
 private fun BankSelectBottomSheetPreview() {
-    BankSelectBottomSheet(onBankSelected = { })
+    BankSelectBottomSheet(
+        onBankSelected = { },
+        onDismiss = { },
+    )
 }

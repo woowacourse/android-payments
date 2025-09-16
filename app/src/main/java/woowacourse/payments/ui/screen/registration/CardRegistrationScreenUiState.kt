@@ -18,10 +18,8 @@ data class CardRegistrationScreenUiState(
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
     val bankType: BankTypeUiModel = BankTypeUiModel.NOT_SELECTED,
+    val openBankSelectorBottomSheet: Boolean = true,
 ) : Parcelable {
-    @IgnoredOnParcel
-    val isShowBankSelectorBottomSheet: Boolean = bankType == BankTypeUiModel.NOT_SELECTED
-
     @IgnoredOnParcel
     val isSaveButtonEnabled: Boolean =
         cardNumber.isValid && cardExpirationDate.isValid && cardholderName.isValid && cardPassword.isValid

@@ -24,7 +24,6 @@ import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.toBankName
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -60,7 +59,7 @@ fun CardRegistrationScreen(
     ) { innerPadding ->
         CardRegistrationScreenContent(
             uiState = uiState,
-            onCardClick = { viewModel.updateBank(BankTypeUiModel.NOT_SELECTED) },
+            onCardClick = viewModel::openBankSelectorBottomSheet,
             onCardNumberChanged = viewModel::updateCardNumber,
             onCardExpirationDateChanged = viewModel::updateCardExpirationDate,
             onCardholderNameChanged = viewModel::updateCardholderName,
@@ -68,7 +67,12 @@ fun CardRegistrationScreen(
             modifier = Modifier.padding(innerPadding),
         )
 
-        if (uiState.isShowBankSelectorBottomSheet) BankSelectBottomSheet(onBankSelected = viewModel::updateBank)
+        if (uiState.openBankSelectorBottomSheet) {
+            BankSelectBottomSheet(
+                onBankSelected = viewModel::updateBank,
+                onDismiss = viewModel::closeBankSelectorBottomSheet,
+            )
+        }
     }
 }
 

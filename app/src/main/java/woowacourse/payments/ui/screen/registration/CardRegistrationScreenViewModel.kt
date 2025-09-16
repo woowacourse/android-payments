@@ -33,6 +33,14 @@ class CardRegistrationScreenViewModel(
         _uiState.update { copy(bankType = bankType) }
     }
 
+    fun openBankSelectorBottomSheet() {
+        _uiState.update { copy(openBankSelectorBottomSheet = true) }
+    }
+
+    fun closeBankSelectorBottomSheet() {
+        _uiState.update { copy(openBankSelectorBottomSheet = false) }
+    }
+
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }
             .onSuccess { newValue ->
