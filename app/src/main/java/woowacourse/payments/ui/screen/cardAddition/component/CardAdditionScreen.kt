@@ -21,7 +21,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.common.component.CardChip
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
 import woowacourse.payments.ui.screen.cardAddition.toUiModel
