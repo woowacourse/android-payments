@@ -32,7 +32,7 @@ fun PaymentCard(
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
             .background(
-                color = Color(card.cardCompany?.cardColor ?: 0xFF333333),
+                color = Color(card.cardCompany.cardColor),
                 shape = RoundedCornerShape(5.dp),
             ),
     ) {
@@ -42,7 +42,7 @@ fun PaymentCard(
                 .padding(start = 16.dp, end = 16.dp, top = 15.dp),
         ) {
             Text(
-                text = card.cardCompany?.name.orEmpty(),
+                text = card.cardCompany.name,
                 color = Color.White,
                 fontSize = 12.sp,
             )

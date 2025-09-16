@@ -97,14 +97,13 @@ private fun Intent.toCardOrNull(): Card? =
         getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let { card: CardUiModel ->
             val yearMonth: YearMonth =
                 YearMonth.parse(card.expirationDate, ExpirationDateFormat.formatPattern)
-            val cardCompany: CardCompany = card.cardCompany?.company ?: return@runCatching null
 
             Card(
                 CardNumber(card.cardNumber),
                 ExpirationDate(yearMonth),
                 CardholderName(card.cardholderName),
                 Passcode(card.passcode),
-                cardCompany,
+                card.cardCompany.company,
             )
         }
     }.getOrNull()

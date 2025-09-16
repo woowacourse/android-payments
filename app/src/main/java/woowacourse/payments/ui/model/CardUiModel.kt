@@ -3,6 +3,7 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.format.CardNumberFormat
 import woowacourse.payments.ui.format.ExpirationDateFormat
 
@@ -12,10 +13,10 @@ data class CardUiModel(
     val expirationDate: String,
     val cardholderName: String,
     val passcode: String,
-    val cardCompany: CardCompanyUiModel?,
+    val cardCompany: CardCompanyUiModel,
 ) : Parcelable {
     companion object {
-        val EMPTY = CardUiModel("", "", "", "", null)
+        val EMPTY = CardUiModel("", "", "", "", CardCompany.NONE.toUiModel())
     }
 }
 
