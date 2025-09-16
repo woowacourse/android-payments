@@ -38,27 +38,33 @@ import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardsUiModel
 import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardsScreen(viewModel: CardsScreenViewModel = rememberCardsScreenViewModel()) {
+fun CardsScreen(
+    modifier: Modifier = Modifier,
+    viewModel: CardsScreenViewModel = rememberCardsScreenViewModel(),
+) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.observeAsState(CardsUiState.EMPTY)
-    val uiEvent by viewModel.uiEvent.observeAsState(CardsScreenUiEvent.None)
+    val uiEvent by viewModel.uiEvent.observeAsState()
     val cardAddLauncher = rememberCardAddLauncher(viewModel::addCard)
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            is CardsScreenUiEvent.None -> Unit
             is CardsScreenUiEvent.RegisteredCard -> {
                 val resId = R.string.cards_screen_card_registered_message
                 Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
             }
+
+            null -> Unit
         }
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             CardsTopAppBar(
                 onRegistrationButtonClick = {
@@ -104,7 +110,7 @@ private fun CardsScreenContent(
     ) {
         when (cardsUiState) {
             is CardsUiState.EMPTY -> CardsEmptyContent(onRegistrationButtonClick)
-            is CardsUiState.MULTIPLE -> CardsMultipleContent(cardsUiState.cards)
+            is CardsUiState.MULTIPLE -> CardsMultipleContent(PaymentCardsUiModel(cardsUiState.cards))
             is CardsUiState.SINGLE ->
                 CardsSingleContent(cardsUiState.card, onRegistrationButtonClick)
         }
@@ -145,14 +151,14 @@ private fun CardsSingleContent(
 
 @Composable
 private fun CardsMultipleContent(
-    cards: List<PaymentCardUiModel>,
+    paymentCards: PaymentCardsUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        cards.forEach { card -> PaymentCard(paymentCardUiModel = card) }
+        paymentCards.cards.forEach { card -> PaymentCard(paymentCardUiModel = card) }
         Spacer(modifier = Modifier.height(12.dp))
     }
 }

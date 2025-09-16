@@ -28,26 +28,29 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardRegistrationScreen(
-    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
     onRegistrationComplete: (PaymentCardUiModel) -> Unit,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
 ) {
     val focusManager = LocalFocusManager.current
     val uiState by viewModel.uiState.observeAsState(CardRegistrationScreenUiState())
-    val uiEvent by viewModel.uiEvent.observeAsState(CardRegistrationScreenUiEvent.None)
+    val uiEvent by viewModel.uiEvent.observeAsState()
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            is CardRegistrationScreenUiEvent.None -> Unit
             is CardRegistrationScreenUiEvent.RegisteredCard -> {
                 (uiEvent as? CardRegistrationScreenUiEvent.RegisteredCard)
                     ?.paymentCard
                     ?.let(onRegistrationComplete)
             }
+
+            null -> Unit
         }
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = onBackClick,
@@ -132,7 +135,7 @@ private fun CardRegistrationScreenContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
             onBackClick = {},
