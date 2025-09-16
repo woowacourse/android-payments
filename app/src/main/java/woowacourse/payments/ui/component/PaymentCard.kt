@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.GOLD
 import woowacourse.payments.ui.util.toCardCompanyUiModel
 
 @Composable
@@ -38,17 +39,27 @@ fun PaymentCard(
                     color = card.cardCompanyUiModel.backgroundColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
-        contentAlignment = Alignment.CenterStart,
     ) {
+        Text(
+            text = card.cardCompanyUiModel.name,
+            modifier =
+                Modifier
+                    .padding(start = 12.dp, top = 12.dp)
+                    .align(Alignment.TopStart),
+            color = Color.White,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+        )
+
         Box(
             modifier =
                 Modifier
                     .padding(start = 14.dp, bottom = 12.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
-                        color = Color(0xFFCBBA64),
+                        color = GOLD,
                         shape = RoundedCornerShape(4.dp),
-                    ),
+                    ).align(Alignment.CenterStart),
         )
 
         Column(
