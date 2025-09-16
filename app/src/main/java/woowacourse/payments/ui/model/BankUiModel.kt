@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CardCompanyUiModel(
+data class BankUiModel(
     val name: String,
     val color: Int,
     val logoRes: Int,
@@ -19,8 +19,8 @@ data class CardCompanyUiModel(
             name: String,
             color: Color,
             logoRes: Int,
-        ): CardCompanyUiModel =
-            CardCompanyUiModel(
+        ): BankUiModel =
+            BankUiModel(
                 name = name,
                 color = color.toArgb(),
                 logoRes = logoRes,

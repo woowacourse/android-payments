@@ -23,7 +23,7 @@ import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.GOLD
-import woowacourse.payments.ui.util.toCardCompanyUiModel
+import woowacourse.payments.ui.util.toBankUiModel
 
 @Composable
 fun PaymentCard(
@@ -36,12 +36,12 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = card.cardCompanyUiModel.backgroundColor,
+                    color = card.bankUiModel.backgroundColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = card.cardCompanyUiModel.name,
+            text = card.bankUiModel.name,
             modifier =
                 Modifier
                     .padding(start = 12.dp, top = 12.dp)
@@ -59,7 +59,8 @@ fun PaymentCard(
                     .background(
                         color = GOLD,
                         shape = RoundedCornerShape(4.dp),
-                    ).align(Alignment.CenterStart),
+                    )
+                    .align(Alignment.CenterStart),
         )
 
         Column(
@@ -105,7 +106,7 @@ fun BCCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    cardCompanyUiModel = BankType.WOORI.toCardCompanyUiModel(),
+                    bankUiModel = BankType.WOORI.toBankUiModel(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
@@ -121,7 +122,7 @@ fun WooriCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    cardCompanyUiModel = BankType.KAKAOBANK.toCardCompanyUiModel(),
+                    bankUiModel = BankType.KAKAOBANK.toBankUiModel(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

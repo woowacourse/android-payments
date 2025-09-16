@@ -36,7 +36,7 @@ import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.toCardCompanyUiModel
+import woowacourse.payments.ui.util.toBankUiModel
 
 @Composable
 fun CardListScreen(
@@ -129,7 +129,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             emptyList(),
             listOf(
                 CardUiModel(
-                    cardCompanyUiModel = BankType.KAKAOBANK.toCardCompanyUiModel(),
+                    bankUiModel = BankType.KAKAOBANK.toBankUiModel(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "HamBeomJoon",
@@ -137,13 +137,13 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             ),
             listOf(
                 CardUiModel(
-                    cardCompanyUiModel = BankType.LOTTE.toCardCompanyUiModel(),
+                    bankUiModel = BankType.LOTTE.toBankUiModel(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
-                    cardCompanyUiModel = BankType.HYUNDAI.toCardCompanyUiModel(),
+                    bankUiModel = BankType.HYUNDAI.toBankUiModel(),
                     number = "8734578233123212",
                     expired = "0729",
                     owner = "meeple",

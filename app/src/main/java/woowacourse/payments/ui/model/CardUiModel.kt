@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardUiModel(
-    val cardCompanyUiModel: CardCompanyUiModel,
+    val bankUiModel: BankUiModel,
     val number: String,
     val expired: String,
     val owner: String,
