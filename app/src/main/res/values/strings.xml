@@ -27,4 +27,5 @@
     <string name="card_lotte">롯데카드</string>
     <string name="card_hana">하나카드</string>
     <string name="card_kb">국민카드</string>
+    <string name="card_default"></string>
 </resources>
