@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.model.BankTypeUiModel
+import woowacourse.payments.ui.model.toBankName
 
 @Composable
 fun BankSelectRow(
@@ -59,7 +60,7 @@ private fun BankSelectButton(
         bankType.logoResId?.let { resId ->
             Image(
                 painter = painterResource(id = resId),
-                contentDescription = bankType.name,
+                contentDescription = bankType.toBankName(),
                 modifier = Modifier.padding(8.dp),
             )
         }
