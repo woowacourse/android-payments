@@ -7,6 +7,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertAll
 import woowacourse.payments.ui.model.BankTypeUiModel
 
@@ -47,6 +48,6 @@ class BankSelectRowTest {
         composeTestRule.onNodeWithText("국민카드").performClick()
 
         // then
-        assert(selectedBank == BankTypeUiModel.KB)
+        assertEquals(selectedBank, BankTypeUiModel.KB)
     }
 }
