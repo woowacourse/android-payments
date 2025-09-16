@@ -38,7 +38,7 @@ fun AddCardScreen(
     val uiState = remember { AddCardScreenUiStateHolder() }
 
     fun saveAddedCard() {
-        uiState.checkEmptyFields()
+        uiState.validate()
         if (uiState.isError) {
             onSaveFailure()
         } else {

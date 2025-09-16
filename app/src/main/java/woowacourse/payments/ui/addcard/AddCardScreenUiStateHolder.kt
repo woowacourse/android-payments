@@ -26,6 +26,16 @@ class AddCardScreenUiStateHolder {
     val isExpirationDateError: MutableState<Boolean> = mutableStateOf(false)
     val isPasscodeError: MutableState<Boolean> = mutableStateOf(false)
 
+    val card: CardUiModel
+        get() =
+            CardUiModel(
+                cardNumber.value,
+                expirationDate.value,
+                cardholderName.value,
+                passcode.value,
+                cardCompany.value,
+            )
+
     val isError: Boolean get() = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
     val shouldMoveFocus: MutableState<Boolean> = mutableStateOf(false)
@@ -75,20 +85,21 @@ class AddCardScreenUiStateHolder {
             (!isPasscodeError.value && filteredValue.length == PASSCODE_REQUIRED_LENGTH)
     }
 
-    val card: CardUiModel
-        get() =
-            CardUiModel(
-                cardNumber.value,
-                expirationDate.value,
-                cardholderName.value,
-                passcode.value,
-                cardCompany.value,
+    fun validate() {
+        isCardNumberError.value = (cardNumber.value.length != CardNumberFormat.REQUIRED_LENGTH)
+        isExpirationDateError.value =
+            (
+                expirationDate.value.length != ExpirationDateFormat.REQUIRED_LENGTH ||
+                    runCatching {
+                        ExpirationDate(
+                            YearMonth.parse(
+                                expirationDate.value,
+                                ExpirationDateFormat.formatPattern,
+                            ),
+                        )
+                    }.isFailure
             )
-
-    fun checkEmptyFields() {
-        if (cardNumber.value.isEmpty()) isCardNumberError.value = true
-        if (expirationDate.value.isEmpty()) isExpirationDateError.value = true
-        if (passcode.value.isEmpty()) isPasscodeError.value = true
+        isPasscodeError.value = (passcode.value.length != PASSCODE_REQUIRED_LENGTH)
     }
 
     fun onFocusMoved() {
