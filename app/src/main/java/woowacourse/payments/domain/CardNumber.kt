@@ -1,6 +1,6 @@
 package woowacourse.payments.domain
 
-import androidx.core.text.isDigitsOnly
+import woowacourse.payments.domain.extension.isDigitsOnly
 
 @JvmInline
 value class CardNumber private constructor(
