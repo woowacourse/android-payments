@@ -66,7 +66,7 @@ private fun PaymentCardText(
     modifier: Modifier = Modifier,
     color: Color = Color.White,
     fontSize: TextUnit = 16.sp,
-    letterSpacing: TextUnit = 1.sp,
+    letterSpacing: TextUnit = 0.sp,
     lineHeight: TextUnit = 1.em,
     fontWeight: FontWeight = FontWeight.W500,
 ) {
@@ -78,6 +78,7 @@ private fun PaymentCardText(
         letterSpacing = letterSpacing,
         lineHeight = lineHeight,
         modifier = modifier,
+        maxLines = 1,
     )
 }
 
