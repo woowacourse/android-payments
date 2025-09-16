@@ -24,7 +24,7 @@ import woowacourse.payments.domain.Password
 fun PasswordTextField(
     password: String,
     onPasswordChange: (String) -> Unit,
-    passwordErrorMessage: String? = null,
+    passwordErrorMessage: String?,
     modifier: Modifier = Modifier
 ) {
     var isFocused by remember { mutableStateOf(false) }
@@ -68,6 +68,7 @@ private fun PasswordTextFieldPreview() {
     PasswordTextField(
         password = password,
         onPasswordChange = { password = it },
+        passwordErrorMessage = null
     )
 }
 

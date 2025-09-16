@@ -18,3 +18,17 @@ val Black1D = Color(0xFF1D1B20)
 val GrayE5 = Color(0xFFE5E5E5)
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
+
+val Brown = Color(0xFF695F54)
+
+val Red = Color(0xFFF04651)
+
+val Green = Color(0xFF009490)
+
+val Yellow = Color(0xFFFFE600)
+
+val Blue = Color(0xFF027BC8)
+
+val shinhanBlue = Color(0xFF0046FF)
+
+val LotteRed = Color(0xFFED1C23)

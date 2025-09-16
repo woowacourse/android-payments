@@ -35,16 +35,14 @@ fun NewCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = {
-                onSaveClick()
-            }) {
+            IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.content_description_icon_check),
                 )
             }
         },
-        modifier = modifier,
+        modifier = Modifier,
     )
 }
 

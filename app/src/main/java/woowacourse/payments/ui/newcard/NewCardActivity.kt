@@ -8,15 +8,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.CardStateHolder
 
 class NewCardActivity : ComponentActivity() {
+    private val state by lazy { CardStateHolder() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            BankSelectBottomSheet()
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
-                onSaveClick = { newCard: Card -> onSaveClick(newCard) })
+                onSaveClick = { saveClick() },
+                state = state
+            )
         }
     }
 
@@ -24,8 +30,8 @@ class NewCardActivity : ComponentActivity() {
         finish()
     }
 
-    fun onSaveClick(newCard: Card) {
-        val intent = Intent(context = this, newCard = newCard)
+    fun saveClick() {
+        val intent = Intent(context = this)
         setResult(RESULT_OK, intent)
         finish()
     }
