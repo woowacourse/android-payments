@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -55,7 +56,7 @@ fun CardListScreen(
     ) { innerPadding ->
         CardListContent(
             modifier = Modifier.padding(innerPadding),
-            enableScroll = uiState.enableScroll,
+            enableScroll = uiState.cards.size > 1,
         ) {
             if (uiState.cards.isEmpty()) {
                 Spacer(modifier = Modifier.height(32.dp))
@@ -66,7 +67,7 @@ fun CardListScreen(
                 )
             }
 
-            for (card in uiState.cards) {
+            uiState.cards.forEach { card ->
                 Spacer(modifier = Modifier.height(32.dp))
                 PaymentCard(card = card)
             }
@@ -75,6 +76,8 @@ fun CardListScreen(
                 Spacer(modifier = Modifier.height(32.dp))
                 AddCardBox(onClick = navigateToAddCard)
             }
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
@@ -83,7 +86,7 @@ fun CardListScreen(
 private fun CardListContent(
     enableScroll: Boolean,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -92,20 +95,16 @@ private fun CardListContent(
             modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .let { baseModifier ->
+                .then(
                     if (enableScroll) {
-                        baseModifier.verticalScroll(scrollState)
+                        Modifier.verticalScroll(scrollState)
                     } else {
-                        baseModifier
-                    }
-                },
+                        Modifier
+                    },
+                ),
         horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        content()
-        if (enableScroll) {
-            Spacer(modifier = Modifier.height(40.dp))
-        }
-    }
+        content = content,
+    )
 }
 
 @Composable
