@@ -37,7 +37,7 @@ data class CardInfoUiState(
         this.password = CardInfo.formatPassword(password)
         this.isExpirationDateValid = CardInfo.checkIsValidMonth(expireDate)
         this.vendor = vendor
-        cardInfoUiModel = CardInfoUiModel(cardNumber, expireDate, ownerName, password)
+        cardInfoUiModel = CardInfoUiModel(cardNumber, expireDate, ownerName, password, vendor)
     }
 }
 
@@ -48,6 +48,7 @@ fun CardInfoUiState.isComplete(): Boolean {
             expireDate = expireDate,
             ownerName = ownerName,
             password = password,
+            vendor = vendor?.vendor,
         )
     return instance != null
 }

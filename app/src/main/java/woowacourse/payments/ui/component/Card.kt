@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,17 +26,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.model.CardVendor
 import woowacourse.payments.ui.allcards.util.CardFormatter
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.uimodel.VendorUiModel
+import woowacourse.payments.ui.uimodel.toUiModel
 
 @Composable
 fun Card(
     cardInfoUiState: CardInfoUiState,
     showCardInfo: Boolean = false,
-    onClick:()->Unit = {}
+    onClick: () -> Unit = {},
 ) {
+    val color =
+        cardInfoUiState.vendor?.let {
+            colorResource(id = it.vendorColorId)
+        } ?: colorResource(id = R.color.payments_card_background)
+
     Box(
         modifier =
             Modifier
@@ -44,10 +53,24 @@ fun Card(
                 .shadow(8.dp)
                 .width(208.dp)
                 .background(
-                    color = colorResource(id = R.color.payments_card_background),
+                    color = color,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
+        cardInfoUiState.vendor?.let {
+            Text(
+                modifier =
+                    Modifier.padding(
+                        start = 14.dp,
+                        end = 14.dp,
+                        top = 10.dp,
+                    ),
+                text = stringResource(id = it.vendorNameId),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                color = colorResource(id = R.color.white),
+            )
+        }
         Box(
             modifier =
                 Modifier
@@ -133,6 +156,7 @@ private fun CardPreview() {
                     expireDate = "12/25",
                     ownerName = "홍길동홍길동홍길동홍길동홍길동",
                     password = "1234",
+                    vendor = CardVendor.KBCard.toUiModel(),
                 ),
             ),
         )

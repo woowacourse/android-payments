@@ -17,8 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.model.CardVendor
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.VendorUiModel
+import woowacourse.payments.ui.uimodel.toUiModel
 
 @Composable
 fun VendorItem(
@@ -51,11 +53,7 @@ fun VendorItem(
 private fun VendorItemPreview() {
     AndroidpaymentsTheme {
         VendorItem(
-            VendorUiModel(
-                R.drawable.img_vendor_bc_card,
-                R.color.vendor_bc_card,
-                R.string.vendor_bc_card,
-            ),
+            CardVendor.BCCard.toUiModel(),
         )
     }
 }
