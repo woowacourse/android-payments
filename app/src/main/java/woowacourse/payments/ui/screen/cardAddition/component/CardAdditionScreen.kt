@@ -73,7 +73,6 @@ fun CardAdditionScreen(
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp),
                 issuingBank = stateHolder.uiState.issuingBank,
-                cardContent = { CardChip(modifier = Modifier.padding(start = 14.dp)) },
             )
             CardNumberTextField(
                 value = stateHolder.uiState.cardNumber.value,

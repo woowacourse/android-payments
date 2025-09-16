@@ -26,10 +26,7 @@ fun ExistingCard(
         issuingBank = card.issuingBank,
         cardContent = {
             Column(
-                modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Bottom,
             ) {
                 CardChip(modifier = Modifier.align(Alignment.Start))
