@@ -65,8 +65,11 @@ fun CardCompanySelectionRow(
                 .padding(vertical = 36.dp),
     ) {
         CardCompany.entries.forEach { cardCompany ->
-            CardCompanyUiModel.from(cardCompany)?.let { it ->
-                CardCompanyItem(it, modifier = Modifier.clickable { onItemClick(cardCompany) })
+            if (cardCompany != CardCompany.NONE) {
+                CardCompanyItem(
+                    cardCompanyUiModel = CardCompanyUiModel.from(cardCompany),
+                    modifier = Modifier.clickable { onItemClick(cardCompany) },
+                )
             }
         }
     }
