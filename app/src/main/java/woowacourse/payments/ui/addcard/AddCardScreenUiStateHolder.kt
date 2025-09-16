@@ -17,8 +17,7 @@ class AddCardScreenUiStateHolder {
     val isExpirationDateError: MutableState<Boolean> = mutableStateOf(false)
     val isPasscodeError: MutableState<Boolean> = mutableStateOf(false)
 
-    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
-
+    val isError: Boolean get() = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
 
     fun checkEmptyFields() {
         if (cardNumber.value.isEmpty()) isCardNumberError.value = true

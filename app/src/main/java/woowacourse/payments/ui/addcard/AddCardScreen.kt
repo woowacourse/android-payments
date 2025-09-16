@@ -36,7 +36,7 @@ fun AddCardScreen(
 
     fun saveAddedCard() {
         uiState.checkEmptyFields()
-        if (uiState.isError()) {
+        if (uiState.isError) {
             onSaveFailure()
         } else {
             onSaveSuccess(
