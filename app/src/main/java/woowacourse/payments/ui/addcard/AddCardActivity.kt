@@ -31,6 +31,7 @@ class AddCardActivity : ComponentActivity() {
         setContent {
             val cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
             val vendorModal by rememberSaveable { mutableStateOf(VendorModalUiState()) }
+            val vendors = rememberSaveable { CardVendor.entries.map { it.toUiModel() } }
 
             AndroidpaymentsTheme {
                 Scaffold(
@@ -54,7 +55,7 @@ class AddCardActivity : ComponentActivity() {
 
                     if (vendorModal.isVisible) {
                         AddCardVendorSelectionScreen(
-                            vendors = CardVendor.entries.map { it.toUiModel() },
+                            vendors = vendors,
                             onDismissRequest = { vendorModal.hide() },
                             onVendorItemClick = { vendor ->
                                 cardInfo.updateCardInfo(
