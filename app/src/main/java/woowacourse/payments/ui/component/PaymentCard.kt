@@ -19,24 +19,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.mapper.toUiModel
 import woowacourse.payments.ui.theme.CardTextStyle
 
 @Composable
 fun PaymentCard(
+    bank: BankType,
     modifier: Modifier = Modifier,
     paymentCard: PaymentCardUiModel?,
 ) {
+    val bankUiModel = bank.toUiModel()
+
     Box(
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = bankUiModel?.color ?: Color(0xFF333333),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
+        if (bankUiModel != null) {
+            Text(
+                text = stringResource(bankUiModel.nameRes),
+                style = CardTextStyle,
+                color = Color.White,
+                modifier =
+                    Modifier
+                        .align(Alignment.TopStart)
+                        .padding(top = 15.dp, start = 14.dp),
+            )
+        }
+
         Column(
             modifier =
                 Modifier
@@ -87,5 +104,9 @@ fun PaymentCard(
 @Preview(showBackground = true)
 @Composable
 private fun RegisteredPaymentCardPreview() {
-    PaymentCard(Modifier, PaymentCardUiModel("1234567812345678", "0511", "minjeong"))
+    PaymentCard(
+        BankType.KB,
+        Modifier,
+        PaymentCardUiModel("1234567812345678", "0511", "minjeong"),
+    )
 }

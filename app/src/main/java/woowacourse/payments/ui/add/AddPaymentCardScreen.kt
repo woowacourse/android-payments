@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.ExpiryTextField
@@ -37,6 +38,8 @@ fun AddPaymentCardScreen(
     val state = stateHolder.state
 
     var showBankSheet by rememberSaveable { mutableStateOf(true) }
+
+    var selectedBank by rememberSaveable { mutableStateOf(BankType.NOT_SELECTED) }
 
     val canSave by remember(state.cardNumber, state.expiry, state.pin) {
         derivedStateOf {
@@ -62,7 +65,7 @@ fun AddPaymentCardScreen(
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
-            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally), null)
+            PaymentCard(selectedBank, modifier = Modifier.align(Alignment.CenterHorizontally), null)
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -96,7 +99,8 @@ fun AddPaymentCardScreen(
     if (showBankSheet) {
         BankSelectBottomSheet(
             onSelect = { bank ->
-                // 선택 결과 반영 로직
+                selectedBank = bank
+                showBankSheet = false
             },
         )
     }
