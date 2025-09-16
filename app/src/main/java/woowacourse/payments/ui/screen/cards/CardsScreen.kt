@@ -34,11 +34,13 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.component.CardRegistrationButton
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.extension.getParcelableExtraCompat
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.PaymentCardsUiModel
+import woowacourse.payments.ui.model.toBankName
 import woowacourse.payments.ui.screen.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -145,9 +147,11 @@ private fun CardsSingleContent(
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
         PaymentCard(
+            bankName = card.bankType.toBankName(),
             number = card.displayCardNumber(),
             expirationDate = card.displayExpirationDate(),
             cardholderName = card.upperCardholderName,
+            backgroundColor = card.bankType.bgColor,
         )
         CardRegistrationButton(onClick = onRegistrationButtonClick)
     }
@@ -164,9 +168,11 @@ private fun CardsMultipleContent(
     ) {
         paymentCards.cards.forEach { card ->
             PaymentCard(
+                bankName = card.bankType.toBankName(),
                 number = card.displayCardNumber(),
                 expirationDate = card.displayExpirationDate(),
                 cardholderName = card.upperCardholderName,
+                backgroundColor = card.bankType.bgColor,
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -195,6 +201,7 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Car
         private val DUMMY_CARDS =
             List(3) {
                 PaymentCardUiModel(
+                    bankType = BankTypeUiModel.HYUNDAI,
                     number = CardNumberUiModel("1234567812345678"),
                     expirationDate = CardExpirationDateUiModel("0301"),
                     cardholderName = CardholderNameUiModel("DICE", 30),

@@ -8,6 +8,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.ui.extension.update
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
@@ -27,6 +28,10 @@ class CardRegistrationScreenViewModel(
 
     private var _uiEvent = MutableLiveData<CardRegistrationScreenUiEvent?>()
     val uiEvent: LiveData<CardRegistrationScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
+
+    fun updateBank(bankType: BankTypeUiModel) {
+        _uiState.update { copy(bankType = bankType) }
+    }
 
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }

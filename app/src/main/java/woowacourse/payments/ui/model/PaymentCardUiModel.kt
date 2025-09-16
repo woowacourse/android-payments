@@ -7,6 +7,7 @@ import woowacourse.payments.ui.extension.coerceInLength
 
 @Parcelize
 data class PaymentCardUiModel(
+    val bankType: BankTypeUiModel,
     private val number: CardNumberUiModel,
     private val expirationDate: CardExpirationDateUiModel,
     private val cardholderName: CardholderNameUiModel,

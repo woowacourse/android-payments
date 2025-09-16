@@ -18,12 +18,14 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardExpirationDateTextField
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.toBankName
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -39,9 +41,8 @@ fun CardRegistrationScreen(
 
     LaunchedEffect(uiEvent) {
         when (val event = uiEvent) {
-            is CardRegistrationScreenUiEvent.RegisteredCard -> {
+            is CardRegistrationScreenUiEvent.RegisteredCard ->
                 event.paymentCard.let(onRegistrationComplete)
-            }
 
             null -> Unit
         }
@@ -68,6 +69,8 @@ fun CardRegistrationScreen(
             onCardPasswordChanged = viewModel::updateCardPassword,
             modifier = Modifier.padding(innerPadding),
         )
+
+        if (uiState.isShowBankSelectorBottomSheet) BankSelectBottomSheet(onBankSelected = viewModel::updateBank)
     }
 }
 
@@ -91,9 +94,11 @@ private fun CardRegistrationScreenContent(
 
         val paymentCard = uiState.toPaymentCardUiModel()
         PaymentCard(
+            bankName = paymentCard.bankType.toBankName(),
             number = paymentCard.displayCardNumber(),
             expirationDate = paymentCard.displayExpirationDate(),
             cardholderName = paymentCard.upperCardholderName,
+            backgroundColor = paymentCard.bankType.bgColor,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 

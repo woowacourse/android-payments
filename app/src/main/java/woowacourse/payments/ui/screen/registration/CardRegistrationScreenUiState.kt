@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
@@ -16,7 +17,11 @@ data class CardRegistrationScreenUiState(
     val cardExpirationDate: CardExpirationDateUiModel = CardExpirationDateUiModel(),
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
+    val bankType: BankTypeUiModel = BankTypeUiModel.NOT_SELECTED,
 ) : Parcelable {
+    @IgnoredOnParcel
+    val isShowBankSelectorBottomSheet: Boolean = bankType == BankTypeUiModel.NOT_SELECTED
+
     @IgnoredOnParcel
     val isSaveButtonEnabled: Boolean =
         cardNumber.isValid && cardExpirationDate.isValid && cardholderName.isValid && cardPassword.isValid
@@ -58,6 +63,7 @@ data class CardRegistrationScreenUiState(
 
     fun toPaymentCardUiModel(): PaymentCardUiModel =
         PaymentCardUiModel(
+            bankType = bankType,
             number = cardNumber,
             expirationDate = cardExpirationDate,
             cardholderName = cardholderName,
