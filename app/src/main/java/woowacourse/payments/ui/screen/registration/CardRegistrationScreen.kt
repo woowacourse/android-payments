@@ -52,7 +52,7 @@ fun CardRegistrationScreen(
             CardRegistrationTopAppBar(
                 onBackClick = onBackClick,
                 onSaveClick = viewModel::registerCard,
-                isSaveButtonEnabled = uiState.isSaveButtonEnabled,
+                isSaveButtonEnabled = uiState.canRegisterCard,
             )
         },
     ) { innerPadding ->

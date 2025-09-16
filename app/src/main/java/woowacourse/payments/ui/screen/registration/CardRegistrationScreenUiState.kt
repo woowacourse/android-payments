@@ -21,7 +21,7 @@ data class CardRegistrationScreenUiState(
     val openBankSelectorBottomSheet: Boolean = true,
 ) : Parcelable {
     @IgnoredOnParcel
-    val isSaveButtonEnabled: Boolean =
+    val canRegisterCard: Boolean =
         cardNumber.isValid && cardExpirationDate.isValid && cardholderName.isValid && cardPassword.isValid
 
     @IgnoredOnParcel

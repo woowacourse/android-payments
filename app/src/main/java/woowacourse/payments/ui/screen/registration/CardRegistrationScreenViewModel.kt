@@ -84,8 +84,10 @@ class CardRegistrationScreenViewModel(
     }
 
     fun registerCard() {
-        if (_uiState.value?.isSaveButtonEnabled == false) return
-        val paymentCard = _uiState.value?.toPaymentCardUiModel() ?: return
+        val currentUiState = _uiState.value ?: return
+        if (!currentUiState.canRegisterCard) return
+
+        val paymentCard = currentUiState.toPaymentCardUiModel()
         _uiEvent.value = CardRegistrationScreenUiEvent.RegisteredCard(paymentCard)
     }
 
