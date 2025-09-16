@@ -40,4 +40,7 @@
     <string name="password_error_content_description">비밀번호 Input Field Error</string>
     <string name="password_placeholder">0000</string>
     <string name="password_invalid">올바른 비밀번호가 아닙니다</string>
+
+    <!-- BankSelectionBottomSheet -->
+    <string name="bank_item_content_description">은행 아이템 이미지</string>
 </resources>
