@@ -33,7 +33,7 @@ class CardsActivity : ComponentActivity() {
 
             AndroidpaymentsTheme {
                 CardsScreen(
-                    cards = stateHolder.uiState.cards,
+                    state = stateHolder.uiState,
                     addCard = { card ->
                         stateHolder.addCard(card)
                         event = CardsUiEvent.AddCardSuccess

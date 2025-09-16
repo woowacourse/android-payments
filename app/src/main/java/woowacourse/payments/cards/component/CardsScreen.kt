@@ -22,12 +22,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.Card
 import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.cardaddition.CardAdditionActivity
+import woowacourse.payments.cards.CardsUiState
 import woowacourse.payments.getParcelableCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
-    cards: List<Card>,
+    state: CardsUiState,
     addCard: (Card) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -49,7 +50,7 @@ fun CardsScreen(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                addCardAction = if (cards.size > 1) navigateToCardAdditionActivity else null,
+                addCardAction = if (state.cards.size > 1) navigateToCardAdditionActivity else null,
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -60,7 +61,7 @@ fun CardsScreen(
                     .padding(innerPadding)
                     .verticalScroll(scrollState),
         ) {
-            when (cards.size) {
+            when (state.cards.size) {
                 0 ->
                     NoCardContent(
                         addCard = navigateToCardAdditionActivity,
@@ -69,14 +70,14 @@ fun CardsScreen(
 
                 1 ->
                     OneCardContent(
-                        card = cards.first(),
+                        card = state.cards.first(),
                         addCard = navigateToCardAdditionActivity,
                         modifier = Modifier.fillMaxSize(),
                     )
 
                 else ->
                     MultipleCardContent(
-                        cards = cards,
+                        cards = state.cards,
                         modifier = Modifier.fillMaxSize(),
                     )
             }
@@ -91,7 +92,7 @@ private fun CardsScreenPreview(
 ) {
     AndroidpaymentsTheme {
         CardsScreen(
-            cards = cards,
+            state = CardsUiState(cards),
             addCard = {},
         )
     }
