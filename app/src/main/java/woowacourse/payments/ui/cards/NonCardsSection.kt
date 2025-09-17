@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.components.PaymentCreateCard
+import woowacourse.payments.ui.newcard.NewCard
 
 @Composable
 fun NonCardsSection(
@@ -38,7 +38,7 @@ fun NonCardsSection(
                 ),
             textAlign = TextAlign.Center,
         )
-        PaymentCreateCard(onAddClick)
+        NewCard(onAddClick)
     }
 }
 

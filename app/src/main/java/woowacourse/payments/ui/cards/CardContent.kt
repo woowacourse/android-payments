@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.components
+package woowacourse.payments.ui.cards
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,11 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.components.CardChip
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 
 @Composable
-fun PaymentCardContent(
+fun CardContent(
     paymentCardUiModel: PaymentCardUiModel,
     modifier: Modifier = Modifier,
 ) {
@@ -39,7 +40,7 @@ fun PaymentCardContent(
             fontSize = 12.sp,
             modifier = Modifier.padding(bottom = 15.dp)
         )
-        PaymentCardChip()
+        CardChip()
         Spacer(Modifier.height(8.dp))
         Text(
             text = paymentCardUiModel.maskCardNumbersFromBack(),
@@ -75,5 +76,5 @@ fun PaymentCardContent(
 @Preview
 @Composable
 fun PaymentCardContentPreview() {
-    PaymentCardContent(paymentCardUiModelSample)
+    CardContent(paymentCardUiModelSample)
 }

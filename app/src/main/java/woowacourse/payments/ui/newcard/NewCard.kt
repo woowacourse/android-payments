@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.components
+package woowacourse.payments.ui.newcard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,7 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
-fun PaymentCreateCard(
+fun NewCard(
     onAddCardCategoryClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -39,5 +39,5 @@ fun PaymentCreateCard(
 @Preview
 @Composable
 fun PaymentCreateCardPreview() {
-    PaymentCreateCard({})
+    NewCard({})
 }

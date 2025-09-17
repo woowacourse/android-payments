@@ -82,7 +82,7 @@ fun NewCardScreen(
                 modifier.padding(innerPadding),
         ) {
             Spacer(modifier = Modifier.height(ScreenAppBarSpacing))
-            CreateCard(
+            CardSample(
                 stateHolder.cardCreateState.bankType,
                 Modifier
                     .align(Alignment.CenterHorizontally)

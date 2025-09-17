@@ -18,12 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.cards.core.mapper.asColor
-import woowacourse.payments.ui.components.PaymentCardChip
+import woowacourse.payments.ui.components.CardChip
 import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.theme.Gray33
 
 @Composable
-fun CreateCard(
+fun CardSample(
     bankType: BankType,
     modifier: Modifier = Modifier,
 ) {
@@ -48,7 +48,7 @@ fun CreateCard(
                 fontSize = 12.sp,
             )
             Spacer(Modifier.height(15.dp))
-            PaymentCardChip()
+            CardChip()
         }
     }
 }
@@ -56,5 +56,5 @@ fun CreateCard(
 @Preview(showBackground = true)
 @Composable
 fun CreateCardPreview() {
-    CreateCard(BankType.BC)
+    CardSample(BankType.BC)
 }

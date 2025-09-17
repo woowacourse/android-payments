@@ -11,7 +11,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.cards.core.mapper.asColor
-import woowacourse.payments.ui.components.PaymentCardContent
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 
@@ -31,7 +30,7 @@ fun PaymentCard(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        PaymentCardContent(
+        CardContent(
             paymentCardUiModel, Modifier
                 .padding(15.dp)
         )
