@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
@@ -57,7 +58,9 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
                 text = card.bankTypeUiModel.displayName,
-                color = Color.White
+                color = Color.White,
+                letterSpacing = 0.17.em,
+                lineHeight = 12.sp
             )
             Text(
                 modifier = Modifier
@@ -69,6 +72,8 @@ fun PaymentCard(
                     card.number.value.drop(4).take(4)
                 } - **** - ****",
                 color = Color.White,
+                letterSpacing = 0.17.em,
+                lineHeight = 12.sp
             )
             Text(
                 modifier = Modifier
@@ -77,7 +82,9 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
                 text = "${card.ownerName.value}",
-                color = Color.White
+                color = Color.White,
+                letterSpacing = 0.17.em,
+                lineHeight = 12.sp
             )
             Text(
                 modifier = Modifier
@@ -86,7 +93,9 @@ fun PaymentCard(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
                 text = "${card.expirationDate.value.format(DateTimeFormatter.ofPattern("MM/yy"))}",
-                color = Color.White
+                color = Color.White,
+                letterSpacing = 0.17.em,
+                lineHeight = 12.sp
             )
         }
     }
