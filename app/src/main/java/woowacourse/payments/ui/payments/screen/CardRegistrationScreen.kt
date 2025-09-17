@@ -26,7 +26,7 @@ import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.payments.CardInputState
+import woowacourse.payments.ui.payments.CardInputUiModel
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
 import woowacourse.payments.ui.payments.CardRegistrationStateHolder
 import woowacourse.payments.ui.payments.component.BankSelectBottomSheet
@@ -113,7 +113,7 @@ private fun CardRegistrationScreenContent(
             onBankSelected = { selectedBank ->
                 onBottomSheetStateChanged(false)
                 cardRegistrationStateHolder.updateState(
-                    CardInputState(
+                    CardInputUiModel(
                         selectedBank,
                     ),
                 )

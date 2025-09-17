@@ -7,9 +7,9 @@ import woowacourse.payments.ui.payments.model.BankUiModel
 class CardRegistrationStateHolder(
     initialBankUiModel: BankUiModel,
 ) {
-    val uiState = mutableStateOf(CardInputState(initialBankUiModel))
+    val uiState = mutableStateOf(CardInputUiModel(initialBankUiModel))
 
-    fun updateState(newState: CardInputState) {
+    fun updateState(newState: CardInputUiModel) {
         uiState.value = newState
     }
 
