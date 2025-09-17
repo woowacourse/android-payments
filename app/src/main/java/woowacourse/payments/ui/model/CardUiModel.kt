@@ -1,14 +1,18 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import androidx.compose.ui.graphics.toArgb
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.color
 
 @Parcelize
 data class CardUiModel(
     val number: String,
     val expirationDate: String,
     val cardHolderName: String,
+    val bankName: String,
+    val bankColor: Int,
 ) : Parcelable
 
 fun Card.toUiModel(): CardUiModel {
@@ -19,6 +23,8 @@ fun Card.toUiModel(): CardUiModel {
         number = maskedNumber,
         expirationDate = formattedExpirationDate,
         cardHolderName = this.cardHolderName.cardHolderName,
+        bankName = this.bank.name,
+        bankColor = this.bank.color().toArgb(),
     )
 }
 

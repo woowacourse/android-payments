@@ -5,6 +5,7 @@ data class Card(
     val expirationDate: ExpirationDate,
     val cardHolderName: CardHolderName,
     val password: Password,
+    val bank: Bank,
 ) {
     companion object {
         fun newCard(
@@ -12,6 +13,7 @@ data class Card(
             expirationDate: String,
             cardHolderName: String,
             password: String,
+            bank: Bank,
         ): Result<Card> =
             runCatching {
                 Card(
@@ -19,6 +21,7 @@ data class Card(
                     expirationDate = ExpirationDate(expirationDate),
                     cardHolderName = CardHolderName(cardHolderName),
                     password = Password(password),
+                    bank = bank,
                 )
             }
     }
