@@ -17,7 +17,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.theme.IconGray
+import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun RegistrationBox(
@@ -39,7 +39,7 @@ fun RegistrationBox(
             imageVector = Icons.Default.Add,
             contentDescription = stringResource(R.string.registration_box_add_icon_description),
             modifier = Modifier.size(34.dp),
-            tint = IconGray,
+            tint = Gray,
         )
     }
 }
