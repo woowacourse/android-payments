@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,7 @@ fun AddCardBtn(
     onClick: () -> Unit,
 ) {
     Box(
-        modifier = modifier.fillMaxSize().clickable { onClick() },
+        modifier = modifier.fillMaxSize().clickable { onClick() }.background(Color(0xFFE5E5E5)),
         contentAlignment = Alignment.Center,
     ) {
         Text(text = stringResource(R.string.add_card_plus_sign), fontSize = 34.sp, color = Color(0xFF575757))

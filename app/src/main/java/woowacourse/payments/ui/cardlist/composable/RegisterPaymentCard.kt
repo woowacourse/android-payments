@@ -23,11 +23,23 @@ fun RegisterPaymentCard(
     card: Card,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(Color(card.bank.color))
+                .padding(horizontal = 16.dp),
+    ) {
+        Text(
+            modifier = Modifier,
+            text = card.bank.bankName,
+            color = Color(0xFFFFFFFF),
+            fontSize = 12.sp,
+        )
         Box(
             modifier =
                 Modifier
-                    .padding(top = 44.dp)
+                    .padding(top = 14.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
                         color = Color(0xFFCBBA64),

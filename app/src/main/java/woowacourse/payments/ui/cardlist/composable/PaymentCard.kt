@@ -9,12 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    color: Color = Color.Black,
     content: @Composable () -> Unit,
 ) {
     Box(
@@ -23,9 +23,11 @@ fun PaymentCard(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
-                .background(
-                    color = color,
-                    shape = RoundedCornerShape(5.dp),
+                .graphicsLayer {
+                    this.shape = RoundedCornerShape(5.dp)
+                    this.clip = true
+                }.background(
+                    color = Color.Black,
                 ),
     ) {
         content()

@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -78,7 +77,6 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
                 if (cards.size <= 1) {
                     PaymentCard(
                         modifier = Modifier.padding(top = 12.dp),
-                        color = Color.Gray,
                         content = {
                             AddCardBtn(onClick = {
                                 navigateToAddCard(context, addCardLauncher)
