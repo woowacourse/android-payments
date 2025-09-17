@@ -50,9 +50,101 @@ fun BottomSheetScreen(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    device = "spec:width=750px,height=1334px,dpi=326",
+    name = "Tiny Phone",
+)
 @Composable
 fun BottomSheetScreenPreview() {
+    val sheetState =
+        rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded,
+            confirmValueChange = { false },
+        )
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        BottomSheetScreen(
+            sheetState = sheetState,
+            onDismiss = {},
+            onItemClick = {},
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(
+    showBackground = true,
+    device = "spec:width=1080px,height=2220px,dpi=440",
+    name = "Small Phone",
+)
+@Composable
+fun BottomSheetScreenSmallPhonePreview() {
+    val sheetState =
+        rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded,
+            confirmValueChange = { false },
+        )
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        BottomSheetScreen(
+            sheetState = sheetState,
+            onDismiss = {},
+            onItemClick = {},
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(
+    showBackground = true,
+    device = "spec:width=1440px,height=3120px,dpi=560",
+    name = "Large Phone",
+)
+@Composable
+fun BottomSheetScreenLargePhonePreview() {
+    val sheetState =
+        rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded,
+            confirmValueChange = { false },
+        )
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        BottomSheetScreen(
+            sheetState = sheetState,
+            onDismiss = {},
+            onItemClick = {},
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(
+    showBackground = true,
+    device = "spec:width=2208px,height=1840px,dpi=420",
+    name = "Foldable Unfolded",
+)
+@Composable
+fun BottomSheetScreenFoldablePreview() {
+    val sheetState =
+        rememberStandardBottomSheetState(
+            initialValue = SheetValue.Expanded,
+            confirmValueChange = { false },
+        )
+
+    AndroidpaymentsTheme(dynamicColor = false) {
+        BottomSheetScreen(
+            sheetState = sheetState,
+            onDismiss = {},
+            onItemClick = {},
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true, device = "spec:width=2560px,height=1800px,dpi=320", name = "Tablet")
+@Composable
+fun BottomSheetScreenTabletPreview() {
     val sheetState =
         rememberStandardBottomSheetState(
             initialValue = SheetValue.Expanded,
