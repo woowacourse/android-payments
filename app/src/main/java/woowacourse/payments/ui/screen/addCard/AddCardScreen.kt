@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,15 +32,22 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
 ) {
-    val stateHolder =
-        rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
+    val stateHolder = rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
     val scrollState = rememberScrollState()
+    val bottomSheetState = rememberModalBottomSheetState()
     var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
+
+    LaunchedEffect(showBottomSheetState) {
+        if (showBottomSheetState) {
+            bottomSheetState.show()
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -103,6 +113,7 @@ fun AddCardScreen(
 
     if (showBottomSheetState) {
         BankSelectBottomSheet(
+            sheetState = bottomSheetState,
             onBankSelected = { bank ->
                 stateHolder.updateBank(bank.toPresentation())
                 showBottomSheetState = false

@@ -54,13 +54,13 @@ fun PaymentCard(
         Box(
             modifier =
                 Modifier
+                    .align(Alignment.CenterStart)
                     .padding(start = 14.dp, bottom = 12.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
                         color = GOLD,
                         shape = RoundedCornerShape(4.dp),
-                    )
-                    .align(Alignment.CenterStart),
+                    ),
         )
 
         Column(
