@@ -1,9 +1,10 @@
 package woowacourse.payments.cardaddition
 
 import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.BankType
-import java.time.Month
+import java.time.MonthDay
 
 @Parcelize
 data class CardAdditionUiState(
@@ -14,19 +15,29 @@ data class CardAdditionUiState(
     val password: String = "",
     val bankType: BankType = BankType.NOT_SELECTED,
 ) : Parcelable {
-    val isValid: Boolean get() = isValidCardNumber && isValidExpiredDate && isValidPassword
+    @IgnoredOnParcel
+    val isValidCardNumber: Boolean = cardNumber.length == CARD_NUMBER_LENGTH
 
-    val isValidCardNumber: Boolean get() = cardNumber.length == CARD_NUMBER_LENGTH
+    @IgnoredOnParcel
+    val isValidExpiredDate: Boolean =
+        run {
+            if (expiredDate.length != EXPIRED_DATE_LENGTH) return@run false
 
-    val isValidExpiredDate: Boolean
-        get() {
-            val month: Int = expiredDate.take(2).toIntOrNull() ?: return false
-            return expiredDate.length == EXPIRED_DATE_LENGTH && month in Month.entries.map(Month::getValue)
+            val month: Int = expiredDate.take(2).toIntOrNull() ?: return@run false
+            val dayOfMonth: Int = expiredDate.takeLast(2).toIntOrNull() ?: return@run false
+
+            runCatching { MonthDay.of(month, dayOfMonth) }.isSuccess
         }
 
-    val isValidPassword: Boolean get() = password.length == PASSWORD_LENGTH
+    @IgnoredOnParcel
+    val isValidPassword: Boolean = password.length == PASSWORD_LENGTH
 
-    val isBankSelected: Boolean get() = bankType != BankType.NOT_SELECTED
+    @IgnoredOnParcel
+    val isBankSelected: Boolean = bankType != BankType.NOT_SELECTED
+
+    @IgnoredOnParcel
+    val isValid: Boolean =
+        isValidCardNumber && isValidExpiredDate && isValidPassword && isBankSelected
 
     companion object {
         const val CARD_NUMBER_LENGTH: Int = 16
