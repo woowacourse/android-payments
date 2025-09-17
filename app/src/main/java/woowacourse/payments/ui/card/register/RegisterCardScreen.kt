@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.card.register
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,16 +8,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Bank
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.color
 import woowacourse.payments.ui.card.component.PaymentCard
 import woowacourse.payments.ui.card.register.component.BankSelectBottomSheet
 import woowacourse.payments.ui.card.register.component.CardExpirationDateTextField
@@ -27,45 +25,20 @@ import woowacourse.payments.ui.card.register.component.CardNumberTextField
 import woowacourse.payments.ui.card.register.component.CardPasswordTextField
 import woowacourse.payments.ui.card.register.component.NewCardTopBar
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 
 @Composable
 fun RegisterCardScreen(
     onCardSaved: (newCardUiModel: CardUiModel) -> Unit,
     onBackClick: () -> Unit,
 ) {
-    var cardNumber by remember { mutableStateOf("") }
-    var expirationDate by remember { mutableStateOf("") }
-    var cardHolderName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-
-    var showBottomSheet by remember { mutableStateOf(true) }
-    var selectedBank: Bank? by remember { mutableStateOf(null) }
-
-    val context = LocalContext.current
-
-    fun saveCard() {
-        Card
-            .newCard(
-                number = cardNumber,
-                expirationDate = expirationDate,
-                cardHolderName = cardHolderName,
-                password = password,
-            ).onSuccess { newCard ->
-                val newCardUiModel = newCard.toUiModel()
-                Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_SHORT).show()
-                onCardSaved(newCardUiModel)
-            }.onFailure { exception ->
-                val errorMessage = exception.message ?: "알 수 없는 오류가 발생했습니다."
-                Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-            }
-    }
+    val stateHolder = remember { RegisterCardStateHolder(onCardSaved) }
+    val uiState = stateHolder.uiState
 
     Scaffold(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { saveCard() },
+                onSaveClick = { stateHolder.saveCard() },
             )
         },
     ) { innerPadding ->
@@ -81,18 +54,20 @@ fun RegisterCardScreen(
                     Modifier
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
+                bankName = uiState.selectedBank?.name,
+                backgroundColor = uiState.selectedBank?.color() ?: Color(0xFF333333),
             )
             CardNumberTextField(
-                value = cardNumber,
-                onValueChange = { cardNumber = it },
+                value = uiState.cardNumber,
+                onValueChange = { stateHolder.updateCardNumber(it) },
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .padding(top = 40.dp),
             )
             CardExpirationDateTextField(
-                value = expirationDate,
-                onValueChange = { expirationDate = it },
+                value = uiState.expirationDate,
+                onValueChange = { stateHolder.updateExpirationDate(it) },
                 modifier =
                     Modifier
                         .padding(top = 30.dp)
@@ -100,16 +75,16 @@ fun RegisterCardScreen(
                         .defaultMinSize(minWidth = 200.dp),
             )
             CardHolderNameTextField(
-                value = cardHolderName,
-                onValueChange = { cardHolderName = it },
+                value = uiState.cardHolderName,
+                onValueChange = { stateHolder.updateCardHolderName(it) },
                 modifier =
                     Modifier
                         .padding(top = 30.dp)
                         .fillMaxWidth(),
             )
             CardPasswordTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = uiState.password,
+                onValueChange = { stateHolder.updatePassword(it) },
                 modifier =
                     Modifier
                         .padding(top = 10.dp)
@@ -118,7 +93,7 @@ fun RegisterCardScreen(
             )
         }
 
-        if (showBottomSheet) {
+        if (uiState.showBottomSheet) {
             val banks =
                 listOf(
                     Bank(BankType.BC, "BC카드"),
@@ -130,13 +105,9 @@ fun RegisterCardScreen(
                     Bank(BankType.HANA, "하나카드"),
                     Bank(BankType.KB, "국민카드"),
                 )
-
             BankSelectBottomSheet(
                 banks = banks,
-                onBankSelected = { bank ->
-                    selectedBank = bank
-                    showBottomSheet = false
-                },
+                onBankSelected = { stateHolder.updateSelectedBank(it) },
             )
         }
     }
