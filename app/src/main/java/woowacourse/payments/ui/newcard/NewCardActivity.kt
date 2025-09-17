@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.content.Context
-import android.content.Intent
 import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -12,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.newcard.CardStateHolder
+import woowacourse.payments.ui.newcard.component.NewCardScreen
+import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.component.SelectedBankBottomSheet
 
 class NewCardActivity : ComponentActivity() {
@@ -23,20 +21,17 @@ class NewCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var bankSheetVisible by rememberSaveable { mutableStateOf(false) }
-
-            if (bankSheetVisible) {
+            var isBankBottomSheetOpen by rememberSaveable { mutableStateOf(true) }
+            if (isBankBottomSheetOpen) {
                 SelectedBankBottomSheet(
-                    isVisible = true,
                     state = state,
-                    onDismissRequest = { bankSheetVisible = false }
+                    onDismissRequest = { isBankBottomSheetOpen = false }
                 )
             }
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
                 onSaveClick = { saveClick() },
                 state = state,
-                onOpenBankSheet = { bankSheetVisible = true },
             )
         }
     }
@@ -46,18 +41,14 @@ class NewCardActivity : ComponentActivity() {
     }
 
     fun saveClick() {
-        state.newCard()
-        val newCard = state.card
+        val newCard = state.newCard()
         if (newCard == null) {
-            Toast.makeText(this, state.cardErrorMessage ?: "입력을 확인해 주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, state.cardErrorMessage ?: "입력을 확인해 주세요.", Toast.LENGTH_SHORT)
+                .show()
             return
         }
         val intent = Intent(context = this, newCard)
         setResult(RESULT_OK, intent)
         finish()
-    }
-
-    companion object {
-        fun Intent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
     }
 }

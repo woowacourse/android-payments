@@ -1,6 +1,5 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.state
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,7 +38,7 @@ class CardStateHolder {
     var passwordErrorMessage by mutableStateOf<String?>(null)
         private set
 
-    fun newCard() {
+    fun newCard(): Card? {
         bankTypeUiModel.let { bankType ->
             runCatching {
                 Card.Companion.Card(
@@ -51,10 +50,12 @@ class CardStateHolder {
                 )
             }.onSuccess { newCard ->
                 card = newCard
+                return card
             }.onFailure { e ->
                 cardErrorMessage = e.message
             }
         }
+        return null
     }
 
     fun changeBankType(newBank: BankTypeUiModel) {
@@ -65,7 +66,9 @@ class CardStateHolder {
 
     fun changeNumber(newNumber: String) {
         number = newNumber
-        if (newNumber.isEmpty()) { numberErrorMessage = null; return }
+        if (newNumber.isEmpty()) {
+            numberErrorMessage = null; return
+        }
         runCatching {
             CardNumber(
                 value = newNumber.filter { it.isDigit() }.take(16)
@@ -76,7 +79,9 @@ class CardStateHolder {
 
     fun changeExpirationDate(newExpirationDate: String) {
         expirationDate = newExpirationDate
-        if (newExpirationDate.isEmpty()) { expirationDateErrorMessage = null; return }
+        if (newExpirationDate.isEmpty()) {
+            expirationDateErrorMessage = null; return
+        }
         runCatching {
             val digits = newExpirationDate.filter { it.isDigit() }.take(4)
             ExpirationDate(
@@ -105,7 +110,9 @@ class CardStateHolder {
 
     fun changePassword(newPassword: String) {
         password = newPassword
-        if (newPassword.isEmpty()) { passwordErrorMessage = null; return }
+        if (newPassword.isEmpty()) {
+            passwordErrorMessage = null; return
+        }
         runCatching {
             Password(newPassword.take(4))
         }.onSuccess { passwordErrorMessage = null }

@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.CardStateHolder
+import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 
 @Composable

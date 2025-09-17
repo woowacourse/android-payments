@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.CardStateHolder
+import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 
 private const val COLUMN_COUNT = 4
@@ -34,9 +34,10 @@ fun SelectedBankRow(
     ) {
         repeat(ROW_COUNT * COLUMN_COUNT) { index: Int ->
             if (BankTypeUiModel.entries[index] != BankTypeUiModel.NOT_SELECTED) {
+                val bankType = BankTypeUiModel.entries[index]
                 BankLogo(
-                    bankTypeUiModel = BankTypeUiModel.entries[index],
-                    selectedBank = { selectedBank(BankTypeUiModel.entries[index]) })
+                    bankType = bankType,
+                    selectedBank = { selectedBank -> selectedBank(selectedBank) })
             }
         }
     }
