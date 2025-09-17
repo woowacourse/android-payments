@@ -36,6 +36,7 @@ fun CardSelectionModal(
     modalBottomSheetState: SheetState,
     onDismissRequest: () -> Unit,
     onCardCompanyClick: (cardCompany: CardCompany) -> Unit,
+    cardCompanies: List<CardCompany>,
     modifier: Modifier = Modifier,
 ) {
     ModalBottomSheet(
@@ -46,7 +47,7 @@ fun CardSelectionModal(
                 .fillMaxWidth(),
     ) {
         CardCompanyGrid(
-            companies = CardCompany.entries.drop(1),
+            companies = cardCompanies,
             modifier = modifier.fillMaxWidth(),
             onClickCardCompany = onCardCompanyClick,
         )

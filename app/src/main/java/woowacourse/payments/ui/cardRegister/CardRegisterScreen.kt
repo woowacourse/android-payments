@@ -28,13 +28,13 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.CardValidator
 import woowacourse.payments.domain.CardValidator.isValidCard
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.cardList.components.CardSelectionModal
 import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
-import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
 
@@ -95,6 +95,7 @@ fun CardRegisterScreen(
                             isShowingBottomSheet = false
                         }
                 },
+                cardCompanies = CardCompany.entries.drop(1),
             )
         }
         Column(
