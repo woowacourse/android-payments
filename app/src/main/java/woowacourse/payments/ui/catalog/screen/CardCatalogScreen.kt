@@ -79,7 +79,7 @@ fun CardCatalogScreen(
         },
     ) { innerPadding ->
         CardCatalogScreenContent(
-            uiState =  cardCatalogStateHolder.cardUiState,
+            uiState = cardCatalogStateHolder.cardUiState,
             modifier = modifier.padding(innerPadding),
             onAddNewCardClick = {
                 val intent = CardRegistrationActivity.newIntent(context)
