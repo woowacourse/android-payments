@@ -56,18 +56,14 @@ fun NewCardScreen(
             NewCardTopBar(
                 onBackClick = { onBackPress() },
                 onSaveClick = {
-                    runCatching {
-                        onSaved(
-                            PaymentCardUiModel(
-                                bankType = newCardStateHolder.bank.type,
-                                cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
-                                cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),
-                                expirationDate = newCardStateHolder.expirationDateUiState.expirationDate,
-                            ),
-                        )
-                    }.onFailure { e ->
-                        Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                    }
+                    onSaved(
+                        PaymentCardUiModel(
+                            bankType = newCardStateHolder.bank.type,
+                            cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
+                            cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),
+                            expirationDate = newCardStateHolder.expirationDateUiState.expirationDate,
+                        ),
+                    )
                 },
             )
         },
