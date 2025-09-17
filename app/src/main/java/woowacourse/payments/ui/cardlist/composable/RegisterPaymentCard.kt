@@ -31,7 +31,7 @@ fun RegisterPaymentCard(
                 .padding(horizontal = 16.dp),
     ) {
         Text(
-            modifier = Modifier,
+            modifier = Modifier.padding(top = 14.dp),
             text = card.bank.bankName,
             color = Color(0xFFFFFFFF),
             fontSize = 12.sp,
@@ -39,7 +39,7 @@ fun RegisterPaymentCard(
         Box(
             modifier =
                 Modifier
-                    .padding(top = 14.dp)
+                    .padding(top = 5.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
                         color = Color(0xFFCBBA64),
