@@ -22,8 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import woowacourse.payments.ui.components.CreateCard
-import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.banks.BanksScreen
 
@@ -107,4 +105,3 @@ fun NewCardScreen(
         }
     }
 }
-
