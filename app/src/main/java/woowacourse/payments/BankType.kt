@@ -19,15 +19,42 @@ enum class BankType(
     val cardName: String?,
     @DrawableRes val imageRes: Int?,
 ) : Parcelable {
-    NOT_SELECTED(null, null),
-    BC("BC카드", R.drawable.img_bc_logo),
-    SHINHAN("신한카드", R.drawable.img_shinhan_logo),
-    KAKAO("카카오뱅크", R.drawable.img_kakao_logo),
-    HYUNDAI("현대카드", R.drawable.img_hyundai_logo),
-    WOORI("우리카드", R.drawable.img_woori_logo),
-    LOTTE("롯데카드", R.drawable.img_lotte_logo),
-    HANA("하나카드", R.drawable.img_hana_logo),
-    KB("국민카드", R.drawable.img_kb_logo),
+    NOT_SELECTED(
+        cardName = null,
+        imageRes = null,
+    ),
+    BC(
+        cardName = "BC카드",
+        imageRes = R.drawable.img_bc_logo,
+    ),
+    SHINHAN(
+        cardName = "신한카드",
+        imageRes = R.drawable.img_shinhan_logo,
+    ),
+    KAKAO(
+        cardName = "카카오뱅크",
+        imageRes = R.drawable.img_kakao_logo,
+    ),
+    HYUNDAI(
+        cardName = "현대카드",
+        imageRes = R.drawable.img_hyundai_logo,
+    ),
+    WOORI(
+        cardName = "우리카드",
+        imageRes = R.drawable.img_woori_logo,
+    ),
+    LOTTE(
+        cardName = "롯데카드",
+        imageRes = R.drawable.img_lotte_logo,
+    ),
+    HANA(
+        cardName = "하나카드",
+        imageRes = R.drawable.img_hana_logo,
+    ),
+    KB(
+        cardName = "국민카드",
+        imageRes = R.drawable.img_kb_logo,
+    ),
     ;
 
     val cardColor: Color
