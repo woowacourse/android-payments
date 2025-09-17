@@ -6,7 +6,7 @@ import woowacourse.payments.domain.BankType
 
 @Parcelize
 data class PaymentCardUiModel(
-    val bankType: BankType,
+    val bankUiModel: BankUiModel,
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,

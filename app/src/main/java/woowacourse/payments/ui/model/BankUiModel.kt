@@ -1,38 +1,39 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcelable
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankUiModel.Companion.fromRes
 import woowacourse.payments.ui.theme.BankCardColors
 
+@Parcelize
 data class BankUiModel(
     val name: String,
     val image: ImageSource,
-    val cardColor: Color
-)
+    val cardColor: ColorSource
+) : Parcelable {
 
-private data class BankResource(
-    @DrawableRes val image: Int,
-    val name: String,
-    val cardColor: Color
-)
+    companion object {
+        fun fromRes(name: String, @DrawableRes resId: Int, @ColorInt cardColor: Int) =
+            BankUiModel(name, ImageSource.Resource(resId), ColorSource.Argb(cardColor))
+    }
+}
 
-fun BankType.toBankUiModel(): BankUiModel? {
-    val resource = when (this) {
-        BankType.BC -> BankResource(R.drawable.ic_bc, "BC카드", BankCardColors.Bc)
-        BankType.HANA -> BankResource(R.drawable.ic_hana, "하나카드", BankCardColors.Hana)
-        BankType.HYUNDAE -> BankResource(R.drawable.ic_hyundae, "현대카드", BankCardColors.Hyundae)
-        BankType.KAKAO -> BankResource(R.drawable.ic_kakao, "카카오뱅크", BankCardColors.Kakao)
-        BankType.KB -> BankResource(R.drawable.ic_kb, "국민카드", BankCardColors.Kb)
-        BankType.LOTTE -> BankResource(R.drawable.ic_lotte, "롯데카드", BankCardColors.Lotte)
-        BankType.SHINHAN -> BankResource(R.drawable.ic_shinhan, "신한카드", BankCardColors.Shinhan)
-        BankType.WOORI -> BankResource(R.drawable.ic_woori, "우리카드", BankCardColors.Woori)
+fun BankType.toLocalBankUiModel(): BankUiModel? {
+    return when (this) {
+        BankType.BC -> fromRes("BC카드", R.drawable.ic_bc, BankCardColors.Bc.toArgb())
+        BankType.HANA -> fromRes("하나카드", R.drawable.ic_hana, BankCardColors.Hana.toArgb())
+        BankType.HYUNDAE -> fromRes("현대카드", R.drawable.ic_hyundae, BankCardColors.Hyundae.toArgb())
+        BankType.KAKAO -> fromRes("카카오뱅크", R.drawable.ic_kakao, BankCardColors.Kakao.toArgb())
+        BankType.KB -> fromRes("국민카드", R.drawable.ic_kb, BankCardColors.Kb.toArgb())
+        BankType.LOTTE -> fromRes("롯데카드", R.drawable.ic_lotte, BankCardColors.Lotte.toArgb())
+        BankType.SHINHAN -> fromRes("신한카드", R.drawable.ic_shinhan, BankCardColors.Shinhan.toArgb())
+        BankType.WOORI -> fromRes("우리카드", R.drawable.ic_woori, BankCardColors.Woori.toArgb())
         BankType.NON -> return null
     }
-    return BankUiModel(
-        name = resource.name,
-        image = ImageSource.Resource(id = resource.image),
-        cardColor = resource.cardColor
-    )
 }

@@ -12,6 +12,7 @@ import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpiryValidator
 import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
 
@@ -45,7 +46,14 @@ class CreateCardStateHolder(
     val hasBankType get() = cardCreateState.bankType != BankType.NON
 
     fun newCard(): PaymentCardUiModel =
-        cardCreateState.run { PaymentCardUiModel(bankType, cardNumber, expiryDate, ownerName) }
+        cardCreateState.run {
+            PaymentCardUiModel(
+                requireNotNull(bankType.toLocalBankUiModel()),
+                cardNumber,
+                expiryDate,
+                ownerName
+            )
+        }
 
     fun updateCardBank(bankType: BankType) {
         cardCreateState = cardCreateState.copy(bankType = bankType)

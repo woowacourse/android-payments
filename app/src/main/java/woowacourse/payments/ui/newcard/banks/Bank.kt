@@ -16,27 +16,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.cards.core.mapper.asPainter
 import woowacourse.payments.ui.model.ImageSource
-import woowacourse.payments.ui.model.toBankUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
 
 
 @Composable
 fun Bank(bankType: BankType, onSelectedCard: (BankType) -> Unit, modifier: Modifier = Modifier) {
-    val bankUiModel = bankType.toBankUiModel() ?: return
+    val bankUiModel = bankType.toLocalBankUiModel() ?: return
     Column(
         modifier.clickable { onSelectedCard(bankType) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        when (val painter = bankUiModel.image) {
-            is ImageSource.Resource -> Icon(
-                painter = painterResource(painter.id),
-                contentDescription = bankUiModel.name,
-                modifier = Modifier.size(37.dp, 37.dp),
-                tint = Color.Unspecified
-            )
-
-            is ImageSource.Url -> TODO()
-        }
+        Icon(
+            painter = bankUiModel.image.asPainter(),
+            contentDescription = bankUiModel.name,
+            modifier = Modifier.size(37.dp, 37.dp),
+            tint = Color.Unspecified
+        )
         Spacer(modifier.height(10.dp))
         Text(text = bankUiModel.name, fontSize = 16.sp, fontWeight = FontWeight.W500)
     }
