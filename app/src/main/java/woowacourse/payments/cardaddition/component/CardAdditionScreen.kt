@@ -15,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -25,24 +26,21 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
 import woowacourse.payments.Card
 import woowacourse.payments.EXTRA_CARD
+import woowacourse.payments.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.cardaddition.CardAdditionUiState
 import woowacourse.payments.ui.component.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionScreen(
-    state: CardAdditionUiState,
-    onCardNumberChange: (String) -> Unit,
-    onExpiredDateChange: (String) -> Unit,
-    onHolderChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onSelectBank: (BankType) -> Unit,
     modifier: Modifier = Modifier,
+    stateHolder: CardAdditionStateHolder = rememberSaveable(saver = CardAdditionStateHolder.Saver) { CardAdditionStateHolder() },
 ) {
+    val state: CardAdditionUiState = stateHolder.uiState
     val activity: Activity? = LocalActivity.current
 
     if (!state.isBankSelected) {
-        BankSelectBottomSheet(onSelectBank)
+        BankSelectBottomSheet(stateHolder::updateBankType)
     }
 
     Scaffold(
@@ -71,13 +69,13 @@ fun CardAdditionScreen(
         },
     ) { paddingValues: PaddingValues ->
         CardAdditionContent(
-            paddingValues,
-            state,
-            onCardNumberChange,
-            onExpiredDateChange,
-            onHolderChange,
-            onPasswordChange,
-            onSelectBank,
+            paddingValues = paddingValues,
+            state = state,
+            onCardNumberChange = stateHolder::updateCardNumber,
+            onExpiredDateChange = stateHolder::updateExpiredDate,
+            onHolderChange = stateHolder::updateHolder,
+            onPasswordChange = stateHolder::updatePassword,
+            onSelectBank = stateHolder::updateBankType,
         )
     }
 }
@@ -154,12 +152,7 @@ private fun CardAdditionScreenPreview(
     @PreviewParameter(CardAdditionScreenPreviewParameterProvider::class) state: CardAdditionUiState,
 ) {
     CardAdditionScreen(
-        state = state,
-        onCardNumberChange = {},
-        onExpiredDateChange = {},
-        onHolderChange = {},
-        onPasswordChange = {},
-        onSelectBank = {},
+        stateHolder = CardAdditionStateHolder(state),
         modifier = Modifier.fillMaxSize(),
     )
 }
