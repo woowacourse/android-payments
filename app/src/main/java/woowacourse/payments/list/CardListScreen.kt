@@ -22,14 +22,14 @@ import woowacourse.payments.newCard.CardScreenUiState
 
 @Composable
 fun CardListScreen(
-    cards: CardScreenUiState,
+    uiState: CardScreenUiState,
     onAddClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CardListTopBar(
                 actions = {
-                    if (cards is CardScreenUiState.MultipleCard) {
+                    if (uiState is CardScreenUiState.MultipleCard) {
                         TextButton(
                             onClick = onAddClick,
                             content = {
@@ -55,19 +55,19 @@ fun CardListScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            when (cards) {
+            when (uiState) {
                 is CardScreenUiState.Empty -> {
                     AddNewCardText()
                     AddNewCard(onAddClick = onAddClick)
                 }
 
                 is CardScreenUiState.SingleCard -> {
-                    CardList(listOf(cards.card))
+                    CardList(listOf(uiState.card))
                     AddNewCard(onAddClick = onAddClick)
                 }
 
                 is CardScreenUiState.MultipleCard -> {
-                    CardList(cards.cards)
+                    CardList(uiState.cards)
                 }
             }
         }

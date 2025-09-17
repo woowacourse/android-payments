@@ -20,7 +20,7 @@ class AddTwoOrMoreCardListTest {
     fun setUp() {
         composeTestRule.setContent {
             CardListScreen(
-                cards =
+                uiState =
                     CardScreenUiState.from(
                         listOf(
                             CardUiModel(

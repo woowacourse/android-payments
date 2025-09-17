@@ -41,7 +41,7 @@ class ListActivity : ComponentActivity() {
                     }
 
                 CardListScreen(
-                    cards = cardState,
+                    uiState = cardState,
                     onAddClick = {
                         val intent = Intent(context, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
