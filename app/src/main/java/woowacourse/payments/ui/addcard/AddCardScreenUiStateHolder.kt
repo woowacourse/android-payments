@@ -88,4 +88,12 @@ class AddCardScreenUiStateHolder {
     fun onFocusMoved() {
         shouldMoveFocus.value = false
     }
+
+    companion object {
+        val CARD_COMPANIES: List<CardCompanyUiModel> =
+            CardCompany.entries
+                .filter { cardCompany: CardCompany ->
+                    cardCompany != CardCompany.NONE
+                }.map(CardCompany::toUiModel)
+    }
 }

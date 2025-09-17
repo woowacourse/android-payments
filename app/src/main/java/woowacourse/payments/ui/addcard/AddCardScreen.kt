@@ -18,16 +18,13 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.composable.PaymentCard
-import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,13 +62,8 @@ fun AddCardScreen(
         },
     ) { innerPadding: PaddingValues ->
         CardCompanyBottomSheet(
-            CardCompany.entries
-                .filter { cardCompany ->
-                    cardCompany != CardCompany.NONE
-                }.map(CardCompany::toUiModel),
-            { cardCompany: CardCompanyUiModel ->
-                uiState.cardCompany.value = cardCompany
-            },
+            uiState.cardCompany,
+            AddCardScreenUiStateHolder.CARD_COMPANIES,
             onBackClick,
         )
 
