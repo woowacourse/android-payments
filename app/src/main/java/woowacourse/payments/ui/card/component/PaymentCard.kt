@@ -24,6 +24,7 @@ fun PaymentCard(
     cardNumber: String? = null,
     expiredDate: String? = null,
     ownerName: String? = null,
+    bankName: String? = null,
 ) {
     Column(
         modifier =
@@ -35,10 +36,16 @@ fun PaymentCard(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
+        Text(
+            text = bankName ?: "",
+            color = Color.White,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(start = 14.dp, top = 12.dp),
+        )
         Box(
             modifier =
                 Modifier
-                    .padding(start = 14.dp, top = 44.dp)
+                    .padding(start = 14.dp, top = 16.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
                         color = Color(0xFFCBBA64),
@@ -79,5 +86,6 @@ fun PaymentCardPreview() {
         cardNumber = "1234 - 5678 - 1234 - 5678",
         expiredDate = "11/24",
         ownerName = "TAMA SEO",
+        bankName = "국민카드",
     )
 }
