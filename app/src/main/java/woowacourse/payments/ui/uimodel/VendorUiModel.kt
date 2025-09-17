@@ -33,6 +33,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_shinhan_card,
                 CardVendor.ShinHanCard,
             )
+
         CardVendor.KakaoBank ->
             VendorUiModel(
                 R.drawable.img_vendor_kakao_bank,
@@ -40,6 +41,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_kakao_bank,
                 CardVendor.KakaoBank,
             )
+
         CardVendor.HyundaiCard ->
             VendorUiModel(
                 R.drawable.img_vendor_hyundae_card,
@@ -47,6 +49,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_hyundai_card,
                 CardVendor.HyundaiCard,
             )
+
         CardVendor.WooriCard ->
             VendorUiModel(
                 R.drawable.img_vendor_woori_card,
@@ -54,6 +57,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_woori_card,
                 CardVendor.WooriCard,
             )
+
         CardVendor.LotteCard ->
             VendorUiModel(
                 R.drawable.img_vendor_lotte_card,
@@ -61,6 +65,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_lotte_card,
                 CardVendor.LotteCard,
             )
+
         CardVendor.HanaCard ->
             VendorUiModel(
                 R.drawable.img_vendor_hana_card,
@@ -68,6 +73,7 @@ fun CardVendor.toUiModel() =
                 R.string.vendor_hana_card,
                 CardVendor.HanaCard,
             )
+
         CardVendor.KBCard ->
             VendorUiModel(
                 R.drawable.img_vendor_kb_card,

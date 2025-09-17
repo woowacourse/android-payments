@@ -5,9 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.model.CardVendor
-import woowacourse.payments.ui.uimodel.VendorUiModel
-import woowacourse.payments.ui.uimodel.toUiModel
 
 @Parcelize
 data class VendorModalUiState(
