@@ -52,6 +52,17 @@ class CardValidatorTest {
         assertThat(result).isEqualTo(false)
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = ["0825", "0124", "1119"])
+    fun `만료일이 오늘 날짜 기준으로 과거일 경우 유효하지 않다고 판단해 false 값을 반환한다`(expiredDate: String) {
+        // given
+        // when
+        val result = CardValidator.isValidExpiredDate(expiredDate)
+
+        // then
+        assertThat(result).isEqualTo(false)
+    }
+
     @Test
     fun `비밀번호가 4자리 숫자면 유효하다고 판단해 true 값을 반환한다`() {
         // given
