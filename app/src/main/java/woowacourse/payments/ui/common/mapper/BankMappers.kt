@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.util
+package woowacourse.payments.ui.common.mapper
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

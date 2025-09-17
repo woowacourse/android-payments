@@ -13,6 +13,7 @@ val Pink40 = Color(0xFF7D5260)
 val GrayText = Color(0xFF49454F)
 val GrayOutline = Color(0xFF79747E)
 val GrayHint = Color(0xFFAAAAAA)
+val GrayLabel = Color(0xFF525252)
 val GrayBackground = Color(0xFF333333)
 val GrayPlaceholder = Color(0xFFE5E5E5)
 

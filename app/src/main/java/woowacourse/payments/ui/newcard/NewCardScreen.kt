@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,11 +25,12 @@ import woowacourse.payments.designsystem.theme.Black
 import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
-import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.newcard.components.BankSelectBottomSheet
 import woowacourse.payments.ui.newcard.components.CardHolderTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpiryTextField
+import woowacourse.payments.ui.newcard.components.NewCardPreviewCard
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.components.PinTextField
 import woowacourse.payments.ui.newcard.model.rememberBoundScrollState
@@ -51,7 +53,7 @@ fun NewCardScreen(
                 onBackClick = { onFinish() },
                 onSaveClick = {
                     if (holder.canSave) {
-                        onSaved(holder.toCardUiModel())
+                        onSaved(holder.createCardUiModel())
                     }
                 },
             )
@@ -71,7 +73,10 @@ fun NewCardScreen(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
-                PaymentCard()
+                NewCardPreviewCard(
+                    bankType = holder.selectedBank,
+                    modifier = Modifier.clickable { holder.updateBankSheet(true) },
+                )
             }
             Spacer(Modifier.height(28.dp))
 
@@ -107,12 +112,18 @@ fun NewCardScreen(
                 modifier = Modifier.width(146.dp),
                 onImeAction = {
                     focusManager.clearFocus()
-                    if (holder.canSave) onSaved(holder.toCardUiModel())
+                    if (holder.canSave) onSaved(holder.createCardUiModel())
                 },
                 colors = formTextFieldColors(),
             )
         }
     }
+    BankSelectBottomSheet(
+        isOpen = holder.isBankSheetOpen,
+        selected = holder.selectedBank,
+        onSelected = { holder.updateBank(it) },
+        onDismiss = { holder.updateBankSheet(false) },
+    )
 }
 
 @Composable
