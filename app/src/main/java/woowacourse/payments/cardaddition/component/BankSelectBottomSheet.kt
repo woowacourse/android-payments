@@ -49,7 +49,7 @@ fun BankSelectBottomSheet(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 43.dp, vertical = 36.dp),
+                    .padding(horizontal = 43.dp, vertical = 26.dp),
         )
     }
 }
@@ -91,7 +91,7 @@ private fun BankButton(
                 .clickable(onClick = { onClick(bankType) })
                 .padding(vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(9.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
         if (bankType.imageRes != null && bankType.cardName != null) {
             Image(
