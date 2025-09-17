@@ -28,8 +28,6 @@ fun ExpirationDateTextField(
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LocalFocusManager.current
-
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(0.5F),
         value = expirationDate.value,

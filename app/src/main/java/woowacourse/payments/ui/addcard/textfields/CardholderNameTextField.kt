@@ -9,7 +9,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -24,8 +23,6 @@ fun CardHolderNameTextField(
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LocalFocusManager.current
-
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
         value = cardholderName.value,
