@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
@@ -42,7 +40,6 @@ fun NewCardScreen(
     onBackPress: () -> Unit = {},
     onSaved: (PaymentCardUiModel) -> Unit = {},
 ) {
-    val context = LocalContext.current
     var isShowBottomSheet by rememberSaveable { mutableStateOf(true) }
 
     val modalBottomSheetState =
