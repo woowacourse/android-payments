@@ -11,8 +11,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -28,7 +28,7 @@ class CardListActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
                             val newCard: Card =
-                                activityResult.data?.parcelable("newCard")
+                                activityResult.data?.parcelable(NEW_CARD_KEY)
                                     ?: return@rememberLauncherForActivityResult
                             cards += newCard
                             Toast
@@ -47,5 +47,9 @@ class CardListActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    companion object {
+        const val NEW_CARD_KEY = "com.woowacourse.payments.ui.cardList.NEW_CARD_KEY"
     }
 }

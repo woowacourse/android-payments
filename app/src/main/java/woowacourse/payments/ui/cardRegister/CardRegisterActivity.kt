@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.cardList.CardListActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardRegisterActivity : ComponentActivity() {
@@ -24,7 +25,7 @@ class CardRegisterActivity : ComponentActivity() {
                     onSaveClick = { card: Card ->
                         val intent =
                             Intent().putExtra(
-                                "newCard",
+                                CardListActivity.NEW_CARD_KEY,
                                 card,
                             )
                         setResult(RESULT_OK, intent)
