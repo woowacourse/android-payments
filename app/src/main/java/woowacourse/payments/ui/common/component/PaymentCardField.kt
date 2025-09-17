@@ -28,9 +28,8 @@ import woowacourse.payments.ui.payments.model.BankUiState
 
 @Composable
 fun PaymentCardField(
+    paymentCardUiModel: PaymentCardUiModel,
     modifier: Modifier = Modifier,
-    bankUiState: BankUiState = BankUiState.NOT_SELECTED,
-    paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -39,12 +38,12 @@ fun PaymentCardField(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(bankUiState.bankColor),
+                    color = colorResource(paymentCardUiModel.bankUiState.bankColor),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = bankUiState.bankName,
+            text = paymentCardUiModel.bankUiState.bankName,
             color = Color.White,
             modifier =
                 Modifier
@@ -62,7 +61,7 @@ fun PaymentCardField(
                     ).align(Alignment.CenterStart),
         )
 
-        if (paymentCardUiModel != null) {
+        if (paymentCardUiModel.bankUiState != BankUiState.NOT_SELECTED) {
             Column(
                 modifier =
                     Modifier
@@ -91,7 +90,7 @@ fun PaymentCardField(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = paymentCardUiModel.cardholderName,
+                        text = if (paymentCardUiModel.cardholderName.isBlank()) "CREW" else paymentCardUiModel.cardholderName,
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
@@ -119,23 +118,27 @@ fun PaymentCardField(
 @Preview(showBackground = true)
 @Composable
 private fun PaymentCardFieldPreview(
-    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel?,
+    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel,
 ) {
     Column(
         modifier = Modifier.padding(20.dp),
     ) {
         PaymentCardField(
             paymentCardUiModel = paymentCardUiModel,
-            bankUiState = BankUiState.KB,
         )
     }
 }
 
 private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
-    override val values: Sequence<PaymentCardUiModel?> =
+    override val values: Sequence<PaymentCardUiModel> =
         sequenceOf(
-            null,
-            PaymentCardUiModel("1111111111111111", "0421", "CREW"),
-            PaymentCardUiModel("2222222222222222", "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
+            PaymentCardUiModel("", "", "", bankUiState = BankUiState.NOT_SELECTED),
+            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiState.SHINHAN),
+            PaymentCardUiModel(
+                "2222222222222222",
+                "0522",
+                "ABCDEABCDEABCDEABCDEABCDEABCDE",
+                BankUiState.KB,
+            ),
         )
 }

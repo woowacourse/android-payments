@@ -71,6 +71,7 @@ fun CardRegistrationScreen(
                             number = uiState.cardNumber,
                             expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
+                            bankUiState = cardRegistrationStateHolder.uiState.value.bankUiState,
                         ),
                     )
                 },
@@ -131,7 +132,13 @@ private fun CardRegistrationScreenContent(
 
         PaymentCardField(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            bankUiState = cardRegistrationStateHolder.uiState.value.bankUiState,
+            paymentCardUiModel =
+                PaymentCardUiModel(
+                    number = uiState.cardNumber,
+                    expirationDate = uiState.cardExpirationDate,
+                    cardholderName = uiState.cardholderName,
+                    bankUiState = cardRegistrationStateHolder.uiState.value.bankUiState,
+                ),
         )
 
         Spacer(modifier = Modifier.height(40.dp))

@@ -41,6 +41,7 @@ import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.showShortToast
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationActivity
+import woowacourse.payments.ui.payments.model.BankUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -188,6 +189,7 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                     number = "1234123412341234",
                     expirationDate = "1234",
                     cardholderName = "CREW",
+                    bankUiState = BankUiState.KB,
                 ),
             ),
             CardUiState.Multiple(
@@ -196,11 +198,13 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                         number = "1234123412341234",
                         expirationDate = "1234",
                         cardholderName = "CREW",
+                        bankUiState = BankUiState.KB,
                     ),
                     PaymentCardUiModel(
                         number = "1234123412341231",
                         expirationDate = "1234",
                         cardholderName = "CREW",
+                        bankUiState = BankUiState.SHINHAN,
                     ),
                 ),
             ),

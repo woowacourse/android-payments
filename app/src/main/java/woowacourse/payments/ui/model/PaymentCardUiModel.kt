@@ -1,14 +1,15 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
-import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.payments.model.BankUiState
 
 @Parcelize
 data class PaymentCardUiModel(
     val number: String,
     val expirationDate: String,
     val cardholderName: String,
+    val bankUiState: BankUiState,
 ) : Parcelable {
     fun formatNumber(
         separator: String = CARD_NUMBER_BASE_SEPARATOR,
@@ -16,14 +17,34 @@ data class PaymentCardUiModel(
         maskingLowerIndex: Int = CARD_NUMBER_BASE_MASKING_LOWER_INDEX,
         maskingUpperIndex: Int = CARD_NUMBER_BASE_MASKING_UPPER_INDEX,
         mask: String = CARD_NUMBER_BASE_MASK,
-    ): String =
-        number
-            .replaceRange(
-                maskingLowerIndex,
-                maskingUpperIndex,
-                mask.repeat(maskingUpperIndex - maskingLowerIndex),
-            ).chunked(chunkSize)
-            .joinToString(separator)
+    ): String {
+        if (number.isBlank()) return ""
+
+        val masked =
+            when {
+                number.length < maskingLowerIndex -> {
+                    number
+                }
+
+                number.length in maskingLowerIndex until maskingUpperIndex -> {
+                    number.replaceRange(
+                        maskingLowerIndex,
+                        number.length,
+                        mask.repeat(number.length - maskingLowerIndex),
+                    )
+                }
+
+                else -> {
+                    number.replaceRange(
+                        maskingLowerIndex,
+                        maskingUpperIndex,
+                        mask.repeat(maskingUpperIndex - maskingLowerIndex),
+                    )
+                }
+            }
+
+        return masked.chunked(chunkSize).joinToString(separator)
+    }
 
     fun formatExpirationDate(chunkSize: Int = CARD_EXPIRATION_GROUP_SIZE): String =
         expirationDate.chunked(chunkSize).joinToString(CARD_EXPIRATION_BASE_SEPARATOR)
