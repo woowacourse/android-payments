@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -86,8 +87,10 @@ private fun BankButton(
     Column(
         modifier =
             modifier
-                .semantics { role = Role.Button }
-                .clickable(onClick = { onClick(bankType) })
+                .semantics {
+                    role = Role.Button
+                    contentDescription = bankType.cardName ?: ""
+                }.clickable(onClick = { onClick(bankType) })
                 .padding(vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),
