@@ -32,6 +32,5 @@ data class CardAdditionUiState(
         const val CARD_NUMBER_LENGTH: Int = 16
         const val EXPIRED_DATE_LENGTH: Int = 4
         const val PASSWORD_LENGTH: Int = 4
-        const val CARD_OWNER_NAME_LENGTH_MAX: Int = 30
     }
 }

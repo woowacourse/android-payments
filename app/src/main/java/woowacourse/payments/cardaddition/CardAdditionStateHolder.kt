@@ -6,7 +6,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import woowacourse.payments.BankType
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.CARD_NUMBER_LENGTH
-import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.CARD_OWNER_NAME_LENGTH_MAX
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.EXPIRED_DATE_LENGTH
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.PASSWORD_LENGTH
 import java.lang.Character.isDigit
@@ -28,7 +27,7 @@ class CardAdditionStateHolder(
     }
 
     fun updateHolder(value: String) {
-        uiState = uiState.copy(holder = value.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase())
+        uiState = uiState.copy(holder = value.take(uiState.holderMaxLength).uppercase())
     }
 
     fun updatePassword(value: String) {
