@@ -1,11 +1,15 @@
 package woowacourse.payments.ui.catalog
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.parcelize.IgnoredOnParcel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
-sealed class CardUiState {
+@Parcelize
+sealed class CardUiState : Parcelable {
     data object Empty : CardUiState()
 
     data class Single(
@@ -16,6 +20,7 @@ sealed class CardUiState {
         val paymentCards: ImmutableList<PaymentCardUiModel>,
     ) : CardUiState()
 
+    @IgnoredOnParcel
     val isAddCardButtonVisible: Boolean = this is Multiple
 
     fun addCard(newCard: PaymentCardUiModel): CardUiState =

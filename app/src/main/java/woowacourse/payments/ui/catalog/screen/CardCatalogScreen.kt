@@ -16,8 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,8 +31,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import woowacourse.payments.R
 import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
+import woowacourse.payments.ui.catalog.CardCatalogStateHolder
 import woowacourse.payments.ui.catalog.CardUiState
-import woowacourse.payments.ui.catalog.CardViewModel
 import woowacourse.payments.ui.catalog.component.AddCardButton
 import woowacourse.payments.ui.catalog.component.CardCatalogTopAppBar
 import woowacourse.payments.ui.common.component.PaymentCardField
@@ -47,10 +46,12 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardCatalogScreen(
     modifier: Modifier = Modifier,
-    cardViewModel: CardViewModel = CardViewModel(),
+    cardCatalogStateHolder: CardCatalogStateHolder =
+        rememberSaveable(
+            saver = CardCatalogStateHolder.Saver,
+        ) { CardCatalogStateHolder() },
 ) {
     val context = LocalContext.current
-    val uiState: CardUiState by cardViewModel.cardUiState.observeAsState(CardUiState.Empty)
 
     val cardCatalogLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(
@@ -61,7 +62,7 @@ fun CardCatalogScreen(
                     activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
                         PAYMENT_CARD_UI_MODEL_KEY,
                     )
-                paymentCardUiModel?.let { cardViewModel.addCard(it) }
+                paymentCardUiModel?.let { cardCatalogStateHolder.addCard(it) }
             } else {
                 context.showShortToast(context.getString(R.string.card_catalog_screen_add_canceled))
             }
@@ -69,7 +70,7 @@ fun CardCatalogScreen(
     Scaffold(
         topBar = {
             CardCatalogTopAppBar(
-                isAddButtonVisible = uiState.isAddCardButtonVisible,
+                isAddButtonVisible = cardCatalogStateHolder.cardUiState.isAddCardButtonVisible,
                 onCardAddClick = {
                     val intent = CardRegistrationActivity.newIntent(context)
                     cardCatalogLauncher.launch(intent)
@@ -78,7 +79,7 @@ fun CardCatalogScreen(
         },
     ) { innerPadding ->
         CardCatalogScreenContent(
-            uiState = uiState,
+            uiState =  cardCatalogStateHolder.cardUiState,
             modifier = modifier.padding(innerPadding),
             onAddNewCardClick = {
                 val intent = CardRegistrationActivity.newIntent(context)
@@ -175,7 +176,7 @@ private fun CardCatalogScreenPreView(
 ) {
     AndroidpaymentsTheme {
         CardCatalogScreen(
-            cardViewModel = CardViewModel(cardUiState),
+            cardCatalogStateHolder = CardCatalogStateHolder(cardUiState),
         )
     }
 }
