@@ -32,11 +32,11 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
-import woowacourse.payments.ui.ExtraKeys
 import woowacourse.payments.ui.addcard.AddCardActivity
-import woowacourse.payments.ui.common.PaymentCard
+import woowacourse.payments.ui.common.ExtraKeys
+import woowacourse.payments.ui.common.composable.PaymentCard
+import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.format.ExpirationDateFormat
-import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth

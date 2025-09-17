@@ -24,7 +24,7 @@ import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
-import woowacourse.payments.ui.common.PaymentCard
+import woowacourse.payments.ui.common.composable.PaymentCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel

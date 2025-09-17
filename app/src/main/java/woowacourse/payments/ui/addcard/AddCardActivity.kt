@@ -8,7 +8,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
-import woowacourse.payments.ui.ExtraKeys
+import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
