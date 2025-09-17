@@ -30,6 +30,7 @@ import woowacourse.payments.ui.state.BankState
 fun BankSelectBottomSheet(
     resourceProvider: CompanyResourceProvider,
     onBankSelect: (Banks) -> Unit,
+    onFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val modalBottomSheetState =
@@ -45,7 +46,7 @@ fun BankSelectBottomSheet(
 
     ModalBottomSheet(
         sheetState = modalBottomSheetState,
-        onDismissRequest = { },
+        onDismissRequest = { onFinish() },
         modifier = modifier,
     ) {
         Column {

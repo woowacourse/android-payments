@@ -33,6 +33,7 @@ import woowacourse.payments.ui.state.CardState
 fun NewCardScreen(
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
+    onFinishRequest: () -> Unit,
 ) {
     val companyResourceProvider = CompanyResourceProvider()
     val newCardUiStateHolder =
@@ -53,6 +54,7 @@ fun NewCardScreen(
             resourceProvider = companyResourceProvider,
             uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
+            onFinishRequest = onFinishRequest,
             modifier = Modifier.padding(innerPadding),
         )
     }
@@ -68,6 +70,7 @@ fun NewCardScreen(
     resourceProvider: CompanyResourceProvider,
     uiState: NewCardUiState,
     onCardChange: (NewCardUiEvent) -> Unit,
+    onFinishRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val card = uiState.card
@@ -168,6 +171,7 @@ fun NewCardScreen(
         if (uiState.card.bank is BankState.Empty) {
             BankSelectBottomSheet(
                 resourceProvider = resourceProvider,
+                onFinish = onFinishRequest,
                 onBankSelect = { bankType ->
                     onCardChange(NewCardUiEvent.OnChangeBankType(bankType))
                 },
@@ -182,6 +186,7 @@ fun NewCardScreenPreview() {
     NewCardScreen(
         resourceProvider = CompanyResourceProvider(),
         uiState = NewCardUiState(),
+        onFinishRequest = {},
         onCardChange = {},
     )
 }

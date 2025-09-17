@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.state.CardState
-import woowacourse.payments.ui.state.BankState
 import woowacourse.payments.ui.core.CompanyResourceProvider
+import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.GrayE5
 
@@ -46,8 +46,7 @@ fun PaymentCard(
                 .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = { onClick(card) }),
+                ).clickable(onClick = { onClick(card) }),
     ) {
         content()
     }
