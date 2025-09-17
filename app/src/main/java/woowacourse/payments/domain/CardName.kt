@@ -17,5 +17,5 @@ value class CardName private constructor(val value: String) {
 }
 
 private fun Char.isEnglishLetterOrSpace(): Boolean {
-    return this == ' ' || (this in 'A'..'Z') || (this in 'a'..'z')
+    return this == ' ' || (this in 'A'..'Z')
 }
