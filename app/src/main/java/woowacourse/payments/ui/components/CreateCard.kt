@@ -3,6 +3,8 @@ package woowacourse.payments.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,9 +18,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.toBankUiModel
-import woowacourse.payments.ui.preview.paymentCardUiModelSample
+import woowacourse.payments.ui.cards.core.mapper.asColor
+import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.theme.Gray33
 
 @Composable
@@ -26,28 +27,27 @@ fun CreateCard(
     bankType: BankType,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = bankType.toBankUiModel()
+    val bankUiModel = bankType.toLocalBankUiModel()
     Box(
-        contentAlignment = Alignment.CenterStart,
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankUiModel?.cardColor ?: Gray33,
+                    color = bankUiModel?.cardColor?.asColor() ?: Gray33,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Column(
             Modifier
-                .padding(horizontal = 14.dp)
+                .padding(15.dp)
         ) {
             Text(
                 bankUiModel?.name ?: "",
                 color = Color.White,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(15.dp)
             )
+            Spacer(Modifier.height(15.dp))
             PaymentCardChip()
         }
     }

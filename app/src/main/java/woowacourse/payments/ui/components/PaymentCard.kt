@@ -15,41 +15,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.cards.core.mapper.asColor
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.toBankUiModel
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
-import woowacourse.payments.ui.theme.Gray33
 
 @Composable
 fun PaymentCard(
     paymentCardUiModel: PaymentCardUiModel,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = paymentCardUiModel.bankType.toBankUiModel()
+    val bankUiModel = paymentCardUiModel.bankUiModel
     Box(
-        contentAlignment = Alignment.CenterStart,
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankUiModel?.cardColor ?: Gray33,
+                    color = bankUiModel.cardColor.asColor(),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        Column(
-            Modifier
-                .padding(horizontal = 14.dp)
-        ) {
-            Text(
-                bankUiModel?.name ?: "",
-                color = Color.White,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(15.dp)
-            )
-            PaymentCardChip()
-            PaymentCardContent(paymentCardUiModel)
-        }
+        PaymentCardContent(
+            paymentCardUiModel, Modifier
+                .padding(15.dp)
+        )
     }
 }
 

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,6 +33,13 @@ fun PaymentCardContent(
             color = Color.White,
         )
     Column(modifier) {
+        Text(
+            paymentCardUiModel.bankUiModel.name,
+            color = Color.White,
+            fontSize = 12.sp,
+            modifier = Modifier.padding(bottom = 15.dp)
+        )
+        PaymentCardChip()
         Spacer(Modifier.height(8.dp))
         Text(
             text = paymentCardUiModel.maskCardNumbersFromBack(),
