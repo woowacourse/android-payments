@@ -32,6 +32,7 @@ fun PaymentCardPlate(
     paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
     val cardModel = paymentCardUiModel ?: PaymentCardUiModel.EMPTY
+    val cardCompanyModel = cardModel.cardCompanyUiModel
     val description =
         if (cardModel == PaymentCardUiModel.EMPTY) {
             stringResource(R.string.payment_card_empty_description)
@@ -51,7 +52,7 @@ fun PaymentCardPlate(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = cardModel.cardCompanyUiModel.plateColor,
+                    color = cardCompanyModel.plateColor,
                     shape = RoundedCornerShape(5.dp),
                 ).semantics {
                     contentDescription = description
@@ -69,7 +70,7 @@ fun PaymentCardPlate(
         )
 
         Text(
-            stringResource(cardModel.cardCompanyUiModel.companyNameResId),
+            stringResource(cardCompanyModel.companyNameResId),
             modifier =
                 Modifier
                     .padding(start = 14.dp, top = 10.dp)
@@ -84,7 +85,7 @@ fun PaymentCardPlate(
                 ),
             fontSize = 12.sp,
             letterSpacing = 0.1.em,
-            color = cardModel.cardCompanyUiModel.textColor,
+            color = cardCompanyModel.textColor,
         )
 
         Text(
@@ -95,7 +96,7 @@ fun PaymentCardPlate(
                     .align(Alignment.BottomStart),
             fontSize = 12.sp,
             letterSpacing = 0.17.em,
-            color = cardModel.cardCompanyUiModel.textColor,
+            color = cardCompanyModel.textColor,
         )
 
         Text(
@@ -106,7 +107,7 @@ fun PaymentCardPlate(
                     .align(Alignment.BottomStart),
             fontSize = 12.sp,
             letterSpacing = 0.1.em,
-            color = cardModel.cardCompanyUiModel.textColor,
+            color = cardCompanyModel.textColor,
         )
 
         Text(
@@ -117,7 +118,7 @@ fun PaymentCardPlate(
                     .align(Alignment.BottomEnd),
             fontSize = 12.sp,
             letterSpacing = 0.1.em,
-            color = cardModel.cardCompanyUiModel.textColor,
+            color = cardCompanyModel.textColor,
         )
     }
 }
