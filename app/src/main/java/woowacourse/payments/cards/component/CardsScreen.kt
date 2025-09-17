@@ -7,7 +7,6 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -85,23 +84,26 @@ fun CardsScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        CardsContent(innerPadding, scrollState, state, navigateToCardAdditionActivity)
+        CardsContent(
+            state = state,
+            navigateToCardAdditionActivity = navigateToCardAdditionActivity,
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .verticalScroll(scrollState),
+        )
     }
 }
 
 @Composable
 private fun CardsContent(
-    innerPadding: PaddingValues,
-    scrollState: ScrollState,
     state: CardsUiState,
     navigateToCardAdditionActivity: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .verticalScroll(scrollState),
+        modifier = modifier,
     ) {
         when (state.cards.size) {
             0 ->

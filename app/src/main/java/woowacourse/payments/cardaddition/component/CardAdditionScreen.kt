@@ -37,6 +37,7 @@ fun CardAdditionScreen(
 ) {
     val state: CardAdditionUiState = stateHolder.uiState
     val activity: Activity? = LocalActivity.current
+    val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
         BankSelectBottomSheet(stateHolder::updateBankType)
@@ -68,35 +69,33 @@ fun CardAdditionScreen(
         },
     ) { paddingValues: PaddingValues ->
         CardAdditionContent(
-            paddingValues = paddingValues,
             state = state,
             onCardNumberChange = stateHolder::updateCardNumber,
             onExpiredDateChange = stateHolder::updateExpiredDate,
             onHolderChange = stateHolder::updateHolder,
             onPasswordChange = stateHolder::updatePassword,
             onSelectBank = stateHolder::updateBankType,
+            modifier =
+                Modifier
+                    .padding(paddingValues)
+                    .padding(horizontal = 24.dp)
+                    .verticalScroll(scrollState),
         )
     }
 }
 
 @Composable
 private fun CardAdditionContent(
-    paddingValues: PaddingValues,
     state: CardAdditionUiState,
     onCardNumberChange: (String) -> Unit,
     onExpiredDateChange: (String) -> Unit,
     onHolderChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onSelectBank: (BankType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-
     Column(
-        modifier =
-            Modifier
-                .padding(paddingValues)
-                .padding(horizontal = 24.dp)
-                .verticalScroll(scrollState),
+        modifier = modifier,
     ) {
         PaymentCard(
             modifier =
