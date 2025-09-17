@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,6 +25,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.CardCompany
+import woowacourse.payments.ui.theme.GrayFF525252
 import woowacourse.payments.ui.theme.Typography
 
 private const val MAX_ITEM_EACH_ROW_COUNT = 4
@@ -38,7 +41,9 @@ fun CardSelectionModal(
     ModalBottomSheet(
         sheetState = modalBottomSheetState,
         onDismissRequest = onDismissRequest,
-        modifier = Modifier.fillMaxWidth(),
+        modifier =
+            Modifier
+                .fillMaxWidth(),
     ) {
         CardCompanyGrid(
             companies = CardCompany.entries.drop(1),
@@ -60,14 +65,17 @@ private fun CardCompanyGrid(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(top = 56.dp, bottom = 82.dp)
-                .padding(horizontal = 44.dp),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+                .padding(top = 36.dp, bottom = 112.dp)
+                .padding(horizontal = 28.dp),
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = maxItemsInEachRow,
     ) {
         companies.forEach { company ->
-            CardCompanyItem(company = company, onClickCardCompany = onClickCardCompany)
+            CardCompanyItem(
+                company = company,
+                onClickCardCompany = onClickCardCompany,
+                modifier = Modifier.weight(1f),
+            )
         }
     }
 }
@@ -76,11 +84,12 @@ private fun CardCompanyGrid(
 private fun CardCompanyItem(
     company: CardCompany,
     onClickCardCompany: (cardCompany: CardCompany) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
-            Modifier
+            modifier
                 .fillMaxWidth(1f / MAX_ITEM_EACH_ROW_COUNT)
                 .clickable { onClickCardCompany(company) },
     ) {
@@ -90,8 +99,10 @@ private fun CardCompanyItem(
             tint = Color.Unspecified,
             modifier = Modifier.size(37.dp),
         )
+        Spacer(modifier = Modifier.height(9.dp))
         Text(
             text = company.title,
+            color = GrayFF525252,
             style = Typography.bodyLarge,
         )
     }
@@ -105,7 +116,7 @@ private fun CardSelectionModalPreview() {
         modifier = Modifier.fillMaxSize(),
     ) {
         CardCompanyGrid(
-            companies = CardCompany.entries,
+            companies = CardCompany.entries.drop(1),
             modifier = Modifier.fillMaxWidth(),
             onClickCardCompany = { },
         )
