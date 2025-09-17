@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -24,7 +25,7 @@ fun PaymentCard(
         modifier =
             modifier
                 .shadow(8.dp)
-                .size(width = 208.dp, height = 124.dp)
+                .width(width = 208.dp)
                 .background(
                     color = bankUiModel.cardColor.asColor(),
                     shape = RoundedCornerShape(5.dp),

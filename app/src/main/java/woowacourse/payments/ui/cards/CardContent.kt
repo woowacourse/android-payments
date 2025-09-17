@@ -38,8 +38,8 @@ fun CardContent(
             paymentCardUiModel.bankUiModel.name,
             color = Color.White,
             fontSize = 12.sp,
-            modifier = Modifier.padding(bottom = 15.dp)
         )
+        Spacer(Modifier.height(15.dp))
         CardChip()
         Spacer(Modifier.height(8.dp))
         Text(
