@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.Card
 
 class CardsStateHolder(
-    initialState: CardsUiState = CardsUiState(cards = emptyList()),
+    initialState: CardsUiState = CardsUiState(),
 ) {
     var uiState: CardsUiState by mutableStateOf(initialState)
         private set
