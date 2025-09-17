@@ -26,7 +26,6 @@ import woowacourse.payments.domain.InputType
 import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.payments.CardInputUiModel
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
 import woowacourse.payments.ui.payments.CardRegistrationStateHolder
 import woowacourse.payments.ui.payments.component.BankSelectBottomSheet
@@ -71,7 +70,7 @@ fun CardRegistrationScreen(
                             number = uiState.cardNumber,
                             expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
-                            bankUiModel = cardRegistrationStateHolder.uiState.value.bankUiModel,
+                            bankUiModel = cardRegistrationStateHolder.uiState.value,
                         ),
                     )
                 },
@@ -113,9 +112,7 @@ private fun CardRegistrationScreenContent(
             onBankSelected = { selectedBank ->
                 onBottomSheetStateChanged(false)
                 cardRegistrationStateHolder.updateState(
-                    CardInputUiModel(
-                        selectedBank,
-                    ),
+                    selectedBank,
                 )
             },
         )
@@ -137,7 +134,7 @@ private fun CardRegistrationScreenContent(
                     number = uiState.cardNumber,
                     expirationDate = uiState.cardExpirationDate,
                     cardholderName = uiState.cardholderName,
-                    bankUiModel = cardRegistrationStateHolder.uiState.value.bankUiModel,
+                    bankUiModel = cardRegistrationStateHolder.uiState.value,
                 ),
         )
 

@@ -5,11 +5,11 @@ import androidx.compose.runtime.saveable.Saver
 import woowacourse.payments.ui.payments.model.BankUiModel
 
 class CardRegistrationStateHolder(
-    initialBankUiModel: BankUiModel,
+    initState: BankUiModel,
 ) {
-    val uiState = mutableStateOf(CardInputUiModel(initialBankUiModel))
+    val uiState = mutableStateOf(initState)
 
-    fun updateState(newState: CardInputUiModel) {
+    fun updateState(newState: BankUiModel) {
         uiState.value = newState
     }
 
@@ -17,7 +17,7 @@ class CardRegistrationStateHolder(
         val Saver: Saver<CardRegistrationStateHolder, Any> =
             Saver(
                 save = { holder ->
-                    holder.uiState.value.bankUiModel
+                    holder.uiState.value
                 },
                 restore = { restoredBankUiState ->
                     CardRegistrationStateHolder(restoredBankUiState as BankUiModel)
