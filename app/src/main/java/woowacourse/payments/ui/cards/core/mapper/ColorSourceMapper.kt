@@ -7,6 +7,6 @@ import woowacourse.payments.ui.model.ColorSource
 @Composable
 fun ColorSource.asColor(): Color {
     return when (this) {
-        is ColorSource.Argb -> Color(id)
+        is ColorSource.Argb -> Color(color)
     }
 }
