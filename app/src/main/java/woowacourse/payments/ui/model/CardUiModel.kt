@@ -12,7 +12,7 @@ data class CardUiModel(
     val expirationDate: String,
     val cardHolderName: String,
     val bankName: String,
-    val bankColor: Int,
+    val bankColor: Long,
 ) : Parcelable
 
 fun Card.toUiModel(): CardUiModel {
@@ -24,7 +24,11 @@ fun Card.toUiModel(): CardUiModel {
         expirationDate = formattedExpirationDate,
         cardHolderName = this.cardHolderName.cardHolderName,
         bankName = this.bank.name,
-        bankColor = this.bank.color().toArgb(),
+        bankColor =
+            this.bank
+                .color()
+                .toArgb()
+                .toLong(),
     )
 }
 

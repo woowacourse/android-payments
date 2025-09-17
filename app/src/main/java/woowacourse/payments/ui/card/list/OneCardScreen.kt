@@ -47,7 +47,7 @@ fun OneCardScreenPreview() {
             expirationDate = "11/24",
             cardHolderName = "TAMA ONE",
             bankName = "국민카드",
-            bankColor = Color(0xFFFBC02D).toArgb(),
+            bankColor = 0xFFFBC02D,
         )
 
     AndroidpaymentsTheme {

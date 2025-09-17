@@ -48,21 +48,21 @@ fun MultipleCardsScreenPreview() {
                 expirationDate = "11/24",
                 cardHolderName = "TAMA ONE",
                 bankName = "국민카드",
-                bankColor = Color(0xFFFBC02D).toArgb(),
+                bankColor = 0xFFFBC02D,
             ),
             CardUiModel(
                 number = "1234 - 5678 - **** - ****",
                 expirationDate = "11/24",
                 cardHolderName = "TAMA TWO",
                 bankName = "신한카드",
-                bankColor = Color(0xFF1565C0).toArgb(),
+                bankColor = 0xFFFBC02D,
             ),
             CardUiModel(
                 number = "1234 - 5678 - **** - ****",
                 expirationDate = "11/24",
                 cardHolderName = "TAMA THREE",
                 bankName = "카카오뱅크",
-                bankColor = Color(0xFFFFEB3B).toArgb(),
+                bankColor = 0xFFFBC02D,
             ),
         )
     AndroidpaymentsTheme {
