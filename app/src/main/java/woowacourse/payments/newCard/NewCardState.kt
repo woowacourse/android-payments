@@ -36,24 +36,43 @@ class NewCardState {
         cardNumber = newNumber
 
         val validation = runCatching { CardNumber(newNumber) }
-        numberErrorMessage = validation.exceptionOrNull()?.message ?: ""
-        isNumberError = newNumber.isNotEmpty() && validation.isFailure
+        validation.onFailure { result ->
+            numberErrorMessage = result.message ?: ""
+            isNumberError = true
+        }
+        validation.onSuccess {
+            numberErrorMessage = ""
+            isNumberError = false
+        }
     }
 
     fun onExpiryChange(newExpiry: String) {
         cardExpiry = newExpiry
 
         val validation = runCatching { CardExpiry.fromString(newExpiry) }
-        expiryErrorMessage = validation.exceptionOrNull()?.message ?: ""
-        isExpiryError = newExpiry.isNotEmpty() && validation.isFailure
+        validation.onFailure { result ->
+            expiryErrorMessage = result.message ?: ""
+            isExpiryError = true
+        }
+        validation.onSuccess {
+            expiryErrorMessage = ""
+            isExpiryError = false
+        }
     }
 
     fun onPasswordChange(newPassword: String) {
         cardPassword = newPassword
 
         val validation = runCatching { CardPassword(newPassword) }
-        passwordErrorMessage = validation.exceptionOrNull()?.message ?: ""
-        isPasswordError = newPassword.isNotEmpty() && validation.isFailure
+        validation.onFailure { result ->
+            passwordErrorMessage = result.message ?: ""
+            isPasswordError = true
+        }
+        validation.onSuccess {
+            passwordErrorMessage = ""
+            isPasswordError = false
+        }
+
     }
 
     fun onNameChange(new: String) {
