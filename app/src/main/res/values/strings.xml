@@ -50,7 +50,7 @@
     <!-- registration_box -->
     <string name="registration_box_add_icon_description">추가</string>
     <string name="registration_box_registration_box_description">추가 박스 영역</string>
- 
+
     <!-- card_company_ui_model -->
     <string name="card_company_ui_model_bc">BC카드</string>
     <string name="card_company_ui_model_shinhan">신한카드</string>
@@ -61,4 +61,7 @@
     <string name="card_company_ui_model_hana">하나카드</string>
     <string name="card_company_ui_model_kb">국민카드</string>
     <string name="card_company_ui_model_not_select">카드 미선택</string>
+
+    <!-- card_company_item -->
+    <string name="card_company_item_logo_description">카드사 로고</string>
 </resources>
