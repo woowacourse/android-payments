@@ -12,6 +12,12 @@ import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.util.BundleKeys.CARD_COMPANY_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_NUMBER_KEY
+import woowacourse.payments.ui.util.BundleKeys.CARD_OWNER_KEY
+import woowacourse.payments.ui.util.BundleKeys.EXPIRED_KEY
+import woowacourse.payments.ui.util.BundleKeys.PASSWORD_KEY
+import woowacourse.payments.ui.util.BundleKeys.VALIDATION_ERROR_KEY
 import woowacourse.payments.ui.util.getParcelableArrayListCompat
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
@@ -49,14 +55,10 @@ class AddCardStateHolder(
         val ownerValue = uiState.cardOwner
         val passwordValue = uiState.password
 
-        if (!CardNumber(cardNumberValue).isValid) {
-            errors.add(
-                AddCardError.CARD_NUMBER_INVALID,
-            )
-        }
-        if (expiredValue.isEmpty() || !Expired(expiredValue).isValid) errors.add(AddCardError.EXPIRED_INVALID)
+        if (!CardNumber(cardNumberValue).isValid) errors.add(AddCardError.CARD_NUMBER_INVALID)
+        if (!Expired(expiredValue).isValid) errors.add(AddCardError.EXPIRED_INVALID)
         if (!CardOwner(ownerValue).isValid) errors.add(AddCardError.OWNER_INVALID)
-        if (passwordValue.isEmpty() || !Password(passwordValue).isValid) errors.add(AddCardError.PASSWORD_INVALID)
+        if (!Password(passwordValue).isValid) errors.add(AddCardError.PASSWORD_INVALID)
 
         uiState = uiState.copy(errors = errors, submitted = true)
     }
@@ -74,29 +76,32 @@ class AddCardStateHolder(
             Saver(
                 save = { holder ->
                     bundleOf(
-                        "card_number" to holder.uiState.cardNumber,
-                        "expired" to holder.uiState.expired,
-                        "owner" to holder.uiState.cardOwner,
-                        "password" to holder.uiState.password,
-                        "bank_ui_model" to holder.uiState.bankUiModel,
-                        "errors" to ArrayList(holder.uiState.errors),
+                        CARD_NUMBER_KEY to holder.uiState.cardNumber,
+                        EXPIRED_KEY to holder.uiState.expired,
+                        CARD_OWNER_KEY to holder.uiState.cardOwner,
+                        PASSWORD_KEY to holder.uiState.password,
+                        CARD_COMPANY_KEY to holder.uiState.bankUiModel,
+                        VALIDATION_ERROR_KEY to ArrayList(holder.uiState.errors),
                     )
                 },
                 restore = { bundle ->
                     val restoredState =
                         AddCardUiState(
-                            cardNumber = bundle.getString("card_number") ?: "",
-                            expired = bundle.getString("expired") ?: "",
-                            cardOwner = bundle.getString("owner") ?: "",
-                            password = bundle.getString("password") ?: "",
+                            cardNumber = bundle.getString(CARD_NUMBER_KEY) ?: "",
+                            expired = bundle.getString(EXPIRED_KEY) ?: "",
+                            cardOwner = bundle.getString(CARD_OWNER_KEY) ?: "",
+                            password = bundle.getString(PASSWORD_KEY) ?: "",
                             bankUiModel =
-                                bundle.getParcelableExtraCompat("bank_ui_model") ?: BankUiModel(
-                                    "",
+                                bundle.getParcelableExtraCompat(CARD_COMPANY_KEY) ?: BankUiModel(
+                                    "wootech",
                                     0,
                                     0,
                                 ),
                             errors =
-                                bundle.getParcelableArrayListCompat<AddCardError>("errors")?.toSet()
+                                bundle
+                                    .getParcelableArrayListCompat<AddCardError>(
+                                        VALIDATION_ERROR_KEY,
+                                    )?.toSet()
                                     ?: emptySet(),
                         )
                     AddCardStateHolder(restoredState)
