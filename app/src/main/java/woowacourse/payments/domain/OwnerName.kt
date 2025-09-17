@@ -13,13 +13,12 @@ value class OwnerName(
     init {
         if (value != null) {
             require(value.length <= OWNER_NAME_MAX_LENGTH) { OwnerNameException.OwnerNameMaxLengthException.message }
-            require(value.isNotBlank()) { OwnerNameException.OwnerNameWhitespaceException.message }
+            require(value == "" || value.isNotBlank()) { OwnerNameException.OwnerNameWhitespaceException.message }
             require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }) { OwnerNameException.OwnerNameTypeException.message }
         }
     }
 
     companion object {
-        private const val OWNER_NAME_MIN_LENGTH: Int = 1
         private const val OWNER_NAME_MAX_LENGTH: Int = 30
     }
 }

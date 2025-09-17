@@ -25,12 +25,7 @@ fun SelectedBankBottomSheet(
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
-        confirmValueChange = { state ->
-            if (state == SheetValue.Hidden) {
-                false
-            }
-            true
-        },
+        confirmValueChange = { false },
     )
 
     LaunchedEffect(key1 = selectedBankCard) {
