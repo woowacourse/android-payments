@@ -25,7 +25,8 @@ fun BankSelectRow(
     FlowRow(
         modifier =
             modifier
-                .padding(4.dp)
+                .padding(20.dp)
+                .padding(vertical = 16.dp)
                 .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalArrangement = Arrangement.spacedBy(23.dp),
