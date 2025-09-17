@@ -39,4 +39,13 @@
     <!-- card_catalog_top_app_bar -->
     <string name="card_catalog_top_app_bar_payments">Payments</string>
     <string name="card_catalog_top_app_bar_add">추가</string>
+    <string name="bank_ui_model_bc_bank_name">BC카드</string>
+    <string name="bank_ui_model_shinhan_bank_name">신한카드</string>
+    <string name="bank_ui_model_kakao_bank_name">카카오뱅크</string>
+    <string name="bank_ui_model_hyundai_bank_name">현대카드</string>
+    <string name="bank_ui_model_woori_bank_name">우리카드</string>
+    <string name="bank_ui_model_lotte_bank_name">롯데카드</string>
+    <string name="bank_ui_model_hana_bank_name">하나카드</string>
+    <string name="bank_ui_model_kb_bank_name">국민카드</string>
+    <string name="bank_ui_model_not_selected_bank_name">선택되지 않은 카드사</string>
 </resources>
