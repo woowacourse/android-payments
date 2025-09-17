@@ -39,9 +39,9 @@ fun BankSelectBottomSheet(
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { sheetValue: SheetValue -> false }),
 ) {
     ModalBottomSheet(
-        sheetState = modalBottomSheetState,
         onDismissRequest = {},
         modifier = modifier,
+        sheetState = modalBottomSheetState,
         properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false),
     ) {
         Banks(
@@ -61,7 +61,6 @@ private fun Banks(
 ) {
     FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.spacedBy(3.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
