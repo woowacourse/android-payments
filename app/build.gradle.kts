@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.android.junit5)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -17,13 +18,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["runnerBuilder"] = "de.mannodermaus.junit5.AndroidJUnit5Builder"
+        testInstrumentationRunnerArguments["runnerBuilder"] =
+            "de.mannodermaus.junit5.AndroidJUnit5Builder"
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
     compileOptions {
@@ -36,6 +41,17 @@ android {
     buildFeatures {
         compose = true
     }
+
+    packaging {
+        resources {
+            // 중복된 라이선스 파일 무시
+            excludes +=
+                setOf(
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1",
+                )
+        }
+    }
 }
 
 dependencies {
@@ -47,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotest.runner.junit5)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,4 +74,5 @@ dependencies {
     androidTestRuntimeOnly(libs.mannodermaus.junit5.runner)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation(kotlin("test"))
 }
