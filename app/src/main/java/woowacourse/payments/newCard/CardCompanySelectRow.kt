@@ -39,7 +39,7 @@ fun CardCompanySelectRow(
 
 @Preview
 @Composable
-private fun CardCompanySelectRow() {
+private fun CardCompanySelectRowPreview() {
     AndroidpaymentsTheme {
         CardCompanySelectRow(
             onClick = {}
