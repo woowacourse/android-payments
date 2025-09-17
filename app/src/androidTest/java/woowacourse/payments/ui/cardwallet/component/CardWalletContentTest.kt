@@ -1,12 +1,13 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.cardwallet
+package woowacourse.payments.ui.cardwallet.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.model.CardWalletState
 import woowacourse.payments.ui.common.model.CardUiModel
@@ -40,7 +41,7 @@ class CardWalletContentTest {
         // given
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백"),
+                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
             )
 
         // when
@@ -63,8 +64,8 @@ class CardWalletContentTest {
         // given
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백"),
-                CardUiModel("4321432143214321", "0928", "비비"),
+                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel("4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
             )
 
         // when

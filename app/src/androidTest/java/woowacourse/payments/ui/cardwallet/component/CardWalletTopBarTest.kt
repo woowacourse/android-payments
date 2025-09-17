@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.cardwallet
+package woowacourse.payments.ui.cardwallet.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
