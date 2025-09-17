@@ -39,7 +39,6 @@ fun CardAdditionScreen(
     modifier: Modifier = Modifier,
 ) {
     val activity: Activity? = LocalActivity.current
-    val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
         BankSelectBottomSheet(onSelectBank)
@@ -69,52 +68,73 @@ fun CardAdditionScreen(
             )
         },
     ) { paddingValues: PaddingValues ->
-        Column(
+        CardAdditionContent(
+            paddingValues,
+            state,
+            onCardNumberChange,
+            onExpiredDateChange,
+            onHolderChange,
+            onPasswordChange,
+        )
+    }
+}
+
+@Composable
+private fun CardAdditionContent(
+    paddingValues: PaddingValues,
+    state: CardAdditionUiState,
+    onCardNumberChange: (String) -> Unit,
+    onExpiredDateChange: (String) -> Unit,
+    onHolderChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+) {
+    val scrollState = rememberScrollState()
+
+    Column(
+        modifier =
+            Modifier
+                .padding(paddingValues)
+                .padding(horizontal = 24.dp)
+                .verticalScroll(scrollState),
+    ) {
+        PaymentCard(
             modifier =
                 Modifier
-                    .padding(paddingValues)
-                    .padding(horizontal = 24.dp)
-                    .verticalScroll(scrollState),
-        ) {
-            PaymentCard(
-                modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 14.dp, bottom = 28.dp),
-            )
-            CardNumberTextField(
-                value = state.cardNumber,
-                onValueChange = onCardNumberChange,
-                isError = state.cardNumber.isNotBlank() && !state.isValidCardNumber,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally),
-            )
-            ExpiredDateTextField(
-                value = state.expiredDate,
-                onValueChange = onExpiredDateChange,
-                isError = state.expiredDate.isNotBlank() && !state.isValidExpiredDate,
-                modifier =
-                    Modifier
-                        .padding(top = 18.dp),
-            )
-            CardOwnerNameTextField(
-                value = state.holder,
-                onValueChange = onHolderChange,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 18.dp),
-                maxLength = state.holderMaxLength,
-            )
-            PasswordTextField(
-                value = state.password,
-                onValueChange = onPasswordChange,
-                isError = state.password.isNotBlank() && !state.isValidPassword,
-            )
-        }
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 14.dp, bottom = 28.dp),
+        )
+        CardNumberTextField(
+            value = state.cardNumber,
+            onValueChange = onCardNumberChange,
+            isError = state.cardNumber.isNotBlank() && !state.isValidCardNumber,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally),
+        )
+        ExpiredDateTextField(
+            value = state.expiredDate,
+            onValueChange = onExpiredDateChange,
+            isError = state.expiredDate.isNotBlank() && !state.isValidExpiredDate,
+            modifier =
+                Modifier
+                    .padding(top = 18.dp),
+        )
+        CardOwnerNameTextField(
+            value = state.holder,
+            onValueChange = onHolderChange,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .padding(top = 18.dp),
+            maxLength = state.holderMaxLength,
+        )
+        PasswordTextField(
+            value = state.password,
+            onValueChange = onPasswordChange,
+            isError = state.password.isNotBlank() && !state.isValidPassword,
+        )
     }
 }
 
