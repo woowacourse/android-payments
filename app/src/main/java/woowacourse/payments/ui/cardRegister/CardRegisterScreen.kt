@@ -96,116 +96,115 @@ fun CardRegisterScreen(
                         }
                 },
             )
-        } else {
-            Column(
+        }
+        Column(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding)
+                    .padding(horizontal = 24.dp),
+        ) {
+            PaymentCard(
+                modifier =
+                    Modifier
+                        .padding(top = 14.dp)
+                        .align(Alignment.CenterHorizontally),
+                card =
+                    Card(
+                        cardCompany = selectedCardCompany ?: CardCompany.NOT_SELECTED,
+                    ),
+            )
+            PaymentTextField(
+                text = cardNumber,
+                onValueChanged = { cardNumber = it },
+                label = stringResource(R.string.card_number_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
+                            Text(
+                                text = stringResource(R.string.card_number_supporting_text),
+                                color = RedFFFF0000,
+                            )
+                        }
+                    },
+                placeholder = stringResource(R.string.card_number_place_holder),
+                maxLength = 16,
+                onlyDigits = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                visualTransformation = CreditCardVisualTransformation(),
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(innerPadding)
-                        .padding(horizontal = 24.dp),
-            ) {
-                PaymentCard(
-                    modifier =
-                        Modifier
-                            .padding(top = 14.dp)
-                            .align(Alignment.CenterHorizontally),
-                    card =
-                        Card(
-                            cardCompany = selectedCardCompany ?: error("카드사를 선택하지 않아 에러가 발생합니다."),
-                        ),
-                )
-                PaymentTextField(
-                    text = cardNumber,
-                    onValueChanged = { cardNumber = it },
-                    label = stringResource(R.string.card_number_label),
-                    supportingText =
-                        {
-                            if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.card_number_supporting_text),
-                                    color = RedFFFF0000,
-                                )
-                            }
-                        },
-                    placeholder = stringResource(R.string.card_number_place_holder),
-                    maxLength = 16,
-                    onlyDigits = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    visualTransformation = CreditCardVisualTransformation(),
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 40.dp),
-                )
-                PaymentTextField(
-                    text = expiredDate,
-                    onValueChanged = { expiredDate = it },
-                    label = stringResource(R.string.expired_date_label),
-                    supportingText =
-                        {
-                            if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.card_expired_date_supporting_text),
-                                    color = RedFFFF0000,
-                                )
-                            }
-                        },
-                    placeholder = stringResource(R.string.expired_date_place_holder),
-                    maxLength = 4,
-                    onlyDigits = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    visualTransformation = DateVisualTransformation(),
-                    modifier =
-                        Modifier
-                            .fillMaxWidth(0.5f)
-                            .padding(top = 30.dp),
-                )
-                PaymentTextField(
-                    text = ownerName,
-                    onValueChanged = { ownerName = it },
-                    label = stringResource(R.string.card_owner_label),
-                    placeholder = stringResource(R.string.card_owner_place_holder),
-                    supportingText = {
-                        Text(
-                            text =
-                                stringResource(
-                                    R.string.card_owner_supporting_text,
-                                    ownerName.length,
-                                ),
-                            textAlign = TextAlign.End,
-                            modifier = Modifier.fillMaxWidth(),
-                        )
+                        .padding(top = 40.dp),
+            )
+            PaymentTextField(
+                text = expiredDate,
+                onValueChanged = { expiredDate = it },
+                label = stringResource(R.string.expired_date_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
+                            Text(
+                                text = stringResource(R.string.card_expired_date_supporting_text),
+                                color = RedFFFF0000,
+                            )
+                        }
                     },
-                    maxLength = 30,
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(top = 30.dp),
-                )
-                PaymentTextField(
-                    text = password,
-                    onValueChanged = { password = it },
-                    label = stringResource(R.string.card_password_label),
-                    supportingText =
-                        {
-                            if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.card_password_supporting_text),
-                                    color = RedFFFF0000,
-                                )
-                            }
-                        },
-                    placeholder = stringResource(R.string.card_password_place_holder),
-                    maxLength = 4,
-                    onlyDigits = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    visualTransformation = PasswordVisualTransformation(),
-                    modifier =
-                        Modifier
-                            .fillMaxWidth(0.5f)
-                            .padding(top = 10.dp),
-                )
-            }
+                placeholder = stringResource(R.string.expired_date_place_holder),
+                maxLength = 4,
+                onlyDigits = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                visualTransformation = DateVisualTransformation(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 30.dp),
+            )
+            PaymentTextField(
+                text = ownerName,
+                onValueChanged = { ownerName = it },
+                label = stringResource(R.string.card_owner_label),
+                placeholder = stringResource(R.string.card_owner_place_holder),
+                supportingText = {
+                    Text(
+                        text =
+                            stringResource(
+                                R.string.card_owner_supporting_text,
+                                ownerName.length,
+                            ),
+                        textAlign = TextAlign.End,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                },
+                maxLength = 30,
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(top = 30.dp),
+            )
+            PaymentTextField(
+                text = password,
+                onValueChanged = { password = it },
+                label = stringResource(R.string.card_password_label),
+                supportingText =
+                    {
+                        if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
+                            Text(
+                                text = stringResource(R.string.card_password_supporting_text),
+                                color = RedFFFF0000,
+                            )
+                        }
+                    },
+                placeholder = stringResource(R.string.card_password_place_holder),
+                maxLength = 4,
+                onlyDigits = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                visualTransformation = PasswordVisualTransformation(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(top = 10.dp),
+            )
         }
     }
 }

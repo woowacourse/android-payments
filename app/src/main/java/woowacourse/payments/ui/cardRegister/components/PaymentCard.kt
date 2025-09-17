@@ -47,8 +47,7 @@ fun PaymentCard(
                 .background(
                     color = card.cardCompany.color,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(bottom = 16.dp)
+                ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -105,7 +104,10 @@ private fun formatCardNumber(number: String): String {
     return "$visibleNumber - **** - ****"
 }
 
-private fun formatExpiredDate(date: String): String = "${date.take(2)} / ${date.takeLast(2)}"
+private fun formatExpiredDate(date: String): String {
+    if (date.isEmpty()) return ""
+    return "${date.take(2)} / ${date.takeLast(2)}"
+}
 
 @Preview(showBackground = true)
 @Composable

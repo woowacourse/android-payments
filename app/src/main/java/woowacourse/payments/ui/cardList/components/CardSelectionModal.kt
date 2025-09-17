@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
@@ -26,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.common.model.CardCompany
 import woowacourse.payments.ui.theme.Typography
 
+private const val MAX_ITEM_EACH_ROW_COUNT = 4
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardSelectionModal(
@@ -40,7 +41,7 @@ fun CardSelectionModal(
         modifier = Modifier.fillMaxWidth(),
     ) {
         CardCompanyGrid(
-            companies = CardCompany.entries,
+            companies = CardCompany.entries.drop(1),
             modifier = modifier.fillMaxWidth(),
             onClickCardCompany = onCardCompanyClick,
         )
@@ -53,14 +54,15 @@ private fun CardCompanyGrid(
     companies: List<CardCompany>,
     onClickCardCompany: (cardCompany: CardCompany) -> Unit,
     modifier: Modifier = Modifier,
-    maxItemsInEachRow: Int = 4,
+    maxItemsInEachRow: Int = MAX_ITEM_EACH_ROW_COUNT,
 ) {
     FlowRow(
         modifier =
             modifier
                 .fillMaxWidth()
-                .padding(top = 56.dp, bottom = 82.dp),
-        horizontalArrangement = Arrangement.Center,
+                .padding(top = 56.dp, bottom = 82.dp)
+                .padding(horizontal = 44.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = maxItemsInEachRow,
     ) {
@@ -79,11 +81,11 @@ private fun CardCompanyItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
             Modifier
-                .width(70.dp)
+                .fillMaxWidth(1f / MAX_ITEM_EACH_ROW_COUNT)
                 .clickable { onClickCardCompany(company) },
     ) {
         Icon(
-            painter = painterResource(company.icon),
+            painter = painterResource(company.icon ?: return),
             contentDescription = company.title,
             tint = Color.Unspecified,
             modifier = Modifier.size(37.dp),

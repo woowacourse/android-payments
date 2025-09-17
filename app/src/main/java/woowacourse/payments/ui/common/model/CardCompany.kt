@@ -3,12 +3,14 @@ package woowacourse.payments.ui.common.model
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.GrayFF333333
 
 enum class CardCompany(
     val title: String,
-    @DrawableRes val icon: Int,
+    @DrawableRes val icon: Int?,
     val color: Color,
 ) {
+    NOT_SELECTED("", null, GrayFF333333),
     BC("BC카드", R.drawable.ic_bc, Color(0xFFF04651)),
     SHINHAN("신한카드", R.drawable.ic_shinhan, Color(0xFF0046FF)),
     KAKAO("카카오뱅크", R.drawable.ic_kakao, Color(0xFFFFE500)),
