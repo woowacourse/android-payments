@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.common.components
+package woowacourse.payments.ui.cardwallet.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,8 +25,11 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.designsystem.theme.Yellow
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.common.components.BankLabel
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.common.mapper.toColor
 
 private const val MASKED_DIGITS = "****"
 
@@ -42,7 +45,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = GrayBackground,
+                    color = card?.bankType?.toColor() ?: GrayBackground,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -51,13 +54,17 @@ fun PaymentCard(
                 Modifier
                     .padding(start = 14.dp, bottom = 10.dp)
                     .size(width = 40.dp, height = 26.dp)
-                    .background(
-                        color = Yellow,
-                        shape = RoundedCornerShape(4.dp),
-                    ),
+                    .background(color = Yellow, shape = RoundedCornerShape(4.dp)),
         )
 
         if (card != null) {
+            BankLabel(
+                bankType = card.bankType,
+                modifier =
+                    Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 14.dp, top = 12.dp),
+            )
             CardContents(card = card, modifier = Modifier.align(Alignment.BottomStart))
         }
     }
@@ -134,6 +141,13 @@ private fun formatExpiry(expiry: String): String = expiry.substring(0, 2) + " / 
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(card = CardUiModel("1234123412341234", "1225", "공백"))
+        val card =
+            CardUiModel(
+                "1234123412341234",
+                "1225",
+                "공백",
+                BankType.HYUNDAI,
+            )
+        PaymentCard(card = card)
     }
 }

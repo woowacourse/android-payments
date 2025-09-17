@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.cardwallet.model.CardWalletState
 import woowacourse.payments.ui.common.model.CardUiModel
 
@@ -69,8 +70,8 @@ private fun CardWalletContentPreview() {
     AndroidpaymentsTheme {
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백"),
-                CardUiModel("4321432143214321", "0928", "비비"),
+                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel("4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
             )
         CardWalletContent(
             cards = cards,
