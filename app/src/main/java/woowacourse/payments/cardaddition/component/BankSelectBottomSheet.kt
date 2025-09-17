@@ -72,7 +72,10 @@ private fun Banks(
                 BankButton(
                     bankType = bankType,
                     onClick = onSelectBank,
-                    modifier = Modifier.weight(1f),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .padding(vertical = 10.dp),
                 )
             }
     }
@@ -86,12 +89,13 @@ private fun BankButton(
 ) {
     Column(
         modifier =
-            modifier
+            Modifier
                 .semantics {
                     role = Role.Button
                     contentDescription = bankType.cardName ?: ""
-                }.clickable(onClick = { onClick(bankType) })
-                .padding(vertical = 10.dp),
+                }
+                .clickable(onClick = { onClick(bankType) })
+                .then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
