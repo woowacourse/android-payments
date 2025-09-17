@@ -18,7 +18,7 @@ fun CardCompanySelectBottomSheet(
     onClick: (CardCompanyUiModel) -> Unit,
     isShow: Boolean = true,
     onDismissRequest: () -> Unit,
-    ) {
+) {
     if (isShow) {
         ModalBottomSheet(
             sheetState = modalBottomSheetState,
@@ -26,7 +26,7 @@ fun CardCompanySelectBottomSheet(
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 70.dp),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 CardCompanySelectRow(onClick)
             }

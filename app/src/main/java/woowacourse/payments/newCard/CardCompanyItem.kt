@@ -20,16 +20,19 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun CardCompanyItem(
     cardCompanyUiModel: CardCompanyUiModel,
-    onClick: (CardCompanyUiModel) -> Unit
+    onClick: (CardCompanyUiModel) -> Unit,
 ) {
-    Box(modifier = Modifier
-        .height(65.dp)
-        .width(80.dp).clickable { onClick(cardCompanyUiModel)},
+    Box(
+        modifier =
+            Modifier
+                .height(65.dp)
+                .width(80.dp).clickable { onClick(cardCompanyUiModel) },
     ) {
         Column(
-            modifier = Modifier
-                .align(alignment = Alignment.Center)
-                .fillMaxHeight(),
+            modifier =
+                Modifier
+                    .align(alignment = Alignment.Center)
+                    .fillMaxHeight(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Icon(
@@ -38,9 +41,10 @@ fun CardCompanyItem(
                 contentDescription = cardCompanyUiModel.displayName,
                 modifier = Modifier.size(37.dp),
             )
-            Text(text = cardCompanyUiModel.displayName,
+            Text(
+                text = cardCompanyUiModel.displayName,
                 fontSize = 16.sp,
-                color = Color(0xFF525252)
+                color = Color(0xFF525252),
             )
         }
     }

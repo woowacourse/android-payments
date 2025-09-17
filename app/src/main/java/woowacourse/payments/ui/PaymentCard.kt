@@ -48,8 +48,10 @@ fun PaymentCard(
                     Modifier
                         .fillMaxSize(),
             ) {
-                Box(modifier = Modifier.height(44.dp),
-                    contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier.height(44.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
                     Text(
                         text = card.company.toUiModel().displayName,
                         fontSize = 12.sp,
@@ -67,14 +69,14 @@ fun PaymentCard(
                 )
                 Box(modifier = Modifier.height(54.dp)) {
                     Column(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(
                             text = card.number,
                             color = Color.White,
                             fontSize = 12.sp,
                             letterSpacing = 2.sp,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -98,7 +100,6 @@ fun PaymentCard(
                     }
                 }
             }
-
         } else {
             Box(
                 modifier =

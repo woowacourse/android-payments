@@ -48,17 +48,18 @@ class NewCardActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 val newCardState = NewCardState()
 
-                val modalBottomSheetState = rememberModalBottomSheetState(
-                    confirmValueChange = { false }
-                )
+                val modalBottomSheetState =
+                    rememberModalBottomSheetState(
+                        confirmValueChange = { false },
+                    )
                 var selectedCardCompany by remember { mutableStateOf(CardCompany.NOT_SELECTED) }
 
                 var isShow by remember { mutableStateOf(true) }
                 CardCompanySelectBottomSheet(
                     modalBottomSheetState,
-                    onClick = { selectedCardCompany = it.company},
+                    onClick = { selectedCardCompany = it.company },
                     isShow = isShow,
-                    onDismissRequest = { finish() }
+                    onDismissRequest = { finish() },
                 )
 
                 LaunchedEffect(key1 = selectedCardCompany) {
@@ -118,13 +119,16 @@ class NewCardActivity : ComponentActivity() {
                                     .fillMaxWidth(),
                             contentAlignment = Alignment.Center,
                         ) {
-                            PaymentCard(card = CardUiModel(
-                                company = selectedCardCompany,
-                                number = "",
-                                name = null,
-                                expiry = "",
-                                password = ""
-                            ))
+                            PaymentCard(
+                                card =
+                                    CardUiModel(
+                                        company = selectedCardCompany,
+                                        number = "",
+                                        name = null,
+                                        expiry = "",
+                                        password = "",
+                                    ),
+                            )
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(
