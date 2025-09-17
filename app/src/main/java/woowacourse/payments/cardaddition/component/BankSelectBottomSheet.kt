@@ -42,7 +42,7 @@ fun BankSelectBottomSheet(
         onDismissRequest = {},
         modifier = modifier,
     ) {
-        BankSelectRow(
+        Banks(
             onSelectBank = onSelectBankType,
             modifier =
                 Modifier
@@ -53,14 +53,14 @@ fun BankSelectBottomSheet(
 }
 
 @Composable
-private fun BankSelectRow(
+private fun Banks(
     onSelectBank: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalArrangement = Arrangement.spacedBy(23.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         BankType.entries
@@ -84,7 +84,8 @@ private fun BankButton(
         modifier =
             modifier
                 .semantics { role = Role.Button }
-                .clickable(onClick = { onClick(bankType) }),
+                .clickable(onClick = { onClick(bankType) })
+                .padding(vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(9.dp),
     ) {
@@ -115,7 +116,7 @@ private fun BankSelectBottomSheetPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun BankSelectRowPreview() {
-    BankSelectRow(
+    Banks(
         onSelectBank = {},
         modifier = Modifier.fillMaxHeight(),
     )
