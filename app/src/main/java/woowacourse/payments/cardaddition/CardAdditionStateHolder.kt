@@ -22,17 +22,17 @@ class CardAdditionStateHolder(
         uiState = uiState.copy(cardNumber = newCardNumber.take(CARD_NUMBER_LENGTH))
     }
 
-    fun updateExpiredDate(newValue: String) {
-        val newDate: String = newValue.filter(::isDigit)
+    fun updateExpiredDate(value: String) {
+        val newDate: String = value.filter(::isDigit)
         uiState = uiState.copy(expiredDate = newDate.take(EXPIRED_DATE_LENGTH))
     }
 
-    fun updateHolder(newValue: String) {
-        uiState = uiState.copy(holder = newValue.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase())
+    fun updateHolder(value: String) {
+        uiState = uiState.copy(holder = value.take(CARD_OWNER_NAME_LENGTH_MAX).uppercase())
     }
 
-    fun updatePassword(newValue: String) {
-        val newPassword: String = newValue.filter(::isDigit)
+    fun updatePassword(value: String) {
+        val newPassword: String = value.filter(::isDigit)
         uiState = uiState.copy(password = newPassword.take(PASSWORD_LENGTH))
     }
 
