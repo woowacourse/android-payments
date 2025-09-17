@@ -46,6 +46,7 @@
     <!-- payment_card -->
     <string name="payment_card_default_name">CREW</string>
     <string name="payment_card_information_description">카드 정보</string>
+    <string name="payment_card_logo_description">카드사 로고</string>
 
     <!-- registration_box -->
     <string name="registration_box_add_icon_description">추가</string>

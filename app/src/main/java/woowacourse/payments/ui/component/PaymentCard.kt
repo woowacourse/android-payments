@@ -1,20 +1,26 @@
 package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -29,13 +35,13 @@ import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.DeepDarkGray
 import woowacourse.payments.ui.theme.Gold
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: CardUiModel? = null,
+    card: CardUiModel = CardUiModel(),
+    onCardClick: () -> Unit = {},
 ) {
     val paymentCardInformationDescription =
         stringResource(R.string.payment_card_information_description)
@@ -47,18 +53,36 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = DeepDarkGray,
+                    color = card.cardCompanyColor,
                     shape = RoundedCornerShape(5.dp),
-                ),
+                ).clickable { onCardClick() },
     ) {
         Column(
             modifier =
                 Modifier
-                    .padding(start = 14.dp, end = 14.dp)
-                    .then(
-                        if (card != null) Modifier.align(Alignment.BottomCenter) else Modifier,
-                    ),
+                    .fillMaxHeight()
+                    .padding(start = 14.dp, end = 14.dp),
+            verticalArrangement = Arrangement.Center,
         ) {
+            Row(modifier = Modifier.padding(vertical = 6.dp)) {
+                Image(
+                    modifier =
+                        Modifier
+                            .size(24.dp)
+                            .clip(CircleShape)
+                            .padding(end = 5.dp),
+                    painter = painterResource(card.cardCompanySymbol),
+                    contentDescription = stringResource(R.string.payment_card_logo_description),
+                )
+                Text(
+                    text = stringResource(card.cardCompanyNameResource),
+                    color = Color.White,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 12.sp,
+                    letterSpacing = 1.sp,
+                )
+            }
+
             Box(
                 modifier =
                     Modifier
@@ -69,51 +93,52 @@ fun PaymentCard(
                         ),
             )
 
-            if (card != null) {
-                Column(
+            Column(
+                modifier =
+                    Modifier.semantics {
+                        contentDescription = paymentCardInformationDescription
+                    },
+            ) {
+                Text(
+                    text = card.formattedCardNumber(),
+                    color = Color.White,
+                    fontWeight = FontWeight.W500,
+                    fontSize = 12.sp,
+                    letterSpacing = 2.0.sp,
+                    lineHeight = 12.sp,
                     modifier =
-                        Modifier.semantics {
-                            contentDescription = paymentCardInformationDescription
-                        },
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp),
+                    maxLines = 1,
+                )
+
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.padding(vertical = 5.dp),
                 ) {
                     Text(
-                        text = card.formattedCardNumber(),
+                        text =
+                            card.cardholderName
+                                ?: stringResource(R.string.payment_card_default_name),
+                        modifier = Modifier.weight(1f),
+                        color = Color.White,
+                        fontWeight = FontWeight.W500,
+                        lineHeight = 12.sp,
+                        fontSize = 12.sp,
+                        letterSpacing = 1.sp,
+                        maxLines = 1,
+                    )
+                    Text(
+                        text = card.formattedCardExpirationDate(),
                         color = Color.White,
                         fontWeight = FontWeight.W500,
                         fontSize = 12.sp,
-                        letterSpacing = 2.0.sp,
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(top = 4.dp),
+                        letterSpacing = 1.sp,
+                        lineHeight = 12.sp,
                         maxLines = 1,
+                        textAlign = TextAlign.End,
                     )
-
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.padding(bottom = 5.dp),
-                    ) {
-                        Text(
-                            text =
-                                card.cardholderName
-                                    ?: stringResource(R.string.payment_card_default_name),
-                            modifier = Modifier.weight(1f),
-                            color = Color.White,
-                            fontWeight = FontWeight.W500,
-                            fontSize = 12.sp,
-                            letterSpacing = 1.sp,
-                            maxLines = 1,
-                        )
-                        Text(
-                            text = card.formattedCardExpirationDate(),
-                            color = Color.White,
-                            fontWeight = FontWeight.W500,
-                            fontSize = 12.sp,
-                            letterSpacing = 1.sp,
-                            maxLines = 1,
-                            textAlign = TextAlign.End,
-                        )
-                    }
                 }
             }
         }
@@ -127,7 +152,7 @@ private fun HasCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                    cardholderNameUiModel = CardholderNameUiModel("TEST"),
                     cardNumberUiModel = CardNumberUiModel("1111222233334444"),
                     cardExpirationDateUiModel = CardExpirationDateUiModel("0421"),
                 ),
@@ -139,6 +164,6 @@ private fun HasCardPreview() {
 @Composable
 private fun HasNotCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(card = null)
+        PaymentCard()
     }
 }
