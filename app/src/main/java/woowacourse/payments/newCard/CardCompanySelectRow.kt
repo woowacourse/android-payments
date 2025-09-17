@@ -2,11 +2,15 @@ package woowacourse.payments.newCard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private const val COLUMN_COUNT = 4
 
@@ -19,9 +23,9 @@ fun CardCompanySelectRow(
         .map { it.toUiModel() }
 
     FlowRow(
-        modifier = Modifier.padding(vertical = 30.dp, horizontal = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        modifier = Modifier.width(360.dp).height(227.dp),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT
     ) {
         companies.forEach { company ->
@@ -33,3 +37,12 @@ fun CardCompanySelectRow(
     }
 }
 
+@Preview
+@Composable
+private fun CardCompanySelectRow() {
+    AndroidpaymentsTheme {
+        CardCompanySelectRow(
+            onClick = {}
+        )
+    }
+}
