@@ -21,10 +21,13 @@ fun LimitedUppercaseTextField(
     maxLength: Int = Int.MAX_VALUE,
     imeAction: ImeAction = ImeAction.Done,
 ) {
+    val regex = Regex("[A-Za-z\\s]")
     OutlinedTextField(
         value = text,
         onValueChange = { newText ->
-            onValueChange(newText.filter { it.isLetter() || it.isWhitespace() }.uppercase().take(maxLength))
+            onValueChange(
+                newText.filter { regex.matches(it.toString()) }.uppercase().take(maxLength)
+            )
         },
         label = { Text(text = label) },
         placeholder = { Text(text = hint) },
