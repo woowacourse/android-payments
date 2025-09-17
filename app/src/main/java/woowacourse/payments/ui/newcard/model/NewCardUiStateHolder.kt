@@ -72,7 +72,6 @@ class NewCardUiStateHolder(
         get() =
             (cardNumber.length == CARD_NUMBER_MAX) &&
                 (expiry.length == EXPIRY_MAX) &&
-                (holder.isNotBlank()) &&
                 (pin.length == PIN_MAX) &&
                 (selectedBank != BankType.NOT_SELECTED)
 
