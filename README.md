@@ -85,4 +85,4 @@
 
 ## 프로그래밍 요구 사항
 
-- [ ] 카드사 선택 기능 구현시 FlowRow와 ModalBottomSheet를 활용한다.
+- [x] 카드사 선택 기능 구현시 FlowRow와 ModalBottomSheet를 활용한다.
