@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import androidx.activity.compose.LocalActivity
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -59,6 +60,7 @@ fun CardAdditionScreen(
                                 number = state.cardNumber,
                                 owner = state.holder,
                                 expiredDate = state.expiredDate,
+                                bankType = state.bankType,
                             ),
                         ),
                     )
@@ -75,6 +77,7 @@ fun CardAdditionScreen(
             onExpiredDateChange,
             onHolderChange,
             onPasswordChange,
+            onSelectBank,
         )
     }
 }
@@ -87,6 +90,7 @@ private fun CardAdditionContent(
     onExpiredDateChange: (String) -> Unit,
     onHolderChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onSelectBank: (BankType) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -101,7 +105,12 @@ private fun CardAdditionContent(
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 14.dp, bottom = 28.dp),
+                    .padding(top = 14.dp, bottom = 28.dp)
+                    .clickable(onClick = { onSelectBank(BankType.NOT_SELECTED) }),
+            number = state.cardNumber,
+            owner = state.holder,
+            expiredDate = state.expiredDate,
+            bankType = state.bankType,
         )
         CardNumberTextField(
             value = state.cardNumber,

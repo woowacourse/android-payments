@@ -66,7 +66,9 @@ private fun Banks(
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         BankType.entries
-            .forEach { bankType: BankType ->
+            .filter { bankType: BankType ->
+                bankType.cardName != null && bankType.imageRes != null
+            }.forEach { bankType: BankType ->
                 BankButton(
                     bankType = bankType,
                     onClick = onSelectBank,
@@ -91,12 +93,14 @@ private fun BankButton(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(9.dp),
     ) {
-        Image(
-            painter = painterResource(bankType.imageRes),
-            null,
-            modifier = Modifier.size(37.dp),
-        )
-        Text(text = bankType.cardName, fontSize = 16.sp)
+        if (bankType.imageRes != null && bankType.cardName != null) {
+            Image(
+                painter = painterResource(bankType.imageRes),
+                null,
+                modifier = Modifier.size(37.dp),
+            )
+            Text(text = bankType.cardName, fontSize = 16.sp)
+        }
     }
 }
 

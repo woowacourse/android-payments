@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import woowacourse.payments.BankType
 import woowacourse.payments.Card
 import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.cardaddition.CardAdditionActivity
@@ -107,6 +108,7 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Lis
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
+                    bankType = BankType.BC,
                 ),
             ),
             listOf(
@@ -114,16 +116,19 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Lis
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
+                    BankType.KB,
                 ),
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
+                    BankType.HANA,
                 ),
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
+                    BankType.KAKAO,
                 ),
             ),
         )

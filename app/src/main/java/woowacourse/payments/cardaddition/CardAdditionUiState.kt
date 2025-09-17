@@ -12,7 +12,7 @@ data class CardAdditionUiState(
     val holder: String = "",
     val holderMaxLength: Int = 30,
     val password: String = "",
-    val bankType: BankType? = null,
+    val bankType: BankType = BankType.NOT_SELECTED,
 ) : Parcelable {
     val isValid: Boolean get() = isValidCardNumber && isValidExpiredDate && isValidPassword
 
@@ -26,7 +26,7 @@ data class CardAdditionUiState(
 
     val isValidPassword: Boolean get() = password.length == PASSWORD_LENGTH
 
-    val isBankSelected: Boolean get() = bankType != null
+    val isBankSelected: Boolean get() = bankType != BankType.NOT_SELECTED
 
     companion object {
         const val CARD_NUMBER_LENGTH: Int = 16
