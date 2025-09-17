@@ -39,7 +39,7 @@ fun BankSelectBottomSheet(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
             ) {
-                BankType.entries.filter { it != NOT_SELECTED }.forEach { bank ->
+                BankType.entries.filterNot { it == NOT_SELECTED }.forEach { bank ->
                     BankItem(
                         bankType = bank,
                         onClick = { onBankSelected(bank) },

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,6 +26,8 @@ fun BankItem(
     bankType: BankType,
     onClick: () -> Unit,
 ) {
+    val bank = remember(bankType) { bankType.toPresentation() }
+
     Column(
         modifier =
             Modifier
@@ -34,13 +37,13 @@ fun BankItem(
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         Image(
-            painter = painterResource(id = bankType.toPresentation().logoRes),
+            painter = painterResource(id = bank.logoRes),
             contentDescription = stringResource(R.string.bank_item_content_description),
             modifier = Modifier.size(48.dp),
         )
 
         Text(
-            text = bankType.toPresentation().name,
+            text = bank.name,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
         )

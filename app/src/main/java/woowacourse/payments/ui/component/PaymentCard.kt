@@ -59,7 +59,8 @@ fun PaymentCard(
                     .background(
                         color = GOLD,
                         shape = RoundedCornerShape(4.dp),
-                    ).align(Alignment.CenterStart),
+                    )
+                    .align(Alignment.CenterStart),
         )
 
         Column(
@@ -105,7 +106,7 @@ fun BCCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.WOORI.toPresentation(),
+                    bankUiModel = BankType.BC.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
@@ -121,7 +122,7 @@ fun WooriCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.KAKAOBANK.toPresentation(),
+                    bankUiModel = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

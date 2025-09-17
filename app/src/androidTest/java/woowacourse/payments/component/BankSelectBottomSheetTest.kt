@@ -7,7 +7,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.component.BankSelectBottomSheet
-import woowacourse.payments.ui.util.toBankUiModel
+import woowacourse.payments.ui.model.toPresentation
 
 class BankSelectBottomSheetTest {
     @get:Rule
@@ -23,9 +23,9 @@ class BankSelectBottomSheetTest {
             )
         }
 
-        BankType.entries.filter { it != BankType.NOT_SELECTED }.forEach { bank ->
+        BankType.entries.filterNot { it == BankType.NOT_SELECTED }.forEach { bank ->
             composeTestRule
-                .onNodeWithText(bank.toBankUiModel().name)
+                .onNodeWithText(bank.toPresentation().name)
                 .assertIsDisplayed()
         }
     }
