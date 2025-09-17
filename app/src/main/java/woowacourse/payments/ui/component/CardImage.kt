@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.BankType.Companion.name
 import woowacourse.payments.domain.model.BankType.Companion.toColor
 
 @Composable
@@ -49,8 +50,19 @@ fun CardImage(
         Column(
             modifier =
                 Modifier
-                    .padding(horizontal = 14.dp, vertical = 16.dp),
+                    .padding(horizontal = 14.dp, vertical = 15.dp),
         ) {
+            Text(
+                text = bankType.name(),
+                fontWeight = W500,
+                fontSize = 12.sp,
+                lineHeight = 12.sp,
+                letterSpacing = 0.1.em,
+                color = Color.White,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Box(
                 modifier =
                     Modifier
@@ -72,8 +84,6 @@ fun CardImage(
                 letterSpacing = 0.17.em,
                 color = Color.White,
             )
-
-            Spacer(modifier = Modifier.height(2.dp))
 
             Row(
                 modifier =
