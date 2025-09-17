@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
 import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.newcard.dialog.components.BankItem
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
