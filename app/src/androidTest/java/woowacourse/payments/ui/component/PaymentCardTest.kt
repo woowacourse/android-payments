@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.BankType
 import woowacourse.payments.Card
 
 class PaymentCardTest {
@@ -16,11 +17,12 @@ class PaymentCardTest {
     fun setUp() {
         composeRule.setContent {
             PaymentCard(
-                detail =
+                card =
                     Card(
                         number = "1234".repeat(4),
                         owner = "CREW",
                         expiredDate = "0421",
+                        bankType = BankType.BC,
                     ),
             )
         }
