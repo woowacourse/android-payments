@@ -7,10 +7,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.newcard.CardCompanyUiModel
 
 class PaymentCardTest {
     @get:Rule
@@ -27,7 +29,9 @@ class PaymentCardTest {
                         expiredDate = ExpiredDate.of(1, 26)!!,
                         ownerName = OwnerName("크림"),
                         password = Password("1234"),
+                        cardCompany = CardCompany.HYUNDAI,
                     ),
+                cardCompanyUiModel = CardCompanyUiModel.from(CardCompany.HYUNDAI),
             )
         }
     }
@@ -47,5 +51,10 @@ class PaymentCardTest {
     @Test
     fun `카드에는_만료일이_표시된다`() {
         composeTestRule.onNodeWithText("01 / 26", useUnmergedTree = true).assertIsDisplayed()
+    }
+
+    @Test
+    fun `카드에는_카드사가_표시된다`() {
+        composeTestRule.onNodeWithText("현대카드", useUnmergedTree = true).assertIsDisplayed()
     }
 }
