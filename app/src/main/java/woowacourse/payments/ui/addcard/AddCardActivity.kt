@@ -14,14 +14,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.model.CardVendor
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
-import woowacourse.payments.ui.uimodel.toUiModel
 
 class AddCardActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +29,6 @@ class AddCardActivity : ComponentActivity() {
         setContent {
             val cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
             val vendorModal by rememberSaveable { mutableStateOf(VendorModalUiState()) }
-            val vendors = rememberSaveable { CardVendor.entries.map { it.toUiModel() } }
 
             AndroidpaymentsTheme {
                 Scaffold(
@@ -53,18 +50,17 @@ class AddCardActivity : ComponentActivity() {
                         onCardClick = { vendorModal.show() },
                     )
 
-                    if (vendorModal.isVisible) {
-                        AddCardVendorSelectionScreen(
-                            vendors = vendors,
-                            onDismissRequest = { vendorModal.hide() },
-                            onVendorItemClick = { vendor ->
-                                cardInfo.updateCardInfo(
-                                    vendor = vendor,
-                                )
-                                vendorModal.hide()
-                            },
-                        )
-                    }
+                    AddCardVendorModalScreen(
+                        vendorModalUiState = vendorModal,
+                        onDismissRequest = { vendorModal.hide() },
+                        onVendorItemClick = { vendor ->
+                            cardInfo.updateCardInfo(
+                                vendor = vendor,
+                            )
+                            vendorModal.hide()
+                        },
+                    )
+
                 }
             }
         }

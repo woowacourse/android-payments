@@ -13,33 +13,36 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.model.CardVendor
 import woowacourse.payments.ui.addcard.component.VendorItem
+import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.VendorUiModel
 import woowacourse.payments.ui.uimodel.toUiModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun AddCardVendorSelectionScreen(
-    vendors: List<VendorUiModel>,
+fun AddCardVendorModalScreen(
+    vendorModalUiState: VendorModalUiState,
     onDismissRequest: () -> Unit = {},
     onVendorItemClick: (VendorUiModel) -> Unit = {},
 ) {
-    ModalBottomSheet(
-        onDismissRequest = onDismissRequest,
-    ) {
-        AddCardVendorSelectionContent(
-            vendors = vendors,
-            modifier =
-                Modifier
-                    .padding(bottom = 70.dp)
-                    .padding(horizontal = 16.dp),
-            onVendorItemClick = onVendorItemClick,
-        )
+    if (vendorModalUiState.isVisible) {
+        ModalBottomSheet(
+            onDismissRequest = onDismissRequest,
+        ) {
+            AddCardVendorModalContent(
+                vendors = vendorModalUiState.vendors,
+                modifier =
+                    Modifier
+                        .padding(bottom = 70.dp)
+                        .padding(horizontal = 16.dp),
+                onVendorItemClick = onVendorItemClick,
+            )
+        }
     }
 }
 
 @Composable
-private fun AddCardVendorSelectionContent(
+private fun AddCardVendorModalContent(
     vendors: List<VendorUiModel>,
     modifier: Modifier = Modifier,
     onVendorItemClick: (VendorUiModel) -> Unit = {},
@@ -65,9 +68,9 @@ private fun AddCardVendorSelectionContent(
 
 @Preview
 @Composable
-private fun AddCardVendorSelectionContentPreview() {
+private fun AddCardVendorModalContentPreview() {
     AndroidpaymentsTheme {
-        AddCardVendorSelectionContent(
+        AddCardVendorModalContent(
             vendors = CardVendor.entries.map { it.toUiModel() },
         )
     }
@@ -76,10 +79,10 @@ private fun AddCardVendorSelectionContentPreview() {
 @Preview
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-private fun AddCardVendorSelectionScreenPreview() {
+private fun AddCardVendorModalScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardVendorSelectionScreen(
-            vendors = CardVendor.entries.map { it.toUiModel() },
+        AddCardVendorModalScreen(
+            vendorModalUiState = VendorModalUiState(),
         )
     }
 }
