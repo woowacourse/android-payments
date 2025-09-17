@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,7 +9,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
-import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class PasscodeTextFieldTest {
@@ -19,10 +17,12 @@ class PasscodeTextFieldTest {
 
     @Before
     fun setUp() {
+        val uiState = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             PasscodeTextField(
-                mutableStateOf(CardUiModel.EMPTY),
-                mutableStateOf(false),
+                uiState.passcode,
+                uiState.isPasscodeError,
+                { newValue: String -> uiState.updatePasscode(newValue) },
             )
         }
     }

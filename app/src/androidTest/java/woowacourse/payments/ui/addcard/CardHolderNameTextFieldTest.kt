@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,7 +9,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
-import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class CardHolderNameTextFieldTest {
@@ -19,7 +17,13 @@ class CardHolderNameTextFieldTest {
 
     @Before
     fun setUp() {
-        composeTestRule.setContent { CardHolderNameTextField(mutableStateOf(CardUiModel.EMPTY)) }
+        val uiState = AddCardScreenUiStateHolder()
+        composeTestRule.setContent {
+            CardHolderNameTextField(
+                uiState.cardholderName,
+                { newValue: String -> uiState.updateCardholderName(newValue) },
+            )
+        }
     }
 
     @Test

@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -10,7 +9,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
-import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class ExpirationDateTextFieldTest {
@@ -19,10 +17,12 @@ class ExpirationDateTextFieldTest {
 
     @Before
     fun setUp() {
+        val uiState = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             ExpirationDateTextField(
-                mutableStateOf(CardUiModel.EMPTY),
-                mutableStateOf(false),
+                uiState.expirationDate,
+                uiState.isExpirationDateError,
+                { newValue: String -> uiState.updateExpirationDate(newValue) },
             )
         }
     }
