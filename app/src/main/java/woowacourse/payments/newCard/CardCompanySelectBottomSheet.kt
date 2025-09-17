@@ -16,20 +16,19 @@ import androidx.compose.ui.unit.dp
 fun CardCompanySelectBottomSheet(
     modalBottomSheetState: SheetState,
     onClick: (CardCompanyUiModel) -> Unit,
-    isShow: Boolean = true,
     onDismissRequest: () -> Unit,
 ) {
-    if (isShow) {
-        ModalBottomSheet(
-            sheetState = modalBottomSheetState,
-            onDismissRequest = { onDismissRequest() },
+    ModalBottomSheet(
+        sheetState = modalBottomSheetState,
+        onDismissRequest = { onDismissRequest() },
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 70.dp),
+            contentAlignment = Alignment.Center,
         ) {
-            Box(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 70.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                CardCompanySelectRow(onClick)
-            }
+            CardCompanySelectRow(onClick)
         }
     }
 }

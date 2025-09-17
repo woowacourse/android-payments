@@ -55,12 +55,13 @@ class NewCardActivity : ComponentActivity() {
                 var selectedCardCompany by remember { mutableStateOf(CardCompany.NOT_SELECTED) }
 
                 var isShow by remember { mutableStateOf(true) }
-                CardCompanySelectBottomSheet(
-                    modalBottomSheetState,
-                    onClick = { selectedCardCompany = it.company },
-                    isShow = isShow,
-                    onDismissRequest = { finish() },
-                )
+                if (isShow) {
+                    CardCompanySelectBottomSheet(
+                        modalBottomSheetState,
+                        onClick = { selectedCardCompany = it.company },
+                        onDismissRequest = { finish() },
+                    )
+                }
 
                 LaunchedEffect(key1 = selectedCardCompany) {
                     if (selectedCardCompany != CardCompany.NOT_SELECTED) {
