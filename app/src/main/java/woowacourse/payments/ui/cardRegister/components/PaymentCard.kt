@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.Card
-import woowacourse.payments.ui.common.model.CardCompany
+import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Typography
 import woowacourse.payments.ui.theme.WhiteFF000000

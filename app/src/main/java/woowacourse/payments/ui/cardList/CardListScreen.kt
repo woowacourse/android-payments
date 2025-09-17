@@ -21,7 +21,7 @@ import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.cardList.components.CardListTopBar
 import woowacourse.payments.ui.cardList.components.RegistrationCard
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
-import woowacourse.payments.ui.common.model.CardCompany
+import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.BlackFF000000
 import woowacourse.payments.ui.theme.GrayFF333333

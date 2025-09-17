@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.common.model.CardCompany
+import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.Typography
 
 private const val MAX_ITEM_EACH_ROW_COUNT = 4
