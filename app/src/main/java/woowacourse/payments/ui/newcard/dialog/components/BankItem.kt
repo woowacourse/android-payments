@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.domain.model.BankType.Companion.name
+import woowacourse.payments.domain.model.BankType.Companion.label
 
 @Composable
 fun BankItem(
@@ -37,11 +37,11 @@ fun BankItem(
         Image(
             modifier = Modifier.size(37.dp),
             painter = painterResource(id = bank.icon),
-            contentDescription = stringResource(R.string.new_card_bank_icon_description, bank.type.name()),
+            contentDescription = stringResource(R.string.new_card_bank_icon_description, bank.type.label()),
         )
         Spacer(modifier = Modifier.size(10.dp))
         Text(
-            text = bank.type.name(),
+            text = bank.type.label(),
             fontWeight = W500,
             fontSize = 16.sp,
             lineHeight = 16.sp,

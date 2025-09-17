@@ -13,7 +13,7 @@ enum class BankType {
     ;
 
     companion object {
-        fun BankType.name(): String =
+        fun BankType.label(): String =
             when (this) {
                 NOT_SELECTED -> ""
                 BC -> "BC카드"
