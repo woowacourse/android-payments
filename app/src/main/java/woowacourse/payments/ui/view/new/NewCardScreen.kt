@@ -26,7 +26,7 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.CompanyResourceProvider
-import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.state.CardState
 
 @Composable
@@ -83,7 +83,7 @@ fun NewCardScreen(
         )
 
     val companyName: String? =
-        resourceProvider.getCompanyName(card.bank)?.let {
+        resourceProvider.getCompanyName(card.company)?.let {
             stringResource(it)
         }
 
@@ -107,7 +107,7 @@ fun NewCardScreen(
                     .padding(top = 18.dp)
                     .shadow(8.dp)
                     .align(alignment = Alignment.CenterHorizontally),
-            bank = uiState.card.bank,
+            bank = uiState.card.company,
         )
 
         CardNumberTextField(
@@ -168,7 +168,7 @@ fun NewCardScreen(
                     .padding(top = 18.dp),
         )
 
-        if (uiState.card.bank is BankState.Empty) {
+        if (uiState.card.company is CardCompanyState.Empty) {
             BankSelectBottomSheet(
                 resourceProvider = resourceProvider,
                 onFinish = onFinishRequest,

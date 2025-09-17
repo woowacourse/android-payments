@@ -12,7 +12,7 @@ import org.junit.Test
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CompanyResourceProvider
-import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.view.new.NewCardScreen
 import woowacourse.payments.ui.view.new.NewCardUiState
 
@@ -25,6 +25,7 @@ class NewCardScreenTest {
         composeTestRule.setContent {
             NewCardScreen(
                 resourceProvider = CompanyResourceProvider(),
+                onFinishRequest = {},
                 uiState =
                     NewCardUiState(
                         card =
@@ -33,7 +34,7 @@ class NewCardScreenTest {
                                 expireDate = "0908",
                                 ownerName = "peto",
                                 password = "0908",
-                                BankState.Bank(CardCompany.BC),
+                                CardCompanyState.Selected(CardCompany.BC),
                             ),
                     ),
                 onCardChange = {},

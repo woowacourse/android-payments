@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.CardCompany
 
 @Parcelize
-sealed interface BankState : Parcelable {
-    data object Empty : BankState
+sealed interface CardCompanyState : Parcelable {
+    data object Empty : CardCompanyState
 
-    data class Bank(
+    data class Selected(
         val company: CardCompany,
-    ) : BankState
+    ) : CardCompanyState
 }

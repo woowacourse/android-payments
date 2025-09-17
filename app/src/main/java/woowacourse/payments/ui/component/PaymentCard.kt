@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.core.CompanyResourceProvider
-import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.GrayE5
@@ -22,7 +22,7 @@ fun PaymentCard(
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     onClick: (CardState) -> Unit = {},
-    bank: BankState? = null,
+    bank: CardCompanyState? = null,
 ) {
     val contentAlignment =
         when (card) {
@@ -34,8 +34,8 @@ fun PaymentCard(
     val backgroundColor =
         bank?.let {
             when (bank) {
-                is BankState.Bank -> resourceProvider.getSignatureColor(bank.company)
-                BankState.Empty -> Black33
+                is CardCompanyState.Selected -> resourceProvider.getSignatureColor(bank.company)
+                CardCompanyState.Empty -> Black33
             }
         } ?: GrayE5
     Box(

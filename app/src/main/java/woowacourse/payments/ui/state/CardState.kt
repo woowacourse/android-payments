@@ -6,6 +6,6 @@ sealed interface CardState {
     data object Pending : CardState
 
     data class Registered(
-        val company: BankState,
+        val company: CardCompanyState,
     ) : CardState
 }

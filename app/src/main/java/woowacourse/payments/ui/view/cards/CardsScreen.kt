@@ -177,7 +177,7 @@ fun SingleCardComponent(
 ) {
     PaymentCard(
         resourceProvider = resourceProvider,
-        card = CardState.Registered(card.bank),
+        card = CardState.Registered(card.company),
         content = {
             RegisteredCard(
                 card,
@@ -188,7 +188,7 @@ fun SingleCardComponent(
                 CARD_EXPIRE_DATE_SEPARATOR,
             )
         },
-        bank = card.bank,
+        bank = card.company,
         modifier =
             Modifier
                 .padding(top = 30.dp)
@@ -217,7 +217,7 @@ fun MultipleCardContent(
     onClickCard: (CardState) -> Unit,
 ) {
     cards.forEach { card ->
-        val cardState = CardState.Registered(card.bank)
+        val cardState = CardState.Registered(card.company)
 
         PaymentCard(
             resourceProvider = resourceProvider,
@@ -233,7 +233,7 @@ fun MultipleCardContent(
                     CARD_EXPIRE_DATE_SEPARATOR,
                 )
             },
-            bank = card.bank,
+            bank = card.company,
             modifier =
                 Modifier
                     .padding(top = 30.dp)

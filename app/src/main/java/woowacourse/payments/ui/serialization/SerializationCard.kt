@@ -3,7 +3,7 @@ package woowacourse.payments.ui.serialization
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardCompanyState
 
 @Parcelize
 data class SerializationCard(
@@ -11,7 +11,7 @@ data class SerializationCard(
     val expireDate: String,
     val ownerName: String,
     val password: String,
-    val bank: BankState,
+    val bank: CardCompanyState,
 ) : Parcelable {
     fun toDomain(): Card =
         Card(
@@ -19,7 +19,7 @@ data class SerializationCard(
             expireDate = expireDate,
             ownerName = ownerName,
             password = password,
-            bank = bank,
+            company = bank,
         )
 }
 
@@ -29,5 +29,5 @@ fun Card.toSerializationCard(): SerializationCard =
         expireDate = expireDate,
         ownerName = ownerName,
         password = password,
-        bank = bank,
+        bank = company,
     )

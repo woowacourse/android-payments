@@ -12,7 +12,7 @@ import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
-import woowacourse.payments.ui.state.BankState
+import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
@@ -54,7 +54,7 @@ class CardsScreenTest {
                     expireDate = "0421",
                     ownerName = "peto",
                     password = "",
-                    bank = BankState.Bank(CardCompany.BC),
+                    company = CardCompanyState.Selected(CardCompany.BC),
                 ),
             )
 
@@ -93,21 +93,21 @@ class CardsScreenTest {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankState.Bank(CardCompany.BC),
+                        CardCompanyState.Selected(CardCompany.BC),
                     ),
                     Card(
                         number = "2222333344445555",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankState.Bank(CardCompany.BC),
+                        CardCompanyState.Selected(CardCompany.BC),
                     ),
                     Card(
                         number = "3333444455556666",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        BankState.Bank(CardCompany.BC),
+                        CardCompanyState.Selected(CardCompany.BC),
                     ),
                 ),
             )

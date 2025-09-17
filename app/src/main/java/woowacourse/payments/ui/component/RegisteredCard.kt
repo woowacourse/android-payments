@@ -30,7 +30,7 @@ fun RegisteredCard(
 ) {
     val resourceProvider = CompanyResourceProvider()
     val companyName: String? =
-        resourceProvider.getCompanyName(card.bank)?.let {
+        resourceProvider.getCompanyName(card.company)?.let {
             stringResource(it)
         }
 
