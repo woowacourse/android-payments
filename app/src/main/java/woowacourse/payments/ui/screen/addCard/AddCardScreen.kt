@@ -40,7 +40,7 @@ fun AddCardScreen(
 ) {
     val stateHolder = rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
     val scrollState = rememberScrollState()
-    val bottomSheetState = rememberModalBottomSheetState()
+    val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
 
     LaunchedEffect(showBottomSheetState) {
