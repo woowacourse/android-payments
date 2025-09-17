@@ -9,4 +9,14 @@ data class PaymentCardUiModel(
     val formattedCardNumber: String,
     val formattedExpireDate: String,
     val ownerName: String,
-) : Parcelable
+) : Parcelable {
+    companion object {
+        val EMPTY =
+            PaymentCardUiModel(
+                cardCompanyUiModel = CardCompanyUiModel.UNKNOWN,
+                formattedCardNumber = "",
+                formattedExpireDate = "",
+                ownerName = "",
+            )
+    }
+}

@@ -74,7 +74,7 @@ class PaymentCardPlateTest {
         // given & when
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
-                PaymentCardPlate(paymentCardUiModel = dummyPaymentCardUiModel)
+                PaymentCardPlate(cardModel = dummyPaymentCardUiModel)
             }
         }
 
@@ -93,7 +93,7 @@ class PaymentCardPlateTest {
 
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
-                PaymentCardPlate(paymentCardUiModel = cardModel)
+                PaymentCardPlate(cardModel = cardModel)
             }
         }
 
