@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import woowacourse.payments.R
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.component.CardCompanyIcon
 
 class CardCompanyIconTest {
@@ -24,7 +24,7 @@ class CardCompanyIconTest {
             CardCompanyIcon(
                 bankIcon = R.drawable.ic_bc,
                 bankName = "우리은행",
-                banks = Banks.BC,
+                cardCompany = CardCompany.BC,
                 onClick = {},
             )
         }
@@ -42,13 +42,13 @@ class CardCompanyIconTest {
     @Test
     fun `은행_아이콘을_클릭하면_콜백이_호출된다`() {
         // given
-        var clickedBank: Banks? = null
+        var clickedBank: CardCompany? = null
 
         composeTestRule.setContent {
             CardCompanyIcon(
                 bankIcon = R.drawable.ic_bc,
                 bankName = "우리은행",
-                banks = Banks.BC,
+                cardCompany = CardCompany.BC,
                 onClick = { clickedBank = it },
             )
         }
@@ -59,6 +59,6 @@ class CardCompanyIconTest {
             .performClick()
 
         // then
-        assertEquals(clickedBank, Banks.BC)
+        assertEquals(clickedBank, CardCompany.BC)
     }
 }

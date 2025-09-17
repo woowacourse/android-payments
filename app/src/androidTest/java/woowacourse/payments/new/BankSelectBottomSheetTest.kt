@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.view.new.BankSelectRow
 
@@ -22,17 +22,17 @@ class BankSelectBottomSheetTest {
             BankSelectRow(resourceProvider = CompanyResourceProvider(), onClick = {})
         }
 
-        Banks.entries.forEach { bankType ->
+        CardCompany.entries.forEach { bankType ->
             val bankName =
                 when (bankType) {
-                    Banks.BC -> composeTestRule.activity.getString(R.string.bank_bc)
-                    Banks.SHINHAN -> composeTestRule.activity.getString(R.string.bank_sinhan)
-                    Banks.KAKAO -> composeTestRule.activity.getString(R.string.bank_kakao)
-                    Banks.HYUNDAE -> composeTestRule.activity.getString(R.string.bank_hyundae)
-                    Banks.WOORI -> composeTestRule.activity.getString(R.string.bank_woori)
-                    Banks.LOTTE -> composeTestRule.activity.getString(R.string.bank_lotte)
-                    Banks.HANA -> composeTestRule.activity.getString(R.string.bank_hana)
-                    Banks.KB -> composeTestRule.activity.getString(R.string.bank_kb)
+                    CardCompany.BC -> composeTestRule.activity.getString(R.string.bank_bc)
+                    CardCompany.SHINHAN -> composeTestRule.activity.getString(R.string.bank_sinhan)
+                    CardCompany.KAKAO -> composeTestRule.activity.getString(R.string.bank_kakao)
+                    CardCompany.HYUNDAE -> composeTestRule.activity.getString(R.string.bank_hyundae)
+                    CardCompany.WOORI -> composeTestRule.activity.getString(R.string.bank_woori)
+                    CardCompany.LOTTE -> composeTestRule.activity.getString(R.string.bank_lotte)
+                    CardCompany.HANA -> composeTestRule.activity.getString(R.string.bank_hana)
+                    CardCompany.KB -> composeTestRule.activity.getString(R.string.bank_kb)
                 }
 
             composeTestRule

@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.theme.Black52
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,8 +26,8 @@ import woowacourse.payments.ui.theme.Black52
 fun CardCompanyIcon(
     bankIcon: Int,
     bankName: String,
-    banks: Banks,
-    onClick: (Banks) -> Unit,
+    cardCompany: CardCompany,
+    onClick: (CardCompany) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -35,7 +35,7 @@ fun CardCompanyIcon(
         modifier =
             modifier
                 .size(width = 70.dp, height = 65.dp)
-                .clickable { onClick(banks) },
+                .clickable { onClick(cardCompany) },
     ) {
         Image(
             painter = painterResource(id = bankIcon),
@@ -64,7 +64,7 @@ fun CardCompanyIconPreview() {
         CardCompanyIcon(
             bankIcon = R.drawable.ic_bc,
             bankName = "우리은행",
-            banks = Banks.BC,
+            cardCompany = CardCompany.BC,
             onClick = {},
         )
     }

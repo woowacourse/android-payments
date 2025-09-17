@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.ui.state.BankState
@@ -24,7 +24,7 @@ class RegisteredCardTest {
                 expireDate = "0421",
                 ownerName = "peto",
                 password = "",
-                BankState.Bank(Banks.BC),
+                BankState.Bank(CardCompany.BC),
             )
 
         composeTestRule.setContent {

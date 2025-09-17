@@ -3,7 +3,7 @@ package woowacourse.payments.ui.view.new
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.BankState
@@ -20,7 +20,7 @@ class NewCardUiStateHolder(
             is NewCardUiEvent.OnChangeExpireDate -> updateExpireDate(event.expireDate)
             is NewCardUiEvent.OnChangeOwnerName -> updateOwnerName(event.ownerName)
             is NewCardUiEvent.OnChangePassword -> updatePassword(event.password)
-            is NewCardUiEvent.OnChangeBankType -> updateCardBankType(event.banks)
+            is NewCardUiEvent.OnChangeBankType -> updateCardBankType(event.cardCompany)
         }
     }
 
@@ -41,7 +41,7 @@ class NewCardUiStateHolder(
         _uiState.value = _uiState.value.copy(card = _uiState.value.card.copy(password = password))
     }
 
-    private fun updateCardBankType(company: Banks) {
+    private fun updateCardBankType(company: CardCompany) {
         _uiState.value =
             _uiState.value.copy(card = _uiState.value.card.copy(bank = BankState.Bank(company)))
     }

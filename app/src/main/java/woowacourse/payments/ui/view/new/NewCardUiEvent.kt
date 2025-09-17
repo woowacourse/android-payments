@@ -1,10 +1,10 @@
 package woowacourse.payments.ui.view.new
 
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 
 sealed interface NewCardUiEvent {
     data class OnChangeBankType(
-        val banks: Banks,
+        val cardCompany: CardCompany,
     ) : NewCardUiEvent
 
     data class OnChangeCardNumber(

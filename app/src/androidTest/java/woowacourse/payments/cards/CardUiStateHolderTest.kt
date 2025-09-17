@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertNotNull
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.BankState
@@ -31,7 +31,7 @@ class CardUiStateHolderTest {
     fun `EMPTY_상태에서_카드가_추가되면_SINGLE_상태로_전환된다`() {
         // given
         val holder = CardUiStateHolder()
-        val card = Card("1111", "12/34", "홍길동", "12", BankState.Bank(Banks.BC)).toSerializationCard()
+        val card = Card("1111", "12/34", "홍길동", "12", BankState.Bank(CardCompany.BC)).toSerializationCard()
 
         // when
         holder.addCard(card)
@@ -43,8 +43,8 @@ class CardUiStateHolderTest {
     @Test
     fun `SINGLE_상태에서_카드가_추가되면_MULTIPLE_상태로_전환되고_toolbarActionButtonVisibility_상태가_true가된다`() {
         // given
-        val firstCard = Card("1111", "12/34", "페토", "1234", BankState.Bank(Banks.BC)).toSerializationCard()
-        val secondCard = Card("2222", "56/78", "정페토", "1234", BankState.Bank(Banks.BC)).toSerializationCard()
+        val firstCard = Card("1111", "12/34", "페토", "1234", BankState.Bank(CardCompany.BC)).toSerializationCard()
+        val secondCard = Card("2222", "56/78", "정페토", "1234", BankState.Bank(CardCompany.BC)).toSerializationCard()
         val holder = CardUiStateHolder()
 
         // when
@@ -61,7 +61,7 @@ class CardUiStateHolderTest {
     @Test
     fun `Saver로_SINGLE_상태를_저장하고_복원한다`() {
         // given
-        val card = Card("1111", "12/34", "페토", "1234", BankState.Bank(Banks.BC))
+        val card = Card("1111", "12/34", "페토", "1234", BankState.Bank(CardCompany.BC))
         val holder = CardUiStateHolder(CardsUiState.SINGLE(card))
         val saved =
             with(
@@ -85,8 +85,8 @@ class CardUiStateHolderTest {
     @Test
     fun `Saver로_MULTIPLE_상태를_저장하고_복원한다`() {
         // given
-        val card1 = Card("1111", "12/34", "페토", "1234", BankState.Bank(Banks.BC))
-        val card2 = Card("2222", "56/78", "정페토", "1234", BankState.Bank(Banks.BC))
+        val card1 = Card("1111", "12/34", "페토", "1234", BankState.Bank(CardCompany.BC))
+        val card2 = Card("2222", "56/78", "정페토", "1234", BankState.Bank(CardCompany.BC))
         val holder = CardUiStateHolder(CardsUiState.MULTIPLE(listOf(card1, card2)))
 
         val saved =

@@ -1,6 +1,6 @@
 package woowacourse.payments.domain
 
-enum class Banks {
+enum class CardCompany {
     BC,
     SHINHAN,
     KAKAO,

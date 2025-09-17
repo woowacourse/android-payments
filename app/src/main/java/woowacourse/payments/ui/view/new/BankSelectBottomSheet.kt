@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.component.CardCompanyIcon
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.state.BankState
@@ -29,7 +29,7 @@ import woowacourse.payments.ui.state.BankState
 @Composable
 fun BankSelectBottomSheet(
     resourceProvider: CompanyResourceProvider,
-    onBankSelect: (Banks) -> Unit,
+    onBankSelect: (CardCompany) -> Unit,
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -38,7 +38,7 @@ fun BankSelectBottomSheet(
             confirmValueChange = { false },
         )
 
-    var selectedBank by remember { mutableStateOf<Banks?>(null) }
+    var selectedBank by remember { mutableStateOf<CardCompany?>(null) }
 
     LaunchedEffect(key1 = selectedBank) {
         selectedBank?.let { modalBottomSheetState.hide() }
@@ -74,7 +74,7 @@ private const val COLUMN_COUNT = 4
 @Composable
 fun BankSelectRow(
     resourceProvider: CompanyResourceProvider,
-    onClick: (Banks) -> Unit,
+    onClick: (CardCompany) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -83,12 +83,12 @@ fun BankSelectRow(
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        Banks.entries.forEachIndexed { index, bankType ->
+        CardCompany.entries.forEachIndexed { index, bankType ->
             resourceProvider.getCompanyName(BankState.Bank(bankType))?.let { bankName ->
                 CardCompanyIcon(
                     bankIcon = resourceProvider.getCompanyIcon(bankType),
                     bankName = stringResource(bankName),
-                    banks = bankType,
+                    cardCompany = bankType,
                     onClick = onClick,
                 )
             }

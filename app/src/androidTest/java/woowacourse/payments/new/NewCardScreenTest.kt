@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Banks
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.state.BankState
@@ -33,7 +33,7 @@ class NewCardScreenTest {
                                 expireDate = "0908",
                                 ownerName = "peto",
                                 password = "0908",
-                                BankState.Bank(Banks.BC),
+                                BankState.Bank(CardCompany.BC),
                             ),
                     ),
                 onCardChange = {},
