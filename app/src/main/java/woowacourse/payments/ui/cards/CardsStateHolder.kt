@@ -5,22 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
-import woowacourse.payments.ui.cards.model.CardsUiState
+import woowacourse.payments.ui.cards.model.CardsState
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
-class CardsStateHolderSaver : Saver<CardsStateHolder, CardsUiState> {
-    override fun SaverScope.save(value: CardsStateHolder): CardsUiState? = value.cardsUiState
+class CardsStateHolderSaver : Saver<CardsStateHolder, CardsState> {
+    override fun SaverScope.save(value: CardsStateHolder): CardsState? = value.cardsState
 
-    override fun restore(value: CardsUiState): CardsStateHolder? = CardsStateHolder(value)
+    override fun restore(value: CardsState): CardsStateHolder? = CardsStateHolder(value)
 }
 
 class CardsStateHolder(
-    cardsUiState: CardsUiState,
+    cardsState: CardsState,
 ) {
-    var cardsUiState by mutableStateOf(cardsUiState)
+    var cardsState by mutableStateOf(cardsState)
         private set
 
     fun addCard(cardUiModel: PaymentCardUiModel) {
-        cardsUiState = cardsUiState.addCard(cardUiModel)
+        cardsState = cardsState.addCard(cardUiModel)
     }
 }

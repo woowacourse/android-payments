@@ -5,30 +5,30 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
-sealed interface CardsUiState : Parcelable {
+sealed interface CardsState : Parcelable {
 
-    fun addCard(card: PaymentCardUiModel): CardsUiState
+    fun addCard(card: PaymentCardUiModel): CardsState
 
-    data object None : CardsUiState {
+    data object None : CardsState {
 
         override fun addCard(card: PaymentCardUiModel) = Single(card)
     }
 
     data class Single(
         val card: PaymentCardUiModel,
-    ) : CardsUiState {
-        override fun addCard(card: PaymentCardUiModel): CardsUiState =
+    ) : CardsState {
+        override fun addCard(card: PaymentCardUiModel): CardsState =
             Multiple(listOf(this.card, card))
     }
 
     data class Multiple(
         val cards: List<PaymentCardUiModel>,
-    ) : CardsUiState {
-        override fun addCard(card: PaymentCardUiModel): CardsUiState = this.copy(this.cards + card)
+    ) : CardsState {
+        override fun addCard(card: PaymentCardUiModel): CardsState = this.copy(this.cards + card)
     }
 
     companion object {
-        fun of(paymentCards: List<PaymentCardUiModel>): CardsUiState =
+        fun of(paymentCards: List<PaymentCardUiModel>): CardsState =
             when (paymentCards.size) {
                 0 -> None
                 1 -> Single(paymentCards.first())
