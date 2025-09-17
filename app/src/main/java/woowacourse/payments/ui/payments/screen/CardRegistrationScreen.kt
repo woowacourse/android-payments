@@ -71,7 +71,7 @@ fun CardRegistrationScreen(
                             number = uiState.cardNumber,
                             expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
-                            bankUiModel = cardRegistrationStateHolder.uiState.value,
+                            bankUiModel = cardRegistrationStateHolder.uiState,
                         ),
                     )
                 },
@@ -138,7 +138,7 @@ private fun CardRegistrationScreenContent(
                     number = uiState.cardNumber,
                     expirationDate = uiState.cardExpirationDate,
                     cardholderName = uiState.cardholderName,
-                    bankUiModel = cardRegistrationStateHolder.uiState.value,
+                    bankUiModel = cardRegistrationStateHolder.uiState,
                 ),
         )
 
