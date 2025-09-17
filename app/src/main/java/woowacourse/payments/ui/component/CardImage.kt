@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cards.components
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,14 +26,13 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.BankType.Companion.toColor
-import woowacourse.payments.ui.model.CardHolderUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.ExpirationDateUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun CardImage(
-    paymentCard: PaymentCardUiModel,
+    bankType: BankType,
+    cardNumber: String,
+    cardHolder: String,
+    expirationDate: String,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -43,7 +42,7 @@ fun CardImage(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(paymentCard.bankType.toColor()),
+                    color = Color(bankType.toColor()),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -66,7 +65,7 @@ fun CardImage(
 
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = formatCardNumber(paymentCard.cardNumber.value),
+                text = formatCardNumber(cardNumber),
                 fontWeight = W500,
                 fontSize = 12.sp,
                 lineHeight = 14.sp,
@@ -83,7 +82,7 @@ fun CardImage(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = paymentCard.cardHolder.value,
+                    text = cardHolder,
                     fontWeight = W500,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
@@ -91,7 +90,7 @@ fun CardImage(
                     color = Color.White,
                 )
                 Text(
-                    text = formatExpirationDate(paymentCard.expirationDate.value),
+                    text = formatExpirationDate(expirationDate),
                     fontWeight = W500,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
@@ -130,11 +129,9 @@ private fun formatExpirationDate(expirationDate: String): String {
 @Composable
 private fun CardPreview() {
     CardImage(
-        PaymentCardUiModel(
-            bankType = BankType.SHINHAN,
-            cardNumber = CardNumberUiModel("1234567890123456"),
-            cardHolder = CardHolderUiModel("홍길동"),
-            expirationDate = ExpirationDateUiModel("1225"),
-        ),
+        bankType = BankType.SHINHAN,
+        cardNumber = "1234567890123456",
+        cardHolder = "홍길동",
+        expirationDate = "1225",
     )
 }

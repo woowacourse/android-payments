@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.cards.CardsStateHolder
+import woowacourse.payments.ui.component.CardImage
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.ExpirationDateUiModel
@@ -41,7 +42,10 @@ fun Cards(
     ) {
         cardsStateHolder.cardList.forEach { card ->
             CardImage(
-                paymentCard = card,
+                bankType = card.bankType,
+                cardNumber = card.cardNumber.value,
+                cardHolder = card.cardHolder.value,
+                expirationDate = card.expirationDate.value,
             )
         }
 

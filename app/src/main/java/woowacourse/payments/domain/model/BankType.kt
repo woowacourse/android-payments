@@ -28,7 +28,7 @@ enum class BankType {
 
         fun BankType.toColor(): Int =
             when (this) {
-                NOT_SELECTED -> (0xFFF04651).toInt()
+                NOT_SELECTED -> (0xFF333333).toInt()
                 BC -> (0xFFF04651).toInt()
                 KB -> (0xFF695F54).toInt()
                 WOORI -> (0xFF20C4F4).toInt()
