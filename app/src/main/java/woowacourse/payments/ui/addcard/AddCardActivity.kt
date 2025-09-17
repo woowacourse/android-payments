@@ -27,8 +27,8 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cardInfo by rememberSaveable { mutableStateOf(CardInfoUiState()) }
-            val vendorModal by rememberSaveable { mutableStateOf(VendorModalUiState()) }
+            val cardInfo = rememberSaveable { CardInfoUiState() }
+            val vendorModal = rememberSaveable { VendorModalUiState() }
 
             AndroidpaymentsTheme {
                 Scaffold(

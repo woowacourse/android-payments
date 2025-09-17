@@ -15,10 +15,7 @@ data class VendorModalUiState(
 ) : Parcelable {
     var isVisible by mutableStateOf(vendorModalUiModel.isVisible)
         private set
-
-    var vendors by mutableStateOf(vendorModalUiModel.vendors)
-        private set
-
+    val vendors = vendorModalUiModel.vendors
     fun show() {
         isVisible = true
     }
