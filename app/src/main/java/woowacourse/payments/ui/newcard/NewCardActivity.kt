@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.data.BankRepository
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -18,6 +19,7 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    banks = BankRepository.getBanks(),
                     newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
                     onSaved = { paymentCard ->

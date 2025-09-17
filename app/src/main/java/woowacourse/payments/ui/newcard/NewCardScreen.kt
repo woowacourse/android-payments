@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.data.BankRepository
+import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.ui.component.CardImage
 import woowacourse.payments.ui.model.CardHolderUiModel
 import woowacourse.payments.ui.model.CardHolderUiModel.Companion.CARD_HOLDER_MAX_LENGTH
@@ -36,6 +37,7 @@ import woowacourse.payments.ui.newcard.dialog.BankBottomSheet
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
+    banks: List<Bank>,
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
     onBackPress: () -> Unit = {},
     onSaved: (PaymentCardUiModel) -> Unit = {},
@@ -68,7 +70,7 @@ fun NewCardScreen(
         if (isShowBottomSheet) {
             BankBottomSheet(
                 sheetState = modalBottomSheetState,
-                banks = BankRepository.getBanks(),
+                banks = banks,
                 onClick = {
                     newCardStateHolder.bank = it
                     isShowBottomSheet = false
@@ -134,5 +136,7 @@ fun NewCardScreen(
 @Preview(showBackground = true)
 @Composable
 private fun NewCardScreenPreview() {
-    NewCardScreen()
+    NewCardScreen(
+        banks = BankRepository.getBanks(),
+    )
 }
