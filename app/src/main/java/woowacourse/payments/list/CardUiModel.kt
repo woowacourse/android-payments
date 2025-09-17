@@ -18,7 +18,7 @@ data class CardUiModel(
 ) : Parcelable
 
 fun CardNumber.toFormattedString(): String {
-    val value = this.toString()
+    val value = this.value.joinToString("") { it.value.toString() }
     val visible = value.substring(0, 8)
     val masked = "*".repeat(8)
     return (visible + masked).chunked(4).joinToString(" - ")
@@ -26,12 +26,12 @@ fun CardNumber.toFormattedString(): String {
 
 fun CardExpiry.toFormattedString(): String {
     val year = this.value.year % 100
-    val month = this.value.monthValue.toString().padStart(2, '0')
+    val month = this.value.monthValue.toString().padStart(2, '0').padStart(2, '0')
     return "$month / $year"
 }
 
 fun CardPassword.toFormattedString(): String {
-    return this.toString().replace(Regex("\\d"), "*")
+    return this.value.joinToString("") { it.value.toString() }.replace(Regex("\\d"), "*")
 }
 
 fun Card.toUiModel(): CardUiModel {
