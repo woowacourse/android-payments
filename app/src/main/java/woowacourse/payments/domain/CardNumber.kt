@@ -28,7 +28,7 @@ data class CardNumber(
     }
 
     fun toFormattedString(): String {
-        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+        val parts = listOf(firstNumber, secondNumber, "****", "****")
         return parts.joinToString(" - ")
     }
 
