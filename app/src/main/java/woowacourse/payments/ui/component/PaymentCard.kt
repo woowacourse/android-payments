@@ -26,7 +26,10 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.BankType
 import woowacourse.payments.Card
 import woowacourse.payments.ui.theme.CardIcChip
-import woowacourse.payments.ui.theme.NotSelectedCardColor
+
+private const val CARD_NUMBER_MASK = "*"
+private const val CARD_NUMBER_GROUP_SEPARATOR = " - "
+private const val EXPIRED_DATE_SEPARATOR = " / "
 
 @Composable
 fun PaymentCard(
@@ -34,7 +37,7 @@ fun PaymentCard(
     number: String? = null,
     owner: String? = null,
     expiredDate: String? = null,
-    bankType: BankType? = null,
+    bankType: BankType = BankType.NOT_SELECTED,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -43,7 +46,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankType?.cardColor ?: NotSelectedCardColor,
+                    color = bankType.cardColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -51,7 +54,7 @@ fun PaymentCard(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = bankType?.cardName ?: "",
+                text = bankType.cardName ?: "",
                 modifier = Modifier.padding(start = 14.dp, bottom = 10.dp),
                 fontSize = 12.sp,
                 color = Color.White,
@@ -128,7 +131,7 @@ private fun PaymentCardDetail(
                     expiredDate
                         .mapIndexed { index: Int, char: Char ->
                             if (index == 1) {
-                                "$char / "
+                                char + EXPIRED_DATE_SEPARATOR
                             } else {
                                 char
                             }
@@ -146,11 +149,11 @@ private val String.markedCardNumber: String
         chunked(4)
             .mapIndexed { index, string ->
                 if (index > 1) {
-                    string.map { "*" }.joinToString("")
+                    string.map { CARD_NUMBER_MASK }.joinToString(separator = "")
                 } else {
                     string
                 }
-            }.joinToString(separator = " - ")
+            }.joinToString(separator = CARD_NUMBER_GROUP_SEPARATOR)
 
 @Preview
 @Composable
@@ -161,7 +164,7 @@ private fun PaymentCardPreview(
         number = card?.number,
         owner = card?.owner,
         expiredDate = card?.expiredDate,
-        bankType = card?.bankType,
+        bankType = card?.bankType ?: BankType.NOT_SELECTED,
     )
 }
 
