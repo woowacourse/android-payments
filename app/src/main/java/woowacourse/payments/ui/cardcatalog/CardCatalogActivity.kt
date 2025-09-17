@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.newcard.NewCardActivity
 
 class CardCatalogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

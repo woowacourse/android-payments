@@ -1,2 +1,0 @@
-package woowacourse.payments.domain
-

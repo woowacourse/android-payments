@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -10,9 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import woowacourse.payments.ui.newcard.component.NewCardScreen
-import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.component.SelectedBankBottomSheet
+import woowacourse.payments.ui.newcard.state.CardStateHolder
 
 class NewCardActivity : ComponentActivity() {
     private val state by lazy { CardStateHolder() }
