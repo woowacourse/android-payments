@@ -8,7 +8,7 @@ object BankRepository {
     fun getBanks(): List<Bank> =
         listOf(
             Bank(BankType.BC, R.drawable.ic_bc),
-            Bank(BankType.SHINHAN, R.drawable.ic_sinhan),
+            Bank(BankType.SHINHAN, R.drawable.ic_shinhan),
             Bank(BankType.KAKAO, R.drawable.ic_kakao),
             Bank(BankType.HYUNDAE, R.drawable.ic_hyundae),
             Bank(BankType.WOORI, R.drawable.ic_woori),
