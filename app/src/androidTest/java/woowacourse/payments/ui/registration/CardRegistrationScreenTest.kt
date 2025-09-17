@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
@@ -24,7 +26,7 @@ class CardRegistrationScreenTest {
     }
 
     @Test
-    fun `카드_번호와_만료일_그리고_비밀번호가_모두_유효한_경우_완료_버튼이_활성화된다`() {
+    fun `카드_번호와_만료일_그리고_비밀번호_카드사_선택_모두_유효한_경우_완료_버튼이_활성화된다`() {
         // given
         val cardNumber = "1234123412341234"
         val cardExpirationDate = "1299"
@@ -35,6 +37,8 @@ class CardRegistrationScreenTest {
             onNodeWithContentDescription("카드 번호").performTextInput(cardNumber)
             onNodeWithContentDescription("만료일").performTextInput(cardExpirationDate)
             onNodeWithContentDescription("비밀번호").performTextInput(cardPassword)
+            onNodeWithContentDescription("카드 정보").performClick()
+            onNodeWithText("카카오뱅크").performClick()
         }
 
         // then

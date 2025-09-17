@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.common.component
 
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import org.junit.Rule
@@ -30,17 +29,5 @@ class PaymentCardTest {
         composeTestRule
             .onNodeWithContentDescription("카드 정보")
             .assertIsDisplayed()
-    }
-
-    @Test
-    fun `카드_정보가_없다면_정보_영역은_보여지지_않는다`() {
-        // given && when
-        val paymentCardInformation = null
-        composeTestRule.setContent { PaymentCard(card = paymentCardInformation) }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드 정보")
-            .assertIsNotDisplayed()
     }
 }
