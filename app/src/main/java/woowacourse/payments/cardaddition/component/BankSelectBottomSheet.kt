@@ -93,8 +93,7 @@ private fun BankButton(
                 .semantics {
                     role = Role.Button
                     contentDescription = bankType.cardName ?: ""
-                }
-                .clickable(onClick = { onClick(bankType) })
+                }.clickable(onClick = { onClick(bankType) })
                 .then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),

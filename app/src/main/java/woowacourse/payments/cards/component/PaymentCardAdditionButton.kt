@@ -38,11 +38,9 @@ fun PaymentCardAdditionButton(
                 .background(
                     color = Gray1,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .semantics {
+                ).semantics {
                     contentDescription = cardAdditionButtonContentDescription
-                }
-                .clickable {
+                }.clickable {
                     onClick()
                 },
     ) {
