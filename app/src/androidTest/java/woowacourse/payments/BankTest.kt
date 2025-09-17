@@ -3,11 +3,9 @@ package woowacourse.payments
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.BankType
@@ -24,7 +22,8 @@ class BankTest {
         rule.setContent {
             Bank(BankType.BC, { bankType = it })
         }
-        rule.onNodeWithTag(BanksTestTag.BANK_CONTAINER_TAG)
+        rule
+            .onNodeWithTag(BanksTestTag.BANK_CONTAINER_TAG)
             .assertIsEnabled()
             .performClick()
 
@@ -36,7 +35,8 @@ class BankTest {
         rule.setContent {
             Bank(BankType.BC, {})
         }
-        rule.onNodeWithTag(BanksTestTag.BANK_NAME_TAG, useUnmergedTree = true)
+        rule
+            .onNodeWithTag(BanksTestTag.BANK_NAME_TAG, useUnmergedTree = true)
             .assert(hasText("BC카드"))
     }
 }

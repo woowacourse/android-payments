@@ -6,5 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed interface ColorSource : Parcelable {
-    data class Argb(@ColorInt val color: Int) : ColorSource
+    data class Argb(
+        @ColorInt val color: Int,
+    ) : ColorSource
 }

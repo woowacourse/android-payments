@@ -6,8 +6,7 @@ import androidx.compose.ui.res.painterResource
 import woowacourse.payments.ui.model.ImageSource
 
 @Composable
-fun ImageSource.asPainter(): Painter {
-    return when (this) {
+fun ImageSource.asPainter(): Painter =
+    when (this) {
         is ImageSource.Resource -> painterResource(id)
     }
-}

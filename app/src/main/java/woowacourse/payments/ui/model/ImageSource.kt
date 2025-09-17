@@ -6,5 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 sealed interface ImageSource : Parcelable {
-    data class Resource(@DrawableRes val id: Int) : ImageSource
+    data class Resource(
+        @DrawableRes val id: Int,
+    ) : ImageSource
 }

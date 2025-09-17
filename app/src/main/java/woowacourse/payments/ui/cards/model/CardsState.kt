@@ -6,19 +6,16 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 sealed interface CardsState : Parcelable {
-
     fun addCard(card: PaymentCardUiModel): CardsState
 
     data object None : CardsState {
-
         override fun addCard(card: PaymentCardUiModel) = Single(card)
     }
 
     data class Single(
         val card: PaymentCardUiModel,
     ) : CardsState {
-        override fun addCard(card: PaymentCardUiModel): CardsState =
-            Multiple(listOf(this.card, card))
+        override fun addCard(card: PaymentCardUiModel): CardsState = Multiple(listOf(this.card, card))
     }
 
     data class Multiple(

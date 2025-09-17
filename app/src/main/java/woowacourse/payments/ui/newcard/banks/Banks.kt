@@ -3,7 +3,6 @@ package woowacourse.payments.ui.newcard.banks
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,12 +24,13 @@ fun Banks(
 ) {
     val bankTypes by remember { mutableStateOf(BankType.entries.filter { it != BankType.NON }) }
     FlowRow(
-        modifier = modifier
-            .testTag(BanksTestTag.BANK_BOARD_TAG),
+        modifier =
+            modifier
+                .testTag(BanksTestTag.BANK_BOARD_TAG),
         horizontalArrangement = Arrangement.spacedBy(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         maxItemsInEachRow = COLUMN_COUNT,
-        maxLines = ROW_COUNT
+        maxLines = ROW_COUNT,
     ) {
         bankTypes.forEach {
             Bank(it, onSelectCard)

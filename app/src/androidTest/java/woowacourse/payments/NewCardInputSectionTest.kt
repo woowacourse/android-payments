@@ -41,7 +41,7 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 카드번호_입력시_구분자가_포맷된다() {
+    fun `카드번호_입력시_구분자가_포맷된다`() {
         setContentWithState()
 
         rule
@@ -54,7 +54,7 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 만료일_입력시_구분자가_포맷된다() {
+    fun `만료일_입력시_구분자가_포맷된다`() {
         setContentWithState()
 
         rule
@@ -65,7 +65,7 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 잘못된_만료일이면_에러메시지가_보인다() {
+    fun `잘못된_만료일이면_에러메시지가_보인다`() {
         val initial =
             NewCardUiState(
                 cardNumber = "",
@@ -81,7 +81,7 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 카드소유자이름_길이가_입력될때마다_카운터가_업데이트된다() {
+    fun `카드소유자이름_길이가_입력될때마다_카운터가_업데이트된다`() {
         setContentWithState()
 
         rule.onNodeWithTag(CARD_OWNER_NAME_INPUT_TAG).performTextInput("12345")
@@ -89,7 +89,7 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 비밀번호는_숫자입력이_가능하고_마스킹된다() {
+    fun `비밀번호는_숫자입력이_가능하고_마스킹된다`() {
         setContentWithState()
         rule
             .onNodeWithTag(CARD_PASSWORD_INPUT_TAG)

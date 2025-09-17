@@ -2,7 +2,6 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.domain.BankType
 
 @Parcelize
 data class PaymentCardUiModel(

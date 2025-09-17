@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.NewCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.NewCard
 import woowacourse.payments.ui.preview.paymentCardUiModelSample
 
 @Composable

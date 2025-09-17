@@ -9,7 +9,7 @@ val paymentCardUiModelSample =
         BankType.BC.toLocalBankUiModel()!!,
         "1234567812345678",
         "1225",
-        "빰".repeat(30)
+        "빰".repeat(30),
     )
 
 val paymentCardUiModelSamples =

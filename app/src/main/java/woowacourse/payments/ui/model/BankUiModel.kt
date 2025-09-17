@@ -3,7 +3,6 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
@@ -15,12 +14,14 @@ import woowacourse.payments.ui.theme.BankCardColors
 data class BankUiModel(
     val name: String,
     val image: ImageSource,
-    val cardColor: ColorSource
+    val cardColor: ColorSource,
 ) : Parcelable {
-
     companion object {
-        fun fromRes(name: String, @DrawableRes resId: Int, @ColorInt cardColor: Int) =
-            BankUiModel(name, ImageSource.Resource(resId), ColorSource.Argb(cardColor))
+        fun fromRes(
+            name: String,
+            @DrawableRes resId: Int,
+            @ColorInt cardColor: Int,
+        ) = BankUiModel(name, ImageSource.Resource(resId), ColorSource.Argb(cardColor))
     }
 }
 

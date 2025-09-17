@@ -40,7 +40,7 @@ fun CardSample(
     ) {
         Column(
             Modifier
-                .padding(15.dp)
+                .padding(15.dp),
         ) {
             Text(
                 bankUiModel?.name ?: "",

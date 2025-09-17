@@ -24,12 +24,13 @@ fun BanksScreen(
     ModalBottomSheet(
         onDismissRequest = onDismissRequest,
         sheetState = sheetState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Banks(
-            onSelectCard, modifier
+            onSelectCard,
+            modifier
                 .fillMaxWidth()
-                .padding(48.dp, bottom = 106.dp, top = 36.dp)
+                .padding(48.dp, bottom = 106.dp, top = 36.dp),
         )
     }
 }

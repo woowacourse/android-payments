@@ -46,6 +46,6 @@ fun NewCardTopBar(
 
 @Preview
 @Composable
-fun NewCardTopBarPreview(){
-    NewCardTopBar({},{},true)
+fun NewCardTopBarPreview() {
+    NewCardTopBar({}, {}, true)
 }

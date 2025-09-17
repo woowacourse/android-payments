@@ -63,7 +63,7 @@ fun NewCardScreen(
                     modalBottomSheetState.hide()
                 }
             },
-            onDismissRequest = { showBottomSheet = false }
+            onDismissRequest = { showBottomSheet = false },
         )
     }
 
@@ -73,7 +73,7 @@ fun NewCardScreen(
             NewCardTopBar(
                 onBackClick = onBackClick,
                 onSaveClick = onSaveHandler,
-                isCreatable = stateHolder.isCardCreatable
+                isCreatable = stateHolder.isCardCreatable,
             )
         },
     ) { innerPadding ->

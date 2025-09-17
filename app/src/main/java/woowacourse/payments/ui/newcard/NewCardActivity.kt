@@ -21,7 +21,7 @@ class NewCardActivity : ComponentActivity() {
                         val intent = CardsActivity.intent(paymentCard)
                         setResult(RESULT_OK, intent)
                         finish()
-                    }
+                    },
                 )
             }
         }

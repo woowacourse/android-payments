@@ -8,13 +8,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -24,9 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import woowacourse.payments.R
-import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.newcard.CreateCardStateHolder.Companion.CARD_OWNER_NAME_MAX
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
@@ -85,9 +79,10 @@ fun NewCardInputSection(
         OutlinedTextField(
             value = newCardUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
-            modifier = Modifier
-                .width(146.dp)
-                .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
+            modifier =
+                Modifier
+                    .width(146.dp)
+                    .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
             label = { Text(stringResource(R.string.expiry_label)) },
             isError = expiryDateErrorTextRes != null,
             placeholder = { Text(stringResource(R.string.expiry_placeholder)) },
@@ -145,6 +140,10 @@ fun NewCardInputSectionPreview() {
             ownerName = "동전감전장전공전구전사전기전상전무전중전체전고전신전생전수전",
             password = "1234",
             expiryDateErrorTextRes = R.string.validate_card_expiry_invalid_month,
-        ), {}, {}, {}, {}
+        ),
+        {},
+        {},
+        {},
+        {},
     )
 }
