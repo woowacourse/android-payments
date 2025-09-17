@@ -35,7 +35,7 @@ import woowacourse.payments.ui.payments.component.CardNumberTextField
 import woowacourse.payments.ui.payments.component.CardPasswordTextField
 import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
 import woowacourse.payments.ui.payments.component.CardholderNameTextField
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -46,7 +46,7 @@ fun CardRegistrationScreen(
     cardRegistrationStateHolder: CardRegistrationStateHolder =
         rememberSaveable(saver = CardRegistrationStateHolder.Saver) {
             CardRegistrationStateHolder(
-                BankUiState.NOT_SELECTED,
+                BankUiModel.NOT_SELECTED,
             )
         },
     onBackPressed: () -> Unit,
@@ -71,7 +71,7 @@ fun CardRegistrationScreen(
                             number = uiState.cardNumber,
                             expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
-                            bankUiState = cardRegistrationStateHolder.uiState.value.bankUiState,
+                            bankUiModel = cardRegistrationStateHolder.uiState.value.bankUiModel,
                         ),
                     )
                 },
@@ -137,7 +137,7 @@ private fun CardRegistrationScreenContent(
                     number = uiState.cardNumber,
                     expirationDate = uiState.cardExpirationDate,
                     cardholderName = uiState.cardholderName,
-                    bankUiState = cardRegistrationStateHolder.uiState.value.bankUiState,
+                    bankUiModel = cardRegistrationStateHolder.uiState.value.bankUiModel,
                 ),
         )
 

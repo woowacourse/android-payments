@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Composable
 fun PaymentCardField(
@@ -38,12 +38,12 @@ fun PaymentCardField(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(paymentCardUiModel.bankUiState.bankColor),
+                    color = colorResource(paymentCardUiModel.bankUiModel.bankColor),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = paymentCardUiModel.bankUiState.bankName,
+            text = paymentCardUiModel.bankUiModel.bankName,
             color = Color.White,
             modifier =
                 Modifier
@@ -61,7 +61,7 @@ fun PaymentCardField(
                     ).align(Alignment.CenterStart),
         )
 
-        if (paymentCardUiModel.bankUiState != BankUiState.NOT_SELECTED) {
+        if (paymentCardUiModel.bankUiModel != BankUiModel.NOT_SELECTED) {
             Column(
                 modifier =
                     Modifier
@@ -132,13 +132,13 @@ private fun PaymentCardFieldPreview(
 private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
     override val values: Sequence<PaymentCardUiModel> =
         sequenceOf(
-            PaymentCardUiModel("", "", "", bankUiState = BankUiState.NOT_SELECTED),
-            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiState.SHINHAN),
+            PaymentCardUiModel("", "", "", bankUiModel = BankUiModel.NOT_SELECTED),
+            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiModel.SHINHAN),
             PaymentCardUiModel(
                 "2222222222222222",
                 "0522",
                 "ABCDEABCDEABCDEABCDEABCDEABCDE",
-                BankUiState.KB,
+                BankUiModel.KB,
             ),
         )
 }

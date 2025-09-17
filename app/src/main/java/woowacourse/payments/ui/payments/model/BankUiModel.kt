@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 
 @Parcelize
-enum class BankUiState(
+enum class BankUiModel(
     val bankName: String,
     @ColorRes val bankColor: Int,
     @DrawableRes val bankLogo: Int,

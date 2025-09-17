@@ -11,11 +11,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Composable
 fun BankButton(
-    bankUiState: BankUiState,
+    bankUiModel: BankUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -23,12 +23,12 @@ fun BankButton(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
-            painter = painterResource(id = bankUiState.bankLogo),
+            painter = painterResource(id = bankUiModel.bankLogo),
             contentDescription = null,
             modifier = Modifier.wrapContentSize(),
         )
         Text(
-            text = bankUiState.bankName,
+            text = bankUiModel.bankName,
             fontWeight = FontWeight.W500,
             fontSize = 16.sp,
             lineHeight = 1.sp,
@@ -39,5 +39,5 @@ fun BankButton(
 @Preview(showBackground = true)
 @Composable
 private fun BankTextFieldPreview() {
-    BankButton(BankUiState.KB)
+    BankButton(BankUiModel.KB)
 }

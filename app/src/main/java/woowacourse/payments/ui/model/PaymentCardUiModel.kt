@@ -2,14 +2,14 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Parcelize
 data class PaymentCardUiModel(
     val number: String,
     val expirationDate: String,
     val cardholderName: String,
-    val bankUiState: BankUiState,
+    val bankUiModel: BankUiModel,
 ) : Parcelable {
     fun formatNumber(
         separator: String = CARD_NUMBER_BASE_SEPARATOR,

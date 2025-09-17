@@ -1,8 +1,8 @@
 package woowacourse.payments.ui.payments
 
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @JvmInline
 value class CardInputState(
-    val bankUiState: BankUiState,
+    val bankUiModel: BankUiModel,
 )

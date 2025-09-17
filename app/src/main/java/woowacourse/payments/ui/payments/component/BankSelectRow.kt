@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.payments.model.BankUiState
+import woowacourse.payments.ui.payments.model.BankUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private const val COLUMN_COUNT = 4
@@ -19,7 +19,7 @@ private const val COLUMN_COUNT = 4
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BankSelectRow(
-    onClick: (BankUiState) -> Unit,
+    onClick: (BankUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -31,11 +31,11 @@ fun BankSelectRow(
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        val selectableBanks = BankUiState.entries.filter { it != BankUiState.NOT_SELECTED }
+        val selectableBanks = BankUiModel.entries.filter { it != BankUiModel.NOT_SELECTED }
 
         selectableBanks.forEach { bankUiState ->
             BankButton(
-                bankUiState = bankUiState,
+                bankUiModel = bankUiState,
                 modifier =
                     Modifier
                         .clickable { onClick(bankUiState) }
