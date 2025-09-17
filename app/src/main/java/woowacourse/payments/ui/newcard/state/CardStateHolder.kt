@@ -103,7 +103,7 @@ class CardStateHolder {
         }
 
         runCatching {
-            OwnerName(newOwnerName.take(30))
+            OwnerName(OwnerName(newOwnerName).maxName())
         }.onSuccess {
             ownerNameErrorMessage = null
         }.onFailure { e ->

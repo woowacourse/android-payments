@@ -18,6 +18,10 @@ value class OwnerName(
         }
     }
 
+    fun maxName(): String {
+        return value.let { it?.take(OWNER_NAME_MAX_LENGTH) ?: "" }
+    }
+
     companion object {
         private const val OWNER_NAME_MAX_LENGTH: Int = 30
     }
