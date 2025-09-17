@@ -10,24 +10,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.payments.model.BankUiModel
+import woowacourse.payments.ui.payments.model.BankUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
     onDismissRequest: () -> Unit,
-    onBankSelected: (BankUiModel) -> Unit,
+    onBankSelected: (BankUiState) -> Unit,
 ) {
     val sheetState =
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
     var selectedBank by remember {
-        mutableStateOf(BankUiModel.NOT_SELECTED)
+        mutableStateOf(BankUiState.NOT_SELECTED)
     }
     LaunchedEffect(key1 = selectedBank) {
-        if (selectedBank != BankUiModel.NOT_SELECTED) {
+        if (selectedBank != BankUiState.NOT_SELECTED) {
             sheetState.hide()
             onBankSelected(selectedBank)
         }
