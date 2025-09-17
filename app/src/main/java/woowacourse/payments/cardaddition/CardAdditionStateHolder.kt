@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import woowacourse.payments.BankType
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.CARD_NUMBER_LENGTH
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.CARD_OWNER_NAME_LENGTH_MAX
 import woowacourse.payments.cardaddition.CardAdditionUiState.Companion.EXPIRED_DATE_LENGTH
@@ -33,6 +34,10 @@ class CardAdditionStateHolder(
     fun updatePassword(newValue: String) {
         val newPassword: String = newValue.filter(::isDigit)
         uiState = uiState.copy(password = newPassword.take(PASSWORD_LENGTH))
+    }
+
+    fun updateBankType(bankType: BankType) {
+        uiState = uiState.copy(bankType = bankType)
     }
 
     companion object {

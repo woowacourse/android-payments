@@ -25,6 +25,7 @@ class CardAdditionActivity : ComponentActivity() {
                     onExpiredDateChange = stateHolder::updateExpiredDate,
                     onHolderChange = stateHolder::updateHolder,
                     onPasswordChange = stateHolder::updatePassword,
+                    onSelectBank = stateHolder::updateBankType,
                     modifier = Modifier.fillMaxSize(),
                 )
             }
