@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
@@ -37,4 +38,10 @@ fun Bank(bankType: BankType, onSelectedCard: (BankType) -> Unit, modifier: Modif
         Spacer(modifier.height(10.dp))
         Text(text = bankUiModel.name, fontSize = 16.sp, fontWeight = FontWeight.W500)
     }
+}
+
+@Preview
+@Composable
+fun BankPreview() {
+    Bank(BankType.BC, {})
 }

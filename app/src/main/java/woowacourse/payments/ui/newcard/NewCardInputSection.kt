@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import woowacourse.payments.R
@@ -50,7 +51,7 @@ fun NewCardInputSection(
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
     onCardPasswordChange: (String) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     val cardNumbersVisualTransformation =
         remember {
@@ -84,10 +85,9 @@ fun NewCardInputSection(
         OutlinedTextField(
             value = newCardUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
-            modifier =
-                Modifier
-                    .width(146.dp)
-                    .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
+            modifier = Modifier
+                .width(146.dp)
+                .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
             label = { Text(stringResource(R.string.expiry_label)) },
             isError = expiryDateErrorTextRes != null,
             placeholder = { Text(stringResource(R.string.expiry_placeholder)) },
@@ -133,4 +133,18 @@ fun NewCardInputSection(
             keyboardOptions = KEYBOARD_OPTIONS_PIN,
         )
     }
+}
+
+@Preview
+@Composable
+fun NewCardInputSectionPreview() {
+    NewCardInputSection(
+        NewCardUiState(
+            cardNumber = "12345678",
+            expiryDate = "13/22",
+            ownerName = "동전감전장전공전구전사전기전상전무전중전체전고전신전생전수전",
+            password = "1234",
+            expiryDateErrorTextRes = R.string.validate_card_expiry_invalid_month,
+        ), {}, {}, {}, {}
+    )
 }

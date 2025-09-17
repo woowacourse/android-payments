@@ -82,18 +82,6 @@ fun cardAddLauncher(
 
 @Preview(showBackground = true)
 @Composable
-fun NoneCardsScreenPreview() {
-    CardsScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SingleCardsScreenPreview() {
-    CardsScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MultipleCardsScreenPreview() {
+fun CardsScreenPreview() {
     CardsScreen()
 }
