@@ -17,11 +17,12 @@ fun CardCompanySelectBottomSheet(
     modalBottomSheetState: SheetState,
     onClick: (CardCompanyUiModel) -> Unit,
     isShow: Boolean = true,
+    onDismissRequest: () -> Unit,
     ) {
     if (isShow) {
         ModalBottomSheet(
             sheetState = modalBottomSheetState,
-            onDismissRequest = { },
+            onDismissRequest = { onDismissRequest() },
         ) {
             Box(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 70.dp),

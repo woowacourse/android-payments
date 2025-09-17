@@ -58,6 +58,7 @@ class NewCardActivity : ComponentActivity() {
                     modalBottomSheetState,
                     onClick = { selectedCardCompany = it.company},
                     isShow = isShow,
+                    onDismissRequest = { finish() }
                 )
 
                 LaunchedEffect(key1 = selectedCardCompany) {
