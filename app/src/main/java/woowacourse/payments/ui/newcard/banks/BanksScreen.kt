@@ -29,7 +29,7 @@ fun BanksScreen(
         Banks(
             onSelectCard, modifier
                 .fillMaxWidth()
-                .padding(48.dp, 36.dp)
+                .padding(48.dp, bottom = 106.dp, top = 36.dp)
         )
     }
 }

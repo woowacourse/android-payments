@@ -26,7 +26,6 @@ fun Banks(
     val bankTypes by remember { mutableStateOf(BankType.entries.filter { it != BankType.NON }) }
     FlowRow(
         modifier = modifier
-            .padding(4.dp)
             .testTag(BanksTestTag.BANK_BOARD_TAG),
         horizontalArrangement = Arrangement.spacedBy(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
