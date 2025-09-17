@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,17 +37,16 @@ fun AddCardScreen(
     onBackClick: () -> Unit,
 ) {
     val uiState = remember { AddCardScreenUiStateHolder() }
+    val focusManager: FocusManager = LocalFocusManager.current
 
     fun saveAddedCard() {
         uiState.validate()
         if (uiState.isError) {
             onSaveFailure()
-        } else {
-            onSaveSuccess(uiState.card)
+            return
         }
+        onSaveSuccess(uiState.card)
     }
-
-    val focusManager = LocalFocusManager.current
 
     LaunchedEffect(uiState.shouldMoveFocus.value) {
         if (uiState.shouldMoveFocus.value) {

@@ -24,6 +24,8 @@ class AddCardScreenUiStateHolder {
     val isExpirationDateError: MutableState<Boolean> = mutableStateOf(false)
     val isPasscodeError: MutableState<Boolean> = mutableStateOf(false)
 
+    val shouldMoveFocus: MutableState<Boolean> = mutableStateOf(false)
+
     val card: CardUiModel
         get() =
             CardUiModel(
@@ -35,8 +37,6 @@ class AddCardScreenUiStateHolder {
             )
 
     val isError: Boolean get() = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
-
-    val shouldMoveFocus: MutableState<Boolean> = mutableStateOf(false)
 
     fun updateCardNumber(newValue: String) {
         val filteredValue: String =
