@@ -170,9 +170,14 @@ fun CardListScreenPreview(
     @PreviewParameter(CardListPreviewProvider::class) cards: List<CardUiModel>,
 ) {
     AndroidpaymentsTheme {
+        val previewStateHolder =
+            remember {
+                CardListStateHolder(cards)
+            }
+
         CardListScreen(
             navigateToAddCard = { },
-            stateHolder = CardListStateHolder(CardListUiState(cards = cards)),
+            stateHolder = previewStateHolder,
         )
     }
 }

@@ -4,6 +4,5 @@ import woowacourse.payments.ui.model.CardUiModel
 
 data class CardListUiState(
     val cards: List<CardUiModel> = emptyList(),
-) {
-    val showAddButton: Boolean = cards.size > 1
-}
+    val showAddButton: Boolean = false,
+)
