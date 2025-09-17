@@ -35,6 +35,8 @@ import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
+import woowacourse.payments.ui.common.model.CardCompanyUiModel
+import woowacourse.payments.ui.common.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
 
@@ -50,7 +52,7 @@ fun CardRegisterScreen(
     var ownerName by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isShowingBottomSheet by rememberSaveable { mutableStateOf(true) }
-    var selectedCardCompany by rememberSaveable { mutableStateOf<CardCompany?>(null) }
+    var selectedCardCompany by rememberSaveable { mutableStateOf(CardCompanyUiModel.NOT_SELECTED) }
     val scope = rememberCoroutineScope()
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -70,8 +72,7 @@ fun CardRegisterScreen(
                                 ownerName = ownerName,
                                 password = password,
                                 cardCompany =
-                                    selectedCardCompany
-                                        ?: error("카드를 선택하지 않아서 에러가 발생합니다."),
+                                    selectedCardCompany.origin,
                             ),
                         )
                     } else {
@@ -87,7 +88,7 @@ fun CardRegisterScreen(
                 modalBottomSheetState = modalBottomSheetState,
                 onDismissRequest = { },
                 onCardCompanyClick = { cardCompany: CardCompany ->
-                    selectedCardCompany = cardCompany
+                    selectedCardCompany = cardCompany.toUiModel()
                     scope
                         .launch {
                             modalBottomSheetState.hide()
@@ -112,7 +113,8 @@ fun CardRegisterScreen(
                         .align(Alignment.CenterHorizontally),
                 card =
                     Card(
-                        cardCompany = selectedCardCompany ?: CardCompany.NOT_SELECTED,
+                        cardCompany =
+                            selectedCardCompany.origin,
                     ),
             )
             PaymentTextField(
