@@ -26,15 +26,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.screen.addCard.AddCardError
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PasswordInputField(
-    onPasswordChange: (Password) -> Unit,
+    password: String,
+    onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    password: Password? = null,
     error: AddCardError? = null,
 ) {
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
@@ -44,10 +43,10 @@ fun PasswordInputField(
     val context = LocalContext.current
 
     OutlinedTextField(
-        value = password?.value ?: "",
+        value = password,
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(4)
-            onPasswordChange(Password(filteredText))
+            onPasswordChange(filteredText)
         },
         modifier =
             modifier.semantics {
@@ -103,6 +102,7 @@ fun PasswordInputField(
 fun PasswordInputPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
+            password = "",
             onPasswordChange = { },
         )
     }
@@ -113,6 +113,7 @@ fun PasswordInputPreview() {
 fun PasswordInputErrorPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
+            password = "",
             onPasswordChange = { },
             error = AddCardError.PASSWORD_INVALID,
         )

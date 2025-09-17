@@ -55,9 +55,9 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    stateHolder.validateAll()
+                    stateHolder.validate()
                     if (stateHolder.uiState.isFormValid) {
-                        onCardSaved(stateHolder.uiState.toCardUiModel())
+                        onCardSaved(stateHolder.toCardUiModel())
                     }
                 },
             )
@@ -78,7 +78,7 @@ fun AddCardScreen(
                         .padding(vertical = 12.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                PaymentCard(card = stateHolder.uiState.toCardUiModel())
+                PaymentCard(card = stateHolder.toCardUiModel())
             }
 
             CardNumberInputField(

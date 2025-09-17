@@ -14,25 +14,23 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.ui.screen.addCard.AddCardError
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardOwnerInputField(
-    onOwnerChange: (CardOwner) -> Unit,
+    cardOwner: String,
+    onOwnerChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    cardOwner: CardOwner? = null,
     error: AddCardError? = null,
 ) {
     val context = LocalContext.current
 
     OutlinedTextField(
-        value = cardOwner?.value.orEmpty(),
+        value = cardOwner,
         onValueChange = { newText ->
             if (newText.length <= 20) {
-                val newCardOwner = CardOwner(newText)
-                onOwnerChange(newCardOwner)
+                onOwnerChange(newText)
             }
         },
         modifier =
@@ -65,7 +63,7 @@ fun CardOwnerInputField(
                     text =
                         stringResource(
                             id = R.string.card_owner_length,
-                            cardOwner?.value?.length ?: 0,
+                            cardOwner.length,
                         ),
                     color = Color.Gray,
                 )
@@ -81,6 +79,7 @@ fun CardOwnerInputField(
 fun CardOwnerInputPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
+            cardOwner = "",
             onOwnerChange = { },
         )
     }
@@ -91,6 +90,7 @@ fun CardOwnerInputPreview() {
 fun CardOwnerInputErrorPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
+            cardOwner = "",
             onOwnerChange = { },
             error = AddCardError.OWNER_INVALID,
         )

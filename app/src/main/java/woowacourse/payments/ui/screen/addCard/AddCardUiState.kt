@@ -1,42 +1,25 @@
 package woowacourse.payments.ui.screen.addCard
 
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.domain.Expired
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.BankUiModel
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toPresentation
 
 data class AddCardUiState(
-    val cardNumber: CardNumber = CardNumber(""),
-    val expired: Expired = Expired(""),
-    val cardOwner: CardOwner = CardOwner(""),
-    val password: Password = Password(""),
+    val cardNumber: String = "",
+    val expired: String = "",
+    val cardOwner: String = "",
+    val password: String = "",
     val bankUiModel: BankUiModel = BankType.NOT_SELECTED.toPresentation(),
     val errors: Set<AddCardError> = emptySet(),
+    val submitted: Boolean = false,
 ) {
     val isFormValid: Boolean = errors.isEmpty()
-    val cardNumberError: AddCardError? = errors.find { it == AddCardError.CARD_NUMBER_INVALID }
-    val expiredError: AddCardError? = errors.find { it == AddCardError.EXPIRED_INVALID }
-    val ownerError: AddCardError? = errors.find { it == AddCardError.OWNER_INVALID }
-    val passwordError: AddCardError? = errors.find { it == AddCardError.PASSWORD_INVALID }
-
-    fun validate(): AddCardUiState {
-        val newErrors = mutableSetOf<AddCardError>()
-        if (!cardNumber.isValid) newErrors.add(AddCardError.CARD_NUMBER_INVALID)
-        if (!expired.isValid) newErrors.add(AddCardError.EXPIRED_INVALID)
-        if (!cardOwner.isValid) newErrors.add(AddCardError.OWNER_INVALID)
-        if (!password.isValid) newErrors.add(AddCardError.PASSWORD_INVALID)
-        return copy(errors = newErrors)
-    }
-
-    fun toCardUiModel(): CardUiModel =
-        CardUiModel(
-            bankUiModel = bankUiModel,
-            number = cardNumber.value,
-            expired = expired.value,
-            owner = cardOwner.value,
-        )
+    val cardNumberError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.CARD_NUMBER_INVALID } else null
+    val expiredError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.EXPIRED_INVALID } else null
+    val ownerError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.OWNER_INVALID } else null
+    val passwordError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.PASSWORD_INVALID } else null
 }

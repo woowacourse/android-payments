@@ -16,15 +16,14 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.screen.addCard.AddCardError
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardNumberInputField(
-    onCardNumberChange: (CardNumber) -> Unit,
+    cardNumber: String,
+    onCardNumberChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    cardNumber: CardNumber? = null,
     error: AddCardError? = null,
 ) {
     val transformation =
@@ -32,10 +31,10 @@ fun CardNumberInputField(
     val context = LocalContext.current
 
     OutlinedTextField(
-        value = cardNumber?.value.orEmpty(),
+        value = cardNumber,
         onValueChange = { newText ->
             val filteredText = newText.filter { it.isDigit() }.take(16)
-            onCardNumberChange(CardNumber(filteredText))
+            onCardNumberChange(filteredText)
         },
         modifier =
             modifier.semantics {
@@ -74,6 +73,7 @@ fun CardNumberInputField(
 fun CardNumberInputPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
+            cardNumber = "",
             onCardNumberChange = { },
         )
     }
@@ -84,6 +84,7 @@ fun CardNumberInputPreview() {
 fun CardNumberInputErrorPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
+            cardNumber = "",
             onCardNumberChange = { },
             error = AddCardError.CARD_NUMBER_INVALID,
         )
