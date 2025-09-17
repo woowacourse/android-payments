@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.cards
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -64,22 +65,21 @@ private fun CardsScreenContent(
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         if (uiState.hasNoContent()) {
             RegistrationGuideText()
-            Spacer(modifier = Modifier.height(16.dp))
         }
 
         uiState.value.forEach { card: CardUiModel ->
             PaymentCard(card = card)
-            Spacer(modifier = Modifier.height(36.dp))
+            Spacer(modifier = Modifier.height(20.dp))
         }
 
         if (uiState.isVisibleRegistrationBoxInContent()) {
             RegistrationBox(onRegistrationClick)
-            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
