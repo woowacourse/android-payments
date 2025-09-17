@@ -18,7 +18,6 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
@@ -29,11 +28,11 @@ import woowacourse.payments.ui.model.CardUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
+    uiState: AddCardScreenUiStateHolder,
     onSaveSuccess: (card: CardUiModel) -> Unit,
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val uiState = remember { AddCardScreenUiStateHolder() }
     val focusManager: FocusManager = LocalFocusManager.current
 
     fun saveAddedCard() {
@@ -61,12 +60,6 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        CardCompanyBottomSheet(
-            uiState.cardCompany,
-            AddCardScreenUiStateHolder.CARD_COMPANIES,
-            onBackClick,
-        )
-
         Column(
             Modifier
                 .fillMaxSize()
@@ -118,6 +111,7 @@ fun AddCardScreen(
 @Composable
 private fun AddCardScreenPreview() {
     AddCardScreen(
+        remember { AddCardScreenUiStateHolder() },
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},
