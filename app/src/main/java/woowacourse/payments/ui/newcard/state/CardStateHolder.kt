@@ -44,7 +44,10 @@ class CardStateHolder {
                 Card.Companion.Card(
                     bankTypeUiModel = bankType,
                     number = number,
-                    expirationDate = expirationDate,
+                    expirationDate = YearMonth.parse(
+                        expirationDate,
+                        DateTimeFormatter.ofPattern("MMyy")
+                    ),
                     ownerName = ownerName,
                     password = password,
                 )

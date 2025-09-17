@@ -18,13 +18,13 @@ data class Card(
         fun Card(
             bankTypeUiModel: BankTypeUiModel,
             number: String,
-            expirationDate: String,
+            expirationDate: YearMonth,
             ownerName: String,
             password: String,
         ) = Card(
             bankTypeUiModel,
             CardNumber(number),
-            ExpirationDate(YearMonth.parse(expirationDate, DateTimeFormatter.ofPattern("MMyy"))),
+            ExpirationDate(expirationDate),
             OwnerName(ownerName),
             Password(password),
         )
