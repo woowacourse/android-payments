@@ -17,7 +17,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.newCard.NewCardActivity
-import woowacourse.payments.newCard.cards
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
 
