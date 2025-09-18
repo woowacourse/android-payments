@@ -20,8 +20,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 fun AddCardTopbar(
     isAddCardEnabled: Boolean = false,
-    onAddCardSucceeded: () -> Unit = {},
-    onAddCardFailed: () -> Unit = {},
+    onAddCardSuccess: () -> Unit = {},
+    onAddCardFail: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -40,9 +40,9 @@ fun AddCardTopbar(
         actions = {
             IconButton(onClick = {
                 if (isAddCardEnabled) {
-                    onAddCardSucceeded()
+                    onAddCardSuccess()
                 } else {
-                    onAddCardFailed()
+                    onAddCardFail()
                     Toast
                         .makeText(
                             context,

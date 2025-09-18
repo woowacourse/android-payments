@@ -27,8 +27,8 @@ fun VendorItem(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             modifier =

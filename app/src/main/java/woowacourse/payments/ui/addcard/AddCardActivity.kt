@@ -33,19 +33,19 @@ class AddCardActivity : ComponentActivity() {
                     topBar = {
                         AddCardTopbar(
                             isAddCardEnabled = cardInfo.isComplete(),
-                            onAddCardSucceeded = { saveCard(cardInfo) },
+                            onAddCardSuccess = { saveCard(cardInfo) },
                             onBackClick = { finish() },
                         )
                     },
                 ) { padding ->
                     AddCardScreen(
+                        cardInfo = cardInfo,
+                        vendorModal = vendorModal,
                         modifier =
                             Modifier
                                 .padding(padding)
                                 .padding(horizontal = 24.dp)
                                 .fillMaxWidth(),
-                        cardInfo = cardInfo,
-                        vendorModal = vendorModal,
                         onCardClick = { vendorModal.showModal() },
                     )
                 }

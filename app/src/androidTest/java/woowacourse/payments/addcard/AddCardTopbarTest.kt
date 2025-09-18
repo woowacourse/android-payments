@@ -37,7 +37,7 @@ class AddCardTopbarTest {
         composeTestRule.setContent {
             AddCardTopbar(
                 isAddCardEnabled = true,
-                onAddCardSucceeded = { isCompleteClicked = true },
+                onAddCardSuccess = { isCompleteClicked = true },
             )
         }
 
@@ -57,7 +57,7 @@ class AddCardTopbarTest {
         composeTestRule.setContent {
             AddCardTopbar(
                 isAddCardEnabled = false,
-                onAddCardFailed = { isCompleteClicked = true },
+                onAddCardFail = { isCompleteClicked = true },
             )
         }
 
