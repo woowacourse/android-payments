@@ -8,11 +8,10 @@ import androidx.compose.ui.test.performClick
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
-import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
@@ -54,7 +53,7 @@ class CardsScreenTest {
                     expireDate = "0421",
                     ownerName = "peto",
                     password = "",
-                    company = CardCompanyState.Selected(CardCompany.BC),
+                    company = CardCompany.BC,
                 ),
             )
 
@@ -93,21 +92,21 @@ class CardsScreenTest {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        CardCompanyState.Selected(CardCompany.BC),
+                        CardCompany.BC,
                     ),
                     Card(
                         number = "2222333344445555",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        CardCompanyState.Selected(CardCompany.BC),
+                        CardCompany.BC,
                     ),
                     Card(
                         number = "3333444455556666",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
-                        CardCompanyState.Selected(CardCompany.BC),
+                        CardCompany.BC,
                     ),
                 ),
             )

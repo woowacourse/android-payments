@@ -134,10 +134,18 @@ fun CardsScreen(
                 EmptyCardContent(resourceProvider, onClickCard)
 
             is CardsUiState.SINGLE ->
-                SingleCardComponent(resourceProvider, uiState.state, onClickCard)
+                SingleCardComponent(
+                    resourceProvider,
+                    CardState.Registered(uiState.state),
+                    onClickCard,
+                )
 
             is CardsUiState.MULTIPLE ->
-                MultipleCardContent(resourceProvider, uiState.state, onClickCard)
+                MultipleCardContent(
+                    resourceProvider,
+                    uiState.state.map { CardState.Registered(it) },
+                    onClickCard,
+                )
         }
     }
 }
@@ -172,15 +180,15 @@ fun EmptyCardContent(
 @Composable
 fun SingleCardComponent(
     resourceProvider: CompanyResourceProvider,
-    card: Card,
+    registeredCard: CardState.Registered,
     onClickCard: (CardState) -> Unit,
 ) {
     PaymentCard(
         resourceProvider = resourceProvider,
-        card = CardState.Registered(card.company),
+        card = registeredCard,
         content = {
             RegisteredCard(
-                card,
+                registeredCard.card,
                 CARD_NUMBER_GROUP_SIZE,
                 CARD_NUMBER_SEPARATOR,
                 CARD_MASKING_CHAR,
@@ -188,7 +196,6 @@ fun SingleCardComponent(
                 CARD_EXPIRE_DATE_SEPARATOR,
             )
         },
-        bank = card.company,
         modifier =
             Modifier
                 .padding(top = 30.dp)
@@ -213,19 +220,17 @@ fun SingleCardComponent(
 @Composable
 fun MultipleCardContent(
     resourceProvider: CompanyResourceProvider,
-    cards: List<Card>,
+    registeredCards: List<CardState.Registered>,
     onClickCard: (CardState) -> Unit,
 ) {
-    cards.forEach { card ->
-        val cardState = CardState.Registered(card.company)
-
+    registeredCards.forEach { card ->
         PaymentCard(
             resourceProvider = resourceProvider,
-            card = cardState,
-            onClick = { onClickCard(cardState) },
+            card = card,
+            onClick = { onClickCard(card) },
             content = {
                 RegisteredCard(
-                    card,
+                    card.card,
                     CARD_NUMBER_GROUP_SIZE,
                     CARD_NUMBER_SEPARATOR,
                     CARD_MASKING_CHAR,
@@ -233,7 +238,6 @@ fun MultipleCardContent(
                     CARD_EXPIRE_DATE_SEPARATOR,
                 )
             },
-            bank = card.company,
             modifier =
                 Modifier
                     .padding(top = 30.dp)
@@ -255,7 +259,7 @@ fun CardScreenPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun OneCardScreenPreview(
+fun SingleCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     CardsScreen(
