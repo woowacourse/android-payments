@@ -35,8 +35,8 @@ import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
-import woowacourse.payments.ui.common.model.CardCompanyUiModel
-import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
 
@@ -52,7 +52,7 @@ fun CardRegisterScreen(
     var ownerName by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var isShowingBottomSheet by rememberSaveable { mutableStateOf(true) }
-    var selectedCardCompany by rememberSaveable { mutableStateOf(CardCompanyUiModel.NOT_SELECTED) }
+    var selectedCardCompany by rememberSaveable { mutableStateOf(CardCompanyUiType.NOT_SELECTED) }
     val scope = rememberCoroutineScope()
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -88,7 +88,7 @@ fun CardRegisterScreen(
                 modalBottomSheetState = modalBottomSheetState,
                 onDismissRequest = { },
                 onCardCompanyClick = { cardCompany: CardCompany ->
-                    selectedCardCompany = cardCompany.toUiModel()
+                    selectedCardCompany = cardCompany.toUiType()
                     scope
                         .launch {
                             modalBottomSheetState.hide()

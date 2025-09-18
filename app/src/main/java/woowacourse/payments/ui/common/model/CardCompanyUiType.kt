@@ -6,7 +6,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.GrayFF333333
 
-enum class CardCompanyUiModel(
+enum class CardCompanyUiType(
     val title: String,
     @DrawableRes val icon: Int?,
     val color: Color,
@@ -23,4 +23,4 @@ enum class CardCompanyUiModel(
     KB("국민카드", R.drawable.ic_kb, Color(0xFF5D544B), CardCompany.KB),
 }
 
-fun CardCompany.toUiModel(): CardCompanyUiModel = CardCompanyUiModel.entries.find { it.origin == this } ?: CardCompanyUiModel.NOT_SELECTED
+fun CardCompany.toUiType(): CardCompanyUiType = CardCompanyUiType.entries.find { it.origin == this } ?: CardCompanyUiType.NOT_SELECTED

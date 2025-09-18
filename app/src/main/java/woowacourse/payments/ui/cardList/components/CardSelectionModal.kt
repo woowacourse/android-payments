@@ -24,8 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.CardCompany
-import woowacourse.payments.ui.common.model.CardCompanyUiModel
-import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.GrayFF525252
 import woowacourse.payments.ui.theme.Typography
 
@@ -94,17 +94,17 @@ private fun CardCompanyItem(
                 .fillMaxWidth(1f / MAX_ITEM_EACH_ROW_COUNT)
                 .clickable { onClickCardCompany(company) },
     ) {
-        val cardCompanyUiModel: CardCompanyUiModel = company.toUiModel()
+        val cardCompanyUiType: CardCompanyUiType = company.toUiType()
 
         Icon(
-            painter = painterResource(cardCompanyUiModel.icon ?: return),
-            contentDescription = cardCompanyUiModel.title,
+            painter = painterResource(cardCompanyUiType.icon ?: return),
+            contentDescription = cardCompanyUiType.title,
             tint = Color.Unspecified,
             modifier = Modifier.size(37.dp),
         )
         Spacer(modifier = Modifier.height(9.dp))
         Text(
-            text = cardCompanyUiModel.title,
+            text = cardCompanyUiType.title,
             color = GrayFF525252,
             style = Typography.bodyLarge,
         )

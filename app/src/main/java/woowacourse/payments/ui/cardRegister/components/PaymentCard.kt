@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardCompany
-import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Typography
 import woowacourse.payments.ui.theme.WhiteFF000000
@@ -46,7 +46,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = card.cardCompany.toUiModel().color,
+                    color = card.cardCompany.toUiType().color,
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(bottom = 16.dp)
@@ -54,7 +54,7 @@ fun PaymentCard(
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = card.cardCompany.toUiModel().title,
+                text = card.cardCompany.toUiType().title,
                 color = WhiteFF000000,
                 style = Typography.labelMedium,
                 modifier = Modifier.padding(bottom = 15.dp),
