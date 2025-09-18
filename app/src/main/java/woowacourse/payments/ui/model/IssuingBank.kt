@@ -4,7 +4,15 @@ import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.BcSignature
 import woowacourse.payments.ui.theme.Gray20
+import woowacourse.payments.ui.theme.HanaSignature
+import woowacourse.payments.ui.theme.HyundaiSignature
+import woowacourse.payments.ui.theme.KakaoSignature
+import woowacourse.payments.ui.theme.KbSignature
+import woowacourse.payments.ui.theme.LotteSignature
+import woowacourse.payments.ui.theme.ShinhanSignature
+import woowacourse.payments.ui.theme.WooriSignature
 
 @Parcelize
 enum class IssuingBank : Parcelable {
@@ -22,14 +30,14 @@ enum class IssuingBank : Parcelable {
     fun getColor(): Color =
         when (this) {
             NOT_SELECTED -> Gray20
-            BC -> Color(0xFFFA3246)
-            SHINHAN -> Color(0xFF0046FF)
-            KAKAO -> Color(0xFFFEE500)
-            HYUNDAI -> Color.Black
-            WOORI -> Color(0xFF0067AC)
-            LOTTE -> Color(0xFFDA291C)
-            HANA -> Color(0xFF008C8C)
-            KB -> Color(0xFFFFCC00)
+            BC -> BcSignature
+            SHINHAN -> ShinhanSignature
+            KAKAO -> KakaoSignature
+            HYUNDAI -> HyundaiSignature
+            WOORI -> WooriSignature
+            LOTTE -> LotteSignature
+            HANA -> HanaSignature
+            KB -> KbSignature
         }
 
     fun getNameResId(): Int? =
