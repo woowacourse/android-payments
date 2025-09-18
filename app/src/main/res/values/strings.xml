@@ -25,4 +25,13 @@
     <string name="payments_enroll_new_card">새로운 카드를 등록해주세요</string>
     <string name="payments_top_bar_icon_name">추가</string>
     <string name="content_description_card_logo">카드 로고 입니다</string>
+    <string name="card_company_bc">BC 카드</string>
+    <string name="card_company_shinhan">신한 카드</string>
+    <string name="card_company_kakao">카카오뱅크</string>
+    <string name="card_company_hyundae">현대 카드</string>
+    <string name="card_company_woori">우리 카드</string>
+    <string name="card_company_lotte">롯데 카드</string>
+    <string name="card_company_hana">하나 카드</string>
+    <string name="card_company_kb">국민 카드</string>
+    <string name="card_company_default"> </string>
 </resources>

@@ -19,18 +19,19 @@ val GrayE5 = Color(0xFFE5E5E5)
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
 
-val Brown = Color(0xFF695F54)
+val SymbolColorKB = Color(0xFF695F54)
 
-val Red = Color(0xFFF04651)
+val SymbolColorBC = Color(0xFFF04651)
 
-val Green = Color(0xFF009490)
+val SymbolColorHANA = Color(0xFF009490)
 
-val Yellow = Color(0xFFFFE600)
+val SymbolColorKAKAO = Color(0xFFFFE600)
 
-val Blue = Color(0xFF027BC8)
+val SymbolColorWOORI = Color(0xFF027BC8)
 
-val shinhanBlue = Color(0xFF0046FF)
+val SymbolColorSHINHAN = Color(0xFF0046FF)
 
-val LotteRed = Color(0xFFED1C23)
+val SymbolColorLOTTE = Color(0xFFED1C23)
 
 val Gray52 = Color(0xFF525252)
+val SymbolColorHYUNDAE = Color(0xFF000000)

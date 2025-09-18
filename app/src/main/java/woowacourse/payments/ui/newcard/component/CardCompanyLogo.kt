@@ -23,26 +23,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
+import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.uiModel.toUiModel
 import woowacourse.payments.ui.theme.Gray52
 
 @Composable
 fun BankLogo(
-    bankType: BankTypeUiModel,
-    selectedBank: (BankTypeUiModel) -> Unit,
+    cardCompany: CardCompanyUiModel.SelectCardCompany,
+    selectedBank: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
             .width(69.dp)
             .height(65.dp)
-            .clickable { selectedBank(bankType) },
+            .clickable { selectedBank(cardCompany) },
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            bankType.logo?.let {
+            cardCompany.logo?.let {
                 Image(
                     painter = painterResource(id = it),
                     contentDescription = stringResource(R.string.content_description_card_logo),
@@ -52,7 +54,7 @@ fun BankLogo(
                 )
             }
             Text(
-                text = bankType.displayName,
+                text = cardCompany.displayName.let { stringResource(it) },
                 fontWeight = FontWeight.W500,
                 fontSize = 16.sp,
                 lineHeight = 16.sp,
@@ -67,22 +69,23 @@ fun BankLogo(
 @Preview(showBackground = true)
 @Composable
 fun BankLogoPreview(
-    @PreviewParameter(BankLogoPreviewParameterProvider::class) bankType: BankTypeUiModel,
+    @PreviewParameter(CardCompanyLogoPreviewParameterProvider::class) cardCompany: CardCompanyUiModel.SelectCardCompany,
 ) {
-    BankLogo(bankType = bankType, {})
+    BankLogo(cardCompany = cardCompany, {})
 }
 
-class BankLogoPreviewParameterProvider : PreviewParameterProvider<BankTypeUiModel> {
-    override val values: Sequence<BankTypeUiModel>
+class CardCompanyLogoPreviewParameterProvider :
+    PreviewParameterProvider<CardCompanyUiModel.SelectCardCompany> {
+    override val values: Sequence<CardCompanyUiModel.SelectCardCompany>
         get() = sequenceOf(
-            BankTypeUiModel.KAKAO,
-            BankTypeUiModel.BC,
-            BankTypeUiModel.KB,
-            BankTypeUiModel.HANA,
-            BankTypeUiModel.HYUNDAI,
-            BankTypeUiModel.SHINHAN,
-            BankTypeUiModel.LOTTE,
-            BankTypeUiModel.WOORI
+            CardCompany.KAKAO.toUiModel(),
+            CardCompany.BC.toUiModel(),
+            CardCompany.KB.toUiModel(),
+            CardCompany.HANA.toUiModel(),
+            CardCompany.HYUNDAE.toUiModel(),
+            CardCompany.SHINHAN.toUiModel(),
+            CardCompany.LOTTE.toUiModel(),
+            CardCompany.WOORI.toUiModel()
         )
 
 }

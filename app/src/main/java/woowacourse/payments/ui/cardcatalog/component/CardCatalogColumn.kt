@@ -24,11 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 import woowacourse.payments.ui.theme.GrayE5
 import java.time.YearMonth
 
@@ -90,13 +90,13 @@ private fun CardCatalogColumnPreview1() {
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
             password = Password("1234"),
-            bankTypeUiModel = BankTypeUiModel.KB,
+            cardCompany = CardCompany.BC,
         )
     )
     CardCatalogColumn(cards = cards, onClickAddCard = {})
 }
 
-@Preview(name ="카드가 2개일 때", showBackground = true)
+@Preview(name = "카드가 2개일 때", showBackground = true)
 @Composable
 private fun CardCatalogColumnPreview2() {
     val cards = listOf(
@@ -105,14 +105,14 @@ private fun CardCatalogColumnPreview2() {
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
             password = Password("1234"),
-            bankTypeUiModel = BankTypeUiModel.BC
+            cardCompany = CardCompany.BC,
         ),
         Card(
             number = CardNumber("1234567890123456"),
             ownerName = OwnerName("Hwang Chaewon"),
             expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),
             password = Password("1234"),
-            bankTypeUiModel = BankTypeUiModel.BC
+            cardCompany = CardCompany.BC,
         )
     )
     CardCatalogColumn(cards = cards, onClickAddCard = {})

@@ -7,11 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.newcard.state.CardStateHolder
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,7 +19,7 @@ fun SelectedBankBottomSheet(
     state: CardStateHolder,
     onDismissRequest: () -> Unit,
 ) {
-    var selectedBankCard by rememberSaveable { mutableStateOf(BankTypeUiModel.NOT_SELECTED) }
+    var selectedBankCard: CardCompanyUiModel by remember { mutableStateOf(CardCompanyUiModel.Default()) }
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
@@ -27,7 +27,7 @@ fun SelectedBankBottomSheet(
     )
 
     LaunchedEffect(key1 = selectedBankCard) {
-        if (selectedBankCard != BankTypeUiModel.NOT_SELECTED) {
+        if (selectedBankCard != CardCompanyUiModel.Default()) {
             bottomSheetState.hide()
             onDismissRequest()
         }
@@ -38,7 +38,7 @@ fun SelectedBankBottomSheet(
     ) {
         SelectedBankRow(
             selectedBank = { selectedBank ->
-                state.changeBankType(selectedBank)
+                state.selectedCardCompany(selectedBank)
                 selectedBankCard = selectedBank
             },
         )

@@ -2,13 +2,11 @@ package woowacourse.payments.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 @Parcelize
 data class Card(
-    val bankTypeUiModel: BankTypeUiModel,
+    val cardCompany: CardCompany,
     val number: CardNumber,
     val expirationDate: ExpirationDate,
     val ownerName: OwnerName,
@@ -16,17 +14,17 @@ data class Card(
 ) : Parcelable {
     companion object {
         fun Card(
-            bankTypeUiModel: BankTypeUiModel,
+            cardCompany: CardCompany,
             number: String,
             expirationDate: YearMonth,
             ownerName: String,
             password: String,
         ) = Card(
-            bankTypeUiModel,
-            CardNumber(number),
-            ExpirationDate(expirationDate),
-            OwnerName(ownerName),
-            Password(password),
+            cardCompany = cardCompany,
+            number = CardNumber(number),
+            expirationDate = ExpirationDate(expirationDate),
+            ownerName = OwnerName(ownerName),
+            password = Password(password),
         )
     }
 }

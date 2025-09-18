@@ -10,7 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.uiModel.cardCompanyMap
 
 private const val COLUMN_COUNT = 4
 private const val ROW_COUNT = 2
@@ -18,7 +19,7 @@ private const val ROW_COUNT = 2
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SelectedBankRow(
-    selectedBank: (BankTypeUiModel) -> Unit,
+    selectedBank: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -31,10 +32,10 @@ fun SelectedBankRow(
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         repeat(ROW_COUNT * COLUMN_COUNT) { index: Int ->
-            if (BankTypeUiModel.entries[index] != BankTypeUiModel.NOT_SELECTED) {
-                val bankType = BankTypeUiModel.entries[index]
+            if (selectedBank != CardCompanyUiModel.Default()) {
+                val cardCompanyType = cardCompanyMap.entries.toList()[index].value
                 BankLogo(
-                    bankType = bankType,
+                    cardCompany = cardCompanyType,
                     selectedBank = { selectedBank -> selectedBank(selectedBank) })
             }
         }

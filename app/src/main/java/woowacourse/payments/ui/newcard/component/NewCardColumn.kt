@@ -20,11 +20,11 @@ fun NewCardColumn(
     Column(
         modifier = modifier.padding(horizontal = 24.dp)
     ) {
-        BankTypeCard(
+        CardType(
+            cardCompanyUiModel = state.cardCompanyUiModel,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 14.dp, bottom = 28.dp),
-            bankTypeUiModel = state.bankTypeUiModel
         )
         Box(
             modifier = Modifier.height(86.dp)

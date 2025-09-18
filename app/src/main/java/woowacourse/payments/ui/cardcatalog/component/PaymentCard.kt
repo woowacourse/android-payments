@@ -1,5 +1,8 @@
 package woowacourse.payments.ui.cardcatalog.component
 
+import android.R.attr.letterSpacing
+import android.R.attr.lineHeight
+import android.R.attr.password
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,17 +14,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.uiModel.toUiModel
 import woowacourse.payments.ui.theme.Black
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -31,12 +37,15 @@ fun PaymentCard(
     card: Card?,
     modifier: Modifier = Modifier,
 ) {
+    val color = card?.cardCompany?.toUiModel()?.color ?: Black
+    val cardName = card?.cardCompany?.toUiModel()?.displayName?.let { stringResource(it) } ?: ""
+
     Box(
         modifier = modifier
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
             .background(
-                color = card?.bankTypeUiModel?.color ?: Black,
+                color = color,
                 shape = RoundedCornerShape(5.dp),
             )
     ) {
@@ -57,10 +66,9 @@ fun PaymentCard(
                     .padding(start = 14.dp, top = 15.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = card.bankTypeUiModel.displayName,
-                color = Color.White,
+                text =cardName,
                 letterSpacing = 0.17.em,
-                lineHeight = 12.sp
+                lineHeight = 12.sp,
             )
             Text(
                 modifier = Modifier
@@ -105,7 +113,7 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     val card = Card(
-        bankTypeUiModel = BankTypeUiModel.BC,
+        cardCompany = CardCompany.BC,
         number = CardNumber("1234567890123456"),
         ownerName = OwnerName("Hwang Chaewon"),
         expirationDate = ExpirationDate(YearMonth.now().plusYears(1)),

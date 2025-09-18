@@ -1,24 +1,26 @@
 package woowacourse.payments.ui.newcard.state
 
+import android.util.Log.i
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.uiModel.BankTypeUiModel
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.uiModel.toDomain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class CardStateHolder {
-    var card by mutableStateOf<Card?>(null)
+    var card: Card? by mutableStateOf(null)
         private set
-
-    var bankTypeUiModel by mutableStateOf(BankTypeUiModel.NOT_SELECTED)
+    var cardCompany: CardCompany? by mutableStateOf(null)
+    var cardCompanyUiModel: CardCompanyUiModel by mutableStateOf(CardCompanyUiModel.Default())
         private set
-
     var number by mutableStateOf("")
         private set
     var expirationDate by mutableStateOf("")
@@ -39,10 +41,10 @@ class CardStateHolder {
         private set
 
     fun newCard(): Card? {
-        bankTypeUiModel.let { bankType ->
+        cardCompany?.let { cardCompany ->
             runCatching {
                 Card.Companion.Card(
-                    bankTypeUiModel = bankType,
+                    cardCompany = cardCompany,
                     number = number,
                     expirationDate = YearMonth.parse(
                         expirationDate,
@@ -61,9 +63,17 @@ class CardStateHolder {
         return null
     }
 
-    fun changeBankType(newBank: BankTypeUiModel) {
-        if (newBank != BankTypeUiModel.NOT_SELECTED) {
-            bankTypeUiModel = newBank
+    fun selectedCardCompany(newCardCompany: CardCompanyUiModel) {
+        when (newCardCompany) {
+            is CardCompanyUiModel.Default -> {
+                cardCompanyUiModel = CardCompanyUiModel.Default()
+                cardCompany = null
+            }
+
+            is CardCompanyUiModel.SelectCardCompany -> {
+                cardCompanyUiModel = newCardCompany
+                cardCompany = newCardCompany.toDomain()
+            }
         }
     }
 
