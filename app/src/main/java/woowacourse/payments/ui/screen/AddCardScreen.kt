@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +28,7 @@ import woowacourse.payments.ui.components.PasswordField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.UserNameField
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 
 @Composable
 fun AddCardScreen(
@@ -37,11 +39,9 @@ fun AddCardScreen(
 
     var showSheet by rememberSaveable { mutableStateOf(true) }
     var selectedCardCompanyType by rememberSaveable { mutableStateOf(CardCompanyType.NOT_SELECTED) }
-    val cardForPreview =
-        remember(selectedCardCompanyType) {
-            CardUiModel.EMPTY.copy(bankType = selectedCardCompanyType)
-        }
-
+    val cardForPreview by remember(selectedCardCompanyType) {
+        derivedStateOf { CardUiModel.EMPTY.copy(cardCompany = selectedCardCompanyType.toUiModel()) }
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -107,8 +107,8 @@ fun AddCardScreen(
     BankSelectBottomSheet(
         visible = showSheet,
         onDismissRequest = { showSheet = false },
-        onSelect = { bank ->
-            selectedCardCompanyType = bank
+        onSelect = { cardCompany ->
+            selectedCardCompanyType = cardCompany
             showSheet = false
         },
         blockUserDismiss = false,

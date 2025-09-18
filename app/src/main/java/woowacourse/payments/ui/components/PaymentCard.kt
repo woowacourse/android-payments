@@ -27,15 +27,13 @@ import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.CardDefault
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: CardUiModel?,
+    card: CardUiModel = CardUiModel.EMPTY,
 ) {
-    val bankInfo = card?.bankType?.toUiModel()
-
+    val cardCompany = card.cardCompany
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -43,7 +41,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankInfo?.background ?: CardDefault,
+                    color = Color(cardCompany.background),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -57,7 +55,7 @@ fun PaymentCard(
         ) {
             Text(
                 fontWeight = FontWeight.W500,
-                text = bankInfo?.let { stringResource(id = it.label) }.orEmpty(),
+                text = stringResource(id = cardCompany.label),
                 color = Color.White,
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
@@ -75,7 +73,7 @@ fun PaymentCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 fontWeight = FontWeight.W500,
-                text = card?.cardNumber.orEmpty(),
+                text = card.cardNumber,
                 color = Color.White,
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
@@ -88,7 +86,7 @@ fun PaymentCard(
             ) {
                 Text(
                     lineHeight = 10.sp,
-                    text = card?.userName.orEmpty(),
+                    text = card.userName.orEmpty(),
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -97,7 +95,7 @@ fun PaymentCard(
                 Spacer(Modifier.height(2.dp))
                 Text(
                     lineHeight = 10.sp,
-                    text = card?.expirationDate.orEmpty(),
+                    text = card.expirationDate,
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -122,7 +120,7 @@ private fun PaymentCardPreview_BC() {
                 expirationDate = "04 / 21",
                 userName = "KIMGAHYUN",
                 password = "1234",
-                bankType = CardCompanyType.BC,
+                cardCompany = CardCompanyType.BC.toUiModel(),
             )
         PaymentCard(
             modifier = Modifier,
@@ -140,11 +138,11 @@ private fun PaymentCardPreview_Kb() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
+                cardCompany = CardCompanyType.KB.toUiModel(),
                 cardNumber = "1111 - 2222 - 3333 - 4444",
                 expirationDate = "04 / 21",
                 userName = "KIMGAHYUN",
                 password = "1234",
-                bankType = CardCompanyType.KB,
             )
         PaymentCard(
             modifier = Modifier,
