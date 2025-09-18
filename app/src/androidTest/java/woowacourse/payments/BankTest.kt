@@ -14,15 +14,15 @@ import woowacourse.payments.ui.newcard.banks.BanksTestTag
 
 class BankTest {
     @get:Rule
-    val rule = createComposeRule()
+    val composeTestRule = createComposeRule()
 
     @Test
     fun `은행_컨테이너를_클릭하면_해당_은행타입으로_onSelectCard가_호출된다`() {
         var bankType: BankType? = null
-        rule.setContent {
+        composeTestRule.setContent {
             Bank(BankType.BC, { bankType = it })
         }
-        rule
+        this@BankTest.composeTestRule
             .onNodeWithTag(BanksTestTag.BANK_CONTAINER_TAG)
             .assertIsEnabled()
             .performClick()
@@ -32,10 +32,10 @@ class BankTest {
 
     @Test
     fun `은행_이름이_UI에_표시된다`() {
-        rule.setContent {
+        composeTestRule.setContent {
             Bank(BankType.BC, {})
         }
-        rule
+        composeTestRule
             .onNodeWithTag(BanksTestTag.BANK_NAME_TAG, useUnmergedTree = true)
             .assert(hasText("BC카드"))
     }
