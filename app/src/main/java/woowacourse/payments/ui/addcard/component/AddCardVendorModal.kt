@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.addcard.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.model.CardVendor
-import woowacourse.payments.ui.addcard.component.VendorItem
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.VendorUiModel
@@ -20,7 +19,7 @@ import woowacourse.payments.ui.uimodel.toUiModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun AddCardVendorModalScreen(
+fun AddCardVendorModal(
     vendorModalUiState: VendorModalUiState,
     onDismissRequest: () -> Unit = {},
     onVendorItemClick: (VendorUiModel) -> Unit = {},
@@ -81,7 +80,7 @@ private fun AddCardVendorModalContentPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 private fun AddCardVendorModalScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardVendorModalScreen(
+        AddCardVendorModal(
             vendorModalUiState = VendorModalUiState(),
         )
     }

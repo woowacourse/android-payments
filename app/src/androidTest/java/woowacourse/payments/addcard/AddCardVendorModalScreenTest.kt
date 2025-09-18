@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.AddCardVendorModalScreen
+import woowacourse.payments.ui.addcard.component.AddCardVendorModal
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 
 @OptIn(ExperimentalTestApi::class)
@@ -19,7 +19,7 @@ class AddCardVendorModalScreenTest {
         // given
         var isClicked = false
         composeTestRule.setContent {
-            AddCardVendorModalScreen(
+            AddCardVendorModal(
                 vendorModalUiState = VendorModalUiState(),
                 onVendorItemClick = {
                     isClicked = true
