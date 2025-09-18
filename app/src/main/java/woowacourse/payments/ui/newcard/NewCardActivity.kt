@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
@@ -21,11 +22,10 @@ class NewCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var isBankBottomSheetOpen by rememberSaveable { mutableStateOf(true) }
-            if (isBankBottomSheetOpen) {
+            if (state.bottomSheetOpen) {
                 SelectedBankBottomSheet(
                     state = state,
-                    onDismissRequest = { isBankBottomSheetOpen = false }
+                    onDismissRequest = { state.changeBottomSheetState() }
                 )
             }
             NewCardScreen(
@@ -43,7 +43,8 @@ class NewCardActivity : ComponentActivity() {
     fun saveClick() {
         val newCard = state.newCard()
         if (newCard == null) {
-            Toast.makeText(this, state.cardErrorMessage ?: "입력을 확인해 주세요.", Toast.LENGTH_SHORT)
+            state.changeBottomSheetState()
+            Toast.makeText(this, state.cardErrorMessage ?: "카드사를 선택해주세요", Toast.LENGTH_SHORT)
                 .show()
             return
         }

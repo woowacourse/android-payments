@@ -26,7 +26,6 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.uiModel.toUiModel
 import woowacourse.payments.ui.theme.Black
 import java.time.YearMonth

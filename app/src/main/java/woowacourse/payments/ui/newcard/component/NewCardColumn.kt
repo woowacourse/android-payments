@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,10 @@ fun NewCardColumn(
             cardCompanyUiModel = state.cardCompanyUiModel,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 14.dp, bottom = 28.dp),
+                .padding(top = 14.dp, bottom = 28.dp)
+                .clickable(
+                    onClick = { state.changeBottomSheetState() }
+                ),
         )
         Box(
             modifier = Modifier.height(86.dp)

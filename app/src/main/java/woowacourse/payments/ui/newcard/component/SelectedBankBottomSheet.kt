@@ -23,7 +23,6 @@ fun SelectedBankBottomSheet(
 
     val bottomSheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
-        confirmValueChange = { false },
     )
 
     LaunchedEffect(key1 = selectedBankCard) {
@@ -34,6 +33,7 @@ fun SelectedBankBottomSheet(
             bottomSheetState.show()
         }
     }
+
     ModalBottomSheet(
         sheetState = bottomSheetState,
         onDismissRequest = { onDismissRequest() },

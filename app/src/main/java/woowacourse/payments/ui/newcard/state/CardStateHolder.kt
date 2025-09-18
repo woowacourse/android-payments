@@ -40,6 +40,13 @@ class CardStateHolder {
     var passwordErrorMessage by mutableStateOf<String?>(null)
         private set
 
+    var bottomSheetOpen by mutableStateOf<Boolean>(true)
+        private set
+
+    fun changeBottomSheetState() {
+        bottomSheetOpen = !bottomSheetOpen
+    }
+
     fun newCard(): Card? {
         cardCompany?.let { cardCompany ->
             runCatching {
