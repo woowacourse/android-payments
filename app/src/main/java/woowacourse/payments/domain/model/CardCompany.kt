@@ -1,7 +1,7 @@
 package woowacourse.payments.domain.model
 
 enum class CardCompany {
-    None,
+    NONE,
     BC,
     SHINHAN,
     KAKAO,
