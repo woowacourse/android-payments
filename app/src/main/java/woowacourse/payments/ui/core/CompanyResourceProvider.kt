@@ -3,7 +3,6 @@ package woowacourse.payments.ui.core
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.theme.SignatureBcRed
 import woowacourse.payments.ui.theme.SignatureHanaTeal
 import woowacourse.payments.ui.theme.SignatureHyundaiBlack
@@ -14,22 +13,16 @@ import woowacourse.payments.ui.theme.SignatureShinhanBlue
 import woowacourse.payments.ui.theme.SignatureWooriBlueWhite
 
 class CompanyResourceProvider {
-    fun getCompanyName(bank: CardCompanyState): Int? =
-        when (bank) {
-            is CardCompanyState.Selected -> {
-                when (bank.company) {
-                    CardCompany.BC -> R.string.bank_bc
-                    CardCompany.SHINHAN -> R.string.bank_sinhan
-                    CardCompany.KAKAO -> R.string.bank_kakao
-                    CardCompany.HYUNDAE -> R.string.bank_hyundae
-                    CardCompany.WOORI -> R.string.bank_woori
-                    CardCompany.LOTTE -> R.string.bank_lotte
-                    CardCompany.HANA -> R.string.bank_hana
-                    CardCompany.KB -> R.string.bank_kb
-                }
-            }
-
-            CardCompanyState.Empty -> null
+    fun getCompanyName(company: CardCompany): Int =
+        when (company) {
+            CardCompany.BC -> R.string.bank_bc
+            CardCompany.SHINHAN -> R.string.bank_sinhan
+            CardCompany.KAKAO -> R.string.bank_kakao
+            CardCompany.HYUNDAE -> R.string.bank_hyundae
+            CardCompany.WOORI -> R.string.bank_woori
+            CardCompany.LOTTE -> R.string.bank_lotte
+            CardCompany.HANA -> R.string.bank_hana
+            CardCompany.KB -> R.string.bank_kb
         }
 
     fun getSignatureColor(cardCompany: CardCompany): Color =

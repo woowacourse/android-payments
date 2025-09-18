@@ -29,10 +29,8 @@ fun RegisteredCard(
     modifier: Modifier = Modifier,
 ) {
     val resourceProvider = CompanyResourceProvider()
-    val companyName: String? =
-        resourceProvider.getCompanyName(card.company)?.let {
-            stringResource(it)
-        }
+    val companyName: String =
+        stringResource(resourceProvider.getCompanyName(card.company))
 
     Column(
         modifier =

@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.component.CardCompanyIcon
 import woowacourse.payments.ui.core.CompanyResourceProvider
-import woowacourse.payments.ui.state.CardCompanyState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,14 +83,13 @@ fun BankSelectRow(
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         CardCompany.entries.forEachIndexed { index, bankType ->
-            resourceProvider.getCompanyName(CardCompanyState.Selected(bankType))?.let { bankName ->
-                CardCompanyIcon(
-                    bankIcon = resourceProvider.getCompanyIcon(bankType),
-                    bankName = stringResource(bankName),
-                    cardCompany = bankType,
-                    onClick = onClick,
-                )
-            }
+            val bankName = resourceProvider.getCompanyName(bankType)
+            CardCompanyIcon(
+                bankIcon = resourceProvider.getCompanyIcon(bankType),
+                bankName = stringResource(bankName),
+                cardCompany = bankType,
+                onClick = onClick,
+            )
         }
     }
 }
