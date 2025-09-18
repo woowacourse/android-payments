@@ -52,7 +52,7 @@ class PaymentCardsTest {
 
     @Test
     fun 카드_개수가_1개_있을_때_카드_추가_버튼이_하단에_표시된다() {
-        val cards = listOf(sampleCard, sampleCard)
+        val cards = listOf(sampleCard)
 
         composeTestRule.setContent {
             PaymentCards(

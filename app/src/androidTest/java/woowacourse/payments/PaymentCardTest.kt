@@ -9,6 +9,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.assertAll
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardNumber
@@ -44,8 +45,7 @@ class PaymentCardTest {
         }
 
         composeTestRule.onNodeWithTag("PaymentCardContainer").assertIsDisplayed()
-
-        composeTestRule.onNodeWithText("BC카드")
+        composeTestRule.onNodeWithText("BC카드").assertIsDisplayed()
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("12 / 26").assertIsDisplayed()
         composeTestRule.onNodeWithText("KIMGAHYUN").assertIsDisplayed()
