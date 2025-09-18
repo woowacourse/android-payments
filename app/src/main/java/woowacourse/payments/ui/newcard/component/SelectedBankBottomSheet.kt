@@ -30,6 +30,8 @@ fun SelectedBankBottomSheet(
         if (selectedBankCard != CardCompanyUiModel.Default()) {
             bottomSheetState.hide()
             onDismissRequest()
+        } else {
+            bottomSheetState.show()
         }
     }
     ModalBottomSheet(
