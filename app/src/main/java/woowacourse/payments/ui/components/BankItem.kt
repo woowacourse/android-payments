@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey52
@@ -64,7 +64,7 @@ private fun BankItemPreview_Shinhan() {
         BankItem(
             bank =
                 CardCompanyUiModel(
-                    type = BankType.SHINHAN,
+                    type = CardCompanyType.SHINHAN,
                     image = R.drawable.ic_bank_shinhan,
                     label = R.string.bank_shinhan,
                     background = ShinhanBlue,
@@ -81,7 +81,7 @@ private fun BankItemPreview_Kakao() {
         BankItem(
             bank =
                 CardCompanyUiModel(
-                    type = BankType.KAKAO,
+                    type = CardCompanyType.KAKAO,
                     image = R.drawable.ic_bank_kakao,
                     label = R.string.bank_kakao,
                     background = KakaoYellow,

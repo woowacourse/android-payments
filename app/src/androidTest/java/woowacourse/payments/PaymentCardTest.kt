@@ -9,9 +9,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.assertAll
-import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
@@ -29,7 +28,7 @@ class PaymentCardTest {
     private val yearMonth = ExpirationDateInputParser.parse("1226")
     private val card =
         Card(
-            type = BankType.BC,
+            type = CardCompanyType.BC,
             cardNumber = CardNumber.from("1111222233334444"),
             expirationDate = ExpirationDate.from(yearMonth),
             userName = UserName.from("KIMGAHYUN"),

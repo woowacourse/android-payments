@@ -1,6 +1,6 @@
 package woowacourse.payments.domain.model
 
-enum class BankType {
+enum class CardCompanyType {
     NOT_SELECTED,
     BC,
     SHINHAN,

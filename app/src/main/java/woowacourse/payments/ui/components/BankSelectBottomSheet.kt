@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -16,7 +16,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun BankSelectBottomSheet(
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    onSelect: (BankType) -> Unit,
+    onSelect: (CardCompanyType) -> Unit,
     blockUserDismiss: Boolean = false,
 ) {
     val sheetState =

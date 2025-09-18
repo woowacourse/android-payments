@@ -3,8 +3,8 @@ package woowacourse.payments.ui.screen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
@@ -81,7 +81,7 @@ class AddCardScreenStateHolder {
 
     fun onSaveClick(
         onAddCard: (Card) -> Unit,
-        bankType: BankType,
+        cardCompanyType: CardCompanyType,
     ) {
         validateAllFields()
         if (!state.isSaveEnabled) return
@@ -93,7 +93,7 @@ class AddCardScreenStateHolder {
                 expirationDate = ExpirationDate.from(yearMonth),
                 userName = UserName.from(state.userName),
                 password = Password.from(state.password),
-                type = bankType,
+                type = cardCompanyType,
             )
         onAddCard(card)
     }

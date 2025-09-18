@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performClick
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.components.BankSelectRow
 import woowacourse.payments.ui.model.toUiModel
 
@@ -19,7 +19,12 @@ class BankSelectRowTest {
 
     @Test
     fun 은행_리스트가_표시된다() {
-        val banks = listOf(BankType.BC, BankType.SHINHAN, BankType.KAKAO).map { it.toUiModel() }
+        val banks =
+            listOf(
+                CardCompanyType.BC,
+                CardCompanyType.SHINHAN,
+                CardCompanyType.KAKAO,
+            ).map { it.toUiModel() }
 
         composeTestRule.setContent {
             BankSelectRow(
@@ -33,8 +38,13 @@ class BankSelectRowTest {
 
     @Test
     fun 은행_아이템을_클릭하면_해당_은행이_선택된다() {
-        val banks = listOf(BankType.BC, BankType.SHINHAN, BankType.KAKAO).map { it.toUiModel() }
-        var selected: BankType? = null
+        val banks =
+            listOf(
+                CardCompanyType.BC,
+                CardCompanyType.SHINHAN,
+                CardCompanyType.KAKAO,
+            ).map { it.toUiModel() }
+        var selected: CardCompanyType? = null
 
         composeTestRule.setContent {
             BankSelectRow(
@@ -48,6 +58,6 @@ class BankSelectRowTest {
             .onNode(hasTestTag("BankItem").and(hasText(label)))
             .performClick()
 
-        assertEquals(BankType.SHINHAN, selected)
+        assertEquals(CardCompanyType.SHINHAN, selected)
     }
 }

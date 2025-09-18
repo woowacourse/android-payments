@@ -1,10 +1,12 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcelable
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.ui.graphics.Color
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.theme.BcRed
 import woowacourse.payments.ui.theme.CardDefault
 import woowacourse.payments.ui.theme.HanaGreen
@@ -15,16 +17,17 @@ import woowacourse.payments.ui.theme.LotteRed
 import woowacourse.payments.ui.theme.ShinhanBlue
 import woowacourse.payments.ui.theme.WooriBlue
 
+@Parcelize
 data class CardCompanyUiModel(
-    val type: BankType,
+    val type: CardCompanyType,
     @DrawableRes val image: Int,
     @StringRes val label: Int,
-    val background: Color,
-)
+    @ColorInt val background: Int,
+) : Parcelable
 
-fun BankType.toUiModel(): CardCompanyUiModel =
+fun CardCompanyType.toUiModel(): CardCompanyUiModel =
     when (this) {
-        BankType.BC ->
+        CardCompanyType.BC ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_bc,
@@ -32,7 +35,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 BcRed,
             )
 
-        BankType.SHINHAN ->
+        CardCompanyType.SHINHAN ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_shinhan,
@@ -40,7 +43,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 ShinhanBlue,
             )
 
-        BankType.KAKAO ->
+        CardCompanyType.KAKAO ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_kakao,
@@ -48,7 +51,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 KakaoYellow,
             )
 
-        BankType.HYUNDAI ->
+        CardCompanyType.HYUNDAI ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_hyundai,
@@ -56,7 +59,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 HyundaiBlack,
             )
 
-        BankType.WOORI ->
+        CardCompanyType.WOORI ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_woori,
@@ -64,7 +67,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 WooriBlue,
             )
 
-        BankType.LOTTE ->
+        CardCompanyType.LOTTE ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_lotte,
@@ -72,7 +75,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 LotteRed,
             )
 
-        BankType.HANA ->
+        CardCompanyType.HANA ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_hana,
@@ -80,7 +83,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 HanaGreen,
             )
 
-        BankType.KB ->
+        CardCompanyType.KB ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_kb,
@@ -88,7 +91,7 @@ fun BankType.toUiModel(): CardCompanyUiModel =
                 KbBrown,
             )
 
-        BankType.NOT_SELECTED ->
+        CardCompanyType.NOT_SELECTED ->
             CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_placeholder,

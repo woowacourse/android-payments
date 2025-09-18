@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -122,7 +122,7 @@ private fun PaymentCardPreview_BC() {
                 expirationDate = "04 / 21",
                 userName = "KIMGAHYUN",
                 password = "1234",
-                bankType = BankType.BC,
+                bankType = CardCompanyType.BC,
             )
         PaymentCard(
             modifier = Modifier,
@@ -144,7 +144,7 @@ private fun PaymentCardPreview_Kb() {
                 expirationDate = "04 / 21",
                 userName = "KIMGAHYUN",
                 password = "1234",
-                bankType = BankType.KB,
+                bankType = CardCompanyType.KB,
             )
         PaymentCard(
             modifier = Modifier,

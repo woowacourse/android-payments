@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -23,12 +23,12 @@ private const val ROW_COUNT = 2
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BankSelectRow(
-    onSelect: (BankType) -> Unit,
+    onSelect: (CardCompanyType) -> Unit,
     modifier: Modifier = Modifier,
     banks: List<CardCompanyUiModel> =
         remember {
-            BankType.entries
-                .filter { it != BankType.NOT_SELECTED }
+            CardCompanyType.entries
+                .filter { it != CardCompanyType.NOT_SELECTED }
                 .map { it.toUiModel() }
         },
 ) {

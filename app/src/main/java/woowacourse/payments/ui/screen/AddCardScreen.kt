@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.components.BankSelectBottomSheet
 import woowacourse.payments.ui.components.CardNumberField
 import woowacourse.payments.ui.components.ExpirationDateField
@@ -36,10 +36,10 @@ fun AddCardScreen(
     val stateHolder = remember { AddCardScreenStateHolder() }
 
     var showSheet by rememberSaveable { mutableStateOf(true) }
-    var selectedBankType by rememberSaveable { mutableStateOf(BankType.NOT_SELECTED) }
+    var selectedCardCompanyType by rememberSaveable { mutableStateOf(CardCompanyType.NOT_SELECTED) }
     val cardForPreview =
-        remember(selectedBankType) {
-            CardUiModel.EMPTY.copy(bankType = selectedBankType)
+        remember(selectedCardCompanyType) {
+            CardUiModel.EMPTY.copy(bankType = selectedCardCompanyType)
         }
 
     Scaffold(
@@ -48,11 +48,11 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    if (selectedBankType == BankType.NOT_SELECTED) {
+                    if (selectedCardCompanyType == CardCompanyType.NOT_SELECTED) {
                         showSheet = true
                         return@NewCardTopBar
                     }
-                    stateHolder.onSaveClick(onAddCard, selectedBankType)
+                    stateHolder.onSaveClick(onAddCard, selectedCardCompanyType)
                 },
             )
         },
@@ -108,7 +108,7 @@ fun AddCardScreen(
         visible = showSheet,
         onDismissRequest = { showSheet = false },
         onSelect = { bank ->
-            selectedBankType = bank
+            selectedCardCompanyType = bank
             showSheet = false
         },
         blockUserDismiss = false,

@@ -1,11 +1,10 @@
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
@@ -23,7 +22,7 @@ class PaymentCardsTest {
     private val yearMonth = ExpirationDateInputParser.parse("1226")
     private val sampleCard =
         Card(
-            type = BankType.BC,
+            type = CardCompanyType.BC,
             cardNumber = CardNumber.from("1111222233334444"),
             expirationDate = ExpirationDate.from(yearMonth),
             userName = UserName.from("KIMGAHYUN"),
