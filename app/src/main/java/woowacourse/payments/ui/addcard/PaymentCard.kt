@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
@@ -37,7 +38,7 @@ fun PaymentCard(
                 modifier =
                     Modifier
                         .padding(start = 14.dp, bottom = 10.dp, top = 10.dp),
-                text = bank.bankName,
+                text = stringResource(id = bank.bankName),
                 color = Color(0xFFFFFFFF),
                 fontSize = 12.sp,
             )

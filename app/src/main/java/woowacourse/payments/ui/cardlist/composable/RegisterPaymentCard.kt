@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
@@ -32,7 +33,7 @@ fun RegisterPaymentCard(
     ) {
         Text(
             modifier = Modifier.padding(top = 14.dp),
-            text = card.bank.bankName,
+            text = stringResource(id = card.bank.bankName),
             color = Color(0xFFFFFFFF),
             fontSize = 12.sp,
         )

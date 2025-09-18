@@ -19,4 +19,15 @@
     <string name="card_list_add_card_description">Add Card</string>
     <string name="card_list_add_card_button">추가</string>
     <string name="add_card_plus_sign">+</string>
+    <!-- 카드 회사 이름 -->
+    <string name="bank_name_bc">BC카드</string>
+    <string name="bank_name_sinhan">신한카드</string>
+    <string name="bank_name_kakao">카카오뱅크</string>
+    <string name="bank_name_hyunde">현대카드</string>
+    <string name="bank_name_uri">우리카드</string>
+    <string name="bank_name_lotte">롯데카드</string>
+    <string name="bank_name_hana">하나카드</string>
+    <string name="bank_name_kb">국민카드</string>
+    <string name="bank_name_not_selected">선택 안됨</string>
 </resources>
+
