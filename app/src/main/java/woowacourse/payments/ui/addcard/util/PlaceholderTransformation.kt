@@ -9,17 +9,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 class PlaceholderTransformation(
     private val placeholder: String,
-    private val textColor: Color
-) :
-    VisualTransformation {
-    override fun filter(text: AnnotatedString): TransformedText {
-        return TransformedText(
+    private val textColor: Color,
+) : VisualTransformation {
+    override fun filter(text: AnnotatedString): TransformedText =
+        TransformedText(
             AnnotatedString(
                 text = placeholder,
                 spanStyle = SpanStyle(color = textColor),
-            ), AddCardOffsetMapping
+            ),
+            AddCardOffsetMapping,
         )
-    }
 }
 
 private object AddCardOffsetMapping : OffsetMapping {

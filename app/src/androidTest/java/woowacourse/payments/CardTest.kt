@@ -72,22 +72,22 @@ class CardTest {
             Card(
                 cardInfoUiState = cards.first(),
                 showCardInfo = true,
-                onClick = { isClicked = true }
+                onClick = { isClicked = true },
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onNodeWithText("홍길동", substring = true)
             .performClick()
 
-        //then
+        // then
         assert(isClicked == true)
     }
 
     @Test
     fun 카드사가_있으면_카드사_이름을_출력한다() {
-        //given
+        // given
         val card = cards.first()
         if (card.vendor == null) throw AssertionError("vendor is null")
         lateinit var context: Context
@@ -100,10 +100,10 @@ class CardTest {
             context = LocalContext.current
         }
 
-        //when
+        // when
         val expected = context.getString(card.vendor!!.vendorNameId)
 
-        //then
+        // then
         composeTestRule
             .onNodeWithText(expected)
             .assertExists()

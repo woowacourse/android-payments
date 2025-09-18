@@ -9,5 +9,5 @@ import woowacourse.payments.ui.uimodel.toUiModel
 @Parcelize
 data class VendorModalUiModel(
     val isVisible: Boolean = true,
-    val vendors: List<VendorUiModel> = CardVendor.entries.map { it.toUiModel() }
+    val vendors: List<VendorUiModel> = CardVendor.entries.map { it.toUiModel() },
 ) : Parcelable

@@ -19,20 +19,18 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 
 @Composable
-fun PlusCard(
-    onClick: () -> Unit = {},
-) {
+fun PlusCard(onClick: () -> Unit = {}) {
     Box(
-        modifier = Modifier
-            .height(124.dp)
-            .width(208.dp)
-            .background(
-                color = colorResource(id = R.color.payments_plus_card_background),
-                shape = RoundedCornerShape(5.dp),
-            )
-            .clickable {
-                onClick()
-            },
+        modifier =
+            Modifier
+                .height(124.dp)
+                .width(208.dp)
+                .background(
+                    color = colorResource(id = R.color.payments_plus_card_background),
+                    shape = RoundedCornerShape(5.dp),
+                ).clickable {
+                    onClick()
+                },
         contentAlignment = Alignment.Center,
     ) {
         Icon(

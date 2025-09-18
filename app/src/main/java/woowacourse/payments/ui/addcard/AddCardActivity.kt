@@ -58,7 +58,6 @@ class AddCardActivity : ComponentActivity() {
                             vendorModal.hide()
                         },
                     )
-
                 }
             }
         }

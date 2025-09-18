@@ -155,7 +155,7 @@ class CardInfoTest {
                 password = rawPassword,
                 ownerName = "홍길동",
                 expireDate = "1225",
-                vendor = CardVendor.BCCard
+                vendor = CardVendor.BCCard,
             )
 
         // then

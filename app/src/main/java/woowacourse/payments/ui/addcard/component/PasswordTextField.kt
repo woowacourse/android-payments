@@ -27,9 +27,14 @@ fun PasswordTextField(
             cardInfo.updateCardInfo(password = it)
         },
         label = { Text(stringResource(R.string.addcard_password_label)) },
-        visualTransformation = if (cardInfo.password.isEmpty()) PlaceholderTransformation(
-            placeholder = stringResource(R.string.addcard_password_placeholder),
-            textColor = colorResource(R.color.payments_placeholder_color)
-        ) else PasswordVisualTransformation()
+        visualTransformation =
+            if (cardInfo.password.isEmpty()) {
+                PlaceholderTransformation(
+                    placeholder = stringResource(R.string.addcard_password_placeholder),
+                    textColor = colorResource(R.color.payments_placeholder_color),
+                )
+            } else {
+                PasswordVisualTransformation()
+            },
     )
 }

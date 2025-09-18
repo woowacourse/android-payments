@@ -77,8 +77,7 @@ fun Card(
                         start = 14.dp,
                         end = 14.dp,
                         bottom = 8.dp,
-                    )
-                    .shadow(8.dp)
+                    ).shadow(8.dp)
                     .align(Alignment.CenterStart)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
@@ -95,8 +94,7 @@ fun Card(
                             start = 14.dp,
                             end = 14.dp,
                             bottom = 10.dp,
-                        )
-                        .align(Alignment.BottomCenter)
+                        ).align(Alignment.BottomCenter)
                         .fillMaxWidth(),
             )
         } else {

@@ -33,9 +33,14 @@ fun ExpireDateTextField(
                 Text(stringResource(R.string.addcard_expire_date_error))
             }
         },
-        visualTransformation = if (cardInfo.expireDate.isEmpty()) PlaceholderTransformation(
-            placeholder = stringResource(R.string.addcard_expire_date_placeholder),
-            textColor = colorResource(R.color.payments_placeholder_color)
-        ) else ExpirationDateFieldTransformation(),
+        visualTransformation =
+            if (cardInfo.expireDate.isEmpty()) {
+                PlaceholderTransformation(
+                    placeholder = stringResource(R.string.addcard_expire_date_placeholder),
+                    textColor = colorResource(R.color.payments_placeholder_color),
+                )
+            } else {
+                ExpirationDateFieldTransformation()
+            },
     )
 }

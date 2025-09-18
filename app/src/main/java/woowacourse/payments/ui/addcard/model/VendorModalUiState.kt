@@ -13,6 +13,7 @@ data class VendorModalUiState(
     var isVisible by mutableStateOf(vendorModalUiModel.isVisible)
         private set
     val vendors = vendorModalUiModel.vendors
+
     fun show() {
         isVisible = true
     }

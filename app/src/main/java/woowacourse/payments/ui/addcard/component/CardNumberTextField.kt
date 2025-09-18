@@ -27,9 +27,14 @@ fun CardNumberTextField(
         },
         singleLine = true,
         label = { Text(stringResource(R.string.addcard_card_number_label)) },
-        visualTransformation = if (cardInfo.cardNumber.isEmpty()) PlaceholderTransformation(
-            placeholder = stringResource(R.string.addcard_card_number_placeholder),
-            textColor = colorResource(R.color.payments_placeholder_color)
-        ) else CardNumberFieldTransformation(),
+        visualTransformation =
+            if (cardInfo.cardNumber.isEmpty()) {
+                PlaceholderTransformation(
+                    placeholder = stringResource(R.string.addcard_card_number_placeholder),
+                    textColor = colorResource(R.color.payments_placeholder_color),
+                )
+            } else {
+                CardNumberFieldTransformation()
+            },
     )
 }

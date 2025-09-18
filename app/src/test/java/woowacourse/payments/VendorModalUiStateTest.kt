@@ -6,25 +6,25 @@ import woowacourse.payments.ui.addcard.model.VendorModalUiState
 class VendorModalUiStateTest {
     @Test
     fun `상태를_숨김으로_전환할_수_있다`() {
-        //given
+        // given
         val vendorModalUiState = VendorModalUiState()
 
-        //when
+        // when
         vendorModalUiState.hide()
 
-        //then
+        // then
         assert(vendorModalUiState.isVisible == false)
     }
 
     @Test
     fun `상태를_보이게_전환할_수_있다`() {
-        //given
+        // given
         val vendorModalUiState = VendorModalUiState()
 
-        //when
+        // when
         vendorModalUiState.show()
 
-        //then
+        // then
         assert(vendorModalUiState.isVisible == true)
     }
 }

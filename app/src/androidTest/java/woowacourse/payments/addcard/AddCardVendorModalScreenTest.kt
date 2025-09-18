@@ -16,23 +16,23 @@ class AddCardVendorModalScreenTest {
 
     @Test
     fun 카드사를_클릭하면_지정된_동작이_수행된다() {
-        //given
+        // given
         var isClicked = false
         composeTestRule.setContent {
             AddCardVendorModalScreen(
                 vendorModalUiState = VendorModalUiState(),
                 onVendorItemClick = {
                     isClicked = true
-                }
+                },
             )
         }
 
-        //when
+        // when
         composeTestRule
             .onAllNodesWithContentDescription("카드사 이미지")[0]
             .performClick()
 
-        //then
+        // then
         assert(isClicked == true)
     }
 }
