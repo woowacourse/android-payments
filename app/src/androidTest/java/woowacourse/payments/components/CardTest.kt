@@ -1,4 +1,4 @@
-package woowacourse.payments
+package woowacourse.payments.components
 
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
@@ -8,6 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.cards
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 
