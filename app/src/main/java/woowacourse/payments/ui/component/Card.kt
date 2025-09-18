@@ -39,22 +39,18 @@ fun Card(
     showCardInfo: Boolean = false,
     onClick: () -> Unit = {},
 ) {
-    val color =
-        cardInfoUiState.vendor?.let {
-            colorResource(id = it.vendorColorId)
-        } ?: colorResource(id = R.color.payments_card_background)
+    val color = colorResource(cardInfoUiState.vendor?.vendorColorId ?: R.color.payments_card_background)
 
     Box(
         modifier =
             Modifier
-                .clickable { onClick() }
                 .height(124.dp)
                 .shadow(8.dp)
                 .width(208.dp)
                 .background(
                     color = color,
                     shape = RoundedCornerShape(5.dp),
-                ),
+                ).clickable { onClick() },
     ) {
         cardInfoUiState.vendor?.let {
             Text(
