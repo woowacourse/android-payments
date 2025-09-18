@@ -13,7 +13,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
-import woowacourse.payments.ui.addcard.component.AddCardVendorModal
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -47,7 +46,7 @@ class AddCardActivity : ComponentActivity() {
                                 .fillMaxWidth(),
                         cardInfo = cardInfo,
                         vendorModal = vendorModal,
-                        onCardClick = { vendorModal.show() },
+                        onCardClick = { vendorModal.showModal() },
                     )
                 }
             }

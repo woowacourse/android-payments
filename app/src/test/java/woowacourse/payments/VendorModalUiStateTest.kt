@@ -10,7 +10,7 @@ class VendorModalUiStateTest {
         val vendorModalUiState = VendorModalUiState()
 
         // when
-        vendorModalUiState.hide()
+        vendorModalUiState.hideModal()
 
         // then
         assert(vendorModalUiState.isVisible == false)
@@ -22,7 +22,7 @@ class VendorModalUiStateTest {
         val vendorModalUiState = VendorModalUiState()
 
         // when
-        vendorModalUiState.show()
+        vendorModalUiState.showModal()
 
         // then
         assert(vendorModalUiState.isVisible == true)

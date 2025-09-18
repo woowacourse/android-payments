@@ -74,12 +74,12 @@ fun AddCardScreen(
 
     AddCardVendorModal(
         vendorModalUiState = vendorModal,
-        onDismissRequest = { vendorModal.hide() },
+        onDismissRequest = { vendorModal.hideModal() },
         onVendorItemClick = { vendor ->
             cardInfo.updateCardInfo(
                 vendor = vendor,
             )
-            vendorModal.hide()
+            vendorModal.hideModal()
         },
     )
 }

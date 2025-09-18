@@ -14,11 +14,11 @@ data class VendorModalUiState(
         private set
     val vendors = vendorModalUiModel.vendors
 
-    fun show() {
+    fun showModal() {
         isVisible = true
     }
 
-    fun hide() {
+    fun hideModal() {
         isVisible = false
     }
 }
