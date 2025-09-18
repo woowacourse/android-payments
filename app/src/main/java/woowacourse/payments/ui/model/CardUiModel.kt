@@ -18,20 +18,20 @@ data class CardUiModel(
     companion object {
         val EMPTY =
             CardUiModel(
+                cardCompany = CardCompanyType.NOT_SELECTED.toUiModel(),
                 cardNumber = "",
                 expirationDate = "",
-                userName = "",
+                userName = null,
                 password = "",
-                bankType = CardCompanyType.NOT_SELECTED,
             )
     }
 }
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
+        cardCompany = this.type.toUiModel(),
         cardNumber = CardNumberFormatter.formatAndMask(cardNumber),
         expirationDate = ExpirationDateFormatter.format(expirationDate),
         userName = userName.value,
         password = password.value,
-        bankType = this.type,
     )
