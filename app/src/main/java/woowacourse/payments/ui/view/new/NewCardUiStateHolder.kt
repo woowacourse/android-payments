@@ -4,8 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.mapSaver
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.serialization.SerializationCard
-import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.CardCompanyState
 
 class NewCardUiStateHolder(
@@ -25,41 +23,62 @@ class NewCardUiStateHolder(
     }
 
     private fun updateNumber(number: String) {
-        _uiState.value = _uiState.value.copy(card = _uiState.value.card.copy(number = number))
+        _uiState.value = _uiState.value.copy(number = number)
     }
 
     private fun updateExpireDate(expireDate: String) {
-        _uiState.value =
-            _uiState.value.copy(card = _uiState.value.card.copy(expireDate = expireDate))
+        _uiState.value = _uiState.value.copy(expireDate = expireDate)
     }
 
     private fun updateOwnerName(ownerName: String) {
-        _uiState.value = _uiState.value.copy(card = _uiState.value.card.copy(ownerName = ownerName))
+        _uiState.value = _uiState.value.copy(ownerName = ownerName)
     }
 
     private fun updatePassword(password: String) {
-        _uiState.value = _uiState.value.copy(card = _uiState.value.card.copy(password = password))
+        _uiState.value = _uiState.value.copy(password = password)
     }
 
     private fun updateCardBankType(company: CardCompany) {
-        _uiState.value =
-            _uiState.value.copy(card = _uiState.value.card.copy(company = CardCompanyState.Selected(company)))
+        _uiState.value = _uiState.value.copy(company = CardCompanyState.Selected(company))
     }
 
     companion object {
-        private const val KEY_CARDS = "cards"
+        private const val KEY_NUMBER = "number"
+        private const val KEY_EXPIRE_DATE = "expireDate"
+        private const val KEY_OWNER_NAME = "ownerName"
+        private const val KEY_PASSWORD = "password"
+        private const val KEY_COMPANY = "company"
 
         val Saver: Saver<NewCardUiStateHolder, Any> =
             mapSaver(
                 save = { holder: NewCardUiStateHolder ->
-                    mapOf(
-                        KEY_CARDS to holder.uiState.card.toSerializationCard(),
-                    )
+                    with(holder.uiState) {
+                        mapOf(
+                            KEY_NUMBER to number,
+                            KEY_EXPIRE_DATE to expireDate,
+                            KEY_OWNER_NAME to ownerName,
+                            KEY_PASSWORD to password,
+                            KEY_COMPANY to company,
+                        )
+                    }
                 },
                 restore = { restored ->
-                    val card = (restored[KEY_CARDS] as SerializationCard).toDomain()
+                    val number = restored[KEY_NUMBER] as String
+                    val expireDate = restored[KEY_EXPIRE_DATE] as String
+                    val ownerName = restored[KEY_OWNER_NAME] as String
+                    val password = restored[KEY_PASSWORD] as String
+                    val company =
+                        restored[KEY_COMPANY] as?
+                            CardCompanyState.Selected ?: CardCompanyState.Empty
+
                     NewCardUiStateHolder(
-                        NewCardUiState(card = card),
+                        NewCardUiState(
+                            number = number,
+                            expireDate = expireDate,
+                            ownerName = ownerName,
+                            password = password,
+                            company = company,
+                        ),
                     )
                 },
             )
