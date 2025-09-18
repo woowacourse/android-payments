@@ -27,7 +27,6 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.state.CardCompanyState
-import woowacourse.payments.ui.state.CardState
 
 @Composable
 fun NewCardScreen(
@@ -45,7 +44,7 @@ fun NewCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = { onBackClick() },
-                onSaveClick = { onSaveClick(newCardUiStateHolder.uiState.card) },
+                onSaveClick = { onSaveClick(newCardUiStateHolder.uiState.toDomain()) },
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -73,7 +72,6 @@ fun NewCardScreen(
     onFinishRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val card = uiState.card
     val focusManager = LocalFocusManager.current
     val cardNumberVisualTransformation =
         CardNumberVisualTransformation(
@@ -82,10 +80,11 @@ fun NewCardScreen(
             maxLength = Card.CARD_MAX_LENGTH,
         )
 
-    val companyName: String? =
-        resourceProvider.getCompanyName(card.company)?.let {
-            stringResource(it)
-        }
+    val company = (uiState.company as? CardCompanyState.Selected)?.company
+    val companyName: String =
+        company?.let { company ->
+            stringResource(resourceProvider.getCompanyName(company))
+        } ?: ""
 
     Column(
         modifier =
@@ -95,7 +94,7 @@ fun NewCardScreen(
     ) {
         PaymentCard(
             resourceProvider = resourceProvider,
-            card = CardState.Pending,
+            card = uiState.cardState,
             content = {
                 Column {
                     NewCardName(companyName)
@@ -107,11 +106,10 @@ fun NewCardScreen(
                     .padding(top = 18.dp)
                     .shadow(8.dp)
                     .align(alignment = Alignment.CenterHorizontally),
-            bank = uiState.card.company,
         )
 
         CardNumberTextField(
-            cardNumber = card.number,
+            cardNumber = uiState.number,
             onCardNumberChange = { cardNumber ->
                 onCardChange(
                     NewCardUiEvent.OnChangeCardNumber(cardNumber),
@@ -130,7 +128,7 @@ fun NewCardScreen(
 
         ExpireDateTextField(
             maxLength = 4,
-            expireDate = card.expireDate,
+            expireDate = uiState.expireDate,
             groupSize = CARD_EXPIRE_DATE_GROUP_SIZE,
             separator = CARD_EXPIRE_DATE_SEPARATOR,
             onExpireDateChange = { expireDate ->
@@ -147,7 +145,7 @@ fun NewCardScreen(
 
         CardOwnerTextField(
             maxLength = 30,
-            ownerName = card.ownerName,
+            ownerName = uiState.ownerName,
             onChangeOwnerName = { ownerName ->
                 onCardChange(NewCardUiEvent.OnChangeOwnerName(ownerName))
             },
@@ -158,7 +156,7 @@ fun NewCardScreen(
 
         CardPasswordTextField(
             maxLength = 4,
-            password = card.password,
+            password = uiState.password,
             onPasswordChange = { password ->
                 onCardChange(NewCardUiEvent.OnChangePassword(password))
             },
@@ -168,7 +166,7 @@ fun NewCardScreen(
                     .padding(top = 18.dp),
         )
 
-        if (uiState.card.company is CardCompanyState.Empty) {
+        if (uiState.company is CardCompanyState.Empty) {
             BankSelectBottomSheet(
                 resourceProvider = resourceProvider,
                 onFinish = onFinishRequest,
@@ -185,7 +183,14 @@ fun NewCardScreen(
 fun NewCardScreenPreview() {
     NewCardScreen(
         resourceProvider = CompanyResourceProvider(),
-        uiState = NewCardUiState(),
+        uiState =
+            NewCardUiState(
+                "",
+                "",
+                "",
+                "",
+                CardCompanyState.Empty,
+            ),
         onFinishRequest = {},
         onCardChange = {},
     )
