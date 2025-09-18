@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.components.BankSelectBottomSheet
 import woowacourse.payments.ui.components.CardNumberField
 import woowacourse.payments.ui.components.ExpirationDateField
@@ -21,22 +22,28 @@ import woowacourse.payments.ui.components.NewCardTopBar
 import woowacourse.payments.ui.components.PasswordField
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.components.UserNameField
+import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun AddCardScreen(
+    uiState: AddCardScreenUiState,
+    cardForPreview: CardUiModel,
     onBackPressed: () -> Unit,
     onAddCard: (Card) -> Unit,
+    onNumberChange: (String) -> Unit,
+    onExpirationChange: (String) -> Unit,
+    onUserNameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onDismissSheet: () -> Unit,
+    onSelectCardCompany: (CardCompanyType) -> Unit,
+    onSaveClick: () -> Unit,
 ) {
-    val stateHolder = remember { AddCardScreenStateHolder() }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackPressed,
-                onSaveClick = {
-                    stateHolder.onSaveClick(onAddCard)
-                },
+                onSaveClick = onSaveClick,
             )
         },
     ) { innerPadding ->
@@ -50,47 +57,47 @@ fun AddCardScreen(
             Spacer(Modifier.height(14.dp))
             PaymentCard(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                card = stateHolder.cardForPreview,
+                card = cardForPreview,
             )
 
             Spacer(Modifier.height(40.dp))
             CardNumberField(
-                value = stateHolder.state.number,
-                onValueChange = stateHolder::onNumberChange,
+                value = uiState.formState.number,
+                onValueChange = onNumberChange,
                 modifier = Modifier.fillMaxWidth(),
-                error = stateHolder.state.numberErrorType,
+                error = uiState.formState.numberErrorType,
             )
 
             Spacer(Modifier.height(30.dp))
             ExpirationDateField(
-                value = stateHolder.state.expiration,
-                onValueChange = stateHolder::onExpirationChange,
+                value = uiState.formState.expiration,
+                onValueChange = onExpirationChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
-                error = stateHolder.state.expirationErrorType,
+                error = uiState.formState.expirationErrorType,
             )
 
             Spacer(Modifier.height(30.dp))
             UserNameField(
-                value = stateHolder.state.userName,
-                onValueChange = stateHolder::onUserNameChange,
+                value = uiState.formState.userName,
+                onValueChange = onUserNameChange,
                 modifier = Modifier.fillMaxWidth(),
-                error = stateHolder.state.userNameErrorType,
+                error = uiState.formState.userNameErrorType,
             )
 
             Spacer(Modifier.height(18.dp))
             PasswordField(
-                value = stateHolder.state.password,
-                onValueChange = stateHolder::onPasswordChange,
+                value = uiState.formState.password,
+                onValueChange = onPasswordChange,
                 modifier = Modifier.fillMaxWidth(0.5f),
-                error = stateHolder.state.passwordErrorType,
+                error = uiState.formState.passwordErrorType,
             )
         }
     }
 
     BankSelectBottomSheet(
-        visible = stateHolder.showSheet,
-        onDismissRequest = { stateHolder.onDismissSheet() },
-        onSelect = { cardCompany -> stateHolder.onSelectCardCompany(cardCompany) },
+        visible = uiState.showSheet,
+        onDismissRequest = onDismissSheet,
+        onSelect = onSelectCardCompany,
         blockUserDismiss = false,
     )
 }
@@ -98,8 +105,19 @@ fun AddCardScreen(
 @Preview
 @Composable
 private fun AddCardScreenPreview() {
+    val dummyStateHolder = remember { AddCardScreenStateHolder(initialShowSheet = false) }
+
     AddCardScreen(
+        uiState = dummyStateHolder.uiState,
+        cardForPreview = dummyStateHolder.cardForPreview,
         onBackPressed = {},
         onAddCard = {},
+        onNumberChange = {},
+        onExpirationChange = {},
+        onUserNameChange = {},
+        onPasswordChange = {},
+        onDismissSheet = {},
+        onSelectCardCompany = {},
+        onSaveClick = {},
     )
 }

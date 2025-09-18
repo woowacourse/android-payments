@@ -16,23 +16,22 @@ import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.text.ExpirationDateInputParser
 import java.time.format.DateTimeParseException
 
-class AddCardScreenStateHolder {
-    var state by mutableStateOf(AddCardFormState())
-        private set
-
-    var showSheet by mutableStateOf(true)
-        private set
-    var selectedCardCompanyType by mutableStateOf(CardCompanyType.NOT_SELECTED)
+class AddCardScreenStateHolder(
+    initialShowSheet: Boolean,
+) {
+    var uiState by mutableStateOf(AddCardScreenUiState(showSheet = initialShowSheet))
         private set
 
     val cardForPreview by derivedStateOf {
-        CardUiModel.EMPTY.copy(cardCompany = selectedCardCompanyType.toUiModel())
+        CardUiModel.EMPTY.copy(
+            cardCompany = uiState.selectedCardCompanyType.toUiModel(),
+        )
     }
 
-    private fun validateAllFields() {
+    private fun validateAllFields(): AddCardFormState {
         val numberError =
             try {
-                CardNumber.from(state.number)
+                CardNumber.from(uiState.formState.number)
                 null
             } catch (_: IllegalArgumentException) {
                 ValidationErrorType.InvalidCardNumberLength
@@ -40,7 +39,7 @@ class AddCardScreenStateHolder {
 
         val expirationError =
             try {
-                val yearMonth = ExpirationDateInputParser.parse(state.expiration)
+                val yearMonth = ExpirationDateInputParser.parse(uiState.formState.expiration)
                 ExpirationDate.from(yearMonth)
                 null
             } catch (_: IllegalArgumentException) {
@@ -51,7 +50,7 @@ class AddCardScreenStateHolder {
 
         val userNameError =
             try {
-                UserName.from(state.userName)
+                UserName.from(uiState.formState.userName)
                 null
             } catch (_: IllegalArgumentException) {
                 ValidationErrorType.InvalidUserNameLength
@@ -59,70 +58,74 @@ class AddCardScreenStateHolder {
 
         val passwordError =
             try {
-                Password.from(state.password)
+                Password.from(uiState.formState.password)
                 null
             } catch (_: IllegalArgumentException) {
                 ValidationErrorType.InvalidPasswordLength
             }
 
-        state =
-            state.copy(
-                numberErrorType = numberError,
-                expirationErrorType = expirationError,
-                userNameErrorType = userNameError,
-                passwordErrorType = passwordError,
-                isSaveEnabled =
-                    numberError == null &&
-                        expirationError == null &&
-                        userNameError == null &&
-                        passwordError == null &&
-                        selectedCardCompanyType != CardCompanyType.NOT_SELECTED,
-            )
+        return uiState.formState.copy(
+            numberErrorType = numberError,
+            expirationErrorType = expirationError,
+            userNameErrorType = userNameError,
+            passwordErrorType = passwordError,
+            isSaveEnabled =
+                numberError == null &&
+                    expirationError == null &&
+                    userNameError == null &&
+                    passwordError == null &&
+                    uiState.selectedCardCompanyType != CardCompanyType.NOT_SELECTED,
+        )
     }
 
     fun onSelectCardCompany(cardCompany: CardCompanyType) {
-        selectedCardCompanyType = cardCompany
-        showSheet = false
+        uiState =
+            uiState.copy(
+                selectedCardCompanyType = cardCompany,
+                showSheet = false,
+            )
     }
 
     fun onDismissSheet() {
-        showSheet = false
+        uiState = uiState.copy(showSheet = false)
     }
 
     fun onSaveClick(onAddCard: (Card) -> Unit) {
-        if (selectedCardCompanyType == CardCompanyType.NOT_SELECTED) {
-            showSheet = true
+        if (uiState.selectedCardCompanyType == CardCompanyType.NOT_SELECTED) {
+            uiState = uiState.copy(showSheet = true)
             return
         }
 
-        validateAllFields()
-        if (!state.isSaveEnabled) return
+        val updatedFormState = validateAllFields()
+        uiState = uiState.copy(formState = updatedFormState)
 
-        val yearMonth = ExpirationDateInputParser.parse(state.expiration)
+        if (!updatedFormState.isSaveEnabled) return
+
+        val yearMonth = ExpirationDateInputParser.parse(updatedFormState.expiration)
         val card =
             Card(
-                cardNumber = CardNumber.from(state.number),
+                cardNumber = CardNumber.from(updatedFormState.number),
                 expirationDate = ExpirationDate.from(yearMonth),
-                userName = UserName.from(state.userName),
-                password = Password.from(state.password),
-                type = selectedCardCompanyType,
+                userName = UserName.from(updatedFormState.userName),
+                password = Password.from(updatedFormState.password),
+                type = uiState.selectedCardCompanyType,
             )
         onAddCard(card)
     }
 
     fun onNumberChange(value: String) {
-        state = state.copy(number = value)
+        uiState = uiState.copy(formState = uiState.formState.copy(number = value))
     }
 
     fun onExpirationChange(value: String) {
-        state = state.copy(expiration = value)
+        uiState = uiState.copy(formState = uiState.formState.copy(expiration = value))
     }
 
     fun onUserNameChange(value: String) {
-        state = state.copy(userName = value)
+        uiState = uiState.copy(formState = uiState.formState.copy(userName = value))
     }
 
     fun onPasswordChange(value: String) {
-        state = state.copy(password = value)
+        uiState = uiState.copy(formState = uiState.formState.copy(password = value))
     }
 }

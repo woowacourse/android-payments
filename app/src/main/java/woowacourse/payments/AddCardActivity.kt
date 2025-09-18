@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardScreen
+import woowacourse.payments.ui.screen.AddCardScreenHost
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class AddCardActivity : ComponentActivity() {
@@ -17,7 +18,7 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                AddCardScreen(
+                AddCardScreenHost(
                     onBackPressed = {
                         finish()
                     },
