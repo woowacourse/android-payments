@@ -18,6 +18,10 @@ class BanksTest {
         composeTestRule.setContent { Banks(onSelectCard = {}) }
         composeTestRule
             .onAllNodesWithTag(BanksTestTag.BANK_CONTAINER_TAG)
-            .assertCountEquals(BankType.entries.size - 1)
+            .assertCountEquals(BankType.entries.size - EXCLUDE_NON_TYPE_COUNT)
+    }
+
+    companion object {
+        private const val EXCLUDE_NON_TYPE_COUNT = 1
     }
 }
