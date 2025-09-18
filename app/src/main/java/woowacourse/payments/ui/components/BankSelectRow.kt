@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -25,7 +25,7 @@ private const val ROW_COUNT = 2
 fun BankSelectRow(
     onSelect: (BankType) -> Unit,
     modifier: Modifier = Modifier,
-    banks: List<BankUiModel> =
+    banks: List<CardCompanyUiModel> =
         remember {
             BankType.entries
                 .filter { it != BankType.NOT_SELECTED }

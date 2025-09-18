@@ -15,17 +15,17 @@ import woowacourse.payments.ui.theme.LotteRed
 import woowacourse.payments.ui.theme.ShinhanBlue
 import woowacourse.payments.ui.theme.WooriBlue
 
-data class BankUiModel(
+data class CardCompanyUiModel(
     val type: BankType,
     @DrawableRes val image: Int,
     @StringRes val label: Int,
     val background: Color,
 )
 
-fun BankType.toUiModel(): BankUiModel =
+fun BankType.toUiModel(): CardCompanyUiModel =
     when (this) {
         BankType.BC ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_bc,
                 R.string.bank_bc,
@@ -33,7 +33,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.SHINHAN ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_shinhan,
                 R.string.bank_shinhan,
@@ -41,7 +41,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.KAKAO ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_kakao,
                 R.string.bank_kakao,
@@ -49,7 +49,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.HYUNDAI ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_hyundai,
                 R.string.bank_hyundai,
@@ -57,7 +57,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.WOORI ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_woori,
                 R.string.bank_woori,
@@ -65,7 +65,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.LOTTE ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_lotte,
                 R.string.bank_lotte,
@@ -73,7 +73,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.HANA ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_hana,
                 R.string.bank_hana,
@@ -81,7 +81,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.KB ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_kb,
                 R.string.bank_kb,
@@ -89,7 +89,7 @@ fun BankType.toUiModel(): BankUiModel =
             )
 
         BankType.NOT_SELECTED ->
-            BankUiModel(
+            CardCompanyUiModel(
                 this,
                 R.drawable.ic_bank_placeholder,
                 R.string.bank_not_selected,

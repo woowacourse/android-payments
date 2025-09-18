@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Grey52
 import woowacourse.payments.ui.theme.KakaoYellow
@@ -29,8 +29,8 @@ import woowacourse.payments.ui.theme.ShinhanBlue
 
 @Composable
 fun BankItem(
-    bank: BankUiModel,
-    onClick: (BankUiModel) -> Unit,
+    bank: CardCompanyUiModel,
+    onClick: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -63,7 +63,7 @@ private fun BankItemPreview_Shinhan() {
     AndroidpaymentsTheme {
         BankItem(
             bank =
-                BankUiModel(
+                CardCompanyUiModel(
                     type = BankType.SHINHAN,
                     image = R.drawable.ic_bank_shinhan,
                     label = R.string.bank_shinhan,
@@ -80,7 +80,7 @@ private fun BankItemPreview_Kakao() {
     AndroidpaymentsTheme {
         BankItem(
             bank =
-                BankUiModel(
+                CardCompanyUiModel(
                     type = BankType.KAKAO,
                     image = R.drawable.ic_bank_kakao,
                     label = R.string.bank_kakao,
