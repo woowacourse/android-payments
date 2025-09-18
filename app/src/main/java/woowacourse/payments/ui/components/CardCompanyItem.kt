@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -28,7 +29,7 @@ import woowacourse.payments.ui.theme.KakaoYellow
 import woowacourse.payments.ui.theme.ShinhanBlue
 
 @Composable
-fun BankItem(
+fun CardCompanyItem(
     bank: CardCompanyUiModel,
     onClick: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -61,13 +62,13 @@ fun BankItem(
 @Composable
 private fun BankItemPreview_Shinhan() {
     AndroidpaymentsTheme {
-        BankItem(
+        CardCompanyItem(
             bank =
                 CardCompanyUiModel(
                     type = CardCompanyType.SHINHAN,
                     image = R.drawable.ic_bank_shinhan,
                     label = R.string.bank_shinhan,
-                    background = ShinhanBlue,
+                    background = ShinhanBlue.toArgb(),
                 ),
             onClick = {},
         )
@@ -78,13 +79,13 @@ private fun BankItemPreview_Shinhan() {
 @Composable
 private fun BankItemPreview_Kakao() {
     AndroidpaymentsTheme {
-        BankItem(
+        CardCompanyItem(
             bank =
                 CardCompanyUiModel(
                     type = CardCompanyType.KAKAO,
                     image = R.drawable.ic_bank_kakao,
                     label = R.string.bank_kakao,
-                    background = KakaoYellow,
+                    background = KakaoYellow.toArgb(),
                 ),
             onClick = {},
         )

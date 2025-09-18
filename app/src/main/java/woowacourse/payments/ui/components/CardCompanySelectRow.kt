@@ -22,7 +22,7 @@ private const val ROW_COUNT = 2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun BankSelectRow(
+fun CardCompanySelectRow(
     onSelect: (CardCompanyType) -> Unit,
     modifier: Modifier = Modifier,
     banks: List<CardCompanyUiModel> =
@@ -48,7 +48,7 @@ fun BankSelectRow(
             maxItemsInEachRow = COLUMN_COUNT,
         ) {
             items.forEach { bank ->
-                BankItem(
+                CardCompanyItem(
                     bank = bank,
                     onClick = { onSelect(bank.type) },
                 )
@@ -61,7 +61,7 @@ fun BankSelectRow(
 @Composable
 private fun BankSelectRowPreview() {
     AndroidpaymentsTheme {
-        BankSelectRow(
+        CardCompanySelectRow(
             onSelect = {},
         )
     }

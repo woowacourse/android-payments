@@ -41,7 +41,7 @@ fun BankSelectBottomSheet(
             sheetState = sheetState,
             onDismissRequest = onDismissRequest,
         ) {
-            BankSelectRow(
+            CardCompanySelectRow(
                 onSelect = { type ->
                     onSelect(type)
                     onDismissRequest()
