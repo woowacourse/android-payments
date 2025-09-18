@@ -14,8 +14,7 @@ import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.uiModel.cardCompanyMap
 
 private const val COLUMN_COUNT = 4
-private var ROW_COUNT =
-    if (cardCompanyMap.size % COLUMN_COUNT != 0) (cardCompanyMap.size / COLUMN_COUNT) + 1 else cardCompanyMap.size / COLUMN_COUNT
+private var ROW_COUNT = if(cardCompanyMap.size % COLUMN_COUNT != 0)(cardCompanyMap.size / COLUMN_COUNT) + 1 else cardCompanyMap.size / COLUMN_COUNT
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
