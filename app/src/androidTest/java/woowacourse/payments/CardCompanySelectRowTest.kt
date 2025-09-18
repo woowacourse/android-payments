@@ -9,11 +9,11 @@ import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.CardCompanyType
-import woowacourse.payments.ui.components.BankSelectRow
+import woowacourse.payments.ui.components.CardCompanySelectRow
 import woowacourse.payments.ui.model.toUiModel
 
 @Suppress("ktlint:standard:function-naming")
-class BankSelectRowTest {
+class CardCompanySelectRowTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -27,7 +27,7 @@ class BankSelectRowTest {
             ).map { it.toUiModel() }
 
         composeTestRule.setContent {
-            BankSelectRow(
+            CardCompanySelectRow(
                 banks = banks,
                 onSelect = {},
             )
@@ -47,7 +47,7 @@ class BankSelectRowTest {
         var selected: CardCompanyType? = null
 
         composeTestRule.setContent {
-            BankSelectRow(
+            CardCompanySelectRow(
                 banks = banks,
                 onSelect = { selected = it },
             )
