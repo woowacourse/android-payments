@@ -22,6 +22,6 @@ class BanksTest {
     }
 
     companion object {
-        private const val EXCLUDE_NON_TYPE_COUNT = 1
+        private const val EXCLUDE_NON_TYPE_COUNT = -1
     }
 }

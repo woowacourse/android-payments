@@ -7,7 +7,7 @@ import woowacourse.payments.domain.BankType
 
 @Parcelize
 data class NewCardUiState(
-    val bankType: BankType = BankType.NON,
+    val bankType: BankType = BankType.UNSPECIFIED,
     val cardNumber: String = "",
     val expiryDate: String = "",
     @StringRes val expiryDateErrorTextRes: Int? = null,

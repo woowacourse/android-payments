@@ -41,7 +41,7 @@ class CreateCardStateHolder(
             }
     }
 
-    val hasBankType get() = cardCreateState.bankType != BankType.NON
+    val hasBankType get() = cardCreateState.bankType != BankType.UNSPECIFIED
 
     fun newCard(): PaymentCardUiModel =
         cardCreateState.run {

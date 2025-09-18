@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
 enum class BankType {
-    NON,
+    UNSPECIFIED,
     BC,
     HANA,
     HYUNDAE,

@@ -35,6 +35,6 @@ fun BankType.toLocalBankUiModel(): BankUiModel? {
         BankType.LOTTE -> fromRes("롯데카드", R.drawable.ic_lotte, BankCardColors.Lotte.toArgb())
         BankType.SHINHAN -> fromRes("신한카드", R.drawable.ic_shinhan, BankCardColors.Shinhan.toArgb())
         BankType.WOORI -> fromRes("우리카드", R.drawable.ic_woori, BankCardColors.Woori.toArgb())
-        BankType.NON -> return null
+        BankType.UNSPECIFIED -> return null
     }
 }
