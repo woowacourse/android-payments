@@ -36,6 +36,7 @@ import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
 import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.toDomain
 import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
@@ -72,7 +73,7 @@ fun CardRegisterScreen(
                                 ownerName = ownerName,
                                 password = password,
                                 cardCompany =
-                                    selectedCardCompany.origin,
+                                    selectedCardCompany.toDomain(),
                             ),
                         )
                     } else {
@@ -114,7 +115,7 @@ fun CardRegisterScreen(
                 card =
                     Card(
                         cardCompany =
-                            selectedCardCompany.origin,
+                            selectedCardCompany.toDomain(),
                     ),
             )
             PaymentTextField(
