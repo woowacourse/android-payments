@@ -2,6 +2,7 @@
 
 package woowacourse.payments.ui.registration
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -148,9 +149,11 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(16.dp))
 
         PaymentCard(
-            onCardClick = onCardClick,
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable { onCardClick() },
             card = uiState.toCardUiModel(),
-            modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 
         Spacer(modifier = Modifier.height(40.dp))

@@ -2,7 +2,6 @@ package woowacourse.payments.ui.common.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,7 +40,6 @@ import woowacourse.payments.ui.theme.Gold
 fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel = CardUiModel(),
-    onCardClick: () -> Unit = {},
 ) {
     val paymentCardInformationDescription =
         stringResource(R.string.payment_card_information_description)
@@ -55,8 +53,7 @@ fun PaymentCard(
                 .background(
                     color = card.cardCompanyColor,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable { onCardClick() },
+                ),
     ) {
         Column(
             modifier =
