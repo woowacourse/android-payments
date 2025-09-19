@@ -25,4 +25,14 @@
     <string name="new_card_password_placeholder">0000</string>
 
     <string name="new_card_bank_icon_description">%s 로고</string>
+
+    <string name="BC_bank_card_name">BC카드</string>
+    <string name="KB_bank_card_name">국민카드</string>
+    <string name="WOORI_bank_card_name">우리카드</string>
+    <string name="SHINHAN_bank_card_name">신한카드</string>
+    <string name="KAKAO_bank_card_name">카카오뱅크</string>
+    <string name="HYUNDAE_bank_card_name">현대카드</string>
+    <string name="LOTTE_bank_card_name">롯데카드</string>
+    <string name="HANA_bank_card_name">하나카드</string>
+    <string name="NONE_bank_card_name">카드를 등록해 주세요</string>
 </resources>

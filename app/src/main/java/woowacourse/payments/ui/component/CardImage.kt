@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,8 +26,8 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.domain.model.BankType.Companion.label
 import woowacourse.payments.ui.util.extensions.toColor
+import woowacourse.payments.ui.util.extensions.toLabel
 
 @Composable
 fun CardImage(
@@ -53,7 +54,7 @@ fun CardImage(
                     .padding(horizontal = 14.dp, vertical = 15.dp),
         ) {
             Text(
-                text = bankType.label(),
+                text = stringResource(bankType.toLabel()),
                 fontWeight = W500,
                 fontSize = 12.sp,
                 lineHeight = 12.sp,
