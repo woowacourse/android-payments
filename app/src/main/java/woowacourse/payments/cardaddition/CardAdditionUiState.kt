@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.BankType
-import java.time.MonthDay
+import java.time.Month
 
 @Parcelize
 data class CardAdditionUiState(
@@ -24,9 +24,8 @@ data class CardAdditionUiState(
             if (expiredDate.length != EXPIRED_DATE_LENGTH) return@run false
 
             val month: Int = expiredDate.take(2).toIntOrNull() ?: return@run false
-            val dayOfMonth: Int = expiredDate.takeLast(2).toIntOrNull() ?: return@run false
 
-            runCatching { MonthDay.of(month, dayOfMonth) }.isSuccess
+            runCatching { Month.of(month) }.isSuccess
         }
 
     @IgnoredOnParcel
