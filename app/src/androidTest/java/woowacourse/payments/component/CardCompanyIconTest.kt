@@ -47,17 +47,17 @@ class CardCompanyIconTest {
 
         composeTestRule.setContent {
             CardCompanyIcon(
-                company = CardCompany.BC,
+                company = CardCompany.WOORI,
                 onClick = { clickedBank = it },
             )
         }
 
         // when
         composeTestRule
-            .onNodeWithContentDescription("우리은행")
+            .onNodeWithContentDescription("우리카드")
             .performClick()
 
         // then
-        assertEquals(clickedBank, CardCompany.BC)
+        assertEquals(clickedBank, CardCompany.WOORI)
     }
 }
