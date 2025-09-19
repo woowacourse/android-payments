@@ -15,7 +15,7 @@ import woowacourse.payments.domain.BankType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BanksScreen(
+fun BanksBottomSheet(
     sheetState: SheetState,
     onDismissRequest: () -> Unit,
     onSelectCard: (BankType) -> Unit,
@@ -38,10 +38,10 @@ fun BanksScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun BanksScreenPreview() {
+fun BanksBottomSheetPreview() {
     val sheetState = rememberModalBottomSheetState()
     LaunchedEffect(Unit) {
         sheetState.show()
     }
-    BanksScreen(sheetState, {}, {})
+    BanksBottomSheet(sheetState, {}, {})
 }
