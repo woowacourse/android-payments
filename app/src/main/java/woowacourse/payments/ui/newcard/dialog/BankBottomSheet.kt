@@ -50,8 +50,8 @@ fun BankBottomSheet(
     ) {
         Spacer(modifier = Modifier.size(92.dp))
         FlowRow(
-            modifier = Modifier.padding(4.dp).fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalArrangement = Arrangement.spacedBy(24.dp),
             maxItemsInEachRow = 4,
         ) {
