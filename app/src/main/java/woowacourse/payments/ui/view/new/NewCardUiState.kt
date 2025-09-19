@@ -1,16 +1,19 @@
 package woowacourse.payments.ui.view.new
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.state.CardState
 
+@Parcelize
 data class NewCardUiState(
     val number: String = "",
     val expireDate: String = "",
     val ownerName: String = "",
     val password: String = "",
     val company: CardCompanyState = CardCompanyState.Empty,
-) {
+): Parcelable {
     val cardState
         get() =
             when (company) {

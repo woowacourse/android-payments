@@ -43,44 +43,20 @@ class NewCardUiStateHolder(
     }
 
     companion object {
-        private const val KEY_NUMBER = "number"
-        private const val KEY_EXPIRE_DATE = "expireDate"
-        private const val KEY_OWNER_NAME = "ownerName"
-        private const val KEY_PASSWORD = "password"
-        private const val KEY_COMPANY = "company"
-
-        val Saver: Saver<NewCardUiStateHolder, Any> =
-            mapSaver(
-                save = { holder: NewCardUiStateHolder ->
-                    with(holder.uiState) {
-                        mapOf(
-                            KEY_NUMBER to number,
-                            KEY_EXPIRE_DATE to expireDate,
-                            KEY_OWNER_NAME to ownerName,
-                            KEY_PASSWORD to password,
-                            KEY_COMPANY to company,
-                        )
-                    }
-                },
+        val Saver: Saver<NewCardUiStateHolder, NewCardUiState> =
+            Saver(
+                save = { holder: NewCardUiStateHolder -> holder.uiState },
                 restore = { restored ->
-                    val number = restored[KEY_NUMBER] as String
-                    val expireDate = restored[KEY_EXPIRE_DATE] as String
-                    val ownerName = restored[KEY_OWNER_NAME] as String
-                    val password = restored[KEY_PASSWORD] as String
-                    val company =
-                        restored[KEY_COMPANY] as?
-                            CardCompanyState.Selected ?: CardCompanyState.Empty
-
                     NewCardUiStateHolder(
                         NewCardUiState(
-                            number = number,
-                            expireDate = expireDate,
-                            ownerName = ownerName,
-                            password = password,
-                            company = company,
-                        ),
+                            number = restored.number,
+                            expireDate = restored.expireDate,
+                            ownerName = restored.ownerName,
+                            password = restored.password,
+                            company = restored.company,
+                        )
                     )
-                },
+                }
             )
     }
 }
