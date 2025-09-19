@@ -1,7 +1,7 @@
 package woowacourse.payments.domain.model
 
 enum class BankType {
-    NOT_SELECTED,
+    NONE,
     BC,
     KB,
     WOORI,
@@ -15,7 +15,7 @@ enum class BankType {
     companion object {
         fun BankType.label(): String =
             when (this) {
-                NOT_SELECTED -> ""
+                NONE -> ""
                 BC -> "BC카드"
                 KB -> "국민카드"
                 WOORI -> "우리카드"
@@ -28,7 +28,7 @@ enum class BankType {
 
         fun BankType.toColor(): Int =
             when (this) {
-                NOT_SELECTED -> (0xFF333333).toInt()
+                NONE -> (0xFF333333).toInt()
                 BC -> (0xFFF04651).toInt()
                 KB -> (0xFF695F54).toInt()
                 WOORI -> (0xFF20C4F4).toInt()

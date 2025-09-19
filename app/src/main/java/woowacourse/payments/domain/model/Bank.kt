@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Bank(
-    val type: BankType = BankType.NOT_SELECTED,
+    val type: BankType = BankType.NONE,
     @DrawableRes val icon: Int = 0,
 ) : Parcelable

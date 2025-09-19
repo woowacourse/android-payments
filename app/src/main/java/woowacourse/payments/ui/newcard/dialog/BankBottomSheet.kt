@@ -34,11 +34,11 @@ fun BankBottomSheet(
     modifier: Modifier = Modifier,
 ) {
     var selectedBank by rememberSaveable {
-        mutableStateOf(BankType.NOT_SELECTED)
+        mutableStateOf(BankType.NONE)
     }
 
     LaunchedEffect(key1 = selectedBank) {
-        if (selectedBank != BankType.NOT_SELECTED) {
+        if (selectedBank != BankType.NONE) {
             sheetState.hide()
         }
     }
