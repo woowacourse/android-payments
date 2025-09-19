@@ -15,7 +15,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,14 +48,6 @@ fun CardRegistrationScreen(
 ) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-
-    LaunchedEffect(uiState.isBottomSheetOpen) {
-        if (uiState.isBottomSheetOpen) {
-            sheetState.show()
-        } else {
-            sheetState.hide()
-        }
-    }
 
     Scaffold(
         topBar = {
