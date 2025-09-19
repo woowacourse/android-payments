@@ -1,11 +1,14 @@
 package woowacourse.payments.component
 
 import androidx.activity.ComponentActivity
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.dp
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -22,20 +25,19 @@ class CardCompanyIconTest {
         // given
         composeTestRule.setContent {
             CardCompanyIcon(
-                bankIcon = R.drawable.ic_bc,
-                bankName = "우리은행",
-                cardCompany = CardCompany.BC,
+                company = CardCompany.WOORI,
                 onClick = {},
+                modifier = Modifier.padding(top = 100.dp),
             )
         }
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("우리은행")
+            .onNodeWithContentDescription("우리카드")
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("우리은행")
+            .onNodeWithText("우리카드")
             .assertIsDisplayed()
     }
 
@@ -46,9 +48,7 @@ class CardCompanyIconTest {
 
         composeTestRule.setContent {
             CardCompanyIcon(
-                bankIcon = R.drawable.ic_bc,
-                bankName = "우리은행",
-                cardCompany = CardCompany.BC,
+                company = CardCompany.BC,
                 onClick = { clickedBank = it },
             )
         }

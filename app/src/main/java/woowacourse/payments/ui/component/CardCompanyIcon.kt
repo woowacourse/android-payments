@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,34 +20,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.core.ext.toIcon
+import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.theme.Black52
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCompanyIcon(
-    bankIcon: Int,
-    bankName: String,
-    cardCompany: CardCompany,
+    company: CardCompany,
     onClick: (CardCompany) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val companyName = stringResource(company.toNameResource())
+    val companyIcon = company.toIcon()
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier =
             modifier
                 .size(width = 70.dp, height = 65.dp)
-                .clickable { onClick(cardCompany) },
+                .clickable { onClick(company) },
     ) {
         Image(
-            painter = painterResource(id = bankIcon),
-            contentDescription = bankName,
+            painter = painterResource(id = companyIcon),
+            contentDescription = companyName,
             modifier = Modifier.size(32.dp),
         )
 
         Spacer(modifier = Modifier.height(9.dp))
 
         Text(
-            text = bankName,
+            text = companyName,
             fontWeight = FontWeight.W500,
             fontSize = 16.sp,
             lineHeight = 20.sp,
@@ -62,9 +66,7 @@ fun CardCompanyIcon(
 fun CardCompanyIconPreview() {
     Column {
         CardCompanyIcon(
-            bankIcon = R.drawable.ic_bc,
-            bankName = "우리은행",
-            cardCompany = CardCompany.BC,
+            company = CardCompany.BC,
             onClick = {},
         )
     }

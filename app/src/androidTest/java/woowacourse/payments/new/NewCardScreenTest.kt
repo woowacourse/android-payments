@@ -10,7 +10,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.view.new.NewCardScreen
 import woowacourse.payments.ui.view.new.NewCardUiState
@@ -23,7 +22,6 @@ class NewCardScreenTest {
     fun setup() {
         composeTestRule.setContent {
             NewCardScreen(
-                resourceProvider = CompanyResourceProvider(),
                 onFinishRequest = {},
                 uiState =
                     NewCardUiState(

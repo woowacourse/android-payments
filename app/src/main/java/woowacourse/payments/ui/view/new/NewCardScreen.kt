@@ -25,7 +25,7 @@ import woowacourse.payments.ui.component.NewCardName
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
-import woowacourse.payments.ui.core.CompanyResourceProvider
+import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.state.CardCompanyState
 
 @Composable
@@ -34,7 +34,6 @@ fun NewCardScreen(
     onSaveClick: (Card) -> Unit,
     onFinishRequest: () -> Unit,
 ) {
-    val companyResourceProvider = CompanyResourceProvider()
     val newCardUiStateHolder =
         rememberSaveable(saver = NewCardUiStateHolder.Saver) {
             NewCardUiStateHolder()
@@ -50,7 +49,6 @@ fun NewCardScreen(
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
         NewCardScreen(
-            resourceProvider = companyResourceProvider,
             uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
             onFinishRequest = onFinishRequest,
@@ -66,7 +64,6 @@ private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
 
 @Composable
 fun NewCardScreen(
-    resourceProvider: CompanyResourceProvider,
     uiState: NewCardUiState,
     onCardChange: (NewCardUiEvent) -> Unit,
     onFinishRequest: () -> Unit,
@@ -81,10 +78,8 @@ fun NewCardScreen(
         )
 
     val company = (uiState.company as? CardCompanyState.Selected)?.company
-    val companyName: String =
-        company?.let { company ->
-            stringResource(resourceProvider.getCompanyName(company))
-        } ?: ""
+
+    val companyName: String = company?.let { stringResource(it.toNameResource()) } ?: ""
 
     Column(
         modifier =
@@ -93,7 +88,6 @@ fun NewCardScreen(
                 .padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            resourceProvider = resourceProvider,
             card = uiState.cardState,
             content = {
                 Column {
@@ -168,7 +162,6 @@ fun NewCardScreen(
 
         if (uiState.company is CardCompanyState.Empty) {
             BankSelectBottomSheet(
-                resourceProvider = resourceProvider,
                 onFinish = onFinishRequest,
                 onBankSelect = { bankType ->
                     onCardChange(NewCardUiEvent.OnChangeBankType(bankType))
@@ -182,7 +175,6 @@ fun NewCardScreen(
 @Composable
 fun NewCardScreenPreview() {
     NewCardScreen(
-        resourceProvider = CompanyResourceProvider(),
         uiState =
             NewCardUiState(
                 "",

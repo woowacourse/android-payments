@@ -9,14 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.core.CompanyResourceProvider
+import woowacourse.payments.ui.core.ext.toSignatureColor
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
 fun PaymentCard(
-    resourceProvider: CompanyResourceProvider,
     card: CardState,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
@@ -27,10 +26,7 @@ fun PaymentCard(
             CardState.Empty -> Alignment.Center to GrayE5
             is CardState.Pending -> Alignment.CenterStart to Black33
             is CardState.Registered ->
-                Alignment.CenterStart to
-                        resourceProvider.getSignatureColor(
-                            card.card.company,
-                        )
+                Alignment.CenterStart to card.card.company.toSignatureColor()
         }
 
     Box(

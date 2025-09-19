@@ -17,17 +17,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.component.CardCompanyIcon
-import woowacourse.payments.ui.core.CompanyResourceProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
-    resourceProvider: CompanyResourceProvider,
     onBankSelect: (CardCompany) -> Unit,
     onFinish: () -> Unit,
     modifier: Modifier = Modifier,
@@ -52,7 +49,6 @@ fun BankSelectBottomSheet(
             Spacer(modifier = Modifier.height(71.dp))
 
             BankSelectRow(
-                resourceProvider = resourceProvider,
                 onClick = { bankType ->
                     selectedBank = bankType
                     onBankSelect(bankType)
@@ -72,7 +68,6 @@ private const val COLUMN_COUNT = 4
 
 @Composable
 fun BankSelectRow(
-    resourceProvider: CompanyResourceProvider,
     onClick: (CardCompany) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -82,12 +77,10 @@ fun BankSelectRow(
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        CardCompany.entries.forEachIndexed { index, bankType ->
-            val bankName = resourceProvider.getCompanyName(bankType)
+        CardCompany.entries.forEachIndexed { index, company ->
+
             CardCompanyIcon(
-                bankIcon = resourceProvider.getCompanyIcon(bankType),
-                bankName = stringResource(bankName),
-                cardCompany = bankType,
+                company = company,
                 onClick = onClick,
             )
         }
@@ -97,8 +90,5 @@ fun BankSelectRow(
 @Preview(showBackground = true)
 @Composable
 fun BankSelectRowPreview() {
-    BankSelectRow(
-        resourceProvider = CompanyResourceProvider(),
-        onClick = {},
-    )
+    BankSelectRow(onClick = {})
 }

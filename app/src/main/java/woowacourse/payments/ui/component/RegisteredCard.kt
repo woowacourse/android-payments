@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.core.CompanyResourceProvider
+import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
@@ -28,15 +28,12 @@ fun RegisteredCard(
     expireDateSeparator: String,
     modifier: Modifier = Modifier,
 ) {
-    val resourceProvider = CompanyResourceProvider()
-    val companyName: String =
-        stringResource(resourceProvider.getCompanyName(card.company))
-
     Column(
         modifier =
             modifier
                 .fillMaxWidth(),
     ) {
+        val companyName = stringResource(card.company.toNameResource())
         NewCardName(companyName)
 
         CardChip()

@@ -10,7 +10,6 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
@@ -26,7 +25,6 @@ class CardsScreenTest {
         // given
         composeTestRule.setContent {
             CardsScreen(
-                CompanyResourceProvider(),
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
                 {},
@@ -60,7 +58,6 @@ class CardsScreenTest {
         // when
         composeTestRule.setContent {
             CardsScreen(
-                resourceProvider = CompanyResourceProvider(),
                 uiState,
                 Event(CardScreenUiEvent.Idle),
                 {},
@@ -114,7 +111,6 @@ class CardsScreenTest {
         // when
         composeTestRule.setContent {
             CardsScreen(
-                CompanyResourceProvider(),
                 uiState,
                 Event(CardScreenUiEvent.Idle),
                 {},
@@ -149,7 +145,6 @@ class CardsScreenTest {
         var clickedType: CardState? = null
         composeTestRule.setContent {
             CardsScreen(
-                CompanyResourceProvider(),
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
                 { clickedType = it },

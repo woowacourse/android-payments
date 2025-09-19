@@ -9,7 +9,6 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.view.new.BankSelectRow
 
 class BankSelectBottomSheetTest {
@@ -19,7 +18,7 @@ class BankSelectBottomSheetTest {
     @Test
     fun `모든_은행_아이콘과_이름이_보인다`() {
         composeTestRule.setContent {
-            BankSelectRow(resourceProvider = CompanyResourceProvider(), onClick = {})
+            BankSelectRow(onClick = {})
         }
 
         CardCompany.entries.forEach { bankType ->

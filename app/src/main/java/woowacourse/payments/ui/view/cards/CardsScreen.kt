@@ -36,9 +36,8 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentToolbar
 import woowacourse.payments.ui.component.RegisteredCard
-import woowacourse.payments.ui.core.CompanyResourceProvider
 import woowacourse.payments.ui.core.Event
-import woowacourse.payments.ui.core.getParcelableCompat
+import woowacourse.payments.ui.core.ext.getParcelableCompat
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.serialization.SerializationCard
@@ -47,7 +46,6 @@ import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
 fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit) {
-    val resourceProvider = CompanyResourceProvider()
 
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) {
@@ -82,7 +80,6 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
         },
     ) { innerPadding ->
         CardsScreen(
-            resourceProvider = resourceProvider,
             uiState = cardUiStateHolder.uiState,
             uiEvent = uiEvent,
             onClickCard = { cardType ->
@@ -103,7 +100,6 @@ private const val CARD_MASKING_CHAR = "*"
 
 @Composable
 fun CardsScreen(
-    resourceProvider: CompanyResourceProvider,
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
     onClickCard: (CardState) -> Unit,
@@ -131,18 +127,16 @@ fun CardsScreen(
     ) {
         when (uiState) {
             CardsUiState.EMPTY ->
-                EmptyCardContent(resourceProvider, onClickCard)
+                EmptyCardContent(onClickCard)
 
             is CardsUiState.SINGLE ->
                 SingleCardComponent(
-                    resourceProvider,
                     CardState.Registered(uiState.state),
                     onClickCard,
                 )
 
             is CardsUiState.MULTIPLE ->
                 MultipleCardContent(
-                    resourceProvider,
                     uiState.state.map { CardState.Registered(it) },
                     onClickCard,
                 )
@@ -152,7 +146,6 @@ fun CardsScreen(
 
 @Composable
 fun EmptyCardContent(
-    resourceProvider: CompanyResourceProvider,
     onClickCard: (CardState) -> Unit,
 ) {
     Text(
@@ -162,7 +155,6 @@ fun EmptyCardContent(
     )
 
     PaymentCard(
-        resourceProvider = resourceProvider,
         card = CardState.Empty,
         onClick = onClickCard,
         content = {
@@ -179,12 +171,10 @@ fun EmptyCardContent(
 
 @Composable
 fun SingleCardComponent(
-    resourceProvider: CompanyResourceProvider,
     registeredCard: CardState.Registered,
     onClickCard: (CardState) -> Unit,
 ) {
     PaymentCard(
-        resourceProvider = resourceProvider,
         card = registeredCard,
         content = {
             RegisteredCard(
@@ -202,7 +192,6 @@ fun SingleCardComponent(
                 .shadow(8.dp),
     )
     PaymentCard(
-        resourceProvider = resourceProvider,
         card = CardState.Empty,
         onClick = { onClickCard(CardState.Empty) },
         content = {
@@ -219,13 +208,11 @@ fun SingleCardComponent(
 
 @Composable
 fun MultipleCardContent(
-    resourceProvider: CompanyResourceProvider,
     registeredCards: List<CardState.Registered>,
     onClickCard: (CardState) -> Unit,
 ) {
     registeredCards.forEach { card ->
         PaymentCard(
-            resourceProvider = resourceProvider,
             card = card,
             onClick = { onClickCard(card) },
             content = {
@@ -250,7 +237,6 @@ fun MultipleCardContent(
 @Preview(showBackground = true)
 fun CardScreenPreview() {
     CardsScreen(
-        CompanyResourceProvider(),
         CardsUiState.EMPTY,
         Event(CardScreenUiEvent.Idle),
         {},
@@ -263,7 +249,6 @@ fun SingleCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     CardsScreen(
-        CompanyResourceProvider(),
         CardsUiState.SINGLE(card),
         Event(CardScreenUiEvent.Idle),
         {},
@@ -276,7 +261,6 @@ fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>,
 ) {
     CardsScreen(
-        CompanyResourceProvider(),
         CardsUiState.MULTIPLE(cards),
         Event(CardScreenUiEvent.Idle),
         {},
