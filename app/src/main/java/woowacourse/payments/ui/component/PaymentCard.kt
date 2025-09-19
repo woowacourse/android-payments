@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,7 +18,6 @@ fun PaymentCard(
     card: CardState,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: (CardState) -> Unit = {},
 ) {
     val (contentAlignment, backgroundColor) =
         when (card) {
@@ -37,7 +35,7 @@ fun PaymentCard(
                 .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable(onClick = { onClick(card) }),
+                )
     ) {
         content()
     }

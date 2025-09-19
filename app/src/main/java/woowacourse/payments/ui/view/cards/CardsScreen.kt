@@ -7,6 +7,7 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -153,7 +154,6 @@ fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
 
     PaymentCard(
         card = CardState.Empty,
-        onClick = onClickCard,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -162,7 +162,8 @@ fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
         },
         modifier =
             Modifier
-                .padding(top = 18.dp),
+                .padding(top = 18.dp)
+                .clickable(onClick = { onClickCard(CardState.Empty) }),
     )
 }
 
@@ -190,7 +191,6 @@ fun SingleCardComponent(
     )
     PaymentCard(
         card = CardState.Empty,
-        onClick = { onClickCard(CardState.Empty) },
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -199,7 +199,8 @@ fun SingleCardComponent(
         },
         modifier =
             Modifier
-                .padding(top = 30.dp),
+                .padding(top = 30.dp)
+                .clickable(onClick = { onClickCard(CardState.Empty) }),
     )
 }
 
@@ -211,7 +212,6 @@ fun MultipleCardComponent(
     registeredCards.forEach { card ->
         PaymentCard(
             card = card,
-            onClick = { onClickCard(card) },
             content = {
                 RegisteredCard(
                     card.card,
@@ -225,7 +225,8 @@ fun MultipleCardComponent(
             modifier =
                 Modifier
                     .padding(top = 30.dp)
-                    .shadow(8.dp),
+                    .shadow(8.dp)
+                    .clickable(onClick = { onClickCard(card) },)
         )
     }
 }
