@@ -157,19 +157,19 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Lis
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
-                    BankType.KB,
+                    bankType = BankType.KB,
                 ),
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
-                    BankType.HANA,
+                    bankType = BankType.HANA,
                 ),
                 Card(
                     number = "1234".repeat(4),
                     owner = "CREW",
                     expiredDate = "0421",
-                    BankType.KAKAO,
+                    bankType = BankType.KAKAO,
                 ),
             ),
         )
