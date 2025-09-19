@@ -73,6 +73,8 @@ fun NewCardScreen(
                 banks = banks,
                 onClick = {
                     newCardStateHolder.bank = it
+                },
+                onDismiss = {
                     isShowBottomSheet = false
                 },
             )

@@ -31,6 +31,7 @@ fun BankBottomSheet(
     sheetState: SheetState,
     banks: List<Bank>,
     onClick: (Bank) -> Unit,
+    onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var selectedBank by rememberSaveable {
@@ -40,17 +41,21 @@ fun BankBottomSheet(
     LaunchedEffect(key1 = selectedBank) {
         if (selectedBank != BankType.NONE) {
             sheetState.hide()
+            onDismiss()
         }
     }
 
     ModalBottomSheet(
         sheetState = sheetState,
-        onDismissRequest = { },
+        onDismissRequest = onDismiss,
         modifier = modifier,
     ) {
         Spacer(modifier = Modifier.size(92.dp))
         FlowRow(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 40.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalArrangement = Arrangement.spacedBy(24.dp),
             maxItemsInEachRow = 4,
@@ -78,6 +83,7 @@ private fun BankBottomSheetPreview() {
             sheetState = rememberStandardBottomSheetState(),
             banks = BankRepository.getBanks(),
             onClick = {},
+            onDismiss = {},
         )
     }
 }
