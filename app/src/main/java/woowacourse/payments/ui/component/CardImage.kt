@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.BankType.Companion.label
-import woowacourse.payments.domain.model.BankType.Companion.toColor
+import woowacourse.payments.ui.util.extensions.toColor
 
 @Composable
 fun CardImage(
@@ -43,7 +43,7 @@ fun CardImage(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(bankType.toColor()),
+                    color = bankType.toColor(),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
