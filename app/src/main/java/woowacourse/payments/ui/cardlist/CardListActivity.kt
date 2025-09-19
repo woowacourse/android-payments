@@ -41,12 +41,7 @@ class CardListActivity : ComponentActivity() {
                         }
                     }
 
-                CardListScreen(
-                    cards,
-                    {
-                        launcher.launch(AddCardActivity.intent(this))
-                    },
-                )
+                CardListScreen(cards) { launcher.launch(AddCardActivity.intent(this)) }
             }
         }
     }

@@ -73,7 +73,7 @@ fun CardListScreen(
 @Preview(showBackground = true, name = "카드 목록 (0개)")
 @Composable
 private fun CardListScreenWithNoCardsPreview() {
-    CardListScreen(remember { mutableStateListOf() }, {})
+    CardListScreen(remember { mutableStateListOf() }) {}
 }
 
 @Preview(showBackground = true, name = "카드 목록 (1개)")
@@ -91,8 +91,7 @@ private fun CardListScreenWithOneCardPreview() {
                 ).toUiModel(),
             )
         },
-        {},
-    )
+    ) {}
 }
 
 @Preview(showBackground = true, name = "카드 목록 (2개)")
@@ -117,6 +116,5 @@ private fun CardListScreenWithTwoCardsPreview() {
                 ).toUiModel(),
             )
         },
-        {},
-    )
+    ) {}
 }
