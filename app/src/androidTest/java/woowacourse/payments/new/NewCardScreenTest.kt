@@ -22,7 +22,6 @@ class NewCardScreenTest {
     fun setup() {
         composeTestRule.setContent {
             NewCardScreen(
-                onFinishRequest = {},
                 uiState =
                     NewCardUiState(
                         number = "1234123412341234",

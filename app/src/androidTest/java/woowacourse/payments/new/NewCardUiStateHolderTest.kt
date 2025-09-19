@@ -5,6 +5,7 @@ import androidx.compose.runtime.saveable.SaverScope
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import woowacourse.payments.ui.view.new.NewCardUiEvent
+import woowacourse.payments.ui.view.new.NewCardUiState
 import woowacourse.payments.ui.view.new.NewCardUiStateHolder
 
 class NewCardUiStateHolderTest {
@@ -64,19 +65,19 @@ class NewCardUiStateHolderTest {
         holder.updateCard(NewCardUiEvent.OnChangeOwnerName("페토"))
         holder.updateCard(NewCardUiEvent.OnChangePassword("1234"))
 
-        val saver: Saver<NewCardUiStateHolder, Any> = NewCardUiStateHolder.Saver
+        val saver: Saver<NewCardUiStateHolder, NewCardUiState> = NewCardUiStateHolder.Saver
 
-        val saved: Any? =
+        val saved: NewCardUiState =
             with(
                 object : SaverScope {
                     override fun canBeSaved(value: Any): Boolean = true
                 },
             ) {
-                saver.run { save(holder) }
+                saver.run { save(holder) } as NewCardUiState
             }
 
         // restore
-        val restored = NewCardUiStateHolder.Saver.restore(saved!!)
+        val restored = NewCardUiStateHolder.Saver.restore(saved)
 
         assertEquals(restored?.uiState?.number, "12345678")
         assertEquals(restored?.uiState?.expireDate, "0908")
