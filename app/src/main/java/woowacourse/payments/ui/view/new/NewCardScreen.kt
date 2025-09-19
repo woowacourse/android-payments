@@ -110,7 +110,7 @@ fun NewCardScreen(
 
     val company = (uiState.company as? CardCompanyState.Selected)?.company
 
-    val companyName: String = company?.let { stringResource(it.toNameResource()) } ?: ""
+    val companyName: String? = company?.let { stringResource(it.toNameResource()) }
 
     Column(
         modifier =
@@ -122,7 +122,7 @@ fun NewCardScreen(
             card = uiState.cardState,
             content = {
                 Column {
-                    NewCardName(companyName)
+                    companyName?.let { NewCardName(it) }
                     CardChip()
                 }
             },
