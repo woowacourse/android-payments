@@ -4,8 +4,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +31,7 @@ import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.state.CardCompanyState
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
     onBackClick: () -> Unit,
@@ -38,12 +42,31 @@ fun NewCardScreen(
         rememberSaveable(saver = NewCardUiStateHolder.Saver) {
             NewCardUiStateHolder()
         }
+    val uiState = newCardUiStateHolder.uiState
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+
+    LaunchedEffect(uiState.company) {
+        when (uiState.company) {
+            CardCompanyState.Empty -> bottomSheetState.show()
+            is CardCompanyState.Selected -> bottomSheetState.hide()
+        }
+    }
 
     Scaffold(
         topBar = {
             NewCardTopBar(
                 onBackClick = { onBackClick() },
-                onSaveClick = { onSaveClick(newCardUiStateHolder.uiState.toDomain()) },
+                onSaveClick = {
+                    runCatching { newCardUiStateHolder.uiState.toDomain() }
+                        .onSuccess { onSaveClick(it) }
+                        .onFailure {
+                            newCardUiStateHolder.updateCard(
+                                NewCardUiEvent.OnChangeCardCompany(
+                                    CardCompanyState.Empty,
+                                ),
+                            )
+                        }
+                },
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -51,10 +74,19 @@ fun NewCardScreen(
         NewCardScreen(
             uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
-            onFinishRequest = onFinishRequest,
             modifier = Modifier.padding(innerPadding),
         )
     }
+
+    BankSelectBottomSheet(
+        modalBottomSheetState = bottomSheetState,
+        onFinish = onFinishRequest,
+        onCardCompanySelect = { company ->
+            newCardUiStateHolder.updateCard(
+                NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
+            )
+        },
+    )
 }
 
 private const val CARD_NUMBER_GROUP_SIZE = 4
@@ -66,7 +98,6 @@ private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
 fun NewCardScreen(
     uiState: NewCardUiState,
     onCardChange: (NewCardUiEvent) -> Unit,
-    onFinishRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -159,15 +190,6 @@ fun NewCardScreen(
                     .fillMaxWidth(0.5f)
                     .padding(top = 18.dp),
         )
-
-        if (uiState.company is CardCompanyState.Empty) {
-            BankSelectBottomSheet(
-                onFinish = onFinishRequest,
-                onBankSelect = { bankType ->
-                    onCardChange(NewCardUiEvent.OnChangeBankType(bankType))
-                },
-            )
-        }
     }
 }
 
@@ -183,7 +205,6 @@ fun NewCardScreenPreview() {
                 "",
                 CardCompanyState.Empty,
             ),
-        onFinishRequest = {},
         onCardChange = {},
     )
 }

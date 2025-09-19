@@ -2,8 +2,6 @@ package woowacourse.payments.ui.view.new
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.mapSaver
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.state.CardCompanyState
 
 class NewCardUiStateHolder(
@@ -18,7 +16,7 @@ class NewCardUiStateHolder(
             is NewCardUiEvent.OnChangeExpireDate -> updateExpireDate(event.expireDate)
             is NewCardUiEvent.OnChangeOwnerName -> updateOwnerName(event.ownerName)
             is NewCardUiEvent.OnChangePassword -> updatePassword(event.password)
-            is NewCardUiEvent.OnChangeBankType -> updateCardBankType(event.cardCompany)
+            is NewCardUiEvent.OnChangeCardCompany -> updateCardBankType(event.cardCompany)
         }
     }
 
@@ -38,8 +36,8 @@ class NewCardUiStateHolder(
         _uiState.value = _uiState.value.copy(password = password)
     }
 
-    private fun updateCardBankType(company: CardCompany) {
-        _uiState.value = _uiState.value.copy(company = CardCompanyState.Selected(company))
+    private fun updateCardBankType(company: CardCompanyState) {
+        _uiState.value = _uiState.value.copy(company = company)
     }
 
     companion object {
@@ -54,9 +52,9 @@ class NewCardUiStateHolder(
                             ownerName = restored.ownerName,
                             password = restored.password,
                             company = restored.company,
-                        )
+                        ),
                     )
-                }
+                },
             )
     }
 }

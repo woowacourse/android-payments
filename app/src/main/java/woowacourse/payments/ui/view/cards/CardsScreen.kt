@@ -46,7 +46,6 @@ import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
 fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit) {
-
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) {
             CardUiStateHolder()
@@ -145,9 +144,7 @@ fun CardsScreen(
 }
 
 @Composable
-fun EmptyCardContent(
-    onClickCard: (CardState) -> Unit,
-) {
+fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
     Text(
         text = stringResource(R.string.card_list_empty),
         fontSize = 22.sp,

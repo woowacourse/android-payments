@@ -37,8 +37,7 @@ fun PaymentCard(
                 .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = { onClick(card) }),
+                ).clickable(onClick = { onClick(card) }),
     ) {
         content()
     }
