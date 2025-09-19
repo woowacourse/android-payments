@@ -136,7 +136,7 @@ fun CardsScreen(
                 )
 
             is CardsUiState.MULTIPLE ->
-                MultipleCardContent(
+                MultipleCardComponent(
                     uiState.state.map { CardState.Registered(it) },
                     onClickCard,
                 )
@@ -207,7 +207,7 @@ fun SingleCardComponent(
 }
 
 @Composable
-fun MultipleCardContent(
+fun MultipleCardComponent(
     registeredCards: List<CardState.Registered>,
     onClickCard: (CardState) -> Unit,
 ) {
