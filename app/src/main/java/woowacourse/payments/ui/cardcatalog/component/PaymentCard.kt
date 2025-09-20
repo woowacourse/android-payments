@@ -1,8 +1,5 @@
 package woowacourse.payments.ui.cardcatalog.component
 
-import android.R.attr.letterSpacing
-import android.R.attr.lineHeight
-import android.R.attr.password
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -12,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -26,6 +24,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.uiModel.toUiModel
 import woowacourse.payments.ui.theme.Black
 import java.time.YearMonth
@@ -34,18 +33,28 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun PaymentCard(
     card: Card?,
+    cardCompanyUiModel: CardCompanyUiModel = CardCompanyUiModel.Default(),
     modifier: Modifier = Modifier,
 ) {
-    val color = card?.cardCompany?.toUiModel()?.color ?: Black
     val cardName = card?.cardCompany?.toUiModel()?.displayName?.let { stringResource(it) } ?: ""
+    val companyName = when (cardCompanyUiModel) {
+        is CardCompanyUiModel.SelectCardCompany -> {
+            stringResource(cardCompanyUiModel.displayName)
+        }
+
+        is CardCompanyUiModel.Default -> stringResource(cardCompanyUiModel.displayName)
+    }
 
     Box(
         modifier = modifier
             .shadow(8.dp)
             .size(width = 208.dp, height = 124.dp)
+            .clip(RoundedCornerShape(5.dp))
             .background(
-                color = color,
-                shape = RoundedCornerShape(5.dp),
+                color = when (cardCompanyUiModel) {
+                    is CardCompanyUiModel.SelectCardCompany -> cardCompanyUiModel.color
+                    is CardCompanyUiModel.Default -> cardCompanyUiModel.color
+                },
             )
     ) {
         Box(
@@ -58,6 +67,15 @@ fun PaymentCard(
                 )
                 .align(Alignment.CenterStart)
         )
+        Text(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(start = 14.dp, top = 15.dp),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.W500,
+            text = companyName,
+            color = Color.White
+        )
         card?.let {
             Text(
                 modifier = Modifier
@@ -65,7 +83,7 @@ fun PaymentCard(
                     .padding(start = 14.dp, top = 15.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text =cardName,
+                text = cardName,
                 letterSpacing = 0.17.em,
                 lineHeight = 12.sp,
             )

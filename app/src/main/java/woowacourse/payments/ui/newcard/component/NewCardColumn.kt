@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.cardcatalog.component.PaymentCard
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 
 @Composable
@@ -21,7 +22,8 @@ fun NewCardColumn(
     Column(
         modifier = modifier.padding(horizontal = 24.dp)
     ) {
-        CardType(
+        PaymentCard(
+            card = null,
             cardCompanyUiModel = state.cardCompanyUiModel,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)

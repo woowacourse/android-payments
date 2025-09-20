@@ -54,8 +54,8 @@ fun CardCatalogColumn(
         }
         for (card in cards) {
             PaymentCard(
-                card,
-                Modifier.align(Alignment.CenterHorizontally)
+                card = card,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(36.dp))
         }
