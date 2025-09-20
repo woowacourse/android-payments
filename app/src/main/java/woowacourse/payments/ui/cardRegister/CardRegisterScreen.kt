@@ -40,8 +40,8 @@ fun CardRegisterScreen(
     onBackClick: () -> Unit,
     onSaveClick: (card: CardUiModel) -> Unit,
     isNotValidInput: () -> Unit,
+    cardRegisterState: CardRegisterState = rememberCardRegisterState(),
 ) {
-    val cardRegisterState = rememberCardRegisterState()
     val scope = rememberCoroutineScope()
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -195,6 +195,11 @@ fun CardRegisterScreen(
 @Composable
 private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegisterScreen({}, {}, {})
+        CardRegisterScreen(
+            {},
+            {},
+            {},
+            cardRegisterState = rememberCardRegisterState(isShowingBottomSheet = false),
+        )
     }
 }
