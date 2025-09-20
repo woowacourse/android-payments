@@ -34,6 +34,7 @@ import woowacourse.payments.list.toUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
 import woowacourse.payments.ui.PaymentCard
+import woowacourse.payments.ui.PaymentCardState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -117,14 +118,15 @@ class NewCardActivity : ComponentActivity() {
                             contentAlignment = Alignment.Center,
                         ) {
                             PaymentCard(
-                                card =
+                                state = PaymentCardState.CardInfo(
                                     CardUiModel(
                                         company = cardSelectionState.selectedCompany,
                                         number = "",
                                         name = null,
                                         expiry = "",
                                         password = "",
-                                    ),
+                                    )
+                                )
                             )
                         }
                         Spacer(modifier = Modifier.height(30.dp))

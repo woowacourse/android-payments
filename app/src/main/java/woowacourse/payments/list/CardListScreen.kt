@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.ui.PaymentCard
+import woowacourse.payments.ui.PaymentCardState
 
 @Composable
 fun CardListScreen(
@@ -66,7 +67,9 @@ fun CardListScreen(
 
                 is CardScreenUiState.SingleCard -> {
                     item {
-                        PaymentCard(card = uiState.card)
+                        PaymentCard(
+                            state = PaymentCardState.CardInfo(uiState.card),
+                        )
                     }
                     item {
                         AddNewCard(onAddClick = onAddClick)
@@ -75,7 +78,9 @@ fun CardListScreen(
 
                 is CardScreenUiState.MultipleCard -> {
                     items(uiState.cards) { card ->
-                        PaymentCard(card = card)
+                        PaymentCard(
+                            state = PaymentCardState.CardInfo(card),
+                        )
                     }
                 }
             }
