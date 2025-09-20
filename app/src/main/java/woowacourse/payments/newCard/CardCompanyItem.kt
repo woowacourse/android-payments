@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.Charcoal
+import woowacourse.payments.ui.theme.DarkGray
 
 @Composable
 fun CardCompanyItem(
@@ -34,7 +36,7 @@ fun CardCompanyItem(
         Text(
             text = cardCompanyUiModel.displayName,
             fontSize = 16.sp,
-            color = Color(0xFF525252),
+            color = Charcoal,
         )
     }
 }
@@ -47,7 +49,7 @@ private fun CardCompanyItemPreview() {
             cardCompanyUiModel = CardCompanyUiModel(
                 company = CardCompany.BC,
                 iconRes = R.drawable.ic_bc,
-                color = Color(0xFF121212)
+                color = DarkGray,
             ),
         )
     }

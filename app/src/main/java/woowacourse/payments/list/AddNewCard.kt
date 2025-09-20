@@ -11,10 +11,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.theme.LightGray
 
 @Composable
 fun AddNewCard(onAddClick: () -> Unit) {
@@ -24,7 +24,7 @@ fun AddNewCard(onAddClick: () -> Unit) {
                 .height(124.dp)
                 .width(208.dp)
                 .clickable(onClick = onAddClick)
-                .background(color = Color(0xFFE5E5E5)),
+                .background(color = LightGray),
         content = {
             Icon(
                 imageVector = Icons.Filled.Add,

@@ -24,6 +24,7 @@ import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.newCard.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.Gold
 
 @Composable
 fun PaymentCard(
@@ -63,7 +64,7 @@ fun PaymentCard(
                         modifier
                             .size(40.dp, 28.dp)
                             .background(
-                                color = Color(0xFFCBBA64),
+                                color = Gold,
                                 shape = RoundedCornerShape(5.dp),
                             ),
                 )
@@ -106,7 +107,7 @@ fun PaymentCard(
                     modifier
                         .size(40.dp, 28.dp)
                         .background(
-                            color = Color(0xFFCBBA64),
+                            color = Gold,
                             shape = RoundedCornerShape(5.dp),
                         ),
             )
