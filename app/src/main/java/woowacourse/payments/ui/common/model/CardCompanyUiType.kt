@@ -24,7 +24,7 @@ enum class CardCompanyUiType(
 
 fun CardCompany.toUiType(): CardCompanyUiType =
     when (this) {
-        CardCompany.NONE -> CardCompanyUiType.NOT_SELECTED
+        CardCompany.OTHER -> CardCompanyUiType.NOT_SELECTED
         CardCompany.BC -> CardCompanyUiType.BC
         CardCompany.SHINHAN -> CardCompanyUiType.SHINHAN
         CardCompany.KAKAO -> CardCompanyUiType.KAKAO
@@ -37,7 +37,7 @@ fun CardCompany.toUiType(): CardCompanyUiType =
 
 fun CardCompanyUiType.toDomain(): CardCompany =
     when (this) {
-        CardCompanyUiType.NOT_SELECTED -> CardCompany.NONE
+        CardCompanyUiType.NOT_SELECTED -> CardCompany.OTHER
         CardCompanyUiType.BC -> CardCompany.BC
         CardCompanyUiType.SHINHAN -> CardCompany.SHINHAN
         CardCompanyUiType.KAKAO -> CardCompany.KAKAO
