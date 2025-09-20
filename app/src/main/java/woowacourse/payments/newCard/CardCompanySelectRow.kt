@@ -15,14 +15,14 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 private const val COLUMN_COUNT = 4
 
 @Composable
-fun CardCompanySelectRow(onClick: (CardCompanyUiModel) -> Unit) {
-    val companies =
-        CardCompany.entries
-            .filter { it != CardCompany.NOT_SELECTED }
-            .map { it.toUiModel() }
-
+fun CardCompanySelectRow(
+    onClick: (CardCompanyUiModel) -> Unit,
+    companies: List<CardCompanyUiModel>,
+) {
     FlowRow(
-        modifier = Modifier.width(360.dp).height(227.dp),
+        modifier = Modifier
+            .width(360.dp)
+            .height(227.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
@@ -44,6 +44,8 @@ private fun CardCompanySelectRowPreview() {
     AndroidpaymentsTheme {
         CardCompanySelectRow(
             onClick = {},
-        )
+            companies = CardCompany.entries
+                .filter { it != CardCompany.NOT_SELECTED }
+                .map { it.toUiModel() })
     }
 }
