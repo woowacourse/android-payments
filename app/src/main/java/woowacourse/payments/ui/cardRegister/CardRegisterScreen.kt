@@ -66,7 +66,14 @@ fun CardRegisterScreen(
         if (cardRegisterState.isShowingBottomSheet) {
             CardSelectionModal(
                 modalBottomSheetState = modalBottomSheetState,
-                onDismissRequest = { },
+                onDismissRequest = {
+                    scope
+                        .launch {
+                            modalBottomSheetState.hide()
+                        }.invokeOnCompletion {
+                            onBackClick()
+                        }
+                },
                 onCardCompanyClick = { cardCompanyUiType: CardCompanyUiType ->
                     cardRegisterState.updateCardCompany(cardCompanyUiType)
                     scope
