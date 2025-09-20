@@ -65,6 +65,7 @@ class CardListScreenTest {
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("CREW").assertIsDisplayed()
         composeTestRule.onNodeWithText("04 / 21").assertIsDisplayed()
+        composeTestRule.onNodeWithText("BC카드").assertIsDisplayed()
 
         composeTestRule
             .onNodeWithContentDescription("카드 추가 버튼")
@@ -105,10 +106,12 @@ class CardListScreenTest {
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("CREW").assertIsDisplayed()
         composeTestRule.onNodeWithText("04 / 21").assertIsDisplayed()
+        composeTestRule.onNodeWithText("하나카드").assertIsDisplayed()
 
         composeTestRule.onNodeWithText("5555 - 6666 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("Moong").assertIsDisplayed()
         composeTestRule.onNodeWithText("05 / 22").assertIsDisplayed()
+        composeTestRule.onNodeWithText("카카오뱅크").assertIsDisplayed()
 
         composeTestRule
             .onNodeWithText("+")

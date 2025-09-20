@@ -43,6 +43,7 @@ class PaymentCardTest {
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("CREW").assertIsDisplayed()
         composeTestRule.onNodeWithText("04 / 21").assertIsDisplayed()
+        composeTestRule.onNodeWithText("하나카드").assertIsDisplayed()
     }
 
     @Test
@@ -63,5 +64,6 @@ class PaymentCardTest {
         // then:
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("04 / 21").assertIsDisplayed()
+        composeTestRule.onNodeWithText("하나카드").assertIsDisplayed()
     }
 }
