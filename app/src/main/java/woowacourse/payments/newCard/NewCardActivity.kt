@@ -16,10 +16,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -47,25 +44,23 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val newCardState = NewCardState()
-
+                val cardSelectionState = remember { CardSelectionState() }
                 val modalBottomSheetState =
                     rememberModalBottomSheetState(
                         confirmValueChange = { false },
                     )
-                var selectedCardCompany by remember { mutableStateOf(CardCompany.NOT_SELECTED) }
 
-                var isShow by remember { mutableStateOf(true) }
-                if (isShow) {
+                if (cardSelectionState.isShowBottomSheet) {
                     CardCompanySelectBottomSheet(
                         modalBottomSheetState,
-                        onClick = { selectedCardCompany = it.company },
+                        onClick = { cardSelectionState.selectedCompany = it.company },
                         onDismissRequest = { finish() },
                     )
                 }
 
-                LaunchedEffect(key1 = selectedCardCompany) {
-                    if (selectedCardCompany != CardCompany.NOT_SELECTED) {
-                        isShow = false
+                LaunchedEffect(key1 = cardSelectionState.selectedCompany) {
+                    if (cardSelectionState.selectedCompany != CardCompany.NOT_SELECTED) {
+                        cardSelectionState.isShowBottomSheet = false
                         modalBottomSheetState.hide()
                     }
                 }
@@ -83,7 +78,7 @@ class NewCardActivity : ComponentActivity() {
                                         putExtra(
                                             "card",
                                             Card(
-                                                company = selectedCardCompany,
+                                                company = cardSelectionState.selectedCompany,
                                                 number = CardNumber(newCardState.cardNumber),
                                                 expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                                 password = CardPassword(newCardState.cardPassword),
@@ -97,7 +92,7 @@ class NewCardActivity : ComponentActivity() {
                             isSaveEnabled =
                                 runCatching {
                                     Card(
-                                        company = selectedCardCompany,
+                                        company = cardSelectionState.selectedCompany,
                                         number = CardNumber(newCardState.cardNumber),
                                         expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                         password = CardPassword(newCardState.cardPassword),
@@ -123,7 +118,7 @@ class NewCardActivity : ComponentActivity() {
                             PaymentCard(
                                 card =
                                     CardUiModel(
-                                        company = selectedCardCompany,
+                                        company = cardSelectionState.selectedCompany,
                                         number = "",
                                         name = null,
                                         expiry = "",
