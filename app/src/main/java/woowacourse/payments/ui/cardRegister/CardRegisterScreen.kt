@@ -27,7 +27,6 @@ import kotlinx.coroutines.launch
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardValidator
 import woowacourse.payments.domain.CardValidator.isValidCard
-import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.cardList.components.CardSelectionModal
 import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
@@ -36,7 +35,7 @@ import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
 import woowacourse.payments.ui.common.model.CardCompanyUiType
-import woowacourse.payments.ui.common.model.toDomain
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
@@ -45,7 +44,7 @@ import woowacourse.payments.ui.theme.RedFFFF0000
 @Composable
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
-    onSaveClick: (card: Card) -> Unit,
+    onSaveClick: (card: CardUiModel) -> Unit,
     isNotValidInput: () -> Unit,
 ) {
     var cardNumber by rememberSaveable { mutableStateOf("") }
@@ -67,13 +66,12 @@ fun CardRegisterScreen(
                 onSaveClick = {
                     if (isValidCard(cardNumber, expiredDate, password)) {
                         onSaveClick(
-                            Card(
+                            CardUiModel(
                                 number = cardNumber,
                                 expiredDate = expiredDate,
                                 ownerName = ownerName,
                                 password = password,
-                                cardCompany =
-                                    selectedCardCompany.toDomain(),
+                                cardCompany = selectedCardCompany,
                             ),
                         )
                     } else {
@@ -113,9 +111,8 @@ fun CardRegisterScreen(
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
                 card =
-                    Card(
-                        cardCompany =
-                            selectedCardCompany.toDomain(),
+                    CardUiModel(
+                        cardCompany = selectedCardCompany,
                     ),
             )
             PaymentTextField(

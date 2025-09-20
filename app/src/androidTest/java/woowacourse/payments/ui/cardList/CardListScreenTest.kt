@@ -2,12 +2,14 @@ package woowacourse.payments.ui.cardList
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.CardUiModel
 
 class CardListScreenTest {
     @get:Rule
@@ -30,11 +32,11 @@ class CardListScreenTest {
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .performClick()
 
         assertThat(clicked).isEqualTo(true)
@@ -44,11 +46,12 @@ class CardListScreenTest {
     fun `카드_1개일_때_카드_정보와_등록_버튼이_보인다`() {
         // given:
         val card =
-            Card(
+            CardUiModel(
                 number = "1111222233334444",
                 expiredDate = "0421",
                 ownerName = "CREW",
                 password = "1234",
+                cardCompany = CardCompanyUiType.BC,
             )
         var clicked = false
         composeTestRule.setContent {
@@ -64,11 +67,11 @@ class CardListScreenTest {
         composeTestRule.onNodeWithText("04 / 21").assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .assertIsDisplayed()
 
         composeTestRule
-            .onNodeWithText("+")
+            .onNodeWithContentDescription("카드 추가 버튼")
             .performClick()
 
         assertThat(clicked).isEqualTo(true)
@@ -79,8 +82,20 @@ class CardListScreenTest {
         // given:
         val cards =
             listOf(
-                Card("1111222233334444", "0421", "CREW", "1234"),
-                Card("5555666677778888", "0522", "Moong", "5678"),
+                CardUiModel(
+                    "1111222233334444",
+                    "0421",
+                    "CREW",
+                    "1234",
+                    cardCompany = CardCompanyUiType.HANA,
+                ),
+                CardUiModel(
+                    "5555666677778888",
+                    "0522",
+                    "Moong",
+                    "5678",
+                    cardCompany = CardCompanyUiType.KAKAO,
+                ),
             )
         composeTestRule.setContent {
             CardListScreen(cards = cards, onRegistrationClick = {})

@@ -17,11 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.cardList.components.CardListTopBar
 import woowacourse.payments.ui.cardList.components.RegistrationCard
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
-import woowacourse.payments.domain.model.CardCompany
+import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.BlackFF000000
 import woowacourse.payments.ui.theme.GrayFF333333
@@ -29,7 +29,7 @@ import woowacourse.payments.ui.theme.Typography
 
 @Composable
 fun CardListScreen(
-    cards: List<Card> = emptyList(),
+    cards: List<CardUiModel> = emptyList(),
     onRegistrationClick: () -> Unit,
 ) {
     Scaffold(
@@ -90,12 +90,12 @@ private fun CardListScreenPreview_SingleCard() {
         CardListScreen(
             cards =
                 listOf(
-                    Card(
+                    CardUiModel(
                         number = "1111 - 2222 - **** - ****",
                         expiredDate = "04 / 21",
                         ownerName = "CREW",
                         password = "1234",
-                        cardCompany = CardCompany.BC,
+                        cardCompany = CardCompanyUiType.BC,
                     ),
                 ),
             onRegistrationClick = {},
@@ -110,19 +110,19 @@ private fun CardListScreenPreview_MultipleCard() {
         CardListScreen(
             cards =
                 listOf(
-                    Card(
+                    CardUiModel(
                         number = "1111222233334444",
                         expiredDate = "0421",
                         ownerName = "CREW",
                         password = "1234",
-                        cardCompany = CardCompany.BC,
+                        cardCompany = CardCompanyUiType.BC,
                     ),
-                    Card(
+                    CardUiModel(
                         number = "1111222233334444",
                         expiredDate = "0421",
                         ownerName = "CREW",
                         password = "1234",
-                        cardCompany = CardCompany.BC,
+                        cardCompany = CardCompanyUiType.BC,
                     ),
                 ),
             onRegistrationClick = {},

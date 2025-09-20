@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
+import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.common.model.toUiModel
 import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -27,10 +29,10 @@ class CardListActivity : ComponentActivity() {
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
-                            val newCard: Card =
+                            val newCard: CardUiModel =
                                 activityResult.data?.parcelable(NEW_CARD_KEY)
                                     ?: return@rememberLauncherForActivityResult
-                            cards += newCard
+                            cards += newCard.toDomain()
                             Toast
                                 .makeText(
                                     context,
@@ -40,7 +42,7 @@ class CardListActivity : ComponentActivity() {
                         }
                     }
                 CardListScreen(
-                    cards = cards,
+                    cards = cards.map { it.toUiModel() },
                     onRegistrationClick = {
                         cardAddLauncher.launch(CardRegisterActivity.newIntent(context))
                     },
