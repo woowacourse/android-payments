@@ -49,22 +49,7 @@ fun CardAdditionScreen(
             CardAdditionTopAppBar(
                 completable = state.isValid,
                 onBackClick = { activity?.finish() },
-                onSaveClick = {
-                    activity?.setResult(
-                        RESULT_OK,
-                        Intent().putExtra(
-                            EXTRA_CARD,
-                            Card(
-                                number = state.cardNumber,
-                                owner = state.holder,
-                                expiredDate = state.expiredDate,
-                                bankType = state.bankType,
-                            ),
-                        ),
-                    )
-
-                    activity?.finish()
-                },
+                onSaveClick = { activity.saveCard(state.card) },
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -74,7 +59,7 @@ fun CardAdditionScreen(
             onExpiredDateChange = stateHolder::updateExpiredDate,
             onHolderChange = stateHolder::updateHolder,
             onPasswordChange = stateHolder::updatePassword,
-            onSelectBank = stateHolder::updateBankType,
+            onClearBankType = { stateHolder.updateBankType(null) },
             modifier =
                 Modifier
                     .padding(paddingValues)
@@ -83,6 +68,23 @@ fun CardAdditionScreen(
         )
     }
 }
+
+private fun Activity?.saveCard(card: Card?) {
+    if (this == null || card == null) return
+
+    setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD, card))
+    finish()
+}
+
+private val CardAdditionUiState.card: Card?
+    get() {
+        return Card(
+            number = cardNumber,
+            owner = holder,
+            expiredDate = expiredDate,
+            bankType = bankType ?: return null,
+        )
+    }
 
 @Composable
 private fun CardAdditionContent(
