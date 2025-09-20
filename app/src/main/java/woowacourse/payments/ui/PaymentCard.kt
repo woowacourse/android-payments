@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,6 +26,7 @@ import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.newCard.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Gold
+import woowacourse.payments.ui.theme.PaymentCardTextStyle
 
 @Composable
 fun PaymentCard(
@@ -55,8 +57,7 @@ fun PaymentCard(
                 ) {
                     Text(
                         text = card.company.toUiModel().displayName,
-                        fontSize = 12.sp,
-                        color = Color.White,
+                        style = PaymentCardTextStyle,
                     )
                 }
                 Box(
@@ -72,11 +73,10 @@ fun PaymentCard(
                     Column(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
+                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = card.number,
-                            color = Color.White,
-                            fontSize = 12.sp,
-                            letterSpacing = 2.sp,
+                            style = PaymentCardTextStyle,
                             modifier = Modifier.fillMaxWidth(),
                         )
                         Row(
@@ -85,17 +85,11 @@ fun PaymentCard(
                         ) {
                             Text(
                                 text = card.name ?: "",
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                lineHeight = 12.sp,
-                                letterSpacing = 2.sp,
+                                style = PaymentCardTextStyle,
                             )
                             Text(
                                 text = card.expiry,
-                                color = Color.White,
-                                fontSize = 12.sp,
-                                lineHeight = 12.sp,
-                                letterSpacing = 1.sp,
+                                style = PaymentCardTextStyle,
                             )
                         }
                     }
@@ -119,7 +113,7 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(card = CardUiModel("0000 - 0000 - **** - ****", "1025", "1234", "CREW"))
+        PaymentCard(card = CardUiModel("0000 - 0000 - **** - ****", "10 / 25", "1234", "CREW"))
     }
 }
 
