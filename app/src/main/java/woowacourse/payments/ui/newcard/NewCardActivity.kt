@@ -10,13 +10,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
 import woowacourse.payments.ui.newcard.component.NewCardScreen
 import woowacourse.payments.ui.newcard.component.SelectedBankBottomSheet
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 
 class NewCardActivity : ComponentActivity() {
-    private val state by lazy { CardStateHolder() }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +25,7 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
-                onSaveClick = { saveClick() },
-                state = state,
+                onSaveClick = { card -> saveClick(card) },
             )
         }
     }
@@ -34,16 +34,11 @@ class NewCardActivity : ComponentActivity() {
         finish()
     }
 
-    fun saveClick() {
-        val newCard = state.newCard()
-        if (newCard == null) {
-            state.changeBottomSheetState()
-            Toast.makeText(this, state.cardErrorMessage ?: "카드사를 선택해주세요", Toast.LENGTH_SHORT)
-                .show()
-            return
+    fun saveClick(newCard: Card?) {
+        newCard?.let {
+            val intent = Intent(context = this, newCard)
+            setResult(RESULT_OK, intent)
+            finish()
         }
-        val intent = Intent(context = this, newCard)
-        setResult(RESULT_OK, intent)
-        finish()
     }
 }
