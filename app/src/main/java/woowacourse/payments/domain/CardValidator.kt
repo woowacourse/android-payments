@@ -1,6 +1,6 @@
 package woowacourse.payments.domain
 
-import java.util.Calendar
+import java.time.LocalDate
 
 object CardValidator {
     fun isValidNumber(number: String): Boolean = number.length == 16 && number.all { it.isDigit() }
@@ -11,11 +11,16 @@ object CardValidator {
         val month: Int = expiredDate.take(2).toIntOrNull() ?: return false
         val year: Int = expiredDate.takeLast(2).toIntOrNull() ?: return false
 
-        val currentDate: Calendar = Calendar.getInstance()
-        val currentYear: Int = currentDate.get(Calendar.YEAR) % 100
-        val currentMonth: Int = currentDate.get(Calendar.MONTH) + 1
+        val currentDate: LocalDate = LocalDate.now()
+        val currentYear: Int =
+            currentDate.year
+                .toString()
+                .takeLast(2)
+                .toInt()
+        val currentMonth: Int = currentDate.month.value
 
         if (year < currentYear) return false
+        if (month !in 1..12) return false
         if (year == currentYear && month < currentMonth) return false
         return true
     }
