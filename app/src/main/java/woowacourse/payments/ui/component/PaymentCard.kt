@@ -15,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +48,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = bankType.cardColor,
+                    color = colorResource(bankType.colorRes),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -54,7 +56,7 @@ fun PaymentCard(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = bankType.cardName ?: "",
+                text = if (bankType.cardNameRes == null) "" else stringResource(bankType.cardNameRes),
                 modifier = Modifier.padding(start = 14.dp, bottom = 10.dp),
                 fontSize = 12.sp,
                 color = Color.White,

@@ -1,73 +1,61 @@
 package woowacourse.payments
 
 import android.os.Parcelable
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.Color
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.theme.BcCardColor
-import woowacourse.payments.ui.theme.HanaCardColor
-import woowacourse.payments.ui.theme.HyundaiCardColor
-import woowacourse.payments.ui.theme.KakaoCardColor
-import woowacourse.payments.ui.theme.KbCardColor
-import woowacourse.payments.ui.theme.LotteCardColor
-import woowacourse.payments.ui.theme.NotSelectedCardColor
-import woowacourse.payments.ui.theme.ShinhanCardColor
-import woowacourse.payments.ui.theme.WooriCardColor
 
 @Parcelize
 enum class BankType(
-    val cardName: String?,
+    @StringRes val cardNameRes: Int?,
     @DrawableRes val imageRes: Int?,
+    @ColorRes val colorRes: Int,
 ) : Parcelable {
     NOT_SELECTED(
-        cardName = null,
+        cardNameRes = null,
         imageRes = null,
+        colorRes = R.color.card_not_selected,
     ),
+
     BC(
-        cardName = "BC카드",
+        cardNameRes = R.string.card_name_bc,
         imageRes = R.drawable.img_bc_logo,
+        colorRes = R.color.card_bc,
     ),
     SHINHAN(
-        cardName = "신한카드",
+        cardNameRes = R.string.card_name_shinhan,
         imageRes = R.drawable.img_shinhan_logo,
+        colorRes = R.color.card_shinhan,
     ),
     KAKAO(
-        cardName = "카카오뱅크",
+        cardNameRes = R.string.card_name_kakao,
         imageRes = R.drawable.img_kakao_logo,
+        colorRes = R.color.card_kakao,
     ),
     HYUNDAI(
-        cardName = "현대카드",
+        cardNameRes = R.string.card_name_hyundai,
         imageRes = R.drawable.img_hyundai_logo,
+        colorRes = R.color.card_hyundai,
     ),
     WOORI(
-        cardName = "우리카드",
+        cardNameRes = R.string.card_name_woori,
         imageRes = R.drawable.img_woori_logo,
+        colorRes = R.color.card_woori,
     ),
     LOTTE(
-        cardName = "롯데카드",
+        cardNameRes = R.string.card_name_lotte,
         imageRes = R.drawable.img_lotte_logo,
+        colorRes = R.color.card_lotte,
     ),
     HANA(
-        cardName = "하나카드",
+        cardNameRes = R.string.card_name_hana,
         imageRes = R.drawable.img_hana_logo,
+        colorRes = R.color.card_hana,
     ),
     KB(
-        cardName = "국민카드",
+        cardNameRes = R.string.card_name_kb,
         imageRes = R.drawable.img_kb_logo,
+        colorRes = R.color.card_kb,
     ),
-    ;
-
-    val cardColor: Color
-        get() =
-            when (this) {
-                NOT_SELECTED -> NotSelectedCardColor
-                BC -> BcCardColor
-                SHINHAN -> ShinhanCardColor
-                KAKAO -> KakaoCardColor
-                HYUNDAI -> HyundaiCardColor
-                WOORI -> WooriCardColor
-                LOTTE -> LotteCardColor
-                HANA -> HanaCardColor
-                KB -> KbCardColor
-            }
 }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
@@ -67,7 +68,7 @@ private fun Banks(
     ) {
         BankType.entries
             .filter { bankType: BankType ->
-                bankType.cardName != null && bankType.imageRes != null
+                bankType.cardNameRes != null && bankType.imageRes != null
             }.forEach { bankType: BankType ->
                 BankButton(
                     bankType = bankType,
@@ -87,24 +88,26 @@ private fun BankButton(
     onClick: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val cardName: String =
+        if (bankType.cardNameRes == null) "" else stringResource(bankType.cardNameRes)
     Column(
         modifier =
             Modifier
                 .semantics {
                     role = Role.Button
-                    contentDescription = bankType.cardName ?: ""
+                    contentDescription = cardName
                 }.clickable(onClick = { onClick(bankType) })
                 .then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        if (bankType.imageRes != null && bankType.cardName != null) {
+        if (bankType.imageRes != null && bankType.cardNameRes != null) {
             Image(
                 painter = painterResource(bankType.imageRes),
                 null,
                 modifier = Modifier.size(37.dp),
             )
-            Text(text = bankType.cardName, fontSize = 16.sp)
+            Text(text = stringResource(bankType.cardNameRes), fontSize = 16.sp)
         }
     }
 }
