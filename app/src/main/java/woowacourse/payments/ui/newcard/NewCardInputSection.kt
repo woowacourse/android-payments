@@ -1,9 +1,12 @@
 package woowacourse.payments.ui.newcard
 
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -89,8 +92,11 @@ fun NewCardInputSection(
             supportingText = {
                 Text(
                     expiryDateErrorTextRes ?: "",
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
                     textAlign = TextAlign.End,
+                    maxLines = 1
                 )
             },
             visualTransformation = expiryDateVisualTransformation,
