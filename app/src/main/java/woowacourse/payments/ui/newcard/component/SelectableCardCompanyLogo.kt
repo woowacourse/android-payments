@@ -29,7 +29,7 @@ import woowacourse.payments.ui.newcard.uiModel.toUiModel
 import woowacourse.payments.ui.theme.Gray52
 
 @Composable
-fun BankLogo(
+fun SelectableCardCompanyLogo(
     cardCompany: CardCompanyUiModel.SelectCardCompany,
     selectedBank: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
@@ -71,7 +71,7 @@ fun BankLogo(
 fun BankLogoPreview(
     @PreviewParameter(CardCompanyLogoPreviewParameterProvider::class) cardCompany: CardCompanyUiModel.SelectCardCompany,
 ) {
-    BankLogo(cardCompany = cardCompany, {})
+    SelectableCardCompanyLogo(cardCompany = cardCompany, {})
 }
 
 class CardCompanyLogoPreviewParameterProvider :

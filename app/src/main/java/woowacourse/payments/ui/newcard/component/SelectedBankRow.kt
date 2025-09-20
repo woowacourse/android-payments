@@ -34,7 +34,7 @@ fun SelectedBankRow(
         repeat(ROW_COUNT * COLUMN_COUNT) { index: Int ->
             if (selectedBank != CardCompanyUiModel.Default()) {
                 val cardCompanyType = cardCompanyMap.entries.toList()[index].value
-                BankLogo(
+                SelectableCardCompanyLogo(
                     cardCompany = cardCompanyType,
                     selectedBank = { selectedBank -> selectedBank(selectedBank) })
             }
