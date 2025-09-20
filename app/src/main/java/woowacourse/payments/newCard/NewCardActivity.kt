@@ -55,6 +55,7 @@ class NewCardActivity : ComponentActivity() {
                         modalBottomSheetState,
                         onClick = { cardSelectionState.selectedCompany = it.company },
                         onDismissRequest = { finish() },
+                        modifier = Modifier
                     )
                 }
 

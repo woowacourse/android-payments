@@ -24,7 +24,6 @@ fun CardCompanySelectBottomSheet(
         onDismissRequest = { onDismissRequest() },
         modifier = modifier
             .fillMaxWidth()
-            .padding(bottom = 70.dp)
     ) {
         CardCompanySelectRow(
             onClick = onClick,
@@ -33,6 +32,7 @@ fun CardCompanySelectBottomSheet(
                 .map { it.toUiModel() },
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 40.dp, bottom = 70.dp)
                 .height(227.dp),
         )
     }
