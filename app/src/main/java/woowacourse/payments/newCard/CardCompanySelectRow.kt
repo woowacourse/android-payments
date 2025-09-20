@@ -1,5 +1,6 @@
 package woowacourse.payments.newCard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,9 @@ fun CardCompanySelectRow(onClick: (CardCompanyUiModel) -> Unit) {
         companies.forEach { company ->
             CardCompanyItem(
                 company,
-                onClick = { onClick(company) },
+                modifier = Modifier
+                    .width(80.dp)
+                    .clickable { onClick(company) }
             )
         }
     }
