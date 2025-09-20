@@ -3,17 +3,18 @@ package woowacourse.payments.newCard
 import woowacourse.payments.list.CardUiModel
 
 sealed class CardScreenUiState {
-    abstract fun cards(): List<CardUiModel>
+    abstract val cards: List<CardUiModel>
 
     data object Empty : CardScreenUiState() {
-        override fun cards() = emptyList<CardUiModel>()
+        override val cards = emptyList<CardUiModel>()
     }
 
     data class SingleCard(val card: CardUiModel) : CardScreenUiState() {
-        override fun cards() = listOf(card)
+        override val cards = listOf(card)
     }
-    data class MultipleCard(val cards: List<CardUiModel>) : CardScreenUiState() {
-        override fun cards() = cards
+
+    data class MultipleCard(val cardList: List<CardUiModel>) : CardScreenUiState() {
+        override val cards = cardList
     }
 
     companion object {
@@ -26,10 +27,3 @@ sealed class CardScreenUiState {
         }
     }
 }
-
-//fun CardScreenUiState.cards(): List<CardUiModel> =
-//    when (this) {
-//        is CardScreenUiState.Empty -> emptyList()
-//        is CardScreenUiState.SingleCard -> listOf(this.card)
-//        is CardScreenUiState.MultipleCard -> this.cards
-//    }

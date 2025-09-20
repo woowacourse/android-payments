@@ -34,7 +34,7 @@ class ListActivity : ComponentActivity() {
                         if (activityResult.resultCode == RESULT_OK) {
                             val newCard = activityResult.data?.parcelable<CardUiModel>("card")
                             newCard?.let { cardUiModel ->
-                                cardState = CardScreenUiState.from(cardState.cards() + cardUiModel)
+                                cardState = CardScreenUiState.from(cardState.cards + cardUiModel)
                                 Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
                             }
                         }
