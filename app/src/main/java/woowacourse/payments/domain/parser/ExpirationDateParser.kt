@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.text
+package woowacourse.payments.domain.parser
 
 import java.time.YearMonth
 import java.time.format.DateTimeFormatterBuilder
@@ -6,7 +6,9 @@ import java.time.format.ResolverStyle
 import java.time.temporal.ChronoField
 import java.util.Locale
 
-object ExpirationDateInputParser {
+object ExpirationDateParser {
+    private const val EXPIRATION_DATE_LENGTH = 4
+
     private val formatter =
         DateTimeFormatterBuilder()
             .appendPattern("MM")
@@ -14,9 +16,9 @@ object ExpirationDateInputParser {
             .toFormatter(Locale.ROOT)
             .withResolverStyle(ResolverStyle.STRICT)
 
-    fun parse(raw: String): YearMonth {
+    fun parse(raw: String): YearMonth? {
         val digits = raw.filter(Char::isDigit)
-        require(digits.length == 4) { "만료일은 4자리여야 합니다." }
-        return YearMonth.parse(digits, formatter)
+        if (digits.length != EXPIRATION_DATE_LENGTH) return null
+        return runCatching { YearMonth.parse(digits, formatter) }.getOrNull()
     }
 }
