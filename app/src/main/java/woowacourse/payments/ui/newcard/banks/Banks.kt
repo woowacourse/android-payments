@@ -3,6 +3,7 @@ package woowacourse.payments.ui.newcard.banks
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.BankType
 
 private const val COLUMN_COUNT = 4
-private const val ROW_COUNT = 2
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -26,19 +26,22 @@ fun Banks(
     FlowRow(
         modifier =
             modifier
+                .fillMaxWidth()
                 .testTag(BanksTestTag.BANK_BOARD_TAG),
-        horizontalArrangement = Arrangement.spacedBy(18.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         maxItemsInEachRow = COLUMN_COUNT,
-        maxLines = ROW_COUNT,
     ) {
         bankTypes.forEach {
-            Bank(it, onSelectCard)
+            Bank(
+                it,
+                onSelectCard,
+                Modifier.weight(1f)
+            )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun BanksPreview() {
     Banks({})

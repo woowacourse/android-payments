@@ -38,12 +38,10 @@ fun Bank(
         Icon(
             painter = bankUiModel.image.asPainter(),
             contentDescription = bankUiModel.name,
-            modifier =
-                Modifier
-                    .size(37.dp, 37.dp),
+            modifier = Modifier.size(37.dp, 37.dp),
             tint = Color.Unspecified,
         )
-        Spacer(modifier.height(10.dp))
+        Spacer(Modifier.height(10.dp))
         Text(
             text = bankUiModel.name,
             fontSize = 16.sp,

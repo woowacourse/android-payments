@@ -28,9 +28,9 @@ fun BanksBottomSheet(
     ) {
         Banks(
             onSelectCard,
-            modifier
-                .fillMaxWidth()
-                .padding(48.dp, bottom = 106.dp, top = 36.dp),
+            Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 106.dp, top = 36.dp),
         )
     }
 }
