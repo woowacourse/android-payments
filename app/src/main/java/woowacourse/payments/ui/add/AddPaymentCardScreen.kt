@@ -10,10 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,8 +34,6 @@ fun AddPaymentCardScreen(
 ) {
     val state = stateHolder.state
 
-    var showBankSheet by rememberSaveable { mutableStateOf(true) }
-
     val canSave by remember(state.cardNumber, state.expiry, state.pin) {
         derivedStateOf {
             stateHolder.isCardNumberValid &&
@@ -54,7 +49,7 @@ fun AddPaymentCardScreen(
                 onBackClick = onBack,
                 onSaveClick = {
                     if (!stateHolder.isBankValid) {
-                        showBankSheet = true
+                        stateHolder.showSheet()
                     } else {
                         stateHolder.buildResult()?.let(onSave)
                     }
@@ -104,12 +99,12 @@ fun AddPaymentCardScreen(
         }
     }
 
-    if (showBankSheet) {
+    if (state.isSheetVisible) {
         BankSelectBottomSheet(
             onSelect = { bank ->
                 stateHolder.onBankChange(bank)
             },
-            onDismiss = { showBankSheet = false },
+            onDismiss = { stateHolder.hideSheet() },
         )
     }
 }

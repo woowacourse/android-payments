@@ -28,6 +28,10 @@ class AddPaymentCardStateHolder private constructor(
 
     fun onBankChange(new: BankType) = update { it.copy(bank = new) }
 
+    fun showSheet() = update { it.copy(isSheetVisible = true) }
+
+    fun hideSheet() = update { it.copy(isSheetVisible = false) }
+
     val isCardNumberValid: Boolean
         get() = state.cardNumber.isNotEmpty() && CardNumber.from(state.cardNumber) != null
     val isExpiryValid: Boolean
