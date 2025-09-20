@@ -11,10 +11,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.common.model.toUiModel
 import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -24,7 +22,7 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cards = rememberSaveable { mutableStateListOf<Card>() }
+                val cards = rememberSaveable { mutableStateListOf<CardUiModel>() }
                 val context = LocalContext.current
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
@@ -32,7 +30,7 @@ class CardListActivity : ComponentActivity() {
                             val newCard: CardUiModel =
                                 activityResult.data?.parcelable(NEW_CARD_KEY)
                                     ?: return@rememberLauncherForActivityResult
-                            cards += newCard.toDomain()
+                            cards += newCard
                             Toast
                                 .makeText(
                                     context,
@@ -42,7 +40,7 @@ class CardListActivity : ComponentActivity() {
                         }
                     }
                 CardListScreen(
-                    cards = cards.map { it.toUiModel() },
+                    cards = cards,
                     onRegistrationClick = {
                         cardAddLauncher.launch(CardRegisterActivity.newIntent(context))
                     },

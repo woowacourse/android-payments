@@ -29,8 +29,8 @@ import woowacourse.payments.ui.theme.Typography
 
 @Composable
 fun CardListScreen(
-    cards: List<CardUiModel> = emptyList(),
     onRegistrationClick: () -> Unit,
+    cards: List<CardUiModel> = emptyList(),
 ) {
     Scaffold(
         topBar = {

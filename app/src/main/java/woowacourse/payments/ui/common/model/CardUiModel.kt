@@ -10,7 +10,7 @@ data class CardUiModel(
     val expiredDate: String = "",
     val ownerName: String? = null,
     val password: String = "",
-    val cardCompany: CardCompanyUiType,
+    val cardCompany: CardCompanyUiType = CardCompanyUiType.NOT_SELECTED,
 ) : Parcelable {
     val formattedCardNumber: String
         get() = formatCardNumber(number)
