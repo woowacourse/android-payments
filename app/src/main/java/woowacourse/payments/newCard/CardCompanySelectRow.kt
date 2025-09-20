@@ -3,7 +3,6 @@ package woowacourse.payments.newCard
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,11 +17,10 @@ private const val COLUMN_COUNT = 4
 fun CardCompanySelectRow(
     onClick: (CardCompanyUiModel) -> Unit,
     companies: List<CardCompanyUiModel>,
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
-        modifier = Modifier
-            .width(360.dp)
-            .height(227.dp),
+        modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
