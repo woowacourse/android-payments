@@ -84,7 +84,6 @@ fun NewCardInputSection(
             onValueChange = onCardExpiryDateChange,
             modifier =
                 Modifier
-                    .width(146.dp)
                     .testTag(CARD_EXPIRY_DATE_INPUT_TAG),
             label = { Text(stringResource(R.string.expiry_label)) },
             isError = expiryDateErrorTextRes != null,
@@ -93,8 +92,7 @@ fun NewCardInputSection(
                 Text(
                     expiryDateErrorTextRes ?: "",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState()),
+                        .fillMaxWidth(),
                     textAlign = TextAlign.End,
                     maxLines = 1
                 )
@@ -126,7 +124,6 @@ fun NewCardInputSection(
             onValueChange = onCardPasswordChange,
             modifier =
                 Modifier
-                    .width(146.dp)
                     .testTag(CARD_PASSWORD_INPUT_TAG),
             label = { Text(stringResource(R.string.password_label)) },
             placeholder = { Text(stringResource(R.string.password_placeholder)) },
