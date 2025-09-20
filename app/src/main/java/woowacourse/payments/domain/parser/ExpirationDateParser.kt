@@ -1,5 +1,6 @@
 package woowacourse.payments.domain.parser
 
+import woowacourse.payments.domain.model.ExpirationDate.Companion.EXPIRATION_DATE_LENGTH
 import java.time.YearMonth
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.ResolverStyle
@@ -7,8 +8,6 @@ import java.time.temporal.ChronoField
 import java.util.Locale
 
 object ExpirationDateParser {
-    private const val EXPIRATION_DATE_LENGTH = 4
-
     private val formatter =
         DateTimeFormatterBuilder()
             .appendPattern("MM")

@@ -11,6 +11,7 @@ import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
 import woowacourse.payments.domain.model.UserName
 import woowacourse.payments.domain.parser.ExpirationDateParser
+import woowacourse.payments.domain.validator.ValidationErrorType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 
@@ -88,11 +89,16 @@ class AddCardStateHolder(
             )
         if (!uiState.isSaveEnabled) return
 
-        val ym = ExpirationDateParser.parse(uiState.expiration)
+        val ym =
+            ExpirationDateParser.parse(uiState.expiration) ?: run {
+                uiState = uiState.copy(expirationError = ValidationErrorType.InvalidFormat)
+                return
+            }
+
         val card =
             Card(
                 cardNumber = CardNumber.from(uiState.number),
-                expirationDate = ExpirationDate.from(ym!!),
+                expirationDate = ExpirationDate.from(ym),
                 userName = UserName.from(uiState.userName),
                 password = Password.from(uiState.password),
                 type = uiState.selectedCompany,
