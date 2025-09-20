@@ -7,11 +7,11 @@ import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.theme.GrayFF333333
 
 enum class CardCompanyUiType(
-    val title: String,
+    val title: String?,
     @DrawableRes val icon: Int?,
     val color: Color,
 ) {
-    NOT_SELECTED("", null, GrayFF333333),
+    NOT_SELECTED(null, null, GrayFF333333),
     BC("BC카드", R.drawable.ic_bc, Color(0xFFF04651)),
     SHINHAN("신한카드", R.drawable.ic_shinhan, Color(0xFF0046FF)),
     KAKAO("카카오뱅크", R.drawable.ic_kakao, Color(0xFFFFE500)),
