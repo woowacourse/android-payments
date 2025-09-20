@@ -23,4 +23,5 @@
     <string name="created_card_message">카드가 추가되었습니다</string>
     <string name="add_message">추가</string>
     <string name="guide_add_new_card">새로운 카드를 등록해주세요</string>
+    <string name="not_select_bank_message">은행 선택은 필수 입니다!</string>
 </resources>

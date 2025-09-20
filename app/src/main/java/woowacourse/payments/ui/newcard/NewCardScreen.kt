@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.newcard
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -13,6 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import woowacourse.payments.R
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 
@@ -27,6 +32,7 @@ fun NewCardScreen(
         rememberSaveable(saver = CreateCardStateHolderSaver()) { CreateCardStateHolder() }
 
     var showBottomSheet by remember { mutableStateOf(!stateHolder.hasBankType) }
+    val context = LocalContext.current
     val modalBottomSheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(showBottomSheet) {
@@ -44,7 +50,10 @@ fun NewCardScreen(
                 stateHolder.updateCardBank(bank)
                 showBottomSheet = false
             },
-            onDismissRequest = { showBottomSheet = false },
+            onDismissRequest = {
+                handleDismiss(stateHolder, context)
+                showBottomSheet = false
+            }
         )
     }
 
@@ -67,5 +76,15 @@ fun NewCardScreen(
             onCardPasswordChange = stateHolder::updatePassword,
             modifier.padding(innerPadding),
         )
+    }
+}
+
+private fun handleDismiss(stateHolder: CreateCardStateHolder, context: Context) {
+    if (!stateHolder.hasBankType) {
+        Toast.makeText(
+            context,
+            context.getString(R.string.not_select_bank_message),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }
