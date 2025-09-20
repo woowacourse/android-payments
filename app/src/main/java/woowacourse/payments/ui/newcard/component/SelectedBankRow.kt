@@ -14,7 +14,6 @@ import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.uiModel.cardCompanyMap
 
 private const val COLUMN_COUNT = 4
-private var ROW_COUNT = if(cardCompanyMap.size % COLUMN_COUNT != 0)(cardCompanyMap.size / COLUMN_COUNT) + 1 else cardCompanyMap.size / COLUMN_COUNT
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -31,7 +30,7 @@ fun SelectedBankRow(
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        repeat(ROW_COUNT * COLUMN_COUNT) { index: Int ->
+        repeat(cardCompanyMap.entries.filterNot { it == CardCompanyUiModel.Default() }.size) { index: Int ->
             if (selectedBank != CardCompanyUiModel.Default()) {
                 val cardCompanyType = cardCompanyMap.entries.toList()[index].value
                 SelectableCardCompanyLogo(
