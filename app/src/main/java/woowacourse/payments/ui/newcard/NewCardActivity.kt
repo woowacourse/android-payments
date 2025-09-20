@@ -25,7 +25,6 @@ class NewCardActivity : ComponentActivity() {
             if (state.bottomSheetOpen) {
                 SelectedBankBottomSheet(
                     state = state,
-                    onDismissRequest = { state.changeBottomSheetState() }
                 )
             }
             NewCardScreen(

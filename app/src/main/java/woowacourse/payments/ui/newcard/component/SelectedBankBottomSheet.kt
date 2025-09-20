@@ -17,7 +17,6 @@ import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
 @Composable
 fun SelectedBankBottomSheet(
     state: CardStateHolder,
-    onDismissRequest: () -> Unit,
 ) {
     var selectedBankCard: CardCompanyUiModel by remember { mutableStateOf(CardCompanyUiModel.Default()) }
 
@@ -28,7 +27,7 @@ fun SelectedBankBottomSheet(
     LaunchedEffect(key1 = selectedBankCard) {
         if (selectedBankCard != CardCompanyUiModel.Default()) {
             bottomSheetState.hide()
-            onDismissRequest()
+            state.changeBottomSheetState()
         } else {
             bottomSheetState.show()
         }
@@ -36,7 +35,7 @@ fun SelectedBankBottomSheet(
 
     ModalBottomSheet(
         sheetState = bottomSheetState,
-        onDismissRequest = { onDismissRequest() },
+        onDismissRequest = { state.changeBottomSheetState() },
     ) {
         SelectedBankRow(
             selectedBank = { selectedBank ->
@@ -50,5 +49,5 @@ fun SelectedBankBottomSheet(
 @Preview
 @Composable
 private fun SelectedBankBottomSheetPreview() {
-    SelectedBankBottomSheet(state = CardStateHolder(), {})
+    SelectedBankBottomSheet(state = CardStateHolder())
 }
