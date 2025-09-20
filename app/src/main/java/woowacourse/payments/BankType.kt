@@ -8,16 +8,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 enum class BankType(
-    @StringRes val cardNameRes: Int?,
-    @DrawableRes val imageRes: Int?,
+    @StringRes val cardNameRes: Int,
+    @DrawableRes val imageRes: Int,
     @ColorRes val colorRes: Int,
 ) : Parcelable {
-    NOT_SELECTED(
-        cardNameRes = null,
-        imageRes = null,
-        colorRes = R.color.card_not_selected,
-    ),
-
     BC(
         cardNameRes = R.string.card_name_bc,
         imageRes = R.drawable.img_bc_logo,

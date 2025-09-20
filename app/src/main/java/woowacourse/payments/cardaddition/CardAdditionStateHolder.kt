@@ -35,7 +35,7 @@ class CardAdditionStateHolder(
         uiState = uiState.copy(password = newPassword.take(PASSWORD_LENGTH))
     }
 
-    fun updateBankType(bankType: BankType) {
+    fun updateBankType(bankType: BankType?) {
         uiState = uiState.copy(bankType = bankType)
     }
 

@@ -91,7 +91,7 @@ private fun CardAdditionContent(
     onExpiredDateChange: (String) -> Unit,
     onHolderChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onSelectBank: (BankType) -> Unit,
+    onClearBankType: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -102,7 +102,7 @@ private fun CardAdditionContent(
                 Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 14.dp, bottom = 28.dp)
-                    .clickable(onClick = { onSelectBank(BankType.NOT_SELECTED) }),
+                    .clickable(onClick = onClearBankType),
             number = state.cardNumber,
             owner = state.holder,
             expiredDate = state.expiredDate,

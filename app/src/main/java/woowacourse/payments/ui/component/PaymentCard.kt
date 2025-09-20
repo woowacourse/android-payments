@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.BankType
 import woowacourse.payments.Card
+import woowacourse.payments.R
 import woowacourse.payments.ui.theme.CardIcChip
 
 private const val CARD_NUMBER_MASK = "*"
@@ -39,7 +40,7 @@ fun PaymentCard(
     number: String? = null,
     owner: String? = null,
     expiredDate: String? = null,
-    bankType: BankType = BankType.NOT_SELECTED,
+    bankType: BankType? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -48,7 +49,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(bankType.colorRes),
+                    color = colorResource(bankType?.colorRes ?: R.color.card_not_selected),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
@@ -56,7 +57,7 @@ fun PaymentCard(
             verticalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = if (bankType.cardNameRes == null) "" else stringResource(bankType.cardNameRes),
+                text = if (bankType?.cardNameRes == null) "" else stringResource(bankType.cardNameRes),
                 modifier = Modifier.padding(start = 14.dp, bottom = 10.dp),
                 fontSize = 12.sp,
                 color = Color.White,
@@ -166,7 +167,7 @@ private fun PaymentCardPreview(
         number = card?.number,
         owner = card?.owner,
         expiredDate = card?.expiredDate,
-        bankType = card?.bankType ?: BankType.NOT_SELECTED,
+        bankType = card?.bankType,
     )
 }
 
