@@ -48,13 +48,16 @@ fun PaymentCard(
                 .background(
                     color = card.cardCompany.toUiType().color,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(bottom = 16.dp)
+                ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = card.cardCompany.toUiType().title,
+                text =
+                    card.cardCompany
+                        .toUiType()
+                        .title
+                        .orEmpty(),
                 color = WhiteFF000000,
                 style = Typography.labelMedium,
                 modifier = Modifier.padding(bottom = 15.dp),

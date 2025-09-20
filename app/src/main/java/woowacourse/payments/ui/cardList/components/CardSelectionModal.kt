@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.model.CardCompany
 import woowacourse.payments.ui.common.model.CardCompanyUiType
 import woowacourse.payments.ui.common.model.toUiType
-import woowacourse.payments.ui.theme.GrayFF525252
 import woowacourse.payments.ui.theme.Typography
 
 private const val MAX_ITEM_EACH_ROW_COUNT = 4
@@ -36,8 +35,8 @@ private const val MAX_ITEM_EACH_ROW_COUNT = 4
 fun CardSelectionModal(
     modalBottomSheetState: SheetState,
     onDismissRequest: () -> Unit,
-    onCardCompanyClick: (cardCompany: CardCompany) -> Unit,
-    cardCompanies: List<CardCompany>,
+    onCardCompanyClick: (cardCompany: CardCompanyUiType) -> Unit,
+    cardCompanies: List<CardCompanyUiType>,
     modifier: Modifier = Modifier,
 ) {
     ModalBottomSheet(
@@ -57,8 +56,8 @@ fun CardSelectionModal(
 
 @Composable
 private fun CardCompanyGrid(
-    companies: List<CardCompany>,
-    onClickCardCompany: (cardCompany: CardCompany) -> Unit,
+    companies: List<CardCompanyUiType>,
+    onClickCardCompany: (cardCompany: CardCompanyUiType) -> Unit,
     modifier: Modifier = Modifier,
     maxItemsInEachRow: Int = MAX_ITEM_EACH_ROW_COUNT,
 ) {
@@ -83,8 +82,8 @@ private fun CardCompanyGrid(
 
 @Composable
 private fun CardCompanyItem(
-    company: CardCompany,
-    onClickCardCompany: (cardCompany: CardCompany) -> Unit,
+    company: CardCompanyUiType,
+    onClickCardCompany: (cardCompany: CardCompanyUiType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -94,18 +93,16 @@ private fun CardCompanyItem(
                 .fillMaxWidth(1f / MAX_ITEM_EACH_ROW_COUNT)
                 .clickable { onClickCardCompany(company) },
     ) {
-        val cardCompanyUiType: CardCompanyUiType = company.toUiType()
-
         Icon(
-            painter = painterResource(cardCompanyUiType.icon ?: return),
-            contentDescription = cardCompanyUiType.title,
+            painter = painterResource(company.icon ?: return),
+            contentDescription = company.title,
             tint = Color.Unspecified,
             modifier = Modifier.size(37.dp),
         )
         Spacer(modifier = Modifier.height(9.dp))
         Text(
-            text = cardCompanyUiType.title,
-            color = GrayFF525252,
+            text = company.title.orEmpty(),
+            color = Color.Unspecified,
             style = Typography.bodyLarge,
         )
     }
@@ -119,7 +116,7 @@ private fun CardSelectionModalPreview() {
         modifier = Modifier.fillMaxSize(),
     ) {
         CardCompanyGrid(
-            companies = CardCompany.entries.drop(1),
+            companies = CardCompany.entries.drop(1).map { it.toUiType() },
             modifier = Modifier.fillMaxWidth(),
             onClickCardCompany = { },
         )

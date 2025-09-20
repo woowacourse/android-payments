@@ -88,8 +88,8 @@ fun CardRegisterScreen(
             CardSelectionModal(
                 modalBottomSheetState = modalBottomSheetState,
                 onDismissRequest = { },
-                onCardCompanyClick = { cardCompany: CardCompany ->
-                    selectedCardCompany = cardCompany.toUiType()
+                onCardCompanyClick = { cardCompanyUiType: CardCompanyUiType ->
+                    selectedCardCompany = cardCompanyUiType
                     scope
                         .launch {
                             modalBottomSheetState.hide()
@@ -97,7 +97,7 @@ fun CardRegisterScreen(
                             isShowingBottomSheet = false
                         }
                 },
-                cardCompanies = CardCompany.entries.drop(1),
+                cardCompanies = CardCompany.entries.drop(1).map { it.toUiType() },
             )
         }
         Column(
