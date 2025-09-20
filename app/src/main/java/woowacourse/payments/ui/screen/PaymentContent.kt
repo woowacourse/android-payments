@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -64,15 +65,15 @@ private fun PaymentScreenOneCardPreview() {
         val sampleCard =
             CardUiModel(
                 cardCompany = CardCompanyType.BC.toUiModel(),
-                cardNumber = "1111 - 2222 - 3333 - 4444",
+                cardNumber = "1111 - 2222 - **** - ****",
                 expirationDate = "04 / 21",
-                userName = "CREW",
+                userName = "GAHYUNKIM",
                 password = "1234",
             )
         PaymentContent(
             cards = listOf(sampleCard),
-            showTopAdd = true,
-            canAddMore = false,
+            showTopAdd = false,
+            canAddMore = true,
             onAddCardClick = {},
         )
     }
@@ -84,9 +85,9 @@ private fun PaymentScreenThreeCardsPreview() {
     val sampleCard =
         CardUiModel(
             cardCompany = CardCompanyType.BC.toUiModel(),
-            cardNumber = "1111 - 2222 - 3333 - 4444",
+            cardNumber = "1111 - 2222 - **** - ****",
             expirationDate = "04 / 21",
-            userName = "CREW",
+            userName = "JOY",
             password = "1234",
         )
     AndroidpaymentsTheme {
