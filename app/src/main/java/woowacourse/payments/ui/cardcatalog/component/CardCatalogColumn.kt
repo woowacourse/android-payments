@@ -1,35 +1,20 @@
 package woowacourse.payments.ui.cardcatalog.component
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.theme.GrayE5
 import java.time.YearMonth
 
 @Composable
@@ -38,48 +23,20 @@ fun CardCatalogColumn(
     onClickAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
-        if (cards.size <= 1) {
-            Text(
-                text = stringResource(R.string.payments_enroll_new_card),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.W700,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Spacer(modifier = Modifier.height(32.dp))
+        item { Spacer(modifier = Modifier.height(32.dp)) }
+        when {
+            cards.isEmpty() -> item { AddNewCardInformationText() }
+            else -> item { PaymentCards(cards) }
         }
-        for (card in cards) {
-            PaymentCard(
-                card = card,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Spacer(modifier = Modifier.height(36.dp))
-        }
-        if (2 > cards.size) {
-            Box(
-                modifier = Modifier
-                    .shadow(8.dp)
-                    .size(width = 208.dp, height = 124.dp)
-                    .background(
-                        color = GrayE5,
-                        shape = RoundedCornerShape(5.dp)
-                    )
-                    .clickable { onClickAddCard() }
-                    .align(Alignment.CenterHorizontally),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = stringResource(R.string.content_description_add_card),
-                )
-            }
-        }
+        if (cards.size < 2) item { EmptyPaymentCard(onClickAddCard) }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
@@ -117,3 +74,4 @@ private fun CardCatalogColumnPreview2() {
     )
     CardCatalogColumn(cards = cards, onClickAddCard = {})
 }
+
