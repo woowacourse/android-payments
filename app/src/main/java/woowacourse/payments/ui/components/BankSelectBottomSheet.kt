@@ -27,14 +27,6 @@ fun BankSelectBottomSheet(
             },
         )
 
-    LaunchedEffect(visible) {
-        if (visible) {
-            sheetState.expand()
-        } else {
-            sheetState.hide()
-        }
-    }
-
     if (visible) {
         ModalBottomSheet(
             containerColor = Color.White,
