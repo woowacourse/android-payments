@@ -32,23 +32,21 @@ fun BankItem(
                 .padding(8.dp)
                 .clickable { onClick(bank) },
     ) {
-        if (bankUiModel != null) {
-            Image(
-                painter = painterResource(bankUiModel.logoRes),
-                contentDescription = stringResource(bankUiModel.nameRes),
-                modifier = Modifier.size(36.dp),
-            )
+        Image(
+            painter = painterResource(bankUiModel.logoRes),
+            contentDescription = stringResource(bankUiModel.nameRes),
+            modifier = Modifier.size(36.dp),
+        )
 
-            Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(4.dp))
 
-            Text(text = stringResource(bankUiModel.nameRes))
-        }
+        Text(text = stringResource(bankUiModel.nameRes))
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BankItemPreview() {
+private fun BankItemPreview() {
     BankItem(
         bank = BankType.KAKAO,
         onClick = {},
