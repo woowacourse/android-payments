@@ -24,6 +24,11 @@ fun NewCardScreen(
                 onSaveClick = { onSaveClick() }
             )
         }) { paddingValues: PaddingValues ->
+        if (state.bottomSheetOpen) {
+            SelectedBankBottomSheet(
+                state = state,
+            )
+        }
         NewCardColumn(
             state = state,
             modifier = Modifier.padding(paddingValues),
