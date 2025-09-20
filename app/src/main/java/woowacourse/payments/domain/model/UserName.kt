@@ -1,5 +1,7 @@
 package woowacourse.payments.domain.model
 
+import woowacourse.payments.domain.validator.ValidationErrorType
+
 @JvmInline
 value class UserName private constructor(
     val value: String,
@@ -14,5 +16,8 @@ value class UserName private constructor(
         const val CARDHOLDER_NAME_MAX_LENGTH = 30
 
         fun from(value: String): UserName = UserName(value)
+
+        fun validate(raw: String): ValidationErrorType? =
+            if (raw.length <= CARDHOLDER_NAME_MAX_LENGTH) null else ValidationErrorType.InvalidUserNameLength
     }
 }

@@ -1,16 +1,31 @@
 package woowacourse.payments.domain.model
 
+import woowacourse.payments.domain.parser.ExpirationDateParser
+import woowacourse.payments.domain.validator.ValidationErrorType
+import java.time.Clock
 import java.time.YearMonth
 
 @JvmInline
 value class ExpirationDate private constructor(
     val value: YearMonth,
 ) {
-    init {
-        require(value >= YearMonth.now()) { "만료일은 현재 연월보다 이후여야 합니다." }
-    }
-
     companion object {
-        fun from(value: YearMonth): ExpirationDate = ExpirationDate(value)
+        private fun now(clock: Clock) = YearMonth.now(clock)
+
+        fun from(
+            value: YearMonth,
+            clock: Clock = Clock.systemDefaultZone(),
+        ): ExpirationDate {
+            require(!value.isBefore(now(clock)))
+            return ExpirationDate(value)
+        }
+
+        fun validate(
+            raw: String,
+            clock: Clock = Clock.systemDefaultZone(),
+        ): ValidationErrorType? {
+            val ym = ExpirationDateParser.parse(raw) ?: return ValidationErrorType.InvalidFormat
+            return if (ym.isBefore(now(clock))) ValidationErrorType.ExpiredDate else null
+        }
     }
 }

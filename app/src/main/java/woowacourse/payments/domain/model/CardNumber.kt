@@ -1,5 +1,7 @@
 package woowacourse.payments.domain.model
 
+import woowacourse.payments.domain.validator.ValidationErrorType
+
 @JvmInline
 value class CardNumber private constructor(
     val value: String,
@@ -13,5 +15,12 @@ value class CardNumber private constructor(
         const val CARD_NUMBER_LENGTH = 16
 
         fun from(value: String): CardNumber = CardNumber(value)
+
+        fun validate(raw: String): ValidationErrorType? =
+            when {
+                raw.length != CARD_NUMBER_LENGTH -> ValidationErrorType.InvalidCardNumberLength
+                !raw.all(Char::isDigit) -> ValidationErrorType.InvalidFormat
+                else -> null
+            }
     }
 }

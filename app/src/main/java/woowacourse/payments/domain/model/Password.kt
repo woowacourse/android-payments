@@ -1,5 +1,7 @@
 package woowacourse.payments.domain.model
 
+import woowacourse.payments.domain.validator.ValidationErrorType
+
 @JvmInline
 value class Password private constructor(
     val value: String,
@@ -14,5 +16,8 @@ value class Password private constructor(
         const val PASSWORD_LENGTH = 4
 
         fun from(value: String): Password = Password(value)
+
+        fun validate(raw: String): ValidationErrorType? =
+            if (raw.length == PASSWORD_LENGTH && raw.all(Char::isDigit)) null else ValidationErrorType.InvalidPasswordLength
     }
 }
