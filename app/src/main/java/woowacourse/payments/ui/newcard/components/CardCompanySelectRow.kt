@@ -22,15 +22,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.model.toUiModel
 
 private const val COLUMN_COUNT = 4
 
 @Composable
 fun CompanySelectRow(
-    companies: List<CompanyUiModel>,
-    onCompanySelected: (CompanyUiModel) -> Unit,
+    companies: List<CardCompanyUiModel>,
+    onCompanySelected: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -39,7 +39,7 @@ fun CompanySelectRow(
         verticalArrangement = Arrangement.spacedBy(20.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        companies.forEach { company: CompanyUiModel ->
+        companies.forEach { company: CardCompanyUiModel ->
             CardCompanyItem(
                 company = company,
                 onClick = onCompanySelected,
@@ -50,8 +50,8 @@ fun CompanySelectRow(
 
 @Composable
 private fun CardCompanyItem(
-    company: CompanyUiModel,
-    onClick: (CompanyUiModel) -> Unit,
+    company: CardCompanyUiModel,
+    onClick: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(

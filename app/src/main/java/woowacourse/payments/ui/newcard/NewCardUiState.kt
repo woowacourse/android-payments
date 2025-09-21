@@ -2,11 +2,11 @@ package woowacourse.payments.ui.newcard
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Parcelize
 data class NewCardUiState(
-    val cardCompany: CompanyUiModel? = null,
+    val cardCompany: CardCompanyUiModel? = null,
     val cardNumber: String = "",
     val isCardNumberValid: Boolean = false,
     val cardExpirationDate: String = "",

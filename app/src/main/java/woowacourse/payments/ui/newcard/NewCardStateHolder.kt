@@ -8,7 +8,7 @@ import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 import java.time.format.DateTimeFormatter
 
 class NewCardStateHolder(
@@ -20,7 +20,7 @@ class NewCardStateHolder(
     val card: CardUiModel?
         get() =
             uiState.cardCompany
-                ?.let { company: CompanyUiModel ->
+                ?.let { company: CardCompanyUiModel ->
                     CardUiModel(
                         companyName = company.name,
                         number = uiState.cardNumber,
@@ -30,7 +30,7 @@ class NewCardStateHolder(
                     )
                 }
 
-    fun onCompanySelected(company: CompanyUiModel) {
+    fun onCompanySelected(company: CardCompanyUiModel) {
         uiState = uiState.copy(cardCompany = company)
     }
 

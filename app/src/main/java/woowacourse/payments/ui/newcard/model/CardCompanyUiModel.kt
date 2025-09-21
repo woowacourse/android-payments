@@ -7,13 +7,13 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 
 @Parcelize
-data class CompanyUiModel(
+data class CardCompanyUiModel(
     val name: String,
     @DrawableRes val logo: Int,
     val color: Long,
 ) : Parcelable
 
-fun CardCompany.toUiModel(): CompanyUiModel {
+fun CardCompany.toUiModel(): CardCompanyUiModel {
     val (@DrawableRes logoResId: Int, color: Long) =
         when (this) {
             CardCompany.BC -> R.drawable.bc to 0xFFF04651
@@ -25,7 +25,7 @@ fun CardCompany.toUiModel(): CompanyUiModel {
             CardCompany.HANA -> R.drawable.hana to 0xFF00908F
             CardCompany.KB -> R.drawable.kb to 0xFF695F54
         }
-    return CompanyUiModel(
+    return CardCompanyUiModel(
         name = companyName,
         logo = logoResId,
         color = color,

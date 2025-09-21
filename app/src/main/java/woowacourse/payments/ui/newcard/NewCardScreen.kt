@@ -32,13 +32,13 @@ import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CardPasswordTextField
 import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.newcard.model.CompanyUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 import woowacourse.payments.ui.newcard.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
-    companies: List<CompanyUiModel> = emptyList(),
+    companies: List<CardCompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
     stateHolder: NewCardStateHolder = rememberNewCardState(),
