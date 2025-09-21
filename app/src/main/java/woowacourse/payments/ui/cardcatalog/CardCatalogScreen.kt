@@ -14,11 +14,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.cardcatalog.component.CardCatalogColumn
 import woowacourse.payments.ui.cardcatalog.component.CardCatalogTopBar
-import kotlin.jvm.java
+import woowacourse.payments.ui.newcard.NewCardActivity
 
 
 @Composable
@@ -42,8 +41,6 @@ fun CardCatalogScreen(
                 }
             }
         }
-
-
 
     fun openAddCardWithResult() {
         val intent = Intent(context, NewCardActivity::class.java)
@@ -70,8 +67,7 @@ fun CardCatalogScreen(
     }
 }
 
-
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun CardCatalogScreenPreview() {
     CardCatalogScreen()

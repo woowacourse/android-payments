@@ -11,7 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.Black
 import woowacourse.payments.ui.theme.Black1D
 
