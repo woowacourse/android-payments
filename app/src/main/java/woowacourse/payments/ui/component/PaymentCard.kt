@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,8 +27,9 @@ import woowacourse.payments.ui.theme.CardTextStyle
 
 @Composable
 fun PaymentCard(
-    modifier: Modifier = Modifier,
     paymentCard: PaymentCardUiModel?,
+    onSelectBank: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val bank = paymentCard?.bank ?: BankType.NOT_SELECTED.toUiModel()
 
@@ -98,7 +100,10 @@ fun PaymentCard(
 
         if (!bank.isSelected) {
             SelectBankHint(
-                modifier = Modifier.align(Alignment.Center),
+                modifier =
+                    Modifier
+                        .align(Alignment.Center)
+                        .clickable(onClick = onSelectBank),
             )
         }
     }
@@ -108,8 +113,9 @@ fun PaymentCard(
 @Composable
 private fun SelectedPaymentCardPreview() {
     PaymentCard(
-        Modifier,
         PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.KB.toUiModel()),
+        {},
+        Modifier,
     )
 }
 
@@ -117,7 +123,13 @@ private fun SelectedPaymentCardPreview() {
 @Composable
 private fun NotSelectedPaymentCardPreview() {
     PaymentCard(
+        PaymentCardUiModel(
+            "1234567812345678",
+            "0511",
+            "minjeong",
+            BankType.NOT_SELECTED.toUiModel(),
+        ),
+        {},
         Modifier,
-        PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.NOT_SELECTED.toUiModel()),
     )
 }

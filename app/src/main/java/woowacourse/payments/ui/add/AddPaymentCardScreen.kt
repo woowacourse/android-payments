@@ -42,6 +42,16 @@ fun AddPaymentCardScreen(
         }
     }
 
+    val previewCard =
+        remember(state.cardNumber, state.expiry, state.owner, state.bank) {
+            PaymentCardUiModel(
+                cardNumber = state.cardNumber,
+                expiry = state.expiry,
+                owner = state.owner,
+                bank = state.bank.toUiModel(),
+            )
+        }
+
     Scaffold(
         topBar = {
             NewCardTopBar(
@@ -65,14 +75,9 @@ fun AddPaymentCardScreen(
                     .padding(innerPadding),
         ) {
             PaymentCard(
+                paymentCard = previewCard,
+                onSelectBank = { stateHolder.showSheet() },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                paymentCard =
-                    PaymentCardUiModel(
-                        cardNumber = state.cardNumber,
-                        expiry = state.expiry,
-                        owner = state.owner,
-                        bank = state.bank.toUiModel(),
-                    ),
             )
 
             Spacer(modifier = Modifier.height(40.dp))

@@ -62,10 +62,14 @@ private fun SingleCard(
     onAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         PaymentCard(
+            paymentCard = paymentCard,
+            onSelectBank = {},
             modifier = Modifier.padding(top = 12.dp, bottom = 36.dp),
-            paymentCard,
         )
         AddCard(onAddClick = onAddCard)
     }
@@ -83,6 +87,7 @@ private fun MultiCards(
         paymentCards.forEach { card ->
             PaymentCard(
                 paymentCard = card,
+                onSelectBank = {},
                 modifier =
                     Modifier
                         .padding(top = 16.dp),
