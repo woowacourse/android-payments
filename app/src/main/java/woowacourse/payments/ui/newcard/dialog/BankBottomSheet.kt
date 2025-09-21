@@ -46,9 +46,9 @@ fun BankBottomSheet(
     }
 
     ModalBottomSheet(
-        sheetState = sheetState,
         onDismissRequest = onDismiss,
         modifier = modifier,
+        sheetState = sheetState,
     ) {
         Spacer(modifier = Modifier.size(92.dp))
         FlowRow(
