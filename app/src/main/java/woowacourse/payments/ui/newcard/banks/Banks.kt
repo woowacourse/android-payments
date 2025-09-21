@@ -28,7 +28,7 @@ fun Banks(
             modifier
                 .fillMaxWidth()
                 .testTag(BanksTestTag.BANK_BOARD_TAG),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         bankTypes.forEach {
