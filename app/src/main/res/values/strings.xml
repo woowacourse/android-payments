@@ -28,4 +28,14 @@
     <string name="passcode_label">비밀번호</string>
     <string name="passcode_placeholder">0000</string>
     <string name="passcode_error_message">비밀번호는 숫자 4자입니다.</string>
+
+    <string name="card_company_name_not_selected" />
+    <string name="card_company_name_bc_card">BC카드</string>
+    <string name="card_company_name_shinhan_card">신한카드</string>
+    <string name="card_company_name_kakao_bank">카카오뱅크</string>
+    <string name="card_company_name_hyundai_card">현대카드</string>
+    <string name="card_company_name_woori_card">우리카드</string>
+    <string name="card_company_name_lotte_card">롯데카드</string>
+    <string name="card_company_name_hana_card">하나카드</string>
+    <string name="card_company_name_kb_card">국민카드</string>
 </resources>

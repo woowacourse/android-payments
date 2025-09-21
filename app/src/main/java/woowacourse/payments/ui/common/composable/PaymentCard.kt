@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.common.composable
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,6 +29,8 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel = CardUiModel.EMPTY,
 ) {
+    val context: Context = LocalContext.current
+
     Box(
         modifier
             .shadow(8.dp)
@@ -42,7 +46,7 @@ fun PaymentCard(
                 .padding(start = 16.dp, end = 16.dp, top = 15.dp),
         ) {
             Text(
-                text = card.cardCompany.name,
+                text = context.getString(card.cardCompany.nameRes),
                 color = Color.White,
                 fontSize = 12.sp,
             )
