@@ -52,7 +52,7 @@ fun PaymentCardField(
                 } else {
                     ""
                 },
-            color = Color.White,
+            color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
             modifier =
                 Modifier
                     .align(Alignment.TopStart)
@@ -79,7 +79,7 @@ fun PaymentCardField(
             ) {
                 Text(
                     text = paymentCardUiModel.formatNumber(),
-                    color = Color.White,
+                    color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                     fontWeight = FontWeight.W500,
                     fontSize = 13.sp,
                     letterSpacing = 3.5.sp,
@@ -99,7 +99,7 @@ fun PaymentCardField(
                 ) {
                     Text(
                         text = if (paymentCardUiModel.cardholderName.isBlank()) "CREW" else paymentCardUiModel.cardholderName,
-                        color = Color.White,
+                        color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
                         lineHeight = 1.em,
@@ -112,7 +112,7 @@ fun PaymentCardField(
 
                     Text(
                         text = paymentCardUiModel.formatExpirationDate(),
-                        color = Color.White,
+                        color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                         fontWeight = FontWeight.W500,
                         lineHeight = 1.em,
                         fontSize = 13.sp,
