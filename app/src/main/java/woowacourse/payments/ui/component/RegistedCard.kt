@@ -15,8 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Grey100
 import woowacourse.payments.ui.theme.Yellow80
@@ -26,6 +30,8 @@ fun RegisteredCard(
     cardUiModel: CardUiModel,
     modifier: Modifier = Modifier,
 ) {
+    val cardColor = cardUiModel.cardCompanyUiModel?.color ?: Grey100
+
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -33,45 +39,58 @@ fun RegisteredCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Grey100,
+                    color = cardColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Box(
+        cardUiModel.cardCompanyUiModel?.let { company ->
+            Text(
+                text = stringResource(id = company.companyName),
+                color = Color.White,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W500,
                 modifier =
                     Modifier
-                        .padding(start = 14.dp, bottom = 10.dp)
-                        .size(width = 40.dp, height = 26.dp)
-                        .background(
-                            color = Yellow80,
-                            shape = RoundedCornerShape(4.dp),
-                        ),
+                        .align(Alignment.BottomStart)
+                        .padding(start = 14.dp, bottom = 85.dp),
             )
-            Text(
-                text = cardUiModel.maskedCardNumber(),
-                color = Color.White,
-                modifier = Modifier.padding(start = 12.dp),
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+
+            Column(
                 modifier = Modifier.fillMaxWidth(),
             ) {
+                Box(
+                    modifier =
+                        Modifier
+                            .padding(start = 14.dp, bottom = 10.dp)
+                            .size(width = 40.dp, height = 26.dp)
+                            .background(
+                                color = Yellow80,
+                                shape = RoundedCornerShape(4.dp),
+                            ),
+                )
                 Text(
-                    text = cardUiModel.cardHolderName,
+                    text = cardUiModel.maskedCardNumber(),
                     color = Color.White,
                     modifier = Modifier.padding(start = 12.dp),
                 )
-                Text(
-                    text = cardUiModel.formattedExpiryDate(),
-                    color = Color.White,
-                    modifier =
-                        Modifier
-                            .padding(end = 12.dp)
-                            .padding(top = 3.dp),
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(
+                        text = cardUiModel.cardHolderName,
+                        color = Color.White,
+                        modifier = Modifier.padding(start = 12.dp),
+                    )
+                    Text(
+                        text = cardUiModel.formattedExpiryDate(),
+                        color = Color.White,
+                        modifier =
+                            Modifier
+                                .padding(end = 12.dp)
+                                .padding(top = 3.dp),
+                    )
+                }
             }
         }
     }
@@ -87,6 +106,7 @@ fun RegisteredCardPreview() {
                 cardHolderName = "홍길동",
                 cardExpiryDate = "1224",
                 cardPassword = "1234",
+                cardCompanyUiModel = CardCompanyUiModel.SHINHAN,
             ),
     )
 }
