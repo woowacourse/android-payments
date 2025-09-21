@@ -33,7 +33,7 @@ fun VendorItem(
         Image(
             modifier =
                 Modifier
-                    .size(37.dp)
+                    .size(36.dp)
                     .padding(bottom = 8.dp),
             painter = painterResource(vendor.vendorImageId),
             contentDescription = stringResource(R.string.payments_vendor_logo_description),
