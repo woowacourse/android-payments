@@ -8,9 +8,11 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpiryValidator
-import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
+import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
 
@@ -23,25 +25,40 @@ class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, NewCardUiState> 
 }
 
 class CreateCardStateHolder(
-    initial: NewCardUiState = NewCardUiState()
+    initial: NewCardUiState = NewCardUiState(),
 ) {
     var cardCreateState by mutableStateOf(initial)
         private set
 
-
     val isCardCreatable: Boolean by derivedStateOf {
-        isCardNumberCreatable(cardCreateState.cardNumber) &&
-                isExpiryDateCreatable(
-                    cardCreateState.expiryDate,
-                    cardCreateState.expiryDateErrorTextRes
-                ) &&
-                cardCreateState.expiryDateErrorTextRes == null &&
-                isOwnerNameCreatable(cardCreateState.ownerName) &&
-                isPasswordCreatable(cardCreateState.password)
+        hasBankType &&
+                cardCreateState.run {
+                    isCardNumberCreatable(cardNumber) &&
+                            isExpiryDateCreatable(
+                                expiryDate,
+                                expiryDateErrorTextRes,
+                            ) &&
+                            isOwnerNameCreatable(ownerName) &&
+                            isPasswordCreatable(password)
+                }
     }
 
+
+    val hasBankType get() = cardCreateState.bankType == null
+
     fun newCard(): PaymentCardUiModel =
-        cardCreateState.run { PaymentCardUiModel(cardNumber, expiryDate, ownerName) }
+        cardCreateState.run {
+            PaymentCardUiModel(
+                requireNotNull(bankType?.toLocalBankUiModel()),
+                cardNumber,
+                expiryDate,
+                ownerName,
+            )
+        }
+
+    fun updateCardBank(bankType: BankType) {
+        cardCreateState = cardCreateState.copy(bankType = bankType)
+    }
 
     fun updateCardNumber(cardNumber: String) {
         val value = cardNumber.trim()
@@ -75,8 +92,7 @@ class CreateCardStateHolder(
     private fun isExpiryDateAcceptable(expiry: String): Boolean =
         expiry.length <= CARD_EXPIRY_DATE_MAX && expiry.isDigitsOnly()
 
-    private fun isOwnerNameAcceptable(name: String): Boolean =
-        name.length <= CARD_OWNER_NAME_MAX
+    private fun isOwnerNameAcceptable(name: String): Boolean = name.length <= CARD_OWNER_NAME_MAX
 
     private fun isPasswordAcceptable(password: String): Boolean =
         password.length <= CARD_PASSWORD_MAX && password.isDigitsOnly()
@@ -84,17 +100,18 @@ class CreateCardStateHolder(
     private fun isCardNumberCreatable(number: String): Boolean =
         number.length == CARD_NUMBERS_MAX && number.isDigitsOnly()
 
-    private fun isExpiryDateCreatable(expiry: String, @StringRes errorRes: Int?): Boolean =
+    private fun isExpiryDateCreatable(
+        expiry: String,
+        @StringRes errorRes: Int?,
+    ): Boolean =
         expiry.length == CARD_EXPIRY_DATE_MAX &&
                 expiry.isDigitsOnly() &&
                 errorRes == null
 
-    private fun isOwnerNameCreatable(name: String): Boolean =
-        name.isNotBlank() && name.length <= CARD_OWNER_NAME_MAX
+    private fun isOwnerNameCreatable(name: String): Boolean = name.length <= CARD_OWNER_NAME_MAX
 
     private fun isPasswordCreatable(password: String): Boolean =
         password.length == CARD_PASSWORD_MAX && password.isDigitsOnly()
-
 
     private fun validateExpiryDate(expiry: String): CardExpiryValidator? {
         val digits = expiry.filter(Char::isDigit)

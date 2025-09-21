@@ -24,10 +24,10 @@ import woowacourse.payments.ui.newcard.model.NewCardUiState
 @RunWith(AndroidJUnit4::class)
 class NewCardInputSectionTest {
     @get:Rule
-    val rule = createComposeRule()
+    val composeTestRule = createComposeRule()
 
     private fun setContentWithState(initial: NewCardUiState = NewCardUiState()) {
-        rule.setContent {
+        composeTestRule.setContent {
             var state by rememberSaveable { mutableStateOf(initial) }
             NewCardInputSection(
                 newCardUiState = state,
@@ -41,31 +41,31 @@ class NewCardInputSectionTest {
     }
 
     @Test
-    fun 카드번호_입력시_구분자가_포맷된다() {
+    fun `카드번호_입력시_구분자가_포맷된다`() {
         setContentWithState()
 
-        rule
+        composeTestRule
             .onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
             .performTextInput("1234567812345678")
 
-        rule
+        this@NewCardInputSectionTest.composeTestRule
             .onNodeWithText("1234-5678-1234-5678")
             .assertIsDisplayed()
     }
 
     @Test
-    fun 만료일_입력시_구분자가_포맷된다() {
+    fun `만료일_입력시_구분자가_포맷된다`() {
         setContentWithState()
 
-        rule
+        composeTestRule
             .onNodeWithTag(CARD_EXPIRY_DATE_INPUT_TAG)
             .performTextInput("1229")
 
-        rule.onNodeWithText("12/29").assertIsDisplayed()
+        composeTestRule.onNodeWithText("12/29").assertIsDisplayed()
     }
 
     @Test
-    fun 잘못된_만료일이면_에러메시지가_보인다() {
+    fun `잘못된_만료일이면_에러메시지가_보인다`() {
         val initial =
             NewCardUiState(
                 cardNumber = "",
@@ -77,24 +77,24 @@ class NewCardInputSectionTest {
         setContentWithState(initial)
 
         val errorText = "월은 01~12여야 합니다"
-        rule.onNodeWithText(errorText).assertIsDisplayed()
+        composeTestRule.onNodeWithText(errorText).assertIsDisplayed()
     }
 
     @Test
-    fun 카드소유자이름_길이가_입력될때마다_카운터가_업데이트된다() {
+    fun `카드소유자이름_길이가_입력될때마다_카운터가_업데이트된다`() {
         setContentWithState()
 
-        rule.onNodeWithTag(CARD_OWNER_NAME_INPUT_TAG).performTextInput("12345")
-        rule.onNodeWithText("5/30").assertIsDisplayed()
+        composeTestRule.onNodeWithTag(CARD_OWNER_NAME_INPUT_TAG).performTextInput("12345")
+        composeTestRule.onNodeWithText("5/30").assertIsDisplayed()
     }
 
     @Test
-    fun 비밀번호는_숫자입력이_가능하고_마스킹된다() {
+    fun `비밀번호는_숫자입력이_가능하고_마스킹된다`() {
         setContentWithState()
-        rule
+        composeTestRule
             .onNodeWithTag(CARD_PASSWORD_INPUT_TAG)
             .performTextInput("123")
 
-        rule.onNodeWithText("•••").assertIsDisplayed()
+        composeTestRule.onNodeWithText("•••").assertIsDisplayed()
     }
 }

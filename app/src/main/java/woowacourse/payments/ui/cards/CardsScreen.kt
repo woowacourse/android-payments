@@ -16,19 +16,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
-import woowacourse.payments.ui.cards.model.CardsUiState
+import woowacourse.payments.ui.cards.model.CardsState
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.utils.ext.parcelable
 
 @Composable
-fun CardsScreen(
-    modifier: Modifier = Modifier,
-) {
-    val cardsStateHolder = rememberSaveable(saver = CardsStateHolderSaver()) {
-        CardsStateHolder(CardsUiState.of(emptyList()))
-    }
+fun CardsScreen(modifier: Modifier = Modifier) {
+    val cardsStateHolder =
+        rememberSaveable(saver = CardsStateHolderSaver()) {
+            CardsStateHolder(CardsState.of(emptyList()))
+        }
     val localContext = LocalContext.current
     val cardAddLauncher = cardAddLauncher(cardsStateHolder, localContext)
     val onAddClick = {
@@ -39,8 +38,8 @@ fun CardsScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                cardsUiState = cardsStateHolder.cardsUiState,
-                onAddClick = onAddClick
+                cardsState = cardsStateHolder.cardsState,
+                onAddClick = onAddClick,
             )
         },
     ) { innerPadding ->
@@ -48,10 +47,10 @@ fun CardsScreen(
             modifier = modifier.padding(innerPadding),
             contentAlignment = Alignment.TopCenter,
         ) {
-            when (val cardUiState = cardsStateHolder.cardsUiState) {
-                CardsUiState.None -> NonCardsSection(onAddClick)
-                is CardsUiState.Single -> SingleCardsSection(onAddClick, cardUiState.card)
-                is CardsUiState.Multiple -> MultiCardsSection(cardUiState.cards)
+            when (val cardUiState = cardsStateHolder.cardsState) {
+                CardsState.None -> NonCardsSection(onAddClick)
+                is CardsState.Single -> SingleCardsSection(onAddClick, cardUiState.card)
+                is CardsState.Multiple -> MultiCardsSection(cardUiState.cards)
             }
         }
     }
@@ -82,18 +81,6 @@ fun cardAddLauncher(
 
 @Preview(showBackground = true)
 @Composable
-fun NoneCardsScreenPreview() {
-    CardsScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SingleCardsScreenPreview() {
-    CardsScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MultipleCardsScreenPreview() {
+fun CardsScreenPreview() {
     CardsScreen()
 }

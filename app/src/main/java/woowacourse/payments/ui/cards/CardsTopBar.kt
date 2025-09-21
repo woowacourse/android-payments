@@ -15,14 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.cards.model.CardsUiState
-import woowacourse.payments.ui.preview.paymentCardUiModelSample
-import woowacourse.payments.ui.preview.paymentCardUiModelSamples
+import woowacourse.payments.ui.cards.model.CardsState
+import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
+import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopBar(
-    cardsUiState: CardsUiState,
+    cardsState: CardsState,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,10 +33,10 @@ fun CardsTopBar(
             )
         },
         actions = {
-            when (cardsUiState) {
-                is CardsUiState.Multiple -> CreateCardButton(onAddClick)
-                CardsUiState.None -> {}
-                is CardsUiState.Single -> {}
+            when (cardsState) {
+                is CardsState.Multiple -> CreateCardButton(onAddClick)
+                CardsState.None -> {}
+                is CardsState.Single -> {}
             }
         },
         modifier = modifier.padding(4.dp, 18.dp),
@@ -64,17 +64,17 @@ fun CreateCardButton(
 @Preview(showBackground = true)
 @Composable
 fun NoneNewCardsTopBarPreview() {
-    CardsTopBar(CardsUiState.None, {})
+    CardsTopBar(CardsState.None, {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SingleNewCardsTopBarPreview() {
-    CardsTopBar(CardsUiState.Single(paymentCardUiModelSample), {})
+    CardsTopBar(CardsState.Single(paymentCardUiModelSample), {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MultipleNewCardsTopBarPreview() {
-    CardsTopBar(CardsUiState.Multiple(paymentCardUiModelSamples), {})
+    CardsTopBar(CardsState.Multiple(paymentCardUiModelSamples), {})
 }
