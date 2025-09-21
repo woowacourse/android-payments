@@ -82,9 +82,8 @@ fun PaymentCard(
                     .padding(start = 14.dp, top = 15.dp),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
-                text = cardName,
-                letterSpacing = 0.17.em,
-                lineHeight = 12.sp,
+                text = companyName,
+                color = Color.White
             )
             Text(
                 modifier = Modifier
