@@ -22,13 +22,21 @@ class NewCardActivity : ComponentActivity() {
                     banks = BankRepository.getBanks(),
                     newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
-                    onSaved = { paymentCard ->
-                        runCatching {
-                            setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, paymentCard))
-                            finish()
-                        }.onFailure { e ->
-                            Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-                        }
+                    onSaved = { result ->
+                        result
+                            .onSuccess { paymentCard ->
+                                runCatching {
+                                    setResult(
+                                        RESULT_OK,
+                                        Intent().putExtra(EXTRA_NEW_CARD, paymentCard),
+                                    )
+                                    finish()
+                                }.onFailure { e ->
+                                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                                }
+                            }.onFailure { e ->
+                                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                            }
                     },
                 )
             }

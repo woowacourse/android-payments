@@ -40,7 +40,7 @@ fun NewCardScreen(
     banks: List<Bank>,
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
     onBackPress: () -> Unit = {},
-    onSaved: (PaymentCardUiModel) -> Unit = {},
+    onSaved: (Result<PaymentCardUiModel>) -> Unit = {},
 ) {
     var isShowBottomSheet by rememberSaveable { mutableStateOf(true) }
 
@@ -56,12 +56,14 @@ fun NewCardScreen(
                 onBackClick = { onBackPress() },
                 onSaveClick = {
                     onSaved(
-                        PaymentCardUiModel(
-                            bankType = newCardStateHolder.bank.type,
-                            cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
-                            cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),
-                            expirationDate = newCardStateHolder.expirationDateUiState.expirationDate,
-                        ),
+                        runCatching {
+                            PaymentCardUiModel(
+                                bankType = newCardStateHolder.bank.type,
+                                cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
+                                cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),
+                                expirationDate = newCardStateHolder.expirationDateUiState.expirationDate,
+                            )
+                        },
                     )
                 },
             )
