@@ -23,14 +23,14 @@ import woowacourse.payments.ui.model.toUiModel
 @Composable
 fun CardCompanyButton(
     company: CardCompanyUiModel,
-    onClick: (CardCompanyUiModel) -> Unit,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
             modifier
                 .size(80.dp)
-                .clickable { onClick(company) },
+                .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
