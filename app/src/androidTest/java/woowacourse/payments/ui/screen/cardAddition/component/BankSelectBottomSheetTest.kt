@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.click
 import androidx.compose.ui.test.isRoot
@@ -9,8 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.model.IssuingBank
@@ -19,17 +20,22 @@ class BankSelectBottomSheetTest {
     @get:Rule
     val composeRule = createComposeRule()
 
-    @Test
-    fun `외부_영역을_터치해도_사라지지_않는다`() {
-        // given
-        var dismissCalled = false
+    private lateinit var selectedBank: IssuingBank
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Before
+    fun setUp() {
         composeRule.setContent {
+            val sheetState = rememberModalBottomSheetState { false }
             BankSelectBottomSheet(
-                onBankSelected = {},
-                onDismissRequest = { dismissCalled = true },
+                sheetState = sheetState,
+                onBankSelected = { selectedBank = it },
             )
         }
+    }
 
+    @Test
+    fun `외부_영역을_터치해도_사라지지_않는다`() {
         // when
         composeRule
             .onAllNodes(isRoot())[0]
@@ -38,24 +44,13 @@ class BankSelectBottomSheetTest {
             }
 
         // then
-        assertFalse(dismissCalled)
         composeRule
             .onNodeWithContentDescription("카드사 선택창")
             .assertIsDisplayed()
     }
 
     @Test
-    fun `카드사를_선택하면_선택창이_사라지고_카드사가_저장된다`() {
-        // given
-        var selectedBank: IssuingBank = IssuingBank.NOT_SELECTED
-        var dismissed = false
-        composeRule.setContent {
-            BankSelectBottomSheet(
-                onBankSelected = { newBank -> selectedBank = newBank },
-                onDismissRequest = { dismissed = true },
-            )
-        }
-
+    fun `카드사를_선택하면_카드사가_저장된다`() {
         // when
         composeRule
             .onNodeWithText("카카오뱅크")
@@ -64,6 +59,5 @@ class BankSelectBottomSheetTest {
 
         // then
         assertEquals(IssuingBank.KAKAO, selectedBank)
-        assertTrue(dismissed)
     }
 }

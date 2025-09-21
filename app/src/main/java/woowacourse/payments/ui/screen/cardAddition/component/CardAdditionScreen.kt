@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -23,9 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
 import woowacourse.payments.ui.screen.cardAddition.toUiModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionScreen(
     modifier: Modifier = Modifier,
@@ -35,8 +40,16 @@ fun CardAdditionScreen(
     val stateHolder =
         rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
     val isCompletable = remember { derivedStateOf { stateHolder.uiState.isValidCard } }
+    val sheetState = rememberModalBottomSheetState { false }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
+
+    LaunchedEffect(stateHolder.uiState.issuingBank) {
+        if (stateHolder.uiState.issuingBank != IssuingBank.NOT_SELECTED) {
+            sheetState.hide()
+            stateHolder.updateSheetVisible()
+        }
+    }
 
     Scaffold(
         modifier = modifier,
@@ -50,10 +63,10 @@ fun CardAdditionScreen(
     ) { paddingValues: PaddingValues ->
         if (!stateHolder.hasShownSheet) {
             BankSelectBottomSheet(
+                sheetState = sheetState,
                 onBankSelected = { newIssuingBank ->
                     stateHolder.updateCardState(newIssuingBank = newIssuingBank)
                 },
-                onDismissRequest = { stateHolder.updateSheetVisible() },
             )
         }
         Column(
