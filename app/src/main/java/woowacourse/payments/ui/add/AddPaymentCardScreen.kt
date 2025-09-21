@@ -65,9 +65,14 @@ fun AddPaymentCardScreen(
                     .padding(innerPadding),
         ) {
             PaymentCard(
-                state.bank.toUiModel(),
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                null,
+                paymentCard =
+                    PaymentCardUiModel(
+                        cardNumber = state.cardNumber,
+                        expiry = state.expiry,
+                        owner = state.owner,
+                        bank = state.bank.toUiModel(),
+                    ),
             )
 
             Spacer(modifier = Modifier.height(40.dp))

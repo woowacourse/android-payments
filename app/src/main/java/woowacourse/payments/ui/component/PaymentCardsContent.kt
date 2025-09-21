@@ -64,7 +64,6 @@ private fun SingleCard(
 ) {
     Column(modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         PaymentCard(
-            paymentCard.bank,
             modifier = Modifier.padding(top = 12.dp, bottom = 36.dp),
             paymentCard,
         )
@@ -83,7 +82,6 @@ private fun MultiCards(
     ) {
         paymentCards.forEach { card ->
             PaymentCard(
-                card.bank,
                 paymentCard = card,
                 modifier =
                     Modifier
