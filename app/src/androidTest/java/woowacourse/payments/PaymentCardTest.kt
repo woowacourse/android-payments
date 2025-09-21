@@ -6,7 +6,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,23 +18,20 @@ class PaymentCardTest {
     @get:Rule
     val composeRule = createComposeRule()
 
-    private val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-    private lateinit var uiModel: PaymentCardUiModel
     private lateinit var expectedCardNumber: String
     private lateinit var expectedExpiry: String
 
     @Before
     fun setup() {
-        uiModel =
+        val uiModel =
             PaymentCardUiModel(
                 cardNumber = "1234567812345678",
                 expiry = "0511",
                 owner = "minjeong",
                 bank = BankType.NOT_SELECTED.toUiModel(),
             )
-        val cardSep = context.getString(R.string.card_number_separator)
-        val expirySep = context.getString(R.string.expiry_separator)
+        val cardSep = "\u00A0-\u00A0"
+        val expirySep = "\u00A0/\u00A0"
 
         expectedCardNumber = uiModel.maskedCardNumber(cardSep)
         expectedExpiry = uiModel.formattedExpiry(expirySep)
