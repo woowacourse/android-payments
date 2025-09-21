@@ -1,0 +1,25 @@
+package woowacourse.payments.ui.component.preview
+
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.mapper.toUiModel
+
+class PaymentCardPreviewProvider : PreviewParameterProvider<PaymentCardUiModel> {
+    override val values: Sequence<PaymentCardUiModel>
+        get() =
+            sequenceOf(
+                PaymentCardUiModel(
+                    cardNumber = "1234567812345678",
+                    expiry = "0511",
+                    owner = "minjeong",
+                    bank = BankType.NOT_SELECTED.toUiModel(),
+                ),
+                PaymentCardUiModel(
+                    cardNumber = "1234567812345678",
+                    expiry = "0511",
+                    owner = "junseo",
+                    bank = BankType.KB.toUiModel(),
+                ),
+            )
+}

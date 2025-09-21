@@ -18,9 +18,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.component.preview.PaymentCardPreviewProvider
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 import woowacourse.payments.ui.theme.CardTextStyle
@@ -111,25 +113,13 @@ fun PaymentCard(
 
 @Preview(showBackground = true)
 @Composable
-private fun SelectedPaymentCardPreview() {
+private fun PaymentCardPreview(
+    @PreviewParameter(PaymentCardPreviewProvider::class)
+    uiModel: PaymentCardUiModel,
+) {
     PaymentCard(
-        PaymentCardUiModel("1234567812345678", "0511", "minjeong", BankType.KB.toUiModel()),
-        {},
-        Modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun NotSelectedPaymentCardPreview() {
-    PaymentCard(
-        PaymentCardUiModel(
-            "1234567812345678",
-            "0511",
-            "minjeong",
-            BankType.NOT_SELECTED.toUiModel(),
-        ),
-        {},
-        Modifier,
+        paymentCard = uiModel,
+        onSelectBank = {},
+        modifier = Modifier,
     )
 }
