@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.state
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,10 +14,11 @@ import woowacourse.payments.ui.newcard.uiModel.toDomain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class CardStateHolder{
-    var uiState: CardUiState by mutableStateOf(CardUiState())
+class CardStateHolder (
+    val previousUiState: MutableState<CardUiState> = mutableStateOf(CardUiState())
+){
+    var uiState by previousUiState
         private set
-
     fun changeBottomSheetState() {
         uiState = uiState.copy(isBottomSheetOpen = !uiState.isBottomSheetOpen)
     }
