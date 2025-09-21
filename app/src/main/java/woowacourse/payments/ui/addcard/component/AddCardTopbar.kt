@@ -21,7 +21,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun AddCardTopbar(
     isAddCardEnabled: Boolean = false,
     onAddCardSuccess: () -> Unit = {},
-    onAddCardFail: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -42,7 +41,6 @@ fun AddCardTopbar(
                 if (isAddCardEnabled) {
                     onAddCardSuccess()
                 } else {
-                    onAddCardFail()
                     Toast
                         .makeText(
                             context,
