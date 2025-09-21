@@ -1,77 +1,54 @@
 package woowacourse.payments.ui.screen
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.components.PaymentCards
-import woowacourse.payments.ui.components.PaymentTopBar
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import woowacourse.payments.AddCardActivity
+import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun PaymentScreen(
-    cards: List<CardUiModel>,
-    onAddCardClick: () -> Unit,
-) {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            PaymentTopBar(
-                modifier = Modifier.fillMaxWidth(),
-                onAddClick = onAddCardClick.takeIf { cards.size >= 3 },
-            )
-        },
-    ) { innerPadding ->
-        PaymentCards(
-            cards = cards,
-            onAddCardClick = onAddCardClick,
-            modifier =
-                Modifier
-                    .padding(innerPadding)
-                    .padding(horizontal = 24.dp)
-                    .fillMaxSize(),
-        )
-    }
-}
+fun PaymentScreen() {
+    var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
+    val context = LocalContext.current
+    val canAddMore = cards.size < 2
+    val showTopAdd = cards.size >= 2
 
-@Preview(name = "카드가 없는 경우")
-@Composable
-private fun PaymentScreenEmptyPreview() {
-    AndroidpaymentsTheme {
-        PaymentScreen(cards = emptyList(), onAddCardClick = {})
-    }
-}
+    val cardAddLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult(),
+        ) { activityResult ->
+            if (activityResult.resultCode == Activity.RESULT_OK) {
+                val newCard = AddCardActivity.parseResult(activityResult.data)
+                if (newCard != null) {
+                    cards = cards + newCard
+                }
+            }
+        }
 
-@Preview(name = "카드가 한개 존재하는 경우")
-@Composable
-private fun PaymentScreenOneCardPreview() {
-    AndroidpaymentsTheme {
-        val sampleCard =
-            CardUiModel(
-                cardNumber = "1111 - 2222 - 3333 - 4444",
-                expirationDate = "04 / 21",
-                userName = "CREW",
-                password = "1234",
-            )
-        PaymentScreen(cards = listOf(sampleCard), onAddCardClick = {})
+    LaunchedEffect(cards.size) {
+        if (cards.isNotEmpty()) {
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.payment_toast_card_added),
+                    Toast.LENGTH_SHORT,
+                ).show()
+        }
     }
-}
 
-@Preview(name = "카드가 3개 이상 존재하는 경우")
-@Composable
-private fun PaymentScreenThreeCardsPreview() {
-    AndroidpaymentsTheme {
-        val cards =
-            listOf(
-                CardUiModel("1111 - 2222 - 3333 - 4444", "04 / 21", "CREW", "1234"),
-                CardUiModel("5555 - 6666 - 7777 - 8888", "05 / 22", "GAHYUN", "5678"),
-                CardUiModel("9999 - 0000 - 1111 - 2222", "06 / 23", "ANDY", "9012"),
-            )
-        PaymentScreen(cards = cards, onAddCardClick = {})
-    }
+    PaymentContent(
+        cards = cards,
+        showTopAdd = showTopAdd,
+        canAddMore = canAddMore,
+        onAddCardClick = { cardAddLauncher.launch(AddCardActivity.newIntent(context)) },
+    )
 }

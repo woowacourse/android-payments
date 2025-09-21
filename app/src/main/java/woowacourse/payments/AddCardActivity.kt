@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.IntentCompat.putParcelableCompat
+import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardScreen
@@ -19,26 +19,33 @@ class AddCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 AddCardScreen(
-                    onBackPressed = {
-                        finish()
-                    },
+                    onBackPressed = { finish() },
                     onAddCard = { card ->
-                        val resultIntent =
-                            Intent()
-                                .putParcelableCompat(EXTRA_RESULT_CARD, card.toUiModel())
-                        setResult(RESULT_OK, resultIntent)
-                        finish()
+                        setCardResultAndFinish(card)
                     },
                 )
             }
         }
     }
 
+    private fun setCardResultAndFinish(card: Card) {
+        val resultIntent =
+            Intent().apply { putExtra(EXTRA_SELECTED_CARD_COMPANY, card.toUiModel()) }
+        setResult(RESULT_OK, resultIntent)
+        finish()
+    }
+
     companion object {
-        private const val EXTRA_RESULT_CARD = "RESULT_CARD"
+        private const val EXTRA_SELECTED_CARD_COMPANY = "SELECTED_CARD_COMPANY"
 
-        fun createIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
-        fun parseResult(data: Intent?): CardUiModel? = data?.let { IntentCompat.getParcelableExtra<CardUiModel>(it, EXTRA_RESULT_CARD) }
+        fun parseResult(data: Intent?): CardUiModel? =
+            data?.let {
+                IntentCompat.getParcelableExtra<CardUiModel>(
+                    it,
+                    EXTRA_SELECTED_CARD_COMPANY,
+                )
+            }
     }
 }

@@ -10,24 +10,33 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
 import woowacourse.payments.domain.model.UserName
+import woowacourse.payments.domain.parser.ExpirationDateParser
 import woowacourse.payments.ui.components.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 
 @Suppress("ktlint:standard:function-naming")
 class PaymentCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val testClock = Clock.fixed(Instant.parse("2025-01-01T00:00:00Z"), ZoneOffset.UTC)
+    private val yearMonth = requireNotNull(ExpirationDateParser.parse("1226")) // 2026-12
+
     private val card =
         Card(
+            type = CardCompanyType.BC,
             cardNumber = CardNumber.from("1111222233334444"),
-            expirationDate = ExpirationDate.from("1226"),
-            userName = UserName("KIMGAHYUN"),
+            expirationDate = ExpirationDate.from(yearMonth, testClock),
+            userName = UserName.from("KIMGAHYUN"),
             password = Password.from("1234"),
         ).toUiModel()
 
@@ -40,7 +49,7 @@ class PaymentCardTest {
         }
 
         composeTestRule.onNodeWithTag("PaymentCardContainer").assertIsDisplayed()
-
+        composeTestRule.onNodeWithText("BC카드").assertIsDisplayed()
         composeTestRule.onNodeWithText("1111 - 2222 - **** - ****").assertIsDisplayed()
         composeTestRule.onNodeWithText("12 / 26").assertIsDisplayed()
         composeTestRule.onNodeWithText("KIMGAHYUN").assertIsDisplayed()
@@ -48,7 +57,7 @@ class PaymentCardTest {
 
     @Test
     fun 카드에_정보가_없으면_컨테이너만_표시되고_값_텍스트는_없다() {
-        val emptyCard: CardUiModel = CardUiModel("", "", "", "")
+        val emptyCard: CardUiModel = CardUiModel.EMPTY
 
         composeTestRule.setContent {
             Box(Modifier.testTag("PaymentCardContainer")) {
@@ -57,7 +66,6 @@ class PaymentCardTest {
         }
 
         composeTestRule.onNodeWithTag("PaymentCardContainer").assertIsDisplayed()
-
         composeTestRule.onNodeWithText(" - ").assertDoesNotExist()
         composeTestRule.onNodeWithText(" / ").assertDoesNotExist()
     }

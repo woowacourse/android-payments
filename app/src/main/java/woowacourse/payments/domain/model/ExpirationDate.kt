@@ -1,30 +1,34 @@
 package woowacourse.payments.domain.model
 
+import woowacourse.payments.domain.parser.ExpirationDateParser
+import woowacourse.payments.domain.validator.ValidationErrorType
+import java.time.Clock
 import java.time.YearMonth
-import java.time.format.DateTimeFormatterBuilder
-import java.time.format.ResolverStyle
-import java.time.temporal.ChronoField
-import java.util.Locale
 
-data class ExpirationDate(
+@JvmInline
+value class ExpirationDate private constructor(
     val value: YearMonth,
-    val currentYearMonth: YearMonth = YearMonth.now(),
 ) {
-    init {
-        require(value >= currentYearMonth) { "만료일은 현재 연월보다 이후여야 합니다." }
-    }
-
     companion object {
-        private val formatter =
-            DateTimeFormatterBuilder()
-                .appendPattern("MM")
-                .appendValueReduced(ChronoField.YEAR, 2, 2, 2000)
-                .toFormatter(Locale.ROOT)
-                .withResolverStyle(ResolverStyle.STRICT)
+        const val EXPIRATION_DATE_LENGTH = 4
 
-        fun from(raw: String): ExpirationDate {
-            val ym = YearMonth.parse(raw, formatter)
-            return ExpirationDate(ym)
+        private fun now(clock: Clock) = YearMonth.now(clock)
+
+        fun from(
+            value: YearMonth,
+            clock: Clock = Clock.systemDefaultZone(),
+        ): ExpirationDate {
+            require(!value.isBefore(now(clock)))
+            return ExpirationDate(value)
+        }
+
+        fun validate(
+            raw: String,
+            clock: Clock = Clock.systemDefaultZone(),
+        ): ValidationErrorType? {
+            if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) return null
+            val ym = ExpirationDateParser.parse(raw) ?: return ValidationErrorType.InvalidFormat
+            return if (ym.isBefore(now(clock))) ValidationErrorType.ExpiredDate else null
         }
     }
 }

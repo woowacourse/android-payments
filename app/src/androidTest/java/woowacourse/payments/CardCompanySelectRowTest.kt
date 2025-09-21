@@ -1,0 +1,63 @@
+package woowacourse.payments
+
+import androidx.compose.ui.test.assertCountEquals
+import androidx.compose.ui.test.hasTestTag
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.performClick
+import junit.framework.TestCase.assertEquals
+import org.junit.Rule
+import org.junit.Test
+import woowacourse.payments.domain.model.CardCompanyType
+import woowacourse.payments.ui.components.CardCompanySelectRow
+import woowacourse.payments.ui.model.toUiModel
+
+@Suppress("ktlint:standard:function-naming")
+class CardCompanySelectRowTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Test
+    fun 은행_리스트가_표시된다() {
+        val banks =
+            listOf(
+                CardCompanyType.BC,
+                CardCompanyType.SHINHAN,
+                CardCompanyType.KAKAO,
+            ).map { it.toUiModel() }
+
+        composeTestRule.setContent {
+            CardCompanySelectRow(
+                banks = banks,
+                onSelect = {},
+            )
+        }
+
+        composeTestRule.onAllNodes(hasTestTag("BankItem")).assertCountEquals(banks.size)
+    }
+
+    @Test
+    fun 은행_아이템을_클릭하면_해당_은행이_선택된다() {
+        val banks =
+            listOf(
+                CardCompanyType.BC,
+                CardCompanyType.SHINHAN,
+                CardCompanyType.KAKAO,
+            ).map { it.toUiModel() }
+        var selected: CardCompanyType? = null
+
+        composeTestRule.setContent {
+            CardCompanySelectRow(
+                banks = banks,
+                onSelect = { selected = it },
+            )
+        }
+
+        val label = "신한카드"
+        composeTestRule
+            .onNode(hasTestTag("BankItem").and(hasText(label)))
+            .performClick()
+
+        assertEquals(CardCompanyType.SHINHAN, selected)
+    }
+}
