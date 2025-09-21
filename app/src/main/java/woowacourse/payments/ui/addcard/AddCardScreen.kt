@@ -34,7 +34,6 @@ fun AddCardScreen(
     val focusManager: FocusManager = LocalFocusManager.current
 
     fun saveAddedCard() {
-        uiState.validate()
         if (uiState.isError) {
             onSaveFailure()
             return
@@ -77,24 +76,24 @@ fun AddCardScreen(
                 CardNumberTextField(
                     uiState.cardNumber,
                     uiState.isCardNumberError,
-                    uiState::updateCardNumber,
+                    uiState::onCardNumberChanged,
                 )
 
                 ExpirationDateTextField(
                     uiState.expirationDate,
                     uiState.isExpirationDateError,
-                    uiState::updateExpirationDate,
+                    uiState::onExpirationDateChanged,
                 )
 
                 CardHolderNameTextField(
                     uiState.cardholderName,
-                    uiState::updateCardholderName,
+                    uiState::onCardholderNameChanged,
                 )
 
                 PasscodeTextField(
                     uiState.passcode,
                     uiState.isPasscodeError,
-                    uiState::updatePasscode,
+                    uiState::onPasscodeChanged,
                 )
             }
         }
