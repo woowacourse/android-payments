@@ -5,23 +5,32 @@ import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.cards.CardsScreen
+import woowacourse.payments.ui.cards.CardsStateHolder
 import java.time.YearMonth
 
 class CardsScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private val stateHolder = CardsStateHolder()
+
+    @Before
+    fun setUp() {
+        composeTestRule.setContent {
+            CardsScreen(stateHolder = stateHolder, onCardAddClick = { })
+        }
+    }
+
     @Test
     fun `등록된_카드가_0개이면_등록해주세요_문구와_카드추가_이미지버튼이_보인다`() {
         // given
-        composeTestRule.setContent {
-            CardsScreen(cardsState = listOf())
-        }
 
         // when & then
         composeTestRule.onNodeWithText("새로운 카드를 등록해주세요.").assertIsDisplayed()
@@ -37,15 +46,14 @@ class CardsScreenTest {
                 expiryDate = YearMonth.of(2034, 12),
                 cardOwner = "뭉치",
                 password = "1234",
+                bankType = BankType.BC,
             )
 
         // when
         val card = result.getOrNull()
 
         Assertions.assertNotNull(card)
-        composeTestRule.setContent {
-            CardsScreen(cardsState = listOf(card!!))
-        }
+        stateHolder.cardsState.add(card!!)
 
         // then
         composeTestRule.onNodeWithText("추가").assertIsNotDisplayed()
@@ -60,15 +68,14 @@ class CardsScreenTest {
                 expiryDate = YearMonth.of(2034, 12),
                 cardOwner = "뭉치",
                 password = "1234",
+                bankType = BankType.BC,
             )
 
         // when
         val card = result.getOrNull()
 
         Assertions.assertNotNull(card)
-        composeTestRule.setContent {
-            CardsScreen(cardsState = listOf(card!!, card))
-        }
+        stateHolder.cardsState.addAll(listOf(card!!, card))
 
         // then
         composeTestRule.onNodeWithContentDescription("카드 추가").assertIsNotDisplayed()
@@ -84,15 +91,14 @@ class CardsScreenTest {
                 expiryDate = YearMonth.of(2034, 12),
                 cardOwner = "뭉치",
                 password = "1234",
+                bankType = BankType.BC,
             )
 
         // when
         val card = result.getOrNull()
 
         Assertions.assertNotNull(card)
-        composeTestRule.setContent {
-            CardsScreen(cardsState = listOf(card!!))
-        }
+        stateHolder.cardsState.add(card!!)
 
         // then
         composeTestRule
@@ -115,15 +121,14 @@ class CardsScreenTest {
                 expiryDate = YearMonth.of(2034, 12),
                 cardOwner = "뭉치",
                 password = "1234",
+                bankType = BankType.BC,
             )
 
         // when
         val card = result.getOrNull()
 
         Assertions.assertNotNull(card)
-        composeTestRule.setContent {
-            CardsScreen(cardsState = listOf(card!!))
-        }
+        stateHolder.cardsState.add(card!!)
 
         // then
         composeTestRule

@@ -1,23 +1,15 @@
 package woowacourse.payments.ui.cards
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,21 +19,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.cards.component.NewCard
+import woowacourse.payments.ui.cards.component.RegisteredCards
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.theme.Gray10
-import woowacourse.payments.ui.theme.Gray57
 
 @Composable
 fun CardsScreen(
-    cardsState: List<Card> = listOf(),
-    onCardAddClick: () -> Unit = {},
+    stateHolder: CardsStateHolder,
+    onCardAddClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CardsTopBar(
                 onCardAddClick = onCardAddClick,
-                cards = cardsState,
+                isRegisterCardButtonVisible = stateHolder.isRegisterCardButtonVisible,
             )
         },
         content = { innerPadding ->
@@ -51,7 +42,10 @@ fun CardsScreen(
                         .padding(innerPadding)
                         .fillMaxSize(),
                 onCardAddClick = onCardAddClick,
-                cards = cardsState,
+                isCardRegisterMessageVisible = stateHolder.isCardRegisterMessageVisible,
+                isRegisteredCardsVisible = stateHolder.isRegisteredCardsVisible,
+                isNewCardVisible = stateHolder.isNewCardVisible,
+                cardsState = stateHolder.cardsState,
             )
         },
     )
@@ -61,14 +55,14 @@ fun CardsScreen(
 @Composable
 private fun CardsTopBar(
     modifier: Modifier = Modifier,
-    cards: List<Card>,
+    isRegisterCardButtonVisible: Boolean,
     onCardAddClick: () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         modifier = modifier,
         title = { Text(stringResource(R.string.card_top_bar_title)) },
         actions = {
-            if (cards.size > 1) {
+            if (isRegisterCardButtonVisible) {
                 Text(
                     modifier =
                         Modifier
@@ -85,75 +79,34 @@ private fun CardsTopBar(
 private fun CardsScreenContent(
     modifier: Modifier = Modifier,
     onCardAddClick: () -> Unit,
-    cards: List<Card>,
+    isCardRegisterMessageVisible: Boolean,
+    isRegisteredCardsVisible: Boolean,
+    isNewCardVisible: Boolean,
+    cardsState: SnapshotStateList<Card>,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        when (cards.size) {
-            0 -> {
-                Text(
-                    modifier = Modifier.padding(vertical = 32.dp),
-                    text = stringResource(R.string.card_register_message),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-                NewCard(onCardAddClick = onCardAddClick)
-            }
-
-            1 -> {
-                RegisteredCards(cards = cards)
-                NewCard(onCardAddClick = onCardAddClick)
-            }
-
-            else -> {
-                RegisteredCards(cards = cards)
-            }
+        if (isCardRegisterMessageVisible) {
+            Text(
+                modifier = Modifier.padding(vertical = 32.dp),
+                text = stringResource(R.string.card_register_message),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+            )
         }
-    }
-}
 
-@Composable
-private fun RegisteredCards(
-    modifier: Modifier = Modifier,
-    cards: List<Card>,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        Spacer(modifier = Modifier.height(12.dp))
-        cards.forEach { card ->
-            PaymentCard(modifier = Modifier.padding(bottom = 36.dp), card = card)
-        }
-    }
-}
+        if (isRegisteredCardsVisible) RegisteredCards(cards = cardsState)
 
-@Composable
-private fun NewCard(
-    modifier: Modifier = Modifier,
-    onCardAddClick: () -> Unit,
-) {
-    Box(
-        modifier =
-            modifier
-                .size(width = 208.dp, height = 124.dp)
-                .clickable { onCardAddClick() }
-                .background(color = Gray10, shape = RoundedCornerShape(5.dp)),
-    ) {
-        Icon(
-            modifier = Modifier.align(Alignment.Center),
-            tint = Gray57,
-            imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.card_register),
-        )
+        if (isNewCardVisible) NewCard(onCardAddClick = onCardAddClick)
     }
 }
 
 @Preview
 @Composable
-private fun ShowCardScreenPreview() {
+private fun CardScreenPreview() {
     AndroidpaymentsTheme {
-        CardsScreen()
+        CardsScreen(stateHolder = CardsStateHolder(), onCardAddClick = {})
     }
 }

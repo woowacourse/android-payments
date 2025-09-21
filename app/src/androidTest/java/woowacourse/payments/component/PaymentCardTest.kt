@@ -1,13 +1,21 @@
 package woowacourse.payments.component
 
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.Assertions
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.theme.Red80
 import java.time.YearMonth
 
 class PaymentCardTest {
@@ -23,6 +31,7 @@ class PaymentCardTest {
                 expiryDate = YearMonth.of(2034, 12),
                 cardOwner = "뭉치",
                 password = "1234",
+                bankType = BankType.BC,
             )
 
         // when
@@ -30,7 +39,7 @@ class PaymentCardTest {
 
         Assertions.assertNotNull(card)
         composeTestRule.setContent {
-            PaymentCard(card = card!!)
+            PaymentCard(card = card!!, bankViewType = BankViewType.BC)
         }
 
         // then
@@ -52,7 +61,10 @@ class PaymentCardTest {
 
         // when
         composeTestRule.setContent {
-            PaymentCard(card = card)
+            PaymentCard(
+                card = card,
+                bankViewType = BankViewType.BC,
+            )
         }
 
         // then
@@ -65,5 +77,27 @@ class PaymentCardTest {
         composeTestRule
             .onNodeWithText("뭉치")
             .assertDoesNotExist()
+    }
+
+    @Test
+    fun `특정_카드사의_카드색과_카드사_이름이_보인다`() {
+        // given
+        composeTestRule.setContent {
+            PaymentCard(
+                modifier = Modifier.testTag("PaymentCard"),
+                card = null,
+                bankViewType = BankViewType.BC,
+            )
+        }
+
+        // when
+        val card = composeTestRule.onNodeWithTag("PaymentCard")
+        val bitmap = card.captureToImage()
+        val pixelMap = bitmap.toPixelMap()
+        val expectedColor = pixelMap[bitmap.width / 2, bitmap.height / 2]
+
+        // then
+        Assertions.assertTrue(expectedColor == Red80)
+        composeTestRule.onNodeWithText("BC 카드").assertIsDisplayed()
     }
 }

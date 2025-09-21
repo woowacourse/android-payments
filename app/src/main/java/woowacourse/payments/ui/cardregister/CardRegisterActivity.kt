@@ -13,30 +13,30 @@ class CardRegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             AndroidpaymentsTheme {
-                CardRegisterScreen(onBackClick = { finish() }, onSaveClick = { card ->
-                    val intent =
-                        Intent().apply {
-                            putExtra(KEY_NEW_CARD, card)
-                        }
-
-                    setResult(RESULT_OK, intent)
-                    finish()
-                })
+                CardRegisterScreen(
+                    onBackClick = { finish() },
+                    onSaveClick = { card -> navigateToCards(card) },
+                )
             }
         }
+    }
+
+    private fun navigateToCards(card: Card) {
+        val intent =
+            Intent().apply {
+                putExtra(KEY_NEW_CARD, card)
+            }
+
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     companion object {
         const val KEY_NEW_CARD: String = "new_card"
 
-        fun newIntent(
-            context: Context,
-            card: Card? = null,
-        ): Intent =
-            Intent(context, CardRegisterActivity::class.java).apply {
-                card?.let { putExtra(KEY_NEW_CARD, it) }
-            }
+        fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
     }
 }

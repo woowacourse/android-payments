@@ -18,4 +18,16 @@
     <string name="register_card_button">추가</string>
     <string name="card_info_invalid_message">카드 정보가 올바르지 않습니다.</string>
     <string name="card_top_bar_title">Payments</string>
+
+
+    <!--카드 선택 버튼-->
+    <string name="bc_card">BC카드</string>
+    <string name="shinhan_card">신한카드</string>
+    <string name="kako_card">카카오뱅크</string>
+    <string name="hyundai_card">현대카드</string>
+    <string name="woori_card">우리카드</string>
+    <string name="lotte_card">롯데카드</string>
+    <string name="hana_card">하나카드</string>
+    <string name="kookmin_card">국민카드</string>
+    <string name="error_invalid_bank_message">올바르지 않은 카드사입니다. 다시 선택해주세요.</string>
 </resources>
