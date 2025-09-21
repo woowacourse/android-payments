@@ -44,12 +44,12 @@ class CreateCardStateHolder(
     }
 
 
-    val hasBankType get() = cardCreateState.bankType != BankType.UNSPECIFIED
+    val hasBankType get() = cardCreateState.bankType == null
 
     fun newCard(): PaymentCardUiModel =
         cardCreateState.run {
             PaymentCardUiModel(
-                requireNotNull(bankType.toLocalBankUiModel()),
+                requireNotNull(bankType?.toLocalBankUiModel()),
                 cardNumber,
                 expiryDate,
                 ownerName,

@@ -25,7 +25,7 @@ data class BankUiModel(
     }
 }
 
-fun BankType.toLocalBankUiModel(): BankUiModel? {
+fun BankType.toLocalBankUiModel(): BankUiModel {
     return when (this) {
         BankType.BC -> fromRes("BC카드", R.drawable.ic_bc, BankCardColors.Bc.toArgb())
         BankType.HANA -> fromRes("하나카드", R.drawable.ic_hana, BankCardColors.Hana.toArgb())
@@ -35,6 +35,5 @@ fun BankType.toLocalBankUiModel(): BankUiModel? {
         BankType.LOTTE -> fromRes("롯데카드", R.drawable.ic_lotte, BankCardColors.Lotte.toArgb())
         BankType.SHINHAN -> fromRes("신한카드", R.drawable.ic_shinhan, BankCardColors.Shinhan.toArgb())
         BankType.WOORI -> fromRes("우리카드", R.drawable.ic_woori, BankCardColors.Woori.toArgb())
-        BankType.UNSPECIFIED -> return null
     }
 }

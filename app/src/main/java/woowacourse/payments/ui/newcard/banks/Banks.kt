@@ -22,7 +22,7 @@ fun Banks(
     onSelectCard: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bankTypes by remember { mutableStateOf(BankType.entries.filter { it != BankType.UNSPECIFIED }) }
+    val bankTypes by remember { mutableStateOf(BankType.entries) }
     FlowRow(
         modifier =
             modifier

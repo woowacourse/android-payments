@@ -24,10 +24,10 @@ import woowacourse.payments.ui.theme.Gray33
 
 @Composable
 fun CardSample(
-    bankType: BankType,
+    bankType: BankType?,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = bankType.toLocalBankUiModel()
+    val bankUiModel = bankType?.toLocalBankUiModel()
     Box(
         modifier =
             modifier
