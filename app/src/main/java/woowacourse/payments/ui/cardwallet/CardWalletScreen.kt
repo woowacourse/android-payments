@@ -49,7 +49,7 @@ fun CardWalletScreen(
     Scaffold(
         topBar = {
             CardWalletTopBar(
-                isAddable = cardList.size > MIN_CARDS_FOR_ADD_BUTTON,
+                isAddable = cardList.size >= MIN_CARDS_FOR_ADD_BUTTON,
                 onAddCardClick = {
                     val intent = NewCardScreenActivity.newIntent(context)
                     cardAddLauncher.launch(intent)
