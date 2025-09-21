@@ -47,7 +47,7 @@ class AddPaymentCardStateHolder private constructor(
             .getOrNull()
             ?.toUiModel()
 
-    private inline fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {
+    private fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {
         uiState.value = block(uiState.value)
     }
 
