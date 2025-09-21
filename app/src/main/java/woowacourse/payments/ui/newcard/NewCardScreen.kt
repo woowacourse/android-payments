@@ -41,7 +41,7 @@ fun NewCardScreen(
     companies: List<CompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
-    state: NewCardState = rememberNewCardState(),
+    state: NewCardStateHolder = rememberNewCardState(),
 ) {
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()

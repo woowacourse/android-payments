@@ -11,7 +11,7 @@ import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.CompanyUiModel
 import java.time.format.DateTimeFormatter
 
-class NewCardState {
+class NewCardStateHolder {
     var cardCompany: CompanyUiModel? by mutableStateOf(null)
         private set
     var cardNumber: String by mutableStateOf("")

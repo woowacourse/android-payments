@@ -9,14 +9,14 @@ import woowacourse.payments.ui.newcard.model.CompanyUiModel
 import woowacourse.payments.ui.util.getParcelableCompat
 
 @Composable
-fun rememberNewCardState(): NewCardState =
-    rememberSaveable(saver = NewCardStateSaver) {
-        NewCardState()
+fun rememberNewCardState(): NewCardStateHolder =
+    rememberSaveable(saver = NewCardStateHolderSaver) {
+        NewCardStateHolder()
     }
 
-private val NewCardStateSaver: Saver<NewCardState, Bundle> =
+private val NewCardStateHolderSaver: Saver<NewCardStateHolder, Bundle> =
     Saver(
-        save = { state: NewCardState ->
+        save = { state: NewCardStateHolder ->
             bundleOf(
                 "company" to state.cardCompany,
                 "number" to state.cardNumber,
@@ -26,7 +26,7 @@ private val NewCardStateSaver: Saver<NewCardState, Bundle> =
             )
         },
         restore = { bundle: Bundle ->
-            NewCardState().apply {
+            NewCardStateHolder().apply {
                 bundle.getParcelableCompat<CompanyUiModel>("company")?.let { onCompanySelected(it) }
                 bundle.getString("number")?.let { onCardNumberChange(it) }
                 bundle.getString("expirationDate")?.let { onCardExpirationDateChange(it) }
