@@ -7,6 +7,7 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,7 +47,6 @@ fun CardsScreen(
     var event by remember { mutableStateOf<CardsUiEvent?>(null) }
 
     val context = LocalContext.current
-    val scrollState = rememberScrollState()
     val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -90,8 +90,7 @@ fun CardsScreen(
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(innerPadding)
-                    .verticalScroll(scrollState),
+                    .padding(innerPadding),
         )
     }
 }
@@ -101,6 +100,7 @@ private fun CardsContent(
     state: CardsUiState,
     navigateToCardAdditionActivity: () -> Unit,
     modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState(),
 ) {
     Column(
         modifier = modifier,
@@ -109,14 +109,20 @@ private fun CardsContent(
             0 ->
                 NoCardContent(
                     addCard = navigateToCardAdditionActivity,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState),
                 )
 
             1 ->
                 OneCardContent(
                     card = state.cards.first(),
                     addCard = navigateToCardAdditionActivity,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .verticalScroll(scrollState),
                 )
 
             else ->

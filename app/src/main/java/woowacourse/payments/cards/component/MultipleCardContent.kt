@@ -1,8 +1,9 @@
 package woowacourse.payments.cards.component
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,12 +18,12 @@ fun MultipleCardContent(
     cards: List<Card>,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier,
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(top = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(modifier = Modifier.padding(vertical = 12.dp))
-        cards.forEach { card: Card ->
+        items(cards) { card: Card ->
             PaymentCard(
                 card = card,
                 modifier = Modifier.padding(bottom = 36.dp),
