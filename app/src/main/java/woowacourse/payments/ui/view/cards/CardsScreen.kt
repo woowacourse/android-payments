@@ -46,7 +46,10 @@ import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
-fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit) {
+fun CardsScreen(
+    onClickToolbarAddAction: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
+    onClickCard: (ManagedActivityResultLauncher<Intent, ActivityResult>, CardState) -> Unit,
+) {
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) {
             CardUiStateHolder()
@@ -73,7 +76,7 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
         topBar = {
             PaymentToolbar(
                 onAddClick = {
-                    onAddCardClick(activityResultLauncher)
+                    onClickToolbarAddAction(activityResultLauncher)
                 },
                 addButtonVisible = cardUiStateHolder.toolbarActionButtonVisibility,
             )
@@ -82,10 +85,11 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
         CardsScreen(
             uiState = cardUiStateHolder.uiState,
             uiEvent = uiEvent,
-            onClickCard = { cardType ->
-                if (cardType is CardState.Empty) {
-                    onAddCardClick(activityResultLauncher)
-                }
+            onClickAddCard = { cardType ->
+                onClickCard(activityResultLauncher, cardType)
+            },
+            onClickModifyCard = { cardType ->
+                onClickCard(activityResultLauncher, cardType)
             },
             modifier = Modifier.padding(innerPadding),
         )
@@ -102,7 +106,8 @@ private const val CARD_MASKING_CHAR = "*"
 fun CardsScreen(
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
-    onClickCard: (CardState) -> Unit,
+    onClickAddCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -127,18 +132,19 @@ fun CardsScreen(
     ) {
         when (uiState) {
             CardsUiState.EMPTY ->
-                EmptyCardContent(onClickCard)
+                EmptyCardContent { onClickAddCard(CardState.Empty) }
 
             is CardsUiState.SINGLE ->
                 SingleCardComponent(
-                    CardState.Registered(uiState.state),
-                    onClickCard,
+                    registeredCard = CardState.Registered(uiState.state),
+                    onClickAddCard = onClickAddCard,
+                    onClickModifyCard = onClickModifyCard,
                 )
 
             is CardsUiState.MULTIPLE ->
                 MultipleCardComponent(
                     uiState.state.map { CardState.Registered(it) },
-                    onClickCard,
+                    onClickModifyCard,
                 )
         }
     }
@@ -170,7 +176,8 @@ fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
 @Composable
 fun SingleCardComponent(
     registeredCard: CardState.Registered,
-    onClickCard: (CardState) -> Unit,
+    onClickAddCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState) -> Unit,
 ) {
     PaymentCard(
         card = registeredCard,
@@ -187,7 +194,8 @@ fun SingleCardComponent(
         modifier =
             Modifier
                 .padding(top = 30.dp)
-                .shadow(8.dp),
+                .shadow(8.dp)
+                .clickable(onClick = { onClickModifyCard(registeredCard) }),
     )
     PaymentCard(
         card = CardState.Empty,
@@ -200,14 +208,14 @@ fun SingleCardComponent(
         modifier =
             Modifier
                 .padding(top = 30.dp)
-                .clickable(onClick = { onClickCard(CardState.Empty) }),
+                .clickable(onClick = { onClickAddCard(CardState.Empty) }),
     )
 }
 
 @Composable
 fun MultipleCardComponent(
     registeredCards: List<CardState.Registered>,
-    onClickCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState) -> Unit,
 ) {
     registeredCards.forEach { card ->
         PaymentCard(
@@ -226,7 +234,7 @@ fun MultipleCardComponent(
                 Modifier
                     .padding(top = 30.dp)
                     .shadow(8.dp)
-                    .clickable(onClick = { onClickCard(card) },)
+                    .clickable(onClick = { onClickModifyCard(card) }),
         )
     }
 }
@@ -237,6 +245,7 @@ fun CardScreenPreview() {
     CardsScreen(
         CardsUiState.EMPTY,
         Event(CardScreenUiEvent.Idle),
+        {},
         {},
     )
 }
@@ -250,6 +259,7 @@ fun SingleCardScreenPreview(
         CardsUiState.SINGLE(card),
         Event(CardScreenUiEvent.Idle),
         {},
+        {},
     )
 }
 
@@ -261,6 +271,7 @@ fun CardsScreenPreview(
     CardsScreen(
         CardsUiState.MULTIPLE(cards),
         Event(CardScreenUiEvent.Idle),
+        {},
         {},
     )
 }

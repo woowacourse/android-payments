@@ -7,8 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.serialization.SerializationCard
+import woowacourse.payments.ui.serialization.toSerializationCard
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.view.new.NewCardActivity
+import woowacourse.payments.ui.view.new.NewCardMode
 
 class CardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,8 +20,17 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardsScreen(
-                    onAddCardClick = { launcher ->
-                        launcher.launch(NewCardActivity.newIntent(this))
+                    onClickToolbarAddAction = { launcher ->
+                        launcher.launch(NewCardActivity.newIntent(this, NewCardMode.Add))
+                    },
+                    onClickCard = { launcher, cardType ->
+                        val mode =
+                            when (cardType) {
+                                CardState.Empty -> NewCardMode.Add
+                                is CardState.Registered -> NewCardMode.Modify(cardType.card.toSerializationCard())
+                                CardState.Pending -> return@CardsScreen
+                            }
+                        launcher.launch(NewCardActivity.newIntent(this, mode))
                     },
                 )
             }

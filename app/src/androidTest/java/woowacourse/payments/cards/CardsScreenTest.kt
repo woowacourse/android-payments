@@ -28,6 +28,7 @@ class CardsScreenTest {
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
                 {},
+                {},
             )
         }
 
@@ -60,6 +61,7 @@ class CardsScreenTest {
             CardsScreen(
                 uiState,
                 Event(CardScreenUiEvent.Idle),
+                {},
                 {},
             )
         }
@@ -114,6 +116,7 @@ class CardsScreenTest {
                 uiState,
                 Event(CardScreenUiEvent.Idle),
                 {},
+                {},
             )
         }
 
@@ -148,6 +151,7 @@ class CardsScreenTest {
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
                 { clickedType = it },
+                {},
             )
         }
 
@@ -158,5 +162,61 @@ class CardsScreenTest {
 
         // then
         assertEquals(CardState.Empty, clickedType)
+    }
+
+    @Test
+    fun `SINGLE_카드_클릭_시_onClickModifyCard_호출된다`() {
+        var clickedCard: CardState? = null
+        val uiState =
+            CardsUiState.SINGLE(
+                Card(
+                    number = "1111222233334444",
+                    expireDate = "0421",
+                    ownerName = "peto",
+                    password = "",
+                    company = CardCompany.BC,
+                ),
+            )
+
+        composeTestRule.setContent {
+            CardsScreen(
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                onClickAddCard = {},
+                onClickModifyCard = { clickedCard = it },
+            )
+        }
+
+        composeTestRule
+            .onNodeWithText("1111 - 2222 - **** - ****")
+            .performClick()
+
+        assertEquals(uiState.state.number, (clickedCard as CardState.Registered).card.number)
+    }
+
+    @Test
+    fun `MULTIPLE_카드_클릭_시_onClickModifyCard_호출된다`() {
+        var clickedCard: CardState? = null
+        val cards =
+            listOf(
+                Card("1111222233334444", "0421", "peto", "", CardCompany.BC),
+                Card("2222333344445555", "0522", "peto", "", CardCompany.BC),
+            )
+        val uiState = CardsUiState.MULTIPLE(cards)
+
+        composeTestRule.setContent {
+            CardsScreen(
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                onClickAddCard = {},
+                onClickModifyCard = { clickedCard = it },
+            )
+        }
+
+        composeTestRule
+            .onNodeWithText("1111 - 2222 - **** - ****")
+            .performClick()
+
+        assertEquals(cards[0].number, (clickedCard as CardState.Registered).card.number)
     }
 }
