@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,6 +50,7 @@ fun PaymentCard(
                 text = context.getString(card.cardCompany.nameRes),
                 color = Color.White,
                 fontSize = 12.sp,
+                modifier = Modifier.testTag("payment card card company name")
             )
 
             Box(
@@ -64,6 +66,7 @@ fun PaymentCard(
                 text = card.cardNumber,
                 color = Color.White,
                 fontSize = 12.sp,
+                modifier = Modifier.testTag("payment card card number")
             )
 
             Row(
@@ -74,12 +77,14 @@ fun PaymentCard(
                     text = card.cardholderName,
                     color = Color.White,
                     fontSize = 12.sp,
+                    modifier = Modifier.testTag("payment card cardholder name")
                 )
 
                 Text(
                     text = card.expirationDate,
                     color = Color.White,
                     fontSize = 12.sp,
+                    modifier = Modifier.testTag("payment card expiration date")
                 )
             }
         }
@@ -102,8 +107,8 @@ private fun PaymentCardWithDetailPreview() {
             card =
                 CardUiModel(
                     "1234 - 1234 - **** - ****",
-                    "CREW",
                     "34 / 12",
+                    "CREW",
                     "1234",
                     CardCompany.BC_CARD.toUiModel(),
                 ),
