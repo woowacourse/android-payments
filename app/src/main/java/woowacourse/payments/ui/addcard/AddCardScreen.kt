@@ -58,11 +58,7 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-        ) {
+        Column(Modifier.padding(innerPadding)) {
             PaymentCard(
                 modifier =
                     Modifier
