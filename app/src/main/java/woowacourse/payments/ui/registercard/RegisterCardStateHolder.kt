@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister
+package woowacourse.payments.ui.registercard
 
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.BankViewType
 
-class CardRegisterStateHolder {
+class RegisterCardStateHolder {
     var cardNumber by mutableStateOf("")
         private set
 

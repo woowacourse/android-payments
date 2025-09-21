@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister.component
+package woowacourse.payments.ui.registercard.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardregister.ExpiryDateVisualTransformation
+import woowacourse.payments.ui.registercard.ExpiryDateVisualTransformation
 
 @Composable
 fun ExpiryDateInputField(

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister
+package woowacourse.payments.ui.registercard
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -30,12 +30,12 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
-import woowacourse.payments.ui.cardregister.component.CardNumberInputField
-import woowacourse.payments.ui.cardregister.component.CardOwnerInputField
-import woowacourse.payments.ui.cardregister.component.ExpiryDateInputField
-import woowacourse.payments.ui.cardregister.component.PasswordInputField
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.registercard.component.CardNumberInputField
+import woowacourse.payments.ui.registercard.component.CardOwnerInputField
+import woowacourse.payments.ui.registercard.component.ExpiryDateInputField
+import woowacourse.payments.ui.registercard.component.PasswordInputField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
 import java.time.YearMonth
@@ -46,7 +46,7 @@ fun CardRegisterScreen(
     onSaveClick: (Card) -> Unit,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { CardRegisterStateHolder() }
+    val stateHolder = rememberSaveable { RegisterCardStateHolder() }
 
     Scaffold(
         topBar = {
@@ -134,7 +134,7 @@ private fun NewCardTopBar(
 @Composable
 private fun CardRegisterContent(
     innerPadding: PaddingValues,
-    stateHolder: CardRegisterStateHolder,
+    stateHolder: RegisterCardStateHolder,
     onBackClick: () -> Unit,
 ) {
     val modalBottomSheetState =

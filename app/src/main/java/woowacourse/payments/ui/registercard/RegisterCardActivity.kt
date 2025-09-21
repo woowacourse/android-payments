@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister
+package woowacourse.payments.ui.registercard
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class CardRegisterActivity : ComponentActivity() {
+class RegisterCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,6 +37,6 @@ class CardRegisterActivity : ComponentActivity() {
     companion object {
         const val KEY_NEW_CARD: String = "new_card"
 
-        fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, RegisterCardActivity::class.java)
     }
 }

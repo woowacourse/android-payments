@@ -1,4 +1,4 @@
-package woowacourse.payments.cardregister
+package woowacourse.payments.registercard
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
@@ -9,9 +9,9 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.cardregister.CardRegisterScreen
+import woowacourse.payments.ui.registercard.CardRegisterScreen
 
-class CardRegisterScreenTest {
+class RegisterCardScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 

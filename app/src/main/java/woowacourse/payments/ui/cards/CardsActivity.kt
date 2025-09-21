@@ -11,9 +11,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.cardregister.CardRegisterActivity
-import woowacourse.payments.ui.cardregister.CardRegisterActivity.Companion.KEY_NEW_CARD
 import woowacourse.payments.ui.getParcelableExtraCompat
+import woowacourse.payments.ui.registercard.RegisterCardActivity
+import woowacourse.payments.ui.registercard.RegisterCardActivity.Companion.KEY_NEW_CARD
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -54,7 +54,7 @@ class CardsActivity : ComponentActivity() {
     }
 
     private fun navigateToCardRegister(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
-        val intent = CardRegisterActivity.newIntent(this)
+        val intent = RegisterCardActivity.newIntent(this)
         launcher.launch(intent)
     }
 }
