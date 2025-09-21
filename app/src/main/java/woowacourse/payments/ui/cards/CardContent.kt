@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.components.CardChip
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.preview.paymentCardUiModelSample
+import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
 
 @Composable
 fun CardContent(

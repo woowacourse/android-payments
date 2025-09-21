@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCard
-import woowacourse.payments.ui.preview.paymentCardUiModelSample
+import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
 
 @Composable
 fun SingleCardsSection(

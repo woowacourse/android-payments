@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.preview
+package woowacourse.payments.ui.debug.fixture
 
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.PaymentCardUiModel
@@ -6,7 +6,7 @@ import woowacourse.payments.ui.model.toLocalBankUiModel
 
 val paymentCardUiModelSample =
     PaymentCardUiModel(
-        BankType.BC.toLocalBankUiModel()!!,
+        BankType.BC.toLocalBankUiModel() ?: throw IllegalArgumentException("paymentCardUiModelSample 오류"),
         "1234567812345678",
         "1225",
         "빰".repeat(30),

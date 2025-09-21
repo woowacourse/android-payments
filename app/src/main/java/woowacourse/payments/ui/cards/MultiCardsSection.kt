@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.preview.paymentCardUiModelSamples
+import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSamples
 
 @Composable
 fun MultiCardsSection(
