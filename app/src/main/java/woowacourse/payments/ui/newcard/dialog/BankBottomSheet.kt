@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.dialog
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
@@ -63,10 +64,11 @@ fun BankBottomSheet(
             banks.forEach { bank ->
                 BankItem(
                     bank = bank,
-                    onClick = {
-                        onClick(bank)
-                        selectedBank = bank.type
-                    },
+                    modifier =
+                        Modifier.clickable {
+                            onClick(bank)
+                            selectedBank = bank.type
+                        },
                 )
             }
         }

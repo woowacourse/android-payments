@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.newcard.dialog.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -24,14 +23,10 @@ import woowacourse.payments.ui.util.extensions.toLabel
 @Composable
 fun BankItem(
     bank: Bank,
-    onClick: (Bank) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier =
-            modifier.clickable {
-                onClick(bank)
-            },
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
@@ -59,6 +54,5 @@ private fun BankItemPreview() {
                 type = BankType.BC,
                 icon = R.drawable.ic_bc,
             ),
-        onClick = {},
     )
 }
