@@ -11,72 +11,59 @@ import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.CompanyUiModel
 import java.time.format.DateTimeFormatter
 
-class NewCardStateHolder {
-    var cardCompany: CompanyUiModel? by mutableStateOf(null)
-        private set
-    var cardNumber: String by mutableStateOf("")
-        private set
-    var cardExpirationDate: String by mutableStateOf("")
-        private set
-    var cardHolderName: String by mutableStateOf("")
-        private set
-    var cardPassword: String by mutableStateOf("")
+class NewCardStateHolder(
+    uiState: NewCardUiState = NewCardUiState(),
+) {
+    var uiState: NewCardUiState by mutableStateOf(uiState)
         private set
 
-    val isCardCompanySelected: Boolean
-        get() = cardCompany != null
-
-    val isCardNumberValid: Boolean
-        get() = runCatching { CardNumber.from(cardNumber) }.isSuccess
-
-    val isCardExpirationDateValid: Boolean
+    val card: CardUiModel?
         get() =
+            uiState.cardCompany
+                ?.let { company: CompanyUiModel ->
+                    CardUiModel(
+                        companyName = company.name,
+                        number = uiState.cardNumber,
+                        expirationDate = uiState.cardExpirationDate,
+                        holderName = uiState.cardHolderName.trim(),
+                        color = company.color,
+                    )
+                }
+
+    fun onCompanySelected(company: CompanyUiModel) {
+        uiState = uiState.copy(cardCompany = company)
+    }
+
+    fun onCardNumberChange(value: String) {
+        val isValid: Boolean = runCatching { CardNumber.from(value) }.isSuccess
+        uiState = uiState.copy(cardNumber = value, isCardNumberValid = isValid)
+    }
+
+    fun onCardExpirationDateChange(value: String) {
+        val isValid: Boolean =
             runCatching {
-                CardExpirationDate.from(cardExpirationDate, DATE_TIME_FORMATTER)
+                CardExpirationDate.from(value, DATE_TIME_FORMATTER)
             }.fold(
                 onSuccess = { !it.isExpired() },
                 onFailure = { false },
             )
-
-    val isCardHolderNameValid: Boolean
-        get() = cardHolderName.isBlank() || runCatching { CardHolderName(cardHolderName.trim()) }.isSuccess
-
-    val isCardPasswordValid: Boolean
-        get() = runCatching { CardPassword(cardPassword) }.isSuccess
-
-    val isCardValid: Boolean
-        get() = isCardCompanySelected && isCardNumberValid && isCardExpirationDateValid && isCardHolderNameValid && isCardPasswordValid
-
-    val card: CardUiModel?
-        get() =
-            cardCompany?.takeIf { isCardCompanySelected }?.let { company: CompanyUiModel ->
-                CardUiModel(
-                    companyName = company.name,
-                    number = cardNumber,
-                    expirationDate = cardExpirationDate,
-                    holderName = cardHolderName.trim(),
-                    color = company.color,
-                )
-            }
-
-    fun onCompanySelected(company: CompanyUiModel) {
-        cardCompany = company
-    }
-
-    fun onCardNumberChange(value: String) {
-        cardNumber = value
-    }
-
-    fun onCardExpirationDateChange(value: String) {
-        cardExpirationDate = value
+        uiState =
+            uiState.copy(
+                cardExpirationDate = value,
+                isCardExpirationDateValid = isValid,
+            )
     }
 
     fun onCardHolderNameChange(value: String) {
-        cardHolderName = value
+        val isValid: Boolean =
+            value.isBlank() || runCatching { CardHolderName(value.trim()) }.isSuccess
+        uiState =
+            uiState.copy(cardHolderName = value, isCardHolderNameValid = isValid)
     }
 
     fun onCardPasswordChange(value: String) {
-        cardPassword = value
+        val isValid: Boolean = runCatching { CardPassword(value) }.isSuccess
+        uiState = uiState.copy(cardPassword = value, isCardPasswordValid = isValid)
     }
 
     companion object {

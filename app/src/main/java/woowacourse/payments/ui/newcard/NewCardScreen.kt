@@ -41,20 +41,21 @@ fun NewCardScreen(
     companies: List<CompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
-    state: NewCardStateHolder = rememberNewCardState(),
+    stateHolder: NewCardStateHolder = rememberNewCardState(),
 ) {
+    val uiState: NewCardUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()
 
-    LaunchedEffect(key1 = state.cardCompany) {
-        if (state.isCardCompanySelected) {
+    LaunchedEffect(key1 = uiState.cardCompany) {
+        if (uiState.cardCompany != null) {
             showBottomSheet = false
         }
     }
 
     CompanySelectBottomSheet(
         companies = companies,
-        onCompanySelected = { state.onCompanySelected(it) },
+        onCompanySelected = { stateHolder.onCompanySelected(it) },
         sheetState = bottomSheetState,
         showBottomSheet = showBottomSheet,
         onDisMiss = onBackClick,
@@ -64,9 +65,9 @@ fun NewCardScreen(
     Scaffold(
         topBar = {
             NewCardTopBar(
-                canSave = state.isCardValid,
+                canSave = uiState.isCardValid,
                 onBackClick = onBackClick,
-                onSaveClick = { state.card?.let { onSaveClick(it) } },
+                onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -80,33 +81,33 @@ fun NewCardScreen(
                     .verticalScroll(scrollState),
         ) {
             PaymentCard(
-                card = state.card,
+                card = stateHolder.card,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
             Spacer(modifier = Modifier.height(20.dp))
 
             CardNumberTextField(
-                value = state.cardNumber,
-                onValueChange = state::onCardNumberChange,
-                isValid = state.isCardNumberValid,
+                value = uiState.cardNumber,
+                onValueChange = stateHolder::onCardNumberChange,
+                isValid = uiState.isCardNumberValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardExpirationDateTextField(
-                value = state.cardExpirationDate,
-                onValueChange = state::onCardExpirationDateChange,
-                isValid = state.isCardExpirationDateValid,
+                value = uiState.cardExpirationDate,
+                onValueChange = stateHolder::onCardExpirationDateChange,
+                isValid = uiState.isCardExpirationDateValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             CardHolderNameTextField(
-                value = state.cardHolderName,
-                onValueChange = state::onCardHolderNameChange,
-                isValid = state.isCardHolderNameValid,
+                value = uiState.cardHolderName,
+                onValueChange = stateHolder::onCardHolderNameChange,
+                isValid = uiState.isCardHolderNameValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardPasswordTextField(
-                value = state.cardPassword,
-                onValueChange = state::onCardPasswordChange,
-                isValid = state.isCardPasswordValid,
+                value = uiState.cardPassword,
+                onValueChange = stateHolder::onCardPasswordChange,
+                isValid = uiState.isCardPasswordValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
