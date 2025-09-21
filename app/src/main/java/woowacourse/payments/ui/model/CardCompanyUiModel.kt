@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardCompany
 
 enum class CardCompanyUiModel(
     @StringRes val companyName: Int,
@@ -51,3 +52,7 @@ enum class CardCompanyUiModel(
         color = Color(0xFF695F54),
     ),
 }
+
+fun CardCompany.toUiModel(): CardCompanyUiModel? = CardCompanyUiModel.entries.find { it.name == this.name }
+
+fun CardCompanyUiModel.toDomain(): CardCompany? = CardCompany.entries.find { it.name == this.name }
