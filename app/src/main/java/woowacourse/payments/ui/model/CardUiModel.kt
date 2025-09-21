@@ -9,6 +9,7 @@ data class CardUiModel(
     val cardHolderName: String,
     val cardExpiryDate: String,
     val cardPassword: String,
+    val cardCompanyUiModel: CardCompanyUiModel?,
 ) : Parcelable {
     fun maskedCardNumber(): String {
         val visibleText = cardNumber.take(8)
