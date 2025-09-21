@@ -42,8 +42,5 @@ class CardListActivity : ComponentActivity() {
         }
     }
 
-    private fun Intent.toCardOrNull(): Card? =
-        getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let { card: CardUiModel ->
-            card.toCardOrNull()
-        }
+    private fun Intent.toCardOrNull(): Card? = getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let(CardUiModel::toCardOrNull)
 }
