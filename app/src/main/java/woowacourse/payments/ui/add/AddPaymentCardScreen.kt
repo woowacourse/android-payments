@@ -23,7 +23,7 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PinTextField
 import woowacourse.payments.ui.component.StringTextField
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.mapper.toUiModel
+import woowacourse.payments.ui.model.mapper.toUiModelOrPlaceholder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -48,7 +48,7 @@ fun AddPaymentCardScreen(
                 cardNumber = state.cardNumber,
                 expiry = state.expiry,
                 owner = state.owner,
-                bank = state.bank.toUiModel(),
+                bank = state.bank.toUiModelOrPlaceholder(),
             )
         }
 

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,8 +19,6 @@ fun BankSelectRow(
     onSelect: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val banks = BankType.entries.filter { it != BankType.NOT_SELECTED }
-
     FlowRow(
         modifier =
             modifier
@@ -31,7 +28,7 @@ fun BankSelectRow(
         horizontalArrangement = Arrangement.Center,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        banks.forEach { bank ->
+        BankType.entries.forEach { bank ->
             BankItem(
                 bank = bank,
                 onClick = { onSelect(bank) },

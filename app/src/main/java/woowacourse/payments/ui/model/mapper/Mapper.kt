@@ -7,7 +7,6 @@ import woowacourse.payments.domain.model.PaymentCard
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.BC
-import woowacourse.payments.ui.theme.Gray300
 import woowacourse.payments.ui.theme.HANA
 import woowacourse.payments.ui.theme.HYUNDAI
 import woowacourse.payments.ui.theme.KAKAO
@@ -26,14 +25,6 @@ fun PaymentCard.toUiModel(): PaymentCardUiModel =
 
 fun BankType.toUiModel(): BankUiModel =
     when (this) {
-        BankType.NOT_SELECTED ->
-            BankUiModel(
-                R.drawable.ic_empty,
-                R.string.card_name_empty,
-                Gray300.toArgb(),
-                false,
-            )
-
         BankType.BC -> BankUiModel(R.drawable.bc, R.string.bc_card_name, BC.toArgb())
         BankType.SHINHAN ->
             BankUiModel(
@@ -55,3 +46,5 @@ fun BankType.toUiModel(): BankUiModel =
         BankType.HANA -> BankUiModel(R.drawable.hana, R.string.hana_card_name, HANA.toArgb())
         BankType.KB -> BankUiModel(R.drawable.kb, R.string.kb_card_name, KB.toArgb())
     }
+
+fun BankType?.toUiModelOrPlaceholder(): BankUiModel = this?.toUiModel() ?: BankUiModel.PlaceHolder
