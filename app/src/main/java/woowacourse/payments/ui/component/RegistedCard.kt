@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
@@ -43,54 +44,53 @@ fun RegisteredCard(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        cardUiModel.cardCompanyUiModel?.let { company ->
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
-                text = stringResource(id = company.companyName),
+                text = stringResource(id = cardUiModel.cardCompanyUiModel?.companyName ?: 0),
                 color = Color.White,
                 fontSize = 12.sp,
+                lineHeight = 1.em,
                 fontWeight = FontWeight.W500,
-                modifier =
-                    Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(start = 14.dp, bottom = 85.dp),
+                modifier = Modifier.padding(start = 14.dp, bottom = 12.dp),
             )
 
-            Column(
+            Box(
+                modifier =
+                    Modifier
+                        .padding(start = 14.dp, bottom = 10.dp)
+                        .size(width = 40.dp, height = 26.dp)
+                        .background(
+                            color = Yellow80,
+                            shape = RoundedCornerShape(4.dp),
+                        ),
+            )
+            Text(
+                text = cardUiModel.maskedCardNumber(),
+                color = Color.White,
+                lineHeight = 1.em,
+                modifier = Modifier.padding(start = 12.dp),
+            )
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Box(
-                    modifier =
-                        Modifier
-                            .padding(start = 14.dp, bottom = 10.dp)
-                            .size(width = 40.dp, height = 26.dp)
-                            .background(
-                                color = Yellow80,
-                                shape = RoundedCornerShape(4.dp),
-                            ),
-                )
                 Text(
-                    text = cardUiModel.maskedCardNumber(),
+                    text = cardUiModel.cardHolderName,
                     color = Color.White,
+                    lineHeight = 1.em,
                     modifier = Modifier.padding(start = 12.dp),
                 )
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    Text(
-                        text = cardUiModel.cardHolderName,
-                        color = Color.White,
-                        modifier = Modifier.padding(start = 12.dp),
-                    )
-                    Text(
-                        text = cardUiModel.formattedExpiryDate(),
-                        color = Color.White,
-                        modifier =
-                            Modifier
-                                .padding(end = 12.dp)
-                                .padding(top = 3.dp),
-                    )
-                }
+                Text(
+                    text = cardUiModel.formattedExpiryDate(),
+                    color = Color.White,
+                    lineHeight = 1.em,
+                    modifier =
+                        Modifier
+                            .padding(end = 12.dp)
+                            .padding(top = 3.dp),
+                )
             }
         }
     }
