@@ -13,11 +13,9 @@ data class CardAdditionUiState(
     val password: CardPassword,
     val issuingBank: IssuingBank,
 ) {
-    val isValidCard: Boolean
-        get() = cardNumber.isValid && expiredDate.isValid && password.isValid
+    val isValidCard: Boolean = cardNumber.isValid && expiredDate.isValid && password.isValid
 
-    val isDateError: Boolean
-        get() = expiredDate.value.isNotEmpty() && expiredDate.isValid.not()
+    val isDateError: Boolean = expiredDate.value.isNotEmpty() && expiredDate.isValid.not()
 
     fun update(
         newCardNumber: String? = null,
