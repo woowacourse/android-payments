@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -95,7 +96,9 @@ fun NewCardScreen(
                 expirationDate = newCardStateHolder.expirationDateUiState.expirationDate.value,
                 modifier =
                     Modifier
-                        .align(Alignment.CenterHorizontally)
+                        .clickable {
+                            isShowBottomSheet = true
+                        }.align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp),
             )
             CardNumberTextField(
