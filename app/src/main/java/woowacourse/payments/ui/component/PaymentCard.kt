@@ -28,9 +28,9 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun PaymentCard(
+    bankViewType: BankViewType,
     modifier: Modifier = Modifier,
     card: Card? = null,
-    bankViewType: BankViewType,
 ) {
     Box(
         modifier =

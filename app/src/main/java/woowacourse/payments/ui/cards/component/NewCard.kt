@@ -36,7 +36,7 @@ fun NewCard(
             modifier = Modifier.align(Alignment.Center),
             tint = Gray57,
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(R.string.card_register),
+            contentDescription = stringResource(R.string.card_register_button),
         )
     }
 }

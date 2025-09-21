@@ -8,15 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +24,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
+import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.registercard.component.CardNumberInputField
 import woowacourse.payments.ui.registercard.component.CardOwnerInputField
@@ -50,7 +44,8 @@ fun CardRegisterScreen(
 
     Scaffold(
         topBar = {
-            NewCardTopBar(
+            CardTopBar(
+                title = stringResource(R.string.card_register_top_bar_title),
                 onBackClick = onBackClick,
                 onSaveClick = {
                     val result =
@@ -99,35 +94,6 @@ private fun String.toYearMonth(): YearMonth? {
     } else {
         YearMonth.of(yearOffset + year, month)
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun NewCardTopBar(
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
-) {
-    TopAppBar(
-        modifier = modifier,
-        title = { Text(stringResource(R.string.card_register)) },
-        navigationIcon = {
-            IconButton(onClick = { onBackClick() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.content_desc_back),
-                )
-            }
-        },
-        actions = {
-            IconButton(onClick = { onSaveClick() }) {
-                Icon(
-                    imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.content_desc_done),
-                )
-            }
-        },
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
