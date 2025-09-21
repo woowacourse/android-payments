@@ -22,7 +22,7 @@ class PasscodeTextFieldTest {
             PasscodeTextField(
                 uiState.passcode,
                 uiState.isPasscodeError,
-                { newValue: String -> uiState.updatePasscode(newValue) },
+                { newValue: String -> uiState.onPasscodeChanged(newValue) },
             )
         }
     }

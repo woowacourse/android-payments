@@ -22,7 +22,7 @@ class CardNumberTextFieldTest {
             CardNumberTextField(
                 uiState.cardNumber,
                 uiState.isCardNumberError,
-                { newValue: String -> uiState.updateCardNumber(newValue) },
+                { newValue: String -> uiState.onCardNumberChanged(newValue) },
             )
         }
     }

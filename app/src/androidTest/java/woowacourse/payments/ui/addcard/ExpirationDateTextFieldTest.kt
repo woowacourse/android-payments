@@ -22,7 +22,7 @@ class ExpirationDateTextFieldTest {
             ExpirationDateTextField(
                 uiState.expirationDate,
                 uiState.isExpirationDateError,
-                { newValue: String -> uiState.updateExpirationDate(newValue) },
+                { newValue: String -> uiState.onExpirationDateChanged(newValue) },
             )
         }
     }

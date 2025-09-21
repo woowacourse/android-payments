@@ -21,7 +21,7 @@ class CardHolderNameTextFieldTest {
         composeTestRule.setContent {
             CardHolderNameTextField(
                 uiState.cardholderName,
-                { newValue: String -> uiState.updateCardholderName(newValue) },
+                { newValue: String -> uiState.onCardholderNameChanged(newValue) },
             )
         }
     }
