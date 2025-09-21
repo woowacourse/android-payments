@@ -39,39 +39,33 @@ class PaymentCardTest {
 
         expectedCardNumber = uiModel.maskedCardNumber(cardSep)
         expectedExpiry = uiModel.formattedExpiry(expirySep)
-    }
 
-    private fun render() {
         composeRule.setContent {
             PaymentCard(
-                modifier = Modifier.testTag(Tags.PAYMENT_CARD),
                 paymentCard = uiModel,
-                bank = uiModel.bank,
+                modifier = Modifier.testTag(Tags.PAYMENT_CARD),
+                onSelectBank = {},
             )
         }
     }
 
     @Test
     fun 카드가_표시된다() {
-        render()
         composeRule.onNodeWithTag(Tags.PAYMENT_CARD).assertIsDisplayed()
     }
 
     @Test
     fun 카드번호가_마스킹되어_표시된다() {
-        render()
         composeRule.onNodeWithText(expectedCardNumber).assertIsDisplayed()
     }
 
     @Test
     fun 소유자_이름이_표시된다() {
-        render()
         composeRule.onNodeWithText("minjeong").assertIsDisplayed()
     }
 
     @Test
     fun 만료일이_형식에_맞게_표시된다() {
-        render()
         composeRule.onNodeWithText(expectedExpiry).assertIsDisplayed()
     }
 }
