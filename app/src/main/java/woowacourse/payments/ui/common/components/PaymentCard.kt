@@ -105,7 +105,7 @@ fun PaymentCard(
 private fun String.toMaskedString(): String =
     this
         .chunked(4)
-        .mapIndexed { index, chunk -> if (index < 2) chunk else "****" }
+        .mapIndexed { index: Int, chunk: String -> if (index < 2) chunk else "*".repeat(chunk.length) }
         .joinToString(" - ")
 
 private fun String.toDisplayString(): String =
