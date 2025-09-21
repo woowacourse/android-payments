@@ -12,7 +12,7 @@ class NewCardStateHolder {
     private var _cardHolder by mutableStateOf("")
     val cardHolder get() = _cardHolder
 
-    val expirationDateUiState by mutableStateOf(ExpirationDateUiState(""))
+    val expirationDateUiState = ExpirationDateUiState("")
 
     private var _password by mutableStateOf("")
     val password get() = _password
