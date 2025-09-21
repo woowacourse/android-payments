@@ -9,11 +9,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 
 @Composable
@@ -29,9 +31,11 @@ fun RegisteredCard(
     Column(
         modifier =
             modifier
-                .padding(top = 20.dp)
                 .fillMaxWidth(),
     ) {
+        val companyName = stringResource(card.company.toNameResource())
+        NewCardName(companyName)
+
         CardChip()
 
         Text(

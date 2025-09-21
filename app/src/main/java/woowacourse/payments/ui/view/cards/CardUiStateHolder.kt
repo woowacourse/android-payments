@@ -2,7 +2,7 @@ package woowacourse.payments.ui.view.cards
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.listSaver
+import androidx.compose.runtime.saveable.mapSaver
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.serialization.toSerializationCard
 
@@ -26,42 +26,39 @@ class CardUiStateHolder(
     }
 
     companion object {
+        private const val KEY_CARD = "card"
+
         val Saver: Saver<CardUiStateHolder, Any> =
-            listSaver(
+            mapSaver(
                 save = { holder ->
-                    when (val uiState = holder.uiState) {
-                        is CardsUiState.EMPTY ->
-                            listOf(CardUiStateType.EMPTY)
-
+                    when (val currentUiState = holder.uiState) {
+                        is CardsUiState.EMPTY -> emptyMap<String, Any>()
                         is CardsUiState.SINGLE ->
-                            listOf(CardUiStateType.SINGLE, uiState.state.toSerializationCard())
-
+                            mapOf(
+                                KEY_CARD to currentUiState.state.toSerializationCard(),
+                            )
                         is CardsUiState.MULTIPLE ->
-                            listOf(CardUiStateType.MULTIPLE) + uiState.state.map { it.toSerializationCard() }
+                            mapOf(
+                                KEY_CARD to currentUiState.state.map { it.toSerializationCard() },
+                            )
                     }
                 },
-                restore = { list ->
-                    when (list.first() as CardUiStateType) {
-                        CardUiStateType.EMPTY ->
-                            CardUiStateHolder(CardsUiState.EMPTY)
+                restore = { restored ->
+                    val map = restored[KEY_CARD]
+                    when (map) {
+                        is SerializationCard ->
+                            CardUiStateHolder(CardsUiState.SINGLE(map.toDomain()))
 
-                        CardUiStateType.SINGLE -> {
-                            val card = list[1] as SerializationCard
-                            CardUiStateHolder(CardsUiState.SINGLE(card.toDomain()))
-                        }
+                        is List<*> ->
+                            CardUiStateHolder(
+                                CardsUiState.MULTIPLE(
+                                    map.filterIsInstance<SerializationCard>().map { it.toDomain() },
+                                ),
+                            )
 
-                        CardUiStateType.MULTIPLE -> {
-                            val cards = list.drop(1).map { it as SerializationCard }
-                            CardUiStateHolder(CardsUiState.MULTIPLE(cards.map { it.toDomain() }))
-                        }
+                        else -> CardUiStateHolder(CardsUiState.EMPTY)
                     }
                 },
             )
-    }
-
-    enum class CardUiStateType {
-        EMPTY,
-        SINGLE,
-        MULTIPLE,
     }
 }

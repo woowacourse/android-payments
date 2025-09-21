@@ -20,6 +20,7 @@ class NewCardActivity : ComponentActivity() {
                 NewCardScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card -> moveToCards(card) },
+                    onFinishRequest = { finish() },
                 )
             }
         }

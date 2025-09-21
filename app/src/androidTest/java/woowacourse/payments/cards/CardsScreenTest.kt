@@ -9,8 +9,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.core.Event
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
 import woowacourse.payments.ui.view.cards.CardsUiState
@@ -24,9 +25,9 @@ class CardsScreenTest {
         // given
         composeTestRule.setContent {
             CardsScreen(
-                uiState = CardsUiState.EMPTY,
-                uiEvent = Event(CardScreenUiEvent.Idle),
-                onClickCard = {},
+                CardsUiState.EMPTY,
+                Event(CardScreenUiEvent.Idle),
+                {},
             )
         }
 
@@ -50,12 +51,17 @@ class CardsScreenTest {
                     expireDate = "0421",
                     ownerName = "peto",
                     password = "",
+                    company = CardCompany.BC,
                 ),
             )
 
         // when
         composeTestRule.setContent {
-            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                {},
+            )
         }
 
         // then
@@ -83,25 +89,32 @@ class CardsScreenTest {
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        CardCompany.BC,
                     ),
                     Card(
                         number = "2222333344445555",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        CardCompany.BC,
                     ),
                     Card(
                         number = "3333444455556666",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",
+                        CardCompany.BC,
                     ),
                 ),
             )
 
         // when
         composeTestRule.setContent {
-            CardsScreen(uiState, Event(CardScreenUiEvent.Idle), {})
+            CardsScreen(
+                uiState,
+                Event(CardScreenUiEvent.Idle),
+                {},
+            )
         }
 
         // then
@@ -129,12 +142,12 @@ class CardsScreenTest {
     @Test
     fun `빈_카드_클릭_시_onClickCard가_호출된다`() {
         // given
-        var clickedType: CardType? = null
+        var clickedType: CardState? = null
         composeTestRule.setContent {
             CardsScreen(
                 CardsUiState.EMPTY,
                 Event(CardScreenUiEvent.Idle),
-                onClickCard = { clickedType = it },
+                { clickedType = it },
             )
         }
 
@@ -144,6 +157,6 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        assertEquals(CardType.EMPTY, clickedType)
+        assertEquals(CardState.Empty, clickedType)
     }
 }

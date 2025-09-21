@@ -1,31 +1,41 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.core.CardType
+import woowacourse.payments.ui.core.ext.toSignatureColor
+import woowacourse.payments.ui.state.CardState
+import woowacourse.payments.ui.theme.Black33
+import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
 fun PaymentCard(
-    cardType: CardType,
+    card: CardState,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    onClick: (CardType) -> Unit = {},
 ) {
+    val (contentAlignment, backgroundColor) =
+        when (card) {
+            CardState.Empty -> Alignment.Center to GrayE5
+            is CardState.Pending -> Alignment.CenterStart to Black33
+            is CardState.Registered ->
+                Alignment.CenterStart to card.card.company.toSignatureColor()
+        }
+
     Box(
-        contentAlignment = cardType.parentAlignment,
+        contentAlignment = contentAlignment,
         modifier =
             modifier
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = cardType.backgroundColor,
+                    color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                ).clickable(onClick = { onClick(cardType) }),
+                )
     ) {
         content()
     }

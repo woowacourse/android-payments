@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.component.RegisteredCard
 
 class RegisteredCardTest {
@@ -22,6 +23,7 @@ class RegisteredCardTest {
                 expireDate = "0421",
                 ownerName = "peto",
                 password = "",
+                CardCompany.BC,
             )
 
         composeTestRule.setContent {

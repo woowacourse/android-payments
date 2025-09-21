@@ -7,6 +7,7 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -36,12 +37,12 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PaymentToolbar
 import woowacourse.payments.ui.component.RegisteredCard
-import woowacourse.payments.ui.core.CardType
 import woowacourse.payments.ui.core.Event
-import woowacourse.payments.ui.core.getParcelableCompat
+import woowacourse.payments.ui.core.ext.getParcelableCompat
 import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.serialization.SerializationCard
+import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
 
 @Composable
@@ -50,6 +51,7 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
         rememberSaveable(saver = CardUiStateHolder.Saver) {
             CardUiStateHolder()
         }
+
     var uiEvent by remember {
         mutableStateOf<Event<CardScreenUiEvent>>(
             Event(CardScreenUiEvent.Idle),
@@ -81,7 +83,7 @@ fun CardsScreen(onAddCardClick: (ManagedActivityResultLauncher<Intent, ActivityR
             uiState = cardUiStateHolder.uiState,
             uiEvent = uiEvent,
             onClickCard = { cardType ->
-                if (cardType == CardType.EMPTY) {
+                if (cardType is CardState.Empty) {
                     onAddCardClick(activityResultLauncher)
                 }
             },
@@ -100,7 +102,7 @@ private const val CARD_MASKING_CHAR = "*"
 fun CardsScreen(
     uiState: CardsUiState,
     uiEvent: Event<CardScreenUiEvent>,
-    onClickCard: (CardType) -> Unit,
+    onClickCard: (CardState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -124,15 +126,26 @@ fun CardsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (uiState) {
-            CardsUiState.EMPTY -> EmptyCardContent(onClickCard)
-            is CardsUiState.SINGLE -> SingleCardComponent(uiState.state, onClickCard)
-            is CardsUiState.MULTIPLE -> MultipleCardContent(uiState.state, onClickCard)
+            CardsUiState.EMPTY ->
+                EmptyCardContent(onClickCard)
+
+            is CardsUiState.SINGLE ->
+                SingleCardComponent(
+                    CardState.Registered(uiState.state),
+                    onClickCard,
+                )
+
+            is CardsUiState.MULTIPLE ->
+                MultipleCardComponent(
+                    uiState.state.map { CardState.Registered(it) },
+                    onClickCard,
+                )
         }
     }
 }
 
 @Composable
-fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
+fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
     Text(
         text = stringResource(R.string.card_list_empty),
         fontSize = 22.sp,
@@ -140,8 +153,7 @@ fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
     )
 
     PaymentCard(
-        cardType = CardType.EMPTY,
-        onClick = onClickCard,
+        card = CardState.Empty,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -150,21 +162,21 @@ fun EmptyCardContent(onClickCard: (CardType) -> Unit) {
         },
         modifier =
             Modifier
-                .padding(top = 18.dp),
+                .padding(top = 18.dp)
+                .clickable(onClick = { onClickCard(CardState.Empty) }),
     )
 }
 
 @Composable
 fun SingleCardComponent(
-    card: Card,
-    onClickCard: (CardType) -> Unit,
+    registeredCard: CardState.Registered,
+    onClickCard: (CardState) -> Unit,
 ) {
     PaymentCard(
-        cardType = CardType.REGISTERED,
-        onClick = {},
+        card = registeredCard,
         content = {
             RegisteredCard(
-                card,
+                registeredCard.card,
                 CARD_NUMBER_GROUP_SIZE,
                 CARD_NUMBER_SEPARATOR,
                 CARD_MASKING_CHAR,
@@ -178,8 +190,7 @@ fun SingleCardComponent(
                 .shadow(8.dp),
     )
     PaymentCard(
-        cardType = CardType.EMPTY,
-        onClick = { onClickCard(CardType.EMPTY) },
+        card = CardState.Empty,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -188,22 +199,22 @@ fun SingleCardComponent(
         },
         modifier =
             Modifier
-                .padding(top = 30.dp),
+                .padding(top = 30.dp)
+                .clickable(onClick = { onClickCard(CardState.Empty) }),
     )
 }
 
 @Composable
-fun MultipleCardContent(
-    cards: List<Card>,
-    onClickCard: (CardType) -> Unit,
+fun MultipleCardComponent(
+    registeredCards: List<CardState.Registered>,
+    onClickCard: (CardState) -> Unit,
 ) {
-    repeat(cards.size) {
+    registeredCards.forEach { card ->
         PaymentCard(
-            cardType = CardType.REGISTERED,
-            onClick = {},
+            card = card,
             content = {
                 RegisteredCard(
-                    cards[it],
+                    card.card,
                     CARD_NUMBER_GROUP_SIZE,
                     CARD_NUMBER_SEPARATOR,
                     CARD_MASKING_CHAR,
@@ -214,7 +225,8 @@ fun MultipleCardContent(
             modifier =
                 Modifier
                     .padding(top = 30.dp)
-                    .shadow(8.dp),
+                    .shadow(8.dp)
+                    .clickable(onClick = { onClickCard(card) },)
         )
     }
 }
@@ -231,10 +243,14 @@ fun CardScreenPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun OneCardScreenPreview(
+fun SingleCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
-    CardsScreen(CardsUiState.SINGLE(card), Event(CardScreenUiEvent.Idle), {})
+    CardsScreen(
+        CardsUiState.SINGLE(card),
+        Event(CardScreenUiEvent.Idle),
+        {},
+    )
 }
 
 @Composable
@@ -242,5 +258,9 @@ fun OneCardScreenPreview(
 fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>,
 ) {
-    CardsScreen(CardsUiState.MULTIPLE(cards), Event(CardScreenUiEvent.Idle), {})
+    CardsScreen(
+        CardsUiState.MULTIPLE(cards),
+        Event(CardScreenUiEvent.Idle),
+        {},
+    )
 }

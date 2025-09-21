@@ -5,9 +5,9 @@ data class Card(
     val expireDate: String,
     val ownerName: String,
     val password: String,
+    val company: CardCompany,
 ) {
     companion object {
-        val EMPTY = Card("", "", "", "")
         const val CARD_MAX_LENGTH = 16
         const val CARD_NUMBER_MASKING_LENGTH = 8
     }
