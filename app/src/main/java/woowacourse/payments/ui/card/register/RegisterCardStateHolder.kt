@@ -34,13 +34,22 @@ class RegisterCardStateHolder(
         uiState = uiState.copy(selectedBank = bank, showBottomSheet = false)
     }
 
-    fun saveCard() {
-        val newCard = createCard() ?: return
-        onCardSaved(newCard.toUiModel())
+    fun clearToastMessage() {
+        uiState = uiState.copy(toastMessage = null)
     }
 
-    private fun createCard(): Card? {
-        val bank = uiState.selectedBank ?: return null
+    fun saveCard() {
+        createCard()
+            .onSuccess { newCard ->
+                onCardSaved(newCard.toUiModel())
+                uiState = uiState.copy(toastMessage = "카드 생성에 성공했습니다.")
+            }.onFailure { errorMessage ->
+                uiState = uiState.copy(toastMessage = errorMessage.message ?: "카드 생성에 실패했습니다.")
+            }
+    }
+
+    private fun createCard(): Result<Card> {
+        val bank = uiState.selectedBank ?: return Result.failure(IllegalArgumentException())
 
         return Card
             .newCard(
@@ -49,6 +58,6 @@ class RegisterCardStateHolder(
                 cardHolderName = uiState.cardHolderName,
                 password = uiState.password,
                 bank = bank,
-            ).getOrNull()
+            )
     }
 }

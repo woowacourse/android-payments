@@ -9,4 +9,5 @@ data class RegisterCardUiState(
     val password: String = "",
     val selectedBank: Bank? = null,
     val showBottomSheet: Boolean = true,
+    val toastMessage: String? = null,
 )
