@@ -15,12 +15,14 @@ fun IssuingBankName(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = cardTextStyle,
 ) {
-    Text(
-        text = issuingBank.getNameResId()?.let { id -> stringResource(id) } ?: "",
-        modifier = modifier,
-        maxLines = 1,
-        style = textStyle,
-    )
+    issuingBank.getNameResId()?.let { id ->
+        Text(
+            text = stringResource(id),
+            modifier = modifier,
+            maxLines = 1,
+            style = textStyle,
+        )
+    }
 }
 
 @Preview

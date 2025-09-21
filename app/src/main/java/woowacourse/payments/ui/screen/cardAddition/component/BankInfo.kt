@@ -37,14 +37,16 @@ fun BankInfo(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Image(
-            painter = painterResource(issuingBank.getIconResId()),
-            contentDescription = stringResource(R.string.card_addition_issuing_bank_icon_description),
-            modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .size(36.dp),
-        )
+        issuingBank.getIconResId()?.let { id ->
+            Image(
+                painter = painterResource(id),
+                contentDescription = stringResource(R.string.card_addition_issuing_bank_icon_description),
+                modifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .size(36.dp),
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
         IssuingBankName(
             issuingBank = issuingBank,
