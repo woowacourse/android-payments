@@ -35,7 +35,6 @@ fun BankItem(
             BankType.LOTTE -> R.drawable.ic_bank_lotte
             BankType.HANA -> R.drawable.ic_bank_hana
             BankType.KB -> R.drawable.ic_bank_kb
-            BankType.NOT_SELECTED -> R.drawable.ic_launcher_foreground
         }
 
     Column(

@@ -3,7 +3,6 @@ package woowacourse.payments.domain
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.domain.BankType.*
 import woowacourse.payments.ui.theme.BC_CARD_COLOR
-import woowacourse.payments.ui.theme.DEFAULT_CARD_COLOR
 import woowacourse.payments.ui.theme.HANA_CARD_COLOR
 import woowacourse.payments.ui.theme.HYUNDAI_CARD_COLOR
 import woowacourse.payments.ui.theme.KAKAO_CARD_COLOR
@@ -27,5 +26,4 @@ fun Bank.color(): Color =
         LOTTE -> LOTTE_CARD_COLOR
         HANA -> HANA_CARD_COLOR
         KB -> KB_CARD_COLOR
-        NOT_SELECTED -> DEFAULT_CARD_COLOR
     }

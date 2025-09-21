@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Bank
 import woowacourse.payments.domain.BankType
@@ -25,6 +24,7 @@ import woowacourse.payments.ui.card.register.component.CardNumberTextField
 import woowacourse.payments.ui.card.register.component.CardPasswordTextField
 import woowacourse.payments.ui.card.register.component.NewCardTopBar
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.theme.DEFAULT_CARD_COLOR
 
 @Composable
 fun RegisterCardScreen(
@@ -55,7 +55,7 @@ fun RegisterCardScreen(
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
                 bankName = uiState.selectedBank?.name,
-                backgroundColor = uiState.selectedBank?.color() ?: Color(0xFF333333),
+                backgroundColor = uiState.selectedBank?.color() ?: DEFAULT_CARD_COLOR,
             )
             CardNumberTextField(
                 value = uiState.cardNumber,

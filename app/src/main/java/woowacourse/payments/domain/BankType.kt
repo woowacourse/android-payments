@@ -1,7 +1,6 @@
 package woowacourse.payments.domain
 
 enum class BankType {
-    NOT_SELECTED,
     BC,
     SHINHAN,
     KAKAO,
