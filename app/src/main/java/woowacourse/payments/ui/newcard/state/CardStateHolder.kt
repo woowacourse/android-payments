@@ -1,11 +1,9 @@
 package woowacourse.payments.ui.newcard.state
 
-import android.util.Log.i
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.OwnerName
@@ -15,127 +13,77 @@ import woowacourse.payments.ui.newcard.uiModel.toDomain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class CardStateHolder {
-    var card: Card? by mutableStateOf(null)
-        private set
-    var cardCompany: CardCompany? by mutableStateOf(null)
-    var cardCompanyUiModel: CardCompanyUiModel by mutableStateOf(CardCompanyUiModel.Default())
-        private set
-    var number by mutableStateOf("")
-        private set
-    var expirationDate by mutableStateOf("")
-        private set
-    var ownerName by mutableStateOf("")
-        private set
-    var password by mutableStateOf("")
-        private set
-
-    var cardErrorMessage by mutableStateOf<String?>(null)
-    var numberErrorMessage by mutableStateOf<String?>(null)
-        private set
-    var expirationDateErrorMessage by mutableStateOf<String?>(null)
-        private set
-    var ownerNameErrorMessage by mutableStateOf<String?>(null)
-        private set
-    var passwordErrorMessage by mutableStateOf<String?>(null)
-        private set
-
-    var bottomSheetOpen by mutableStateOf<Boolean>(true)
+class CardStateHolder{
+    var uiState: CardUiState by mutableStateOf(CardUiState())
         private set
 
     fun changeBottomSheetState() {
-        bottomSheetOpen = !bottomSheetOpen
-    }
-
-    fun newCard(): Card? {
-        cardCompany?.let { cardCompany ->
-            runCatching {
-                Card.Companion.Card(
-                    cardCompany = cardCompany,
-                    number = number,
-                    expirationDate = YearMonth.parse(
-                        expirationDate,
-                        DateTimeFormatter.ofPattern("MMyy")
-                    ),
-                    ownerName = ownerName,
-                    password = password,
-                )
-            }.onSuccess { newCard ->
-                card = newCard
-                return card
-            }.onFailure { e ->
-                cardErrorMessage = e.message
-            }
-        }
-        return null
+        uiState = uiState.copy(isBottomSheetOpen = !uiState.isBottomSheetOpen)
     }
 
     fun selectedCardCompany(newCardCompany: CardCompanyUiModel) {
         when (newCardCompany) {
             is CardCompanyUiModel.Default -> {
-                cardCompanyUiModel = CardCompanyUiModel.Default()
-                cardCompany = null
+                uiState = uiState.copy(cardCompany = null)
             }
-
             is CardCompanyUiModel.SelectCardCompany -> {
-                cardCompanyUiModel = newCardCompany
-                cardCompany = newCardCompany.toDomain()
+                uiState = uiState.copy(cardCompany = newCardCompany.toDomain())
             }
         }
     }
 
     fun changeNumber(newNumber: String) {
-        number = newNumber
-        if (newNumber.isEmpty()) {
-            numberErrorMessage = null; return
-        }
-        runCatching {
-            CardNumber(
-                value = newNumber.filter { it.isDigit() }.take(16)
-            )
-        }.onSuccess { numberErrorMessage = null }
-            .onFailure { e -> numberErrorMessage = e.message }
+        val sanitized = newNumber.filter { it.isDigit() }.take(16)
+        val error = if (sanitized.isEmpty()) null else runCatching {
+            CardNumber(value = sanitized)
+        }.fold(onSuccess = { null }, onFailure = { it.message })
+
+        uiState = uiState.copy(number = newNumber, numberErrorMessage = error)
     }
 
     fun changeExpirationDate(newExpirationDate: String) {
-        expirationDate = newExpirationDate
-        if (newExpirationDate.isEmpty()) {
-            expirationDateErrorMessage = null; return
-        }
-        runCatching {
-            val digits = newExpirationDate.filter { it.isDigit() }.take(4)
-            ExpirationDate(
-                value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy"))
-            )
-        }.onSuccess { expirationDateErrorMessage = null }
-            .onFailure { e -> expirationDateErrorMessage = e.message }
+        val digits = newExpirationDate.filter { it.isDigit() }.take(4)
+        val error = if (digits.isEmpty()) null else runCatching {
+            ExpirationDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
+        }.fold(onSuccess = { null }, onFailure = { it.message })
+
+        uiState = uiState.copy(expirationDate = newExpirationDate, expirationDateErrorMessage = error)
     }
 
     fun changeOwnerName(newOwnerName: String) {
-        ownerName = newOwnerName
-
-        if (newOwnerName.isEmpty()) {
-            ownerNameErrorMessage = null
-            return
-        }
-
-        runCatching {
+        val error = if (newOwnerName.isEmpty()) null else runCatching {
             OwnerName(OwnerName(newOwnerName).maxName())
-        }.onSuccess {
-            ownerNameErrorMessage = null
-        }.onFailure { e ->
-            ownerNameErrorMessage = e.message
-        }
+        }.fold(onSuccess = { null }, onFailure = { it.message })
+
+        uiState = uiState.copy(ownerName = newOwnerName, ownerNameErrorMessage = error)
     }
 
     fun changePassword(newPassword: String) {
-        password = newPassword
-        if (newPassword.isEmpty()) {
-            passwordErrorMessage = null; return
-        }
-        runCatching {
-            Password(newPassword.take(4))
-        }.onSuccess { passwordErrorMessage = null }
-            .onFailure { e -> passwordErrorMessage = e.message }
+        val trimmed = newPassword.take(4)
+        val error = if (trimmed.isEmpty()) null else runCatching {
+            Password(trimmed)
+        }.fold(onSuccess = { null }, onFailure = { it.message })
+
+        uiState = uiState.copy(password = newPassword, passwordErrorMessage = error)
+    }
+
+    fun newCard(): Card? {
+        val company = uiState.cardCompany ?: return null
+        return runCatching {
+            Card.Companion.Card(
+                cardCompany = company,
+                number = uiState.number,
+                expirationDate = YearMonth.parse(
+                    uiState.expirationDate.filter { it.isDigit() }.take(4),
+                    DateTimeFormatter.ofPattern("MMyy")
+                ),
+                ownerName = uiState.ownerName,
+                password = uiState.password,
+            )
+        }.onSuccess { built ->
+            uiState = uiState.copy(card = built, cardErrorMessage = null)
+        }.onFailure { e ->
+            uiState = uiState.copy(card = null, cardErrorMessage = e.message)
+        }.getOrNull()
     }
 }

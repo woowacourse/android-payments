@@ -19,23 +19,23 @@ fun NewCardScreen(
     onSaveClick: (Card?) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val state = CardStateHolder()
+    val stateHolder = CardStateHolder()
 
     Scaffold(
         modifier = modifier,
         topBar = {
             NewCardTopBar(
                 onBackClick = { navigateToBack() },
-                onSaveClick = { onSaveClick(state.newCard()) }
+                onSaveClick = { onSaveClick(stateHolder.newCard()) }
             )
         }) { paddingValues: PaddingValues ->
-        if (state.bottomSheetOpen) {
+        if (stateHolder.uiState.isBottomSheetOpen) {
             SelectedBankBottomSheet(
-                state = state,
+                stateHolder = stateHolder,
             )
         }
         NewCardColumn(
-            state = state,
+            stateHolder = stateHolder,
             modifier = Modifier.padding(paddingValues),
         )
     }

@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.component
 
+import android.R.attr.password
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +17,7 @@ import woowacourse.payments.ui.newcard.state.CardStateHolder
 
 @Composable
 fun NewCardColumn(
-    state: CardStateHolder,
+    stateHolder: CardStateHolder,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -24,21 +25,21 @@ fun NewCardColumn(
     ) {
         PaymentCard(
             card = null,
-            cardCompanyUiModel = state.cardCompanyUiModel,
+            cardCompanyUiModel = stateHolder.uiState.cardCompanyUiModel,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 14.dp, bottom = 28.dp)
                 .clickable(
-                    onClick = { state.changeBottomSheetState() }
+                    onClick = { stateHolder.changeBottomSheetState() }
                 ),
         )
         Box(
             modifier = Modifier.height(86.dp)
         ) {
             CardNumberTextField(
-                number = state.number,
-                numberErrorMessage = state.numberErrorMessage,
-                onNumberChange = { state.changeNumber(it) },
+                number = stateHolder.uiState.number,
+                numberErrorMessage = stateHolder.uiState.numberErrorMessage,
+                onNumberChange = { stateHolder.changeNumber(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -46,18 +47,18 @@ fun NewCardColumn(
             modifier = Modifier.height(86.dp)
         ) {
             ExpiredDateTextField(
-                expiredDate = state.expirationDate,
-                expirationDateErrorMessage = state.expirationDateErrorMessage,
-                onExpirationDateChange = { state.changeExpirationDate(it) },
+                expiredDate = stateHolder.uiState.expirationDate,
+                expirationDateErrorMessage = stateHolder.uiState.expirationDateErrorMessage,
+                onExpirationDateChange = { stateHolder.changeExpirationDate(it) },
             )
         }
         Box(
             modifier = Modifier.height(86.dp)
         ) {
             CardOwnerNameTextField(
-                ownerName = state.ownerName,
-                ownerNameErrorMessage = state.ownerNameErrorMessage,
-                onOwnerNameChange = { state.changeOwnerName(it) },
+                ownerName = stateHolder.uiState.ownerName,
+                ownerNameErrorMessage = stateHolder.uiState.ownerNameErrorMessage,
+                onOwnerNameChange = { stateHolder.changeOwnerName(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -65,9 +66,9 @@ fun NewCardColumn(
             modifier = Modifier.height(86.dp)
         ) {
             PasswordTextField(
-                password = state.password,
-                passwordErrorMessage = state.passwordErrorMessage,
-                onPasswordChange = { state.changePassword(it) }
+                password = stateHolder.uiState.password,
+                passwordErrorMessage = stateHolder.uiState.passwordErrorMessage,
+                onPasswordChange = { stateHolder.changePassword(it) }
             )
         }
     }
