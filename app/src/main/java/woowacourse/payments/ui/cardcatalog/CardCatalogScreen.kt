@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key.Companion.I
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
@@ -22,6 +23,7 @@ import woowacourse.payments.ui.newcard.NewCardActivity
 
 @Composable
 fun CardCatalogScreen(
+    onEditCard: (Card) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -62,6 +64,7 @@ fun CardCatalogScreen(
             onClickAddCard = {
                 openAddCardWithResult()
             },
+            onEditCard = { card -> onEditCard(card) },
             modifier = Modifier.padding(paddingValues)
         )
     }
@@ -70,5 +73,5 @@ fun CardCatalogScreen(
 @Preview(showBackground = true)
 @Composable
 private fun CardCatalogScreenPreview() {
-    CardCatalogScreen()
+    CardCatalogScreen({})
 }

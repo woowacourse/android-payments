@@ -21,6 +21,7 @@ import java.time.YearMonth
 fun CardCatalogColumn(
     cards: List<Card> = emptyList(),
     onClickAddCard: () -> Unit,
+    onEditCard: (Card) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -31,7 +32,7 @@ fun CardCatalogColumn(
         item { Spacer(modifier = Modifier.height(32.dp)) }
         when {
             cards.isEmpty() -> item { AddNewCardInformationText() }
-            else -> item { PaymentCards(cards) }
+            else -> item { PaymentCards(cards, { card -> onEditCard(card) }) }
         }
         if (cards.size < 2) item { EmptyPaymentCard(onClickAddCard) }
     }
@@ -50,7 +51,7 @@ private fun CardCatalogColumnPreview1() {
             cardCompany = CardCompany.BC,
         )
     )
-    CardCatalogColumn(cards = cards, onClickAddCard = {})
+    CardCatalogColumn(cards = cards, onClickAddCard = {}, {})
 }
 
 @Preview(name = "카드가 2개일 때", showBackground = true)
@@ -72,6 +73,6 @@ private fun CardCatalogColumnPreview2() {
             cardCompany = CardCompany.BC,
         )
     )
-    CardCatalogColumn(cards = cards, onClickAddCard = {})
+    CardCatalogColumn(cards = cards, onClickAddCard = {}, {})
 }
 
