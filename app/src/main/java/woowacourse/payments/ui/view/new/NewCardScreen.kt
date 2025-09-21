@@ -43,7 +43,10 @@ fun NewCardScreen(
             NewCardUiStateHolder()
         }
     val uiState = newCardUiStateHolder.uiState
-    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val bottomSheetState =
+        rememberModalBottomSheetState(
+            confirmValueChange = { false },
+        )
 
     LaunchedEffect(uiState.company) {
         when (uiState.company) {
@@ -78,15 +81,18 @@ fun NewCardScreen(
         )
     }
 
-    BankSelectBottomSheet(
-        modalBottomSheetState = bottomSheetState,
-        onFinish = onFinishRequest,
-        onCardCompanySelect = { company ->
-            newCardUiStateHolder.updateCard(
-                NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
-            )
-        },
-    )
+    val openBottomSheet = uiState.company is CardCompanyState.Empty
+    if (openBottomSheet) {
+        BankSelectBottomSheet(
+            modalBottomSheetState = bottomSheetState,
+            onFinish = onFinishRequest,
+            onCardCompanySelect = { company ->
+                newCardUiStateHolder.updateCard(
+                    NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
+                )
+            },
+        )
+    }
 }
 
 private const val CARD_NUMBER_GROUP_SIZE = 4
