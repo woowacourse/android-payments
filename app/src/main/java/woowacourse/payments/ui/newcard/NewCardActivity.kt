@@ -3,9 +3,11 @@ package woowacourse.payments.ui.newcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.data.BankRepository
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -17,11 +19,24 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    banks = BankRepository.getBanks(),
                     newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
-                    onSaved = { paymentCard ->
-                        setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, paymentCard))
-                        finish()
+                    onSaved = { result ->
+                        result
+                            .onSuccess { paymentCard ->
+                                runCatching {
+                                    setResult(
+                                        RESULT_OK,
+                                        Intent().putExtra(EXTRA_NEW_CARD, paymentCard),
+                                    )
+                                    finish()
+                                }.onFailure { e ->
+                                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                                }
+                            }.onFailure { e ->
+                                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+                            }
                     },
                 )
             }

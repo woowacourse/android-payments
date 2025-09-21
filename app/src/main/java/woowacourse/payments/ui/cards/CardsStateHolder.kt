@@ -6,10 +6,11 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 class CardsStateHolder(
     cards: List<PaymentCardUiModel> = emptyList(),
 ) {
-    val cardList = cards.toMutableStateList()
+    private val _cardList = cards.toMutableStateList()
+    val cardList get() = _cardList.toList()
 
     fun addCard(card: PaymentCardUiModel) {
-        cardList.add(card)
+        _cardList.add(card)
     }
 
     fun isAddableWithAddCard(): Boolean = cardList.size <= MINIMUM_CARD_COUNT_FOR_ADD_BUTTON

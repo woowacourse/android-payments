@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cards.components
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,20 +18,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.CardHolderUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.ExpirationDateUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.util.extensions.toColor
+import woowacourse.payments.ui.util.extensions.toLabel
 
 @Composable
 fun CardImage(
-    paymentCard: PaymentCardUiModel,
+    bankType: BankType,
+    cardNumber: String,
+    cardHolder: String,
+    expirationDate: String,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -41,15 +44,26 @@ fun CardImage(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = colorResource(R.color.card_background),
+                    color = bankType.toColor(),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Column(
             modifier =
                 Modifier
-                    .padding(horizontal = 14.dp, vertical = 16.dp),
+                    .padding(horizontal = 14.dp, vertical = 15.dp),
         ) {
+            Text(
+                text = stringResource(bankType.toLabel()),
+                fontWeight = W500,
+                fontSize = 12.sp,
+                lineHeight = 12.sp,
+                letterSpacing = 0.1.em,
+                color = Color.White,
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
             Box(
                 modifier =
                     Modifier
@@ -64,15 +78,13 @@ fun CardImage(
 
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = formatCardNumber(paymentCard.cardNumber.value),
+                text = formatCardNumber(cardNumber),
                 fontWeight = W500,
                 fontSize = 12.sp,
                 lineHeight = 14.sp,
                 letterSpacing = 0.17.em,
                 color = Color.White,
             )
-
-            Spacer(modifier = Modifier.height(2.dp))
 
             Row(
                 modifier =
@@ -81,7 +93,7 @@ fun CardImage(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = paymentCard.cardHolder.value,
+                    text = cardHolder,
                     fontWeight = W500,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
@@ -89,7 +101,7 @@ fun CardImage(
                     color = Color.White,
                 )
                 Text(
-                    text = formatExpirationDate(paymentCard.expirationDate.value),
+                    text = formatExpirationDate(expirationDate),
                     fontWeight = W500,
                     fontSize = 12.sp,
                     lineHeight = 14.sp,
@@ -128,10 +140,9 @@ private fun formatExpirationDate(expirationDate: String): String {
 @Composable
 private fun CardPreview() {
     CardImage(
-        PaymentCardUiModel(
-            cardNumber = CardNumberUiModel("1234567890123456"),
-            cardHolder = CardHolderUiModel("홍길동"),
-            expirationDate = ExpirationDateUiModel("1225"),
-        ),
+        bankType = BankType.SHINHAN,
+        cardNumber = "1234567890123456",
+        cardHolder = "홍길동",
+        expirationDate = "1225",
     )
 }
