@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.features.addcard.components.bottomsheet
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -23,15 +24,17 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomSheetCardCompanyItem(
+fun BottomSheetCardCompanySelectableItem(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     value: CardCompanyUiModel,
 ) {
     Column(
         modifier =
             modifier
                 .width(78.dp)
-                .padding(vertical = 8.dp),
+                .padding(vertical = 8.dp)
+                .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (value.iconResId != null) {
@@ -59,7 +62,7 @@ fun BottomSheetCardCompanyItem(
 @Composable
 fun BottomSheetCardCompanyItemBCPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
-        BottomSheetCardCompanyItem(
+        BottomSheetCardCompanySelectableItem(
             value = CardCompanyUiModel.BC,
         )
     }
@@ -69,7 +72,7 @@ fun BottomSheetCardCompanyItemBCPreview() {
 @Composable
 fun BottomSheetCardCompanyItemHyundaiPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
-        BottomSheetCardCompanyItem(
+        BottomSheetCardCompanySelectableItem(
             value = CardCompanyUiModel.HYUNDAI,
         )
     }
@@ -79,7 +82,7 @@ fun BottomSheetCardCompanyItemHyundaiPreview() {
 @Composable
 fun BottomSheetCardCompanyItemKakaoPreview() {
     AndroidpaymentsTheme(dynamicColor = false) {
-        BottomSheetCardCompanyItem(
+        BottomSheetCardCompanySelectableItem(
             value = CardCompanyUiModel.KAKAO,
         )
     }

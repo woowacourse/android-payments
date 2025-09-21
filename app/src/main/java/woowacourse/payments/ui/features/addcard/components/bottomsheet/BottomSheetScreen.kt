@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.features.addcard.components.bottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,8 +39,9 @@ fun BottomSheetScreen(
             maxItemsInEachRow = COLUMN_COUNT,
         ) {
             CardCompanyUiModel.entries.filter { it != CardCompanyUiModel.UNKNOWN }.forEach {
-                BottomSheetCardCompanyItem(
-                    modifier = Modifier.clickable { onItemClick(it) },
+                BottomSheetCardCompanySelectableItem(
+                    modifier = Modifier,
+                    onClick = { onItemClick(it) },
                     value = it,
                 )
             }

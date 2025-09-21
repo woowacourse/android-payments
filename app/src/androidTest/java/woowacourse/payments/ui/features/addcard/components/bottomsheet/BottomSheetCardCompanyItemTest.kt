@@ -23,7 +23,7 @@ class BottomSheetCardCompanyItemTest {
         val kakaoCompanyName = context.getString(kakaoUiModel.companyNameResId)
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
-                BottomSheetCardCompanyItem(
+                BottomSheetCardCompanySelectableItem(
                     value = kakaoUiModel,
                 )
             }
