@@ -81,24 +81,24 @@ fun AddCardScreen(
                 CardNumberTextField(
                     uiState.cardNumber,
                     uiState.isCardNumberError,
-                    { newValue: String -> uiState.updateCardNumber(newValue) },
+                    uiState::updateCardNumber,
                 )
 
                 ExpirationDateTextField(
                     uiState.expirationDate,
                     uiState.isExpirationDateError,
-                    { newValue: String -> uiState.updateExpirationDate(newValue) },
+                    uiState::updateExpirationDate,
                 )
 
                 CardHolderNameTextField(
                     uiState.cardholderName,
-                    { newValue: String -> uiState.updateCardholderName(newValue) },
+                    uiState::updateCardholderName,
                 )
 
                 PasscodeTextField(
                     uiState.passcode,
                     uiState.isPasscodeError,
-                    { newValue: String -> uiState.updatePasscode(newValue) },
+                    uiState::updatePasscode,
                 )
             }
         }
