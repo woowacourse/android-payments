@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.model.CardCompanyUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,4 +46,16 @@ fun CardCompanySelectBottomSheet(
             },
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+private fun CardCompanySelectBottomSheetPreview() {
+    CardCompanySelectBottomSheet(
+        onCompanyClick = { company ->
+        },
+        onDismissRequest = {
+        },
+    )
 }
