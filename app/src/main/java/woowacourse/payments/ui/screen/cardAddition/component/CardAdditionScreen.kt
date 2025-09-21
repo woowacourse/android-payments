@@ -50,8 +50,8 @@ fun CardAdditionScreen(
     ) { paddingValues: PaddingValues ->
         if (!stateHolder.hasShownSheet) {
             BankSelectBottomSheet(
-                onBankSelected = { issuingBank ->
-                    stateHolder.updateIssuingBank(issuingBank)
+                onBankSelected = { newIssuingBank ->
+                    stateHolder.updateCardState(newIssuingBank = newIssuingBank)
                 },
                 onDismissRequest = { stateHolder.updateSheetVisible() },
             )
@@ -82,7 +82,7 @@ fun CardAdditionScreen(
             CardNumberTextField(
                 value = stateHolder.uiState.cardNumber.value,
                 onCardNumberChange = { newCardNumber: String ->
-                    stateHolder.updateCardNumber(newCardNumber)
+                    stateHolder.updateCardState(newCardNumber = newCardNumber)
                 },
                 modifier =
                     Modifier
@@ -98,7 +98,7 @@ fun CardAdditionScreen(
             ExpiredDateTextField(
                 value = stateHolder.uiState.expiredDate.value,
                 onDateChange = { newExpiredDate: String ->
-                    stateHolder.updateExpiredDate(newExpiredDate)
+                    stateHolder.updateCardState(newExpiredDate = newExpiredDate)
                 },
                 modifier =
                     Modifier
@@ -127,7 +127,7 @@ fun CardAdditionScreen(
             CardOwnerNameTextField(
                 value = stateHolder.uiState.ownerName,
                 onNameChange = { newOwnerName: String ->
-                    stateHolder.updateCardOwnerName(newOwnerName)
+                    stateHolder.updateCardState(newOwnerName = newOwnerName)
                 },
                 modifier =
                     Modifier
@@ -139,7 +139,7 @@ fun CardAdditionScreen(
             PasswordTextField(
                 value = stateHolder.uiState.password.value,
                 onPasswordChange = { newPassword: String ->
-                    stateHolder.updatePassword(newPassword)
+                    stateHolder.updateCardState(newPassword = newPassword)
                 },
                 modifier =
                     Modifier.semantics {

@@ -22,14 +22,14 @@ data class CardAdditionUiState(
         newExpiredDate: String? = null,
         newOwnerName: String? = null,
         newPassword: String? = null,
-        issuingBank: IssuingBank? = null,
+        newIssuingBank: IssuingBank? = null,
     ): CardAdditionUiState =
         copy(
             cardNumber = newCardNumber?.let(::CardNumber) ?: cardNumber,
             expiredDate = newExpiredDate?.let(::ExpiredDate) ?: expiredDate,
             ownerName = newOwnerName ?: ownerName,
             password = newPassword?.let(::CardPassword) ?: password,
-            issuingBank = issuingBank ?: this.issuingBank,
+            issuingBank = newIssuingBank ?: this.issuingBank,
         )
 
     companion object {

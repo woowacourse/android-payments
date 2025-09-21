@@ -17,24 +17,21 @@ class CardAdditionUiStateHolder(
     var hasShownSheet by mutableStateOf(false)
         private set
 
-    fun updateCardNumber(newCardNumber: String) {
-        uiState = uiState.update(newCardNumber = newCardNumber)
-    }
-
-    fun updateExpiredDate(newExpiredDate: String) {
-        uiState = uiState.update(newExpiredDate = newExpiredDate)
-    }
-
-    fun updateCardOwnerName(newOwnerName: String) {
-        uiState = uiState.update(newOwnerName = newOwnerName)
-    }
-
-    fun updatePassword(newPassword: String) {
-        uiState = uiState.update(newPassword = newPassword)
-    }
-
-    fun updateIssuingBank(issuingBank: IssuingBank) {
-        uiState = uiState.update(issuingBank = issuingBank)
+    fun updateCardState(
+        newCardNumber: String? = null,
+        newExpiredDate: String? = null,
+        newOwnerName: String? = null,
+        newPassword: String? = null,
+        newIssuingBank: IssuingBank? = null,
+    ) {
+        uiState =
+            uiState.update(
+                newCardNumber = newCardNumber,
+                newExpiredDate = newExpiredDate,
+                newOwnerName = newOwnerName,
+                newPassword = newPassword,
+                newIssuingBank = newIssuingBank,
+            )
     }
 
     fun updateSheetVisible() {
