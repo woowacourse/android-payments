@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.newCard.NewCardActivity
@@ -27,7 +26,6 @@ class ListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 var cardState by remember { mutableStateOf(CardScreenUiState.from(emptyList())) }
-                val context = LocalContext.current
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
@@ -35,7 +33,7 @@ class ListActivity : ComponentActivity() {
                             val newCard = activityResult.data?.parcelable<CardUiModel>("card")
                             newCard?.let { cardUiModel ->
                                 cardState = CardScreenUiState.from(cardState.cards + cardUiModel)
-                                Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
@@ -43,7 +41,7 @@ class ListActivity : ComponentActivity() {
                 CardListScreen(
                     uiState = cardState,
                     onAddClick = {
-                        val intent = Intent(context, NewCardActivity::class.java)
+                        val intent = Intent(this, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
                     },
                 )
