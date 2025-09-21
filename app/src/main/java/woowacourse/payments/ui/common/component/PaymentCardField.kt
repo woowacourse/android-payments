@@ -101,7 +101,7 @@ fun PaymentCardField(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = if (paymentCardUiModel.cardholderName.isBlank()) "CREW" else paymentCardUiModel.cardholderName,
+                        text = paymentCardUiModel.cardholderName,
                         color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
