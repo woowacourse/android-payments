@@ -14,7 +14,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,9 +33,7 @@ import woowacourse.payments.ui.features.addcard.components.CardPasswordField
 import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
 import woowacourse.payments.ui.features.addcard.components.bottomsheet.BottomSheetScreen
 import woowacourse.payments.ui.mapper.CardCreationResult
-import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
-import woowacourse.payments.ui.mapper.CardMapper.toPaymentCardUiModel
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -49,13 +46,11 @@ fun AddCardScreen(
     onNavigateBack: () -> Unit,
     onNavigateSave: (PaymentCard) -> Unit,
 ) {
-    var cardUiState by remember { mutableStateOf(CardUiState()) }
-    val expireDateUiState by remember(cardUiState.expireDate) {
-        derivedStateOf { getExpireDateUiState(cardUiState.expireDate) }
-    }
-    val paymentCardUiModel by remember(cardUiState) {
-        derivedStateOf { cardUiState.toPaymentCardUiModel() }
-    }
+    val cardUiStateHolder = remember { CardUiStateHolder() }
+
+    val uiState by cardUiStateHolder.uiState
+    val expireDateUiState by cardUiStateHolder.expireDateUiState
+    val paymentCardUiModel by cardUiStateHolder.paymentCardUiModel
 
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(true) }
@@ -76,7 +71,7 @@ fun AddCardScreen(
 
     val attemptSave = {
         isSavingInProgress = true
-        val cardDomainResult = cardUiState.toDomainCard()
+        val cardDomainResult = uiState.toDomainCard()
         when (cardDomainResult) {
             CardCreationResult.UnknownCardCompany -> showBottomSheet = true
 
@@ -104,8 +99,8 @@ fun AddCardScreen(
         }
     }
 
-    LaunchedEffect(cardUiState.cardCompanyUiModel) {
-        if (isSavingInProgress && cardUiState.cardCompanyUiModel == CardCompanyUiModel.UNKNOWN) {
+    LaunchedEffect(uiState.cardCompanyUiModel) {
+        if (isSavingInProgress && uiState.cardCompanyUiModel == CardCompanyUiModel.UNKNOWN) {
             attemptSave()
         }
     }
@@ -118,7 +113,7 @@ fun AddCardScreen(
                 isSavingInProgress = false
             },
             onItemClick = { selectedCard: CardCompanyUiModel ->
-                cardUiState = cardUiState.updateCardCompany(selectedCard)
+                cardUiStateHolder.updateCardCompany(selectedCard)
                 showBottomSheet = false
                 if (isSavingInProgress) {
                     attemptSave()
@@ -153,13 +148,13 @@ fun AddCardScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             CardNumberField(
-                value = cardUiState.cardNumber,
-                onValueChange = { cardUiState = cardUiState.updateCardNumber(it) },
+                value = uiState.cardNumber,
+                onValueChange = { cardUiStateHolder.updateCardNumber(it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardExpireDateField(
-                value = cardUiState.expireDate,
-                onValueChange = { cardUiState = cardUiState.updateExpireDate(it) },
+                value = uiState.expireDate,
+                onValueChange = { cardUiStateHolder.updateExpireDate(it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
@@ -168,13 +163,13 @@ fun AddCardScreen(
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardOwnerNameField(
-                value = cardUiState.ownerName,
-                onValueChange = { cardUiState = cardUiState.updateOwnerName(it) },
+                value = uiState.ownerName,
+                onValueChange = { cardUiStateHolder.updateOwnerName(it) },
             )
             Spacer(modifier = Modifier.height(FormFieldSpacing - SupportingTextHeight))
             CardPasswordField(
-                value = cardUiState.password,
-                onValueChange = { cardUiState = cardUiState.updatePassword(it) },
+                value = uiState.password,
+                onValueChange = { cardUiStateHolder.updatePassword(it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(0.5f),
