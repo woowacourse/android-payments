@@ -62,26 +62,34 @@ class PaymentCardPlateTest {
 
         // then
         compose
-            .onNodeWithText(context.getString(dummyPaymentCardUiModel.cardCompanyUiModel.companyNameResId))
+            .onNodeWithText(context.getString(dummyPaymentKakaoCardUiModel.cardCompanyUiModel.companyNameResId))
             .assertDoesNotExist()
-        compose.onNodeWithText(dummyPaymentCardUiModel.formattedCardNumber).assertDoesNotExist()
-        compose.onNodeWithText(dummyPaymentCardUiModel.formattedExpireDate).assertDoesNotExist()
-        compose.onNodeWithText(dummyPaymentCardUiModel.ownerName).assertDoesNotExist()
+        compose
+            .onNodeWithText(dummyPaymentKakaoCardUiModel.formattedCardNumber)
+            .assertDoesNotExist()
+        compose
+            .onNodeWithText(dummyPaymentKakaoCardUiModel.formattedExpireDate)
+            .assertDoesNotExist()
+        compose.onNodeWithText(dummyPaymentKakaoCardUiModel.ownerName).assertDoesNotExist()
     }
 
     @Test
     fun 카드_UI_모델이_주어지지_않는_경우_카드_정보_텍스트가_올바르게_표시된다() {
         // given & when
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
-                PaymentCardPlate(cardModel = dummyPaymentCardUiModel)
+                PaymentCardPlate(paymentCardUiModel = dummyPaymentKakaoCardUiModel)
             }
         }
 
         // then
-        compose.onNodeWithText(dummyPaymentCardUiModel.formattedCardNumber).assertIsDisplayed()
-        compose.onNodeWithText(dummyPaymentCardUiModel.formattedExpireDate).assertIsDisplayed()
-        compose.onNodeWithText(dummyPaymentCardUiModel.ownerName).assertIsDisplayed()
+        compose
+            .onNodeWithText(context.getString(dummyPaymentKakaoCardUiModel.cardCompanyUiModel.companyNameResId))
+            .assertIsDisplayed()
+        compose.onNodeWithText(dummyPaymentKakaoCardUiModel.formattedCardNumber).assertIsDisplayed()
+        compose.onNodeWithText(dummyPaymentKakaoCardUiModel.formattedExpireDate).assertIsDisplayed()
+        compose.onNodeWithText(dummyPaymentKakaoCardUiModel.ownerName).assertIsDisplayed()
     }
 
     @Test
@@ -93,7 +101,7 @@ class PaymentCardPlateTest {
 
         compose.setContent {
             AndroidpaymentsTheme(dynamicColor = false) {
-                PaymentCardPlate(cardModel = cardModel)
+                PaymentCardPlate(paymentCardUiModel = cardModel)
             }
         }
 
