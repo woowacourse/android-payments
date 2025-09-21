@@ -1,6 +1,6 @@
 package woowacourse.payments.domain.card.exception
 
-import woowacourse.payments.domain.card.ExpireDateStatus
+import woowacourse.payments.ui.model.ExpireDateStatus
 
 class ExpireDateException(
     val reason: ExpireDateStatus.Invalid.ExpireDateInvalidReason,

@@ -1,12 +1,11 @@
 package woowacourse.payments.ui.mapper
 
-import woowacourse.payments.domain.card.ExpireDateStatus
-import woowacourse.payments.domain.card.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.domain.card.exception.ExpireDateException
 import woowacourse.payments.domain.card.values.CardCompany
 import woowacourse.payments.domain.card.values.CardNumber
 import woowacourse.payments.domain.card.values.ExpireDate
+import woowacourse.payments.domain.card.values.ExpireDate.Companion.create
 import woowacourse.payments.domain.card.values.OwnerName
 import woowacourse.payments.domain.card.values.Password
 import woowacourse.payments.ui.components.toMaskedString
@@ -17,19 +16,21 @@ import woowacourse.payments.ui.features.addcard.components.CARD_NUMBER_SEPARATOR
 import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_CHUNK_SIZE
 import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_SEPARATOR
 import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.ExpireDateStatus
+import woowacourse.payments.ui.model.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.MAX_EXPIRE_DATE_INPUT_LENGTH
+import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 object CardMapper {
     fun getExpireDateUiState(expireDate: String): ExpireDateUiState {
         if (expireDate.isEmpty()) return ExpireDateUiState.Empty
-        if (expireDate.length < ExpireDate.MAX_LENGTH_EXPIRE_DATE) return ExpireDateUiState.Typing
+        if (expireDate.length < MAX_EXPIRE_DATE_INPUT_LENGTH) return ExpireDateUiState.Typing
 
-        val result = ExpireDate.from(expireDate)
+        val result = toExpireDate(expireDate)
         return result.fold(
-            onSuccess = { createdExpireDate ->
-                ExpireDateUiState.Valid(createdExpireDate)
-            },
+            onSuccess = { ExpireDateUiState.Valid },
             onFailure = { throwable ->
                 val reason = getExpireDateInvalidReason(throwable)
                 ExpireDateUiState.Invalid(reason)
@@ -71,8 +72,7 @@ object CardMapper {
                     onFailure = { return CardCreationResult.InvalidCardNumber },
                 )
         val expireDate =
-            ExpireDate
-                .from(this.expireDate)
+            toExpireDate(this.expireDate)
                 .getOrElse { throwable ->
                     return CardCreationResult.InvalidExpireDate(
                         ExpireDateStatus.Invalid(
@@ -132,4 +132,28 @@ object CardMapper {
         } else {
             ExpireDateInvalidReason.INVALID_FORMAT
         }
+
+    private fun toExpireDate(expireDateString: String): Result<ExpireDate> {
+        if (expireDateString.length != MAX_EXPIRE_DATE_INPUT_LENGTH) {
+            return Result.failure(ExpireDateException(ExpireDateInvalidReason.INVALID_FORMAT))
+        }
+
+        val mm =
+            expireDateString.take(2).toIntOrNull() ?: return Result.failure(
+                ExpireDateException(ExpireDateInvalidReason.INVALID_FORMAT),
+            )
+
+        val yy =
+            expireDateString.takeLast(2).toIntOrNull() ?: return Result.failure(
+                ExpireDateException(ExpireDateInvalidReason.INVALID_FORMAT),
+            )
+
+        if (mm !in 1..12) {
+            return Result.failure(ExpireDateException(ExpireDateInvalidReason.INVALID_MONTH))
+        }
+
+        val yearMonth = YearMonth.of(2000 + yy, mm)
+
+        return create(yearMonth)
+    }
 }

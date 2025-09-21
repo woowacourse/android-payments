@@ -11,6 +11,7 @@ data class PaymentCardUiModel(
     val ownerName: String,
 ) : Parcelable {
     companion object {
+        const val MAX_EXPIRE_DATE_INPUT_LENGTH = 4
         val EMPTY =
             PaymentCardUiModel(
                 cardCompanyUiModel = CardCompanyUiModel.UNKNOWN,

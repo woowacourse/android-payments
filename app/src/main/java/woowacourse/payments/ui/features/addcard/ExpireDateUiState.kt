@@ -1,12 +1,9 @@
 package woowacourse.payments.ui.features.addcard
 
-import woowacourse.payments.domain.card.ExpireDateStatus.Invalid.ExpireDateInvalidReason
-import woowacourse.payments.domain.card.values.ExpireDate
+import woowacourse.payments.ui.model.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 
 sealed interface ExpireDateUiState {
-    data class Valid(
-        val expireDate: ExpireDate,
-    ) : ExpireDateUiState
+    data object Valid : ExpireDateUiState
 
     data class Invalid(
         val reason: ExpireDateInvalidReason,
