@@ -41,8 +41,8 @@ fun AddCardScreen(
         onSaveSuccess(uiState.card)
     }
 
-    LaunchedEffect(uiState.shouldMoveFocus.value) {
-        if (uiState.shouldMoveFocus.value) {
+    LaunchedEffect(uiState.shouldMoveFocus) {
+        if (uiState.shouldMoveFocus) {
             focusManager.moveFocus(FocusDirection.Next)
             uiState.onFocusMoved()
         }
@@ -63,7 +63,7 @@ fun AddCardScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 30.dp),
-                card = CardUiModel.EMPTY.copy(cardCompany = uiState.cardCompany.value),
+                card = CardUiModel.EMPTY.copy(cardCompany = uiState.cardCompany),
             )
 
             Column(

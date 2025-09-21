@@ -5,9 +5,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -19,13 +16,13 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardHolderNameTextField(
-    cardholderName: MutableState<String>,
+    cardholderName: String,
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
-        value = cardholderName.value,
+        value = cardholderName,
         onValueChange = onValueChange,
         singleLine = true,
         label = { Text(stringResource(R.string.cardholder_name_label)) },
@@ -40,7 +37,7 @@ fun CardHolderNameTextField(
                 text =
                     stringResource(
                         R.string.cardholder_name_entry_length,
-                        cardholderName.value.length,
+                        cardholderName.length,
                         CARDHOLDER_NAME_MAX_LENGTH,
                     ),
                 textAlign = TextAlign.End,
@@ -54,8 +51,5 @@ fun CardHolderNameTextField(
 @Preview(showBackground = true, name = "카드 소유자 이름 입력란")
 @Composable
 private fun CardHolderNameTextFieldPreview() {
-    CardHolderNameTextField(
-        remember { mutableStateOf("CREW") },
-        onValueChange = {},
-    )
+    CardHolderNameTextField("CREW", {})
 }

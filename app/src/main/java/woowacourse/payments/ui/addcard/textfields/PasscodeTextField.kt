@@ -7,11 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,14 +19,14 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun PasscodeTextField(
-    passcode: MutableState<String>,
-    isError: MutableState<Boolean>,
+    passcode: String,
+    isError: Boolean,
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(0.5F),
-        value = passcode.value,
+        value = passcode,
         onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
@@ -43,10 +39,10 @@ fun PasscodeTextField(
         },
         supportingText = {
             Box(Modifier.height(20.dp)) {
-                if (isError.value) Text(stringResource(R.string.passcode_error_message))
+                if (isError) Text(stringResource(R.string.passcode_error_message))
             }
         },
-        isError = isError.value,
+        isError = isError,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,
@@ -59,8 +55,8 @@ fun PasscodeTextField(
 @Composable
 private fun PasscodeTextFieldPreview() {
     PasscodeTextField(
-        passcode = remember { mutableStateOf("0000") },
-        isError = remember { mutableStateOf(true) },
+        passcode = "0000",
+        isError = true,
         onValueChange = {},
     )
 }
@@ -69,8 +65,8 @@ private fun PasscodeTextFieldPreview() {
 @Composable
 private fun PasscodeTextFieldWithErrorPreview() {
     PasscodeTextField(
-        passcode = remember { mutableStateOf("00") },
-        isError = remember { mutableStateOf(true) },
+        passcode = "00",
+        isError = true,
         onValueChange = {},
     )
 }

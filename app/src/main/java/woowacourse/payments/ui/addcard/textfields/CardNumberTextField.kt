@@ -7,9 +7,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -22,14 +19,14 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun CardNumberTextField(
-    cardNumber: MutableState<String>,
-    isError: MutableState<Boolean>,
+    cardNumber: String,
+    isError: Boolean,
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
-        value = cardNumber.value,
+        value = cardNumber,
         onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = CardNumberFormat.visualTransformation,
@@ -42,10 +39,10 @@ fun CardNumberTextField(
         },
         supportingText = {
             Box(Modifier.height(20.dp)) {
-                if (isError.value) Text(stringResource(R.string.card_number_error_message))
+                if (isError) Text(stringResource(R.string.card_number_error_message))
             }
         },
-        isError = isError.value,
+        isError = isError,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -58,8 +55,8 @@ fun CardNumberTextField(
 @Composable
 private fun CardNumberTextFieldPreview() {
     CardNumberTextField(
-        cardNumber = remember { mutableStateOf("1234123412341234") },
-        isError = remember { mutableStateOf(false) },
+        cardNumber = "1234123412341234",
+        isError = false,
         onValueChange = {},
     )
 }
@@ -68,8 +65,8 @@ private fun CardNumberTextFieldPreview() {
 @Composable
 private fun CardNumberTextFieldWithErrorPreview() {
     CardNumberTextField(
-        cardNumber = remember { mutableStateOf("1234123412341234") },
-        isError = remember { mutableStateOf(true) },
+        cardNumber = "1234123412341234",
+        isError = true,
         onValueChange = {},
     )
 }

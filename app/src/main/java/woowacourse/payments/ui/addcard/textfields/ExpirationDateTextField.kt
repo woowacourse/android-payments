@@ -7,11 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,14 +19,14 @@ import woowacourse.payments.ui.theme.Gray
 
 @Composable
 fun ExpirationDateTextField(
-    expirationDate: MutableState<String>,
-    isError: MutableState<Boolean>,
+    expirationDate: String,
+    isError: Boolean,
     onValueChange: (newValue: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(0.5F),
-        value = expirationDate.value,
+        value = expirationDate,
         onValueChange = onValueChange,
         singleLine = true,
         visualTransformation = ExpirationDateFormat.visualTransformation,
@@ -43,10 +39,10 @@ fun ExpirationDateTextField(
         },
         supportingText = {
             Box(Modifier.height(20.dp)) {
-                if (isError.value) Text(stringResource(R.string.expiration_date_error_message))
+                if (isError) Text(stringResource(R.string.expiration_date_error_message))
             }
         },
-        isError = isError.value,
+        isError = isError,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -59,8 +55,8 @@ fun ExpirationDateTextField(
 @Composable
 private fun ExpirationDateTextFieldPreview() {
     ExpirationDateTextField(
-        expirationDate = remember { mutableStateOf("1234") },
-        isError = remember { mutableStateOf(false) },
+        expirationDate = "1234",
+        isError = false,
         onValueChange = {},
     )
 }
@@ -69,8 +65,8 @@ private fun ExpirationDateTextFieldPreview() {
 @Composable
 private fun ExpirationDateTextFieldWithErrorPreview() {
     ExpirationDateTextField(
-        expirationDate = remember { mutableStateOf("1234") },
-        isError = remember { mutableStateOf(true) },
+        expirationDate = "1234",
+        isError = true,
         onValueChange = {},
     )
 }

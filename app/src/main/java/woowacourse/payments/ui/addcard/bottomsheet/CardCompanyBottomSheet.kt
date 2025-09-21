@@ -10,31 +10,30 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.addcard.AddCardScreenUiStateHolder
 import woowacourse.payments.ui.model.CardCompanyUiModel
-import woowacourse.payments.ui.model.toUiModel
 
 private const val MAX_ITEMS_PER_ROW = 4
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCompanyBottomSheet(
-    cardCompany: MutableState<CardCompanyUiModel>,
     cardCompanies: List<CardCompanyUiModel>,
+    onCompanySelected: (CardCompanyUiModel) -> Unit,
     onDismissed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val visible: MutableState<Boolean> = remember { mutableStateOf(true) }
+    var visible: Boolean by remember { mutableStateOf(true) }
     val sheetState: SheetState = rememberModalBottomSheetState { false }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
@@ -42,7 +41,7 @@ fun CardCompanyBottomSheet(
         sheetState.expand()
     }
 
-    if (visible.value) {
+    if (visible) {
         ModalBottomSheet(
             modifier = modifier,
             sheetState = sheetState,
@@ -61,10 +60,10 @@ fun CardCompanyBottomSheet(
                     CardCompanyButton(
                         company,
                         {
-                            cardCompany.value = company
+                            onCompanySelected(company)
                             coroutineScope
                                 .launch { sheetState.hide() }
-                                .invokeOnCompletion { visible.value = false }
+                                .invokeOnCompletion { visible = false }
                         },
                     )
                 }
@@ -77,9 +76,5 @@ fun CardCompanyBottomSheet(
 @Preview(showBackground = true)
 @Composable
 fun CardCompanyBottomSheetPreview() {
-    CardCompanyBottomSheet(
-        remember { mutableStateOf(CardCompany.NONE.toUiModel()) },
-        AddCardScreenUiStateHolder.CARD_COMPANIES,
-        {},
-    )
+    CardCompanyBottomSheet(AddCardScreenUiStateHolder.CARD_COMPANIES, {}, {})
 }

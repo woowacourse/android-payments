@@ -1,7 +1,8 @@
 package woowacourse.payments.ui.addcard
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName.Companion.CARDHOLDER_NAME_MAX_LENGTH
@@ -16,83 +17,89 @@ import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
 class AddCardScreenUiStateHolder {
-    val cardNumber: MutableState<String> = mutableStateOf("")
-    val expirationDate: MutableState<String> = mutableStateOf("")
-    val cardholderName: MutableState<String> = mutableStateOf("")
-    val passcode: MutableState<String> = mutableStateOf("")
-    val cardCompany: MutableState<CardCompanyUiModel> = mutableStateOf(CardCompany.NONE.toUiModel())
+    var cardNumber: String by mutableStateOf("")
+        private set
+    var expirationDate: String by mutableStateOf("")
+        private set
+    var cardholderName: String by mutableStateOf("")
+        private set
+    var passcode: String by mutableStateOf("")
+        private set
+    var cardCompany: CardCompanyUiModel by mutableStateOf(CardCompany.NONE.toUiModel())
+        private set
 
-    val isCardNumberError: MutableState<Boolean> = mutableStateOf(false)
-    val isExpirationDateError: MutableState<Boolean> = mutableStateOf(false)
-    val isPasscodeError: MutableState<Boolean> = mutableStateOf(false)
+    var isCardNumberError: Boolean by mutableStateOf(false)
+        private set
+    var isExpirationDateError: Boolean by mutableStateOf(false)
+        private set
+    var isPasscodeError: Boolean by mutableStateOf(false)
+        private set
 
-    val shouldMoveFocus: MutableState<Boolean> = mutableStateOf(false)
+    var shouldMoveFocus: Boolean by mutableStateOf(false)
+        private set
 
     val card: CardUiModel
-        get() =
-            CardUiModel(
-                cardNumber.value,
-                expirationDate.value,
-                cardholderName.value,
-                passcode.value,
-                cardCompany.value,
-            )
+        get() = CardUiModel(cardNumber, expirationDate, cardholderName, passcode, cardCompany)
 
     val isError: Boolean
         get() {
             updateCardNumberError()
             updateExpirationDateError()
             updatePasscodeError()
-            return isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
+            return isCardNumberError || isExpirationDateError || isPasscodeError
         }
 
     fun onCardNumberChanged(newValue: String) {
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(CardNumberFormat.REQUIRED_LENGTH)
-        cardNumber.value = filteredValue
+        cardNumber = filteredValue
         updateCardNumberError()
-        shouldMoveFocus.value = !isCardNumberError.value
+        shouldMoveFocus = !isCardNumberError
     }
 
     fun onExpirationDateChanged(newValue: String) {
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(ExpirationDateFormat.REQUIRED_LENGTH)
-        expirationDate.value = filteredValue
+        expirationDate = filteredValue
         updateExpirationDateError()
-        shouldMoveFocus.value = !isExpirationDateError.value
+        shouldMoveFocus = !isExpirationDateError
     }
 
     fun onCardholderNameChanged(newValue: String) {
-        cardholderName.value = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
+        cardholderName = newValue.take(CARDHOLDER_NAME_MAX_LENGTH)
     }
 
     fun onPasscodeChanged(newValue: String) {
         val filteredValue: String =
             newValue.filter(Char::isDigit).take(PASSCODE_REQUIRED_LENGTH)
-        passcode.value = filteredValue
+        passcode = filteredValue
         updatePasscodeError()
-        shouldMoveFocus.value = !isPasscodeError.value
+        shouldMoveFocus = !isPasscodeError
+    }
+
+    fun onCardCompanySelected(company: CardCompanyUiModel) {
+        cardCompany = company
     }
 
     fun onFocusMoved() {
-        shouldMoveFocus.value = false
+        shouldMoveFocus = false
     }
 
     private fun updateCardNumberError() {
-        isCardNumberError.value = runCatching { CardNumber(cardNumber.value) }.isFailure
+        isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
     }
 
     private fun updateExpirationDateError() {
-        isExpirationDateError.value =
+        isExpirationDateError =
             runCatching {
                 val yearMonth =
-                    YearMonth.parse(expirationDate.value, ExpirationDateFormat.formatPattern)
+                    YearMonth.parse(expirationDate, ExpirationDateFormat.formatPattern)
                 ExpirationDate(yearMonth)
             }.isFailure
     }
 
     private fun updatePasscodeError() {
-        isPasscodeError.value = runCatching { Passcode(passcode.value) }.isFailure
+        isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
     companion object {
