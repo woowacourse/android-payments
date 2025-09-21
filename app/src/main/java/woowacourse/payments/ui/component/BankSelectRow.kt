@@ -20,7 +20,7 @@ fun BankSelectRow(
     onSelect: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val banks = remember { BankType.entries.filter { it != BankType.NOT_SELECTED } }
+    val banks = BankType.entries.filter { it != BankType.NOT_SELECTED }
 
     FlowRow(
         modifier =
