@@ -35,18 +35,20 @@ class RegisterCardStateHolder(
     }
 
     fun saveCard() {
-        val bank = uiState.selectedBank ?: return
+        val newCard = createCard() ?: return
+        onCardSaved(newCard.toUiModel())
+    }
 
-        Card
+    private fun createCard(): Card? {
+        val bank = uiState.selectedBank ?: return null
+
+        return Card
             .newCard(
                 number = uiState.cardNumber,
                 expirationDate = uiState.expirationDate,
                 cardHolderName = uiState.cardHolderName,
                 password = uiState.password,
                 bank = bank,
-            ).onSuccess { newCard ->
-                val newCardUiModel = newCard.toUiModel()
-                onCardSaved(newCardUiModel)
-            }
+            ).getOrNull()
     }
 }
