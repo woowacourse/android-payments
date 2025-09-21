@@ -24,6 +24,8 @@ import woowacourse.payments.ui.addcard.AddCardScreenUiStateHolder
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.toUiModel
 
+private const val MAX_ITEMS_PER_ROW = 4
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCompanyBottomSheet(
@@ -47,7 +49,7 @@ fun CardCompanyBottomSheet(
             onDismissRequest = onDismissed,
         ) {
             FlowRow(
-                maxItemsInEachRow = 4,
+                maxItemsInEachRow = MAX_ITEMS_PER_ROW,
                 horizontalArrangement = Arrangement.Center,
                 verticalArrangement = Arrangement.Center,
                 modifier =
