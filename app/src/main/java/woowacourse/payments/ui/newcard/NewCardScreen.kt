@@ -75,7 +75,7 @@ fun NewCardScreen(
                 sheetState = modalBottomSheetState,
                 banks = banks,
                 onClick = {
-                    newCardStateHolder.bank = it
+                    newCardStateHolder.updateBank(it)
                 },
                 onDismiss = {
                     isShowBottomSheet = false
@@ -107,7 +107,7 @@ fun NewCardScreen(
                         .fillMaxWidth()
                         .padding(top = 40.dp, start = 24.dp, end = 24.dp),
                 value = newCardStateHolder.cardNumber,
-                onValueChange = { newCardStateHolder.cardNumber = it },
+                onValueChange = { newCardStateHolder.updateCardNumber(it) },
                 maxLength = CARD_NUMBER_LENGTH,
             )
             ExpirationDateTextField(
@@ -125,7 +125,7 @@ fun NewCardScreen(
                         .fillMaxWidth()
                         .padding(start = 24.dp, top = 30.dp, end = 24.dp),
                 value = newCardStateHolder.cardHolder,
-                onValueChange = { newCardStateHolder.cardHolder = it },
+                onValueChange = { newCardStateHolder.updateCardHolder(it) },
                 maxLength = CARD_HOLDER_MAX_LENGTH,
             )
             PasswordField(
@@ -133,7 +133,7 @@ fun NewCardScreen(
                     Modifier
                         .padding(start = 24.dp, top = 30.dp),
                 value = newCardStateHolder.password,
-                onValueChange = { newCardStateHolder.password = it },
+                onValueChange = { newCardStateHolder.updatePassword(it) },
                 maxLength = PASSWORD_LENGTH,
             )
         }
