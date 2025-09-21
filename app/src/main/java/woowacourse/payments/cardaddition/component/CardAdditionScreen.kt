@@ -1,9 +1,5 @@
 package woowacourse.payments.cardaddition.component
 
-import android.app.Activity
-import android.app.Activity.RESULT_OK
-import android.content.Intent
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +20,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
 import woowacourse.payments.Card
-import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.cardaddition.CardAdditionUiState
 import woowacourse.payments.ui.component.PaymentCard
@@ -32,11 +27,12 @@ import woowacourse.payments.ui.component.PaymentCard
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionScreen(
+    onBackClick: () -> Unit,
+    onSaveClick: (Card?) -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: CardAdditionStateHolder = rememberSaveable(saver = CardAdditionStateHolder.Saver) { CardAdditionStateHolder() },
 ) {
     val state: CardAdditionUiState = stateHolder.uiState
-    val activity: Activity? = LocalActivity.current
     val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
@@ -48,8 +44,8 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopAppBar(
                 completable = state.isValid,
-                onBackClick = { activity?.finish() },
-                onSaveClick = { activity.saveCard(state.card) },
+                onBackClick = onBackClick,
+                onSaveClick = { onSaveClick(state.card) },
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -67,13 +63,6 @@ fun CardAdditionScreen(
                     .verticalScroll(scrollState),
         )
     }
-}
-
-private fun Activity?.saveCard(card: Card?) {
-    if (this == null || card == null) return
-
-    setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD, card))
-    finish()
 }
 
 private val CardAdditionUiState.card: Card?
@@ -152,6 +141,8 @@ private fun CardAdditionScreenPreview(
     @PreviewParameter(CardAdditionScreenPreviewParameterProvider::class) state: CardAdditionUiState,
 ) {
     CardAdditionScreen(
+        onBackClick = {},
+        onSaveClick = {},
         stateHolder = CardAdditionStateHolder(state),
     )
 }
