@@ -3,7 +3,6 @@ package woowacourse.payments.ui.editcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,7 +17,6 @@ class EditCardActivity : ComponentActivity() {
 
         val registeredCard =
             intent.getParcelableExtraCompat<Card>(KEY_CARD_TO_EDIT) ?: run {
-                Toast.makeText(this, "", Toast.LENGTH_SHORT).show()
                 finish()
                 return
             }
