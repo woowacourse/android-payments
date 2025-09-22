@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.screen.cardList.CardListActivity.Companion.NEW_CARD_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -14,6 +15,9 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
+                val stateHolder =
+                    rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
+
                 AddCardScreen(
                     onBackPressed = { finish() },
                     onCardSaved = { cardUiModel ->
@@ -24,6 +28,7 @@ class AddCardActivity : ComponentActivity() {
                         setResult(RESULT_OK, resultIntent)
                         finish()
                     },
+                    stateHolder = stateHolder,
                 )
             }
         }

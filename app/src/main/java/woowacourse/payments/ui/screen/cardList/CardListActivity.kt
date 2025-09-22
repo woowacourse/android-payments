@@ -45,11 +45,11 @@ class CardListActivity : ComponentActivity() {
                     }
 
                 CardListScreen(
-                    stateHolder = stateHolder,
                     navigateToAddCard = {
                         val intent = Intent(this@CardListActivity, AddCardActivity::class.java)
                         addCardLauncher.launch(intent)
                     },
+                    stateHolder = stateHolder,
                 )
             }
         }

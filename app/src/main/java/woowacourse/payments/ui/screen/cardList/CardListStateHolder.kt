@@ -30,7 +30,7 @@ class CardListStateHolder(
         val saver =
             Saver<CardListStateHolder, List<CardUiModel>>(
                 save = { holder -> holder.uiState.cards },
-                restore = { cards -> CardListStateHolder() },
+                restore = { cards -> CardListStateHolder(cards) },
             )
     }
 }

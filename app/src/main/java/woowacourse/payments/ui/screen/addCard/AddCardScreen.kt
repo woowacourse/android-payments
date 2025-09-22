@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,8 +38,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun AddCardScreen(
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
+    stateHolder: AddCardStateHolder = remember { AddCardStateHolder() },
 ) {
-    val stateHolder = rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
+    val uiState = stateHolder.uiState
     val scrollState = rememberScrollState()
     val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
@@ -56,7 +58,7 @@ fun AddCardScreen(
                 onBackClick = onBackPressed,
                 onSaveClick = {
                     stateHolder.validate()
-                    if (stateHolder.uiState.isFormValid) {
+                    if (uiState.isFormValid) {
                         onCardSaved(stateHolder.toCardUiModel())
                     }
                 },
@@ -83,30 +85,30 @@ fun AddCardScreen(
 
             CardNumberInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardNumber = stateHolder.uiState.cardNumber,
+                cardNumber = uiState.cardNumber,
                 onCardNumberChange = { stateHolder.updateCardNumber(it) },
-                error = stateHolder.uiState.cardNumberError,
+                error = uiState.cardNumberError,
             )
 
             ExpiredInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                expired = stateHolder.uiState.expired,
+                expired = uiState.expired,
                 onExpiredChange = { stateHolder.updateExpired(it) },
-                error = stateHolder.uiState.expiredError,
+                error = uiState.expiredError,
             )
 
             CardOwnerInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardOwner = stateHolder.uiState.cardOwner,
+                cardOwner = uiState.cardOwner,
                 onOwnerChange = { stateHolder.updateCardOwner(it) },
-                error = stateHolder.uiState.ownerError,
+                error = uiState.ownerError,
             )
 
             PasswordInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                password = stateHolder.uiState.password,
+                password = uiState.password,
                 onPasswordChange = { stateHolder.updatePassword(it) },
-                error = stateHolder.uiState.passwordError,
+                error = uiState.passwordError,
             )
         }
     }
