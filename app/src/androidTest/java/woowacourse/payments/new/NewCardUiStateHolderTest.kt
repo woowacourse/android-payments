@@ -4,7 +4,6 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.new.NewCardMode
 import woowacourse.payments.ui.view.new.NewCardUiEvent
 import woowacourse.payments.ui.view.new.NewCardUiState

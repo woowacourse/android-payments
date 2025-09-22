@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.ext.getParcelableCompat
 import woowacourse.payments.ui.serialization.toSerializationCard
-import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.view.cards.CardsActivity
 import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_MODIFY_INDEX

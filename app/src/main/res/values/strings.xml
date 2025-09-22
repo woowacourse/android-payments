@@ -11,6 +11,7 @@
     <string name="card_owner_letter_count">%d / %d</string>
     <string name="card_password">비밀번호</string>
     <string name="card_password_place_holder">0000</string>
+    <string name="card_modification_not_complete">수정된 카드 정보가 없습니다.</string>
 
     <!-- 카드사 !-->
     <string name="bank_bc">BC카드</string>

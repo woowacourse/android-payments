@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.CardChip
 import woowacourse.payments.ui.component.CardNumberTextField
@@ -33,21 +39,19 @@ import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.ext.toNameResource
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.state.CardCompanyState
-import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.view.new.NewCardUiStateHolder.Companion.NewCardUiStateHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
     mode: NewCardMode,
-    cardState: CardState,
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
     onFinishRequest: () -> Unit,
 ) {
     val newCardUiStateHolder =
         rememberSaveable(saver = NewCardUiStateHolder.Saver) {
-            NewCardUiStateHolder(cardState, mode)
+            NewCardUiStateHolder(mode)
         }
 
     val uiState = newCardUiStateHolder.uiState
@@ -55,15 +59,36 @@ fun NewCardScreen(
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val modificationGuideMessage = stringResource(R.string.card_modification_not_complete)
+    val showModificationGuide: () -> Unit = {
+        scope.launch {
+            snackbarHostState.showSnackbar(modificationGuideMessage)
+        }
+    }
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             NewCardTopBar(
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     runCatching { newCardUiStateHolder.uiState.toDomain() }
-                        .onSuccess { card: Card -> onSaveClick(card) }
-                        .onFailure {
+                        .onSuccess { card: Card ->
+                            when (mode) {
+                                NewCardMode.Add -> onSaveClick(card)
+                                is NewCardMode.Modify -> {
+                                    if (uiState.isModified()) {
+                                        onSaveClick(card)
+                                    } else {
+                                        showModificationGuide()
+                                    }
+                                }
+                            }
+                        }.onFailure {
                             newCardUiStateHolder.modifyUiState(
                                 NewCardUiEvent.OnChangeCardCompany(
                                     CardCompanyState.Empty,
@@ -162,7 +187,7 @@ fun NewCardScreen(
         )
 
         ExpireDateTextField(
-            maxLength = 4,
+            maxLength = CARD_NUMBER_GROUP_SIZE,
             expireDate = uiState.expireDate,
             groupSize = CARD_EXPIRE_DATE_GROUP_SIZE,
             separator = CARD_EXPIRE_DATE_SEPARATOR,
