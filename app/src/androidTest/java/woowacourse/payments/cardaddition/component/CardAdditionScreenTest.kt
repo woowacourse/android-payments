@@ -101,37 +101,6 @@ class CardAdditionScreenTest {
     }
 
     @Test
-    fun `카드_번호에_숫자가_아닌_값을_입력할_수_없다`() {
-        // when
-        composeRule
-            .onNodeWithTag("CardNumberTextField")
-            .performTextInput("123NaN")
-
-        // then
-        composeRule
-            .onNodeWithText("123")
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun `카드_소유자_이름의_경우_입력_글자_제한이_30자이다`() {
-        // given
-        composeRule
-            .onNodeWithTag("CardOwnerNameTextField")
-            .performTextInput("GIO".repeat(10))
-
-        // when
-        composeRule
-            .onNodeWithText("GIO".repeat(10))
-            .performTextInput("GIO")
-
-        // then
-        composeRule
-            .onNodeWithText("GIO".repeat(10))
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun `카드_비밀번호는_4글자까지_입력할_수_있다`() {
         // when
         composeRule

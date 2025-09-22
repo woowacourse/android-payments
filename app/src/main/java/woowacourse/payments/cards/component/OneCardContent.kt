@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.BankType
 import woowacourse.payments.Card
 import woowacourse.payments.ui.component.PaymentCard
 
@@ -23,8 +24,8 @@ fun OneCardContent(
         verticalArrangement = Arrangement.spacedBy(36.dp),
     ) {
         PaymentCard(
-            detail = card,
             modifier = Modifier.padding(top = 12.dp),
+            card = card,
         )
         PaymentCardAdditionButton(
             onClick = addCard,
@@ -41,6 +42,7 @@ private fun OneCardContentPreview() {
                 number = "1234".repeat(4),
                 owner = "CREW",
                 expiredDate = "0421",
+                bankType = BankType.HANA,
             ),
         addCard = {},
     )

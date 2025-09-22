@@ -8,4 +8,5 @@ data class Card(
     val number: String,
     val owner: String,
     val expiredDate: String,
+    val bankType: BankType,
 ) : Parcelable

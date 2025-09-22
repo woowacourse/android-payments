@@ -8,9 +8,9 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.NO_CARD
-import woowacourse.payments.ONE_CARD
-import woowacourse.payments.THREE_CARD
+import woowacourse.payments.cards
+import woowacourse.payments.cards.CardsStateHolder
+import woowacourse.payments.cards.CardsUiState
 
 class CardsScreenTest {
     @get:Rule
@@ -22,8 +22,7 @@ class CardsScreenTest {
 
         composeRule.setContent {
             CardsScreen(
-                cards = NO_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(0))),
             )
         }
 
@@ -38,8 +37,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                cards = NO_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(0))),
             )
         }
 
@@ -59,8 +57,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                cards = ONE_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(1))),
             )
         }
 
@@ -75,8 +72,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                cards = ONE_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(1))),
             )
         }
 
@@ -96,8 +92,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                cards = THREE_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(3))),
             )
         }
 
@@ -112,8 +107,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                cards = THREE_CARD,
-                addCard = {},
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(3))),
             )
         }
 

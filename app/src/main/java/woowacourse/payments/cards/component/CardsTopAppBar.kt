@@ -20,7 +20,7 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopAppBar(
-    addAction: (() -> Unit)?,
+    addCardAction: (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -32,8 +32,8 @@ fun CardsTopAppBar(
         },
         modifier = modifier,
         actions = {
-            if (addAction != null) {
-                TextButton(onClick = addAction) {
+            if (addCardAction != null) {
+                TextButton(onClick = addCardAction) {
                     val addActionContentDescription =
                         stringResource(R.string.cards_top_app_bar_add_action_content_description)
                     Text(
@@ -59,7 +59,7 @@ private fun CardsTopAppBarPreview(
     @PreviewParameter(CardsTopAppBarPreviewParameterProvider::class) addAction: (() -> Unit)?,
 ) {
     CardsTopAppBar(
-        addAction = addAction,
+        addCardAction = addAction,
     )
 }
 
