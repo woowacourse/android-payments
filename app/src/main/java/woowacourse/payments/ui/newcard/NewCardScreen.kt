@@ -16,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.component.CardCompanySelectBottomSheet
@@ -41,7 +40,6 @@ fun NewCardScreen(
 
     var selectedCardCompany by rememberSaveable { mutableStateOf<CardCompanyUiModel?>(null) }
     var showBottomSheet by remember { mutableStateOf(false) }
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         showBottomSheet = true
@@ -114,6 +112,7 @@ fun NewCardScreen(
         }
         if (showBottomSheet) {
             CardCompanySelectBottomSheet(
+                //selectedCardCompany,
                 onCompanyClick = { company ->
                     selectedCardCompany = company
                     showBottomSheet = false
