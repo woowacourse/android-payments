@@ -38,7 +38,7 @@ class AddCardStateHolder(
         uiState = uiState.copy(bankUiModel = newBank)
     }
 
-    fun validate() {
+    fun validate(): Boolean {
         val errors = mutableSetOf<AddCardError>()
         val cardNumberValue = uiState.cardNumber
         val expiredValue = uiState.expired
@@ -51,6 +51,7 @@ class AddCardStateHolder(
         if (!Password(passwordValue).isValid) errors.add(AddCardError.PASSWORD_INVALID)
 
         uiState = uiState.copy(errors = errors, submitted = true)
+        return errors.isEmpty()
     }
 
     fun toCardUiModel(): CardUiModel =

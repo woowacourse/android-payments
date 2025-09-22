@@ -56,8 +56,7 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    stateHolder.validate()
-                    if (uiState.isFormValid) {
+                    if (stateHolder.validate()) {
                         onCardSaved(stateHolder.toCardUiModel())
                     }
                 },

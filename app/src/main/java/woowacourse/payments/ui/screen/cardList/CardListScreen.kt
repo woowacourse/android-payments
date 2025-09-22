@@ -131,7 +131,10 @@ private fun AddCardBox(onClick: () -> Unit) {
                 .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(Icons.Default.Add, contentDescription = "카드 추가")
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.card_list_add_card_description),
+        )
     }
 }
 
