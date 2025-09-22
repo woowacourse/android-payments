@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.formattedExpired
+import woowacourse.payments.ui.model.formattedNumber
 import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.GOLD
@@ -71,7 +73,7 @@ fun PaymentCard(
                     .padding(horizontal = 14.dp, vertical = 8.dp),
         ) {
             Text(
-                text = card.formattedNumber,
+                text = card.formattedNumber(),
                 color = Color.White,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
@@ -89,7 +91,7 @@ fun PaymentCard(
                 )
 
                 Text(
-                    text = card.formattedExpired,
+                    text = card.formattedExpired(),
                     color = Color.White,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
