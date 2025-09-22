@@ -6,6 +6,17 @@
     <string name="payment_card_empty_description">빈 카드 플레이트 이미지</string>
     <string name="invalid_field_icon_description">유효하지 않은 입력폼 경고 아이콘</string>
 
+    <!--    공통 카드사명-->
+    <string name="card_company_unknown" />
+    <string name="bc_card_company_name">BC카드</string>
+    <string name="shinhan_card_company_name">신한카드</string>
+    <string name="kakao_card_company_name">카카오뱅크</string>
+    <string name="hyundai_card_company_name">현대카드</string>
+    <string name="woori_card_company_name">우리카드</string>
+    <string name="lotte_card_company_name">롯데카드</string>
+    <string name="hana_card_company_name">하나카드</string>
+    <string name="kb_card_company_name">국민카드</string>
+
     <!--    카드 목록 컴포넌트-->
     <!--    상단바(TopBar)-->
     <string name="card_list_top_bar_title">Payments</string>
@@ -23,6 +34,9 @@
     <string name="card_list_incomplete_card_number_field_alert">카드 번호 입력이 완료되지 않았습니다</string>
     <string name="card_list_incomplete_expire_date_field_alert">카드 만료일 입력이 완료되지 않았습니다</string>
     <string name="card_list_incomplete_card_password_field_alert">카드 비밀번호 입력이 완료되지 않았습니다</string>
+
+    <!--    카드 추가 바텀시트-->
+    <string name="add_card_bottom_sheet_card_company_icon_description">%1$s 카드사 아이콘</string>
 
     <!--    상단바(TopBar)-->
     <string name="add_card_top_bar_title">카드 추가</string>

@@ -12,11 +12,13 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
+import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 val dummyPaymentCardUiModel =
     PaymentCardUiModel(
+        CardCompanyUiModel.UNKNOWN,
         "1234 - 1234 - 1234 - 1234",
         "02 / 26",
         "CREW",

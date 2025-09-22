@@ -5,7 +5,19 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PaymentCardUiModel(
-    val maskedCardNumber: String,
+    val cardCompanyUiModel: CardCompanyUiModel,
+    val formattedCardNumber: String,
     val formattedExpireDate: String,
     val ownerName: String,
-) : Parcelable
+) : Parcelable {
+    companion object {
+        const val MAX_EXPIRE_DATE_INPUT_LENGTH = 4
+        val EMPTY =
+            PaymentCardUiModel(
+                cardCompanyUiModel = CardCompanyUiModel.UNKNOWN,
+                formattedCardNumber = "",
+                formattedExpireDate = "",
+                ownerName = "",
+            )
+    }
+}
