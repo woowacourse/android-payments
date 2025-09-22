@@ -9,7 +9,6 @@ import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.BankUiModel
-import woowacourse.payments.ui.model.CardUiModel
 
 class AddCardStateHolder(
     initialState: AddCardUiState = AddCardUiState(),
@@ -31,7 +30,6 @@ class AddCardStateHolder(
 
     fun updatePassword(newPassword: String) {
         uiState = uiState.copy(password = newPassword)
-        validate()
     }
 
     fun updateBank(newBank: BankUiModel) {
@@ -53,14 +51,6 @@ class AddCardStateHolder(
         uiState = uiState.copy(errors = errors, submitted = true)
         return errors.isEmpty()
     }
-
-    fun toCardUiModel(): CardUiModel =
-        CardUiModel(
-            bankUiModel = uiState.bankUiModel,
-            number = uiState.cardNumber,
-            expired = uiState.expired,
-            owner = uiState.cardOwner,
-        )
 
     companion object {
         val saver: Saver<AddCardStateHolder, AddCardUiState> =
