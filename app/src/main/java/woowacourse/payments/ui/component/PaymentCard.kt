@@ -9,15 +9,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -37,6 +39,7 @@ fun PaymentCard(
     cardholderName: String,
     modifier: Modifier = Modifier,
     backgroundColor: Color = Color.DarkGray,
+    textStyle: TextStyle = paymentCardTextStyle(),
     cornerRadius: Int = 5,
 ) {
     Box(
@@ -49,41 +52,31 @@ fun PaymentCard(
                 .padding(12.dp)
                 .semanticsContentDescription(R.string.payment_card_content_description),
     ) {
-        PaymentCardText(
-            text = bankName,
-            modifier = Modifier.align(Alignment.TopStart),
-        )
-        PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
-        PaymentCardInfoBlock(
-            number = number,
-            expirationDate = expirationDate,
-            cardholderName = cardholderName,
-            modifier = Modifier.align(Alignment.BottomStart),
-        )
+        CompositionLocalProvider(LocalTextStyle provides textStyle) {
+            Text(
+                text = bankName,
+                modifier = Modifier.align(Alignment.TopStart),
+            )
+            PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
+            PaymentCardInfoBlock(
+                number = number,
+                expirationDate = expirationDate,
+                cardholderName = cardholderName,
+                modifier = Modifier.align(Alignment.BottomStart),
+            )
+        }
     }
 }
 
 @Composable
-private fun PaymentCardText(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = Color.White,
-    fontSize: TextUnit = 12.sp,
-    letterSpacing: TextUnit = 0.sp,
-    lineHeight: TextUnit = 1.em,
-    fontWeight: FontWeight = FontWeight.W500,
-) {
-    Text(
-        text = text,
-        color = color,
-        fontSize = fontSize,
-        fontWeight = fontWeight,
-        letterSpacing = letterSpacing,
-        lineHeight = lineHeight,
-        modifier = modifier,
-        maxLines = 1,
+fun paymentCardTextStyle(): TextStyle =
+    TextStyle(
+        color = Color.White,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.W500,
+        letterSpacing = 0.sp,
+        lineHeight = 1.em,
     )
-}
 
 @Composable
 private fun PaymentCardChip(
@@ -109,20 +102,25 @@ private fun PaymentCardInfoBlock(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        PaymentCardText(
+        Text(
             text = number,
             letterSpacing = 2.sp,
+            maxLines = 1,
         )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            PaymentCardText(
+            Text(
                 text = cardholderName,
+                maxLines = 1,
                 modifier = Modifier.weight(1f),
             )
-            PaymentCardText(text = expirationDate)
+            Text(
+                text = expirationDate,
+                maxLines = 1,
+            )
         }
     }
 }
