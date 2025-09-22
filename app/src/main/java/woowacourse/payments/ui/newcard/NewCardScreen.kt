@@ -112,7 +112,6 @@ fun NewCardScreen(
         }
         if (showBottomSheet) {
             CardCompanySelectBottomSheet(
-                //selectedCardCompany,
                 onCompanyClick = { company ->
                     selectedCardCompany = company
                     showBottomSheet = false

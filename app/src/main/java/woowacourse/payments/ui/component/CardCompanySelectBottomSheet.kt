@@ -13,19 +13,11 @@ import woowacourse.payments.ui.model.CardCompanyUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCompanySelectBottomSheet(
-    //selectedCompany: CardCompanyUiModel?,
     onCompanyClick: (CardCompanyUiModel) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState()
-
-//    LaunchedEffect(selectedCompany) {
-//        selectedCompany.let {
-//            sheetState.hide()
-//            onDismissRequest()
-//        }
-//    }
 
     ModalBottomSheet(
         modifier = modifier,
@@ -36,7 +28,6 @@ fun CardCompanySelectBottomSheet(
         CardCompanySelectRow(
             modifier = Modifier.navigationBarsPadding(),
             onCompanyClick = { company ->
-                //selectedCompany = company
                 onCompanyClick(company)
             },
         )
