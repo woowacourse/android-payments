@@ -32,7 +32,7 @@ fun BankType.toNameRes(): Int =
 @DrawableRes
 fun BankType.toIconRes(): Int =
     when (this) {
-        NOT_SELECTED -> 0
+        NOT_SELECTED -> R.drawable.ic_placeholder
         BC -> R.drawable.ic_bc_card
         SHINHAN -> R.drawable.ic_shinhan_card
         KAKAO_BANK -> R.drawable.ic_kakao_bank

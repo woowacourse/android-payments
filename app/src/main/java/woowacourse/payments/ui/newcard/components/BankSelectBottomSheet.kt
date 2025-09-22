@@ -102,10 +102,7 @@ private fun BankChip(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         val label = stringResource(bank.toNameRes())
-        val icon = bank.toIconRes()
-        if (icon != 0) {
-            Image(painterResource(icon), contentDescription = label, modifier = Modifier.size(36.dp))
-        }
+        Image(painterResource(bank.toIconRes()), contentDescription = label, modifier = Modifier.size(36.dp))
         Spacer(modifier = Modifier.height(8.dp))
         Text(text = label, color = GrayLabel, fontSize = 16.sp, fontWeight = FontWeight.W500)
     }
