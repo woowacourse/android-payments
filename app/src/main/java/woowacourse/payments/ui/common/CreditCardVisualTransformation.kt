@@ -22,6 +22,7 @@ class CreditCardVisualTransformation : VisualTransformation {
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int =
                     when {
+                        offset <= 0 -> 0
                         offset <= 4 -> offset
                         offset <= 8 -> offset + 3
                         offset <= 12 -> offset + 6
@@ -31,12 +32,18 @@ class CreditCardVisualTransformation : VisualTransformation {
 
                 override fun transformedToOriginal(offset: Int): Int =
                     when {
+                        offset <= 0 -> 0
                         offset <= 4 -> offset
-                        offset <= 9 -> offset - 3
-                        offset <= 14 -> offset - 6
-                        offset <= 19 -> offset - 9
+                        offset <= 5 -> 4
+                        offset <= 6 -> 4
+                        offset <= 10 -> offset - 3
+                        offset <= 11 -> 8
+                        offset <= 12 -> 8
+                        offset <= 16 -> offset - 6
+                        offset <= 17 -> 12
+                        offset <= 18 -> 12
                         else -> trimmed.length
-                    }
+                    }.coerceIn(0, trimmed.length)
             }
 
         return TransformedText(AnnotatedString(out), creditCardOffsetTranslator)

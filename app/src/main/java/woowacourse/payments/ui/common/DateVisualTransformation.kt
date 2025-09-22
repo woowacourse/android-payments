@@ -19,28 +19,28 @@ class DateVisualTransformation : VisualTransformation {
                 }
             }
 
-        val transformedLength = out.length
-
         val dateOffsetTranslator =
             object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int =
                     when {
-                        offset <= 1 -> offset
-                        offset <= 3 -> offset + 1
-                        else -> transformedLength
-                    }.coerceIn(0, transformedLength)
+                        offset <= 0 -> 0
+                        offset <= 2 -> offset
+                        offset <= 4 -> offset + 3
+                        else -> out.length
+                    }
 
                 override fun transformedToOriginal(offset: Int): Int =
                     when {
+                        offset <= 0 -> 0
                         offset <= 2 -> offset
-                        offset <= 5 -> offset - 1
+                        offset <= 3 -> 2
+                        offset <= 4 -> 2
+                        offset <= 5 -> 2
+                        offset <= 7 -> offset - 3
                         else -> trimmed.length
                     }.coerceIn(0, trimmed.length)
             }
 
-        return TransformedText(
-            AnnotatedString(out),
-            dateOffsetTranslator,
-        )
+        return TransformedText(AnnotatedString(out), dateOffsetTranslator)
     }
 }

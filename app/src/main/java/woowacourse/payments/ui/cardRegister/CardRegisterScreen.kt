@@ -5,13 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,43 +19,42 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardValidator
-import woowacourse.payments.domain.CardValidator.isValidCard
+import woowacourse.payments.domain.model.CardCompany
+import woowacourse.payments.ui.cardList.components.CardSelectionModal
 import woowacourse.payments.ui.cardRegister.components.CardRegisterTopBar
 import woowacourse.payments.ui.cardRegister.components.PaymentCard
 import woowacourse.payments.ui.cardRegister.components.PaymentTextField
 import woowacourse.payments.ui.common.CreditCardVisualTransformation
 import woowacourse.payments.ui.common.DateVisualTransformation
-import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.common.model.toUiType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.RedFFFF0000
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
-    onSaveClick: (card: Card) -> Unit,
+    onSaveClick: (card: CardUiModel) -> Unit,
     isNotValidInput: () -> Unit,
+    cardRegisterState: CardRegisterState = rememberCardRegisterState(),
 ) {
-    var cardNumber by rememberSaveable { mutableStateOf("") }
-    var expiredDate by rememberSaveable { mutableStateOf("") }
-    var ownerName by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val modalBottomSheetState =
+        rememberModalBottomSheetState(
+            confirmValueChange = { false },
+        )
 
     Scaffold(
         topBar = {
             CardRegisterTopBar(
                 onBackClick = { onBackClick() },
                 onSaveClick = {
-                    if (isValidCard(cardNumber, expiredDate, password)) {
-                        onSaveClick(
-                            Card(
-                                number = cardNumber,
-                                expiredDate = expiredDate,
-                                ownerName = ownerName,
-                                password = password,
-                            ),
-                        )
+                    if (cardRegisterState.isValid()) {
+                        onSaveClick(cardRegisterState.cardUiModel)
                     } else {
                         isNotValidInput()
                     }
@@ -65,6 +63,29 @@ fun CardRegisterScreen(
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
+        if (cardRegisterState.isShowingBottomSheet) {
+            CardSelectionModal(
+                modalBottomSheetState = modalBottomSheetState,
+                onDismissRequest = {
+                    scope
+                        .launch {
+                            modalBottomSheetState.hide()
+                        }.invokeOnCompletion {
+                            onBackClick()
+                        }
+                },
+                onCardCompanyClick = { cardCompanyUiType: CardCompanyUiType ->
+                    cardRegisterState.updateCardCompany(cardCompanyUiType)
+                    scope
+                        .launch {
+                            modalBottomSheetState.hide()
+                        }.invokeOnCompletion {
+                            cardRegisterState.hideBottomSheet()
+                        }
+                },
+                cardCompanies = CardCompany.entries.drop(1).map { it.toUiType() },
+            )
+        }
         Column(
             modifier =
                 Modifier
@@ -77,14 +98,18 @@ fun CardRegisterScreen(
                     Modifier
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
+                card =
+                    CardUiModel(
+                        cardCompany = cardRegisterState.cardCompany,
+                    ),
             )
             PaymentTextField(
-                text = cardNumber,
-                onValueChanged = { cardNumber = it },
+                text = cardRegisterState.cardNumber,
+                onValueChanged = { cardRegisterState.updateCardNumber(it) },
                 label = stringResource(R.string.card_number_label),
                 supportingText =
                     {
-                        if (!CardValidator.isValidNumber(cardNumber) && cardNumber.isNotEmpty()) {
+                        if (cardRegisterState.isShowingCardNumberError()) {
                             Text(
                                 text = stringResource(R.string.card_number_supporting_text),
                                 color = RedFFFF0000,
@@ -102,12 +127,12 @@ fun CardRegisterScreen(
                         .padding(top = 40.dp),
             )
             PaymentTextField(
-                text = expiredDate,
-                onValueChanged = { expiredDate = it },
+                text = cardRegisterState.expiredDate,
+                onValueChanged = { cardRegisterState.updateExpiredDate(it) },
                 label = stringResource(R.string.expired_date_label),
                 supportingText =
                     {
-                        if (!CardValidator.isValidExpiredDate(expiredDate) && expiredDate.isNotEmpty()) {
+                        if (cardRegisterState.isShowingExpiredDateError()) {
                             Text(
                                 text = stringResource(R.string.card_expired_date_supporting_text),
                                 color = RedFFFF0000,
@@ -125,8 +150,8 @@ fun CardRegisterScreen(
                         .padding(top = 30.dp),
             )
             PaymentTextField(
-                text = ownerName,
-                onValueChanged = { ownerName = it },
+                text = cardRegisterState.ownerName,
+                onValueChanged = { cardRegisterState.updateOwnerName(it) },
                 label = stringResource(R.string.card_owner_label),
                 placeholder = stringResource(R.string.card_owner_place_holder),
                 supportingText = {
@@ -134,7 +159,7 @@ fun CardRegisterScreen(
                         text =
                             stringResource(
                                 R.string.card_owner_supporting_text,
-                                ownerName.length,
+                                cardRegisterState.ownerName.length,
                             ),
                         textAlign = TextAlign.End,
                         modifier = Modifier.fillMaxWidth(),
@@ -147,12 +172,12 @@ fun CardRegisterScreen(
                         .padding(top = 30.dp),
             )
             PaymentTextField(
-                text = password,
-                onValueChanged = { password = it },
+                text = cardRegisterState.password,
+                onValueChanged = { cardRegisterState.updatePassword(it) },
                 label = stringResource(R.string.card_password_label),
                 supportingText =
                     {
-                        if (!CardValidator.isValidPassword(password) && password.isNotEmpty()) {
+                        if (cardRegisterState.isShowingOwnerNameError()) {
                             Text(
                                 text = stringResource(R.string.card_password_supporting_text),
                                 color = RedFFFF0000,
@@ -177,6 +202,11 @@ fun CardRegisterScreen(
 @Composable
 private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegisterScreen({}, {}, {})
+        CardRegisterScreen(
+            {},
+            {},
+            {},
+            cardRegisterState = rememberCardRegisterState(isShowingBottomSheet = false),
+        )
     }
 }
