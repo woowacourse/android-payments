@@ -59,7 +59,7 @@ fun BankSelectRow(
         verticalArrangement = Arrangement.spacedBy(23.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        CardCompany.entries.forEachIndexed { index, company ->
+        CardCompany.entries.forEach { company ->
             CardCompanyIcon(
                 company = company,
                 onClick = onClick,
