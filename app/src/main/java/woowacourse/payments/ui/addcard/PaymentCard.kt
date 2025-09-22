@@ -37,7 +37,8 @@ fun PaymentCard(
             Text(
                 modifier =
                     Modifier
-                        .padding(start = 14.dp, bottom = 10.dp, top = 10.dp),
+                        .padding(start = 14.dp)
+                        .padding(vertical = 10.dp),
                 text = stringResource(id = bank.bankName),
                 color = Color(0xFFFFFFFF),
                 fontSize = 12.sp,
