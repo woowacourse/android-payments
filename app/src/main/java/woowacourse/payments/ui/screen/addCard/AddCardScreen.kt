@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -36,9 +35,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
+    stateHolder: AddCardStateHolder,
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
-    stateHolder: AddCardStateHolder = remember { AddCardStateHolder() },
 ) {
     val uiState = stateHolder.uiState
     val scrollState = rememberScrollState()
@@ -129,7 +128,11 @@ fun AddCardScreen(
 @Preview(showBackground = true)
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
+        val preViewStateHolder =
+            rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
+
         AddCardScreen(
+            stateHolder = preViewStateHolder,
             onBackPressed = {},
             onCardSaved = {},
         )

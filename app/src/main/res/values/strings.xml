@@ -3,6 +3,7 @@
 
     <!-- CardListScreen -->
     <string name="card_list_add_new_card">새로운 카드를 등록해주세요</string>
+    <string name="card_list_add_card_description">카드 추가 버튼</string>
     <string name="card_list_add_card_toast">새 카드가 추가되었습니다</string>
 
     <!-- NewCardTopBar -->
