@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.registercard.CardTextFieldStateHolder
+import woowacourse.payments.ui.registercard.CardInputFieldStateHolder
 
 @Composable
-fun CardTextFields(
-    stateHolder: CardTextFieldStateHolder,
+fun CardInputFields(
+    stateHolder: CardInputFieldStateHolder,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -38,4 +39,10 @@ fun CardTextFields(
             isError = stateHolder.isPasswordError,
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardInputFieldsPreview() {
+    CardInputFields(stateHolder = CardInputFieldStateHolder())
 }

@@ -5,41 +5,52 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.toBankViewType
+import woowacourse.payments.ui.toYearMonthString
 import java.time.format.DateTimeFormatter
 
 @Parcelize
-class CardTextFieldStateHolder : Parcelable {
+class CardInputFieldStateHolder : Parcelable {
+    @IgnoredOnParcel
     var cardNumber by mutableStateOf("")
         private set
 
+    @IgnoredOnParcel
     var expiryDate by mutableStateOf("")
         private set
 
+    @IgnoredOnParcel
     var cardOwner by mutableStateOf("")
         private set
 
+    @IgnoredOnParcel
     var password by mutableStateOf("")
         private set
 
+    @IgnoredOnParcel
     var selectedBankViewType by mutableStateOf(BankViewType.NONE)
         private set
 
+    @IgnoredOnParcel
     val isCardNumberError by derivedStateOf {
         cardNumber.isNotEmpty() && cardNumber.length != CARD_NUMBER_MAX_LENGTH
     }
 
+    @IgnoredOnParcel
     val isExpiryDateError by derivedStateOf {
         expiryDate.isNotEmpty() && expiryDate.length != EXPIRY_DATE_MAX_LENGTH
     }
 
+    @IgnoredOnParcel
     val isCardOwnerError by derivedStateOf {
         cardOwner.length > CARD_OWNER_MAX_LENGTH
     }
 
+    @IgnoredOnParcel
     val isPasswordError by derivedStateOf {
         password.isNotEmpty() && password.length != PASSWORD_MAX_LENGTH
     }
@@ -69,7 +80,7 @@ class CardTextFieldStateHolder : Parcelable {
 
     fun setupRegisteredCardInfo(card: Card) {
         onCardNumberChange(card.cardNumber)
-        onExpiryDateChange(card.expiryDate.format(DateTimeFormatter.ofPattern("MM/yy")))
+        onExpiryDateChange(card.expiryDate.toYearMonthString())
         onCardOwnerChange(card.cardOwner ?: cardOwner)
         onPasswordChange(card.password)
         onSelectedBankViewTypeChange(card.bankType.toBankViewType())

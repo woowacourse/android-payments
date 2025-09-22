@@ -22,12 +22,12 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
-import woowacourse.payments.ui.component.CardTextFields
+import woowacourse.payments.ui.component.CardInputFields
 import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
-import java.time.YearMonth
+import woowacourse.payments.ui.toYearMonth
 
 @Composable
 fun CardRegisterScreen(
@@ -36,7 +36,7 @@ fun CardRegisterScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { CardTextFieldStateHolder() }
+    val stateHolder = rememberSaveable { CardInputFieldStateHolder() }
 
     Scaffold(
         topBar = {
@@ -85,24 +85,11 @@ fun CardRegisterScreen(
     )
 }
 
-fun String.toYearMonth(): YearMonth? {
-    val yearOffset = 2000
-    if (length != 4) return null
-    val year = substring(2, 4).toIntOrNull()
-    val month = substring(0, 2).toIntOrNull()
-    if (month !in 1..12) return null
-    return if (year == null || month == null) {
-        null
-    } else {
-        YearMonth.of(yearOffset + year, month)
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CardRegisterContent(
     innerPadding: PaddingValues,
-    stateHolder: CardTextFieldStateHolder,
+    stateHolder: CardInputFieldStateHolder,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -131,7 +118,7 @@ private fun CardRegisterContent(
                     .padding(top = 14.dp, bottom = 40.dp)
                     .align(Alignment.CenterHorizontally),
         )
-        CardTextFields(stateHolder = stateHolder)
+        CardInputFields(stateHolder = stateHolder)
     }
     if (stateHolder.selectedBankViewType == BankViewType.NONE) {
         SelectBankBottomSheet(
@@ -147,7 +134,7 @@ private fun CardRegisterContent(
 
 @Preview
 @Composable
-private fun ShowCardRegisterScreenPreview() {
+private fun RegisterCardScreenPreview() {
     AndroidpaymentsTheme {
         CardRegisterScreen(
             onBackClick = { },

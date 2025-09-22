@@ -31,28 +31,17 @@ class CardsActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(
                         ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
-                        updateCardsViewFromCardRegister(
-                            activityResult,
-                            stateHolder,
-                        )
                         if (activityResult.resultCode == RESULT_OK) {
-                            val editedCard =
-                                activityResult.data?.getParcelableExtraCompat<Card>(
-                                    KEY_EDITED_CARD,
-                                ) ?: return@rememberLauncherForActivityResult
-
-                            if (cardToEditIndex != INITIAL_INDEX) {
-                                stateHolder.cardsState[cardToEditIndex] =
-                                    editedCard
-                            }
+                            updateCardsViewFromRegisterCard(activityResult, stateHolder)
+                            updateCardsViewFromEditCard(activityResult, stateHolder)
                         }
                     }
 
                 CardsScreen(
                     stateHolder,
-                    onCardAddClick = { navigateToCardRegister(launcher) },
+                    onCardAddClick = { navigateToRegisterCard(launcher) },
                     onCardClick = { cardToEdit ->
-                        navigateToCardEdit(cardToEdit, launcher)
+                        navigateToEditCard(cardToEdit, launcher)
                         cardToEditIndex = stateHolder.cardsState.indexOfFirst { it == cardToEdit }
                     },
                 )
@@ -60,24 +49,37 @@ class CardsActivity : ComponentActivity() {
         }
     }
 
-    private fun updateCardsViewFromCardRegister(
+    private fun updateCardsViewFromRegisterCard(
         activityResult: ActivityResult,
         stateHolder: CardsStateHolder,
     ) {
-        if (activityResult.resultCode == RESULT_OK) {
-            val newCard =
-                activityResult.data?.getParcelableExtraCompat<Card>(KEY_NEW_CARD)
-                    ?: return
-            stateHolder.cardsState.add(newCard)
+        val newCard =
+            activityResult.data?.getParcelableExtraCompat<Card>(KEY_NEW_CARD)
+                ?: return
+        stateHolder.cardsState.add(newCard)
+    }
+
+    private fun updateCardsViewFromEditCard(
+        activityResult: ActivityResult,
+        stateHolder: CardsStateHolder,
+    ) {
+        val editedCard =
+            activityResult.data?.getParcelableExtraCompat<Card>(
+                KEY_EDITED_CARD,
+            ) ?: return
+
+        if (cardToEditIndex != INITIAL_INDEX) {
+            stateHolder.cardsState[cardToEditIndex] =
+                editedCard
         }
     }
 
-    private fun navigateToCardRegister(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
+    private fun navigateToRegisterCard(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
         val intent = RegisterCardActivity.newIntent(this)
         launcher.launch(intent)
     }
 
-    private fun navigateToCardEdit(
+    private fun navigateToEditCard(
         card: Card,
         launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
     ) {

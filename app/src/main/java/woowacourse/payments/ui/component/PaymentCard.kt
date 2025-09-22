@@ -25,6 +25,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.Yellow64
+import woowacourse.payments.ui.toYearMonthString
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -97,7 +98,7 @@ private fun CardInfo(
                 color = Color.White,
             )
             Text(
-                text = card.expiryDate.format(DateTimeFormatter.ofPattern("MM/yy")),
+                text = card.expiryDate.toYearMonthString(),
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
                 color = Color.White,

@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.component.CardTextFields
+import woowacourse.payments.ui.component.CardInputFields
 import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.registercard.CardTextFieldStateHolder
-import woowacourse.payments.ui.registercard.toYearMonth
+import woowacourse.payments.ui.registercard.CardInputFieldStateHolder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
+import woowacourse.payments.ui.toYearMonth
 import java.time.YearMonth
 
 @Composable
@@ -34,7 +34,7 @@ fun EditCardScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { CardTextFieldStateHolder() }
+    val stateHolder = rememberSaveable { CardInputFieldStateHolder() }
     LaunchedEffect(Unit) {
         stateHolder.setupRegisteredCardInfo(card)
     }
@@ -87,7 +87,7 @@ fun EditCardScreen(
 private fun EditCardContent(
     card: Card,
     innerPadding: PaddingValues,
-    stateHolder: CardTextFieldStateHolder,
+    stateHolder: CardInputFieldStateHolder,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -104,26 +104,8 @@ private fun EditCardContent(
                     .align(Alignment.CenterHorizontally),
             card = card,
         )
-        CardTextFields(stateHolder = stateHolder)
+        CardInputFields(stateHolder = stateHolder)
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun EditCardContentPreview() {
-    val card =
-        Card.create(
-            cardNumber = "1234567812345678",
-            expiryDate = YearMonth.of(2095, 12),
-            cardOwner = "쥐돌킹",
-            password = "1234",
-            bankType = BankType.BC,
-        )
-    EditCardContent(
-        card = card.getOrNull()!!,
-        innerPadding = PaddingValues(),
-        stateHolder = CardTextFieldStateHolder(),
-    )
 }
 
 @Preview(showBackground = true)
