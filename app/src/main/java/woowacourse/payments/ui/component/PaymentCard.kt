@@ -58,7 +58,7 @@ fun PaymentCard(
                 modifier = Modifier.align(Alignment.TopStart),
             )
             PaymentCardChip(modifier = Modifier.align(Alignment.CenterStart))
-            PaymentCardInfoBlock(
+            PaymentCardDetails(
                 number = number,
                 expirationDate = expirationDate,
                 cardholderName = cardholderName,
@@ -92,7 +92,7 @@ private fun PaymentCardChip(
 }
 
 @Composable
-private fun PaymentCardInfoBlock(
+private fun PaymentCardDetails(
     number: String,
     expirationDate: String,
     cardholderName: String,
@@ -160,7 +160,7 @@ private fun PaymentCardInfoBlockPreview() {
             expirationDate = CardExpirationDateUiModel("1224"),
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
         )
-    PaymentCardInfoBlock(
+    PaymentCardDetails(
         number = paymentCardUiModel.displayCardNumber(),
         expirationDate = paymentCardUiModel.displayExpirationDate(),
         cardholderName = paymentCardUiModel.upperCardholderName,
