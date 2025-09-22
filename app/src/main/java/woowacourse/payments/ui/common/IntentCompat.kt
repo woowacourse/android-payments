@@ -1,4 +1,4 @@
-package woowacourse.payments.ui
+package woowacourse.payments.ui.common
 
 import android.content.Intent
 import android.os.Build

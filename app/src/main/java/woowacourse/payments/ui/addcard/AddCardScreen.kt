@@ -8,47 +8,43 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
 import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
-import woowacourse.payments.ui.common.PaymentCard
+import woowacourse.payments.ui.common.composable.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun AddCardScreen(
+    uiState: AddCardScreenUiStateHolder,
     onSaveSuccess: (card: CardUiModel) -> Unit,
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
 ) {
-    val card: MutableState<CardUiModel> = remember { mutableStateOf(CardUiModel.EMPTY) }
-
-    val isCardNumberError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isExpirationDateError: MutableState<Boolean> = remember { mutableStateOf(false) }
-    val isPasscodeError: MutableState<Boolean> = remember { mutableStateOf(false) }
-
-    fun isError(): Boolean = isCardNumberError.value || isExpirationDateError.value || isPasscodeError.value
-
-    fun checkEmptyFields() {
-        if (card.value.cardNumber.isEmpty()) isCardNumberError.value = true
-        if (card.value.expirationDate.isEmpty()) isExpirationDateError.value = true
-        if (card.value.passcode.isEmpty()) isPasscodeError.value = true
-    }
+    val focusManager: FocusManager = LocalFocusManager.current
 
     fun saveAddedCard() {
-        checkEmptyFields()
-        if (isError()) {
+        if (uiState.isError) {
             onSaveFailure()
-        } else {
-            onSaveSuccess(card.value)
-            card.value = CardUiModel.EMPTY
+            return
+        }
+        onSaveSuccess(uiState.card)
+    }
+
+    LaunchedEffect(uiState.shouldMoveFocus) {
+        if (uiState.shouldMoveFocus) {
+            focusManager.moveFocus(FocusDirection.Next)
+            uiState.onFocusMoved()
         }
     }
 
@@ -61,20 +57,44 @@ fun AddCardScreen(
             )
         },
     ) { innerPadding: PaddingValues ->
-        Column(Modifier.fillMaxSize().padding(innerPadding)) {
-            PaymentCard(Modifier.align(Alignment.CenterHorizontally).padding(vertical = 30.dp))
+        Column(Modifier.padding(innerPadding)) {
+            PaymentCard(
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 30.dp),
+                card = CardUiModel.EMPTY.copy(cardCompany = uiState.cardCompany),
+            )
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                CardNumberTextField(card, isCardNumberError)
+                CardNumberTextField(
+                    uiState.cardNumber,
+                    uiState.isCardNumberError,
+                    uiState::onCardNumberChanged,
+                )
 
-                ExpirationDateTextField(card, isExpirationDateError)
+                ExpirationDateTextField(
+                    uiState.expirationDate,
+                    uiState.isExpirationDateError,
+                    uiState::onExpirationDateChanged,
+                )
 
-                CardHolderNameTextField(card)
+                CardHolderNameTextField(
+                    uiState.cardholderName,
+                    uiState::onCardholderNameChanged,
+                )
 
-                PasscodeTextField(card, isPasscodeError)
+                PasscodeTextField(
+                    uiState.passcode,
+                    uiState.isPasscodeError,
+                    uiState::onPasscodeChanged,
+                )
             }
         }
     }
@@ -84,6 +104,7 @@ fun AddCardScreen(
 @Composable
 private fun AddCardScreenPreview() {
     AddCardScreen(
+        remember { AddCardScreenUiStateHolder() },
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},
