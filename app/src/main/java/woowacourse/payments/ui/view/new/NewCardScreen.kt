@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.view.new
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,8 +9,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -56,11 +59,8 @@ fun NewCardScreen(
             confirmValueChange = { false },
         )
 
-    LaunchedEffect(uiState.company) {
-        when (uiState.company) {
-            CardCompanyState.Empty -> bottomSheetState.show()
-            is CardCompanyState.Selected -> bottomSheetState.hide()
-        }
+    var openBottomSheet by rememberSaveable {
+        mutableStateOf(uiState.company is CardCompanyState.Empty)
     }
 
     Scaffold(
@@ -85,11 +85,11 @@ fun NewCardScreen(
         NewCardScreen(
             uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
+            onClickCard = { openBottomSheet = true },
             modifier = Modifier.padding(innerPadding),
         )
     }
 
-    val openBottomSheet = uiState.company is CardCompanyState.Empty
     if (openBottomSheet) {
         BankSelectBottomSheet(
             modalBottomSheetState = bottomSheetState,
@@ -98,6 +98,7 @@ fun NewCardScreen(
                 newCardUiStateHolder.updateCard(
                     NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
                 )
+                openBottomSheet = false
             },
         )
     }
@@ -114,6 +115,7 @@ private const val CARD_MASKING_CHAR = "*"
 fun NewCardScreen(
     uiState: NewCardUiState,
     onCardChange: (NewCardUiEvent) -> Unit,
+    onClickCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -132,34 +134,13 @@ fun NewCardScreen(
     ) {
         PaymentCard(
             cardState = uiState.cardState,
-            content = {
-                when (uiState.mode) {
-                    NewCardMode.Add -> {
-                        Column {
-                            if (uiState.company is CardCompanyState.Selected) {
-                                val companyName = stringResource(uiState.company.company.toNameResource())
-                                NewCardName(companyName)
-                            }
-                            CardChip()
-                        }
-                    }
-                    is NewCardMode.Modify -> {
-                        RegisteredCard(
-                            uiState.toDomain(),
-                            CARD_NUMBER_GROUP_SIZE,
-                            CARD_NUMBER_SEPARATOR,
-                            CARD_MASKING_CHAR,
-                            CARD_EXPIRE_DATE_GROUP_SIZE,
-                            CARD_EXPIRE_DATE_SEPARATOR,
-                        )
-                    }
-                }
-            },
+            content = { PaymentCardContent(uiState) },
             modifier =
                 Modifier
                     .padding(top = 18.dp)
                     .shadow(8.dp)
-                    .align(alignment = Alignment.CenterHorizontally),
+                    .align(alignment = Alignment.CenterHorizontally)
+                    .clickable(onClick = onClickCard),
         )
 
         CardNumberTextField(
@@ -222,6 +203,39 @@ fun NewCardScreen(
     }
 }
 
+@Composable
+private fun PaymentCardContent(uiState: NewCardUiState) {
+    when (uiState.mode) {
+        NewCardMode.Add -> {
+            when (val cardCompanyState = uiState.company) {
+                CardCompanyState.Empty -> CardChip()
+
+                is CardCompanyState.Selected -> {
+                    Column {
+                        val companyName =
+                            stringResource(
+                                cardCompanyState.company.toNameResource(),
+                            )
+                        NewCardName(companyName)
+                        CardChip()
+                    }
+                }
+            }
+        }
+
+        is NewCardMode.Modify -> {
+            RegisteredCard(
+                uiState.toDomain(),
+                CARD_NUMBER_GROUP_SIZE,
+                CARD_NUMBER_SEPARATOR,
+                CARD_MASKING_CHAR,
+                CARD_EXPIRE_DATE_GROUP_SIZE,
+                CARD_EXPIRE_DATE_SEPARATOR,
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun NewCardScreenAddPreview() {
@@ -235,6 +249,7 @@ fun NewCardScreenAddPreview() {
                 CardCompanyState.Empty,
             ),
         onCardChange = {},
+        onClickCard = {},
     )
 }
 
@@ -252,6 +267,7 @@ fun NewCardScreenModifyPreview(
                 card.password,
                 CardCompanyState.Selected(card.company),
             ),
+        onClickCard = {},
         onCardChange = {},
     )
 }
