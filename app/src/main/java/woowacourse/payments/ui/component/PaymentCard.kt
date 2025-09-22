@@ -143,27 +143,3 @@ private fun PaymentCardPreview() {
         cardholderName = paymentCardUiModel.upperCardholderName,
     )
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun PaymentCardChipPreview() {
-    PaymentCardChip()
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFF333333)
-@Composable
-private fun PaymentCardInfoBlockPreview() {
-    val paymentCardUiModel =
-        PaymentCardUiModel(
-            bankType = BankTypeUiModel.HYUNDAI,
-            number = CardNumberUiModel("1234567812345678"),
-            expirationDate = CardExpirationDateUiModel("1224"),
-            cardholderName = CardholderNameUiModel("JOHN DOE", 30),
-        )
-    PaymentCardDetails(
-        number = paymentCardUiModel.displayCardNumber(),
-        expirationDate = paymentCardUiModel.displayExpirationDate(),
-        cardholderName = paymentCardUiModel.upperCardholderName,
-        modifier = Modifier.padding(12.dp),
-    )
-}
