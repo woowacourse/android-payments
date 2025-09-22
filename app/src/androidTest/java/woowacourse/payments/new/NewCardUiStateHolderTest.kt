@@ -15,7 +15,7 @@ class NewCardUiStateHolderTest {
     @Test
     fun `카드_번호가_변경되면_OnChangeCardNumber_이벤트가_발생하고_카드번호가_변경된다`() {
         // given
-        val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
+        val holder = NewCardUiStateHolder(NewCardMode.Add)
 
         // when
         holder.modifyUiState(NewCardUiEvent.OnChangeCardNumber("12345678"))
@@ -27,7 +27,7 @@ class NewCardUiStateHolderTest {
     @Test
     fun `카드_만료일이_변경되면_OnChangeExpireDate_이벤트가_발생하고_만료일이_변경된다`() {
         // given
-        val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
+        val holder = NewCardUiStateHolder(NewCardMode.Add)
 
         // when
         holder.modifyUiState(NewCardUiEvent.OnChangeExpireDate("1228"))
@@ -39,7 +39,7 @@ class NewCardUiStateHolderTest {
     @Test
     fun `카드_소유자_이름이_변경되면_OnChangeOwnerName_이벤트가_발생하고_소유자_이름이_변경된다`() {
         // given
-        val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
+        val holder = NewCardUiStateHolder(NewCardMode.Add)
 
         // when
         holder.modifyUiState(NewCardUiEvent.OnChangeOwnerName("홍길동"))
@@ -51,7 +51,7 @@ class NewCardUiStateHolderTest {
     @Test
     fun `카드_비밀번호가_변경되면_OnChangePassword_이벤트가_발생하고_비밀번호가_변경된다`() {
         // given
-        val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
+        val holder = NewCardUiStateHolder(NewCardMode.Add)
 
         // when
         holder.modifyUiState(NewCardUiEvent.OnChangePassword("12"))
@@ -62,7 +62,7 @@ class NewCardUiStateHolderTest {
 
     @Test
     fun `Saver를_통해_상태가_저장된_후_복원된다`() {
-        val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
+        val holder = NewCardUiStateHolder(NewCardMode.Add)
         holder.modifyUiState(NewCardUiEvent.OnChangeCardNumber("12345678"))
         holder.modifyUiState(NewCardUiEvent.OnChangeExpireDate("0908"))
         holder.modifyUiState(NewCardUiEvent.OnChangeOwnerName("페토"))

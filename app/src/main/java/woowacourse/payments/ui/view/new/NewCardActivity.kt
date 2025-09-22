@@ -21,14 +21,8 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 intent.getParcelableCompat<NewCardMode>(EXTRA_MODE)?.let { mode ->
-                    val cardState =
-                        when (mode) {
-                            NewCardMode.Add -> CardState.Pending
-                            is NewCardMode.Modify -> CardState.Registered(mode.card.toDomain())
-                        }
                     NewCardScreen(
                         mode = mode,
-                        cardState = cardState,
                         onBackClick = { finish() },
                         onSaveClick = { card ->
                             moveToCards(card, mode)

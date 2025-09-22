@@ -65,28 +65,23 @@ class NewCardUiStateHolder private constructor(
                 },
             )
 
-        fun NewCardUiStateHolder(
-            cardState: CardState,
-            mode: NewCardMode,
-        ): NewCardUiStateHolder {
-            val uiState =
-                when (cardState) {
-                    is CardState.Registered -> {
-                        NewCardUiState(
-                            number = cardState.card.number,
-                            expireDate = cardState.card.expireDate,
-                            ownerName = cardState.card.ownerName,
-                            password = cardState.card.password,
-                            cardCompanyState = CardCompanyState.Selected(cardState.card.company),
-                            mode = mode,
-                            isBottomSheetOpen = false,
-                        )
-                    }
+        fun NewCardUiStateHolder(mode: NewCardMode): NewCardUiStateHolder {
+            val uiState = when (mode) {
+                NewCardMode.Add -> NewCardUiState()
 
-                    CardState.Empty,
-                    CardState.Pending,
-                    -> NewCardUiState()
+                is NewCardMode.Modify -> {
+                    val card = mode.card
+                    NewCardUiState(
+                        number = card.number,
+                        expireDate = card.expireDate,
+                        ownerName = card.ownerName,
+                        password = card.password,
+                        cardCompanyState = CardCompanyState.Selected(card.company),
+                        mode = mode,
+                        isBottomSheetOpen = false,
+                    )
                 }
+            }
 
             return NewCardUiStateHolder(uiState)
         }
