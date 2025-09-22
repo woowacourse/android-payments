@@ -7,16 +7,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 
 class NewCardStateHolder {
-    var cardNumber: String by mutableStateOf("")
-        private set
-
-    var expiredDate: String by mutableStateOf("")
-        private set
-
-    var ownerName: String by mutableStateOf("")
-        private set
-
-    var password: String by mutableStateOf("")
+    var newCardUiState = mutableStateOf(NewCardUiState())
         private set
 
     var selectedCardCompany: CardCompany by mutableStateOf(CardCompany.NONE)
@@ -24,27 +15,27 @@ class NewCardStateHolder {
     val isCardSelected: Boolean get() = selectedCardCompany != CardCompany.NONE
 
     fun updateCardNumber(value: String) {
-        cardNumber = value
+        newCardUiState.value = newCardUiState.value.copy(cardNumber = value)
     }
 
     fun updateExpiredDate(value: String) {
-        expiredDate = value
+        newCardUiState.value = newCardUiState.value.copy(expiredDate = value)
     }
 
     fun updateOwnerName(value: String) {
-        ownerName = value
+        newCardUiState.value = newCardUiState.value.copy(ownerName = value)
     }
 
     fun updatePassword(value: String) {
-        password = value
+        newCardUiState.value = newCardUiState.value.copy(password = value)
     }
 
     fun getCard(): Result<Card> =
         Card.from(
-            cardNumber,
-            expiredDate,
-            ownerName,
-            password,
+            newCardUiState.value.cardNumber,
+            newCardUiState.value.expiredDate,
+            newCardUiState.value.ownerName,
+            newCardUiState.value.password,
             selectedCardCompany,
         )
 }

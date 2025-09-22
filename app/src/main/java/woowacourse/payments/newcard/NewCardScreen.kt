@@ -90,21 +90,21 @@ fun NewCardScreen(
                         .padding(vertical = 24.dp, horizontal = 40.dp),
             ) {
                 CardNumberTextField(
-                    value = newCardStateHolder.cardNumber,
+                    value = newCardStateHolder.newCardUiState.value.cardNumber,
                     onValueChange = newCardStateHolder::updateCardNumber,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 ExpiredDateTextField(
-                    value = newCardStateHolder.expiredDate,
+                    value = newCardStateHolder.newCardUiState.value.expiredDate,
                     onValueChange = newCardStateHolder::updateExpiredDate,
                 )
                 OwnerNameTextField(
-                    value = newCardStateHolder.ownerName,
+                    value = newCardStateHolder.newCardUiState.value.ownerName,
                     onValueChange = newCardStateHolder::updateOwnerName,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 PasswordTextField(
-                    value = newCardStateHolder.password,
+                    value = newCardStateHolder.newCardUiState.value.password,
                     onValueChange = newCardStateHolder::updatePassword,
                 )
             }
