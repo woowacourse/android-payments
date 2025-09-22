@@ -10,5 +10,6 @@ sealed interface NewCardMode : Parcelable {
 
     data class Modify(
         val card: SerializationCard,
+        val index: Int,
     ) : NewCardMode
 }

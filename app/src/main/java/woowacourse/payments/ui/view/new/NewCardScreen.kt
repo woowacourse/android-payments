@@ -92,9 +92,13 @@ fun NewCardScreen(
             onFinish = onFinishRequest,
             onCardCompanySelect = { company ->
                 newCardUiStateHolder.modifyUiState(
-                    NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
+                    NewCardUiEvent.OnChangeCardCompany(
+                        CardCompanyState.Selected(company),
+                    ),
                 )
-                newCardUiStateHolder.modifyUiState(NewCardUiEvent.OnChangeBottomSheet(false))
+                newCardUiStateHolder.modifyUiState(
+                    NewCardUiEvent.OnChangeBottomSheet(false),
+                )
             },
         )
     }

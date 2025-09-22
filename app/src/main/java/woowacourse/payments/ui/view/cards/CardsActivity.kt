@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResult
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.CardState
@@ -20,21 +22,35 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardsScreen(
-                    onClickToolbarAddAction = { launcher ->
-                        launcher.launch(NewCardActivity.newIntent(this, NewCardMode.Add))
+                    onClickAddCard = { launcher ->
+                        moveToAddCard(launcher)
                     },
-                    onClickCard = { launcher, cardType ->
-                        val mode =
-                            when (cardType) {
-                                CardState.Empty -> NewCardMode.Add
-                                is CardState.Registered -> NewCardMode.Modify(cardType.card.toSerializationCard())
-                                CardState.Pending -> return@CardsScreen
-                            }
-                        launcher.launch(NewCardActivity.newIntent(this, mode))
+                    onClickModifyCard = { launcher, cardType, index ->
+                        moveToModifyCard(launcher, cardType, index)
                     },
                 )
             }
         }
+    }
+
+    private fun moveToAddCard(launcher: ManagedActivityResultLauncher<Intent, ActivityResult>) {
+        launcher.launch(NewCardActivity.newIntent(this, NewCardMode.Add))
+    }
+
+    private fun moveToModifyCard(
+        launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+        cardType: CardState,
+        index: Int,
+    ) {
+        val mode =
+            when (cardType) {
+                CardState.Empty -> NewCardMode.Add
+                is CardState.Registered ->
+                    NewCardMode.Modify(cardType.card.toSerializationCard(), index)
+
+                CardState.Pending -> return
+            }
+        launcher.launch(NewCardActivity.newIntent(this, mode))
     }
 
     companion object {
@@ -43,8 +59,10 @@ class CardsActivity : ComponentActivity() {
             card: SerializationCard,
         ): Intent =
             Intent(context, CardsActivity::class.java)
-                .apply { putExtra(EXTRA_CARD, card) }
+                .apply { putExtra(EXTRA_CARD_ADD, card) }
 
-        const val EXTRA_CARD = "extra_card"
+        const val EXTRA_CARD_ADD = "extra_card_add"
+        const val EXTRA_CARD_MODIFY = "extra_card_MODIFY"
+        const val EXTRA_CARD_MODIFY_INDEX = "extra_card_modify_index"
     }
 }

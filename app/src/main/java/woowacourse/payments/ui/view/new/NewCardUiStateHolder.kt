@@ -79,6 +79,7 @@ class NewCardUiStateHolder private constructor(
                             password = cardState.card.password,
                             company = CardCompanyState.Selected(cardState.card.company),
                             mode = mode,
+                            isBottomSheetOpen = false,
                         )
                     }
 

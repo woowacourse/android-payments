@@ -10,9 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.core.Event
 import woowacourse.payments.ui.state.CardState
-import woowacourse.payments.ui.view.cards.CardScreenUiEvent
 import woowacourse.payments.ui.view.cards.CardsScreen
 import woowacourse.payments.ui.view.cards.CardsUiState
 
@@ -26,9 +24,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 CardsUiState.EMPTY,
-                Event(CardScreenUiEvent.Idle),
                 {},
-                {},
+                { _, _ -> },
             )
         }
 
@@ -60,9 +57,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 uiState,
-                Event(CardScreenUiEvent.Idle),
                 {},
-                {},
+                { _, _ -> },
             )
         }
 
@@ -114,9 +110,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 uiState,
-                Event(CardScreenUiEvent.Idle),
                 {},
-                {},
+                { _, _ -> },
             )
         }
 
@@ -149,9 +144,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 CardsUiState.EMPTY,
-                Event(CardScreenUiEvent.Idle),
                 { clickedType = it },
-                {},
+                { _, _ -> },
             )
         }
 
@@ -181,9 +175,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 uiState,
-                Event(CardScreenUiEvent.Idle),
                 onClickAddCard = {},
-                onClickModifyCard = { clickedCard = it },
+                onClickModifyCard = { cardState, index -> clickedCard = cardState },
             )
         }
 
@@ -207,9 +200,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 uiState,
-                Event(CardScreenUiEvent.Idle),
                 onClickAddCard = {},
-                onClickModifyCard = { clickedCard = it },
+                onClickModifyCard = { cardState, index -> clickedCard = cardState },
             )
         }
 

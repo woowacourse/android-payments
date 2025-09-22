@@ -12,6 +12,7 @@ import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.CardState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.view.cards.CardsActivity
+import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_MODIFY_INDEX
 
 class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,9 @@ class NewCardActivity : ComponentActivity() {
                         mode = mode,
                         cardState = cardState,
                         onBackClick = { finish() },
-                        onSaveClick = { card -> moveToCards(card) },
+                        onSaveClick = { card ->
+                            moveToCards(card, mode)
+                        },
                         onFinishRequest = { finish() },
                     )
                 }
@@ -37,10 +40,22 @@ class NewCardActivity : ComponentActivity() {
         }
     }
 
-    private fun moveToCards(card: Card) {
-        val intent =
-            CardsActivity.newIntent(this, card.toSerializationCard())
-        setResult(RESULT_OK, intent)
+    private fun moveToCards(
+        card: Card,
+        mode: NewCardMode,
+    ) {
+        val cardExtra =
+            when (mode) {
+                NewCardMode.Add -> CardsActivity.EXTRA_CARD_ADD
+                is NewCardMode.Modify -> CardsActivity.EXTRA_CARD_MODIFY
+            }
+
+        val resultIntent =
+            Intent().apply {
+                putExtra(cardExtra, card.toSerializationCard())
+                if (mode is NewCardMode.Modify) putExtra(EXTRA_CARD_MODIFY_INDEX, mode.index)
+            }
+        setResult(RESULT_OK, resultIntent)
         finish()
     }
 

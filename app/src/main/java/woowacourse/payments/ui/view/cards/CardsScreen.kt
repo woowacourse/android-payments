@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -47,12 +47,14 @@ import woowacourse.payments.ui.preview.CardsPreviewParameterProvider
 import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.serialization.SerializationCard
 import woowacourse.payments.ui.state.CardState
-import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD
+import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_ADD
+import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_MODIFY
+import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_MODIFY_INDEX
 
 @Composable
 fun CardsScreen(
-    onClickToolbarAddAction: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
-    onClickCard: (ManagedActivityResultLauncher<Intent, ActivityResult>, CardState) -> Unit,
+    onClickAddCard: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
+    onClickModifyCard: (ManagedActivityResultLauncher<Intent, ActivityResult>, CardState, Int) -> Unit,
 ) {
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) {
@@ -64,15 +66,44 @@ fun CardsScreen(
             Event(CardScreenUiEvent.Idle),
         )
     }
+
+    val context = LocalContext.current
+    val toastMessage = stringResource(R.string.card_list_add_new_card)
+
+    val event = uiEvent.getContentIfNotHandled()
+    LaunchedEffect(Unit) {
+        event?.let {
+            when (it) {
+                CardScreenUiEvent.CompleteAddCard -> {
+                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+                }
+
+                CardScreenUiEvent.Idle -> Unit
+            }
+        }
+    }
+
     val activityResultLauncher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                result.data?.getParcelableCompat<SerializationCard>(EXTRA_CARD)?.let { newCard ->
-                    cardUiStateHolder.addCard(newCard)
-                    uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
-                }
+                result.data
+                    ?.getParcelableCompat<SerializationCard>(EXTRA_CARD_ADD)
+                    ?.let { newCard ->
+                        cardUiStateHolder.addCard(newCard)
+                        uiEvent = Event(CardScreenUiEvent.CompleteAddCard)
+                    }
+
+                result.data
+                    ?.getParcelableCompat<SerializationCard>(EXTRA_CARD_MODIFY)
+                    ?.let { newCard ->
+                        result.data
+                            ?.getIntExtra(EXTRA_CARD_MODIFY_INDEX, -1)
+                            ?.let { index ->
+                                cardUiStateHolder.modifyCardAt(index, newCard)
+                            }
+                    }
             }
         }
 
@@ -80,7 +111,7 @@ fun CardsScreen(
         topBar = {
             PaymentToolbar(
                 onAddClick = {
-                    onClickToolbarAddAction(activityResultLauncher)
+                    onClickAddCard(activityResultLauncher)
                 },
                 addButtonVisible = cardUiStateHolder.toolbarActionButtonVisibility,
             )
@@ -88,12 +119,11 @@ fun CardsScreen(
     ) { innerPadding ->
         CardsScreen(
             uiState = cardUiStateHolder.uiState,
-            uiEvent = uiEvent,
             onClickAddCard = { cardType ->
-                onClickCard(activityResultLauncher, cardType)
+                onClickAddCard(activityResultLauncher)
             },
-            onClickModifyCard = { cardType ->
-                onClickCard(activityResultLauncher, cardType)
+            onClickModifyCard = { cardType, index ->
+                onClickModifyCard(activityResultLauncher, cardType, index)
             },
             modifier = Modifier.padding(innerPadding),
         )
@@ -109,27 +139,10 @@ private const val CARD_MASKING_CHAR = "*"
 @Composable
 fun CardsScreen(
     uiState: CardsUiState,
-    uiEvent: Event<CardScreenUiEvent>,
     onClickAddCard: (CardState) -> Unit,
-    onClickModifyCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    val toastMessage = stringResource(R.string.card_list_add_new_card)
-
-    val event = uiEvent.getContentIfNotHandled()
-    LaunchedEffect(event) {
-        event?.let {
-            when (it) {
-                CardScreenUiEvent.CompleteAddCard -> {
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
-                }
-
-                CardScreenUiEvent.Idle -> Unit
-            }
-        }
-    }
-
     when (uiState) {
         CardsUiState.EMPTY ->
             EmptyCardComponent(
@@ -189,7 +202,7 @@ fun EmptyCardComponent(
 fun SingleCardComponent(
     registeredCard: CardState.Registered,
     onClickAddCard: (CardState) -> Unit,
-    onClickModifyCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -212,7 +225,7 @@ fun SingleCardComponent(
             modifier =
                 Modifier
                     .shadow(8.dp)
-                    .clickable(onClick = { onClickModifyCard(registeredCard) }),
+                    .clickable(onClick = { onClickModifyCard(registeredCard, 0) }),
         )
         PaymentCard(
             cardState = CardState.Empty,
@@ -232,7 +245,7 @@ fun SingleCardComponent(
 @Composable
 fun MultipleCardComponent(
     registeredCards: List<CardState.Registered>,
-    onClickModifyCard: (CardState) -> Unit,
+    onClickModifyCard: (CardState, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -241,7 +254,7 @@ fun MultipleCardComponent(
         verticalArrangement = Arrangement.spacedBy(30.dp),
         modifier = modifier.fillMaxSize(),
     ) {
-        items(registeredCards, key = { it.card.number }) { card ->
+        itemsIndexed(registeredCards) { index, card ->
             PaymentCard(
                 cardState = card,
                 content = {
@@ -257,7 +270,7 @@ fun MultipleCardComponent(
                 modifier =
                     Modifier
                         .shadow(8.dp)
-                        .clickable(onClick = { onClickModifyCard(card) }),
+                        .clickable(onClick = { onClickModifyCard(card, index) }),
             )
         }
     }
@@ -268,9 +281,8 @@ fun MultipleCardComponent(
 fun CardScreenPreview() {
     CardsScreen(
         CardsUiState.EMPTY,
-        Event(CardScreenUiEvent.Idle),
         {},
-        {},
+        { _, _ -> },
     )
 }
 
@@ -281,9 +293,8 @@ fun SingleCardScreenPreview(
 ) {
     CardsScreen(
         CardsUiState.SINGLE(card),
-        Event(CardScreenUiEvent.Idle),
         {},
-        {},
+        { _, _ -> },
     )
 }
 
@@ -294,8 +305,7 @@ fun CardsScreenPreview(
 ) {
     CardsScreen(
         CardsUiState.MULTIPLE(cards),
-        Event(CardScreenUiEvent.Idle),
         {},
-        {},
+        { _, _ -> },
     )
 }

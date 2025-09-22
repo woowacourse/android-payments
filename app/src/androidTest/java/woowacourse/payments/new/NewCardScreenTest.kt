@@ -128,7 +128,7 @@ class NewCardScreenTest {
                         card.ownerName,
                         card.password,
                         CardCompanyState.Selected(card.company),
-                        mode = NewCardMode.Modify(card.toSerializationCard()),
+                        mode = NewCardMode.Modify(card.toSerializationCard(), 0),
                     ),
                 onCardChange = {},
                 onClickCard = {},
