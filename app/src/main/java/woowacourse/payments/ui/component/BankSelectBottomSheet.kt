@@ -55,6 +55,7 @@ fun BankSelectBottomSheet(
                                 onDismiss()
                             }
                         },
+                        modifier = Modifier,
                     )
                 }
             }

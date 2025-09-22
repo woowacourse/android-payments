@@ -25,12 +25,13 @@ import woowacourse.payments.ui.model.toPresentation
 fun BankItem(
     bankType: BankType,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val bank = remember(bankType) { bankType.toPresentation() }
 
     Column(
         modifier =
-            Modifier
+            modifier
                 .width(80.dp)
                 .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
