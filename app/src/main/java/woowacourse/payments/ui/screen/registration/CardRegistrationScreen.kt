@@ -66,10 +66,10 @@ fun CardRegistrationScreen(
             modifier = Modifier.padding(innerPadding),
         )
 
-        if (uiState.openBankSelectorBottomSheet) {
+        if (uiState.shouldOpenBankSelector) {
             BankSelectBottomSheet(
                 onBankSelected = viewModel::updateBank,
-                onDismiss = viewModel::closeBankSelectorBottomSheet,
+                onDismissRequest = viewModel::closeBankSelectorBottomSheet,
             )
         }
     }
@@ -153,7 +153,7 @@ private fun CardRegistrationScreenPreview() {
             onRegistrationComplete = {},
             viewModel =
                 CardRegistrationScreenViewModel(
-                    CardRegistrationScreenUiState(openBankSelectorBottomSheet = false),
+                    CardRegistrationScreenUiState(shouldOpenBankSelector = false),
                 ),
         )
     }

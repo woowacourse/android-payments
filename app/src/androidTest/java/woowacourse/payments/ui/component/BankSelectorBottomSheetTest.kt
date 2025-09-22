@@ -20,7 +20,7 @@ class BankSelectorBottomSheetTest {
         composeTestRule.setContent {
             BankSelectBottomSheet(
                 onBankSelected = { selectedBank = it },
-                onDismiss = {},
+                onDismissRequest = {},
             )
         }
 
@@ -43,7 +43,7 @@ class BankSelectorBottomSheetTest {
         composeTestRule.setContent {
             BankSelectBottomSheet(
                 onBankSelected = {},
-                onDismiss = { dismissed = true },
+                onDismissRequest = { dismissed = true },
             )
         }
 
