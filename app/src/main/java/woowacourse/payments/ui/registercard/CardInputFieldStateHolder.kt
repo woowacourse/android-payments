@@ -10,8 +10,8 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.toBankViewType
+import woowacourse.payments.ui.toYearMonth
 import woowacourse.payments.ui.toYearMonthString
-import java.time.format.DateTimeFormatter
 
 @Parcelize
 class CardInputFieldStateHolder : Parcelable {
@@ -55,6 +55,20 @@ class CardInputFieldStateHolder : Parcelable {
         password.isNotEmpty() && password.length != PASSWORD_MAX_LENGTH
     }
 
+    @IgnoredOnParcel
+    val canSave by derivedStateOf {
+        cardBeforeEdit?.let { card ->
+            cardNumber != card.cardNumber ||
+                expiryDate.toYearMonth() != card.expiryDate ||
+                cardOwner != (card.cardOwner ?: "") ||
+                password != card.password ||
+                selectedBankViewType != card.bankType.toBankViewType()
+        } ?: false
+    }
+
+    @IgnoredOnParcel
+    private var cardBeforeEdit: Card? by mutableStateOf(null)
+
     fun onCardNumberChange(newValue: String) {
         val filteredText = newValue.filter { it.isDigit() }
         if (filteredText.length <= CARD_NUMBER_MAX_LENGTH) cardNumber = filteredText
@@ -79,9 +93,10 @@ class CardInputFieldStateHolder : Parcelable {
     }
 
     fun setupRegisteredCardInfo(card: Card) {
+        cardBeforeEdit = card
         onCardNumberChange(card.cardNumber)
         onExpiryDateChange(card.expiryDate.toYearMonthString())
-        onCardOwnerChange(card.cardOwner ?: cardOwner)
+        onCardOwnerChange(card.cardOwner ?: "")
         onPasswordChange(card.password)
         onSelectedBankViewTypeChange(card.bankType.toBankViewType())
     }

@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,10 +33,12 @@ fun EditCardScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { CardInputFieldStateHolder() }
-    LaunchedEffect(Unit) {
-        stateHolder.setupRegisteredCardInfo(card)
-    }
+    val stateHolder =
+        rememberSaveable {
+            CardInputFieldStateHolder().apply {
+                setupRegisteredCardInfo(card)
+            }
+        }
 
     Scaffold(topBar = {
         CardTopBar(
@@ -54,15 +55,8 @@ fun EditCardScreen(
                     )
 
                 result
-                    .onSuccess { card ->
-                        Toast
-                            .makeText(
-                                context,
-                                context.getString(R.string.card_register_complete_message),
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        onSaveClick(card)
-                    }.onFailure {
+                    .onSuccess { card -> onSaveClick(card) }
+                    .onFailure {
                         Toast
                             .makeText(
                                 context,
@@ -72,6 +66,7 @@ fun EditCardScreen(
                     }
             },
             modifier = modifier,
+            canSave = stateHolder.canSave,
         )
     }) { innerPadding ->
         EditCardContent(

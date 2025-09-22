@@ -20,6 +20,7 @@ fun CardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    canSave: Boolean = true,
 ) {
     TopAppBar(
         modifier = modifier,
@@ -33,7 +34,7 @@ fun CardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = { onSaveClick() }, enabled = canSave) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.content_desc_done),
