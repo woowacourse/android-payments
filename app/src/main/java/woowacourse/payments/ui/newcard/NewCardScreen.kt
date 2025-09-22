@@ -26,7 +26,7 @@ import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.components.BankSelectBottomSheet
+import woowacourse.payments.ui.newcard.components.BankSelector
 import woowacourse.payments.ui.newcard.components.CardHolderTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpiryTextField
@@ -118,7 +118,7 @@ fun NewCardScreen(
             )
         }
     }
-    BankSelectBottomSheet(
+    BankSelector(
         isOpen = holder.isBankSheetOpen,
         selected = holder.selectedBank,
         onSelected = { holder.updateBank(it) },
