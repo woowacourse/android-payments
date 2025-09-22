@@ -37,7 +37,7 @@ private const val COLUMN_COUNT: Int = 4
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BankSelectBottomSheet(
+fun BankSelector(
     isOpen: Boolean = false,
     selected: BankType,
     onDismiss: () -> Unit,

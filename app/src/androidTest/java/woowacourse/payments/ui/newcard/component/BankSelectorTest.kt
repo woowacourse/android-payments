@@ -9,9 +9,9 @@ import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.newcard.components.BankSelectBottomSheet
+import woowacourse.payments.ui.newcard.components.BankSelector
 
-class BankSelectBottomSheetTest {
+class BankSelectorTest {
     @get:Rule
     val composeRule = createComposeRule()
 
@@ -19,7 +19,7 @@ class BankSelectBottomSheetTest {
     fun 바텀시트가_열리면_은행_리스트를_표시한다() {
         // given & when
         composeRule.setContent {
-            BankSelectBottomSheet(
+            BankSelector(
                 isOpen = true,
                 selected = BankType.NOT_SELECTED,
                 onDismiss = {},
@@ -38,7 +38,7 @@ class BankSelectBottomSheetTest {
         var selected: BankType = BankType.NOT_SELECTED
 
         composeRule.setContent {
-            BankSelectBottomSheet(
+            BankSelector(
                 isOpen = true,
                 selected = BankType.NOT_SELECTED,
                 onDismiss = {},
