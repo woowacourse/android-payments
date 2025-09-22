@@ -16,6 +16,20 @@ data class NewCardUiState(
     val mode: NewCardMode = NewCardMode.Add,
     val isBottomSheetOpen: Boolean = true,
 ) : Parcelable {
+    fun isModified(): Boolean {
+        return when (mode) {
+            NewCardMode.Add -> return true
+            is NewCardMode.Modify -> {
+                val originCard = mode.card
+
+                number != originCard.number ||
+                    expireDate != originCard.expireDate ||
+                    ownerName != originCard.ownerName ||
+                    password != originCard.password ||
+                    (cardCompanyState as CardCompanyState.Selected).company != mode.card.company
+            }
+        }
+    }
 
     val cardState
         get() =

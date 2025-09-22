@@ -7,6 +7,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.Card
@@ -15,7 +17,9 @@ import woowacourse.payments.ui.serialization.toSerializationCard
 import woowacourse.payments.ui.state.CardCompanyState
 import woowacourse.payments.ui.view.new.NewCardMode
 import woowacourse.payments.ui.view.new.NewCardScreen
+import woowacourse.payments.ui.view.new.NewCardUiEvent
 import woowacourse.payments.ui.view.new.NewCardUiState
+import woowacourse.payments.ui.view.new.NewCardUiStateHolder.Companion.NewCardUiStateHolder
 
 class NewCardScreenTest {
     @get:Rule
@@ -167,6 +171,67 @@ class NewCardScreenTest {
         // then
         composeTestRule.runOnIdle {
             assert(bottomSheetOpened)
+        }
+    }
+
+    @Test
+    fun `기존에_등록된_카드_정보가_수정되었다면_참을_반환한다`() {
+        // given
+        val origin =
+            NewCardMode.Modify(
+                Card(
+                    "1234123412341234",
+                    "0908",
+                    "peto",
+                    "1234",
+                    CardCompany.BC,
+                ).toSerializationCard(),
+                0,
+            )
+        val holder = NewCardUiStateHolder(origin)
+
+        // 초기 상태는 false
+        assertFalse(holder.uiState.isModified())
+
+        // when & then (수정된 경우 → true)
+        listOf(
+            NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(CardCompany.KB)),
+            NewCardUiEvent.OnChangeCardNumber("111111111111"),
+            NewCardUiEvent.OnChangeExpireDate("0909"),
+            NewCardUiEvent.OnChangeOwnerName("peto123"),
+        ).forEach { event ->
+            holder.modifyUiState(event)
+            assertTrue(holder.uiState.isModified())
+        }
+    }
+
+    @Test
+    fun `기존에_등록된_카드_정보가_수정되지_않았다면_거짓을_반환한다`() {
+        // given
+        val origin =
+            NewCardMode.Modify(
+                Card(
+                    "1234123412341234",
+                    "0908",
+                    "peto",
+                    "1234",
+                    CardCompany.BC,
+                ).toSerializationCard(),
+                0,
+            )
+        val holder = NewCardUiStateHolder(origin)
+
+        assertFalse(holder.uiState.isModified())
+
+        // then
+        listOf(
+            NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(CardCompany.BC)),
+            NewCardUiEvent.OnChangeCardNumber("1234123412341234"),
+            NewCardUiEvent.OnChangeExpireDate("0908"),
+            NewCardUiEvent.OnChangeOwnerName("peto"),
+        ).forEach { event ->
+            holder.modifyUiState(event)
+            assertFalse(holder.uiState.isModified())
         }
     }
 }
