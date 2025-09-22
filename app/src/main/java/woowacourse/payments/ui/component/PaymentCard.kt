@@ -35,7 +35,7 @@ fun PaymentCard(
                 .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                )
+                ),
     ) {
         content()
     }

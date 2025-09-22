@@ -17,6 +17,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.CardChip
@@ -27,21 +28,28 @@ import woowacourse.payments.ui.component.ExpireDateTextField
 import woowacourse.payments.ui.component.NewCardName
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.ui.core.CardNumberVisualTransformation
 import woowacourse.payments.ui.core.ext.toNameResource
+import woowacourse.payments.ui.preview.OneCardPreviewParameterProvider
 import woowacourse.payments.ui.state.CardCompanyState
+import woowacourse.payments.ui.state.CardState
+import woowacourse.payments.ui.view.new.NewCardUiStateHolder.Companion.NewCardUiStateHolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
+    mode: NewCardMode,
+    cardState: CardState,
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
     onFinishRequest: () -> Unit,
 ) {
     val newCardUiStateHolder =
         rememberSaveable(saver = NewCardUiStateHolder.Saver) {
-            NewCardUiStateHolder()
+            NewCardUiStateHolder(cardState, mode)
         }
+
     val uiState = newCardUiStateHolder.uiState
     val bottomSheetState =
         rememberModalBottomSheetState(
@@ -99,6 +107,8 @@ private const val CARD_NUMBER_GROUP_SIZE = 4
 private const val CARD_SEPARATOR = " - "
 private const val CARD_EXPIRE_DATE_GROUP_SIZE = 2
 private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
+private const val CARD_NUMBER_SEPARATOR = " - "
+private const val CARD_MASKING_CHAR = "*"
 
 @Composable
 fun NewCardScreen(
@@ -114,10 +124,6 @@ fun NewCardScreen(
             maxLength = Card.CARD_MAX_LENGTH,
         )
 
-    val company = (uiState.company as? CardCompanyState.Selected)?.company
-
-    val companyName: String? = company?.let { stringResource(it.toNameResource()) }
-
     Column(
         modifier =
             modifier
@@ -127,9 +133,26 @@ fun NewCardScreen(
         PaymentCard(
             card = uiState.cardState,
             content = {
-                Column {
-                    companyName?.let { NewCardName(it) }
-                    CardChip()
+                when (uiState.mode) {
+                    NewCardMode.Add -> {
+                        Column {
+                            if (uiState.company is CardCompanyState.Selected) {
+                                val companyName = stringResource(uiState.company.company.toNameResource())
+                                NewCardName(companyName)
+                            }
+                            CardChip()
+                        }
+                    }
+                    is NewCardMode.Modify -> {
+                        RegisteredCard(
+                            uiState.toDomain(),
+                            CARD_NUMBER_GROUP_SIZE,
+                            CARD_NUMBER_SEPARATOR,
+                            CARD_MASKING_CHAR,
+                            CARD_EXPIRE_DATE_GROUP_SIZE,
+                            CARD_EXPIRE_DATE_SEPARATOR,
+                        )
+                    }
                 }
             },
             modifier =
@@ -201,7 +224,7 @@ fun NewCardScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardScreenPreview() {
+fun NewCardScreenAddPreview() {
     NewCardScreen(
         uiState =
             NewCardUiState(
@@ -210,6 +233,24 @@ fun NewCardScreenPreview() {
                 "",
                 "",
                 CardCompanyState.Empty,
+            ),
+        onCardChange = {},
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun NewCardScreenModifyPreview(
+    @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
+) {
+    NewCardScreen(
+        uiState =
+            NewCardUiState(
+                card.number,
+                card.expireDate,
+                card.ownerName,
+                card.password,
+                CardCompanyState.Selected(card.company),
             ),
         onCardChange = {},
     )

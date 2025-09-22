@@ -3,9 +3,10 @@ package woowacourse.payments.ui.view.new
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import woowacourse.payments.ui.state.CardCompanyState
+import woowacourse.payments.ui.state.CardState
 
-class NewCardUiStateHolder(
-    initialState: NewCardUiState = NewCardUiState(),
+class NewCardUiStateHolder private constructor(
+    initialState: NewCardUiState,
 ) {
     private val _uiState = mutableStateOf(initialState)
     val uiState: NewCardUiState get() = _uiState.value
@@ -52,9 +53,35 @@ class NewCardUiStateHolder(
                             ownerName = restored.ownerName,
                             password = restored.password,
                             company = restored.company,
+                            mode = restored.mode,
                         ),
                     )
                 },
             )
+
+        fun NewCardUiStateHolder(
+            cardState: CardState,
+            mode: NewCardMode,
+        ): NewCardUiStateHolder {
+            val uiState =
+                when (cardState) {
+                    is CardState.Registered -> {
+                        NewCardUiState(
+                            number = cardState.card.number,
+                            expireDate = cardState.card.expireDate,
+                            ownerName = cardState.card.ownerName,
+                            password = cardState.card.password,
+                            company = CardCompanyState.Selected(cardState.card.company),
+                            mode = mode,
+                        )
+                    }
+
+                    CardState.Empty,
+                    CardState.Pending,
+                    -> NewCardUiState()
+                }
+
+            return NewCardUiStateHolder(uiState)
+        }
     }
 }
