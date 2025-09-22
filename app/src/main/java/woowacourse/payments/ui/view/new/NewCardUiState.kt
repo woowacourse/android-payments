@@ -14,6 +14,7 @@ data class NewCardUiState(
     val password: String = "",
     val company: CardCompanyState = CardCompanyState.Empty,
     val mode: NewCardMode = NewCardMode.Add,
+    val isBottomSheetOpen: Boolean = true,
 ) : Parcelable {
     val cardState
         get() =

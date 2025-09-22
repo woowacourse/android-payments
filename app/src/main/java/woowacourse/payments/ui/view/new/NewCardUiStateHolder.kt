@@ -18,6 +18,7 @@ class NewCardUiStateHolder private constructor(
             is NewCardUiEvent.OnChangeOwnerName -> updateOwnerName(event.ownerName)
             is NewCardUiEvent.OnChangePassword -> updatePassword(event.password)
             is NewCardUiEvent.OnChangeCardCompany -> updateCardBankType(event.cardCompany)
+            is NewCardUiEvent.OnChangeBottomSheet -> updateBottomSheet(event.isBottomSheetOpen)
         }
     }
 
@@ -41,6 +42,10 @@ class NewCardUiStateHolder private constructor(
         _uiState.value = _uiState.value.copy(company = company)
     }
 
+    private fun updateBottomSheet(isBottomSheetOpen: Boolean) {
+        _uiState.value = _uiState.value.copy(isBottomSheetOpen = isBottomSheetOpen)
+    }
+
     companion object {
         val Saver: Saver<NewCardUiStateHolder, NewCardUiState> =
             Saver(
@@ -53,6 +58,7 @@ class NewCardUiStateHolder private constructor(
                             ownerName = restored.ownerName,
                             password = restored.password,
                             company = restored.company,
+                            isBottomSheetOpen = restored.isBottomSheetOpen,
                             mode = restored.mode,
                         ),
                     )

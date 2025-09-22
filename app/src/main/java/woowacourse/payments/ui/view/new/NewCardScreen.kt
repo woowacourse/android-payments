@@ -9,10 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -59,10 +56,6 @@ fun NewCardScreen(
             confirmValueChange = { false },
         )
 
-    var openBottomSheet by rememberSaveable {
-        mutableStateOf(uiState.company is CardCompanyState.Empty)
-    }
-
     Scaffold(
         topBar = {
             NewCardTopBar(
@@ -85,12 +78,15 @@ fun NewCardScreen(
         NewCardScreen(
             uiState = newCardUiStateHolder.uiState,
             onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
-            onClickCard = { openBottomSheet = true },
+            onClickCard = {
+                newCardUiStateHolder
+                    .updateCard(NewCardUiEvent.OnChangeBottomSheet(true))
+            },
             modifier = Modifier.padding(innerPadding),
         )
     }
 
-    if (openBottomSheet) {
+    if (uiState.isBottomSheetOpen) {
         BankSelectBottomSheet(
             modalBottomSheetState = bottomSheetState,
             onFinish = onFinishRequest,
@@ -98,7 +94,7 @@ fun NewCardScreen(
                 newCardUiStateHolder.updateCard(
                     NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
                 )
-                openBottomSheet = false
+                newCardUiStateHolder.updateCard(NewCardUiEvent.OnChangeBottomSheet(false))
             },
         )
     }

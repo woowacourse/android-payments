@@ -7,6 +7,10 @@ sealed interface NewCardUiEvent {
         val cardCompany: CardCompanyState,
     ) : NewCardUiEvent
 
+    data class OnChangeBottomSheet(
+        val isBottomSheetOpen: Boolean,
+    ) : NewCardUiEvent
+
     data class OnChangeCardNumber(
         val cardNumber: String,
     ) : NewCardUiEvent
