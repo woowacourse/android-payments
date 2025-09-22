@@ -10,8 +10,10 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.component.PaymentCardsContent
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.mapper.toUiModel
 
 class PaymentCardsContentTest {
     @get:Rule
@@ -41,7 +43,7 @@ class PaymentCardsContentTest {
 
     @Test
     fun 한개면_SingleCard_표시() {
-        val one = listOf(PaymentCardUiModel("1234567812345678", "0527", "Alice"))
+        val one = listOf(PaymentCardUiModel("1234567812345678", "0527", "Alice", BankType.NOT_SELECTED.toUiModel()))
         setContentWithTag(one, Tags.SINGLE_CARD)
         composeRule.onNodeWithTag(Tags.SINGLE_CARD).assertIsDisplayed()
     }
@@ -50,8 +52,8 @@ class PaymentCardsContentTest {
     fun 두개_이상이면_MultiCards_표시() {
         val many =
             listOf(
-                PaymentCardUiModel("1234567812345678", "0527", "Alice"),
-                PaymentCardUiModel("8765432187654321", "1128", "Bob"),
+                PaymentCardUiModel("1234567812345678", "0527", "Alice", BankType.NOT_SELECTED.toUiModel()),
+                PaymentCardUiModel("8765432187654321", "1128", "Bob", BankType.NOT_SELECTED.toUiModel()),
             )
         setContentWithTag(many, Tags.MULTI_CARDS)
         composeRule.onNodeWithTag(Tags.MULTI_CARDS).assertIsDisplayed()

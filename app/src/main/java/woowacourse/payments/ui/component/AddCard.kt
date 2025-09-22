@@ -33,8 +33,7 @@ fun AddCard(
                 .background(
                     color = Gray50,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = onAddClick),
+                ).clickable(onClick = onAddClick),
     ) {
         Icon(
             imageVector = Icons.Filled.Add,

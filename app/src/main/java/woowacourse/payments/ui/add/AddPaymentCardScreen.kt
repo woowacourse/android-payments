@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.ExpiryTextField
 import woowacourse.payments.ui.component.NewCardTopBar
@@ -22,6 +23,7 @@ import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.component.PinTextField
 import woowacourse.payments.ui.component.StringTextField
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.mapper.toUiModelOrPlaceholder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -40,12 +42,28 @@ fun AddPaymentCardScreen(
         }
     }
 
+    val previewCard =
+        remember(state.cardNumber, state.expiry, state.owner, state.bank) {
+            PaymentCardUiModel(
+                cardNumber = state.cardNumber,
+                expiry = state.expiry,
+                owner = state.owner,
+                bank = state.bank.toUiModelOrPlaceholder(),
+            )
+        }
+
     Scaffold(
         topBar = {
             NewCardTopBar(
                 modifier = Modifier.padding(bottom = 14.dp),
                 onBackClick = onBack,
-                onSaveClick = { stateHolder.buildResult()?.let(onSave) },
+                onSaveClick = {
+                    if (!stateHolder.isBankValid) {
+                        stateHolder.showSheet()
+                    } else {
+                        stateHolder.buildResult()?.let(onSave)
+                    }
+                },
                 saveEnabled = canSave,
             )
         },
@@ -56,7 +74,11 @@ fun AddPaymentCardScreen(
                     .fillMaxSize()
                     .padding(innerPadding),
         ) {
-            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally), null)
+            PaymentCard(
+                paymentCard = previewCard,
+                onSelectBank = { stateHolder.showSheet() },
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
@@ -85,6 +107,15 @@ fun AddPaymentCardScreen(
                 modifier = Modifier.fillMaxWidth(0.6f),
             )
         }
+    }
+
+    if (state.isSheetVisible) {
+        BankSelectBottomSheet(
+            onSelect = { bank ->
+                stateHolder.onBankChange(bank)
+            },
+            onDismiss = { stateHolder.hideSheet() },
+        )
     }
 }
 
