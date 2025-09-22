@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.card.component.NewCard
@@ -28,6 +30,8 @@ fun OneCardScreen(
             cardNumber = card.number,
             expiredDate = card.expirationDate,
             ownerName = card.cardHolderName,
+            bankName = card.bankName,
+            backgroundColor = Color(card.bankColor),
         )
         Spacer(modifier = Modifier.padding(top = 36.dp))
         NewCard(onClick = onAddNewCardClick)
@@ -39,9 +43,11 @@ fun OneCardScreen(
 fun OneCardScreenPreview() {
     val card =
         CardUiModel(
-            number = "1234567890123456",
+            number = "1234 - 5678 - **** - ****",
             expirationDate = "11/24",
-            cardHolderName = "TAMA SEO",
+            cardHolderName = "TAMA ONE",
+            bankName = "국민카드",
+            bankColor = 0xFFFBC02D,
         )
 
     AndroidpaymentsTheme {

@@ -9,7 +9,6 @@ class CardListStateHolder {
     var uiState by mutableStateOf<CardListUiState>(CardListUiState.Empty)
         private set
     private var cards by mutableStateOf(emptyList<CardUiModel>())
-        private set
 
     init {
         updateUiState()
