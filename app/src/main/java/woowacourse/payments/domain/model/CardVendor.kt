@@ -1,4 +1,4 @@
-package woowacourse.payments.model
+package woowacourse.payments.domain.model
 
 enum class CardVendor {
     BCCard,

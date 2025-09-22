@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import woowacourse.payments.R
-import woowacourse.payments.model.CardInfo
+import woowacourse.payments.domain.model.CardInfo
 import woowacourse.payments.ui.addcard.util.PlaceholderTransformation
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 

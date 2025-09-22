@@ -6,7 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
-import woowacourse.payments.model.CardVendor
+import woowacourse.payments.domain.model.CardVendor
 
 @Parcelize
 data class VendorUiModel(

@@ -1,7 +1,7 @@
 package woowacourse.payments
 
 import androidx.compose.runtime.mutableStateListOf
-import woowacourse.payments.model.CardVendor
+import woowacourse.payments.domain.model.CardVendor
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState

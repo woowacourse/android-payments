@@ -17,7 +17,7 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.pressKey
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.model.CardInfo
+import woowacourse.payments.domain.model.CardInfo
 import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField

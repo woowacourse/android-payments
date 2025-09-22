@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.model.CardInfo
+import woowacourse.payments.domain.model.CardInfo
 
 @Parcelize
 data class CardInfoUiState(
