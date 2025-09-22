@@ -57,10 +57,15 @@ class CardInputFieldStateHolder : Parcelable {
 
     @IgnoredOnParcel
     val canSave by derivedStateOf {
+        isEdited && !isCardNumberError && !isExpiryDateError && !isCardOwnerError && !isPasswordError
+    }
+
+    @IgnoredOnParcel
+    private val isEdited by derivedStateOf {
         cardBeforeEdit?.let { card ->
             cardNumber != card.cardNumber ||
                 expiryDate.toYearMonth() != card.expiryDate ||
-                cardOwner != (card.cardOwner ?: "") ||
+                cardOwner != (card.cardOwner ?: cardOwner) ||
                 password != card.password ||
                 selectedBankViewType != card.bankType.toBankViewType()
         } ?: false
@@ -96,7 +101,7 @@ class CardInputFieldStateHolder : Parcelable {
         cardBeforeEdit = card
         onCardNumberChange(card.cardNumber)
         onExpiryDateChange(card.expiryDate.toYearMonthString())
-        onCardOwnerChange(card.cardOwner ?: "")
+        onCardOwnerChange(card.cardOwner ?: cardOwner)
         onPasswordChange(card.password)
         onSelectedBankViewTypeChange(card.bankType.toBankViewType())
     }
