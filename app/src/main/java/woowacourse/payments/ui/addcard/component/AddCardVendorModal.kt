@@ -22,7 +22,7 @@ import woowacourse.payments.ui.uimodel.toUiModel
 fun AddCardVendorModal(
     vendorModalUiState: VendorModalUiState,
     onDismissRequest: () -> Unit = {},
-    onVendorItemClick: (VendorUiModel) -> Unit = {},
+    onVendorItemClick: (uiModel: VendorUiModel) -> Unit = {},
 ) {
     if (vendorModalUiState.isVisible) {
         ModalBottomSheet(
