@@ -159,7 +159,7 @@ fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
     )
 
     PaymentCard(
-        card = CardState.Empty,
+        cardState = CardState.Empty,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -180,7 +180,7 @@ fun SingleCardComponent(
     onClickModifyCard: (CardState) -> Unit,
 ) {
     PaymentCard(
-        card = registeredCard,
+        cardState = registeredCard,
         content = {
             RegisteredCard(
                 registeredCard.card,
@@ -198,7 +198,7 @@ fun SingleCardComponent(
                 .clickable(onClick = { onClickModifyCard(registeredCard) }),
     )
     PaymentCard(
-        card = CardState.Empty,
+        cardState = CardState.Empty,
         content = {
             Icon(
                 imageVector = Icons.Default.Add,
@@ -219,7 +219,7 @@ fun MultipleCardComponent(
 ) {
     registeredCards.forEach { card ->
         PaymentCard(
-            card = card,
+            cardState = card,
             content = {
                 RegisteredCard(
                     card.card,

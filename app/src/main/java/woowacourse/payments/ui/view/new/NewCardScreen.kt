@@ -131,7 +131,7 @@ fun NewCardScreen(
                 .padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            card = uiState.cardState,
+            cardState = uiState.cardState,
             content = {
                 when (uiState.mode) {
                     NewCardMode.Add -> {
