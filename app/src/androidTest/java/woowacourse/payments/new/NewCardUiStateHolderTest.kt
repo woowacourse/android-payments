@@ -18,7 +18,7 @@ class NewCardUiStateHolderTest {
         val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
 
         // when
-        holder.updateCard(NewCardUiEvent.OnChangeCardNumber("12345678"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeCardNumber("12345678"))
 
         // then
         assertEquals(holder.uiState.number, "12345678")
@@ -30,7 +30,7 @@ class NewCardUiStateHolderTest {
         val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
 
         // when
-        holder.updateCard(NewCardUiEvent.OnChangeExpireDate("1228"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeExpireDate("1228"))
 
         // then
         assertEquals(holder.uiState.expireDate, "1228")
@@ -42,7 +42,7 @@ class NewCardUiStateHolderTest {
         val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
 
         // when
-        holder.updateCard(NewCardUiEvent.OnChangeOwnerName("홍길동"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeOwnerName("홍길동"))
 
         // then
         assertEquals(holder.uiState.ownerName, "홍길동")
@@ -54,7 +54,7 @@ class NewCardUiStateHolderTest {
         val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
 
         // when
-        holder.updateCard(NewCardUiEvent.OnChangePassword("12"))
+        holder.modifyUiState(NewCardUiEvent.OnChangePassword("12"))
 
         // then
         assertEquals(holder.uiState.password, "12")
@@ -63,10 +63,10 @@ class NewCardUiStateHolderTest {
     @Test
     fun `Saver를_통해_상태가_저장된_후_복원된다`() {
         val holder = NewCardUiStateHolder(CardState.Empty, NewCardMode.Add)
-        holder.updateCard(NewCardUiEvent.OnChangeCardNumber("12345678"))
-        holder.updateCard(NewCardUiEvent.OnChangeExpireDate("0908"))
-        holder.updateCard(NewCardUiEvent.OnChangeOwnerName("페토"))
-        holder.updateCard(NewCardUiEvent.OnChangePassword("1234"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeCardNumber("12345678"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeExpireDate("0908"))
+        holder.modifyUiState(NewCardUiEvent.OnChangeOwnerName("페토"))
+        holder.modifyUiState(NewCardUiEvent.OnChangePassword("1234"))
 
         val saver: Saver<NewCardUiStateHolder, NewCardUiState> = NewCardUiStateHolder.Saver
 

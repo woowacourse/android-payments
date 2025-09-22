@@ -11,7 +11,7 @@ class NewCardUiStateHolder private constructor(
     private val _uiState = mutableStateOf(initialState)
     val uiState: NewCardUiState get() = _uiState.value
 
-    fun updateCard(event: NewCardUiEvent) {
+    fun modifyUiState(event: NewCardUiEvent) {
         when (event) {
             is NewCardUiEvent.OnChangeCardNumber -> updateNumber(event.cardNumber)
             is NewCardUiEvent.OnChangeExpireDate -> updateExpireDate(event.expireDate)

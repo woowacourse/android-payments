@@ -64,7 +64,7 @@ fun NewCardScreen(
                     runCatching { newCardUiStateHolder.uiState.toDomain() }
                         .onSuccess { onSaveClick(it) }
                         .onFailure {
-                            newCardUiStateHolder.updateCard(
+                            newCardUiStateHolder.modifyUiState(
                                 NewCardUiEvent.OnChangeCardCompany(
                                     CardCompanyState.Empty,
                                 ),
@@ -77,10 +77,10 @@ fun NewCardScreen(
     ) { innerPadding ->
         NewCardScreen(
             uiState = newCardUiStateHolder.uiState,
-            onCardChange = { event -> newCardUiStateHolder.updateCard(event) },
+            onCardChange = { event -> newCardUiStateHolder.modifyUiState(event) },
             onClickCard = {
                 newCardUiStateHolder
-                    .updateCard(NewCardUiEvent.OnChangeBottomSheet(true))
+                    .modifyUiState(NewCardUiEvent.OnChangeBottomSheet(true))
             },
             modifier = Modifier.padding(innerPadding),
         )
@@ -91,10 +91,10 @@ fun NewCardScreen(
             modalBottomSheetState = bottomSheetState,
             onFinish = onFinishRequest,
             onCardCompanySelect = { company ->
-                newCardUiStateHolder.updateCard(
+                newCardUiStateHolder.modifyUiState(
                     NewCardUiEvent.OnChangeCardCompany(CardCompanyState.Selected(company)),
                 )
-                newCardUiStateHolder.updateCard(NewCardUiEvent.OnChangeBottomSheet(false))
+                newCardUiStateHolder.modifyUiState(NewCardUiEvent.OnChangeBottomSheet(false))
             },
         )
     }
