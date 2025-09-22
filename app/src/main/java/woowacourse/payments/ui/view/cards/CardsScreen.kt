@@ -8,9 +8,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -126,51 +130,59 @@ fun CardsScreen(
         }
     }
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        when (uiState) {
-            CardsUiState.EMPTY ->
-                EmptyCardContent { onClickAddCard(CardState.Empty) }
+    when (uiState) {
+        CardsUiState.EMPTY ->
+            EmptyCardComponent(
+                onClickCard = { onClickAddCard(CardState.Empty) },
+                modifier = modifier,
+            )
 
-            is CardsUiState.SINGLE ->
-                SingleCardComponent(
-                    registeredCard = CardState.Registered(uiState.state),
-                    onClickAddCard = onClickAddCard,
-                    onClickModifyCard = onClickModifyCard,
-                )
+        is CardsUiState.SINGLE ->
+            SingleCardComponent(
+                registeredCard = uiState.card,
+                onClickAddCard = onClickAddCard,
+                onClickModifyCard = onClickModifyCard,
+                modifier = modifier,
+            )
 
-            is CardsUiState.MULTIPLE ->
-                MultipleCardComponent(
-                    uiState.state.map { CardState.Registered(it) },
-                    onClickModifyCard,
-                )
-        }
+        is CardsUiState.MULTIPLE ->
+            MultipleCardComponent(
+                uiState.cards,
+                onClickModifyCard,
+                modifier = modifier,
+            )
     }
 }
 
 @Composable
-fun EmptyCardContent(onClickCard: (CardState) -> Unit) {
-    Text(
-        text = stringResource(R.string.card_list_empty),
-        fontSize = 22.sp,
-        modifier = Modifier.padding(top = 50.dp),
-    )
+fun EmptyCardComponent(
+    onClickCard: (CardState) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+    ) {
+        Text(
+            text = stringResource(R.string.card_list_empty),
+            fontSize = 22.sp,
+            modifier = Modifier.padding(top = 10.dp),
+        )
 
-    PaymentCard(
-        cardState = CardState.Empty,
-        content = {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.content_description_card_list_empty),
-            )
-        },
-        modifier =
-            Modifier
-                .padding(top = 18.dp)
-                .clickable(onClick = { onClickCard(CardState.Empty) }),
-    )
+        PaymentCard(
+            cardState = CardState.Empty,
+            content = {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.content_description_card_list_empty),
+                )
+            },
+            modifier =
+                Modifier
+                    .clickable(onClick = { onClickCard(CardState.Empty) }),
+        )
+    }
 }
 
 @Composable
@@ -178,51 +190,18 @@ fun SingleCardComponent(
     registeredCard: CardState.Registered,
     onClickAddCard: (CardState) -> Unit,
     onClickModifyCard: (CardState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    PaymentCard(
-        cardState = registeredCard,
-        content = {
-            RegisteredCard(
-                registeredCard.card,
-                CARD_NUMBER_GROUP_SIZE,
-                CARD_NUMBER_SEPARATOR,
-                CARD_MASKING_CHAR,
-                CARD_EXPIRE_DATE_GROUP_SIZE,
-                CARD_EXPIRE_DATE_SEPARATOR,
-            )
-        },
-        modifier =
-            Modifier
-                .padding(top = 30.dp)
-                .shadow(8.dp)
-                .clickable(onClick = { onClickModifyCard(registeredCard) }),
-    )
-    PaymentCard(
-        cardState = CardState.Empty,
-        content = {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = stringResource(R.string.content_description_card_list_empty),
-            )
-        },
-        modifier =
-            Modifier
-                .padding(top = 30.dp)
-                .clickable(onClick = { onClickAddCard(CardState.Empty) }),
-    )
-}
-
-@Composable
-fun MultipleCardComponent(
-    registeredCards: List<CardState.Registered>,
-    onClickModifyCard: (CardState) -> Unit,
-) {
-    registeredCards.forEach { card ->
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(30.dp),
+    ) {
         PaymentCard(
-            cardState = card,
+            cardState = registeredCard,
             content = {
                 RegisteredCard(
-                    card.card,
+                    registeredCard.card,
                     CARD_NUMBER_GROUP_SIZE,
                     CARD_NUMBER_SEPARATOR,
                     CARD_MASKING_CHAR,
@@ -232,10 +211,55 @@ fun MultipleCardComponent(
             },
             modifier =
                 Modifier
-                    .padding(top = 30.dp)
                     .shadow(8.dp)
-                    .clickable(onClick = { onClickModifyCard(card) }),
+                    .clickable(onClick = { onClickModifyCard(registeredCard) }),
         )
+        PaymentCard(
+            cardState = CardState.Empty,
+            content = {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.content_description_card_list_empty),
+                )
+            },
+            modifier =
+                Modifier
+                    .clickable(onClick = { onClickAddCard(CardState.Empty) }),
+        )
+    }
+}
+
+@Composable
+fun MultipleCardComponent(
+    registeredCards: List<CardState.Registered>,
+    onClickModifyCard: (CardState) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = PaddingValues(top = 30.dp, bottom = 30.dp),
+        verticalArrangement = Arrangement.spacedBy(30.dp),
+        modifier = modifier.fillMaxSize(),
+    ) {
+        items(registeredCards, key = { it.card.number }) { card ->
+            PaymentCard(
+                cardState = card,
+                content = {
+                    RegisteredCard(
+                        card.card,
+                        CARD_NUMBER_GROUP_SIZE,
+                        CARD_NUMBER_SEPARATOR,
+                        CARD_MASKING_CHAR,
+                        CARD_EXPIRE_DATE_GROUP_SIZE,
+                        CARD_EXPIRE_DATE_SEPARATOR,
+                    )
+                },
+                modifier =
+                    Modifier
+                        .shadow(8.dp)
+                        .clickable(onClick = { onClickModifyCard(card) }),
+            )
+        }
     }
 }
 
