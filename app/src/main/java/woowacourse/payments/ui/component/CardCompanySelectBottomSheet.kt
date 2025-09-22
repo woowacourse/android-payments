@@ -18,9 +18,9 @@ import woowacourse.payments.ui.model.CardCompanyUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCompanySelectBottomSheet(
-    modifier: Modifier = Modifier,
     onCompanyClick: (CardCompanyUiModel) -> Unit,
     onDismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState()
     var selectedCompany by remember { mutableStateOf<CardCompanyUiModel?>(null) }

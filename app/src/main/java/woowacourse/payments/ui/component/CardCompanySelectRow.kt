@@ -30,8 +30,8 @@ private const val COLUMN_COUNT = 4
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CardCompanySelectRow(
-    modifier: Modifier = Modifier,
     onCompanyClick: (CardCompanyUiModel) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier =
@@ -54,9 +54,9 @@ fun CardCompanySelectRow(
 
 @Composable
 private fun CardCompanyItem(
-    modifier: Modifier = Modifier,
     company: CardCompanyUiModel,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.clickable(onClick = onClick),
