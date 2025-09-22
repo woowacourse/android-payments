@@ -18,7 +18,7 @@ class EmptyCardListTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardListScreen(cards = CardScreenUiState.from(emptyList()), onAddClick = {})
+            CardListScreen(uiState = CardScreenUiState.from(emptyList()), onAddClick = {})
         }
     }
 

@@ -13,11 +13,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.newCard.NewCardActivity
-import woowacourse.payments.newCard.cards
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
 
@@ -28,23 +26,22 @@ class ListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 var cardState by remember { mutableStateOf(CardScreenUiState.from(emptyList())) }
-                val context = LocalContext.current
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
                             val newCard = activityResult.data?.parcelable<CardUiModel>("card")
                             newCard?.let { cardUiModel ->
-                                cardState = CardScreenUiState.from(cardState.cards() + cardUiModel)
-                                Toast.makeText(context, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
+                                cardState = CardScreenUiState.from(cardState.cards + cardUiModel)
+                                Toast.makeText(this, "카드가 추가되었습니다.", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
 
                 CardListScreen(
-                    cards = cardState,
+                    uiState = cardState,
                     onAddClick = {
-                        val intent = Intent(context, NewCardActivity::class.java)
+                        val intent = Intent(this, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
                     },
                 )

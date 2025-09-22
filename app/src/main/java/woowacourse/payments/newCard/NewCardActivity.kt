@@ -12,7 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -20,23 +24,48 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.InputMask
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpiry
 import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.list.toUiModel
 import woowacourse.payments.ui.DigitTextField
 import woowacourse.payments.ui.LimitedUppercaseTextField
 import woowacourse.payments.ui.PaymentCard
+import woowacourse.payments.ui.PaymentCardState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
                 val newCardState = NewCardState()
+                val cardSelectionState = remember { CardSelectionState() }
+                val modalBottomSheetState =
+                    rememberModalBottomSheetState(
+                        confirmValueChange = { false },
+                    )
+
+                if (cardSelectionState.isShowBottomSheet) {
+                    CardCompanySelectBottomSheet(
+                        modalBottomSheetState,
+                        onClick = { cardSelectionState.selectedCompany = it.company },
+                        onDismissRequest = { finish() },
+                        modifier = Modifier
+                    )
+                }
+
+                LaunchedEffect(key1 = cardSelectionState.selectedCompany) {
+                    if (cardSelectionState.selectedCompany != CardCompany.NOT_SELECTED) {
+                        cardSelectionState.isShowBottomSheet = false
+                        modalBottomSheetState.hide()
+                    }
+                }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
@@ -51,8 +80,9 @@ class NewCardActivity : ComponentActivity() {
                                         putExtra(
                                             "card",
                                             Card(
-                                                CardNumber(newCardState.cardNumber),
-                                                CardExpiry.fromString(newCardState.cardExpiry),
+                                                company = cardSelectionState.selectedCompany,
+                                                number = CardNumber(newCardState.cardNumber),
+                                                expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                                 password = CardPassword(newCardState.cardPassword),
                                                 name = CardName(newCardState.cardName),
                                             ).toUiModel(),
@@ -64,8 +94,9 @@ class NewCardActivity : ComponentActivity() {
                             isSaveEnabled =
                                 runCatching {
                                     Card(
-                                        CardNumber(newCardState.cardNumber),
-                                        CardExpiry.fromString(newCardState.cardExpiry),
+                                        company = cardSelectionState.selectedCompany,
+                                        number = CardNumber(newCardState.cardNumber),
+                                        expiry = CardExpiry.fromString(newCardState.cardExpiry),
                                         password = CardPassword(newCardState.cardPassword),
                                         name = CardName(newCardState.cardName),
                                     )
@@ -86,7 +117,17 @@ class NewCardActivity : ComponentActivity() {
                                     .fillMaxWidth(),
                             contentAlignment = Alignment.Center,
                         ) {
-                            PaymentCard()
+                            PaymentCard(
+                                state = PaymentCardState.CardInfo(
+                                    CardUiModel(
+                                        company = cardSelectionState.selectedCompany,
+                                        number = "",
+                                        name = null,
+                                        expiry = "",
+                                        password = "",
+                                    )
+                                )
+                            )
                         }
                         Spacer(modifier = Modifier.height(30.dp))
                         DigitTextField(

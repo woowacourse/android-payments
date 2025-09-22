@@ -1,9 +1,10 @@
 package woowacourse.payments.list
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,17 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.newCard.CardScreenUiState
+import woowacourse.payments.ui.PaymentCard
+import woowacourse.payments.ui.PaymentCardState
 
 @Composable
 fun CardListScreen(
-    cards: CardScreenUiState,
+    uiState: CardScreenUiState,
     onAddClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             CardListTopBar(
                 actions = {
-                    if (cards is CardScreenUiState.MultipleCard) {
+                    if (uiState is CardScreenUiState.MultipleCard) {
                         TextButton(
                             onClick = onAddClick,
                             content = {
@@ -44,7 +47,7 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier =
                 Modifier
                     .fillMaxSize()
@@ -52,19 +55,33 @@ fun CardListScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(18.dp),
         ) {
-            when (cards) {
+            when (uiState) {
                 is CardScreenUiState.Empty -> {
-                    AddNewCardText()
-                    AddNewCard(onAddClick = onAddClick)
+                    item {
+                        AddNewCardText()
+                    }
+                    item {
+                        AddNewCard(onAddClick = onAddClick)
+                    }
                 }
 
                 is CardScreenUiState.SingleCard -> {
-                    CardList(listOf(cards.card))
-                    AddNewCard(onAddClick = onAddClick)
+                    item {
+                        PaymentCard(
+                            state = PaymentCardState.CardInfo(uiState.card),
+                        )
+                    }
+                    item {
+                        AddNewCard(onAddClick = onAddClick)
+                    }
                 }
 
                 is CardScreenUiState.MultipleCard -> {
-                    CardList(cards.cards)
+                    items(uiState.cards) { card ->
+                        PaymentCard(
+                            state = PaymentCardState.CardInfo(card),
+                        )
+                    }
                 }
             }
         }

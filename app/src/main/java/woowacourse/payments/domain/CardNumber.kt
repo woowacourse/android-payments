@@ -8,8 +8,6 @@ value class CardNumber(val value: List<Digit>) {
         require(value.size == CARD_NUMBER_LENGTH) { "카드 번호는 ${CARD_NUMBER_LENGTH}자리여야 합니다." }
     }
 
-    override fun toString(): String = value.joinToString("") { it.value.toString() }
-
     companion object {
         private const val CARD_NUMBER_LENGTH = 16
     }
