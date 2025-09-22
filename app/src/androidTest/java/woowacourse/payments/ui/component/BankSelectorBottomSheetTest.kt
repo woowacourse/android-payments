@@ -6,7 +6,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.assertAll
 import woowacourse.payments.ui.model.BankTypeUiModel
 
 class BankSelectorBottomSheetTest {
@@ -14,30 +13,48 @@ class BankSelectorBottomSheetTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `카드사를_선택하면_선택된_카드사와_닫기를_전달한다`() {
+    fun `카드사를_선택하면_선택된_카드사가_전달된다`() {
         // given
         var selectedBank: BankTypeUiModel? = null
-        var dismissed = false
 
         composeTestRule.setContent {
             BankSelectBottomSheet(
                 onBankSelected = { selectedBank = it },
+                onDismiss = {},
+            )
+        }
+
+        // when
+        val target = composeTestRule.onNodeWithText("국민카드")
+        target.assertIsDisplayed()
+        target.performClick()
+
+        // then
+        composeTestRule.waitForIdle()
+
+        assert(selectedBank == BankTypeUiModel.KB)
+    }
+
+    @Test
+    fun `카드사를_선택하면_닫기가_전달된다`() {
+        // given
+        var dismissed = false
+
+        composeTestRule.setContent {
+            BankSelectBottomSheet(
+                onBankSelected = {},
                 onDismiss = { dismissed = true },
             )
         }
 
         // when
-        composeTestRule
-            .onNodeWithText("국민카드")
-            .assertIsDisplayed()
-            .performClick()
+        val target = composeTestRule.onNodeWithText("국민카드")
+        target.assertIsDisplayed()
+        target.performClick()
 
         // then
         composeTestRule.waitForIdle()
 
-        assertAll(
-            { assert(selectedBank == BankTypeUiModel.KB) },
-            { assert(dismissed) },
-        )
+        assert(dismissed)
     }
 }
