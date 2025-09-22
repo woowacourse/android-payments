@@ -12,7 +12,7 @@ import woowacourse.payments.ui.toBankViewType
 import java.time.format.DateTimeFormatter
 
 @Parcelize
-class RegisterCardStateHolder : Parcelable {
+class CardTextFieldStateHolder : Parcelable {
     var cardNumber by mutableStateOf("")
         private set
 
