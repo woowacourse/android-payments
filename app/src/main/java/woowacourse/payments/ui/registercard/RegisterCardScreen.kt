@@ -3,9 +3,7 @@ package woowacourse.payments.ui.registercard
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,12 +22,9 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
+import woowacourse.payments.ui.component.CardTextFields
 import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.registercard.component.CardNumberInputField
-import woowacourse.payments.ui.registercard.component.CardOwnerInputField
-import woowacourse.payments.ui.registercard.component.ExpiryDateInputField
-import woowacourse.payments.ui.registercard.component.PasswordInputField
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
 import java.time.YearMonth
@@ -38,9 +33,10 @@ import java.time.YearMonth
 fun CardRegisterScreen(
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { RegisterCardStateHolder() }
+    val stateHolder = rememberSaveable { CardTextFieldStateHolder() }
 
     Scaffold(
         topBar = {
@@ -75,10 +71,16 @@ fun CardRegisterScreen(
                                 ).show()
                         }
                 },
+                modifier = modifier,
             )
         },
         content = { innerPadding ->
-            CardRegisterContent(innerPadding, stateHolder, onBackClick)
+            CardRegisterContent(
+                innerPadding = innerPadding,
+                stateHolder = stateHolder,
+                onBackClick = onBackClick,
+                modifier = modifier,
+            )
         },
     )
 }
@@ -100,8 +102,9 @@ fun String.toYearMonth(): YearMonth? {
 @Composable
 private fun CardRegisterContent(
     innerPadding: PaddingValues,
-    stateHolder: RegisterCardStateHolder,
+    stateHolder: CardTextFieldStateHolder,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -116,7 +119,7 @@ private fun CardRegisterContent(
 
     Column(
         modifier =
-            Modifier
+            modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 24.dp),
@@ -128,29 +131,7 @@ private fun CardRegisterContent(
                     .padding(top = 14.dp, bottom = 40.dp)
                     .align(Alignment.CenterHorizontally),
         )
-        CardNumberInputField(
-            text = stateHolder.cardNumber,
-            onValueChange = { newText -> stateHolder.onCardNumberChange(newText) },
-            isError = stateHolder.isCardNumberError,
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        ExpiryDateInputField(
-            text = stateHolder.expiryDate,
-            onValueChange = { newText -> stateHolder.onExpiryDateChange(newText) },
-            isError = stateHolder.isExpiryDateError,
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        CardOwnerInputField(
-            text = stateHolder.cardOwner,
-            onValueChange = { newText -> stateHolder.onCardOwnerChange(newText) },
-            isError = stateHolder.isCardOwnerError,
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        PasswordInputField(
-            text = stateHolder.password,
-            onValueChange = { newText -> stateHolder.onPasswordChange(newText) },
-            isError = stateHolder.isPasswordError,
-        )
+        CardTextFields(stateHolder = stateHolder)
     }
     if (stateHolder.selectedBankViewType == BankViewType.NONE) {
         SelectBankBottomSheet(

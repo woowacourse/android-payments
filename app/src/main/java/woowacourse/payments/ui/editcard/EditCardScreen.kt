@@ -3,8 +3,6 @@ package woowacourse.payments.ui.editcard
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,13 +17,10 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.component.CardTextFields
 import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.registercard.RegisterCardStateHolder
-import woowacourse.payments.ui.registercard.component.CardNumberInputField
-import woowacourse.payments.ui.registercard.component.CardOwnerInputField
-import woowacourse.payments.ui.registercard.component.ExpiryDateInputField
-import woowacourse.payments.ui.registercard.component.PasswordInputField
+import woowacourse.payments.ui.registercard.CardTextFieldStateHolder
 import woowacourse.payments.ui.registercard.toYearMonth
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
@@ -39,7 +34,7 @@ fun EditCardScreen(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { RegisterCardStateHolder() }
+    val stateHolder = rememberSaveable { CardTextFieldStateHolder() }
     LaunchedEffect(Unit) {
         stateHolder.setupRegisteredCardInfo(card)
     }
@@ -92,7 +87,7 @@ fun EditCardScreen(
 private fun EditCardContent(
     card: Card,
     innerPadding: PaddingValues,
-    stateHolder: RegisterCardStateHolder,
+    stateHolder: CardTextFieldStateHolder,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -109,29 +104,7 @@ private fun EditCardContent(
                     .align(Alignment.CenterHorizontally),
             card = card,
         )
-        CardNumberInputField(
-            text = stateHolder.cardNumber,
-            onValueChange = { newText -> stateHolder.onCardNumberChange(newText) },
-            isError = stateHolder.isCardNumberError,
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        ExpiryDateInputField(
-            text = stateHolder.expiryDate,
-            onValueChange = { newText -> stateHolder.onExpiryDateChange(newText) },
-            isError = stateHolder.isExpiryDateError,
-        )
-        Spacer(modifier = Modifier.height(30.dp))
-        CardOwnerInputField(
-            text = stateHolder.cardOwner,
-            onValueChange = { newText -> stateHolder.onCardOwnerChange(newText) },
-            isError = stateHolder.isCardOwnerError,
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        PasswordInputField(
-            text = stateHolder.password,
-            onValueChange = { newText -> stateHolder.onPasswordChange(newText) },
-            isError = stateHolder.isPasswordError,
-        )
+        CardTextFields(stateHolder = stateHolder)
     }
 }
 
@@ -149,7 +122,7 @@ private fun EditCardContentPreview() {
     EditCardContent(
         card = card.getOrNull()!!,
         innerPadding = PaddingValues(),
-        stateHolder = RegisterCardStateHolder(),
+        stateHolder = CardTextFieldStateHolder(),
     )
 }
 
