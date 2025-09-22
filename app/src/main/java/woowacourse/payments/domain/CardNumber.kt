@@ -2,6 +2,7 @@ package woowacourse.payments.domain
 
 import android.os.Parcelable
 import androidx.core.text.isDigitsOnly
+import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -11,25 +12,31 @@ data class CardNumber(
     val thirdNumber: String = "",
     val fourthNumber: String = "",
 ) : Parcelable {
+    @IgnoredOnParcel
+    private val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
+
     init {
-        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
         require(parts.all { it.isDigitsOnly() })
         require(parts.all { it.length <= CARD_NUMBER_PART_LENGTH })
     }
 
-    override fun toString(): String {
-        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
-        return parts.joinToString("")
-    }
+    override fun toString(): String = parts.joinToString("")
 
-    fun isValid(): Boolean {
-        val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
-        return !parts.any { it.length != CARD_NUMBER_PART_LENGTH }
-    }
+    fun isValid(): Boolean = !parts.any { it.length != CARD_NUMBER_PART_LENGTH }
 
-    fun toFormattedString(): String {
-        val parts = listOf(firstNumber, secondNumber, "****", "****")
-        return parts.joinToString(" - ")
+    fun toMaskedString(
+        mask: String = "*",
+        startNumberIndex: Int = 3,
+    ): String {
+        val maskedParts =
+            parts.mapIndexed { index, part ->
+                if (index >= (startNumberIndex - 1)) {
+                    mask.repeat(part.length)
+                } else {
+                    part
+                }
+            }
+        return maskedParts.joinToString(" - ")
     }
 
     companion object {

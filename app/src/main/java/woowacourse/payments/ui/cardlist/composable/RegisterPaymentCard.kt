@@ -49,7 +49,7 @@ fun RegisterPaymentCard(
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = card.number.toFormattedString(),
+            text = card.number.toMaskedString(),
             color = Color.White,
             fontSize = 12.sp,
         )
