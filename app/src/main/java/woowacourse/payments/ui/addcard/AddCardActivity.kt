@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,7 +14,7 @@ class AddCardActivity : ComponentActivity() {
             CardCreationScreen(
                 onBackClick = { finish() },
                 onSaveClick = {
-                    val resultIntent = android.content.Intent()
+                    val resultIntent = Intent()
                     resultIntent.putExtra(EXTRA_CARD, it)
                     setResult(RESULT_OK, resultIntent)
                     finish()

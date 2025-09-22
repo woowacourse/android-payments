@@ -9,8 +9,7 @@ data class Card(
     val expirationDate: CardExpirationDate = CardExpirationDate(),
     val ownerName: OwnerName = OwnerName(),
     val password: Password = Password(),
+    val bank: BankType = BankType.NOT_SELECTED,
 ) : Parcelable {
-    fun isValid(): Boolean {
-        return number.isValid() && expirationDate.isValid() && password.isValid()
-    }
+    fun isValid(): Boolean = number.isValid() && expirationDate.isValid() && password.isValid() && bank != BankType.NOT_SELECTED
 }

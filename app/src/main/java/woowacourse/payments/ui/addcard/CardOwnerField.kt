@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.OwnerName.Companion.CARD_OWNER_MAX_LENGTH
@@ -35,5 +36,13 @@ fun CardOwnerField(
                 textAlign = TextAlign.End,
             )
         },
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardOwnerFieldPreview() {
+    CardOwnerField(
+        cardOwner = OwnerName.fromRawInput(""),
     )
 }

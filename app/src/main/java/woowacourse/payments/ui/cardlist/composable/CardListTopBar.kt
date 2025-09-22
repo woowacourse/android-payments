@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @Composable
@@ -33,4 +34,16 @@ fun CardListTopBar(
             }
         },
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardListTopBarPreview() {
+    CardListTopBar(showAddCardBtn = true, onAddCardClick = {})
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardListTopBarNoAddCardBtnPreview() {
+    CardListTopBar(showAddCardBtn = false, onAddCardClick = {})
 }

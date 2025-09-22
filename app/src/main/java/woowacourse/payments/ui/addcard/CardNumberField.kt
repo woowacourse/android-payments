@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.util.CardNumberVisualTransformation
@@ -29,5 +30,13 @@ fun CardNumberField(
         visualTransformation = CardNumberVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardNumberFieldPreview() {
+    CardNumberField(
+        cardNumber = CardNumber.fromRawInput(""),
     )
 }
