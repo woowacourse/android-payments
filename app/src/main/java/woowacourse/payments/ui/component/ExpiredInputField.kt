@@ -42,12 +42,7 @@ fun ExpiredInputField(
                 contentDescription = context.getString(R.string.expired_content_description)
             },
         label = { Text(text = stringResource(R.string.expired_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.expired_placeholder),
-                color = Color.LightGray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.expired_placeholder)) },
         supportingText = {
             error?.let {
                 Text(
@@ -59,7 +54,6 @@ fun ExpiredInputField(
                                 contentDescription =
                                     context.getString(R.string.expired_error_content_description)
                             },
-                    color = Color.Red,
                     fontSize = 12.sp,
                 )
             }

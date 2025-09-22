@@ -7,7 +7,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
@@ -39,12 +38,7 @@ fun CardOwnerInputField(
                 .semantics {
                     contentDescription = context.getString(R.string.card_owner_content_description)
                 },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.card_owner_placeholder),
-                color = Color.LightGray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.card_owner_placeholder)) },
         supportingText = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -57,7 +51,6 @@ fun CardOwnerInputField(
                             contentDescription =
                                 context.getString(R.string.card_owner_error_content_description)
                         },
-                    color = Color.Red,
                 )
                 Text(
                     text =
@@ -65,7 +58,6 @@ fun CardOwnerInputField(
                             id = R.string.card_owner_length,
                             cardOwner.length,
                         ),
-                    color = Color.Gray,
                 )
             }
         },

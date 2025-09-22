@@ -41,12 +41,7 @@ fun CardNumberInputField(
                 contentDescription = context.getString(R.string.card_number_content_description)
             },
         label = { Text(text = stringResource(R.string.card_number_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.card_number_placeholder),
-                color = Color.LightGray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.card_number_placeholder)) },
         supportingText = {
             error?.let {
                 Text(
@@ -58,7 +53,6 @@ fun CardNumberInputField(
                                 contentDescription =
                                     context.getString(R.string.card_number_error_content_description)
                             },
-                    color = Color.Red,
                 )
             }
         },

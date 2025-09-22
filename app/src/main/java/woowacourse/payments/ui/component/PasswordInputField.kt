@@ -14,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,12 +52,7 @@ fun PasswordInputField(
                 contentDescription = context.getString(R.string.password_content_description)
             },
         label = { Text(text = stringResource(R.string.password_label)) },
-        placeholder = {
-            Text(
-                text = stringResource(R.string.password_placeholder),
-                color = Color.LightGray,
-            )
-        },
+        placeholder = { Text(text = stringResource(R.string.password_placeholder)) },
         trailingIcon = {
             if (isFocused) {
                 val painter =
@@ -85,7 +79,6 @@ fun PasswordInputField(
                             contentDescription =
                                 context.getString(R.string.password_error_content_description)
                         },
-                    color = Color.Red,
                     fontSize = 12.sp,
                 )
             }
