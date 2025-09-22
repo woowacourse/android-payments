@@ -1,12 +1,18 @@
 package woowacourse.payments.ui.registercard
 
+import android.os.Parcelable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
+import woowacourse.payments.ui.toBankViewType
+import java.time.format.DateTimeFormatter
 
-class RegisterCardStateHolder {
+@Parcelize
+class RegisterCardStateHolder : Parcelable {
     var cardNumber by mutableStateOf("")
         private set
 
@@ -59,6 +65,14 @@ class RegisterCardStateHolder {
 
     fun onSelectedBankViewTypeChange(newValue: BankViewType) {
         selectedBankViewType = newValue
+    }
+
+    fun setupRegisteredCardInfo(card: Card) {
+        onCardNumberChange(card.cardNumber)
+        onExpiryDateChange(card.expiryDate.format(DateTimeFormatter.ofPattern("MM/yy")))
+        onCardOwnerChange(card.cardOwner ?: cardOwner)
+        onPasswordChange(card.password)
+        onSelectedBankViewTypeChange(card.bankType.toBankViewType())
     }
 
     companion object {

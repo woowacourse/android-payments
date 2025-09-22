@@ -1,11 +1,14 @@
 package woowacourse.payments.ui.cards
 
+import android.os.Parcelable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 
-class CardsStateHolder {
+@Parcelize
+class CardsStateHolder : Parcelable {
     val cardsState = mutableStateListOf<Card>()
 
     val isNewCardVisible by derivedStateOf { cardsState.size <= 1 }

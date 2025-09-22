@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
+            android:name=".ui.editcard.EditCardActivity"
+            android:exported="false"
+            android:label="EditCardActivity"
+            android:theme="@style/Theme.Androidpayments" />
+        <activity
             android:name=".ui.cards.CardsActivity"
             android:exported="true"
             android:label="CardsActivity"

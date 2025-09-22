@@ -16,8 +16,9 @@ import java.time.YearMonth
 
 @Composable
 fun RegisteredCards(
-    modifier: Modifier = Modifier,
     cards: List<Card>,
+    onCardClick: (Card) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -29,6 +30,7 @@ fun RegisteredCards(
                 bankViewType = card.bankType.toBankViewType(),
                 modifier = Modifier.padding(bottom = 36.dp),
                 card = card,
+                onCardClick = { onCardClick(card) },
             )
         }
     }
@@ -46,5 +48,8 @@ private fun RegisteredCardsPreview() {
                 password = "1234",
                 bankType = BankType.BC,
             ).getOrNull()
-    RegisteredCards(cards = List(3) { card!! })
+    RegisteredCards(
+        cards = List(3) { card!! },
+        onCardClick = { },
+    )
 }

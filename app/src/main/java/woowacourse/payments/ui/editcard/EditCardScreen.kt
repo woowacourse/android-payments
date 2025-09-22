@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.editcard
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,10 +26,10 @@ import woowacourse.payments.ui.registercard.component.CardNumberInputField
 import woowacourse.payments.ui.registercard.component.CardOwnerInputField
 import woowacourse.payments.ui.registercard.component.ExpiryDateInputField
 import woowacourse.payments.ui.registercard.component.PasswordInputField
+import woowacourse.payments.ui.registercard.toYearMonth
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.toBankViewType
+import woowacourse.payments.ui.toBankType
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun EditCardScreen(
@@ -35,12 +38,44 @@ fun EditCardScreen(
     onSaveClick: (Card) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
     val stateHolder = rememberSaveable { RegisterCardStateHolder() }
+    LaunchedEffect(Unit) {
+        stateHolder.setupRegisteredCardInfo(card)
+    }
+
     Scaffold(topBar = {
         CardTopBar(
             stringResource(R.string.card_edit_top_bar_title),
             onBackClick = onBackClick,
-            onSaveClick = { onSaveClick(card) },
+            onSaveClick = {
+                val result =
+                    Card.create(
+                        cardNumber = stateHolder.cardNumber,
+                        expiryDate = stateHolder.expiryDate.toYearMonth(),
+                        cardOwner = stateHolder.cardOwner,
+                        password = stateHolder.password,
+                        bankType = stateHolder.selectedBankViewType.toBankType(),
+                    )
+
+                result
+                    .onSuccess { card ->
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.card_register_complete_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        onSaveClick(card)
+                    }.onFailure {
+                        Toast
+                            .makeText(
+                                context,
+                                context.getString(R.string.card_info_invalid_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    }
+            },
             modifier = modifier,
         )
     }) { innerPadding ->
@@ -67,7 +102,7 @@ private fun EditCardContent(
                 .padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            bankViewType = card.bankType.toBankViewType(),
+            bankViewType = stateHolder.selectedBankViewType,
             modifier =
                 Modifier
                     .padding(top = 14.dp, bottom = 40.dp)
@@ -75,25 +110,25 @@ private fun EditCardContent(
             card = card,
         )
         CardNumberInputField(
-            text = card.cardNumber,
+            text = stateHolder.cardNumber,
             onValueChange = { newText -> stateHolder.onCardNumberChange(newText) },
             isError = stateHolder.isCardNumberError,
         )
         Spacer(modifier = Modifier.height(30.dp))
         ExpiryDateInputField(
-            text = card.expiryDate.format(DateTimeFormatter.ofPattern("MM/yy")),
+            text = stateHolder.expiryDate,
             onValueChange = { newText -> stateHolder.onExpiryDateChange(newText) },
             isError = stateHolder.isExpiryDateError,
         )
         Spacer(modifier = Modifier.height(30.dp))
         CardOwnerInputField(
-            text = card.cardOwner ?: "",
+            text = stateHolder.cardOwner,
             onValueChange = { newText -> stateHolder.onCardOwnerChange(newText) },
             isError = stateHolder.isCardOwnerError,
         )
         Spacer(modifier = Modifier.height(10.dp))
         PasswordInputField(
-            text = card.password,
+            text = stateHolder.password,
             onValueChange = { newText -> stateHolder.onPasswordChange(newText) },
             isError = stateHolder.isPasswordError,
         )

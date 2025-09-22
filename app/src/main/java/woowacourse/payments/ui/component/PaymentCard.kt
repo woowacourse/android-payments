@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import java.time.format.DateTimeFormatter
 fun PaymentCard(
     bankViewType: BankViewType,
     modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {},
     card: Card? = null,
 ) {
     Box(
@@ -37,6 +39,7 @@ fun PaymentCard(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
+                .clickable { onCardClick() }
                 .background(
                     color = bankViewType.color ?: Black33,
                     shape = RoundedCornerShape(5.dp),

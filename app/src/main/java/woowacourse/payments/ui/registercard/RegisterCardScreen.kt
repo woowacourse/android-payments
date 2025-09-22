@@ -83,7 +83,7 @@ fun CardRegisterScreen(
     )
 }
 
-private fun String.toYearMonth(): YearMonth? {
+fun String.toYearMonth(): YearMonth? {
     val yearOffset = 2000
     if (length != 4) return null
     val year = substring(2, 4).toIntOrNull()
