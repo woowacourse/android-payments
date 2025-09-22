@@ -4,8 +4,8 @@ import io.kotest.matchers.shouldBe
 import kotlinx.collections.immutable.persistentListOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import woowacourse.payments.ui.catalog.CardCatalogStateHolder
 import woowacourse.payments.ui.catalog.CardUiState
-import woowacourse.payments.ui.catalog.CardViewModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @ExtendWith(InstantTaskExecutorExtension::class)
@@ -13,10 +13,10 @@ class CardViewModelTest {
     @Test
     fun `처음 기본 상태는 Empty이다`() {
         // given
-        val cardViewModel = CardViewModel()
+        val cardCatalogStateHolder = CardCatalogStateHolder()
 
         // when
-        val actual = cardViewModel.cardUiState.value
+        val actual = cardCatalogStateHolder.cardUiState.value
         val expected = CardUiState.Empty
 
         // then
@@ -26,7 +26,7 @@ class CardViewModelTest {
     @Test
     fun `기본 상태에서 카드를 하나 등록하면 Single이다`() {
         // given
-        val cardViewModel = CardViewModel()
+        val cardCatalogStateHolder = CardCatalogStateHolder()
         val newCard =
             PaymentCardUiModel(
                 number = "1234123412341234",
@@ -35,8 +35,8 @@ class CardViewModelTest {
             )
 
         // when
-        cardViewModel.addCard(newCard)
-        val actual = cardViewModel.cardUiState.value
+        cardCatalogStateHolder.addCard(newCard)
+        val actual = cardCatalogStateHolder.cardUiState.value
         val expected = CardUiState.Single(newCard)
 
         // then
@@ -60,12 +60,12 @@ class CardViewModelTest {
                 cardholderName = "CREW",
             )
 
-        val cardViewModel = CardViewModel()
-        cardViewModel.addCard(newCard)
+        val cardCatalogStateHolder = CardCatalogStateHolder()
+        cardCatalogStateHolder.addCard(newCard)
 
         // when
-        cardViewModel.addCard(anotherNewCard)
-        val actual = cardViewModel.cardUiState.value
+        cardCatalogStateHolder.addCard(anotherNewCard)
+        val actual = cardCatalogStateHolder.cardUiState.value
         val expected = CardUiState.Multiple(persistentListOf(newCard, anotherNewCard))
 
         // then
@@ -96,13 +96,13 @@ class CardViewModelTest {
                 cardholderName = "CREW",
             )
 
-        val cardViewModel = CardViewModel()
-        cardViewModel.addCard(oneNewCard)
-        cardViewModel.addCard(twoNewCard)
+        val cardCatalogStateHolder = CardCatalogStateHolder()
+        cardCatalogStateHolder.addCard(oneNewCard)
+        cardCatalogStateHolder.addCard(twoNewCard)
 
         // when
-        cardViewModel.addCard(threeNewCard)
-        val actual = cardViewModel.cardUiState.value
+        cardCatalogStateHolder.addCard(threeNewCard)
+        val actual = cardCatalogStateHolder.cardUiState.value
         val expected = CardUiState.Multiple(persistentListOf(oneNewCard, twoNewCard, threeNewCard))
 
         // then

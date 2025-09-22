@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.payments.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,11 +28,14 @@ import woowacourse.payments.domain.PaymentCardValidator
 import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
+import woowacourse.payments.ui.payments.CardRegistrationStateHolder
+import woowacourse.payments.ui.payments.component.BankSelectBottomSheet
 import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
 import woowacourse.payments.ui.payments.component.CardNumberTextField
 import woowacourse.payments.ui.payments.component.CardPasswordTextField
 import woowacourse.payments.ui.payments.component.CardRegistrationTopAppBar
 import woowacourse.payments.ui.payments.component.CardholderNameTextField
+import woowacourse.payments.ui.payments.model.BankUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -39,6 +43,12 @@ fun CardRegistrationScreen(
     onCardRegistered: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator(),
+    cardRegistrationStateHolder: CardRegistrationStateHolder =
+        rememberSaveable(saver = CardRegistrationStateHolder.Saver) {
+            CardRegistrationStateHolder(
+                BankUiModel.NOT_SELECTED,
+            )
+        },
     onBackPressed: () -> Unit,
 ) {
     var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
@@ -46,6 +56,8 @@ fun CardRegistrationScreen(
         derivedStateOf { uiState.isRegistrable(paymentCardValidator) }
     }
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
+
+    var bottomSheetState by rememberSaveable { mutableStateOf(true) }
 
     Scaffold(
         topBar = {
@@ -59,6 +71,7 @@ fun CardRegistrationScreen(
                             number = uiState.cardNumber,
                             expirationDate = uiState.cardExpirationDate,
                             cardholderName = uiState.cardholderName,
+                            bankUiModel = cardRegistrationStateHolder.uiState,
                         ),
                     )
                 },
@@ -69,9 +82,14 @@ fun CardRegistrationScreen(
         CardRegistrationScreenContent(
             modifier = modifier.padding(innerPadding),
             uiState = uiState,
+            onBottomSheetStateChanged = { newBottomSheetState ->
+                bottomSheetState = newBottomSheetState
+            },
+            bottomSheetState = bottomSheetState,
             onUiStateChanged = { newUiState -> uiState = newUiState },
             paymentCardValidator = paymentCardValidator,
             expiredCardMessage = expiredCardMessage,
+            cardRegistrationStateHolder = cardRegistrationStateHolder,
         )
     }
 }
@@ -79,11 +97,28 @@ fun CardRegistrationScreen(
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
+    bottomSheetState: Boolean,
+    cardRegistrationStateHolder: CardRegistrationStateHolder,
+    onBottomSheetStateChanged: (Boolean) -> Unit,
     onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
     modifier: Modifier = Modifier,
 ) {
+    if (bottomSheetState) {
+        BankSelectBottomSheet(
+            onDismissRequest = {
+                onBottomSheetStateChanged(false)
+            },
+            onBankSelected = { selectedBank ->
+                onBottomSheetStateChanged(false)
+                cardRegistrationStateHolder.updateState(
+                    selectedBank,
+                )
+            },
+        )
+    }
+
     Column(
         modifier =
             modifier
@@ -93,7 +128,19 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentCardField(modifier = Modifier.align(Alignment.CenterHorizontally))
+        PaymentCardField(
+            modifier =
+                Modifier.align(Alignment.CenterHorizontally).clickable {
+                    onBottomSheetStateChanged(true)
+                },
+            paymentCardUiModel =
+                PaymentCardUiModel(
+                    number = uiState.cardNumber,
+                    expirationDate = uiState.cardExpirationDate,
+                    cardholderName = uiState.cardholderName,
+                    bankUiModel = cardRegistrationStateHolder.uiState,
+                ),
+        )
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -151,7 +198,6 @@ private fun CardRegistrationScreenContent(
 private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: PaymentCardValidator): Boolean =
     paymentCardValidator.validateCardNumber(cardNumber) &&
         paymentCardValidator.validateCardExpirationDate(cardExpirationDate) &&
-        paymentCardValidator.validateCardholderName(cardholderName) &&
         paymentCardValidator.validateCardPassword(cardPassword)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)

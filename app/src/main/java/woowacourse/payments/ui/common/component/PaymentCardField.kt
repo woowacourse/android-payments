@@ -15,7 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -23,11 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Composable
 fun PaymentCardField(
+    paymentCardUiModel: PaymentCardUiModel,
     modifier: Modifier = Modifier,
-    paymentCardUiModel: PaymentCardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -36,10 +40,25 @@ fun PaymentCardField(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = colorResource(paymentCardUiModel.bankUiModel.bankColor),
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
+        Text(
+            text =
+                if (paymentCardUiModel.bankUiModel != BankUiModel.NOT_SELECTED) {
+                    stringResource(
+                        paymentCardUiModel.bankUiModel.bankName,
+                    )
+                } else {
+                    ""
+                },
+            color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = 15.dp, start = 14.dp),
+        )
         Box(
             modifier =
                 Modifier
@@ -51,7 +70,7 @@ fun PaymentCardField(
                     ).align(Alignment.CenterStart),
         )
 
-        if (paymentCardUiModel != null) {
+        if (paymentCardUiModel.bankUiModel != BankUiModel.NOT_SELECTED) {
             Column(
                 modifier =
                     Modifier
@@ -61,15 +80,17 @@ fun PaymentCardField(
             ) {
                 Text(
                     text = paymentCardUiModel.formatNumber(),
-                    color = Color.White,
+                    color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                     fontWeight = FontWeight.W500,
                     fontSize = 13.sp,
                     letterSpacing = 3.5.sp,
                     lineHeight = 1.em,
+                    textAlign = TextAlign.End,
                     modifier =
                         Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(bottom = 2.dp),
+                            .align(Alignment.Start)
+                            .padding(bottom = 2.dp)
+                            .padding(horizontal = 14.dp),
                 )
 
                 Row(
@@ -81,7 +102,7 @@ fun PaymentCardField(
                 ) {
                     Text(
                         text = paymentCardUiModel.cardholderName,
-                        color = Color.White,
+                        color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                         fontWeight = FontWeight.W500,
                         fontSize = 13.sp,
                         lineHeight = 1.em,
@@ -94,7 +115,7 @@ fun PaymentCardField(
 
                     Text(
                         text = paymentCardUiModel.formatExpirationDate(),
-                        color = Color.White,
+                        color = colorResource(paymentCardUiModel.bankUiModel.bankTextColor),
                         fontWeight = FontWeight.W500,
                         lineHeight = 1.em,
                         fontSize = 13.sp,
@@ -108,20 +129,27 @@ fun PaymentCardField(
 @Preview(showBackground = true)
 @Composable
 private fun PaymentCardFieldPreview(
-    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel?,
+    @PreviewParameter(PaymentCardFieldPreviewParameterProvider::class) paymentCardUiModel: PaymentCardUiModel,
 ) {
     Column(
         modifier = Modifier.padding(20.dp),
     ) {
-        PaymentCardField(paymentCardUiModel = paymentCardUiModel)
+        PaymentCardField(
+            paymentCardUiModel = paymentCardUiModel,
+        )
     }
 }
 
 private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
-    override val values: Sequence<PaymentCardUiModel?> =
+    override val values: Sequence<PaymentCardUiModel> =
         sequenceOf(
-            null,
-            PaymentCardUiModel("1111111111111111", "0421", "CREW"),
-            PaymentCardUiModel("2222222222222222", "0522", "ABCDEABCDEABCDEABCDEABCDEABCDE"),
+            PaymentCardUiModel("", "", "", bankUiModel = BankUiModel.NOT_SELECTED),
+            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiModel.SHINHAN),
+            PaymentCardUiModel(
+                "2222222222222222",
+                "0522",
+                "ABCDEABCDEABCDEABCDEABCDEABCDE",
+                BankUiModel.KB,
+            ),
         )
 }

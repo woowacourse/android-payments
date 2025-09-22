@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="no_selected_color">#FF333333</color>
+    <color name="bc_color">#FF9B1112</color>">
+    <color name="shinhan_color">#FF0046FF</color>">
+    <color name="kakao_color">#FFF9E000</color>">
+    <color name="hyundai_color">#FF000000</color>">
+    <color name="woori_color">#FF4B5CC4</color>">
+    <color name="lotte_color">#FFFF2D51</color>">
+    <color name="hana_color">#FF008485</color>">
+    <color name="kb_color">#FFFECE0A</color>">
+
 </resources>
