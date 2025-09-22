@@ -1,0 +1,69 @@
+package woowacourse.payments.ui.screen.cardAddition.component
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
+import woowacourse.payments.ui.common.component.IssuingBankName
+import woowacourse.payments.ui.model.IssuingBank
+
+@Composable
+fun BankInfo(
+    modifier: Modifier = Modifier,
+    issuingBank: IssuingBank = IssuingBank.NOT_SELECTED,
+) {
+    val context = LocalContext.current
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        issuingBank.getIconResId()?.let { id ->
+            Image(
+                painter = painterResource(id),
+                contentDescription = stringResource(R.string.card_addition_issuing_bank_icon_description),
+                modifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .size(36.dp),
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        IssuingBankName(
+            issuingBank = issuingBank,
+            modifier =
+                Modifier.semantics {
+                    contentDescription =
+                        context.getString(R.string.card_addition_issuing_bank_name_description)
+                },
+            textStyle = TextStyle(fontSize = 16.sp, color = Color.Black),
+        )
+    }
+}
+
+@Preview
+@Composable
+private fun BankInfoPreview() {
+    BankInfo(
+        issuingBank = IssuingBank.BC,
+    )
+}

@@ -1,8 +1,11 @@
 package woowacourse.payments.ui.screen.cards
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.CardUiModel
 
-sealed interface CardsUiState {
+@Parcelize
+sealed interface CardsUiState : Parcelable {
     fun addCard(newCard: CardUiModel): CardsUiState =
         when (this) {
             is Empty -> SingleCard(newCard)

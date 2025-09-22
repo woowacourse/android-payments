@@ -2,7 +2,6 @@
     <string name="app_name">android-payments</string>
 
     <!--  카드 추가  -->
-    <!--  앱 바  -->
     <string name="card_addition_top_bar_title">카드 추가</string>
     <string name="card_addition_top_bar_back">뒤로 가기</string>
     <string name="card_addition_top_bar_complete">완료</string>
@@ -16,6 +15,19 @@
     <string name="expired_date_error">유효하지 않은 만료일입니다.</string>
     <string name="password_label">비밀번호</string>
     <string name="password_placeholder">0000</string>
+    <string name="card_addition_card_description">카드 미리보기</string>
+    <string name="card_addition_fields_description">카드 정보 입력창</string>
+    <string name="card_addition_card_number_field_description">카드 번호 입력창</string>
+    <string name="card_addition_card_expired_date_field_description">카드 만료일 입력창</string>
+    <string name="card_addition_card_password_field_description">카드 비밀번호 입력창</string>
+    <string name="card_addition_complete_button_description">카드 추가 완료</string>
+
+    <!--  카드사 선택  -->
+    <string name="card_addition_issuing_bank_sheet_description">카드사 선택창</string>
+    <string name="card_addition_issuing_bank_icon_description">카드사 아이콘</string>
+    <string name="card_addition_issuing_bank_name_description">카드사 이름</string>
+    <string name="card_addition_issuing_bank_info_description">카드사 정보</string>
+    <string name="card_addition_issuing_banks_description">카드사 목록</string>
 
     <!--  카드 목록  -->
     <string name="cards_top_bar_title">Payments</string>
@@ -28,4 +40,14 @@
     <string name="cards_card_owner_name_description">카드 소유자 이름</string>
     <string name="cards_card_expired_date_description">카드 만료일</string>
     <string name="cards_card_addition_description">카드 추가 안내</string>
+    
+    <!--  카드사  -->
+    <string name="issuing_bank_bc">BC카드</string>
+    <string name="issuing_bank_shinhan">신한카드</string>
+    <string name="issuing_bank_kakao">카카오뱅크</string>
+    <string name="issuing_bank_hyundai">현대카드</string>
+    <string name="issuing_bank_woori">우리카드</string>
+    <string name="issuing_bank_lotte">롯데카드</string>
+    <string name="issuing_bank_hana">하나카드</string>
+    <string name="issuing_bank_kb">국민카드</string>
 </resources>

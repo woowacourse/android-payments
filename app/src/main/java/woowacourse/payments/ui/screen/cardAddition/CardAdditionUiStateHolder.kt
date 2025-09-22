@@ -7,27 +7,35 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.model.IssuingBank
 
 class CardAdditionUiStateHolder(
     initialState: CardAdditionUiState = CardAdditionUiState.EMPTY_CARD,
 ) {
     var uiState by mutableStateOf(initialState)
         private set
+    var hasShownSheet by mutableStateOf(false)
+        private set
 
-    fun updateCardNumber(newCardNumber: String) {
-        uiState = uiState.update(newCardNumber = newCardNumber)
+    fun updateCardState(
+        newCardNumber: String? = null,
+        newExpiredDate: String? = null,
+        newOwnerName: String? = null,
+        newPassword: String? = null,
+        newIssuingBank: IssuingBank? = null,
+    ) {
+        uiState =
+            uiState.update(
+                newCardNumber = newCardNumber,
+                newExpiredDate = newExpiredDate,
+                newOwnerName = newOwnerName,
+                newPassword = newPassword,
+                newIssuingBank = newIssuingBank,
+            )
     }
 
-    fun updateExpiredDate(newExpiredDate: String) {
-        uiState = uiState.update(newExpiredDate = newExpiredDate)
-    }
-
-    fun updateCardOwnerName(newOwnerName: String) {
-        uiState = uiState.update(newOwnerName = newOwnerName)
-    }
-
-    fun updatePassword(newPassword: String) {
-        uiState = uiState.update(newPassword = newPassword)
+    fun updateSheetVisible() {
+        hasShownSheet = hasShownSheet.not()
     }
 
     companion object {
@@ -39,16 +47,18 @@ class CardAdditionUiStateHolder(
                         holder.uiState.expiredDate.value,
                         holder.uiState.ownerName,
                         holder.uiState.password.value,
+                        holder.uiState.issuingBank,
                     )
                 },
                 restore = { saver ->
-                    val (number, date, owner, password) = saver
+                    val (number, date, owner, password, issuingBank) = saver
                     CardAdditionUiStateHolder(
                         CardAdditionUiState(
-                            cardNumber = CardNumber(number),
-                            expiredDate = ExpiredDate(date),
-                            ownerName = owner,
-                            password = CardPassword(password),
+                            cardNumber = CardNumber(number as String),
+                            expiredDate = ExpiredDate(date as String),
+                            ownerName = owner as String,
+                            password = CardPassword(password as String),
+                            issuingBank = issuingBank as IssuingBank,
                         ),
                     )
                 },

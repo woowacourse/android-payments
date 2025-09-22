@@ -14,3 +14,12 @@ val Pink40 = Color(0xFF7D5260)
 val Gray40 = Color(0xFF575757)
 
 val Gray20 = Color(0xFF333333)
+
+val BcSignature = Color(0xFFFA3246)
+val ShinhanSignature = Color(0xFF0046FF)
+val KakaoSignature = Color(0xFFFEE500)
+val HyundaiSignature = Color(0xFF000000)
+val WooriSignature = Color(0xFF0067AC)
+val LotteSignature = Color(0xFFDA291C)
+val HanaSignature = Color(0xFF008C8C)
+val KbSignature = Color(0xFFFFCC00)

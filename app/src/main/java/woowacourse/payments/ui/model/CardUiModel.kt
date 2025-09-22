@@ -9,6 +9,7 @@ data class CardUiModel(
     val number: String,
     val expiredDate: String,
     val ownerName: String,
+    val issuingBank: IssuingBank,
 ) : Parcelable {
     fun formatCardNumber(
         visibleLength: Int = CARD_NUMBER_VISIBLE_LENGTH,
