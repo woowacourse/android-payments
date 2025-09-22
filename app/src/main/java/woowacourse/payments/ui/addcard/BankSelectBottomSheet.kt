@@ -4,6 +4,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.BankType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -20,4 +21,13 @@ fun BankSelectBottomSheet(
     ) {
         BankSelectRow(onClick = onBankSelected)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BankSelectBottomSheetPreview() {
+    BankSelectBottomSheet(
+        onDismiss = {},
+        onBankSelected = {},
+    )
 }

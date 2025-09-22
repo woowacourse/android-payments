@@ -10,7 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.BankType
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardExpirationDate
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.OwnerName
+import woowacourse.payments.domain.Password
 
 @Composable
 fun PaymentCard(
@@ -32,4 +39,22 @@ fun PaymentCard(
     ) {
         content()
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PaymentCardPreview() {
+    PaymentCard(
+        content = {
+            RegisterPaymentCard(
+                card = Card(
+                    bank = BankType.BC,
+                    number = CardNumber.fromRawInput("1234123412341234"),
+                    expirationDate = CardExpirationDate.fromRawInput("12/34"),
+                    ownerName = OwnerName.fromRawInput("Yerin"),
+                    password = Password.fromRawInput("12")
+                )
+            )
+        }
+    )
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.BankType
 
 private const val COLUMN_COUNT = 4
@@ -33,4 +34,10 @@ fun BankSelectRow(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BankSelectRowPreview() {
+    BankSelectRow(onClick = {})
 }

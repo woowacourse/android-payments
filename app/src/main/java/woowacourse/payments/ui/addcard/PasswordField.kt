@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Password
 
@@ -26,5 +27,13 @@ fun PasswordField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PasswordFieldPreview() {
+    PasswordField(
+        password = Password.fromRawInput(""),
     )
 }

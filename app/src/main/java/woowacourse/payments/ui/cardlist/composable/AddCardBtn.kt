@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 
@@ -24,4 +25,10 @@ fun AddCardBtn(
     ) {
         Text(text = stringResource(R.string.add_card_plus_sign), fontSize = 34.sp, color = Color(0xFF575757))
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AddCardBtnPreview() {
+    AddCardBtn(onClick = {})
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.BankType
 
 @Composable
@@ -40,4 +41,13 @@ fun BankSelectBtn(
         )
         Text(stringResource(id = bank.bankName), fontSize = 16.sp, letterSpacing = (-0.085).em)
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun BankSelectBtnPreview() {
+    BankSelectBtn(
+        bank = BankType.BC,
+        onClick = {},
+    )
 }
