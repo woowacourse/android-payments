@@ -15,16 +15,16 @@ import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
 fun PaymentCard(
-    card: CardState,
+    cardState: CardState,
     content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val (contentAlignment, backgroundColor) =
-        when (card) {
+        when (cardState) {
             CardState.Empty -> Alignment.Center to GrayE5
             is CardState.Pending -> Alignment.CenterStart to Black33
             is CardState.Registered ->
-                Alignment.CenterStart to card.card.company.toSignatureColor()
+                Alignment.CenterStart to cardState.card.company.toSignatureColor()
         }
 
     Box(
