@@ -20,15 +20,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 class PaymentCardPlateTest {
     @get:Rule
     val compose = createComposeRule()
-
-    val dummyPaymentCardUiModel =
-        PaymentCardUiModel(
-            CardCompanyUiModel.UNKNOWN,
-            "1234 - 1234 - 1234 - 1234",
-            "02 / 26",
-            "CREW",
-        )
-
     val dummyPaymentKakaoCardUiModel =
         PaymentCardUiModel(
             CardCompanyUiModel.KAKAO,
