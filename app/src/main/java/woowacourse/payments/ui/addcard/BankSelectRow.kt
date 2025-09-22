@@ -13,7 +13,6 @@ import woowacourse.payments.domain.BankType
 private const val COLUMN_COUNT = 4
 private const val ROW_COUNT = 2
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BankSelectRow(
     onClick: (BankType) -> Unit,
