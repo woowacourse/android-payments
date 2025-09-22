@@ -33,7 +33,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.newcard.CardCompanyUiModel
+import woowacourse.payments.newcard.CardCompanyUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.PaymentCard
 import woowacourse.payments.util.parcelable
@@ -91,7 +91,7 @@ fun CardsScreen(
             cardsStateHolder.cards.forEach { card: Card ->
                 PaymentCard(
                     card = card,
-                    cardCompanyUiModel = CardCompanyUiModel.from(card.cardCompany),
+                    cardCompanyUiState = CardCompanyUiState.from(card.cardCompany),
                 )
                 Spacer(modifier = Modifier.height(32.dp))
             }

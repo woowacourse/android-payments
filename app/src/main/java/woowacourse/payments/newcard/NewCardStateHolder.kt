@@ -1,8 +1,6 @@
 package woowacourse.payments.newcard
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 
@@ -10,9 +8,8 @@ class NewCardStateHolder {
     var newCardUiState = mutableStateOf(NewCardUiState())
         private set
 
-    var selectedCardCompany: CardCompany by mutableStateOf(CardCompany.NONE)
-
-    val isCardSelected: Boolean get() = selectedCardCompany != CardCompany.NONE
+    var cardCompanyUiState = mutableStateOf(CardCompanyUiState.from(CardCompany.NONE))
+        private set
 
     fun updateCardNumber(value: String) {
         newCardUiState.value = newCardUiState.value.copy(cardNumber = value)
@@ -30,12 +27,23 @@ class NewCardStateHolder {
         newCardUiState.value = newCardUiState.value.copy(password = value)
     }
 
+    fun updateCardCompanyUiState(value: CardCompanyUiState) {
+        cardCompanyUiState.value = value
+
+        val isCardCompanySelected = value != CardCompanyUiState.from(CardCompany.NONE)
+        updateIsCardCompanySelected(isCardCompanySelected)
+    }
+
+    private fun updateIsCardCompanySelected(value: Boolean) {
+        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
+    }
+
     fun getCard(): Result<Card> =
         Card.from(
-            newCardUiState.value.cardNumber,
-            newCardUiState.value.expiredDate,
-            newCardUiState.value.ownerName,
-            newCardUiState.value.password,
-            selectedCardCompany,
+            cardNumber = newCardUiState.value.cardNumber,
+            expiredDate = newCardUiState.value.expiredDate,
+            ownerName = newCardUiState.value.ownerName,
+            password = newCardUiState.value.password,
+            cardCompany = cardCompanyUiState.value.toDomain(),
         )
 }
