@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.cards.toParcelable
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.newcard.component.CardNumberTextField
 import woowacourse.payments.newcard.component.ExpiredDateTextField
 import woowacourse.payments.newcard.component.NewCardTopBar
@@ -39,15 +40,15 @@ fun NewCardScreen(
     onSaveClick: (CardParcelable) -> Unit = {},
     onCardSaveFailed: () -> Unit = {},
 ) {
-    if (!newCardStateHolder.isCardSelected) {
+    if (!newCardStateHolder.newCardUiState.value.isCardCompanySelected) {
         ModalBottomSheet(
             onDismissRequest = {},
             sheetState = sheetState,
             properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false),
         ) {
             CardCompanySelectionRow(
-                onItemClick = { cardCompany ->
-                    newCardStateHolder.selectedCardCompany = cardCompany
+                onItemClick = { cardCompany: CardCompany ->
+                    newCardStateHolder.updateCardCompanyUiState(CardCompanyUiState.from(cardCompany))
                 },
             )
         }
@@ -80,7 +81,7 @@ fun NewCardScreen(
         ) {
             PaymentCard(
                 modifier = Modifier.padding(top = 14.dp),
-                cardCompanyUiModel = CardCompanyUiModel.from(newCardStateHolder.selectedCardCompany),
+                cardCompanyUiState = newCardStateHolder.cardCompanyUiState.value,
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(30.dp),

@@ -12,7 +12,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.newcard.CardCompanyUiModel
+import woowacourse.payments.newcard.CardCompanyUiState
 
 class PaymentCardTest {
     @get:Rule
@@ -31,7 +31,7 @@ class PaymentCardTest {
                         password = Password("1234"),
                         cardCompany = CardCompany.HYUNDAI,
                     ),
-                cardCompanyUiModel = CardCompanyUiModel.from(CardCompany.HYUNDAI),
+                cardCompanyUiState = CardCompanyUiState.from(CardCompany.HYUNDAI),
             )
         }
     }

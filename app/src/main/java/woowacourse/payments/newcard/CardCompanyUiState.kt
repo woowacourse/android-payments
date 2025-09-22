@@ -15,54 +15,67 @@ import woowacourse.payments.ui.theme.LOTTE
 import woowacourse.payments.ui.theme.SHINHAN
 import woowacourse.payments.ui.theme.WOORI
 
-class CardCompanyUiModel(
+data class CardCompanyUiState(
     @StringRes val nameResId: Int,
     @DrawableRes val imageResId: Int,
     val color: Color,
 ) {
+    fun toDomain(): CardCompany =
+        when (nameResId) {
+            R.string.card_bc -> CardCompany.BC
+            R.string.card_shinhan -> CardCompany.SHINHAN
+            R.string.card_kakaobank -> CardCompany.KAKAO
+            R.string.card_hyundai -> CardCompany.HYUNDAI
+            R.string.card_woori -> CardCompany.WOORI
+            R.string.card_lotte -> CardCompany.LOTTE
+            R.string.card_hana -> CardCompany.HANA
+            R.string.card_kb -> CardCompany.KB
+            else -> CardCompany.NONE
+        }
+
     companion object {
-        fun from(cardCompany: CardCompany): CardCompanyUiModel =
+        fun from(cardCompany: CardCompany): CardCompanyUiState =
             when (cardCompany) {
-                CardCompany.BC -> CardCompanyUiModel(R.string.card_bc, R.drawable.bc, BC)
+                CardCompany.BC -> CardCompanyUiState(R.string.card_bc, R.drawable.bc, BC)
                 CardCompany.SHINHAN ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_shinhan,
                         R.drawable.shinhan,
                         SHINHAN,
                     )
 
                 CardCompany.KAKAO ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_kakaobank,
                         R.drawable.kakaobank,
                         KAKAO,
                     )
 
                 CardCompany.HYUNDAI ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_hyundai,
                         R.drawable.hyundai,
                         HYUNDAI,
                     )
 
                 CardCompany.WOORI ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_woori,
                         R.drawable.woori,
                         WOORI,
                     )
 
                 CardCompany.LOTTE ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_lotte,
                         R.drawable.lotte,
                         LOTTE,
                     )
 
-                CardCompany.HANA -> CardCompanyUiModel(R.string.card_hana, R.drawable.hana, HANA)
-                CardCompany.KB -> CardCompanyUiModel(R.string.card_kb, R.drawable.kb, KB)
+                CardCompany.HANA -> CardCompanyUiState(R.string.card_hana, R.drawable.hana, HANA)
+                CardCompany.KB -> CardCompanyUiState(R.string.card_kb, R.drawable.kb, KB)
                 CardCompany.NONE ->
-                    CardCompanyUiModel(
+                    CardCompanyUiState(
                         R.string.card_default,
                         R.drawable.kb,
                         DEFAULT,

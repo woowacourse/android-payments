@@ -30,11 +30,11 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.newcard.CardCompanyUiModel
+import woowacourse.payments.newcard.CardCompanyUiState
 
 @Composable
 fun PaymentCard(
-    cardCompanyUiModel: CardCompanyUiModel,
+    cardCompanyUiState: CardCompanyUiState,
     modifier: Modifier = Modifier,
     card: Card? = null,
 ) {
@@ -45,12 +45,12 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = cardCompanyUiModel.color,
+                    color = cardCompanyUiState.color,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = stringResource(cardCompanyUiModel.nameResId),
+            text = stringResource(cardCompanyUiState.nameResId),
             style = cardTextStyle,
             modifier =
                 Modifier
@@ -126,7 +126,7 @@ private fun PaymentCardPreview() {
                 password = Password("1234"),
                 cardCompany = CardCompany.KAKAO,
             ),
-        cardCompanyUiModel = CardCompanyUiModel.from(CardCompany.KAKAO),
+        cardCompanyUiState = CardCompanyUiState.from(CardCompany.KAKAO),
     )
 }
 

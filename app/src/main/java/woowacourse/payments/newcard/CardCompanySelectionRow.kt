@@ -26,7 +26,7 @@ private const val COLUMN_COUNT = 4
 
 @Composable
 fun CardCompanyItem(
-    cardCompanyUiModel: CardCompanyUiModel,
+    cardCompanyUiState: CardCompanyUiState,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -38,12 +38,12 @@ fun CardCompanyItem(
                 .sizeIn(minWidth = 70.dp, minHeight = 70.dp),
     ) {
         Image(
-            painter = painterResource(id = cardCompanyUiModel.imageResId),
-            contentDescription = stringResource(id = cardCompanyUiModel.nameResId),
+            painter = painterResource(id = cardCompanyUiState.imageResId),
+            contentDescription = stringResource(id = cardCompanyUiState.nameResId),
             modifier = Modifier.size(37.dp),
         )
         Text(
-            text = stringResource(id = cardCompanyUiModel.nameResId),
+            text = stringResource(id = cardCompanyUiState.nameResId),
             fontSize = 16.sp,
             letterSpacing = (-0.085).em,
         )
@@ -67,7 +67,7 @@ fun CardCompanySelectionRow(
         CardCompany.entries.forEach { cardCompany ->
             if (cardCompany != CardCompany.NONE) {
                 CardCompanyItem(
-                    cardCompanyUiModel = CardCompanyUiModel.from(cardCompany),
+                    cardCompanyUiState = CardCompanyUiState.from(cardCompany),
                     modifier = Modifier.clickable { onItemClick(cardCompany) },
                 )
             }
