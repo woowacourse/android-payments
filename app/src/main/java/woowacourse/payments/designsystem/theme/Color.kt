@@ -20,12 +20,3 @@ val GrayPlaceholder = Color(0xFFE5E5E5)
 val Yellow = Color(0xFFCBBA64)
 
 val Black = Color(0xFF1D1B20)
-
-val BankBC = Color(0xFFF04651)
-val BankShinhan = Color(0xFF0046FF)
-val BankKakaoBank = Color(0xFFFFE600)
-val BankHyundai = Color(0xFF000000)
-val BankWoori = Color(0xFF007BC8)
-val BankLotte = Color(0xFFED1C24)
-val BankHana = Color(0xFF009490)
-val BankKB = Color(0xFF6A6156)

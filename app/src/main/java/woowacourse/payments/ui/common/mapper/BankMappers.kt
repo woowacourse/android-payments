@@ -4,15 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import woowacourse.payments.R
-import woowacourse.payments.designsystem.theme.BankBC
-import woowacourse.payments.designsystem.theme.BankHana
-import woowacourse.payments.designsystem.theme.BankHyundai
-import woowacourse.payments.designsystem.theme.BankKB
-import woowacourse.payments.designsystem.theme.BankKakaoBank
-import woowacourse.payments.designsystem.theme.BankLotte
-import woowacourse.payments.designsystem.theme.BankShinhan
-import woowacourse.payments.designsystem.theme.BankWoori
-import woowacourse.payments.designsystem.theme.GrayBackground
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.domain.model.BankType.BC
 import woowacourse.payments.domain.model.BankType.HANA
@@ -54,13 +45,13 @@ fun BankType.toIconRes(): Int =
 
 fun BankType.toColor(): Color =
     when (this) {
-        NOT_SELECTED -> GrayBackground
-        BC -> BankBC
-        SHINHAN -> BankShinhan
-        KAKAO_BANK -> BankKakaoBank
-        HYUNDAI -> BankHyundai
-        WOORI -> BankWoori
-        LOTTE -> BankLotte
-        HANA -> BankHana
-        KB -> BankKB
+        NOT_SELECTED -> Color(0xFF333333)
+        BC -> Color(0xFFF04651)
+        SHINHAN -> Color(0xFF0046FF)
+        KAKAO_BANK -> Color(0xFFFFE600)
+        HYUNDAI -> Color(0xFF000000)
+        WOORI -> Color(0xFF007BC8)
+        LOTTE -> Color(0xFFED1C24)
+        HANA -> Color(0xFF009490)
+        KB -> Color(0xFF6A6156)
     }
