@@ -40,7 +40,7 @@ fun PaymentCard(
                         .padding(start = 14.dp)
                         .padding(vertical = 10.dp),
                 text = stringResource(id = bank.bankName),
-                color = Color(0xFFFFFFFF),
+                color = Color.White,
                 fontSize = 12.sp,
             )
             Box(

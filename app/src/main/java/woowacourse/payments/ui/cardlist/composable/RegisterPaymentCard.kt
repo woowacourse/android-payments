@@ -34,7 +34,7 @@ fun RegisterPaymentCard(
         Text(
             modifier = Modifier.padding(top = 14.dp),
             text = stringResource(id = card.bank.bankName),
-            color = Color(0xFFFFFFFF),
+            color = Color.White,
             fontSize = 12.sp,
         )
         Box(
