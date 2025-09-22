@@ -1,13 +1,12 @@
 package woowacourse.payments.ui.features.cardlist
 
-import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -28,18 +27,15 @@ private val dummyPaymentCardList2 = List(2) { dummyPaymentCardUiModel }
 
 class CardListScreenTest {
     @get:Rule
-    val compose = createComposeRule()
-
-    private lateinit var context: Context
+    val compose = createAndroidComposeRule<ComponentActivity>()
     private lateinit var titleText: String
     private lateinit var addCardDescription: String
 
     @Before
     fun setUp() {
-        context = InstrumentationRegistry.getInstrumentation().targetContext
-        titleText = context.getString(R.string.card_list_add_payment_card_title)
+        titleText = compose.activity.getString(R.string.card_list_add_payment_card_title)
         addCardDescription =
-            context.getString(R.string.card_list_add_payment_card_panel_description)
+            compose.activity.getString(R.string.card_list_add_payment_card_panel_description)
     }
 
     @Test
