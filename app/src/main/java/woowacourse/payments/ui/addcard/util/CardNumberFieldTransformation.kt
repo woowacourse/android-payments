@@ -11,7 +11,8 @@ class CardNumberFieldTransformation : VisualTransformation {
         return TransformedText(
             AnnotatedString(
                 text = cardNumberWithHyphens,
-            ), CardNumberOffsetMapping()
+            ),
+            CardNumberOffsetMapping(),
         )
     }
 }

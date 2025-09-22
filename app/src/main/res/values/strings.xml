@@ -4,7 +4,6 @@
     <string name="payments_allcards_topbar_all_cards">Payments</string>
     <string name="payments_allcards_topbar_add_cards">추가</string>
 
-
     <!--addcard -->
     <string name="addcard_card_number_label">카드 번호</string>
     <string name="addcard_card_number_placeholder">0000-0000-0000-0000</string>
@@ -21,9 +20,19 @@
     <string name="allcards_request_add_card">새로운 카드를 등록해주세요</string>
     <string name="allcards_card_added">카드가 추가되었습니다</string>
 
+    <!--vendors-->
+    <string name="vendor_bc_card">BC카드</string>
+    <string name="vendor_shinhan_card">신한카드</string>
+    <string name="vendor_kakao_bank">카카오뱅크</string>
+    <string name="vendor_hyundai_card">현대카드</string>
+    <string name="vendor_woori_card">우리카드</string>
+    <string name="vendor_lotte_card">롯데카드</string>
+    <string name="vendor_hana_card">하나카드</string>
+    <string name="vendor_kb_card">국민카드</string>
 
     <!--content description-->
     <string name="payments_topbar_back_icon_description">뒤로 가기</string>
     <string name="payments_topbar_checked_icon_description">확인</string>
     <string name="payments_topbar_add_card_icon_description">추가</string>
+    <string name="payments_vendor_logo_description">카드사 이미지</string>
 </resources>

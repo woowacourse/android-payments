@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
-import woowacourse.payments.ui.uimodel.CardInfoUiState
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,6 +41,7 @@ fun AllCardsTopbar(
                         fontSize = 18.sp,
                     )
                 }
+
                 AllCardsUiState.ViewType.SINGLE -> Unit
                 AllCardsUiState.ViewType.EMPTY -> Unit
             }

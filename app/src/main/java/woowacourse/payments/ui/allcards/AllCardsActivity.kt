@@ -52,12 +52,14 @@ class AllCardsActivity : ComponentActivity() {
                     },
                 ) { padding ->
                     LaunchedEffect(allCards.cards.size) {
-                        Toast
-                            .makeText(
-                                this@AllCardsActivity,
-                                getString(R.string.allcards_card_added),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        if (allCards.viewType != AllCardsUiState.ViewType.EMPTY) {
+                            Toast
+                                .makeText(
+                                    this@AllCardsActivity,
+                                    getString(R.string.allcards_card_added),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                        }
                     }
                     AllCardsScreen(
                         allCards = allCards,

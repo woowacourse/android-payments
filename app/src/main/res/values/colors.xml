@@ -13,4 +13,15 @@
     <color name="payments_plus_card_icon_color">#FF575757</color>
     <color name="payments_card_chip">#FFCBBA64</color>
     <color name="payments_placeholder_color">#FFAAAAAA</color>
+    <color name="payments_vendor_text_color">#FF525252</color>
+
+    <!--Vendor Color-->
+    <color name="vendor_bc_card">#FFF04651</color>
+    <color name="vendor_shinhan_card">#FF0046FF</color>
+    <color name="vendor_kakao_bank">#FFFFE600</color>
+    <color name="vendor_hyundai_card">#FF000000</color>
+    <color name="vendor_woori_card">#FF007BC8</color>
+    <color name="vendor_lotte_card">#FFED1C24</color>
+    <color name="vendor_hana_card">#FF009490</color>
+    <color name="vendor_kb_card">#FF695F54</color>
 </resources>

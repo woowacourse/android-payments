@@ -2,6 +2,7 @@ package woowacourse.payments
 
 import org.junit.jupiter.api.Test
 import woowacourse.payments.model.CardInfo
+import woowacourse.payments.model.CardVendor
 
 class CardInfoTest {
     @Test
@@ -154,6 +155,7 @@ class CardInfoTest {
                 password = rawPassword,
                 ownerName = "홍길동",
                 expireDate = "1225",
+                vendor = CardVendor.BCCard,
             )
 
         // then

@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
+import woowacourse.payments.ui.addcard.component.AddCardVendorModal
 import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField
 import woowacourse.payments.ui.addcard.component.PasswordTextField
+import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
@@ -25,7 +27,9 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 @Composable
 fun AddCardScreen(
     cardInfo: CardInfoUiState,
+    vendorModal: VendorModalUiState,
     modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {},
 ) {
     Column(
         modifier =
@@ -38,6 +42,7 @@ fun AddCardScreen(
         Card(
             cardInfoUiState = cardInfo,
             showCardInfo = false,
+            onClick = onCardClick,
         )
         Column {
             Spacer(modifier = Modifier.height(40.dp))
@@ -66,6 +71,17 @@ fun AddCardScreen(
             )
         }
     }
+
+    AddCardVendorModal(
+        vendorModalUiState = vendorModal,
+        onDismissRequest = { vendorModal.hideModal() },
+        onVendorItemClick = { vendor ->
+            cardInfo.updateCardInfo(
+                vendor = vendor,
+            )
+            vendorModal.hideModal()
+        },
+    )
 }
 
 @Preview(showBackground = true)
@@ -79,6 +95,7 @@ private fun AddCardScreenPreview() {
         ) { paddingValues ->
             AddCardScreen(
                 rememberSaveable { CardInfoUiState() },
+                rememberSaveable { VendorModalUiState() },
                 modifier =
                     Modifier
                         .padding(paddingValues),

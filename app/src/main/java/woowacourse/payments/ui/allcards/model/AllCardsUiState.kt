@@ -13,12 +13,13 @@ data class AllCardsUiState(
     constructor(cards: List<CardInfoUiState>) : this(cards.toMutableStateList())
 
     val cards: List<CardInfoUiState> get() = _cards
-    val viewType: ViewType get() =
-        when (_cards.size) {
-            0 -> ViewType.EMPTY
-            1 -> ViewType.SINGLE
-            else -> ViewType.MULTIPLE
-        }
+    val viewType: ViewType
+        get() =
+            when (_cards.size) {
+                0 -> ViewType.EMPTY
+                1 -> ViewType.SINGLE
+                else -> ViewType.MULTIPLE
+            }
 
     fun addCard(card: CardInfoUiState) {
         _cards.add(card)

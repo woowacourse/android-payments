@@ -7,7 +7,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.cards
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiState

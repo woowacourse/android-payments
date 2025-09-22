@@ -9,4 +9,5 @@ data class CardInfoUiModel(
     val expireDate: String = "",
     val ownerName: String = "",
     val password: String = "",
+    val vendor: VendorUiModel? = null,
 ) : Parcelable

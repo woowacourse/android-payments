@@ -1,6 +1,5 @@
 package woowacourse.payments.addcard
 
-import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
@@ -38,7 +37,7 @@ class AddCardTopbarTest {
         composeTestRule.setContent {
             AddCardTopbar(
                 isAddCardEnabled = true,
-                onAddCardSucceeded = { isCompleteClicked = true },
+                onAddCardSuccess = { isCompleteClicked = true },
             )
         }
 
@@ -58,7 +57,7 @@ class AddCardTopbarTest {
         composeTestRule.setContent {
             AddCardTopbar(
                 isAddCardEnabled = false,
-                onAddCardFailed = { isCompleteClicked = true },
+                onAddCardFail = { isCompleteClicked = true },
             )
         }
 

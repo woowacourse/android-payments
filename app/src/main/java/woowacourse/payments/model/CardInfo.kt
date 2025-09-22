@@ -8,6 +8,7 @@ data class CardInfo(
     val expireDate: LocalDate,
     val ownerName: String,
     val password: String,
+    val vendor: CardVendor,
 ) {
     init {
         require(cardNumber.length == CARD_NUMBER_MAX_SIZE) {
@@ -27,6 +28,7 @@ data class CardInfo(
             expireDate: String,
             ownerName: String,
             password: String,
+            vendor: CardVendor? = null,
         ): CardInfo? {
             val formattedCardNumber = formatCardNumber(cardNumber)
             val formattedExpireDateString = formatExpireDate(expireDate)
@@ -46,6 +48,7 @@ data class CardInfo(
                 formattedOwnerName.length > OWNER_NAME_MAX_SIZE -> return null
                 formattedPassword.length != PASSWORD_MAX_SIZE -> return null
                 parsedExpireDate == null -> return null
+                vendor == null -> return null
             }
 
             return CardInfo(
@@ -53,6 +56,7 @@ data class CardInfo(
                 expireDate = parsedExpireDate,
                 ownerName = formattedOwnerName,
                 password = formattedPassword,
+                vendor = vendor,
             )
         }
 

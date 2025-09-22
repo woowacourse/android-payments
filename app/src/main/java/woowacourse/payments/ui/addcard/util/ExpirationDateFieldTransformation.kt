@@ -11,7 +11,8 @@ class ExpirationDateFieldTransformation : VisualTransformation {
         return TransformedText(
             AnnotatedString(
                 text = cardNumberWithHyphens,
-            ), ExpirationDateOffset()
+            ),
+            ExpirationDateOffset(),
         )
     }
 }

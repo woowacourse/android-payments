@@ -1,6 +1,5 @@
 package woowacourse.payments.allcards
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.junit4.createComposeRule
