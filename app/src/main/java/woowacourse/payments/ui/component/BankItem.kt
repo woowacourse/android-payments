@@ -39,7 +39,11 @@ fun BankItem(
     ) {
         Image(
             painter = painterResource(id = bank.logoRes),
-            contentDescription = stringResource(R.string.bank_item_content_description),
+            contentDescription =
+                stringResource(
+                    id = R.string.bank_item_content_description,
+                    bank.name,
+                ),
             modifier = Modifier.size(48.dp),
         )
 
