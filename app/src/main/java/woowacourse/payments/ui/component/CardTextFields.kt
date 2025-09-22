@@ -7,10 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.registercard.CardTextFieldStateHolder
-import woowacourse.payments.ui.registercard.component.CardNumberInputField
-import woowacourse.payments.ui.registercard.component.CardOwnerInputField
-import woowacourse.payments.ui.registercard.component.ExpiryDateInputField
-import woowacourse.payments.ui.registercard.component.PasswordInputField
 
 @Composable
 fun CardTextFields(
