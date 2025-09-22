@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.newcard.state
 
+import android.R.attr.digits
+import android.R.attr.password
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,13 +16,29 @@ import woowacourse.payments.ui.newcard.uiModel.toDomain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
-class CardStateHolder (
+class CardStateHolder(
     val previousUiState: MutableState<CardUiState> = mutableStateOf(CardUiState())
-){
+) {
+
     var uiState by previousUiState
         private set
+
     fun changeBottomSheetState() {
         uiState = uiState.copy(isBottomSheetOpen = !uiState.isBottomSheetOpen)
+    }
+
+    fun changeCard(card: Card?) {
+        if (card == null) return
+        uiState = uiState.copy(
+            isBottomSheetOpen = !uiState.isBottomSheetOpen,
+            card = card,
+            cardCompany = card.cardCompany,
+            expirationDate = card.expirationDate.value
+                .format(DateTimeFormatter.ofPattern("MMyy")),
+            number = card.number.value,
+            ownerName = card.ownerName.value ?: "",
+            password = card.password.value
+        )
     }
 
     fun selectedCardCompany(newCardCompany: CardCompanyUiModel) {
@@ -28,6 +46,7 @@ class CardStateHolder (
             is CardCompanyUiModel.Default -> {
                 uiState = uiState.copy(cardCompany = null)
             }
+
             is CardCompanyUiModel.SelectCardCompany -> {
                 uiState = uiState.copy(cardCompany = newCardCompany.toDomain())
             }
@@ -49,7 +68,8 @@ class CardStateHolder (
             ExpirationDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState = uiState.copy(expirationDate = newExpirationDate, expirationDateErrorMessage = error)
+        uiState =
+            uiState.copy(expirationDate = newExpirationDate, expirationDateErrorMessage = error)
     }
 
     fun changeOwnerName(newOwnerName: String) {
