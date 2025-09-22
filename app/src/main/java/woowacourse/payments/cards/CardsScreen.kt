@@ -40,7 +40,6 @@ import woowacourse.payments.util.parcelable
 
 @Composable
 fun CardsScreen(
-    modifier: Modifier = Modifier,
     cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
     onCardAdded: () -> Unit = {},
 ) {
