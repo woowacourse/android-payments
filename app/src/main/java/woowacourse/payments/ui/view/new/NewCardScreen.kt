@@ -62,7 +62,7 @@ fun NewCardScreen(
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     runCatching { newCardUiStateHolder.uiState.toDomain() }
-                        .onSuccess { onSaveClick(it) }
+                        .onSuccess { card: Card -> onSaveClick(card) }
                         .onFailure {
                             newCardUiStateHolder.modifyUiState(
                                 NewCardUiEvent.OnChangeCardCompany(
@@ -207,7 +207,7 @@ fun NewCardScreen(
 private fun PaymentCardContent(uiState: NewCardUiState) {
     when (uiState.mode) {
         NewCardMode.Add -> {
-            when (val cardCompanyState = uiState.company) {
+            when (val cardCompanyState = uiState.cardCompanyState) {
                 CardCompanyState.Empty -> CardChip()
 
                 is CardCompanyState.Selected -> {

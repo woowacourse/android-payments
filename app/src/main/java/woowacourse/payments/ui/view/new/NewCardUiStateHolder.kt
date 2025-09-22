@@ -39,7 +39,7 @@ class NewCardUiStateHolder private constructor(
     }
 
     private fun updateCardBankType(company: CardCompanyState) {
-        _uiState.value = _uiState.value.copy(company = company)
+        _uiState.value = _uiState.value.copy(cardCompanyState = company)
     }
 
     private fun updateBottomSheet(isBottomSheetOpen: Boolean) {
@@ -57,7 +57,7 @@ class NewCardUiStateHolder private constructor(
                             expireDate = restored.expireDate,
                             ownerName = restored.ownerName,
                             password = restored.password,
-                            company = restored.company,
+                            cardCompanyState = restored.cardCompanyState,
                             isBottomSheetOpen = restored.isBottomSheetOpen,
                             mode = restored.mode,
                         ),
@@ -77,7 +77,7 @@ class NewCardUiStateHolder private constructor(
                             expireDate = cardState.card.expireDate,
                             ownerName = cardState.card.ownerName,
                             password = cardState.card.password,
-                            company = CardCompanyState.Selected(cardState.card.company),
+                            cardCompanyState = CardCompanyState.Selected(cardState.card.company),
                             mode = mode,
                             isBottomSheetOpen = false,
                         )
