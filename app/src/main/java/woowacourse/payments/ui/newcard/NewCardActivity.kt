@@ -8,7 +8,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.data.BankRepository
+import woowacourse.payments.domain.model.Bank
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.extensions.getParcelableCompat
 
 class NewCardActivity : ComponentActivity() {
     private val newCardStateHolder = NewCardStateHolder()
@@ -16,10 +19,15 @@ class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val initialCard =
+            intent.getParcelableCompat<PaymentCardUiModel>(EXTRA_NEW_CARD_INITIAL_CARD)?.apply {
+                updateInitialCard(this)
+            }
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
                     banks = BankRepository.getBanks(),
+                    initialCard = initialCard,
                     newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
                     onSaved = { result ->
@@ -43,9 +51,24 @@ class NewCardActivity : ComponentActivity() {
         }
     }
 
+    private fun updateInitialCard(initialCard: PaymentCardUiModel) {
+        newCardStateHolder.updateId(initialCard.id)
+        newCardStateHolder.updateCardNumber(initialCard.cardNumber.value)
+        newCardStateHolder.updateCardHolder(initialCard.cardHolder.value)
+        newCardStateHolder.updateBank(Bank(initialCard.bankType))
+        newCardStateHolder.expirationDateUiState.onValueChanged(initialCard.expirationDate.value)
+    }
+
     companion object {
         const val EXTRA_NEW_CARD = "EXTRA_NEW_CARD"
+        const val EXTRA_NEW_CARD_INITIAL_CARD = "EXTRA_NEW_CARD_INITIAL_CARD"
 
-        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
+        fun newIntent(
+            context: Context,
+            paymentCard: PaymentCardUiModel? = null,
+        ): Intent =
+            Intent(context, NewCardActivity::class.java).apply {
+                putExtra(EXTRA_NEW_CARD_INITIAL_CARD, paymentCard)
+            }
     }
 }

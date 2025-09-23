@@ -19,6 +19,16 @@ class CardsStateHolder(
 
     fun isEmpty(): Boolean = cardList.size == EMPTY_CARDS_SIZE
 
+    fun upsertCard(card: PaymentCardUiModel) {
+        val index = _cardList.indexOfFirst { it.id == card.id }
+        if (index >= 0) {
+            _cardList[index] = card
+        } else {
+            val newCard = card.copy(id = _cardList.size + 1)
+            _cardList.add(newCard)
+        }
+    }
+
     companion object {
         private const val MINIMUM_CARD_COUNT_FOR_ADD_BUTTON: Int = 1
         private const val EMPTY_CARDS_SIZE: Int = 0

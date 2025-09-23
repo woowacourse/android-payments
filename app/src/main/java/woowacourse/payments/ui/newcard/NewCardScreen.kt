@@ -39,11 +39,12 @@ import woowacourse.payments.ui.newcard.dialog.BankBottomSheet
 @Composable
 fun NewCardScreen(
     banks: List<Bank>,
+    initialCard: PaymentCardUiModel? = null,
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
     onBackPress: () -> Unit = {},
     onSaved: (Result<PaymentCardUiModel>) -> Unit = {},
 ) {
-    var isShowBottomSheet by rememberSaveable { mutableStateOf(true) }
+    var isShowBottomSheet by rememberSaveable { mutableStateOf(initialCard == null) }
 
     val modalBottomSheetState =
         rememberModalBottomSheetState(
@@ -59,6 +60,7 @@ fun NewCardScreen(
                     onSaved(
                         runCatching {
                             PaymentCardUiModel(
+                                id = newCardStateHolder.id,
                                 bankType = newCardStateHolder.bank.type,
                                 cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
                                 cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),

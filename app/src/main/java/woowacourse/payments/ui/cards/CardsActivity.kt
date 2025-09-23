@@ -12,7 +12,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.util.extensions.getSerializableCompat
+import woowacourse.payments.ui.util.extensions.getParcelableCompat
 
 class CardsActivity : ComponentActivity() {
     private val cardsStateHolder = CardsStateHolder()
@@ -27,10 +27,10 @@ class CardsActivity : ComponentActivity() {
                 ) { activityResult ->
                     if (activityResult.resultCode == RESULT_OK) {
                         val newCard =
-                            activityResult.data?.getSerializableCompat<PaymentCardUiModel>(
+                            activityResult.data?.getParcelableCompat<PaymentCardUiModel>(
                                 EXTRA_NEW_CARD,
                             )
-                        newCard?.let { cardsStateHolder.addCard(it) }
+                        newCard?.let { cardsStateHolder.upsertCard(it) }
                         Toast.makeText(this, R.string.new_card_add_card_success, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -39,7 +39,10 @@ class CardsActivity : ComponentActivity() {
                 CardsScreen(
                     cardsStateHolder = cardsStateHolder,
                     onAddClick = {
-                        cardAddLauncher.launch(NewCardActivity.newIntent(this))
+                        cardAddLauncher.launch(NewCardActivity.newIntent(this, null))
+                    },
+                    onEditClick = { card ->
+                        cardAddLauncher.launch(NewCardActivity.newIntent(this, card))
                     },
                 )
             }

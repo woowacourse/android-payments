@@ -6,6 +6,9 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.model.Bank
 
 class NewCardStateHolder {
+    private var _id = 0
+    val id get() = _id
+
     private var _cardNumber by mutableStateOf("")
     val cardNumber get() = _cardNumber
 
@@ -34,5 +37,9 @@ class NewCardStateHolder {
 
     fun updatePassword(newPassword: String) {
         _password = newPassword
+    }
+
+    fun updateId(newId: Int) {
+        _id = newId
     }
 }
