@@ -11,7 +11,7 @@ import woowacourse.payments.domain.BankType
 @Composable
 fun BankSelectBottomSheet(
     onDismiss: () -> Unit,
-    onBankSelected: (BankType) -> Unit,
+    onBankSelect: (BankType) -> Unit,
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -19,7 +19,7 @@ fun BankSelectBottomSheet(
         sheetState = modalBottomSheetState,
         onDismissRequest = onDismiss,
     ) {
-        BankSelectRow(onClick = onBankSelected)
+        BankSelectRow(onClick = onBankSelect)
     }
 }
 
@@ -28,6 +28,6 @@ fun BankSelectBottomSheet(
 private fun BankSelectBottomSheetPreview() {
     BankSelectBottomSheet(
         onDismiss = {},
-        onBankSelected = {},
+        onBankSelect = {},
     )
 }

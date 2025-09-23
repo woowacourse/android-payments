@@ -14,9 +14,9 @@ import woowacourse.payments.ui.util.CardExpirationDateVisualTransformation
 
 @Composable
 fun ExpirationDateField(
+    onValueChange: (String) -> Unit,
     expirationDate: CardExpirationDate,
     modifier: Modifier = Modifier,
-    onValueChange: (String) -> Unit,
 ) {
     OutlinedTextField(
         value = expirationDate.toCombinedFormat(),

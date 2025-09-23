@@ -53,7 +53,7 @@ fun CardScreen(
             if (isSheetVisible) {
                 BankSelectBottomSheet(
                     onDismiss = { isSheetVisible = false },
-                    onBankSelected = { bank ->
+                    onBankSelect = { bank ->
                         onCardChange(card.copy(bank = bank))
                         isSheetVisible = false
                     },
