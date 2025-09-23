@@ -19,7 +19,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.component.CardInputFields
 import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.registercard.CardInputFieldStateHolder
+import woowacourse.payments.ui.CardInputFieldStateHolder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
 import woowacourse.payments.ui.toYearMonth

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
+import woowacourse.payments.ui.CardInputFieldStateHolder
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
 import woowacourse.payments.ui.component.CardInputFields
 import woowacourse.payments.ui.component.CardTopBar

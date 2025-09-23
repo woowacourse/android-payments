@@ -10,8 +10,8 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.CardInputFieldStateHolder
 import woowacourse.payments.ui.component.CardInputFields
-import woowacourse.payments.ui.registercard.CardInputFieldStateHolder
 import java.time.YearMonth
 
 class CardInputFieldsTest {

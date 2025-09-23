@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registercard
+package woowacourse.payments.ui
 
 import android.os.Parcelable
 import androidx.compose.runtime.derivedStateOf
@@ -8,10 +8,6 @@ import androidx.compose.runtime.setValue
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.BankViewType
-import woowacourse.payments.ui.toBankViewType
-import woowacourse.payments.ui.toYearMonth
-import woowacourse.payments.ui.toYearMonthString
 
 @Parcelize
 class CardInputFieldStateHolder : Parcelable {

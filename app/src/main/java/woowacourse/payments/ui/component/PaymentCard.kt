@@ -26,7 +26,6 @@ import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.Yellow64
 import woowacourse.payments.ui.toYearMonthString
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun PaymentCard(
