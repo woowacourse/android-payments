@@ -3,6 +3,7 @@ package woowacourse.payments.ui.newcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -27,6 +28,7 @@ class NewCardActivity : ComponentActivity() {
                 cardUiModel = cardUiModel,
                 navigateToBack = ::finish,
                 onSaveCard = ::onSaveCard,
+                onUpdateCard = ::onUpdateCard
             )
         }
     }
@@ -34,6 +36,15 @@ class NewCardActivity : ComponentActivity() {
     fun onSaveCard(newCard: CardUiModel?) {
         newCard?.let {
             val intent = Intent(context = this, newCard)
+            setResult(RESULT_OK, intent)
+            finish()
+        }
+    }
+
+    fun onUpdateCard(oldCard: CardUiModel?, newCard: CardUiModel?) {
+        newCard?.let {
+            val intent = Intent(context = this, newCard)
+            intent.putExtra("oldCard", oldCard)
             setResult(RESULT_OK, intent)
             finish()
         }

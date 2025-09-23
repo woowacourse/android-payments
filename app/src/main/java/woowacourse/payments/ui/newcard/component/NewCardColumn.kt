@@ -20,6 +20,7 @@ import woowacourse.payments.ui.newcard.state.CardUiState
 @Composable
 fun NewCardColumn(
     uiState: CardUiState,
+    selectCardCompany: () -> Unit,
     changeNumber: (String) -> Unit,
     changeExpiredDate: (String) -> Unit,
     changeOwnerName: (String) -> Unit,
@@ -30,6 +31,7 @@ fun NewCardColumn(
         modifier = modifier.padding(horizontal = 24.dp),
     ) {
         PaymentCard(
+            onEditCard = { selectCardCompany() },
             cardUiModel = uiState.cardUiModel,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
@@ -78,7 +80,7 @@ fun NewCardColumn(
 @Composable
 private fun NewCardColumnPreview() {
     NewCardColumn(
-        CardStateHolder().uiState, {}, {}, {}, {}
+        CardStateHolder().uiState, {}, {}, {}, {}, {}
     )
 }
 

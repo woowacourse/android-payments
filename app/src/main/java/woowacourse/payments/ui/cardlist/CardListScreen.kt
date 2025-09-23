@@ -3,6 +3,7 @@ package woowacourse.payments.ui.cardlist
 import android.app.Activity
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.PaddingValues
@@ -38,7 +39,13 @@ fun CardCatalogScreen(
                 val newCard: CardUiModel =
                     activityResult.data?.getParcelableCompat("newCard")
                         ?: return@rememberLauncherForActivityResult
-                stateHolder.addCard(newCard)
+                val oldCard: CardUiModel? = activityResult.data?.getParcelableCompat("oldCard")
+
+                if (oldCard != null) {
+                    stateHolder.replaceCard(oldCard, newCard)
+                } else {
+                    stateHolder.addCard(newCard)
+                }
             }
         }
 
@@ -63,7 +70,11 @@ fun CardCatalogScreen(
             onAddCard = {
                 navigateToCardList()
             },
-            onEditCard = { cardUiModel -> onEditCard(cardUiModel) },
+            onEditCard = { cardUiModel ->
+                onEditCard(cardUiModel)
+                Log.d("test", "asdfasdf ${cardUiModel}")
+                navigateToCardList()
+            },
             modifier = Modifier.padding(paddingValues)
         )
     }

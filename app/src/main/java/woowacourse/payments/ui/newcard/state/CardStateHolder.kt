@@ -24,6 +24,17 @@ class CardStateHolder(
         uiState = uiState.copy(isBottomSheetOpen = !uiState.isBottomSheetOpen)
     }
 
+    fun compareToBefore(old: CardUiState, new: CardUiState) {
+        if (old.cardCompanyUiModel != new.cardCompanyUiModel ||
+            old.number != new.number||
+            old.password != new.password ||
+            old.expiredDate != new.expiredDate ||
+            old.ownerName != new.ownerName) {
+        } else {
+
+        }
+
+    }
     fun changeCard(card: Card?) {
         if (card == null) return
         uiState = uiState.copy(

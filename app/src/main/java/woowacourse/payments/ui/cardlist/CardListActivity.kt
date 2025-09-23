@@ -28,7 +28,6 @@ class CardListActivity : ComponentActivity() {
         startActivity(intent)
     }
 
-
     companion object {
         private const val EXTRA_NEW_CARD = "newCard"
         fun Intent(context: Context, newCard: CardUiModel): Intent {
