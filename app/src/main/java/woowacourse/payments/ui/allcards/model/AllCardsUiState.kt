@@ -25,6 +25,15 @@ data class AllCardsUiState(
         _cards.add(card)
     }
 
+    fun modifyCard(
+        cardInfo: CardInfoUiState,
+        index: Int?,
+    ) {
+        index?.let {
+            _cards[index] = cardInfo
+        }
+    }
+
     enum class ViewType {
         EMPTY,
         SINGLE,

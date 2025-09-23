@@ -12,16 +12,12 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 fun SingleCard(
     cards: List<CardInfoUiState>,
     onPlusCardClick: () -> Unit = {},
-    onCardClick: (CardInfoUiState) -> Unit = {},
+    onCardClick: (cardInfo: CardInfoUiState, idx: Int) -> Unit = { _, _ -> },
 ) {
-    val cardInfo = cards.first()
-    Spacer(modifier = Modifier.height(12.dp))
-    Card(
-        cardInfoUiState = cardInfo,
-        showCardInfo = true,
-        onClick = { onCardClick(cardInfo) },
+    MultipleCards(
+        cards = cards,
+        onCardClick = onCardClick,
     )
-    Spacer(modifier = Modifier.height(36.dp))
     PlusCard(
         onClick = onPlusCardClick,
     )

@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard.component
 
-import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -23,7 +22,9 @@ import woowacourse.payments.ui.util.showToast
 fun AddCardTopbar(
     modificationMode: ModificationMode,
     isAddCardEnabled: Boolean = false,
+    isModificationEnabled: Boolean = false,
     onAddCardSuccess: () -> Unit = {},
+    onModifyCardSuccess: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -47,10 +48,20 @@ fun AddCardTopbar(
         },
         actions = {
             IconButton(onClick = {
-                if (isAddCardEnabled) {
-                    onAddCardSuccess()
-                } else {
+                if (!isAddCardEnabled) {
                     context.showToast(context.getString(R.string.addcard_failed_to_add_card))
+                    return@IconButton
+                }
+                when (modificationMode) {
+                    ModificationMode.ADD_CARD -> onAddCardSuccess()
+
+                    ModificationMode.MODIFY_CARD -> {
+                        if (isModificationEnabled) {
+                            onModifyCardSuccess()
+                        } else {
+                            context.showToast(context.getString(R.string.addcard_failed_to_modify_card))
+                        }
+                    }
                 }
             }) {
                 Icon(

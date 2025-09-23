@@ -1,9 +1,7 @@
 package woowacourse.payments.ui.allcards
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -12,18 +10,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.AddCardActivity
+import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.util.getParcelableCompat
+import woowacourse.payments.ui.util.getSerializableCompat
 import woowacourse.payments.ui.util.showToast
 
 class AllCardsActivity : ComponentActivity() {
@@ -35,11 +33,31 @@ class AllCardsActivity : ComponentActivity() {
             val launcher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        result.data?.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)?.let {
-                            allCards.addCard(it)
-                            showToast(
-                                getString(R.string.allcards_card_added),
+                        val modificationMode =
+                            result.data?.getSerializableCompat<ModificationMode>(
+                                CARD_MODIFICATION_MODE_KEY,
                             )
+                        val cardInfo =
+                            result.data?.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)
+
+                        val index =
+                            result.data?.getSerializableCompat<Int>(CARD_MODIFICATION_INDEX_KEY)
+
+                        if (modificationMode != null && cardInfo != null) {
+                            when (modificationMode) {
+                                ModificationMode.ADD_CARD -> {
+                                    allCards.addCard(cardInfo)
+                                    showToast(getString(R.string.allcards_card_added))
+                                }
+
+                                ModificationMode.MODIFY_CARD -> {
+                                    allCards.modifyCard(
+                                        cardInfo,
+                                        index,
+                                    )
+                                    showToast(getString(R.string.allcards_card_modified))
+                                }
+                            }
                         }
                     }
                 }
@@ -66,8 +84,8 @@ class AllCardsActivity : ComponentActivity() {
                         onPlusCardClick = {
                             launcher.launch(Intent(this, AddCardActivity::class.java))
                         },
-                        onCardClick = { cardInfo ->
-                            launcher.launch(AddCardActivity.newIntent(this, cardInfo))
+                        onCardClick = { cardInfo, index ->
+                            launcher.launch(AddCardActivity.newIntent(this, cardInfo, index))
                         },
                     )
                 }
@@ -77,5 +95,7 @@ class AllCardsActivity : ComponentActivity() {
 
     companion object {
         const val CARD_INFO_KEY = "cardInfo"
+        const val CARD_MODIFICATION_MODE_KEY = "cardAddMode"
+        const val CARD_MODIFICATION_INDEX_KEY = "cardIndex"
     }
 }

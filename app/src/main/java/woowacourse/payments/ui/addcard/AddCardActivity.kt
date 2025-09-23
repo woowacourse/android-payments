@@ -12,18 +12,19 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.addcard.model.VendorModalUiModel
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
+import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_MODIFICATION_INDEX_KEY
+import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_MODIFICATION_MODE_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
 import woowacourse.payments.ui.util.getParcelableCompat
+import woowacourse.payments.ui.util.getSerializableCompat
 
 class AddCardActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -31,16 +32,17 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val initialCardInfo = intent.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)
+            val previousCardInfo = intent.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)
+            val modificationIndex = intent.getSerializableCompat<Int>(CARD_MODIFICATION_INDEX_KEY)
             val cardInfo =
                 rememberSaveable {
-                    initialCardInfo ?: CardInfoUiState()
+                    previousCardInfo?.copy() ?: CardInfoUiState()
                 }
             val vendorModal =
                 rememberSaveable {
                     VendorModalUiState(
                         VendorModalUiModel(
-                            isVisible = initialCardInfo == null,
+                            isVisible = previousCardInfo == null,
                         ),
                     )
                 }
@@ -50,13 +52,27 @@ class AddCardActivity : ComponentActivity() {
                     topBar = {
                         AddCardTopbar(
                             modificationMode =
-                                if (initialCardInfo == null) {
+                                if (previousCardInfo == null) {
                                     ModificationMode.ADD_CARD
                                 } else {
                                     ModificationMode.MODIFY_CARD
                                 },
                             isAddCardEnabled = cardInfo.isComplete(),
-                            onAddCardSuccess = { saveCard(cardInfo) },
+                            isModificationEnabled =
+                                ModificationMode.isModificationEnabled(
+                                    previous = previousCardInfo,
+                                    current = cardInfo,
+                                ),
+                            onAddCardSuccess = {
+                                saveCard(cardInfo)
+                            },
+                            onModifyCardSuccess = {
+                                saveCard(
+                                    cardInfo = cardInfo,
+                                    modificationMode = ModificationMode.MODIFY_CARD,
+                                    modificationIndex = modificationIndex,
+                                )
+                            },
                             onBackClick = { finish() },
                         )
                     },
@@ -76,11 +92,17 @@ class AddCardActivity : ComponentActivity() {
         }
     }
 
-    private fun saveCard(cardInfo: CardInfoUiState) {
+    private fun saveCard(
+        cardInfo: CardInfoUiState,
+        modificationMode: ModificationMode = ModificationMode.ADD_CARD,
+        modificationIndex: Int? = null,
+    ) {
         setResult(
             RESULT_OK,
             Intent().apply {
                 putExtra(CARD_INFO_KEY, cardInfo)
+                putExtra(CARD_MODIFICATION_MODE_KEY, modificationMode)
+                putExtra(CARD_MODIFICATION_INDEX_KEY, modificationIndex)
             },
         )
         finish()
@@ -90,8 +112,10 @@ class AddCardActivity : ComponentActivity() {
         fun newIntent(
             context: Context,
             cardInfo: CardInfoUiState = CardInfoUiState(),
+            modificationIndex: Int? = null,
         ) = Intent(context, AddCardActivity::class.java).apply {
             putExtra(CARD_INFO_KEY, cardInfo)
+            putExtra(CARD_MODIFICATION_INDEX_KEY, modificationIndex)
         }
     }
 }

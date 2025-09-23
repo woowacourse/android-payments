@@ -11,14 +11,14 @@ import woowacourse.payments.ui.uimodel.CardInfoUiState
 @Composable
 fun MultipleCards(
     cards: List<CardInfoUiState>,
-    onCardClick: (CardInfoUiState) -> Unit = {},
+    onCardClick: (cardInfo: CardInfoUiState, idx: Int) -> Unit = { _, _ -> },
 ) {
     Spacer(modifier = Modifier.height(12.dp))
-    cards.forEach { cardInfoUiState ->
+    cards.forEachIndexed { idx, cardInfoUiState ->
         Card(
             cardInfoUiState = cardInfoUiState,
             showCardInfo = true,
-            onClick = { onCardClick(cardInfoUiState) },
+            onClick = { onCardClick(cardInfoUiState, idx) },
         )
         Spacer(modifier = Modifier.height(36.dp))
     }
