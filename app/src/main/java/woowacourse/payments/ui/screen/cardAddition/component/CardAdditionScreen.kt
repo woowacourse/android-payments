@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,11 +31,16 @@ import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
 @Composable
 fun CardAdditionScreen(
     modifier: Modifier = Modifier,
+    card: CardUiModel? = null,
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
     val stateHolder =
-        rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
+        rememberSaveable(card, saver = CardAdditionUiStateHolder.Saver) {
+            CardAdditionUiStateHolder(
+                card,
+            )
+        }
     val sheetState = rememberModalBottomSheetState { false }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
@@ -53,7 +57,7 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(stateHolder.cardUiModel) },
+                onSaveClick = { onSaveClick(stateHolder.card) },
                 isCompletable = stateHolder.isCompletable,
             )
         },
@@ -83,13 +87,13 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp)
-                        .clickable(onClick = stateHolder::updateSheetVisible)
                         .semantics {
                             contentDescription =
                                 context.getString(R.string.card_addition_card_description)
                         },
                 issuingBank = stateHolder.uiState.issuingBank,
-                cardContent = { CardInfoContent(stateHolder.cardUiModel) },
+                onClick = stateHolder::updateSheetVisible,
+                cardContent = { CardInfoContent(stateHolder.card) },
             )
             CardNumberTextField(
                 value = stateHolder.uiState.cardNumber.value,
