@@ -11,16 +11,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardScreenCategory
+import woowacourse.payments.ui.util.getParcelableExtraCompat
 
-class AddCardActivity : ComponentActivity() {
+class EditCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var card by remember { mutableStateOf(Card()) }
+            var card by remember { mutableStateOf(intent.getParcelableExtraCompat<Card>(EXTRA_CARD) ?: Card()) }
             CardScreen(
                 card = card,
-                cardScreenCategory = CardScreenCategory.Add,
+                cardScreenCategory = CardScreenCategory.Edit,
                 onBackClick = { finish() },
                 onSaveClick = {
                     val resultIntent = Intent()
@@ -29,11 +30,12 @@ class AddCardActivity : ComponentActivity() {
                     finish()
                 },
                 onCardChange = { newCard -> card = newCard },
+                isSheetVisibleInit = false,
             )
         }
     }
 
     companion object {
-        const val EXTRA_CARD = "card"
+        const val EXTRA_CARD = "EXTRA_CARD"
     }
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardScreenCategory
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -25,20 +26,24 @@ import woowacourse.payments.ui.theme.Dimens.AddCardComposableComponentPadding
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableScreenPadding
 
 @Composable
-fun CardCreationScreen(
+fun CardScreen(
+    card: Card,
+    cardScreenCategory: CardScreenCategory,
+    onCardChange: (Card) -> Unit,
     onBackClick: () -> Unit,
-    onSaveClick: (Card) -> Unit,
+    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isSheetVisibleInit: Boolean = true,
 ) {
-    var card by remember { mutableStateOf(Card()) }
-    var isSheetVisible by remember { mutableStateOf(true) }
+    var isSheetVisible by remember { mutableStateOf(isSheetVisibleInit) }
 
     AndroidpaymentsTheme {
         Scaffold(
             topBar = {
-                AddCardTopBar(
+                CardTopBar(
+                    titleResId = cardScreenCategory.topBarTitleId,
                     onBackClick = onBackClick,
-                    onSaveClick = { onSaveClick(card) },
+                    onSaveClick = { onSaveClick() },
                     isOnSaveClickable = card.isValid(),
                 )
             },
@@ -48,7 +53,7 @@ fun CardCreationScreen(
                 BankSelectBottomSheet(
                     onDismiss = { isSheetVisible = false },
                     onBankSelected = { bank ->
-                        card = card.copy(bank = bank)
+                        onCardChange(card.copy(bank = bank))
                         isSheetVisible = false
                     },
                 )
@@ -72,7 +77,7 @@ fun CardCreationScreen(
                 CardNumberField(
                     card.number,
                     onValueChange = { input ->
-                        card = card.copy(number = CardNumber.fromRawInput(input))
+                        onCardChange(card.copy(number = CardNumber.fromRawInput(input)))
                     },
                     modifier =
                         Modifier
@@ -84,10 +89,11 @@ fun CardCreationScreen(
                         Modifier
                             .fillMaxWidth(Dimens.FIELD_HALF_WIDTH),
                     onValueChange = { input ->
-                        card =
+                        onCardChange(
                             card.copy(
                                 expirationDate = CardExpirationDate.fromRawInput(input),
-                            )
+                            ),
+                        )
                     },
                     expirationDate = card.expirationDate,
                 )
@@ -96,13 +102,13 @@ fun CardCreationScreen(
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
-                        card = card.copy(ownerName = OwnerName.fromRawInput(input))
+                        onCardChange(card.copy(ownerName = OwnerName.fromRawInput(input)))
                     },
                 )
                 PasswordField(
                     password = card.password,
                     onValueChange = { input ->
-                        card = card.copy(password = Password.fromRawInput(input))
+                        onCardChange(card.copy(password = Password.fromRawInput(input)))
                     },
                     modifier =
                         Modifier
@@ -116,5 +122,5 @@ fun CardCreationScreen(
 @Preview(showBackground = true)
 @Composable
 private fun GenerateCardPreview() {
-    CardCreationScreen(onBackClick = {}, onSaveClick = {})
+    CardScreen(onBackClick = {}, onSaveClick = {}, card = Card(), onCardChange = {}, cardScreenCategory = CardScreenCategory.Add)
 }
