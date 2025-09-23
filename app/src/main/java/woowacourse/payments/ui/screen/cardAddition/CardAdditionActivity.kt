@@ -9,16 +9,19 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.component.CardAdditionScreen
 import woowacourse.payments.ui.screen.cards.CardsActivity
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardAdditionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardAdditionScreen(
-                onBackClick = { finish() },
-                onSaveClick = { card -> navigateToCards(card) },
-            )
+            AndroidpaymentsTheme {
+                CardAdditionScreen(
+                    onBackClick = { finish() },
+                    onSaveClick = { card -> navigateToCards(card) },
+                )
+            }
         }
     }
 
