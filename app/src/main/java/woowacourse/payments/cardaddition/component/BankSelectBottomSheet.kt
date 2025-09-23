@@ -66,19 +66,16 @@ private fun Banks(
         verticalArrangement = Arrangement.spacedBy(3.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        BankType.entries
-            .filter { bankType: BankType ->
-                bankType.cardNameRes != null && bankType.imageRes != null
-            }.forEach { bankType: BankType ->
-                BankButton(
-                    bankType = bankType,
-                    onClick = onSelectBank,
-                    modifier =
-                        Modifier
-                            .weight(1f)
-                            .padding(vertical = 10.dp),
-                )
-            }
+        BankType.entries.forEach { bankType: BankType ->
+            BankButton(
+                bankType = bankType,
+                onClick = onSelectBank,
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(vertical = 10.dp),
+            )
+        }
     }
 }
 
@@ -88,8 +85,7 @@ private fun BankButton(
     onClick: (BankType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val cardName: String =
-        if (bankType.cardNameRes == null) "" else stringResource(bankType.cardNameRes)
+    val cardName: String = stringResource(bankType.cardNameRes)
     Column(
         modifier =
             Modifier
@@ -101,14 +97,12 @@ private fun BankButton(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(3.dp),
     ) {
-        if (bankType.imageRes != null && bankType.cardNameRes != null) {
-            Image(
-                painter = painterResource(bankType.imageRes),
-                null,
-                modifier = Modifier.size(37.dp),
-            )
-            Text(text = stringResource(bankType.cardNameRes), fontSize = 16.sp)
-        }
+        Image(
+            painter = painterResource(bankType.imageRes),
+            null,
+            modifier = Modifier.size(37.dp),
+        )
+        Text(text = stringResource(bankType.cardNameRes), fontSize = 16.sp)
     }
 }
 
