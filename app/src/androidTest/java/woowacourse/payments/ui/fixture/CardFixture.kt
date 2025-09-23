@@ -40,4 +40,5 @@ val PAYMENT_CARD =
         number = VALIDATED_CARD_NUMBER,
         expirationDate = VALIDATED_CARD_EXPIRATION_DATE,
         cardholderName = VALIDATED_CARD_HOLDER_NAME,
+        password = VALIDATED_CARD_PASSWORD,
     )
