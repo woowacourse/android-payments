@@ -57,6 +57,9 @@ object CardMapper {
             cardCompanyUiModel = cardCompanyUiModel,
             formattedCardNumber =
                 cardNumber
+                    .mapIndexed { index, char ->
+                        if (index < 8) char else '*'
+                    }.joinToString("")
                     .chunked(CARD_NUMBER_CHUNK_SIZE)
                     .joinToString(CARD_NUMBER_SEPARATOR),
             formattedExpireDate =
