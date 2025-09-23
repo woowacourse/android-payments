@@ -7,10 +7,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.LaunchedEffect
 import woowacourse.payments.R
 import woowacourse.payments.ui.add.AddPaymentCardActivity
-import woowacourse.payments.ui.common.parcelable
-import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class PaymentCardsActivity : ComponentActivity() {
@@ -22,19 +21,20 @@ class PaymentCardsActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 val stateHolder = rememberPaymentCardsStateHolder()
 
+                LaunchedEffect(Unit) {
+                    stateHolder.refreshFromStore()
+                }
+
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                         if (result.resultCode == RESULT_OK) {
-                            val newCard = result.data?.parcelable<PaymentCardUiModel>(EXTRA_CARD)
-                            if (newCard != null) {
-                                stateHolder.addCard(newCard)
-                                Toast
-                                    .makeText(
-                                        this,
-                                        getString(R.string.toast_card_add),
-                                        Toast.LENGTH_SHORT,
-                                    ).show()
-                            }
+                            stateHolder.refreshFromStore()
+                            Toast
+                                .makeText(
+                                    this,
+                                    getString(R.string.toast_card_add),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         }
                     }
 
@@ -45,9 +45,5 @@ class PaymentCardsActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    companion object {
-        private const val EXTRA_CARD = "extra_card"
     }
 }

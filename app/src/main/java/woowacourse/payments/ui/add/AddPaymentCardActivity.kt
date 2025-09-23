@@ -16,8 +16,8 @@ class AddPaymentCardActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 AddPaymentCardScreen(
                     onBack = { finish() },
-                    onSave = { paymentCard ->
-                        setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD, paymentCard))
+                    onSave = {
+                        setResult(RESULT_OK)
                         finish()
                     },
                 )
@@ -26,8 +26,6 @@ class AddPaymentCardActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EXTRA_CARD = "extra_card"
-
         fun newIntent(context: Context): Intent = Intent(context, AddPaymentCardActivity::class.java)
     }
 }

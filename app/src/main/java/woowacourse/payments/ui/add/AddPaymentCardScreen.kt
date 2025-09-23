@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.PaymentCardStore
 import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.ExpiryTextField
@@ -29,7 +30,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun AddPaymentCardScreen(
     onBack: () -> Unit,
-    onSave: (PaymentCardUiModel) -> Unit,
+    onSave: () -> Unit,
     stateHolder: AddPaymentCardStateHolder = rememberAddPaymentCardStateHolder(),
 ) {
     val state = stateHolder.state
@@ -61,7 +62,10 @@ fun AddPaymentCardScreen(
                     if (!stateHolder.isBankValid) {
                         stateHolder.showSheet()
                     } else {
-                        stateHolder.buildResult()?.let(onSave)
+                        stateHolder.buildResult()?.let { card ->
+                            PaymentCardStore.add(card)
+                            onSave()
+                        }
                     }
                 },
                 saveEnabled = canSave,

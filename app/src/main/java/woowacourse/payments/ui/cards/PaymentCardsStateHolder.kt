@@ -5,16 +5,18 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.domain.PaymentCardStore
+import woowacourse.payments.ui.model.mapper.toUiModel
 
 class PaymentCardsStateHolder private constructor(
     private val uiState: MutableState<PaymentCardsUiState>,
 ) {
     val state: PaymentCardsUiState get() = uiState.value
 
-    fun addCard(card: PaymentCardUiModel) =
+    fun refreshFromStore() =
         update {
-            it.copy(cards = it.cards + card)
+            val cards = PaymentCardStore.getAll().map { it.toUiModel() }
+            it.copy(cards)
         }
 
     private inline fun update(block: (PaymentCardsUiState) -> PaymentCardsUiState) {

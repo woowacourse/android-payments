@@ -43,8 +43,7 @@ fun PaymentCard(
                 .background(
                     color = Color(bank.colorInt),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = onEditCard),
+                ).clickable(onClick = onEditCard),
     ) {
         Text(
             text = stringResource(bank.nameRes),

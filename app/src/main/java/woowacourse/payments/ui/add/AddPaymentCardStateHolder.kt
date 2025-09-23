@@ -10,8 +10,6 @@ import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.Expiry
 import woowacourse.payments.domain.model.PaymentCard
 import woowacourse.payments.domain.model.Pin
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.mapper.toUiModel
 
 class AddPaymentCardStateHolder private constructor(
     private val uiState: MutableState<AddPaymentCardUiState>,
@@ -40,12 +38,11 @@ class AddPaymentCardStateHolder private constructor(
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
     val isBankValid: Boolean get() = (state.bank != null)
 
-    fun buildResult(): PaymentCardUiModel? {
+    fun buildResult(): PaymentCard? {
         val bank = state.bank ?: return null
         return PaymentCard
             .create(state.cardNumber, state.expiry, state.owner, state.pin, bank)
             .getOrNull()
-            ?.toUiModel()
     }
 
     private fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {
