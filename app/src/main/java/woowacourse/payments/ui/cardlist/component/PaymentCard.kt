@@ -109,7 +109,7 @@ fun PaymentCard(
                 .padding(end = 14.dp, bottom = 16.dp),
             fontSize = 12.sp,
             fontWeight = FontWeight.W500,
-            text = "${cardUiModel.expiredDate.format("MM/yy")}",
+            text = "${cardUiModel.expiredDate}",
             color = Color.White,
             letterSpacing = 0.17.em,
             lineHeight = 12.sp

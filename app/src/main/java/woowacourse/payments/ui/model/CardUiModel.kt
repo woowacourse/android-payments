@@ -38,7 +38,7 @@ fun Card.toUiModel(): CardUiModel {
     return CardUiModel(
         cardCompanyUiModel = cardCompany.toUiModel(),
         number = number.value,
-        expiredDate = expiredDate.toString(),
+        expiredDate = expiredDate.value.format(DateTimeFormatter.ofPattern("MM/yy")),
         ownerName = ownerName.value ?: "",
         password = password.value
     )

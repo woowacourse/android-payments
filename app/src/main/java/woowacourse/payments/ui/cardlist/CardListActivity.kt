@@ -18,15 +18,9 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CardCatalogScreen(
-                onAddCard = ::onAddCard,
                 onEditCard = ::onEditCard,
             )
         }
-    }
-
-    fun onAddCard() {
-        val intent = NewCardActivity.Intent(NewCardStatus.CreateCard, this)
-        startActivity(intent)
     }
 
     fun onEditCard(cardUiModel: CardUiModel) {
