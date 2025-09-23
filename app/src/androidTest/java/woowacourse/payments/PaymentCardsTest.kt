@@ -23,15 +23,15 @@ class PaymentCardsTest {
     val composeTestRule = createComposeRule()
 
     private val testClock = Clock.fixed(Instant.parse("2025-01-01T00:00:00Z"), ZoneOffset.UTC)
-    private val yearMonth = requireNotNull(ExpirationDateParser.parse("1226")) // 2026-12
+    private val yearMonth = requireNotNull(ExpirationDateParser.parseOrNull("1226")) // 2026-12
 
     private val sampleCard =
         Card(
             type = CardCompanyType.BC,
-            cardNumber = CardNumber.from("1111222233334444"),
-            expirationDate = ExpirationDate.from(yearMonth, testClock),
-            userName = UserName.from("KIMGAHYUN"),
-            password = Password.from("1234"),
+            cardNumber = CardNumber.create("1111222233334444"),
+            expirationDate = ExpirationDate.create(yearMonth, testClock),
+            userName = UserName.create("KIMGAHYUN"),
+            password = Password.create("1234"),
         ).toUiModel()
 
     @Test
@@ -43,6 +43,7 @@ class PaymentCardsTest {
                 cards = cards,
                 canAddMore = true,
                 onAddCardClick = {},
+                onCardClick = { _, _ -> },
             )
         }
 
@@ -64,6 +65,7 @@ class PaymentCardsTest {
                 cards = cards,
                 canAddMore = true,
                 onAddCardClick = {},
+                onCardClick = { _, _ -> },
             )
         }
 
@@ -81,6 +83,7 @@ class PaymentCardsTest {
                 cards = cards,
                 canAddMore = false,
                 onAddCardClick = {},
+                onCardClick = { _, _ -> },
             )
         }
 
