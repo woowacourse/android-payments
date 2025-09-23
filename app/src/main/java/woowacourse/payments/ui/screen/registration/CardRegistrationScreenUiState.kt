@@ -70,4 +70,16 @@ data class CardRegistrationScreenUiState(
             expirationDate = cardExpirationDate,
             cardholderName = cardholderName,
         )
+
+    companion object {
+        fun from(paymentCard: PaymentCardUiModel): CardRegistrationScreenUiState =
+            with(paymentCard) {
+                CardRegistrationScreenUiState(
+                    cardNumber = number,
+                    cardExpirationDate = paymentCard.expirationDate,
+                    cardholderName = paymentCard.cardholderName,
+                    bankType = paymentCard.bankType,
+                )
+            }
+    }
 }
