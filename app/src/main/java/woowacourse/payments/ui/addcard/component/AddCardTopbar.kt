@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.showToast
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,12 +42,7 @@ fun AddCardTopbar(
                 if (isAddCardEnabled) {
                     onAddCardSuccess()
                 } else {
-                    Toast
-                        .makeText(
-                            context,
-                            context.getString(R.string.addcard_failed_to_add_card),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                    context.showToast(context.getString(R.string.addcard_failed_to_add_card))
                 }
             }) {
                 Icon(

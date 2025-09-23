@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.AddCardActivity
@@ -23,6 +24,7 @@ import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.util.getParcelableCompat
+import woowacourse.payments.ui.util.showToast
 
 class AllCardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +37,9 @@ class AllCardsActivity : ComponentActivity() {
                     if (result.resultCode == RESULT_OK) {
                         result.data?.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)?.let {
                             allCards.addCard(it)
+                            showToast(
+                                getString(R.string.allcards_card_added),
+                            )
                         }
                     }
                 }
@@ -52,16 +57,6 @@ class AllCardsActivity : ComponentActivity() {
                         )
                     },
                 ) { padding ->
-                    LaunchedEffect(allCards.cards.size) {
-                        if (allCards.viewType != AllCardsUiState.ViewType.EMPTY) {
-                            Toast
-                                .makeText(
-                                    this@AllCardsActivity,
-                                    getString(R.string.allcards_card_added),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                        }
-                    }
                     AllCardsScreen(
                         allCards = allCards,
                         modifier =
