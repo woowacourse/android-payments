@@ -9,5 +9,4 @@ enum class BankType {
     LOTTE,
     HANA,
     KB,
-    NOT_SELECTED,
 }

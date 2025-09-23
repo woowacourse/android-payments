@@ -31,7 +31,6 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -117,10 +116,11 @@ fun AddCardScreen(
     if (showBottomSheetState) {
         BankSelectBottomSheet(
             sheetState = bottomSheetState,
+            banks = stateHolder.allBanks,
             onBankSelected = { bank ->
                 coroutineScope.launch { bottomSheetState.hide() }.invokeOnCompletion {
                     showBottomSheetState = false
-                    stateHolder.updateBank(bank.toPresentation())
+                    stateHolder.updateBank(bank)
                 }
             },
             onDismiss = { showBottomSheetState = false },

@@ -4,15 +4,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.model.BankUiModel
 
 class AddCardStateHolder(
     initialState: AddCardUiState = AddCardUiState(),
 ) {
+    val allBanks: List<BankType> = BankType.entries
+
     var uiState by mutableStateOf(initialState)
         private set
 
@@ -32,8 +34,9 @@ class AddCardStateHolder(
         uiState = uiState.copy(password = newPassword)
     }
 
-    fun updateBank(newBank: BankUiModel) {
-        uiState = uiState.copy(bankUiModel = newBank)
+    fun updateBank(newBank: BankType) {
+        uiState =
+            uiState.copy(cardCompanySelectionState = CardCompanySelectionState.Selected(newBank))
     }
 
     fun validate(): Boolean {

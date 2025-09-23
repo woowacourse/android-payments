@@ -28,13 +28,23 @@ data class BankUiModel(
                 color = color,
                 logoRes = logoRes,
             )
+
+        val NOT_SELECTED =
+            BankUiModel(
+                name = "카드사를 선택하세요",
+                color = Color.LightGray,
+                logoRes = R.drawable.ic_not_visible,
+            )
     }
 }
 
 object ColorParceler : Parceler<Color> {
     override fun create(parcel: Parcel): Color = Color(parcel.readInt())
 
-    override fun Color.write(parcel: Parcel, flags: Int) {
+    override fun Color.write(
+        parcel: Parcel,
+        flags: Int,
+    ) {
         parcel.writeInt(this.toArgb())
     }
 }
@@ -95,12 +105,5 @@ fun BankType.toPresentation(): BankUiModel =
                 name = "KB카드",
                 color = woowacourse.payments.ui.theme.KB,
                 logoRes = R.drawable.img_kb,
-            )
-
-        BankType.NOT_SELECTED ->
-            BankUiModel.create(
-                name = "",
-                color = woowacourse.payments.ui.theme.GRAY,
-                logoRes = R.drawable.ic_not_visible,
             )
     }
