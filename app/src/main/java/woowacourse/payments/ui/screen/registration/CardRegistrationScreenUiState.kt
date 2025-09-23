@@ -20,7 +20,7 @@ data class CardRegistrationScreenUiState(
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
     val bankType: BankTypeUiModel = BankTypeUiModel.NOT_SELECTED,
     val isModifyingCard: Boolean = true,
-    val shouldOpenBankSelector: Boolean = true,
+    val shouldOpenBankSelector: Boolean = bankType == BankTypeUiModel.NOT_SELECTED,
 ) : Parcelable {
     @IgnoredOnParcel
     val canRegisterCard: Boolean =
@@ -86,6 +86,7 @@ data class CardRegistrationScreenUiState(
                     cardPassword = paymentCard.password,
                     bankType = paymentCard.bankType,
                     isModifyingCard = false,
+                    shouldOpenBankSelector = false,
                 )
             }
     }

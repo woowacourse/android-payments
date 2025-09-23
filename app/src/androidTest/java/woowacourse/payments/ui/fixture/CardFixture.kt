@@ -36,6 +36,7 @@ val KB_BANK = BankTypeUiModel.KB
 
 val PAYMENT_CARD =
     PaymentCardUiModel(
+        id = 1L,
         bankType = KB_BANK,
         number = VALIDATED_CARD_NUMBER,
         expirationDate = VALIDATED_CARD_EXPIRATION_DATE,
