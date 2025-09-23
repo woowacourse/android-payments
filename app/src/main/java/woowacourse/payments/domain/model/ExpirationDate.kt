@@ -14,21 +14,38 @@ value class ExpirationDate private constructor(
 
         private fun now(clock: Clock) = YearMonth.now(clock)
 
-        fun from(
+        fun create(
             value: YearMonth,
             clock: Clock = Clock.systemDefaultZone(),
         ): ExpirationDate {
-            require(!value.isBefore(now(clock)))
+            val current = now(clock)
+            require(!value.isBefore(current)) { "만료일은 현재보다 과거일 수 없습니다." }
             return ExpirationDate(value)
+        }
+
+        fun createFromRaw(
+            raw: String,
+            clock: Clock = Clock.systemDefaultZone(),
+        ): ExpirationDate {
+            val yearMonth =
+                ExpirationDateParser.parse(raw)
+                    ?: throw IllegalArgumentException("만료일 형식이 올바르지 않습니다.")
+            return create(yearMonth, clock)
         }
 
         fun validate(
             raw: String,
             clock: Clock = Clock.systemDefaultZone(),
         ): ValidationErrorType? {
-            if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) return null
-            val ym = ExpirationDateParser.parse(raw) ?: return ValidationErrorType.InvalidFormat
-            return if (ym.isBefore(now(clock))) ValidationErrorType.ExpiredDate else null
+            if (raw.isBlank()) return ValidationErrorType.InvalidFormat
+            if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) ValidationErrorType.InvalidFormat
+
+            val yearMonth =
+                ExpirationDateParser.parse(raw) ?: return ValidationErrorType.InvalidFormat
+            val current = now(clock)
+            if (yearMonth.isBefore(current)) return ValidationErrorType.ExpiredDate
+
+            return null
         }
     }
 }
