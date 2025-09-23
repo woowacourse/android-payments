@@ -69,7 +69,11 @@ class CardsScreenTest {
 
     private fun setup(uiState: CardsUiState) {
         composeTestRule.setContent {
-            CardsScreen(viewModel = CardsScreenViewModel(uiState))
+            CardsScreen(
+                onRegisterCardClick = {},
+                onEditCardClick = { _, _ -> },
+                viewModel = CardsScreenViewModel(uiState),
+            )
         }
     }
 }

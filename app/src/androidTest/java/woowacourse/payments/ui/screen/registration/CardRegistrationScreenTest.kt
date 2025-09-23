@@ -19,6 +19,7 @@ import woowacourse.payments.ui.fixture.VALIDATED_CARD_EXPIRATION_DATE
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_HOLDER_NAME
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_NUMBER
 import woowacourse.payments.ui.fixture.VALIDATED_CARD_PASSWORD
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.util.onNodeWithRoleAndContentDescription
 
 class CardRegistrationScreenTest {
@@ -77,6 +78,7 @@ class CardRegistrationScreenTest {
                 cardExpirationDate = VALIDATED_CARD_EXPIRATION_DATE,
                 cardholderName = VALIDATED_CARD_HOLDER_NAME,
                 cardPassword = VALIDATED_CARD_PASSWORD,
+                bankType = BankTypeUiModel.KB,
             ),
         )
         val cardRegistrationButton =
