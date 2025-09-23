@@ -17,12 +17,12 @@ class ExpirationDateTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             ExpirationDateTextField(
-                uiState.expirationDate,
-                uiState.isExpirationDateError,
-                { newValue: String -> uiState.onExpirationDateChanged(newValue) },
+                stateHolder.expirationDate,
+                stateHolder.isExpirationDateError,
+                { newValue: String -> stateHolder.onExpirationDateChanged(newValue) },
             )
         }
     }

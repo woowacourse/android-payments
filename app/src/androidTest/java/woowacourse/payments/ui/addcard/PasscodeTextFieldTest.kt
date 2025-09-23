@@ -17,12 +17,12 @@ class PasscodeTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             PasscodeTextField(
-                uiState.passcode,
-                uiState.isPasscodeError,
-                { newValue: String -> uiState.onPasscodeChanged(newValue) },
+                stateHolder.passcode,
+                stateHolder.isPasscodeError,
+                { newValue: String -> stateHolder.onPasscodeChanged(newValue) },
             )
         }
     }

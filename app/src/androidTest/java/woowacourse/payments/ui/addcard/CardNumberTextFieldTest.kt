@@ -17,12 +17,12 @@ class CardNumberTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             CardNumberTextField(
-                uiState.cardNumber,
-                uiState.isCardNumberError,
-                { newValue: String -> uiState.onCardNumberChanged(newValue) },
+                stateHolder.cardNumber,
+                stateHolder.isCardNumberError,
+                { newValue: String -> stateHolder.onCardNumberChanged(newValue) },
             )
         }
     }

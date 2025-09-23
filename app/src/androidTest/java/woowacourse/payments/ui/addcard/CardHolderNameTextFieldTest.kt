@@ -17,11 +17,11 @@ class CardHolderNameTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             CardHolderNameTextField(
-                uiState.cardholderName,
-                { newValue: String -> uiState.onCardholderNameChanged(newValue) },
+                stateHolder.cardholderName,
+                { newValue: String -> stateHolder.onCardholderNameChanged(newValue) },
             )
         }
     }

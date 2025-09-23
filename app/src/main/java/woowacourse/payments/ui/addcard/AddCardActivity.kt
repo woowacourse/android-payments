@@ -20,10 +20,10 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val uiState = remember { AddCardScreenUiStateHolder() }
+                val stateHolder = remember { AddCardScreenUiStateHolder() }
 
                 AddCardScreen(
-                    uiState = uiState,
+                    stateHolder = stateHolder,
                     onSaveSuccess = { card: CardUiModel ->
                         Toast
                             .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
@@ -40,7 +40,7 @@ class AddCardActivity : ComponentActivity() {
 
                 CardCompanyBottomSheet(
                     AddCardScreenUiStateHolder.CARD_COMPANIES,
-                    uiState::onCardCompanySelected,
+                    stateHolder::onCardCompanySelected,
                     { finish() },
                 )
             }
