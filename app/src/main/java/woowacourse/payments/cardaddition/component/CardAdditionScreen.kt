@@ -43,7 +43,7 @@ fun CardAdditionScreen(
         modifier = modifier.testTag("CardAdditionScreen"),
         topBar = {
             CardAdditionTopAppBar(
-                completable = state.isValid,
+                completable = state.canAddCard,
                 onBackClick = onBackClick,
                 onSaveClick = { onSaveClick(state.card) },
             )
