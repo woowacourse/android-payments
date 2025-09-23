@@ -72,8 +72,6 @@ fun CardCatalogScreen(
             },
             onEditCard = { cardUiModel ->
                 onEditCard(cardUiModel)
-                Log.d("test", "asdfasdf ${cardUiModel}")
-                navigateToCardList()
             },
             modifier = Modifier.padding(paddingValues)
         )
