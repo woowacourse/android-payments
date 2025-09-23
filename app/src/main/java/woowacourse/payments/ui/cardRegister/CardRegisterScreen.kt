@@ -177,7 +177,7 @@ fun CardRegisterScreen(
                 label = stringResource(R.string.card_password_label),
                 supportingText =
                     {
-                        if (cardRegisterState.isShowingOwnerNameError()) {
+                        if (cardRegisterState.isShowingPasswordError()) {
                             Text(
                                 text = stringResource(R.string.card_password_supporting_text),
                                 color = RedFFFF0000,

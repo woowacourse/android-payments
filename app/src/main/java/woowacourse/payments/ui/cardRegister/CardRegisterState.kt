@@ -75,7 +75,7 @@ class CardRegisterState(
 
     fun isShowingExpiredDateError(): Boolean = expiredDate.isNotEmpty() && !CardValidator.isValidExpiredDate(expiredDate)
 
-    fun isShowingOwnerNameError(): Boolean = password.isNotEmpty() && !CardValidator.isValidPassword(password)
+    fun isShowingPasswordError(): Boolean = password.isNotEmpty() && !CardValidator.isValidPassword(password)
 
     fun isValid(): Boolean = CardValidator.isValidCard(cardNumber, expiredDate, password)
 
