@@ -29,6 +29,8 @@ fun NewCardScreen(
         modifier = modifier,
         topBar = {
             NewCardTopBar(
+                stateHolder = stateHolder,
+                card = card,
                 onBackClick = { navigateToBack() },
                 onSaveClick = { onSaveClick(stateHolder.newCard()) }
             )

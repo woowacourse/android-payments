@@ -37,7 +37,7 @@ class CardStateHolder(
                 .format(DateTimeFormatter.ofPattern("MMyy")),
             number = card.number.value,
             ownerName = card.ownerName.value ?: "",
-            password = card.password.value
+            password = card.password.value,
         )
     }
 
@@ -48,7 +48,10 @@ class CardStateHolder(
             }
 
             is CardCompanyUiModel.SelectCardCompany -> {
-                uiState = uiState.copy(cardCompany = newCardCompany.toDomain())
+                uiState = uiState.copy(
+                    cardCompany = newCardCompany.toDomain(),
+                    isChangeCardCompany = true
+                )
             }
         }
     }
@@ -59,7 +62,8 @@ class CardStateHolder(
             CardNumber(value = sanitized)
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState = uiState.copy(number = newNumber, numberErrorMessage = error)
+        uiState =
+            uiState.copy(number = newNumber, numberErrorMessage = error, isChangeNumber = true)
     }
 
     fun changeExpirationDate(newExpirationDate: String) {
@@ -69,7 +73,11 @@ class CardStateHolder(
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
         uiState =
-            uiState.copy(expirationDate = newExpirationDate, expirationDateErrorMessage = error)
+            uiState.copy(
+                expirationDate = newExpirationDate,
+                expirationDateErrorMessage = error,
+                isChangeExpirationDate = true
+            )
     }
 
     fun changeOwnerName(newOwnerName: String) {
@@ -86,7 +94,9 @@ class CardStateHolder(
             Password(trimmed)
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState = uiState.copy(password = newPassword, passwordErrorMessage = error)
+        uiState = uiState.copy(
+            password = newPassword, passwordErrorMessage = error, isPassword = true
+        )
     }
 
     fun newCard(): Card? {
@@ -103,7 +113,22 @@ class CardStateHolder(
                 password = uiState.password,
             )
         }.onSuccess { built ->
-            uiState = uiState.copy(card = built, cardErrorMessage = null)
+            val old = uiState.card
+            val changed = old == null || old.cardCompany != company ||
+                    old.number.value != uiState.number ||
+                    old.expirationDate.value != YearMonth.parse(
+                uiState.expirationDate.filter { it.isDigit() }.take(4),
+                DateTimeFormatter.ofPattern("MMyy")
+            ) ||
+                    (old.ownerName.value ?: "") != uiState.ownerName ||
+                    old.password.value != uiState.password
+
+            if (changed) {
+                uiState = uiState.copy(card = built, cardErrorMessage = null, isPossibleAddCard = true)
+            } else {
+                uiState = uiState.copy(isPossibleAddCard = false)
+            }
+
         }.onFailure { e ->
             uiState = uiState.copy(card = null, cardErrorMessage = e.message)
         }.getOrNull()

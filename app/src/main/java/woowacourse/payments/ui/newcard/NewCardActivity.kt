@@ -17,7 +17,7 @@ class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val card = intent.getParcelableCompat<Card>(KEY_INTENT_CARD)
+        val card: Card? = intent.getParcelableCompat<Card>(KEY_INTENT_CARD)
         setContent {
             NewCardScreen(
                 navigateToBack = { navigateToBack() },
@@ -41,7 +41,7 @@ class NewCardActivity : ComponentActivity() {
 
     companion object {
         private const val KEY_INTENT_CARD = "card"
-        fun Intent(newCardMode: NewCardMode, context: Context, card: Card?): Intent {
+        fun  Intent(newCardMode: NewCardMode, context: Context, card: Card?): Intent {
             when (newCardMode) {
                 is NewCardMode.CreateMode -> {
                     val intent = Intent(context, NewCardActivity::class.java)

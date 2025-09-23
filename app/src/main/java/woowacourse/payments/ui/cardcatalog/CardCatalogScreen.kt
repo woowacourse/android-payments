@@ -73,5 +73,5 @@ fun CardCatalogScreen(
 @Preview(showBackground = true)
 @Composable
 private fun CardCatalogScreenPreview() {
-    CardCatalogScreen({})
+    CardCatalogScreen({} )
 }
