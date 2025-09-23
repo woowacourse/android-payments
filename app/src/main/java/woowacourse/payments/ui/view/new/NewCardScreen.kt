@@ -50,7 +50,7 @@ fun NewCardScreen(
     onFinishRequest: () -> Unit,
 ) {
     val newCardUiStateHolder =
-        rememberSaveable(saver = NewCardUiStateHolder.Saver) {
+        rememberSaveable(mode, saver = NewCardUiStateHolder.Saver) {
             NewCardUiStateHolder(mode)
         }
 
