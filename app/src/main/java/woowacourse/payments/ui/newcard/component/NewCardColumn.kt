@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.ui.cardlist.component.PaymentCard
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.state.CardUiState
 
