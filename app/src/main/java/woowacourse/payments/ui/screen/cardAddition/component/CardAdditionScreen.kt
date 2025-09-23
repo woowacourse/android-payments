@@ -67,6 +67,7 @@ fun CardAdditionScreen(
                 onBankSelected = { newIssuingBank ->
                     stateHolder.updateCardState(newIssuingBank = newIssuingBank)
                 },
+                onDismissRequest = stateHolder::updateSheetVisible,
             )
         }
         Column(
@@ -85,7 +86,7 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp)
-                        .clickable { stateHolder.updateSheetVisible() }
+                        .clickable(onClick = stateHolder::updateSheetVisible)
                         .semantics {
                             contentDescription =
                                 context.getString(R.string.card_addition_card_description)
