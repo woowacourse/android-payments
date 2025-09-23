@@ -47,6 +47,7 @@ class CardAdditionUiStateHolder(
             number = cardNumber.value,
             expiredDate = expiredDate.value,
             ownerName = ownerName,
+            password = password.value,
             issuingBank = issuingBank,
         )
 
