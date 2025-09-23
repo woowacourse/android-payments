@@ -28,17 +28,18 @@ import woowacourse.payments.R
 import woowacourse.payments.cards.component.CardsTopBar
 import woowacourse.payments.cards.component.EmptyCard
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.newcard.CardCompanyUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.PaymentCard
 import woowacourse.payments.util.parcelable
 
 @Composable
 fun CardsScreen(
-    modifier: Modifier = Modifier,
     cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
     onCardAdded: () -> Unit = {},
 ) {
@@ -88,7 +89,10 @@ fun CardsScreen(
             }
 
             cardsStateHolder.cards.forEach { card: Card ->
-                PaymentCard(card = card)
+                PaymentCard(
+                    card = card,
+                    cardCompanyUiState = CardCompanyUiState.from(card.cardCompany),
+                )
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
@@ -120,6 +124,7 @@ private fun CardsScreenPreview() {
                             expiredDate = ExpiredDate.of(4, 26)!!,
                             ownerName = OwnerName("크림"),
                             password = Password("1234"),
+                            cardCompany = CardCompany.KAKAO,
                         ),
                     )
                 },

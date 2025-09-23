@@ -1,35 +1,49 @@
 package woowacourse.payments.newcard
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 
 class NewCardStateHolder {
-    var cardNumber: String by mutableStateOf("")
+    var newCardUiState = mutableStateOf(NewCardUiState())
         private set
 
-    var expiredDate: String by mutableStateOf("")
-        private set
-
-    var ownerName: String by mutableStateOf("")
-        private set
-
-    var password: String by mutableStateOf("")
+    var cardCompanyUiState = mutableStateOf(CardCompanyUiState.from(CardCompany.NONE))
         private set
 
     fun updateCardNumber(value: String) {
-        cardNumber = value
+        newCardUiState.value = newCardUiState.value.copy(cardNumber = value)
     }
 
     fun updateExpiredDate(value: String) {
-        expiredDate = value
+        newCardUiState.value = newCardUiState.value.copy(expiredDate = value)
     }
 
     fun updateOwnerName(value: String) {
-        ownerName = value
+        newCardUiState.value = newCardUiState.value.copy(ownerName = value)
     }
 
     fun updatePassword(value: String) {
-        password = value
+        newCardUiState.value = newCardUiState.value.copy(password = value)
     }
+
+    fun updateCardCompanyUiState(value: CardCompanyUiState) {
+        cardCompanyUiState.value = value
+
+        val isCardCompanySelected = value != CardCompanyUiState.from(CardCompany.NONE)
+        updateIsCardCompanySelected(isCardCompanySelected)
+    }
+
+    private fun updateIsCardCompanySelected(value: Boolean) {
+        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
+    }
+
+    fun getCard(): Result<Card> =
+        Card.from(
+            cardNumber = newCardUiState.value.cardNumber,
+            expiredDate = newCardUiState.value.expiredDate,
+            ownerName = newCardUiState.value.ownerName,
+            password = newCardUiState.value.password,
+            cardCompany = cardCompanyUiState.value.toDomain(),
+        )
 }
