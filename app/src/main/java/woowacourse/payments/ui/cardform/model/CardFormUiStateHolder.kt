@@ -25,7 +25,7 @@ class CardFormUiStateHolder(
     holderInit: String = "",
     pinInit: String = "",
     bankInit: BankType = BankType.NOT_SELECTED,
-    isBankSheetOpenInit: Boolean = true,
+    isBankSheetOpenInit: Boolean = false,
 ) {
     private val originalCard: CardUiModel? = original
 
