@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cartinput
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
@@ -9,7 +9,7 @@ import org.junit.Test
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class AddCardScreenTest {
+class CardInputScreenTest {
     @get:Rule
     val compose = createAndroidComposeRule<ComponentActivity>()
 
@@ -17,7 +17,7 @@ class AddCardScreenTest {
     fun setUp() {
         compose.setContent {
             AndroidpaymentsTheme {
-                AddCardScreen(
+                CardInputScreen(
                     onNavigateBack = { },
                     onNavigateSave = { },
                 )

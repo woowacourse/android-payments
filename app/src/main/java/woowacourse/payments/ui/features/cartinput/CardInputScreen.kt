@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cartinput
 
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
-import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
-import woowacourse.payments.ui.features.addcard.components.CardNumberField
-import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
-import woowacourse.payments.ui.features.addcard.components.CardPasswordField
-import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
-import woowacourse.payments.ui.features.addcard.components.bottomsheet.BottomSheetScreen
+import woowacourse.payments.ui.features.cartinput.components.CardExpireDateField
+import woowacourse.payments.ui.features.cartinput.components.CardNumberField
+import woowacourse.payments.ui.features.cartinput.components.CardOwnerNameField
+import woowacourse.payments.ui.features.cartinput.components.CardPasswordField
+import woowacourse.payments.ui.features.cartinput.components.NewCardTopBar
+import woowacourse.payments.ui.features.cartinput.components.bottomsheet.BottomSheetScreen
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
@@ -42,7 +42,7 @@ private val FormFieldSpacing = 30.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCardScreen(
+fun CardInputScreen(
     onNavigateBack: () -> Unit,
     onNavigateSave: (PaymentCard) -> Unit,
 ) {
@@ -182,6 +182,6 @@ fun AddCardScreen(
 @Composable
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardScreen({}, {})
+        CardInputScreen({}, {})
     }
 }

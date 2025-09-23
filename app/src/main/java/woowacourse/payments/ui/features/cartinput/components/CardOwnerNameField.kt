@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard.components
+package woowacourse.payments.ui.features.cartinput.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions

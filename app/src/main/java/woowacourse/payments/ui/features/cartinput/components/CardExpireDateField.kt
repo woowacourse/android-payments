@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard.components
+package woowacourse.payments.ui.features.cartinput.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.addcard.ExpireDateUiState
+import woowacourse.payments.ui.features.cartinput.ExpireDateUiState
 import woowacourse.payments.ui.mapper.messageResId
 import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.MAX_EXPIRE_DATE_INPUT_LENGTH
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme

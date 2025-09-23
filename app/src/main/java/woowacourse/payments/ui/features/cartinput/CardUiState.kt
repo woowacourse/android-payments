@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cartinput
 
 import woowacourse.payments.ui.model.CardCompanyUiModel
 

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cartinput
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
