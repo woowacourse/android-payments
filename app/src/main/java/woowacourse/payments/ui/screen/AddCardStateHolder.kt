@@ -15,8 +15,21 @@ import woowacourse.payments.ui.model.toUiModel
 
 class AddCardStateHolder(
     initialShowSheet: Boolean,
+    initial: CardUiModel? = null,
 ) {
-    var uiState by mutableStateOf(AddCardUiState(showCompanySheet = initialShowSheet))
+    var uiState by mutableStateOf(
+        AddCardUiState(showCompanySheet = initialShowSheet).let { base ->
+            initial?.let { cardUiModel ->
+                base.copy(
+                    number = cardUiModel.cardNumberRaw,
+                    expiration = cardUiModel.expirationDateRaw,
+                    userName = cardUiModel.userName ?: "",
+                    password = cardUiModel.password,
+                    selectedCompany = cardUiModel.cardCompany.type,
+                )
+            } ?: base
+        },
+    )
         private set
 
     val cardPreview by derivedStateOf {

@@ -16,13 +16,16 @@ class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val initial = parseInitial(intent)
+
         setContent {
             AndroidpaymentsTheme {
                 AddCardScreen(
                     onBackPressed = { finish() },
-                    onAddCard = { card ->
-                        setCardResultAndFinish(card)
-                    },
+                    onAddCard = { card -> setCardResultAndFinish(card) },
+                    initialShowSheet = initial == null, // 새로 추가일 때만 바텀시트 오픈
+                    initialCard = initial,
                 )
             }
         }
@@ -30,22 +33,35 @@ class AddCardActivity : ComponentActivity() {
 
     private fun setCardResultAndFinish(card: Card) {
         val resultIntent =
-            Intent().apply { putExtra(EXTRA_SELECTED_CARD_COMPANY, card.toUiModel()) }
+            Intent().apply {
+                putExtra(EXTRA_CARD_RESULT, card.toUiModel()) // ✅ 키 통일
+            }
         setResult(RESULT_OK, resultIntent)
         finish()
     }
 
     companion object {
-        private const val EXTRA_SELECTED_CARD_COMPANY = "SELECTED_CARD_COMPANY"
+        private const val EXTRA_CARD_RESULT = "EXTRA_CARD_RESULT"
+        private const val EXTRA_INITIAL_CARD = "EXTRA_INITIAL_CARD"
 
         fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
+        fun newIntent(
+            context: Context,
+            initial: CardUiModel,
+        ): Intent =
+            Intent(context, AddCardActivity::class.java).apply {
+                putExtra(EXTRA_INITIAL_CARD, initial)
+            }
+
+        fun parseInitial(intent: Intent?): CardUiModel? =
+            intent?.let {
+                IntentCompat.getParcelableExtra(it, EXTRA_INITIAL_CARD)
+            }
+
         fun parseResult(data: Intent?): CardUiModel? =
             data?.let {
-                IntentCompat.getParcelableExtra<CardUiModel>(
-                    it,
-                    EXTRA_SELECTED_CARD_COMPANY,
-                )
+                IntentCompat.getParcelableExtra(it, EXTRA_CARD_RESULT)
             }
     }
 }
