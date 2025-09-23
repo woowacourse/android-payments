@@ -28,7 +28,7 @@ value class ExpirationDate private constructor(
             clock: Clock = Clock.systemDefaultZone(),
         ): ExpirationDate {
             val yearMonth =
-                ExpirationDateParser.parse(raw)
+                ExpirationDateParser.parseOrNull(raw)
                     ?: throw IllegalArgumentException("만료일 형식이 올바르지 않습니다.")
             return create(yearMonth, clock)
         }
@@ -41,7 +41,7 @@ value class ExpirationDate private constructor(
             if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) ValidationErrorType.InvalidFormat
 
             val yearMonth =
-                ExpirationDateParser.parse(raw) ?: return ValidationErrorType.InvalidFormat
+                ExpirationDateParser.parseOrNull(raw) ?: return ValidationErrorType.InvalidFormat
             val current = now(clock)
             if (yearMonth.isBefore(current)) return ValidationErrorType.ExpiredDate
 

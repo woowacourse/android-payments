@@ -15,7 +15,7 @@ object ExpirationDateParser {
             .toFormatter(Locale.ROOT)
             .withResolverStyle(ResolverStyle.STRICT)
 
-    fun parse(raw: String): YearMonth? {
+    fun parseOrNull(raw: String): YearMonth? {
         val digits = raw.filter(Char::isDigit)
         if (digits.length != EXPIRATION_DATE_LENGTH) return null
         return runCatching { YearMonth.parse(digits, formatter) }.getOrNull()
