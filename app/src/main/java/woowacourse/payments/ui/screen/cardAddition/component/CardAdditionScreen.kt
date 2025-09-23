@@ -11,8 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +37,6 @@ fun CardAdditionScreen(
 ) {
     val stateHolder =
         rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
-    val isCompletable = remember { derivedStateOf { stateHolder.uiState.isValidCard } }
     val sheetState = rememberModalBottomSheetState { false }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
@@ -57,7 +54,7 @@ fun CardAdditionScreen(
             CardAdditionTopBar(
                 onBackClick = onBackClick,
                 onSaveClick = { onSaveClick(stateHolder.uiState.toUiModel()) },
-                isCompletable = isCompletable.value,
+                isCompletable = stateHolder.isCompletable,
             )
         },
     ) { paddingValues: PaddingValues ->

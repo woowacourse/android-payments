@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.cardAddition
 
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -16,6 +17,8 @@ class CardAdditionUiStateHolder(
         private set
     var hasShownSheet by mutableStateOf(false)
         private set
+
+    val isCompletable by derivedStateOf { uiState.isValidCard }
 
     fun updateCardState(
         newCardNumber: String? = null,
