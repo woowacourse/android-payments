@@ -29,6 +29,7 @@ private fun ExistingCardPreview() {
                 number = "1234567812345678",
                 expiredDate = "0925",
                 ownerName = "INHYEOP LEE",
+                password = "",
                 issuingBank = IssuingBank.NOT_SELECTED,
             ),
     )

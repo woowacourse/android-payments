@@ -99,6 +99,7 @@ private fun CardInfoContentPreview() {
                 number = "1234123412341234",
                 expiredDate = "0925",
                 ownerName = "MEEPLE",
+                password = "",
                 issuingBank = IssuingBank.KAKAO,
             ),
     )
