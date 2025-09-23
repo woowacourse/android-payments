@@ -1,8 +1,10 @@
 package woowacourse.payments.cardaddition
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.BankType
 import java.lang.Character.isDigit
@@ -86,11 +88,15 @@ class CardAdditionStateHolder(
         private const val CARD_NUMBER_LENGTH: Int = 16
         private const val EXPIRED_DATE_LENGTH: Int = 4
         private const val PASSWORD_LENGTH: Int = 4
+    }
+}
 
-        val Saver: Saver<CardAdditionStateHolder, CardAdditionUiState> =
+@Composable
+fun rememberCardAdditionStateHolder(initialState: CardAdditionUiState = CardAdditionUiState()) =
+    rememberSaveable(
+        saver =
             Saver(
                 save = { stateHolder: CardAdditionStateHolder -> stateHolder.uiState },
                 restore = { state: CardAdditionUiState -> CardAdditionStateHolder(state) },
-            )
-    }
-}
+            ),
+    ) { CardAdditionStateHolder(initialState) }

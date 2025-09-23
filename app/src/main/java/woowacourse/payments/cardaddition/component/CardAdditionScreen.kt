@@ -10,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -22,6 +21,7 @@ import woowacourse.payments.BankType
 import woowacourse.payments.Card
 import woowacourse.payments.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.cardaddition.CardAdditionUiState
+import woowacourse.payments.cardaddition.rememberCardAdditionStateHolder
 import woowacourse.payments.ui.component.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +30,7 @@ fun CardAdditionScreen(
     onBackClick: () -> Unit,
     onCheckClick: (Card?) -> Unit,
     modifier: Modifier = Modifier,
-    stateHolder: CardAdditionStateHolder = rememberSaveable(saver = CardAdditionStateHolder.Saver) { CardAdditionStateHolder() },
+    stateHolder: CardAdditionStateHolder = rememberCardAdditionStateHolder(),
 ) {
     val state: CardAdditionUiState = stateHolder.uiState
     val scrollState = rememberScrollState()
