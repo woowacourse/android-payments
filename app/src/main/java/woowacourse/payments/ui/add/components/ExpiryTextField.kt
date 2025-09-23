@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.add.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,21 +11,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.Pin
+import woowacourse.payments.domain.model.Expiry
+import woowacourse.payments.ui.transformation.NumberVisualTransformation
 
 @Composable
-fun PinTextField(
+fun ExpiryTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val separator = stringResource(R.string.expiry_separator)
+    val visual = remember(separator) { NumberVisualTransformation(2, separator) }
     val textState = remember(value) { TextFieldValue(value, selection = TextRange(value.length)) }
+
     val digitsOnly = value.filter(Char::isDigit)
-    val showError = digitsOnly.isNotEmpty() && Pin.from(digitsOnly) == null
+    val showError = digitsOnly.isNotEmpty() && Expiry.from(digitsOnly) == null
 
     OutlinedTextField(
         value = textState,
@@ -33,15 +36,15 @@ fun PinTextField(
             val filtered = input.text.filter(Char::isDigit).take(4)
             onValueChange(filtered)
         },
-        label = { Text(stringResource(R.string.label_pin)) },
-        placeholder = { Text(stringResource(R.string.placeholder_pin)) },
-        visualTransformation = PasswordVisualTransformation(),
+        label = { Text(stringResource(R.string.label_expiry)) },
+        placeholder = { Text(stringResource(R.string.placeholder_expiry)) },
+        visualTransformation = visual,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         isError = showError,
         supportingText = {
             if (showError) {
                 Text(
-                    text = stringResource(R.string.error_pin_invalid),
+                    text = stringResource(R.string.error_expiry_invalid),
                     color = MaterialTheme.colorScheme.error,
                 )
             }

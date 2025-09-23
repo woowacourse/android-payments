@@ -11,7 +11,7 @@ import androidx.compose.ui.test.onNodeWithTag
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.component.PaymentCardsContent
+import woowacourse.payments.ui.cards.components.PaymentCardsContent
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 

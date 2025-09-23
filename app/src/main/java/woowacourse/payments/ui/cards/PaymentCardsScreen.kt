@@ -5,8 +5,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.component.PaymentCardsContent
-import woowacourse.payments.ui.component.PaymentCardsTopBar
+import woowacourse.payments.ui.cards.components.PaymentCardsContent
+import woowacourse.payments.ui.cards.components.PaymentCardsTopBar
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 

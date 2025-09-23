@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.preview
+package woowacourse.payments.ui.cards.components.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.domain.model.BankType

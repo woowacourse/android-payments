@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.cards.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.component.preview.PaymentCardPreviewProvider
+import woowacourse.payments.ui.add.components.SelectBankHint
+import woowacourse.payments.ui.cards.components.preview.PaymentCardPreviewProvider
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.CardTextStyle

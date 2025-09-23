@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performClick
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.PaymentCardsTopBar
+import woowacourse.payments.ui.cards.components.PaymentCardsTopBar
 
 class PaymentCardsTopBarTest {
     @get:Rule
