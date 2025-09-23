@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,12 +28,11 @@ fun CardScreen(
     onCardChange: (Card) -> Unit,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    isCardSavable: Boolean,
+    isSheetVisible: Boolean,
+    onChangeSheetVisible: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    isSheetVisibleInit: Boolean = true,
-    isCardSavable: Boolean = false,
 ) {
-    var isSheetVisible by remember { mutableStateOf(isSheetVisibleInit) }
-
     AndroidpaymentsTheme {
         Scaffold(
             topBar = {
@@ -52,10 +47,10 @@ fun CardScreen(
         ) { innerPadding ->
             if (isSheetVisible) {
                 BankSelectBottomSheet(
-                    onDismiss = { isSheetVisible = false },
+                    onDismiss = { onChangeSheetVisible(false) },
                     onBankSelect = { bank ->
                         onCardChange(card.copy(bank = bank))
-                        isSheetVisible = false
+                        onChangeSheetVisible(false)
                     },
                 )
             }
@@ -72,11 +67,11 @@ fun CardScreen(
                     modifier =
                         Modifier
                             .align(Alignment.CenterHorizontally)
-                            .clickable { isSheetVisible = true },
+                            .clickable { onChangeSheetVisible(true) },
                     bank = card.bank.toUiModel(),
                 )
                 CardNumberField(
-                    card.number,
+                    card.number.toUiModel(),
                     onValueChange = { input ->
                         onCardChange(card.copy(number = CardNumber.fromRawInput(input)))
                     },
@@ -96,10 +91,11 @@ fun CardScreen(
                             ),
                         )
                     },
-                    expirationDate = card.expirationDate,
+                    expirationDate = card.expirationDate.toUiModel(),
+                    isValid = card.expirationDate.isValid(),
                 )
                 CardOwnerField(
-                    cardOwner = card.ownerName,
+                    cardOwner = card.ownerName.toUiModel(),
                     Modifier
                         .fillMaxWidth(),
                     onValueChange = { input ->
@@ -107,7 +103,7 @@ fun CardScreen(
                     },
                 )
                 PasswordField(
-                    password = card.password,
+                    password = card.password.toUiModel(),
                     onValueChange = { input ->
                         onCardChange(card.copy(password = Password.fromRawInput(input)))
                     },
@@ -123,5 +119,14 @@ fun CardScreen(
 @Preview(showBackground = true)
 @Composable
 private fun GenerateCardPreview() {
-    CardScreen(onBackClick = {}, onSaveClick = {}, card = Card(), onCardChange = {}, cardScreenCategory = CardScreenCategory.Add)
+    CardScreen(
+        onBackClick = {},
+        onSaveClick = {},
+        card = Card(),
+        onCardChange = {},
+        cardScreenCategory = CardScreenCategory.Add,
+        isCardSavable = true,
+        isSheetVisible = true,
+        onChangeSheetVisible = {},
+    )
 }

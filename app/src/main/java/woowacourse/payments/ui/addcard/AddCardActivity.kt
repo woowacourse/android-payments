@@ -18,6 +18,7 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             var card by remember { mutableStateOf(Card()) }
+            var isSheetVisible by remember { mutableStateOf(true) }
             CardScreen(
                 card = card,
                 cardScreenCategory = CardScreenCategory.Add,
@@ -30,6 +31,8 @@ class AddCardActivity : ComponentActivity() {
                 },
                 onCardChange = { newCard -> card = newCard },
                 isCardSavable = card.isValid(),
+                isSheetVisible = isSheetVisible,
+                onChangeSheetVisible = { isOpen -> isSheetVisible = isOpen },
             )
         }
     }
