@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.registration
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,69 +11,74 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardExpirationDateTextField
 import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.toBankName
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardRegistrationScreen(
-    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
     onRegistrationComplete: (PaymentCardUiModel) -> Unit,
     onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
 ) {
-    val focusManager = LocalFocusManager.current
-    val uiState by viewModel.uiState.observeAsState(CardRegistrationScreenUiState())
-    val uiEvent by viewModel.uiEvent.observeAsState(CardRegistrationScreenUiEvent.None)
+    val uiState = viewModel.uiState.observeAsState().value ?: return
+    val uiEvent = viewModel.uiEvent.observeAsState().value
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
-            is CardRegistrationScreenUiEvent.None -> Unit
-            is CardRegistrationScreenUiEvent.RegisteredCard -> {
-                (uiEvent as? CardRegistrationScreenUiEvent.RegisteredCard)
-                    ?.paymentCard
-                    ?.let(onRegistrationComplete)
-            }
+            is CardRegistrationScreenUiEvent.RegisteredCard ->
+                uiEvent.paymentCard.run(onRegistrationComplete)
+
+            null -> Unit
         }
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = onBackClick,
-                onSaveClick = {
-                    focusManager.clearFocus()
-                    viewModel.registerCard()
-                },
-                isSaveButtonEnabled = uiState.isSaveButtonEnabled,
+                onSaveClick = viewModel::registerCard,
+                isSaveButtonEnabled = uiState.canRegisterCard,
             )
         },
     ) { innerPadding ->
         CardRegistrationScreenContent(
             uiState = uiState,
+            onCardClick = viewModel::openBankSelectorBottomSheet,
             onCardNumberChanged = viewModel::updateCardNumber,
             onCardExpirationDateChanged = viewModel::updateCardExpirationDate,
             onCardholderNameChanged = viewModel::updateCardholderName,
             onCardPasswordChanged = viewModel::updateCardPassword,
             modifier = Modifier.padding(innerPadding),
         )
+
+        if (uiState.shouldOpenBankSelector) {
+            BankSelectBottomSheet(
+                onBankSelected = viewModel::updateBank,
+                onDismissRequest = viewModel::closeBankSelectorBottomSheet,
+            )
+        }
     }
 }
 
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
+    onCardClick: () -> Unit,
     onCardNumberChanged: (String) -> Unit,
     onCardExpirationDateChanged: (String) -> Unit,
     onCardholderNameChanged: (String) -> Unit,
@@ -88,9 +94,17 @@ private fun CardRegistrationScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
+        val paymentCard = uiState.toPaymentCardUiModel()
         PaymentCard(
-            paymentCardUiModel = uiState.toPaymentCardUiModel(),
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            bankName = paymentCard.bankType.toBankName(),
+            number = paymentCard.displayCardNumber(),
+            expirationDate = paymentCard.displayExpirationDate(),
+            cardholderName = paymentCard.upperCardholderName,
+            backgroundColor = paymentCard.bankType.bgColor,
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable { onCardClick() },
         )
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -132,11 +146,15 @@ private fun CardRegistrationScreenContent(
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
-fun CardRegistrationScreenPreview() {
+private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
             onBackClick = {},
             onRegistrationComplete = {},
+            viewModel =
+                CardRegistrationScreenViewModel(
+                    CardRegistrationScreenUiState(shouldOpenBankSelector = false),
+                ),
         )
     }
 }

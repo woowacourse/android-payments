@@ -8,7 +8,7 @@ import woowacourse.payments.domain.CardholderName
 @Parcelize
 data class CardholderNameUiModel(
     private val name: String = "",
-    val maxLength: Int,
+    val maxLength: Int = CardholderName.MAX_LENGTH,
     val state: State = State.VALID,
 ) : Parcelable {
     @IgnoredOnParcel

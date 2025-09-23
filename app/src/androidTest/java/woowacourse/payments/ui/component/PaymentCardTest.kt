@@ -6,10 +6,6 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class PaymentCardTest {
     @get:Rule
@@ -17,34 +13,39 @@ class PaymentCardTest {
 
     @Before
     fun setup() {
-        val paymentCard =
-            PaymentCardUiModel(
-                number = CardNumberUiModel("1234567812345678"),
-                expirationDate = CardExpirationDateUiModel("1224"),
-                cardholderName = CardholderNameUiModel("JOHN DOE", 30),
-            )
-
         composeTestRule.setContent {
-            PaymentCard(paymentCardUiModel = paymentCard)
+            PaymentCard(
+                bankName = "국민카드",
+                number = "1234 - 5678 - 1234 - 5678",
+                expirationDate = "12 / 24",
+                cardholderName = "JOHN DOE",
+            )
         }
     }
 
     @Test
-    fun `카드번호는_앞의_8자리만_표시되고_이후는_마스킹된다`() {
+    fun `카드사_이름이_표시된다`() {
         composeTestRule
-            .onNodeWithText("1234 - 5678 - **** - ****")
+            .onNodeWithText("국민카드")
             .assertIsDisplayed()
     }
 
     @Test
-    fun `만료일은_MM_슬래시_YY_형식으로_표시된다`() {
+    fun `카드번호가_표시된다`() {
+        composeTestRule
+            .onNodeWithText("1234 - 5678 - 1234 - 5678")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `만료일이_표시된다`() {
         composeTestRule
             .onNodeWithText("12 / 24")
             .assertIsDisplayed()
     }
 
     @Test
-    fun `카드소유자명이_UI에_그대로_표시된다`() {
+    fun `카드소유자명이_표시된다`() {
         composeTestRule
             .onNodeWithText("JOHN DOE")
             .assertIsDisplayed()

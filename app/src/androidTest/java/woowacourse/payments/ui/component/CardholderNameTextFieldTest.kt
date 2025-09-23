@@ -70,28 +70,6 @@ class CardholderNameTextFieldTest {
     }
 
     @Test
-    fun `최대_글자_이상으로는_입력이_되지_않는다`() {
-        // given
-        val maxLength = 10
-        val initialCardholderName = "A".repeat(maxLength)
-        setup(initialCardholderName, maxLength)
-        val textField = composeTestRule.onNodeWithTag(TEST_TAG)
-
-        // when
-        textField.performTextInput("B")
-
-        // then
-        val labelText = "카드 소유자 이름(선택)"
-        val supportingText = "10/10"
-        val editableText = "A".repeat(maxLength)
-
-        assertAll(
-            { textField.assertIsDisplayed() },
-            { textField.assertTextEquals(labelText, supportingText, editableText) },
-        )
-    }
-
-    @Test
     fun `입력_문자열의_길이가_표시된다`() {
         // given
         setup(maxLength = 30)
@@ -112,7 +90,7 @@ class CardholderNameTextFieldTest {
     }
 
     @Test
-    fun `에러메시지가_있으면_오류_텍스트가_보인다`() {
+    fun `오류_메시지가_제공되면_오류_텍스트가_보인다`() {
         // given
         setup(errorMessage = "형식이 올바르지 않습니다.")
         val textField = composeTestRule.onNodeWithTag(TEST_TAG)

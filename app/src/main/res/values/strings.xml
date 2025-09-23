@@ -12,6 +12,9 @@
     <!-- COMPONENT -->
     <!-- ========================================================= -->
 
+    <!--  PaymentCard  -->
+    <string name="payment_card_content_description">카드</string>
+
     <!-- card_number_text_field -->
     <string name="card_number_text_field_label">카드 번호</string>
     <string name="card_number_text_field_placeholder">0000 – 0000 – 0000 – 0000</string>
@@ -31,6 +34,17 @@
     <string name="cardholder_name_text_field_label">카드 소유자 이름(선택)</string>
     <string name="cardholder_name_text_field_placeholder">카드에 표시된 이름을 입력하세요.</string>
     <string name="cardholder_name_text_field_content_description">카드 소유자 이름 입력란</string>
+
+    <!-- Issuing Bank Selector Bottom Sheet -->
+    <string name="issuing_bank_selector_bc_card">BC카드</string>
+    <string name="issuing_bank_selector_hana_card">하나카드</string>
+    <string name="issuing_bank_selector_hyundai_card">현대카드</string>
+    <string name="issuing_bank_selector_kakao_card">카카오카드</string>
+    <string name="issuing_bank_selector_kb_card">국민카드</string>
+    <string name="issuing_bank_selector_lotte_card">롯데카드</string>
+    <string name="issuing_bank_selector_shinhan_card">신한카드</string>
+    <string name="issuing_bank_selector_woori_card">우리카드</string>
+    <string name="issuing_bank_selector_bottom_sheet_content_description">카드사 선택 바텀 시트</string>
 
     <!-- ========================================================= -->
     <!-- SCREEN -->

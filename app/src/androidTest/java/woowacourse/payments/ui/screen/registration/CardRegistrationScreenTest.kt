@@ -4,10 +4,14 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.assertTextEquals
+import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
@@ -33,6 +37,35 @@ class CardRegistrationScreenTest {
             { cardRegistrationButton.assertIsDisplayed() },
             { cardRegistrationButton.assertIsNotEnabled() },
         )
+    }
+
+    @Test
+    fun `화면_진입_시_카드사_선택_바텀_시트가_보인다`() {
+        // given
+        setup()
+
+        // then
+        composeTestRule
+            .onNodeWithContentDescription("카드사 선택 바텀 시트")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `카드사_선택_바텀_시트에서_카드사를_선택하면_카드사_이름이_카드_미리보기에_보인다`() {
+        // given
+        setup()
+
+        // when
+        composeTestRule
+            .onNode(hasText("국민카드") and hasClickAction())
+            .performClick()
+
+        composeTestRule.waitForIdle()
+
+        // then
+        composeTestRule
+            .onNodeWithContentDescription("카드")
+            .assertTextContains("국민카드")
     }
 
     @Test

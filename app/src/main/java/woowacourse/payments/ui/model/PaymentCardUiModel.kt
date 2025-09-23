@@ -3,10 +3,10 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.extension.coerceAtMost
 
 @Parcelize
 data class PaymentCardUiModel(
+    val bankType: BankTypeUiModel,
     private val number: CardNumberUiModel,
     private val expirationDate: CardExpirationDateUiModel,
     private val cardholderName: CardholderNameUiModel,
@@ -15,7 +15,7 @@ data class PaymentCardUiModel(
         mask: String = DEFAULT_MASK,
         maskingRange: IntRange = DEFAULT_MASKING_RANGE,
     ): String {
-        val safeRange = maskingRange.coerceAtMost(number.number.length)
+        val safeRange = maskingRange.coerceInLength(number.number.length)
         return number.number
             .replaceRange(safeRange, mask.repeat(safeRange.count()))
             .chunked(4)
@@ -27,6 +27,8 @@ data class PaymentCardUiModel(
 
     @IgnoredOnParcel
     val upperCardholderName: String = cardholderName.displayedName.uppercase()
+
+    private fun IntRange.coerceInLength(length: Int): IntRange = (first.coerceAtMost(length)..last.coerceAtMost(length - 1))
 
     companion object {
         private const val DEFAULT_EXPIRATION_DATE_SEPARATOR = " / "
