@@ -25,13 +25,13 @@ fun CardCatalogScreen(
         topBar = {
             CardCatalogTopBar(
                 cardListStatus = stateHolder.uiState,
-                onAddCard = { onAddCard },
+                onAddCard = { onAddCard() },
             )
         }
     ) { paddingValues: PaddingValues ->
         CardCatalogColumn(
             cardListStatus = stateHolder.uiState,
-            onAddCard = { onAddCard },
+            onAddCard = { onAddCard() },
             onEditCard = { cardUiModel -> onEditCard(cardUiModel) },
             modifier = Modifier.padding(paddingValues)
         )

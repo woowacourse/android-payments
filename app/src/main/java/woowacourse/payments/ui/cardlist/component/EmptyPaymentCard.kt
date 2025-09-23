@@ -27,7 +27,7 @@ fun EmptyPaymentCard(onAddCard: () -> Unit) {
                 color = GrayE5,
                 shape = RoundedCornerShape(5.dp)
             )
-            .clickable { onAddCard },
+            .clickable { onAddCard() },
         contentAlignment = Alignment.Center
     ) {
         Icon(

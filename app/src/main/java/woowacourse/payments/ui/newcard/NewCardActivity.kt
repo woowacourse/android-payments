@@ -6,32 +6,32 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.cardcatalog.CardCatalogActivity.Companion.Intent
+import woowacourse.payments.ui.cardlist.CardListActivity.Companion.Intent
 import woowacourse.payments.ui.core.getParcelableCompat
-import woowacourse.payments.ui.newcard.component.NewCardScreen
-import woowacourse.payments.ui.newcard.uiModel.NewCardMode
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.newcard.state.NewCardStatus
 
 class NewCardActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val card: Card? = intent.getParcelableCompat<Card>(KEY_INTENT_CARD)
+        val cardUiModel: CardUiModel? = intent.getParcelableCompat<CardUiModel>(KEY_INTENT_CARD)
+        val newCardStatus: NewCardStatus =
+            intent.getParcelableCompat<NewCardStatus>(KEY_INTENT_NEW_CARD_MODE)
+                ?: NewCardStatus.CreateCard
+
         setContent {
             NewCardScreen(
-                navigateToBack = { navigateToBack() },
-                onSaveClick = { card -> saveClick(card) },
-                card = card
+                newCardStatus = newCardStatus,
+                cardUiModel = cardUiModel,
+                navigateToBack = ::finish,
+                onSaveCard = ::onSaveCard,
             )
         }
     }
 
-    fun navigateToBack() {
-        finish()
-    }
-
-    fun saveClick(newCard: Card?) {
+    fun onSaveCard(newCard: CardUiModel?) {
         newCard?.let {
             val intent = Intent(context = this, newCard)
             setResult(RESULT_OK, intent)
@@ -41,16 +41,22 @@ class NewCardActivity : ComponentActivity() {
 
     companion object {
         private const val KEY_INTENT_CARD = "card"
-        fun  Intent(newCardMode: NewCardMode, context: Context, card: Card?): Intent {
-            when (newCardMode) {
-                is NewCardMode.CreateMode -> {
+        private const val KEY_INTENT_NEW_CARD_MODE = "new_card_mode"
+        fun Intent(newCardStatus: NewCardStatus, context: Context): Intent {
+            when (newCardStatus) {
+                is NewCardStatus.CreateCard -> {
                     val intent = Intent(context, NewCardActivity::class.java)
+                    intent.putExtra(KEY_INTENT_NEW_CARD_MODE, newCardStatus)
                     return intent
                 }
 
-                is NewCardMode.EditMode -> {
+                is NewCardStatus.EditCard -> {
                     val intent = Intent(context, NewCardActivity::class.java)
-                    intent.putExtra(KEY_INTENT_CARD, card)
+                    intent.apply {
+                        putExtra(KEY_INTENT_CARD, newCardStatus.cardUiModel)
+                        putExtra(KEY_INTENT_NEW_CARD_MODE, newCardStatus)
+                    }
+
                     return intent
                 }
             }

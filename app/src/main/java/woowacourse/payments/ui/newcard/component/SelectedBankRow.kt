@@ -30,8 +30,8 @@ fun SelectedBankRow(
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        repeat(cardCompanyMap.entries.filterNot { it == CardCompanyUiModel.Default() }.size) { index: Int ->
-            if (selectedBank != CardCompanyUiModel.Default()) {
+        repeat(cardCompanyMap.entries.filterNot { it == CardCompanyUiModel.Default }.size) { index: Int ->
+            if (selectedBank != CardCompanyUiModel.Default) {
                 val cardCompanyType = cardCompanyMap.entries.toList()[index].value
                 SelectableCardCompanyLogo(
                     cardCompany = cardCompanyType,

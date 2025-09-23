@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter
 class CardStateHolder(
     val previousUiState: MutableState<CardUiState> = mutableStateOf(CardUiState())
 ) {
-
     var uiState by previousUiState
         private set
 
@@ -31,7 +30,7 @@ class CardStateHolder(
             isBottomSheetOpen = !uiState.isBottomSheetOpen,
             card = card,
             cardCompany = card.cardCompany,
-            expirationDate = card.expiredDate.value
+            expiredDate = card.expiredDate.value
                 .format(DateTimeFormatter.ofPattern("MMyy")),
             number = card.number.value,
             ownerName = card.ownerName.value ?: "",
@@ -64,7 +63,7 @@ class CardStateHolder(
             uiState.copy(number = newNumber, numberErrorMessage = error, isChangeNumber = true)
     }
 
-    fun changeExpirationDate(newExpirationDate: String) {
+    fun changeExpiredDate(newExpirationDate: String) {
         val digits = newExpirationDate.filter { it.isDigit() }.take(4)
         val error = if (digits.isEmpty()) null else runCatching {
             ExpiredDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
@@ -72,7 +71,7 @@ class CardStateHolder(
 
         uiState =
             uiState.copy(
-                expirationDate = newExpirationDate,
+                expiredDate = newExpirationDate,
                 expirationDateErrorMessage = error,
                 isChangeExpirationDate = true
             )
@@ -104,7 +103,7 @@ class CardStateHolder(
                 cardCompany = company,
                 number = uiState.number,
                 expiredDate = YearMonth.parse(
-                    uiState.expirationDate.filter { it.isDigit() }.take(4),
+                    uiState.expiredDate.filter { it.isDigit() }.take(4),
                     DateTimeFormatter.ofPattern("MMyy")
                 ),
                 ownerName = uiState.ownerName,
@@ -115,16 +114,14 @@ class CardStateHolder(
             val changed = old == null || old.cardCompany != company ||
                     old.number.value != uiState.number ||
                     old.expiredDate.value != YearMonth.parse(
-                uiState.expirationDate.filter { it.isDigit() }.take(4),
+                uiState.expiredDate.filter { it.isDigit() }.take(4),
                 DateTimeFormatter.ofPattern("MMyy")
             ) ||
                     (old.ownerName.value ?: "") != uiState.ownerName ||
                     old.password.value != uiState.password
 
             if (changed) {
-                uiState = uiState.copy(card = built, cardErrorMessage = null, isPossibleAddCard = true)
-            } else {
-                uiState = uiState.copy(isPossibleAddCard = false)
+                uiState = uiState.copy(card = built, cardErrorMessage = null)
             }
 
         }.onFailure { e ->

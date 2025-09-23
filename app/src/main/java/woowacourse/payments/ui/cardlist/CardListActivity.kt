@@ -9,8 +9,8 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
-import woowacourse.payments.ui.model.NewCardMode
 import woowacourse.payments.ui.model.toDomain
+import woowacourse.payments.ui.newcard.state.NewCardStatus
 
 class CardListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,12 +25,12 @@ class CardListActivity : ComponentActivity() {
     }
 
     fun onAddCard() {
-        val intent = NewCardActivity.Intent(NewCardMode.CreateMode, this)
+        val intent = NewCardActivity.Intent(NewCardStatus.CreateCard, this)
         startActivity(intent)
     }
 
     fun onEditCard(cardUiModel: CardUiModel) {
-        val intent = NewCardActivity.Intent(NewCardMode.EditMode, this, cardUiModel)
+        val intent = NewCardActivity.Intent(NewCardStatus.EditCard(cardUiModel), this)
         startActivity(intent)
     }
 

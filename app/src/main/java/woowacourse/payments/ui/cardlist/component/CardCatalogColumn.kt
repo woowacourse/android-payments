@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist.component
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,23 +31,25 @@ fun CardCatalogColumn(
         when (cardListStatus) {
             is CardListUiStatus.EmptyCardList -> {
                 item { InformationText() }
-                item { EmptyPaymentCard { onAddCard } }
+                item { EmptyPaymentCard {
+                    Log.d("test", "동작")
+                    onAddCard() } }
             }
 
             is CardListUiStatus.OneCardList -> {
                 item {
                     PaymentCard(
                         cardUiModel = cardListStatus.card,
-                        onEditCard = { onEditCard })
+                        onEditCard = { onEditCard(it) })
                 }
-                item { EmptyPaymentCard { onAddCard } }
+                item { EmptyPaymentCard { onAddCard() } }
             }
 
             is CardListUiStatus.MultiCardList -> item {
                 cardListStatus.card.forEach { card ->
                     PaymentCard(
                         cardUiModel = card,
-                        onEditCard = { onEditCard })
+                        onEditCard = { onEditCard(it) })
                 }
             }
         }
@@ -70,9 +73,9 @@ private fun CardCatalogColumnPreview1() {
         CardUiModel(
             number = "1234567890123456",
             ownerName = "Hwang Chaewon",
-            expiredDate = YearMonth.now().plusYears(1),
+            expiredDate = "0230",
             password = "1234",
-            cardCompanyUiModel = CardCompanyUiModel.Default(),
+            cardCompanyUiModel = CardCompanyUiModel.Default,
         )
 
     CardCatalogColumn(
@@ -89,16 +92,16 @@ private fun CardCatalogColumnPreview2() {
         CardUiModel(
             number = "1234567890123456",
             ownerName = "Hwang Chaewon",
-            expiredDate = YearMonth.now().plusYears(1),
+            expiredDate = "0230",
             password = "1234",
-            cardCompanyUiModel = CardCompanyUiModel.Default(),
+            cardCompanyUiModel = CardCompanyUiModel.Default,
         ),
         CardUiModel(
             number = "1234567890123456",
             ownerName = "Hwang Chaewon",
-            expiredDate = YearMonth.now().plusYears(1),
+            expiredDate = "0230",
             password = "1234",
-            cardCompanyUiModel = CardCompanyUiModel.Default(),
+            cardCompanyUiModel = CardCompanyUiModel.Default,
         )
     )
     CardCatalogColumn(
