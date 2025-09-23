@@ -19,7 +19,16 @@ sealed interface CardsUiState : Parcelable {
     fun addCard(newCard: PaymentCardUiModel): CardsUiState =
         when (this) {
             EMPTY -> SINGLE(newCard)
-            is SINGLE -> MULTIPLE(listOf(card, newCard))
-            is MULTIPLE -> copy(cards = cards + newCard)
+
+            is SINGLE ->
+                when {
+                    newCard.id == card.id -> SINGLE(newCard)
+                    else -> MULTIPLE(listOf(card, newCard))
+                }
+
+            is MULTIPLE -> {
+                val newCards = cards.map { card -> if (card.id == newCard.id) newCard else card }
+                MULTIPLE(newCards)
+            }
         }
 }
