@@ -20,7 +20,7 @@ class EditCardActivity : ComponentActivity() {
         setContent {
             val initCard = requireNotNull(intent.getParcelableExtraCompat<CardUiModel>(EXTRA_CARD)).toDomain()
             var card by remember { mutableStateOf(initCard) }
-            var isSheetVisible by remember { mutableStateOf(true) }
+            var isSheetVisible by remember { mutableStateOf(false) }
             CardScreen(
                 card = card,
                 cardScreenCategory = CardScreenCategory.Edit,
