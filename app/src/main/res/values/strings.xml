@@ -69,6 +69,8 @@
     <string name="add_card_password_incomplete_error_message">4자리로 입력해 주세요</string>
 
     <!--    카드 수정 컴포넌트-->
+    <string name="card_list_card_edited_alert">카드가 수정되었습니다</string>
+    <string name="edit_card_same_alert">변경된 정보가 없습니다.\n카드 정보를 수정해 주세요.</string>
     <!--    상단바(TopBar)-->
     <string name="edit_card_top_bar_title">카드 수정</string>
 

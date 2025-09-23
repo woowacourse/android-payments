@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.data.PaymentFakeRepository.addCardToDB
+import woowacourse.payments.data.PaymentFakeRepository.getCardUiStateById
 import woowacourse.payments.data.PaymentFakeRepository.updateDBCard
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
@@ -82,8 +83,15 @@ fun CardInputScreen(
             is CardCreationResult.Success -> {
                 isSavingInProgress = false
                 if (dbId != EMPTY_DB_ID) {
-                    updateDBCard(dbId, uiState)
-                    onNavigateSave(dbId, cardDomainResult.paymentCard)
+                    val dbState = getCardUiStateById(dbId)
+
+                    if (dbState == cardUiStateHolder.uiState.value) {
+                        isSavingInProgress = false
+                        toastMessageResId = R.string.edit_card_same_alert
+                    } else {
+                        updateDBCard(dbId, uiState)
+                        onNavigateSave(dbId, cardDomainResult.paymentCard)
+                    }
                 } else {
                     val savedDBId = addCardToDB(uiState)
                     onNavigateSave(savedDBId, cardDomainResult.paymentCard)
