@@ -1,0 +1,43 @@
+package woowacourse.payments.ui.cards.component
+
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertIsNotDisplayed
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import org.junit.Rule
+import org.junit.Test
+
+class CardsTopAppBarTest {
+    @get:Rule
+    val composeTestRule = createComposeRule()
+
+    @Test
+    fun `추가_버튼을_활성화할_수_있다`() {
+        // given && when
+        val isVisibleRegistrationButton = true
+        composeTestRule.setContent {
+            CardsTopAppBar(
+                onRegistrationClick = {},
+                isVisibleRegistrationButton = isVisibleRegistrationButton,
+            )
+        }
+
+        // then
+        composeTestRule.onNodeWithContentDescription("카드 목록 앱 바 추가").assertIsDisplayed()
+    }
+
+    @Test
+    fun `추가_버튼을_비활성화할_수_있다`() {
+        // given && when
+        val isVisibleRegistrationButton = false
+        composeTestRule.setContent {
+            CardsTopAppBar(
+                onRegistrationClick = {},
+                isVisibleRegistrationButton = isVisibleRegistrationButton,
+            )
+        }
+
+        // then
+        composeTestRule.onNodeWithContentDescription("카드 목록 앱 바 추가").assertIsNotDisplayed()
+    }
+}

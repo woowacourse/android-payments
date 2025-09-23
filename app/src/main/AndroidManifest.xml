@@ -11,11 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
-            android:name=".ui.screen.registration.CardRegistrationActivity"
+            android:name=".ui.registration.CardRegistrationActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
         <activity
-            android:name=".ui.screen.cards.CardsActivity"
+            android:name=".ui.cards.CardsActivity"
             android:exported="true"
             android:theme="@style/Theme.Androidpayments">
             <intent-filter>
