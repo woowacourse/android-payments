@@ -29,9 +29,14 @@ class CardListActivity : ComponentActivity() {
                 val launcher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                         if (result.resultCode == RESULT_OK) {
-                            result.data?.toCardOrNull()?.let { card: Card ->
-                                cards.add(card.toUiModel())
-                            }
+                            val data: Intent =
+                                result.data ?: return@rememberLauncherForActivityResult
+                            val card: Card =
+                                data
+                                    .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_ADDED_CARD)
+                                    ?.toCardOrNull()
+                                    ?: return@rememberLauncherForActivityResult
+                            cards.add(card.toUiModel())
                         }
                     }
 
@@ -39,6 +44,4 @@ class CardListActivity : ComponentActivity() {
             }
         }
     }
-
-    private fun Intent.toCardOrNull(): Card? = getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let(CardUiModel::toCardOrNull)
 }

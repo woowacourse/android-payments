@@ -1,5 +1,5 @@
 package woowacourse.payments.ui.common
 
 object ExtraKeys {
-    const val CARD_KEY = "card_key"
+    const val KEY_ADDED_CARD = "key_added_card"
 }
