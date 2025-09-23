@@ -51,7 +51,7 @@ fun CardRegistrationScreen(
         topBar = {
             CardRegistrationTopAppBar(
                 onBackClick = onBackClick,
-                onSaveClick = viewModel::registerCard,
+                onSaveClick = viewModel::registerOrUpdateCard,
                 isSaveButtonEnabled = uiState.canRegisterCard,
             )
         },

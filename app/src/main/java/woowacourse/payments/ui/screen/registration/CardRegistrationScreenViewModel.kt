@@ -3,16 +3,19 @@ package woowacourse.payments.ui.screen.registration
 import androidx.compose.runtime.saveable.Saver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.CardholderName
+import woowacourse.payments.domain.PaymentCards
 import woowacourse.payments.ui.extension.update
 import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardRegistrationScreenViewModel(
     initialUiState: CardRegistrationScreenUiState =
@@ -83,12 +86,22 @@ class CardRegistrationScreenViewModel(
             }
     }
 
-    fun registerCard() {
+    fun registerOrUpdateCard() {
         val currentUiState = _uiState.value ?: return
         if (!currentUiState.canRegisterCard) return
 
-        val paymentCard = currentUiState.toPaymentCardUiModel()
-        _uiEvent.value = CardRegistrationScreenUiEvent.RegisteredCard(paymentCard)
+        PaymentCards
+            .registerOrUpdate(
+                id = currentUiState.cardId,
+                bankType = BankType.valueOf(currentUiState.bankType.name),
+                number = CardNumber.from(currentUiState.cardNumber.number),
+                expirationDate = CardExpirationDate.from(currentUiState.cardExpirationDate.expirationDate),
+                cardholderName = CardholderName.from(currentUiState.cardholderName.displayedName),
+                password = CardPassword.from(currentUiState.cardPassword.password),
+            ).onSuccess { paymentCard ->
+                _uiEvent.value =
+                    CardRegistrationScreenUiEvent.RegisteredCard(PaymentCardUiModel.from(paymentCard))
+            }
     }
 
     private fun handleCardNumberError(

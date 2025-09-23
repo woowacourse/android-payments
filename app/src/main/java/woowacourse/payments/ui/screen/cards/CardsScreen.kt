@@ -40,6 +40,7 @@ import woowacourse.payments.ui.extension.getParcelableExtraCompat
 import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.PaymentCardsUiModel
@@ -225,6 +226,7 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Car
                     number = CardNumberUiModel("1234567812345678"),
                     expirationDate = CardExpirationDateUiModel("0301"),
                     cardholderName = CardholderNameUiModel("DICE", 30),
+                    password = CardPasswordUiModel("1234"),
                 )
             }
     }
