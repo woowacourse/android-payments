@@ -38,7 +38,7 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = card.bankUiModel.backgroundColor,
+                    color = card.bankUiModel.color,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {

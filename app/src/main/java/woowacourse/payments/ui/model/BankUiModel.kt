@@ -1,21 +1,22 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import kotlinx.parcelize.Parceler
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.TypeParceler
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
 
 @Parcelize
 data class BankUiModel(
     val name: String,
-    val color: Int,
-    val logoRes: Int,
+    @TypeParceler<Color, ColorParceler> val color: Color,
+    @param:DrawableRes val logoRes: Int,
 ) : Parcelable {
-    val backgroundColor: Color
-        get() = Color(color)
-
     companion object {
         fun create(
             name: String,
@@ -24,9 +25,17 @@ data class BankUiModel(
         ): BankUiModel =
             BankUiModel(
                 name = name,
-                color = color.toArgb(),
+                color = color,
                 logoRes = logoRes,
             )
+    }
+}
+
+object ColorParceler : Parceler<Color> {
+    override fun create(parcel: Parcel): Color = Color(parcel.readInt())
+
+    override fun Color.write(parcel: Parcel, flags: Int) {
+        parcel.writeInt(this.toArgb())
     }
 }
 
