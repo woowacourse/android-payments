@@ -9,6 +9,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.common.model.CardUiModel
 
 const val CARD_NUMBER_MAX: Int = 16
@@ -24,6 +25,8 @@ class NewCardUiStateHolder(
     holderInit: String = "",
     pinInit: String = "",
     scrollInit: Int = 0,
+    bankInit: BankType = BankType.NOT_SELECTED,
+    isBankSheetOpenInit: Boolean = true,
 ) {
     var cardNumber by mutableStateOf(cardNumberInit)
         private set
@@ -33,8 +36,9 @@ class NewCardUiStateHolder(
         private set
     var pin by mutableStateOf(pinInit)
         private set
-
     var scrollPosition by mutableIntStateOf(scrollInit)
+        private set
+    var isBankSheetOpen by mutableStateOf(isBankSheetOpenInit)
         private set
 
     fun updateCardNumber(input: String) {
@@ -61,18 +65,31 @@ class NewCardUiStateHolder(
         scrollPosition = position.coerceAtLeast(0)
     }
 
+    var selectedBank by mutableStateOf(bankInit)
+        private set
+
     val canSave: Boolean
         get() =
             (cardNumber.length == CARD_NUMBER_MAX) &&
                 (expiry.length == EXPIRY_MAX) &&
-                (pin.length == PIN_MAX)
+                (pin.length == PIN_MAX) &&
+                (selectedBank != BankType.NOT_SELECTED)
 
-    fun toCardUiModel(): CardUiModel =
+    fun createCardUiModel(): CardUiModel =
         CardUiModel(
             numberDigits = cardNumber,
             expiry = expiry,
             holder = holder,
+            bankType = selectedBank,
         )
+
+    fun updateBank(bank: BankType) {
+        selectedBank = bank
+    }
+
+    fun updateBankSheet(isOpen: Boolean) {
+        isBankSheetOpen = isOpen
+    }
 
     @Parcelize
     data class Saved(
@@ -81,12 +98,24 @@ class NewCardUiStateHolder(
         val holder: String,
         val pin: String,
         val scroll: Int,
+        val bank: String,
+        val isBankSheetOpen: Boolean,
     ) : Parcelable
 
     companion object {
         val Saver: Saver<NewCardUiStateHolder, Saved> =
             Saver(
-                save = { holder -> Saved(holder.cardNumber, holder.expiry, holder.holder, holder.pin, holder.scrollPosition) },
+                save = { holder ->
+                    Saved(
+                        cardNumber = holder.cardNumber,
+                        expiry = holder.expiry,
+                        holder = holder.holder,
+                        pin = holder.pin,
+                        scroll = holder.scrollPosition,
+                        bank = holder.selectedBank.name,
+                        isBankSheetOpen = holder.isBankSheetOpen,
+                    )
+                },
                 restore = { saved ->
                     NewCardUiStateHolder(
                         cardNumberInit = saved.cardNumber,
@@ -94,6 +123,8 @@ class NewCardUiStateHolder(
                         holderInit = saved.holder,
                         pinInit = saved.pin,
                         scrollInit = saved.scroll,
+                        bankInit = BankType.valueOf(saved.bank),
+                        isBankSheetOpenInit = saved.isBankSheetOpen,
                     )
                 },
             )

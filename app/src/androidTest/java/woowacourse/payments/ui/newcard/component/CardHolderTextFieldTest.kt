@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

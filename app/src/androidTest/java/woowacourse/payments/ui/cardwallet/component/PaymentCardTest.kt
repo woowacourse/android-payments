@@ -1,13 +1,14 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.cardwallet
+package woowacourse.payments.ui.cardwallet.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.common.components.PaymentCard
+import woowacourse.payments.domain.model.BankType
+import woowacourse.payments.ui.cardwallet.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
 
 class PaymentCardTest {
@@ -22,6 +23,7 @@ class PaymentCardTest {
                 numberDigits = "1234123412341234",
                 expiry = "0511",
                 holder = "공백",
+                bankType = BankType.HYUNDAI,
             )
 
         // when
