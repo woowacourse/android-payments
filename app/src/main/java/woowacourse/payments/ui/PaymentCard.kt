@@ -1,6 +1,7 @@
 package woowacourse.payments.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.newCard.toUiModel
@@ -32,10 +32,13 @@ import woowacourse.payments.ui.theme.PaymentCardTextStyle
 fun PaymentCard(
     state: PaymentCardState,
     modifier: Modifier = Modifier,
+    onClick: ((CardUiModel) -> Unit)? = null,
 ) {
     when (state) {
         PaymentCardState.Empty -> EmptyPaymentCard(modifier)
-        is PaymentCardState.CardInfo -> PaymentCardContent(card = state.card)
+        is PaymentCardState.CardInfo -> PaymentCardContent(
+            card = state.card,
+            onClick = { onClick?.invoke(state.card) })
     }
 }
 
@@ -43,6 +46,7 @@ fun PaymentCard(
 fun PaymentCardContent(
     card: CardUiModel,
     modifier: Modifier = Modifier,
+    onClick: (CardUiModel) -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -55,7 +59,8 @@ fun PaymentCardContent(
                         ?: CardCompany.NOT_SELECTED.toUiModel().color,
                     shape = RoundedCornerShape(5.dp),
                 )
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .clickable { onClick(card) }
     ) {
         Column(
             modifier =

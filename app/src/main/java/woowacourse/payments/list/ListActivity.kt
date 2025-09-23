@@ -44,6 +44,7 @@ class ListActivity : ComponentActivity() {
                         val intent = Intent(this, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
                     },
+                    onClick = {},
                 )
             }
         }
@@ -57,6 +58,7 @@ private fun EmptyCardListPreview() {
         CardListScreen(
             CardScreenUiState.from(emptyList()),
             onAddClick = {},
+            onClick = {},
         )
     }
 }
@@ -77,6 +79,7 @@ private fun AddOneCardListPreview() {
                 ),
             ),
             onAddClick = {},
+            onClick = {},
         )
     }
 }
@@ -103,6 +106,7 @@ private fun AddTwoOrMoreCardListPreview() {
                 ),
             ),
             onAddClick = {},
+            onClick = {},
         )
     }
 }

@@ -25,6 +25,7 @@ import woowacourse.payments.ui.PaymentCardState
 fun CardListScreen(
     uiState: CardScreenUiState,
     onAddClick: () -> Unit,
+    onClick: (CardUiModel) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -69,6 +70,7 @@ fun CardListScreen(
                     item {
                         PaymentCard(
                             state = PaymentCardState.CardInfo(uiState.card),
+                            onClick = { onClick(uiState.card) },
                         )
                     }
                     item {
@@ -80,6 +82,7 @@ fun CardListScreen(
                     items(uiState.cards) { card ->
                         PaymentCard(
                             state = PaymentCardState.CardInfo(card),
+                            onClick = { onClick(card) },
                         )
                     }
                 }
