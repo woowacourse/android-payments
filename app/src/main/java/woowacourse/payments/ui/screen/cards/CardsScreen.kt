@@ -1,9 +1,13 @@
 package woowacourse.payments.ui.screen.cards
 
 import android.app.Activity
+import android.content.Intent
 import android.widget.Toast
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,13 +49,15 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
+    onRegisterCardClick: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
+    onEditCardClick: (PaymentCardUiModel, ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CardsScreenViewModel = rememberCardsScreenViewModel(),
 ) {
     val context = LocalContext.current
     val uiState = viewModel.uiState.observeAsState().value ?: return
     val uiEvent = viewModel.uiEvent.observeAsState().value
-    val cardAddLauncher = rememberCardAddLauncher(viewModel::addCard)
+    val launcher = rememberCardAddLauncher(viewModel::addCard)
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
@@ -68,20 +74,15 @@ fun CardsScreen(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                onRegistrationButtonClick = {
-                    val newIntent = CardRegistrationActivity.newIntent(context)
-                    cardAddLauncher.launch(newIntent)
-                },
+                onRegistrationButtonClick = { onRegisterCardClick(launcher) },
                 showRegistrationButton = uiState is CardsUiState.MULTIPLE,
             )
         },
     ) { innerPadding ->
         CardsScreenContent(
             cardsUiState = uiState,
-            onRegistrationButtonClick = {
-                val newIntent = CardRegistrationActivity.newIntent(context)
-                cardAddLauncher.launch(newIntent)
-            },
+            onRegistrationButtonClick = { onRegisterCardClick(launcher) },
+            onCardClick = { card -> onEditCardClick(card, launcher) },
             modifier = Modifier.padding(innerPadding),
         )
     }
@@ -100,6 +101,7 @@ private fun rememberCardAddLauncher(onCardAdded: (PaymentCardUiModel) -> Unit) =
 private fun CardsScreenContent(
     cardsUiState: CardsUiState,
     onRegistrationButtonClick: () -> Unit,
+    onCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -110,10 +112,21 @@ private fun CardsScreenContent(
         contentAlignment = Alignment.TopCenter,
     ) {
         when (cardsUiState) {
-            is CardsUiState.EMPTY -> CardsEmptyContent(onRegistrationButtonClick)
-            is CardsUiState.MULTIPLE -> CardsMultipleContent(PaymentCardsUiModel(cardsUiState.cards))
+            is CardsUiState.EMPTY ->
+                CardsEmptyContent(onRegistrationButtonClick)
+
             is CardsUiState.SINGLE ->
-                CardsSingleContent(cardsUiState.card, onRegistrationButtonClick)
+                CardsSingleContent(
+                    card = cardsUiState.card,
+                    onRegistrationButtonClick = onRegistrationButtonClick,
+                    onCardClick = onCardClick,
+                )
+
+            is CardsUiState.MULTIPLE ->
+                CardsMultipleContent(
+                    paymentCards = PaymentCardsUiModel(cardsUiState.cards),
+                    onCardClick = onCardClick,
+                )
         }
     }
 }
@@ -139,6 +152,7 @@ private fun CardsEmptyContent(
 private fun CardsSingleContent(
     card: PaymentCardUiModel,
     onRegistrationButtonClick: () -> Unit,
+    onCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -151,6 +165,7 @@ private fun CardsSingleContent(
             expirationDate = card.displayExpirationDate(),
             cardholderName = card.upperCardholderName,
             backgroundColor = card.bankType.bgColor,
+            modifier = Modifier.clickable { onCardClick(card) },
         )
         CardRegistrationButton(onClick = onRegistrationButtonClick)
     }
@@ -159,6 +174,7 @@ private fun CardsSingleContent(
 @Composable
 private fun CardsMultipleContent(
     paymentCards: PaymentCardsUiModel,
+    onCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -172,6 +188,7 @@ private fun CardsMultipleContent(
                 expirationDate = card.displayExpirationDate(),
                 cardholderName = card.upperCardholderName,
                 backgroundColor = card.bankType.bgColor,
+                modifier = Modifier.clickable { onCardClick(card) },
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
@@ -184,7 +201,11 @@ private fun CardsScreenPreview(
     @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: CardsUiState,
 ) {
     AndroidpaymentsTheme {
-        CardsScreen(viewModel = CardsScreenViewModel(cards))
+        CardsScreen(
+            onRegisterCardClick = {},
+            onEditCardClick = { _, _ -> },
+            viewModel = CardsScreenViewModel(cards),
+        )
     }
 }
 
