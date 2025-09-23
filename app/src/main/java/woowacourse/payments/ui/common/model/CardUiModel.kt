@@ -2,7 +2,6 @@ package woowacourse.payments.ui.common.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.domain.model.Card
 
 @Parcelize
 data class CardUiModel(
@@ -28,22 +27,4 @@ data class CardUiModel(
         if (date.isEmpty()) return ""
         return "${date.take(2)} / ${date.takeLast(2)}"
     }
-
-    fun toDomain(): Card =
-        Card(
-            number = number,
-            expiredDate = expiredDate,
-            ownerName = ownerName,
-            password = password,
-            cardCompany = cardCompany.toDomain(),
-        )
 }
-
-fun Card.toUiModel(): CardUiModel =
-    CardUiModel(
-        number = number,
-        expiredDate = expiredDate,
-        ownerName = ownerName,
-        password = password,
-        cardCompany = cardCompany.toUiType(),
-    )
