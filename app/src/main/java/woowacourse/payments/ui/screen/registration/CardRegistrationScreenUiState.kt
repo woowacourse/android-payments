@@ -13,6 +13,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 data class CardRegistrationScreenUiState(
+    val cardId: Long? = null,
     val cardNumber: CardNumberUiModel = CardNumberUiModel(),
     val cardExpirationDate: CardExpirationDateUiModel = CardExpirationDateUiModel(),
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
@@ -69,15 +70,18 @@ data class CardRegistrationScreenUiState(
             number = cardNumber,
             expirationDate = cardExpirationDate,
             cardholderName = cardholderName,
+            password = cardPassword,
         )
 
     companion object {
         fun from(paymentCard: PaymentCardUiModel): CardRegistrationScreenUiState =
             with(paymentCard) {
                 CardRegistrationScreenUiState(
+                    cardId = id,
                     cardNumber = number,
                     cardExpirationDate = paymentCard.expirationDate,
                     cardholderName = paymentCard.cardholderName,
+                    cardPassword = paymentCard.password,
                     bankType = paymentCard.bankType,
                 )
             }
