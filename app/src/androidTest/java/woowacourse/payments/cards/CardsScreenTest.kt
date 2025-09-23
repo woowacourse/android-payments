@@ -24,7 +24,7 @@ class CardsScreenTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardsScreen(stateHolder = stateHolder, onCardAddClick = { })
+            CardsScreen(stateHolder = stateHolder, onCardAddClick = { }, onCardClick = {})
         }
     }
 
