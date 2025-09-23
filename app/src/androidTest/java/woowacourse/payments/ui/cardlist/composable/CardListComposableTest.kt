@@ -3,8 +3,10 @@ package woowacourse.payments.ui.cardlist.composable
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import kotlinx.collections.immutable.toImmutableList
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.domain.Card
 
 class CardListComposableTest {
     @get:Rule
@@ -12,7 +14,12 @@ class CardListComposableTest {
 
     private fun setupCardListComposable() {
         composeTestRule.setContent {
-            GenerateCardListView()
+            CardListScreen(
+                emptyList<Card>().toImmutableList(),
+                onEditCard = {},
+                onAddCard = {},
+                onChangeIndex = {},
+            )
         }
     }
 

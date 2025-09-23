@@ -7,11 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -20,6 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.cardlist.util.navigateToAddCard
@@ -27,22 +24,17 @@ import woowacourse.payments.ui.cardlist.util.navigateToEditCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun GenerateCardListView(modifier: Modifier = Modifier) {
-    var cards by remember { mutableStateOf(emptyList<Card>()) }
-    var currentIndex by remember { mutableIntStateOf(0) }
+fun CardListScreen(
+    cards: ImmutableList<Card>,
+    onEditCard: (Card) -> Unit,
+    onAddCard: (Card) -> Unit,
+    onChangeIndex: (Int) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
-    val addCardLauncher = GenerateAddCardLauncher({ card -> cards = cards + card }, context)
+    val addCardLauncher = GenerateAddCardLauncher(onAddCard, context)
     val editCardLauncher =
-        GenerateEditCardLauncher(context = context, editCard = { card ->
-            cards =
-                cards.mapIndexed { index, oldCard ->
-                    if (index == currentIndex) {
-                        card
-                    } else {
-                        oldCard
-                    }
-                }
-        })
+        GenerateEditCardLauncher(context = context, editCard = onEditCard)
     AndroidpaymentsTheme {
         Scaffold(
             topBar = {
@@ -75,7 +67,7 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
                                 .padding(top = 12.dp, bottom = 24.dp)
                                 .clickable(
                                     onClick = {
-                                        currentIndex = cards.indexOf(card)
+                                        onChangeIndex(cards.indexOf(card))
                                         navigateToEditCard(context, editCardLauncher, card)
                                     },
                                 ),
@@ -100,5 +92,10 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 private fun GenerateCardListPreview() {
-    GenerateCardListView()
+    CardListScreen(
+        cards = emptyList<Card>().toImmutableList(),
+        onEditCard = { },
+        onAddCard = { },
+        onChangeIndex = { },
+    )
 }
