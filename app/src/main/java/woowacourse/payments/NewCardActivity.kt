@@ -7,8 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
+import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.newcard.NewCardScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.util.parcelable
 import woowacourse.payments.util.showShortToast
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,23 +21,29 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    card = intent.parcelable<CardParcelable>(KEY_CARD),
                     onBackClick = { finish() },
-                    onSaveClick = { card ->
+                    onSaveClick = { card, isEditMode ->
                         val resultIntent = Intent().putExtra(KEY_CARD, card)
-                        setResult(RESULT_OK, resultIntent)
+                        setResult(if (isEditMode) RESULT_EDITED else RESULT_ADDED, resultIntent)
                         finish()
                     },
-                    onCardSaveFailed = {
-                        showShortToast(getString(R.string.card_save_failed))
-                    },
+                    onCardSaveFailed = { showShortToast(getString(R.string.card_save_failed)) },
                 )
             }
         }
     }
 
     companion object {
-        fun newIntent(context: Context) = Intent(context, NewCardActivity::class.java)
+        fun newIntent(
+            context: Context,
+            cardParcelable: CardParcelable?,
+        ) = Intent(context, NewCardActivity::class.java).apply {
+            putExtra(KEY_CARD, cardParcelable)
+        }
 
         const val KEY_CARD = "key_card"
+        const val RESULT_ADDED = 200
+        const val RESULT_EDITED = 201
     }
 }

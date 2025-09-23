@@ -1,15 +1,30 @@
 package woowacourse.payments.newcard
 
 import androidx.compose.runtime.mutableStateOf
+import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 
-class NewCardStateHolder {
+class NewCardStateHolder(
+    card: CardParcelable?,
+) {
     var newCardUiState = mutableStateOf(NewCardUiState())
         private set
 
     var cardCompanyUiState = mutableStateOf(CardCompanyUiState.from(CardCompany.NONE))
         private set
+
+    var isEditMode = mutableStateOf(false)
+        private set
+
+    init {
+        card?.let {
+            val cardCompany = CardCompany.valueOf(card.cardCompany)
+            cardCompanyUiState.value = CardCompanyUiState.from(cardCompany)
+            newCardUiState.value = card.toUiStateOrNull() ?: NewCardUiState()
+            isEditMode.value = true
+        }
+    }
 
     fun updateCardNumber(value: String) {
         newCardUiState.value = newCardUiState.value.copy(cardNumber = value)

@@ -30,15 +30,14 @@ import woowacourse.payments.newcard.component.PasswordTextField
 import woowacourse.payments.util.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun NewCardScreen(
-    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
-    sheetState: SheetState =
-        rememberModalBottomSheetState(confirmValueChange = { false }),
-    onBackClick: () -> Unit = {},
-    onSaveClick: (CardParcelable) -> Unit = {},
-    onCardSaveFailed: () -> Unit = {},
+    card: CardParcelable?,
+    onBackClick: () -> Unit,
+    onSaveClick: (CardParcelable, Boolean) -> Unit,
+    onCardSaveFailed: () -> Unit,
+    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder(card) },
+    sheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { false }),
 ) {
     if (!newCardStateHolder.newCardUiState.value.isCardCompanySelected) {
         ModalBottomSheet(
@@ -64,7 +63,10 @@ fun NewCardScreen(
 
                     cardResult
                         .onSuccess {
-                            onSaveClick(cardResult.getOrThrow().toParcelable())
+                            onSaveClick(
+                                cardResult.getOrThrow().toParcelable(),
+                                newCardStateHolder.isEditMode.value,
+                            )
                         }.onFailure {
                             onCardSaveFailed()
                         }
@@ -80,8 +82,8 @@ fun NewCardScreen(
                     .padding(innerPadding),
         ) {
             PaymentCard(
-                modifier = Modifier.padding(top = 14.dp),
                 cardCompanyUiState = newCardStateHolder.cardCompanyUiState.value,
+                modifier = Modifier.padding(top = 14.dp),
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(30.dp),

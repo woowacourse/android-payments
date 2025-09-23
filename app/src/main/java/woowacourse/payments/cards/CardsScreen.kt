@@ -1,11 +1,11 @@
 package woowacourse.payments.cards
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -48,24 +48,24 @@ fun CardsScreen(
     // 카드 추가 Activity result를 처리하기 위한 launcher
     val cardAddLauncher: ActivityResultLauncher<Intent> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                val cardParcelable: CardParcelable? =
-                    activityResult.data?.parcelable<CardParcelable>(NewCardActivity.KEY_CARD)
+            val cardParcelable: CardParcelable? =
+                activityResult.data?.parcelable<CardParcelable>(NewCardActivity.KEY_CARD)
+            val card: Card? = cardParcelable?.toDomainOrNull()
 
-                val card: Card? = cardParcelable?.toDomainOrNull()
-
-                if (card != null) {
-                    cardsStateHolder.add(card)
+            if (card != null) {
+                when (activityResult.resultCode) {
+                    NewCardActivity.RESULT_ADDED -> cardsStateHolder.add(card)
+                    NewCardActivity.RESULT_EDITED -> cardsStateHolder.replace(card)
                 }
-                onCardAdded()
             }
+            onCardAdded()
         }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                onAddClick = { launchNewCardActivity(context, cardAddLauncher) },
+                onAddClick = { launchNewCardActivity(context, null, cardAddLauncher) },
                 modifier = Modifier.padding(),
                 isAddable = cardsStateHolder.cards.size > 1,
             )
@@ -92,12 +92,29 @@ fun CardsScreen(
                 PaymentCard(
                     card = card,
                     cardCompanyUiState = CardCompanyUiState.from(card.cardCompany),
+                    modifier =
+                        Modifier
+                            .clickable(onClick = {
+                                cardsStateHolder.updateSelectedCardIndex(card)
+
+                                launchNewCardActivity(
+                                    context = context,
+                                    cardParcelable = card.toParcelable(),
+                                    launcher = cardAddLauncher,
+                                )
+                            }),
                 )
                 Spacer(modifier = Modifier.height(32.dp))
             }
 
             if (cardsStateHolder.shouldDisplayEmptyCard()) {
-                EmptyCard(onClick = { launchNewCardActivity(context, cardAddLauncher) })
+                EmptyCard(onClick = {
+                    launchNewCardActivity(
+                        context = context,
+                        cardParcelable = null,
+                        launcher = cardAddLauncher,
+                    )
+                })
             }
         }
     }
@@ -105,9 +122,10 @@ fun CardsScreen(
 
 private fun launchNewCardActivity(
     context: Context,
+    cardParcelable: CardParcelable?,
     launcher: ActivityResultLauncher<Intent>,
 ) {
-    val intent = NewCardActivity.newIntent(context)
+    val intent = NewCardActivity.newIntent(context, cardParcelable)
     launcher.launch(intent)
 }
 
