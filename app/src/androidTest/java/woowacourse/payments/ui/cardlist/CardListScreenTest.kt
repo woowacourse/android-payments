@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
@@ -102,7 +103,7 @@ class CardListScreenTest {
     companion object {
         private val CARD =
             CardUiModel(
-                companyName = "BC카드",
+                companyName = R.string.bc_card,
                 color = 0xFFF04651,
                 number = "1111222233334444",
                 expirationDate = "0925",

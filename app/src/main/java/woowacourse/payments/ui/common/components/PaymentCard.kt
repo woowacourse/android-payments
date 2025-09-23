@@ -52,7 +52,7 @@ fun PaymentCard(
     ) {
         Column {
             Text(
-                text = card?.companyName ?: "",
+                text = card?.companyName?.let { stringResource(it) } ?: "",
                 fontSize = 12.sp,
                 color = Color.White,
                 letterSpacing = 2.sp,
@@ -124,7 +124,7 @@ private fun PaymentCardPreview(
 private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<CardUiModel?> {
     private val card: CardUiModel =
         CardUiModel(
-            companyName = "BC카드",
+            companyName = R.string.bc_card,
             color = 0xFFF04651,
             number = "1111222233334444",
             expirationDate = "0925",

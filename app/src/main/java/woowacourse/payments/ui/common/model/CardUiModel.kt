@@ -1,13 +1,14 @@
 package woowacourse.payments.ui.common.model
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.newcard.NewCardUiState
 import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Parcelize
 data class CardUiModel(
-    val companyName: String,
+    @StringRes val companyName: Int,
     val color: Long,
     val number: String,
     val expirationDate: String,

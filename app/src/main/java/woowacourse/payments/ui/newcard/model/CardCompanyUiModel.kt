@@ -2,18 +2,32 @@ package woowacourse.payments.ui.newcard.model
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 
 @Parcelize
 data class CardCompanyUiModel(
-    val name: String,
+    @StringRes val name: Int,
     @DrawableRes val logo: Int,
     val color: Long,
 ) : Parcelable
 
 fun CardCompany.toUiModel(): CardCompanyUiModel {
+    @StringRes
+    val nameResId: Int =
+        when (this) {
+            CardCompany.BC -> R.string.bc_card
+            CardCompany.SHINHAN -> R.string.shinhan_card
+            CardCompany.KAKAO -> R.string.kakao_card
+            CardCompany.HYUNDAI -> R.string.hyundai_card
+            CardCompany.WOORI -> R.string.woori_card
+            CardCompany.LOTTE -> R.string.lotte_card
+            CardCompany.HANA -> R.string.hana_card
+            CardCompany.KB -> R.string.kb_card
+        }
+
     val (@DrawableRes logoResId: Int, color: Long) =
         when (this) {
             CardCompany.BC -> R.drawable.bc to 0xFFF04651
@@ -26,7 +40,7 @@ fun CardCompany.toUiModel(): CardCompanyUiModel {
             CardCompany.KB -> R.drawable.kb to 0xFF695F54
         }
     return CardCompanyUiModel(
-        name = companyName,
+        name = nameResId,
         logo = logoResId,
         color = color,
     )

@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
@@ -65,7 +66,7 @@ class PaymentCardTest {
     companion object {
         private val CARD =
             CardUiModel(
-                companyName = "BC카드",
+                companyName = R.string.bc_card,
                 color = 0xFFF04651,
                 number = "1111222233334444",
                 expirationDate = "0925",
