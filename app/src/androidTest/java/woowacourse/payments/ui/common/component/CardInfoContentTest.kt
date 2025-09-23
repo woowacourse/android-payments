@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.screen.cards.component
+package woowacourse.payments.ui.common.component
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -12,16 +12,16 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.screen.DEFAULT_CARD
 
-class CardInfoTest {
+class CardInfoContentTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardInfo(
+            CardInfoContent(
                 card = DEFAULT_CARD,
-                modifier = Modifier.testTag(TEST_TAG),
+                modifier = Modifier.Companion.testTag(TEST_TAG),
             )
         }
     }

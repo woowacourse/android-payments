@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.common.component.CardInfoContent
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
@@ -88,6 +89,7 @@ fun CardAdditionScreen(
                                 context.getString(R.string.card_addition_card_description)
                         },
                 issuingBank = stateHolder.uiState.issuingBank,
+                cardContent = { CardInfoContent(stateHolder.cardUiModel) },
             )
             CardNumberTextField(
                 value = stateHolder.uiState.cardNumber.value,
