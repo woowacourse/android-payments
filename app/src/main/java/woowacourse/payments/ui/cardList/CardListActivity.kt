@@ -39,6 +39,9 @@ class CardListActivity : ComponentActivity() {
                     }
                 CardListScreen(
                     cards = cards,
+                    onCardClick = { card: CardUiModel ->
+                        cardAddLauncher.launch(CardRegisterActivity.newIntent(this, card))
+                    },
                     onRegistrationClick = {
                         cardAddLauncher.launch(CardRegisterActivity.newIntent(this))
                     },

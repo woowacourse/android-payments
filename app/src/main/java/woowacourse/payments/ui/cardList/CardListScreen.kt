@@ -30,6 +30,7 @@ import woowacourse.payments.ui.theme.Typography
 @Composable
 fun CardListScreen(
     onRegistrationClick: () -> Unit,
+    onCardClick: (card: CardUiModel) -> Unit,
     cards: List<CardUiModel> = emptyList(),
 ) {
     Scaffold(
@@ -63,7 +64,7 @@ fun CardListScreen(
             }
             cards.forEach { card ->
                 Spacer(modifier = Modifier.height(36.dp))
-                PaymentCard(card = card)
+                PaymentCard(card = card, onClick = { onCardClick(card) })
             }
             if (cards.size == 1 || cards.isEmpty()) {
                 RegistrationCard(
@@ -79,7 +80,7 @@ fun CardListScreen(
 @Composable
 private fun CardListScreenPreview_EmptyCard() {
     AndroidpaymentsTheme {
-        CardListScreen(onRegistrationClick = {})
+        CardListScreen(onRegistrationClick = {}, onCardClick = {})
     }
 }
 
@@ -98,6 +99,7 @@ private fun CardListScreenPreview_SingleCard() {
                         cardCompany = CardCompanyUiType.BC,
                     ),
                 ),
+            onCardClick = {},
             onRegistrationClick = {},
         )
     }
@@ -125,6 +127,7 @@ private fun CardListScreenPreview_MultipleCard() {
                         cardCompany = CardCompanyUiType.BC,
                     ),
                 ),
+            onCardClick = {},
             onRegistrationClick = {},
         )
     }

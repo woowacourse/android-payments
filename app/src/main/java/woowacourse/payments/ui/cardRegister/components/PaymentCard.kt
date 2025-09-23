@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cardRegister.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,6 +28,7 @@ import woowacourse.payments.ui.theme.YellowFFCBBA64
 fun PaymentCard(
     card: CardUiModel,
     modifier: Modifier = Modifier,
+    onClick: ((card: CardUiModel) -> Unit)? = null,
 ) {
     Box(
         contentAlignment = Alignment.BottomCenter,
@@ -37,6 +39,12 @@ fun PaymentCard(
                 .background(
                     color = card.cardCompany.color,
                     shape = RoundedCornerShape(5.dp),
+                ).then(
+                    if (onClick != null) {
+                        Modifier.clickable { onClick(card) }
+                    } else {
+                        Modifier
+                    },
                 ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {

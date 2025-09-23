@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardList.CardListActivity
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.common.parcelable
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardRegisterActivity : ComponentActivity() {
@@ -37,12 +38,24 @@ class CardRegisterActivity : ComponentActivity() {
                                 Toast.LENGTH_SHORT,
                             ).show()
                     },
+                    cardRegisterState =
+                        rememberCardRegisterState(
+                            card = intent.parcelable(EDIT_CARD_KEY),
+                        ),
                 )
             }
         }
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
+        private const val EDIT_CARD_KEY = "woowacourse.payments.ui.cardRegister"
+
+        fun newIntent(
+            context: Context,
+            card: CardUiModel? = null,
+        ): Intent =
+            Intent(context, CardRegisterActivity::class.java).apply {
+                putExtra(EDIT_CARD_KEY, card)
+            }
     }
 }
