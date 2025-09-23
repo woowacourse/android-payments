@@ -7,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class PaymentCardUiModel(
     val bankType: BankTypeUiModel,
-    private val number: CardNumberUiModel,
-    private val expirationDate: CardExpirationDateUiModel,
-    private val cardholderName: CardholderNameUiModel,
+    val number: CardNumberUiModel,
+    val expirationDate: CardExpirationDateUiModel,
+    val cardholderName: CardholderNameUiModel,
 ) : Parcelable {
     fun displayCardNumber(
         mask: String = DEFAULT_MASK,
