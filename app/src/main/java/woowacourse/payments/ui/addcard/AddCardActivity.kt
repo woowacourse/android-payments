@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
@@ -22,7 +20,7 @@ class AddCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val uiState by remember { mutableStateOf(AddCardScreenUiStateHolder()) }
+                val uiState = remember { AddCardScreenUiStateHolder() }
 
                 AddCardScreen(
                     uiState = uiState,
