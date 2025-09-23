@@ -11,7 +11,6 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.model.BankTypeUiModel
 
 class RegisterPaymentCardTest {
     @get:Rule

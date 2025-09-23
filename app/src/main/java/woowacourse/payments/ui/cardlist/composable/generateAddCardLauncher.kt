@@ -13,7 +13,7 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 @Composable
-fun generateAddCardLauncher(
+fun GenerateAddCardLauncher(
     addCard: (Card) -> Unit,
     context: Context,
 ) = rememberLauncherForActivityResult(

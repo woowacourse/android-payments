@@ -1,14 +1,10 @@
 package woowacourse.payments.ui.addcard
 
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import androidx.compose.ui.test.printToLog
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.model.CardNumberUiModel
 
 class CardNumberFieldTest {

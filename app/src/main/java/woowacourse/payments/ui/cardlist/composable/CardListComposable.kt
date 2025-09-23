@@ -31,9 +31,9 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
     var cards by remember { mutableStateOf(emptyList<Card>()) }
     var currentIndex by remember { mutableIntStateOf(0) }
     val context = LocalContext.current
-    val addCardLauncher = generateAddCardLauncher({ card -> cards = cards + card }, context)
+    val addCardLauncher = GenerateAddCardLauncher({ card -> cards = cards + card }, context)
     val editCardLauncher =
-        generateEditCardLauncher(context = context, editCard = { card ->
+        GenerateEditCardLauncher(context = context, editCard = { card ->
             cards =
                 cards.mapIndexed { index, oldCard ->
                     if (index == currentIndex) {
