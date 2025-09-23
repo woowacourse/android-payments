@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.model.Bank
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class NewCardStateHolder {
     private var _id = 0
@@ -42,4 +43,8 @@ class NewCardStateHolder {
     fun updateId(newId: Int) {
         _id = newId
     }
+
+    fun isModified(initialCard: PaymentCardUiModel): Boolean =
+        cardNumber != initialCard.cardNumber.value || cardHolder != initialCard.cardHolder.value ||
+            expirationDateUiState.expirationDate.value != initialCard.expirationDate.value
 }

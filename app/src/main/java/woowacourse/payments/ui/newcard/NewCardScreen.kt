@@ -57,6 +57,9 @@ fun NewCardScreen(
             NewCardTopBar(
                 onBackClick = { onBackPress() },
                 onSaveClick = {
+                    initialCard?.let {
+                        if (!newCardStateHolder.isModified(it)) return@NewCardTopBar
+                    }
                     onSaved(
                         runCatching {
                             PaymentCardUiModel(
