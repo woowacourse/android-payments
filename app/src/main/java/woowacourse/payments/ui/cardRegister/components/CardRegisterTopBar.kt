@@ -20,10 +20,19 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun CardRegisterTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    editMode: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.new_card_top_bar_title)) },
+        title = {
+            Text(
+                if (editMode) {
+                    stringResource(R.string.edit_card_top_bar_title)
+                } else {
+                    stringResource(R.string.new_card_top_bar_title)
+                },
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
@@ -46,8 +55,16 @@ fun CardRegisterTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardRegisterTopBarPreview() {
+private fun CardRegisterTopBarPreview_NotEditMode() {
     AndroidpaymentsTheme {
-        CardRegisterTopBar({}, {})
+        CardRegisterTopBar({}, {}, editMode = false)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun CardRegisterTopBarPreview_EditMode() {
+    AndroidpaymentsTheme {
+        CardRegisterTopBar({}, {}, editMode = true)
     }
 }
