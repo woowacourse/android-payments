@@ -17,8 +17,10 @@ data class CardUiModel(
         groupSize: Int = CARD_NUMBER_GROUP_SIZE,
         delimiter: String = CARD_NUMBER_DELIMITER,
     ): String {
+        if (number.isBlank()) return ""
         val visiblePart = number.take(visibleLength)
-        val maskedPart = maskingSign.repeat(number.length - visibleLength)
+        val maskedCount = (number.length - visibleLength).coerceAtLeast(0)
+        val maskedPart = maskingSign.repeat(maskedCount)
         return (visiblePart + maskedPart)
             .chunked(groupSize)
             .joinToString(delimiter)
@@ -27,11 +29,11 @@ data class CardUiModel(
     fun formatExpiredDate(
         groupSize: Int = CARD_DATE_GROUP_SIZE,
         delimiter: String = CARD_DATE_DELIMITER,
-    ): String =
-        expiredDate
-            .filter(::isDigit)
-            .chunked(groupSize)
-            .joinToString(delimiter)
+    ): String {
+        val digits = expiredDate.filter(::isDigit)
+        if (digits.isBlank()) return ""
+        return digits.chunked(groupSize).joinToString(delimiter)
+    }
 
     fun formatOwnerName(maxLength: Int = CARD_OWNER_NAME_MAX_LENGTH): String = ownerName.take(maxLength)
 
