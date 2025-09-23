@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -42,7 +43,7 @@ fun BankSelectBottomSheet(
 ) {
     ModalBottomSheet(
         onDismissRequest = {},
-        modifier = modifier,
+        modifier = modifier.testTag("BankSelectBottomSheet"),
         sheetState = modalBottomSheetState,
         properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false),
     ) {

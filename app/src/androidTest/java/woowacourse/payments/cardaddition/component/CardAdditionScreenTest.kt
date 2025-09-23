@@ -2,9 +2,11 @@ package woowacourse.payments.cardaddition.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsFocused
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
@@ -18,7 +20,10 @@ class CardAdditionScreenTest {
     @Before
     fun setUp() {
         composeRule.setContent {
-            CardAdditionScreen()
+            CardAdditionScreen(
+                onBackClick = {},
+                onCheckClick = {},
+            )
         }
     }
 
@@ -124,5 +129,25 @@ class CardAdditionScreenTest {
         composeRule
             .onNodeWithText("올바른 형식이 아닙니다.")
             .assertIsDisplayed()
+    }
+
+    @Test
+    fun `카드_추가_화면에_접속했을_때_카드사_선택_다이얼로그가_표시된다`() {
+        composeRule
+            .onNodeWithTag("BankSelectBottomSheet")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `선택한_카드사에_따라_카드_미리보기가_바뀌어야_한다`() {
+        // when
+        composeRule
+            .onNodeWithText("BC카드")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("PaymentCardBankNameText", true)
+            .assertTextEquals("BC카드")
     }
 }

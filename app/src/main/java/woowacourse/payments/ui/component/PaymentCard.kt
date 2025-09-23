@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +59,10 @@ fun PaymentCard(
         ) {
             Text(
                 text = if (bankType?.cardNameRes == null) "" else stringResource(bankType.cardNameRes),
-                modifier = Modifier.padding(start = 14.dp, bottom = 10.dp),
+                modifier =
+                    Modifier
+                        .padding(start = 14.dp, bottom = 10.dp)
+                        .testTag("PaymentCardBankNameText"),
                 fontSize = 12.sp,
                 color = Color.White,
             )
