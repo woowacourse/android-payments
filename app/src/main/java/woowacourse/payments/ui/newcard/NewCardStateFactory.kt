@@ -5,20 +5,13 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
-fun rememberNewCardState(): NewCardState =
-    rememberSaveable(saver = NewCardStateSaver) {
-        NewCardState()
+fun rememberNewCardState(): NewCardStateHolder =
+    rememberSaveable(saver = NewCardStateHolderSaver) {
+        NewCardStateHolder()
     }
 
-private val NewCardStateSaver =
-    Saver<NewCardState, List<String>>(
-        save = { listOf(it.cardNumber, it.cardExpirationDate, it.cardHolderName, it.cardPassword) },
-        restore = {
-            NewCardState().apply {
-                onCardNumberChange(it[0])
-                onCardExpirationDateChange(it[1])
-                onCardHolderNameChange(it[2])
-                onCardPasswordChange(it[3])
-            }
-        },
+private val NewCardStateHolderSaver: Saver<NewCardStateHolder, NewCardUiState> =
+    Saver(
+        save = { stateHolder: NewCardStateHolder -> stateHolder.uiState },
+        restore = { uiState: NewCardUiState -> NewCardStateHolder(uiState) },
     )

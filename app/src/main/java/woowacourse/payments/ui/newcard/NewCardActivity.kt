@@ -9,8 +9,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.common.model.toUiModel
+import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.newcard.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -20,8 +21,9 @@ class NewCardActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    companies = CardCompany.entries.map(CardCompany::toUiModel),
                     onBackClick = { finish() },
-                    onSaveClick = { card: Card ->
+                    onSaveClick = { card: CardUiModel ->
                         saveCard(card)
                         showToast(getString(R.string.card_added_message))
                         finish()
@@ -31,10 +33,9 @@ class NewCardActivity : ComponentActivity() {
         }
     }
 
-    private fun saveCard(card: Card) {
-        val intent = Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card.toUiModel()) }
+    private fun saveCard(card: CardUiModel) {
+        val intent = Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
         setResult(Activity.RESULT_OK, intent)
-        finish()
     }
 
     private fun showToast(message: String) {

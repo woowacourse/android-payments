@@ -17,9 +17,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
@@ -27,18 +33,32 @@ fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel? = null,
 ) {
+    val cardCompanyDescription = stringResource(R.string.card_company_description)
+    val cardNumberDescription = stringResource(R.string.card_number_description)
+    val cardHolderNameDescription = stringResource(R.string.card_holder_name_description)
+    val cardExpirationDateDescription = stringResource(R.string.card_expiration_date_description)
+
     Box(
-        contentAlignment = Alignment.BottomStart,
+        contentAlignment = Alignment.Center,
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = Color(card?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 14.dp, vertical = 16.dp),
+                )
+                .padding(horizontal = 12.dp),
     ) {
         Column {
+            Text(
+                text = card?.companyName?.let { stringResource(it) } ?: "",
+                fontSize = 12.sp,
+                color = Color.White,
+                letterSpacing = 2.sp,
+                modifier = Modifier.semantics { contentDescription = cardCompanyDescription },
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             Box(
                 modifier =
                     Modifier
@@ -48,12 +68,13 @@ fun PaymentCard(
                             shape = RoundedCornerShape(4.dp),
                         ),
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = card?.number ?: "",
+                text = card?.number?.toMaskedString() ?: "",
                 fontSize = 12.sp,
                 letterSpacing = 2.sp,
                 color = Color.White,
+                modifier = Modifier.semantics { contentDescription = cardNumberDescription },
             )
             Spacer(modifier = Modifier.height(2.dp))
             Row(
@@ -65,33 +86,54 @@ fun PaymentCard(
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
+                    modifier =
+                        Modifier.semantics { contentDescription = cardHolderNameDescription },
                 )
                 Text(
-                    text = card?.expirationDate ?: "",
+                    text = card?.expirationDate?.toDisplayString() ?: "",
                     fontSize = 12.sp,
                     letterSpacing = 2.sp,
                     color = Color.White,
+                    modifier =
+                        Modifier.semantics { contentDescription = cardExpirationDateDescription },
                 )
             }
         }
     }
 }
 
-@Preview(name = "카드 정보 없음")
+private fun String.toMaskedString(): String =
+    this
+        .chunked(4)
+        .mapIndexed { index: Int, chunk: String -> if (index < 2) chunk else "*".repeat(chunk.length) }
+        .joinToString(" - ")
+
+private fun String.toDisplayString(): String =
+    this
+        .chunked(2)
+        .joinToString(" / ")
+
+@Preview
 @Composable
-private fun PaymentCardPreview1() {
-    PaymentCard()
+private fun PaymentCardPreview(
+    @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: CardUiModel?,
+) {
+    PaymentCard(card = card)
 }
 
-@Preview(name = "카드 정보 있음")
-@Composable
-private fun PaymentCardPreview2() {
-    PaymentCard(
-        card =
-            CardUiModel(
-                number = "1111 - 2222 - 3333 - 4444",
-                expirationDate = "09 / 25",
-                holderName = "CREW",
-            ),
-    )
+private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<CardUiModel?> {
+    private val card: CardUiModel =
+        CardUiModel(
+            companyName = R.string.bc_card,
+            color = 0xFFF04651,
+            number = "1111222233334444",
+            expirationDate = "0925",
+            holderName = "CREW",
+        )
+
+    override val values: Sequence<CardUiModel?> =
+        sequenceOf(
+            null,
+            card,
+        )
 }

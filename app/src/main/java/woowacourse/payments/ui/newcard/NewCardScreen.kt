@@ -10,33 +10,64 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
+import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.CardPasswordTextField
+import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.model.toUiModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
+    companies: List<CardCompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
-    onSaveClick: (Card) -> Unit = {},
-    state: NewCardState = rememberNewCardState(),
+    onSaveClick: (CardUiModel) -> Unit = {},
+    stateHolder: NewCardStateHolder = rememberNewCardState(),
 ) {
+    val uiState: NewCardUiState = stateHolder.uiState
+    var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
+    val bottomSheetState = rememberModalBottomSheetState()
+
+    LaunchedEffect(key1 = uiState.cardCompany) {
+        if (uiState.cardCompany != null) {
+            showBottomSheet = false
+        }
+    }
+
+    CompanySelectBottomSheet(
+        companies = companies,
+        onCompanySelected = { stateHolder.onCompanySelected(it) },
+        sheetState = bottomSheetState,
+        showBottomSheet = showBottomSheet,
+        onDisMiss = onBackClick,
+    )
+
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             NewCardTopBar(
-                canSave = state.card != null,
+                canSave = uiState.isCardValid,
                 onBackClick = onBackClick,
-                onSaveClick = { state.card?.let { card: Card -> onSaveClick(card) } },
+                onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -49,31 +80,34 @@ fun NewCardScreen(
                     .padding(horizontal = 24.dp, vertical = 20.dp)
                     .verticalScroll(scrollState),
         ) {
-            PaymentCard(modifier = Modifier.align(Alignment.CenterHorizontally))
+            PaymentCard(
+                card = stateHolder.card,
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+            )
             Spacer(modifier = Modifier.height(20.dp))
 
             CardNumberTextField(
-                value = state.cardNumber,
-                onValueChange = state::onCardNumberChange,
-                isValid = state.isCardNumberValid,
+                value = uiState.cardNumber,
+                onValueChange = stateHolder::onCardNumberChange,
+                isValid = uiState.isCardNumberValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardExpirationDateTextField(
-                value = state.cardExpirationDate,
-                onValueChange = state::onCardExpirationDateChange,
-                isValid = state.isCardExpirationDateValid,
+                value = uiState.cardExpirationDate,
+                onValueChange = stateHolder::onCardExpirationDateChange,
+                isValid = uiState.isCardExpirationDateValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
             CardHolderNameTextField(
-                value = state.cardHolderName,
-                onValueChange = state::onCardHolderNameChange,
-                isValid = state.isCardHolderNameValid,
+                value = uiState.cardHolderName,
+                onValueChange = stateHolder::onCardHolderNameChange,
+                isValid = uiState.isCardHolderNameValid,
                 modifier = Modifier.fillMaxWidth(),
             )
             CardPasswordTextField(
-                value = state.cardPassword,
-                onValueChange = state::onCardPasswordChange,
-                isValid = state.isCardPasswordValid,
+                value = uiState.cardPassword,
+                onValueChange = stateHolder::onCardPasswordChange,
+                isValid = uiState.isCardPasswordValid,
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
@@ -83,5 +117,5 @@ fun NewCardScreen(
 @Preview
 @Composable
 private fun NewCardScreenPreview() {
-    NewCardScreen()
+    NewCardScreen(companies = CardCompany.entries.map(CardCompany::toUiModel))
 }

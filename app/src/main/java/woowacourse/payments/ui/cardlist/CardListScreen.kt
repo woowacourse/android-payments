@@ -99,6 +99,8 @@ private fun CardListScreenPreview(
 private class CardListScreenPreviewParameterProvider : PreviewParameterProvider<List<CardUiModel>> {
     private val card: CardUiModel =
         CardUiModel(
+            companyName = R.string.bc_card,
+            color = 0xFFF04651,
             number = "1111 - 2222 - 3333 - 4444",
             expirationDate = "09 / 25",
             holderName = "CREW",
