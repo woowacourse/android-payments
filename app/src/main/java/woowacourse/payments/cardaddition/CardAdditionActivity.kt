@@ -20,7 +20,7 @@ class CardAdditionActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 CardAdditionScreen(
                     onBackClick = ::finish,
-                    onSaveClick = ::saveCard,
+                    onCheckClick = ::saveCard,
                     modifier = Modifier.fillMaxSize(),
                 )
             }

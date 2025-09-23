@@ -28,7 +28,7 @@ import woowacourse.payments.ui.component.PaymentCard
 @Composable
 fun CardAdditionScreen(
     onBackClick: () -> Unit,
-    onSaveClick: (Card?) -> Unit,
+    onCheckClick: (Card?) -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: CardAdditionStateHolder = rememberSaveable(saver = CardAdditionStateHolder.Saver) { CardAdditionStateHolder() },
 ) {
@@ -43,9 +43,9 @@ fun CardAdditionScreen(
         modifier = modifier.testTag("CardAdditionScreen"),
         topBar = {
             CardAdditionTopAppBar(
-                completable = state.canAddCard,
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(state.card) },
+                onCheckClick = { onCheckClick(state.card) },
+                checkEnabled = state.canAddCard,
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -142,7 +142,7 @@ private fun CardAdditionScreenPreview(
 ) {
     CardAdditionScreen(
         onBackClick = {},
-        onSaveClick = {},
+        onCheckClick = {},
         stateHolder = CardAdditionStateHolder(state),
     )
 }

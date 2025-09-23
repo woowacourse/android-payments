@@ -19,9 +19,9 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionTopAppBar(
-    completable: Boolean,
     onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
+    onCheckClick: () -> Unit,
+    checkEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -36,8 +36,8 @@ fun CardAdditionTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = onSaveClick,
-                enabled = completable,
+                onClick = onCheckClick,
+                enabled = checkEnabled,
             ) {
                 Icon(
                     imageVector = Icons.Filled.Check,
@@ -55,9 +55,9 @@ private fun CardAdditionTopBarPreview(
     @PreviewParameter(CardAdditionTopBarPreviewParameterProvider::class) completable: Boolean,
 ) {
     CardAdditionTopAppBar(
-        completable = completable,
+        checkEnabled = completable,
         onBackClick = {},
-        onSaveClick = {},
+        onCheckClick = {},
     )
 }
 
