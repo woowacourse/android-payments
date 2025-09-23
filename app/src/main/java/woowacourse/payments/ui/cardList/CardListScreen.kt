@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardList
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,12 +27,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.BlackFF000000
 import woowacourse.payments.ui.theme.GrayFF333333
 import woowacourse.payments.ui.theme.Typography
+import java.time.LocalDate
 
 @Composable
 fun CardListScreen(
     onRegistrationClick: () -> Unit,
     onCardClick: (card: CardUiModel) -> Unit,
-    cards: List<CardUiModel> = emptyList(),
+    cards: List<CardUiModel>,
 ) {
     Scaffold(
         topBar = {
@@ -63,6 +65,7 @@ fun CardListScreen(
                 )
             }
             cards.forEach { card ->
+                Log.d("moongchi", "CardListScreen: card")
                 Spacer(modifier = Modifier.height(36.dp))
                 PaymentCard(card = card, onClick = { onCardClick(card) })
             }
@@ -80,7 +83,7 @@ fun CardListScreen(
 @Composable
 private fun CardListScreenPreview_EmptyCard() {
     AndroidpaymentsTheme {
-        CardListScreen(onRegistrationClick = {}, onCardClick = {})
+        CardListScreen(onRegistrationClick = {}, onCardClick = {}, cards = emptyList())
     }
 }
 
@@ -92,6 +95,7 @@ private fun CardListScreenPreview_SingleCard() {
             cards =
                 listOf(
                     CardUiModel(
+                        id = LocalDate.now().toString(),
                         number = "1111 - 2222 - **** - ****",
                         expiredDate = "04 / 21",
                         ownerName = "CREW",
@@ -113,6 +117,7 @@ private fun CardListScreenPreview_MultipleCard() {
             cards =
                 listOf(
                     CardUiModel(
+                        id = LocalDate.now().toString(),
                         number = "1111222233334444",
                         expiredDate = "0421",
                         ownerName = "CREW",
@@ -120,6 +125,7 @@ private fun CardListScreenPreview_MultipleCard() {
                         cardCompany = CardCompanyUiType.BC,
                     ),
                     CardUiModel(
+                        id = LocalDate.now().toString(),
                         number = "1111222233334444",
                         expiredDate = "0421",
                         ownerName = "CREW",

@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardRegister
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,8 +38,11 @@ import woowacourse.payments.ui.theme.RedFFFF0000
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardRegisterScreen(
+    editMode: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: (card: CardUiModel) -> Unit,
+    onEditingSaveClick: (card: CardUiModel) -> Unit,
+    isNotChangedInput: (card: CardUiModel) -> Unit,
     isNotValidInput: () -> Unit,
     cardRegisterState: CardRegisterState = rememberCardRegisterState(),
 ) {
@@ -51,19 +55,39 @@ fun CardRegisterScreen(
     Scaffold(
         topBar = {
             CardRegisterTopBar(
+                editMode = editMode,
                 onBackClick = { onBackClick() },
                 onSaveClick = {
-                    if (cardRegisterState.isValid()) {
-                        onSaveClick(cardRegisterState.cardUiModel)
-                    } else {
-                        isNotValidInput()
+                    val cardUiModel = cardRegisterState.cardUiModel
+                    when {
+                        !cardRegisterState.isValidInput() -> isNotValidInput()
+
+                        !cardRegisterState.isChanged() -> isNotChangedInput(cardUiModel)
+
+                        cardRegisterState.isChanged() && cardRegisterState.isEditingMode() ->
+                            onEditingSaveClick(
+                                cardUiModel,
+                            ).also {
+                                Log.d(
+                                    "moongchi11",
+                                    "CardRegisterScreenedit3: $cardUiModel",
+                                )
+                            }
+
+                        else ->
+                            onSaveClick(cardUiModel).also {
+                                Log.d(
+                                    "moongchi22",
+                                    "CardRegisterScreensave: $cardUiModel",
+                                )
+                            }
                     }
                 },
             )
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
-        if (cardRegisterState.isShowingBottomSheet) {
+        if (cardRegisterState.isShowingBottomSheet && !editMode) {
             CardSelectionModal(
                 modalBottomSheetState = modalBottomSheetState,
                 onDismissRequest = {
@@ -203,9 +227,12 @@ fun CardRegisterScreen(
 private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
         CardRegisterScreen(
+            true,
             {},
             {},
             {},
+            {},
+            { },
             cardRegisterState = rememberCardRegisterState(isShowingBottomSheet = false),
         )
     }

@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardValidator
 import woowacourse.payments.ui.common.model.CardCompanyUiType
 import woowacourse.payments.ui.common.model.CardUiModel
+import java.time.LocalDateTime
 
 @Stable
 class CardRegisterState(
@@ -18,6 +19,7 @@ class CardRegisterState(
     initialPassword: String = "",
     initialIsShowingBottomSheet: Boolean = true,
     initialSelectedCardCompany: CardCompanyUiType = CardCompanyUiType.NOT_SELECTED,
+    private val originalCardUiModel: CardUiModel? = null,
 ) {
     var cardNumber by mutableStateOf(initialCardNumber)
         private set
@@ -39,13 +41,21 @@ class CardRegisterState(
 
     val cardUiModel: CardUiModel
         get() =
-            CardUiModel(
+            originalCardUiModel?.copy(
                 number = cardNumber,
                 expiredDate = expiredDate,
                 ownerName = ownerName,
                 password = password,
                 cardCompany = cardCompany,
             )
+                ?: CardUiModel(
+                    id = LocalDateTime.now().toString(),
+                    number = cardNumber,
+                    expiredDate = expiredDate,
+                    ownerName = ownerName,
+                    password = password,
+                    cardCompany = cardCompany,
+                )
 
     fun updateCardNumber(newCardNumber: String) {
         cardNumber = newCardNumber
@@ -77,7 +87,11 @@ class CardRegisterState(
 
     fun isShowingPasswordError(): Boolean = password.isNotEmpty() && !CardValidator.isValidPassword(password)
 
-    fun isValid(): Boolean = CardValidator.isValidCard(cardNumber, expiredDate, password)
+    fun isValidInput(): Boolean = CardValidator.isValidCard(cardNumber, expiredDate, password)
+
+    fun isEditingMode(): Boolean = originalCardUiModel != null
+
+    fun isChanged(): Boolean = originalCardUiModel?.let { it != cardUiModel } ?: true
 
     companion object {
         val Saver: Saver<CardRegisterState, *> =
