@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicLong
 object PaymentCards {
     private val lastId: AtomicLong = AtomicLong()
     private val _cards: MutableMap<Long, PaymentCard> = mutableMapOf()
-    val cards: List<PaymentCard> = _cards.values.toList()
+    val cards: List<PaymentCard> get() = _cards.values.toList()
 
     fun registerOrUpdate(
         id: Long? = null,
