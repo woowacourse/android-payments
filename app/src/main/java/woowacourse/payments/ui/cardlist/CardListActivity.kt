@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.addcard.AddCardActivity
+import woowacourse.payments.ui.addcard.CardScreenType
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
@@ -31,16 +32,46 @@ class CardListActivity : ComponentActivity() {
                         if (result.resultCode == RESULT_OK) {
                             val data: Intent =
                                 result.data ?: return@rememberLauncherForActivityResult
-                            val card: Card =
-                                data
-                                    .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_ADDED_CARD)
-                                    ?.toCardOrNull()
-                                    ?: return@rememberLauncherForActivityResult
-                            cards.add(card.toUiModel())
+                            val type: CardScreenType =
+                                data.getParcelableExtraCompat<CardScreenType>(
+                                    ExtraKeys.KEY_CARD_SCREEN_TYPE,
+                                ) ?: return@rememberLauncherForActivityResult
+                            when (type) {
+                                is CardScreenType.New -> {
+                                    val card: Card =
+                                        data
+                                            .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_ADDED_CARD)
+                                            ?.toCardOrNull()
+                                            ?: return@rememberLauncherForActivityResult
+                                    cards.add(card.toUiModel())
+                                }
+
+                                is CardScreenType.Edit -> {
+                                    cards[type.index] = type.card
+                                }
+                            }
                         }
                     }
 
-                CardListScreen(cards) { launcher.launch(AddCardActivity.intent(this)) }
+                CardListScreen(
+                    cards = cards,
+                    onNavigateToAddCard = {
+                        launcher.launch(
+                            AddCardActivity.intent(
+                                this,
+                                CardScreenType.New,
+                            ),
+                        )
+                    },
+                    onNavigateToEditCard = { index: Int, card: CardUiModel ->
+                        launcher.launch(
+                            AddCardActivity.intent(
+                                this,
+                                CardScreenType.Edit(index, card),
+                            ),
+                        )
+                    },
+                )
             }
         }
     }

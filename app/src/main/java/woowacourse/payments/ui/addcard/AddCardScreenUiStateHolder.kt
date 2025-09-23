@@ -16,16 +16,18 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
-class AddCardScreenUiStateHolder {
-    var cardNumber: String by mutableStateOf("")
+class AddCardScreenUiStateHolder(
+    val type: CardScreenType,
+) {
+    var cardNumber: String by mutableStateOf(type.card.cardNumber)
         private set
-    var expirationDate: String by mutableStateOf("")
+    var expirationDate: String by mutableStateOf(type.card.expirationDate)
         private set
-    var cardholderName: String by mutableStateOf("")
+    var cardholderName: String by mutableStateOf(type.card.cardholderName)
         private set
-    var passcode: String by mutableStateOf("")
+    var passcode: String by mutableStateOf(type.card.passcode)
         private set
-    var cardCompany: CardCompanyUiModel by mutableStateOf(CardCompany.NONE.toUiModel())
+    var cardCompany: CardCompanyUiModel by mutableStateOf(type.card.cardCompany)
         private set
 
     var isCardNumberError: Boolean by mutableStateOf(false)

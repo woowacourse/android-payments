@@ -63,7 +63,11 @@ fun AddCardScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 30.dp),
-                card = CardUiModel.EMPTY.copy(cardCompany = stateHolder.cardCompany),
+                card =
+                    when (stateHolder.type) {
+                        is CardScreenType.New -> CardUiModel.EMPTY.copy(cardCompany = stateHolder.cardCompany)
+                        is CardScreenType.Edit -> stateHolder.type.card
+                    },
             )
 
             Column(
@@ -104,7 +108,7 @@ fun AddCardScreen(
 @Composable
 private fun AddCardScreenPreview() {
     AddCardScreen(
-        stateHolder = remember { AddCardScreenUiStateHolder() },
+        stateHolder = remember { AddCardScreenUiStateHolder(CardScreenType.New) },
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},

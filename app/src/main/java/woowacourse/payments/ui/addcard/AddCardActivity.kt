@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.common.ExtraKeys
+import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -18,9 +19,16 @@ class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val type: CardScreenType =
+            intent.getParcelableExtraCompat<CardScreenType>(ExtraKeys.KEY_CARD_SCREEN_TYPE) ?: run {
+                finish()
+                return
+            }
+
         setContent {
             AndroidpaymentsTheme {
-                val stateHolder = remember { AddCardScreenUiStateHolder() }
+                val stateHolder = remember { AddCardScreenUiStateHolder(type) }
 
                 AddCardScreen(
                     stateHolder = stateHolder,
@@ -28,7 +36,7 @@ class AddCardActivity : ComponentActivity() {
                         Toast
                             .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
                             .show()
-                        submitAddedCard(card)
+                        submitAddedCard(type, card)
                     },
                     onSaveFailure = {
                         Toast
@@ -47,13 +55,26 @@ class AddCardActivity : ComponentActivity() {
         }
     }
 
-    private fun submitAddedCard(card: CardUiModel) {
-        val result: Intent = Intent().putExtra(ExtraKeys.KEY_ADDED_CARD, card)
+    private fun submitAddedCard(
+        type: CardScreenType,
+        card: CardUiModel,
+    ) {
+        val result: Intent =
+            Intent().apply {
+                putExtra(ExtraKeys.KEY_CARD_SCREEN_TYPE, type)
+                putExtra(ExtraKeys.KEY_ADDED_CARD, card)
+            }
         setResult(RESULT_OK, result)
         finish()
     }
 
     companion object {
-        fun intent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
+        fun intent(
+            context: Context,
+            mode: CardScreenType,
+        ): Intent =
+            Intent(context, AddCardActivity::class.java).apply {
+                putExtra(ExtraKeys.KEY_CARD_SCREEN_TYPE, mode)
+            }
     }
 }

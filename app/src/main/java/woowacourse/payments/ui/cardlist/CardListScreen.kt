@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -34,6 +35,7 @@ import java.time.YearMonth
 fun CardListScreen(
     cards: List<CardUiModel>,
     onNavigateToAddCard: () -> Unit,
+    onNavigateToEditCard: (index: Int, card: CardUiModel) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -59,7 +61,13 @@ fun CardListScreen(
                 verticalArrangement = Arrangement.spacedBy(36.dp),
             ) {
                 items(count = cards.size) { index: Int ->
-                    PaymentCard(card = cards[index])
+                    PaymentCard(
+                        card = cards[index],
+                        modifier =
+                            Modifier.clickable {
+                                onNavigateToEditCard(index, cards[index])
+                            },
+                    )
                 }
             }
 
@@ -73,7 +81,7 @@ fun CardListScreen(
 @Preview(showBackground = true, name = "카드 목록 (0개)")
 @Composable
 private fun CardListScreenWithNoCardsPreview() {
-    CardListScreen(remember { mutableStateListOf() }) {}
+    CardListScreen(remember { mutableStateListOf() }, {}, { _, _ -> })
 }
 
 @Preview(showBackground = true, name = "카드 목록 (1개)")
@@ -91,7 +99,9 @@ private fun CardListScreenWithOneCardPreview() {
                 ).toUiModel(),
             )
         },
-    ) {}
+        {},
+        { _, _ -> },
+    )
 }
 
 @Preview(showBackground = true, name = "카드 목록 (2개)")
@@ -116,5 +126,7 @@ private fun CardListScreenWithTwoCardsPreview() {
                 ).toUiModel(),
             )
         },
-    ) {}
+        {},
+        { _, _ -> },
+    )
 }
