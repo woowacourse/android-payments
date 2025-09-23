@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import woowacourse.payments.ui.model.IssuingBank
 fun PaymentCard(
     modifier: Modifier = Modifier,
     issuingBank: IssuingBank = IssuingBank.NOT_SELECTED,
+    onClick: () -> Unit = {},
     cardContent: @Composable BoxScope.() -> Unit = {},
 ) {
     Box(
@@ -32,6 +34,7 @@ fun PaymentCard(
                 .size(width = 208.dp, height = 124.dp)
                 .clip(CircleShape.copy(CornerSize(5.dp)))
                 .background(color = issuingBank.getColor())
+                .clickable(onClick = onClick)
                 .padding(12.dp),
     ) {
         IssuingBankName(

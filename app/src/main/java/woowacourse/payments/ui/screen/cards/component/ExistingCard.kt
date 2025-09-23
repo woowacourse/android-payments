@@ -12,9 +12,11 @@ import woowacourse.payments.ui.screen.cardAddition.component.PaymentCard
 fun ExistingCard(
     card: CardUiModel,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     PaymentCard(
         modifier = modifier,
+        onClick = onClick,
         issuingBank = card.issuingBank,
         cardContent = { CardInfoContent(card) },
     )
