@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +21,7 @@ fun PaymentContent(
     showTopAdd: Boolean,
     canAddMore: Boolean,
     onAddCardClick: () -> Unit,
+    onCardClick: (CardUiModel, Int) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -36,6 +36,7 @@ fun PaymentContent(
             cards = cards,
             canAddMore = canAddMore,
             onAddCardClick = onAddCardClick,
+            onCardClick = onCardClick,
             modifier =
                 Modifier
                     .padding(innerPadding)
@@ -54,6 +55,7 @@ private fun PaymentScreenEmptyPreview() {
             showTopAdd = false,
             canAddMore = true,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
         )
     }
 }
@@ -65,8 +67,8 @@ private fun PaymentScreenOneCardPreview() {
         val sampleCard =
             CardUiModel(
                 cardCompany = CardCompanyType.BC.toUiModel(),
-                cardNumber = "1111 - 2222 - **** - ****",
-                expirationDate = "04 / 21",
+                cardNumberRaw = "1111 - 2222 - **** - ****",
+                expirationDateRaw = "04 / 21",
                 userName = "GAHYUNKIM",
                 password = "1234",
             )
@@ -75,6 +77,7 @@ private fun PaymentScreenOneCardPreview() {
             showTopAdd = false,
             canAddMore = true,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
         )
     }
 }
@@ -85,8 +88,8 @@ private fun PaymentScreenThreeCardsPreview() {
     val sampleCard =
         CardUiModel(
             cardCompany = CardCompanyType.BC.toUiModel(),
-            cardNumber = "1111 - 2222 - **** - ****",
-            expirationDate = "04 / 21",
+            cardNumberRaw = "11112222********",
+            expirationDateRaw = "0421",
             userName = "JOY",
             password = "1234",
         )
@@ -102,6 +105,7 @@ private fun PaymentScreenThreeCardsPreview() {
             showTopAdd = true,
             canAddMore = false,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
         )
     }
 }

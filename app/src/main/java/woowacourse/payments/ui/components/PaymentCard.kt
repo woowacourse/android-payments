@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
     card: CardUiModel = CardUiModel.EMPTY,
 ) {
     val cardCompany = card.cardCompany
@@ -40,6 +42,7 @@ fun PaymentCard(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
+                .clickable(onClick = onClick)
                 .background(
                     color = Color(cardCompany.background),
                     shape = RoundedCornerShape(5.dp),
@@ -73,7 +76,7 @@ fun PaymentCard(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 fontWeight = FontWeight.W500,
-                text = card.cardNumber,
+                text = card.cardNumberMasked,
                 color = Color.White,
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
@@ -95,7 +98,7 @@ fun PaymentCard(
                 Spacer(Modifier.height(2.dp))
                 Text(
                     lineHeight = 10.sp,
-                    text = card.expirationDate,
+                    text = card.expirationFormatted,
                     color = Color.White,
                     fontWeight = FontWeight.W500,
                     fontSize = 10.sp,
@@ -116,8 +119,8 @@ private fun PaymentCardPreview_BC() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
-                cardNumber = "1111 - 2222 - 3333 - 4444",
-                expirationDate = "04 / 21",
+                cardNumberRaw = "1111222233334444",
+                expirationDateRaw = "0421",
                 userName = "KIMGAHYUN",
                 password = "1234",
                 cardCompany = CardCompanyType.BC.toUiModel(),
@@ -139,8 +142,8 @@ private fun PaymentCardPreview_Kb() {
         val sampleCard =
             CardUiModel(
                 cardCompany = CardCompanyType.KB.toUiModel(),
-                cardNumber = "1111 - 2222 - 3333 - 4444",
-                expirationDate = "04 / 21",
+                cardNumberRaw = "1111222233334444",
+                expirationDateRaw = "0421",
                 userName = "KIMGAHYUN",
                 password = "1234",
             )

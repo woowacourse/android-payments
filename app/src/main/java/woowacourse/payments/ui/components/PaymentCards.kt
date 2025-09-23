@@ -26,6 +26,7 @@ fun PaymentCards(
     cards: List<CardUiModel>,
     canAddMore: Boolean,
     onAddCardClick: () -> Unit,
+    onCardClick: (CardUiModel, Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -45,7 +46,10 @@ fun PaymentCards(
             }
         } else {
             itemsIndexed(cards) { index, card ->
-                PaymentCard(card = card)
+                PaymentCard(
+                    card = card,
+                    onClick = { onCardClick(card, index) },
+                )
                 if (index < cards.lastIndex) {
                     Spacer(Modifier.height(16.dp))
                 }
@@ -68,6 +72,7 @@ private fun PaymentCards_Empty_Preview() {
             cards = emptyList(),
             canAddMore = true,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -81,6 +86,7 @@ private fun PaymentCards_One_Preview() {
             cards = listOf(sampleCard()),
             canAddMore = true,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -94,6 +100,7 @@ private fun PaymentCards_Many_Preview() {
             cards = List(3) { sampleCard() },
             canAddMore = false,
             onAddCardClick = {},
+            onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -103,8 +110,8 @@ private fun PaymentCards_Many_Preview() {
 private fun sampleCard(): CardUiModel =
     CardUiModel(
         cardCompany = CardCompanyType.BC.toUiModel(),
-        cardNumber = "1111 - 2222 - **** - ****",
-        expirationDate = "12 / 26",
+        cardNumberRaw = "11112222********",
+        expirationDateRaw = "1226",
         userName = "JOY",
         password = "1234",
     )

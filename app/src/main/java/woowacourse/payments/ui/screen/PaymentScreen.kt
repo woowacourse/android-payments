@@ -9,21 +9,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.AddCardActivity
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.mapper.CardMapper.toDomain
+import woowacourse.payments.ui.model.toUiModel
 
 @Composable
 fun PaymentScreen() {
     val state = rememberPaymentStateHolder()
     val context = LocalContext.current
 
-    val cardAddLauncher =
+    val cardLauncher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
-        ) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                AddCardActivity.parseResult(result.data)?.let { card: CardUiModel ->
-                    state.onCardAdded(card)
-                }
+        ) { res ->
+            if (res.resultCode == Activity.RESULT_OK) {
+                AddCardActivity
+                    .parseResult(res.data)
+                    ?.toDomain()
+                    ?.let(state::applyResult)
+            } else {
+                state.cancelEdit()
             }
         }
 
@@ -39,9 +43,24 @@ fun PaymentScreen() {
     }
 
     PaymentContent(
-        cards = state.cards,
+        cards = state.uiCards,
         showTopAdd = state.showTopAdd,
         canAddMore = state.canAddMore,
-        onAddCardClick = { cardAddLauncher.launch(AddCardActivity.newIntent(context)) },
+        onAddCardClick = { cardLauncher.launch(AddCardActivity.newIntent(context)) },
+        onCardClick = { _, index ->
+            state
+                .beginEditAt(index)
+                .takeIf { it }
+                ?.let {
+                    state.cards.getOrNull(index)?.let { domain ->
+                        cardLauncher.launch(
+                            AddCardActivity.newIntent(
+                                context,
+                                domain.toUiModel(),
+                            ),
+                        )
+                    } ?: state.cancelEdit()
+                }
+        },
     )
 }
