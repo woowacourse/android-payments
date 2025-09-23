@@ -14,12 +14,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.showToast
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun AddCardTopbar(
+    modificationMode: ModificationMode,
     isAddCardEnabled: Boolean = false,
     onAddCardSuccess: () -> Unit = {},
     onBackClick: () -> Unit = {},
@@ -27,7 +29,13 @@ fun AddCardTopbar(
     val context = LocalContext.current
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.payments_addcard_topbar_add_card))
+            Text(
+                text =
+                    when (modificationMode) {
+                        ModificationMode.ADD_CARD -> stringResource(R.string.payments_addcard_topbar_add_card)
+                        ModificationMode.MODIFY_CARD -> stringResource(R.string.payments_addcard_topbar_modify_card)
+                    },
+            )
         },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
@@ -58,6 +66,8 @@ fun AddCardTopbar(
 @Composable
 private fun AddCardTopbarPreView() {
     AndroidpaymentsTheme {
-        AddCardTopbar()
+        AddCardTopbar(
+            modificationMode = ModificationMode.ADD_CARD,
+        )
     }
 }

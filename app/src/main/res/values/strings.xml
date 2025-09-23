@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">android-payments</string>
     <string name="payments_addcard_topbar_add_card">카드 추가</string>
+    <string name="payments_addcard_topbar_modify_card">카드 수정</string>
     <string name="payments_allcards_topbar_all_cards">Payments</string>
     <string name="payments_allcards_topbar_add_cards">추가</string>
 
