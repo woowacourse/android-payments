@@ -29,6 +29,7 @@ import woowacourse.payments.ui.theme.Black700
 @Composable
 fun CardListScreen(
     onAddCard: () -> Unit,
+    onEditCard: (PaymentCardUiModel) -> Unit = {},
     cardUiModels: List<PaymentCardUiModel> = emptyList(),
 ) {
     Scaffold(
@@ -65,10 +66,13 @@ fun CardListScreen(
                 // 카드가 1장 이상일 때 카드 목록 표시
                 items(
                     items = cardUiModels,
-                    key = { cardUiModel -> cardUiModel.formattedCardNumber },
+                    key = { cardUiModel -> cardUiModel.dbId },
                 ) { cardUiModel ->
                     Spacer(modifier = Modifier.height(12.dp))
-                    PaymentCardPlate(paymentCardUiModel = cardUiModel)
+                    PaymentCardPlate(
+                        paymentCardUiModel = cardUiModel,
+                        modifier = Modifier.clickable { onEditCard(cardUiModel) },
+                    )
                     Spacer(modifier = Modifier.height(36.dp))
                 }
             }
@@ -96,6 +100,7 @@ fun CardListScreenEmptyPreview() {
 fun CardListScreenOneCardPreview() {
     val dummyPaymentCardUiModel =
         PaymentCardUiModel(
+            -1,
             CardCompanyUiModel.BC,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
@@ -104,7 +109,7 @@ fun CardListScreenOneCardPreview() {
     val dummyPaymentCardList1 = listOf(dummyPaymentCardUiModel)
 
     AndroidpaymentsTheme {
-        CardListScreen({}, dummyPaymentCardList1)
+        CardListScreen({}, {}, dummyPaymentCardList1)
     }
 }
 
@@ -113,6 +118,7 @@ fun CardListScreenOneCardPreview() {
 fun CardListScreenManyCardPreview() {
     val dummyPaymentCardUiModel =
         PaymentCardUiModel(
+            -1,
             CardCompanyUiModel.BC,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
@@ -123,6 +129,6 @@ fun CardListScreenManyCardPreview() {
             dummyPaymentCardUiModel
         }
     AndroidpaymentsTheme {
-        CardListScreen({}, dummyPaymentCardList5)
+        CardListScreen({}, {}, dummyPaymentCardList5)
     }
 }

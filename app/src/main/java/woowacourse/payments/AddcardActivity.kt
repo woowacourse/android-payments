@@ -14,6 +14,7 @@ import woowacourse.payments.ui.features.cartinput.CardInputScreen
 import woowacourse.payments.ui.features.cartinput.CardUiStateHolder
 import woowacourse.payments.ui.mapper.CardMapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
@@ -28,9 +29,10 @@ class AddcardActivity : ComponentActivity() {
                     cardUiStateHolder = cardUiStateHolder,
                     screenTitle = stringResource(R.string.add_card_top_bar_title),
                     onNavigateBack = { finish() },
-                    onNavigateSave = { card: PaymentCard ->
+                    onNavigateSave = { id, card: PaymentCard ->
                         val intent =
                             Intent().apply {
+                                putExtra(EXTRA_CARD_DB_ID, id)
                                 putExtra(EXTRA_PAYMENT_CARD_UI_MODEL, card.toUiModel())
                             }
                         setResult(RESULT_OK, intent)
@@ -42,17 +44,23 @@ class AddcardActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EXTRA_PAYMENT_CARD_UI_MODEL = "EXTRA_PAYMENT_CARD"
+        private const val EXTRA_CARD_DB_ID = "ADD_EXTRA_CARD_ID"
+        private const val EXTRA_PAYMENT_CARD_UI_MODEL = "ADD_EXTRA_PAYMENT_CARD"
 
         fun newIntent(context: Context): Intent = Intent(context, AddcardActivity::class.java)
 
-        fun getPaymentCardUiModel(activityResult: ActivityResult): PaymentCardUiModel? {
+        fun getPaymentCardUiModelByAddCard(activityResult: ActivityResult): PaymentCardUiModel? {
             if (activityResult.resultCode != RESULT_OK) {
                 return null
             }
-            return activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
-                EXTRA_PAYMENT_CARD_UI_MODEL,
-            )
+
+            val cardDBId =
+                activityResult.data?.getIntExtra(EXTRA_CARD_DB_ID, EMPTY_DB_ID) ?: EMPTY_DB_ID
+            val paymentCardUiModel =
+                activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
+                    EXTRA_PAYMENT_CARD_UI_MODEL,
+                ) ?: return null
+            return paymentCardUiModel.copy(dbId = cardDBId)
         }
     }
 }

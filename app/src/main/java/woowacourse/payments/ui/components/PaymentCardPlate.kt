@@ -24,6 +24,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.card.values.CardNumber
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -144,6 +145,7 @@ fun PaymentCardDetailPreview() {
         PaymentCardPlate(
             paymentCardUiModel =
                 PaymentCardUiModel(
+                    EMPTY_DB_ID,
                     CardCompanyUiModel.BC,
                     "1234 - 1234 - 1234 - 1234",
                     "02 / 26",
@@ -160,6 +162,7 @@ fun PaymentCardDetailKakaoPreview() {
         PaymentCardPlate(
             paymentCardUiModel =
                 PaymentCardUiModel(
+                    EMPTY_DB_ID,
                     CardCompanyUiModel.KAKAO,
                     "1234 - 1234 - 1234 - 1234",
                     "02 / 26",

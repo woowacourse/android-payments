@@ -19,6 +19,7 @@ import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.ExpireDateStatus
 import woowacourse.payments.ui.model.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.MAX_EXPIRE_DATE_INPUT_LENGTH
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -42,6 +43,7 @@ object CardMapper {
         val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
         return PaymentCardUiModel(
+            dbId = EMPTY_DB_ID,
             cardCompanyUiModel = cardCompany.toUiModel(),
             formattedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
@@ -51,6 +53,7 @@ object CardMapper {
 
     fun CardUiState.toPaymentCardUiModel(): PaymentCardUiModel =
         PaymentCardUiModel(
+            dbId = EMPTY_DB_ID,
             cardCompanyUiModel = cardCompanyUiModel,
             formattedCardNumber =
                 cardNumber

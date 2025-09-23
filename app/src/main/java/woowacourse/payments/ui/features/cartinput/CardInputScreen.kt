@@ -24,6 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.data.PaymentFakeRepository.addCardToDB
+import woowacourse.payments.data.PaymentFakeRepository.updateDBCard
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
 import woowacourse.payments.ui.features.cartinput.components.CardExpireDateField
@@ -35,6 +37,7 @@ import woowacourse.payments.ui.features.cartinput.components.bottomsheet.BottomS
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
@@ -43,17 +46,18 @@ private val FormFieldSpacing = 30.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardInputScreen(
+    dbId: Int = EMPTY_DB_ID,
     cardUiStateHolder: CardUiStateHolder,
     screenTitle: String,
     onNavigateBack: () -> Unit,
-    onNavigateSave: (PaymentCard) -> Unit,
+    onNavigateSave: (Int, PaymentCard) -> Unit,
 ) {
     val uiState by cardUiStateHolder.uiState
     val expireDateUiState by cardUiStateHolder.expireDateUiState
     val paymentCardUiModel by cardUiStateHolder.paymentCardUiModel
 
     val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember { mutableStateOf(true) }
+    var showBottomSheet by remember { mutableStateOf(dbId == EMPTY_DB_ID) }
 
     var isSavingInProgress by remember { mutableStateOf(false) }
 
@@ -77,7 +81,13 @@ fun CardInputScreen(
 
             is CardCreationResult.Success -> {
                 isSavingInProgress = false
-                onNavigateSave(cardDomainResult.paymentCard)
+                if (dbId != EMPTY_DB_ID) {
+                    updateDBCard(dbId, uiState)
+                    onNavigateSave(dbId, cardDomainResult.paymentCard)
+                } else {
+                    val savedDBId = addCardToDB(uiState)
+                    onNavigateSave(savedDBId, cardDomainResult.paymentCard)
+                }
             }
 
             else -> {
@@ -183,6 +193,12 @@ fun CardInputScreen(
 @Composable
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        CardInputScreen(cardUiStateHolder = CardUiStateHolder(), screenTitle = "카드 입력 화면", {}, {})
+        CardInputScreen(
+            EMPTY_DB_ID,
+            cardUiStateHolder = CardUiStateHolder(),
+            screenTitle = "카드 입력 화면",
+            {},
+            { _, _ -> },
+        )
     }
 }

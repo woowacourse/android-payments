@@ -10,7 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import woowacourse.payments.AddcardActivity.Companion.getPaymentCardUiModel
+import woowacourse.payments.AddcardActivity.Companion.getPaymentCardUiModelByAddCard
+import woowacourse.payments.EditcardActivity.Companion.getPaymentCardUiModelByEditCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -27,10 +28,26 @@ class CardlistActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
-                        val newCard = getPaymentCardUiModel(activityResult)
-                        newCard?.let {
-                            cardUiModels.add(it)
+                        val newCard =
+                            getPaymentCardUiModelByAddCard(activityResult)
+                                ?: return@rememberLauncherForActivityResult
+                        newCard.let {
+                            cardUiModels.add(newCard)
                             showToast(this, R.string.card_list_card_added_alert)
+                        }
+                    }
+
+                val cardEditLauncher =
+                    rememberLauncherForActivityResult(
+                        contract = ActivityResultContracts.StartActivityForResult(),
+                    ) { activityResult ->
+                        val editedCard =
+                            getPaymentCardUiModelByEditCard(activityResult)
+                                ?: return@rememberLauncherForActivityResult
+                        val index = cardUiModels.indexOfFirst { it.dbId == editedCard.dbId }
+                        if (index != -1) {
+                            cardUiModels[index] = editedCard
+                            showToast(this, R.string.card_list_card_edited_alert)
                         }
                     }
 
@@ -39,6 +56,10 @@ class CardlistActivity : ComponentActivity() {
                     onAddCard = {
                         val intent = AddcardActivity.newIntent(this)
                         cardAddLauncher.launch(intent)
+                    },
+                    onEditCard = { cardUiModel ->
+                        val intent = EditcardActivity.newIntent(this, cardUiModel)
+                        cardEditLauncher.launch(intent)
                     },
                 )
             }
