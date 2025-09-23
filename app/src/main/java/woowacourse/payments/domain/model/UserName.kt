@@ -16,7 +16,7 @@ value class UserName private constructor(
             return UserName(value)
         }
 
-        fun validate(raw: String): ValidationErrorType? =
+        fun validationErrorType(raw: String): ValidationErrorType? =
             if (raw.length <= CARDHOLDER_NAME_MAX_LENGTH) {
                 null
             } else {

@@ -15,7 +15,7 @@ value class CardNumber private constructor(
             return CardNumber(value)
         }
 
-        fun validate(raw: String): ValidationErrorType? =
+        fun validationErrorType(raw: String): ValidationErrorType? =
             when {
                 !raw.all(Char::isDigit) -> ValidationErrorType.InvalidFormat
                 raw.length > CARD_NUMBER_LENGTH -> ValidationErrorType.InvalidCardNumberLength

@@ -15,7 +15,7 @@ value class Password private constructor(
             return Password(value)
         }
 
-        fun validate(raw: String): ValidationErrorType? =
+        fun validationErrorType(raw: String): ValidationErrorType? =
             when {
                 !raw.all(Char::isDigit) -> ValidationErrorType.InvalidCharacters
                 raw.length > PASSWORD_LENGTH -> ValidationErrorType.InvalidPasswordLength

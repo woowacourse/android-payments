@@ -10,8 +10,6 @@ import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.ExpirationDate
 import woowacourse.payments.domain.model.Password
 import woowacourse.payments.domain.model.UserName
-import woowacourse.payments.domain.parser.ExpirationDateParser
-import woowacourse.payments.domain.validator.ValidationErrorType
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 
@@ -29,7 +27,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 number = value,
-                numberError = CardNumber.validate(value),
+                numberError = CardNumber.validationErrorType(value),
             )
     }
 
@@ -37,7 +35,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 expiration = value,
-                expirationError = ExpirationDate.validate(value),
+                expirationError = ExpirationDate.validationErrorType(value),
             )
     }
 
@@ -45,7 +43,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 userName = value,
-                userNameError = UserName.validate(value),
+                userNameError = UserName.validationErrorType(value),
             )
     }
 
@@ -53,7 +51,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 password = value,
-                passwordError = Password.validate(value),
+                passwordError = Password.validationErrorType(value),
             )
     }
 
@@ -77,10 +75,10 @@ class AddCardStateHolder(
 
         uiState =
             uiState.copy(
-                numberError = CardNumber.validate(uiState.number),
-                expirationError = ExpirationDate.validate(uiState.expiration),
-                userNameError = UserName.validate(uiState.userName),
-                passwordError = Password.validate(uiState.password),
+                numberError = CardNumber.validationErrorType(uiState.number),
+                expirationError = ExpirationDate.validationErrorType(uiState.expiration),
+                userNameError = UserName.validationErrorType(uiState.userName),
+                passwordError = Password.validationErrorType(uiState.password),
             )
         if (!uiState.isSaveEnabled) return
 
@@ -97,10 +95,10 @@ class AddCardStateHolder(
         } catch (_: IllegalArgumentException) {
             uiState =
                 uiState.copy(
-                    numberError = CardNumber.validate(uiState.number),
-                    expirationError = ExpirationDate.validate(uiState.expiration),
-                    userNameError = UserName.validate(uiState.userName),
-                    passwordError = Password.validate(uiState.password),
+                    numberError = CardNumber.validationErrorType(uiState.number),
+                    expirationError = ExpirationDate.validationErrorType(uiState.expiration),
+                    userNameError = UserName.validationErrorType(uiState.userName),
+                    passwordError = Password.validationErrorType(uiState.password),
                 )
         }
     }

@@ -33,7 +33,7 @@ value class ExpirationDate private constructor(
             return create(yearMonth, clock)
         }
 
-        fun validate(
+        fun validationErrorType(
             raw: String,
             clock: Clock = Clock.systemDefaultZone(),
         ): ValidationErrorType? {
