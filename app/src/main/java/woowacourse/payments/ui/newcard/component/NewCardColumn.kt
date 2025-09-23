@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.password
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.cardcatalog.component.PaymentCard
+import woowacourse.payments.ui.cardlist.component.PaymentCard
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 
 @Composable
@@ -23,16 +22,16 @@ fun NewCardColumn(
     Column(
         modifier = modifier.padding(horizontal = 24.dp)
     ) {
-        PaymentCard(
-            card = null,
-            cardCompanyUiModel = stateHolder.uiState.cardCompanyUiModel,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 14.dp, bottom = 28.dp)
-                .clickable(
-                    onClick = { stateHolder.changeBottomSheetState() }
-                ),
-        )
+//        PaymentCard(
+//            card = null,
+//            cardCompanyUiModel = stateHolder.uiState.cardCompanyUiModel,
+////            modifier = Modifier
+////                .align(Alignment.CenterHorizontally)
+////                .padding(top = 14.dp, bottom = 28.dp)
+////                .clickable(
+////                    onClick = { stateHolder.changeBottomSheetState() }
+////                ),
+//        )
         Box(
             modifier = Modifier.height(86.dp)
         ) {

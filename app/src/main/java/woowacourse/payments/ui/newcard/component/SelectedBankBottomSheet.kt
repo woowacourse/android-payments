@@ -11,7 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.newcard.state.CardStateHolder
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.uiModel.toUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.Gray52
 
 @Composable

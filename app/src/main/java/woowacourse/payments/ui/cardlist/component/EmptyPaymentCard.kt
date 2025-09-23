@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcatalog.component
+package woowacourse.payments.ui.cardlist.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +18,7 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.theme.GrayE5
 
 @Composable
-fun EmptyPaymentCard(onClickAddCard: () -> Unit) {
+fun EmptyPaymentCard(onAddCard: () -> Unit) {
     Box(
         modifier = Modifier
             .shadow(8.dp)
@@ -27,7 +27,7 @@ fun EmptyPaymentCard(onClickAddCard: () -> Unit) {
                 color = GrayE5,
                 shape = RoundedCornerShape(5.dp)
             )
-            .clickable { onClickAddCard() },
+            .clickable { onAddCard },
         contentAlignment = Alignment.Center
     ) {
         Icon(

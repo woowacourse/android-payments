@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcatalog.component
+package woowacourse.payments.ui.cardlist.component
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 
 @Composable
-fun AddNewCardInformationText(
+fun InformationText(
     modifier: Modifier = Modifier,
 ) {
     Text(
