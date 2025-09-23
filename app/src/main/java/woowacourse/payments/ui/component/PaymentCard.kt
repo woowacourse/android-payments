@@ -30,6 +30,7 @@ import woowacourse.payments.ui.theme.CardTextStyle
 fun PaymentCard(
     paymentCard: PaymentCardUiModel?,
     onSelectBank: () -> Unit,
+    onEditCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val bank = paymentCard?.bank ?: BankUiModel.PlaceHolder
@@ -42,7 +43,8 @@ fun PaymentCard(
                 .background(
                     color = Color(bank.colorInt),
                     shape = RoundedCornerShape(5.dp),
-                ),
+                )
+                .clickable(onClick = onEditCard),
     ) {
         Text(
             text = stringResource(bank.nameRes),
@@ -119,6 +121,7 @@ private fun PaymentCardPreview(
     PaymentCard(
         paymentCard = uiModel,
         onSelectBank = {},
+        onEditCard = {},
         modifier = Modifier,
     )
 }

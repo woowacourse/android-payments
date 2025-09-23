@@ -14,6 +14,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentCardsScreen(
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
+    onEditCard: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -30,6 +31,7 @@ fun PaymentCardsScreen(
                     .padding(innerPadding),
             paymentCards = paymentCards,
             onAddCard = onAddCard,
+            onEditCard = onEditCard,
         )
     }
 }
@@ -38,6 +40,6 @@ fun PaymentCardsScreen(
 @Composable
 private fun PaymentCardsPreview() {
     AndroidpaymentsTheme {
-        PaymentCardsScreen(emptyList(), {})
+        PaymentCardsScreen(emptyList(), {}, {})
     }
 }

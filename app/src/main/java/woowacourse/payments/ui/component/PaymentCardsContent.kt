@@ -23,6 +23,7 @@ fun PaymentCardsContent(
     modifier: Modifier = Modifier,
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
+    onEditCard: () -> Unit,
 ) {
     when (paymentCards.size) {
         0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
@@ -31,9 +32,15 @@ fun PaymentCardsContent(
                 modifier = modifier,
                 paymentCard = paymentCards.first(),
                 onAddCard = onAddCard,
+                onEditCard = onEditCard,
             )
 
-        else -> MultiCards(modifier = modifier, paymentCards = paymentCards)
+        else ->
+            MultiCards(
+                modifier = modifier,
+                paymentCards = paymentCards,
+                onEditCard = onEditCard,
+            )
     }
 }
 
@@ -60,6 +67,7 @@ private fun EmptyCard(
 private fun SingleCard(
     paymentCard: PaymentCardUiModel,
     onAddCard: () -> Unit,
+    onEditCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -69,6 +77,7 @@ private fun SingleCard(
         PaymentCard(
             paymentCard = paymentCard,
             onSelectBank = {},
+            onEditCard = onEditCard,
             modifier = Modifier.padding(top = 12.dp, bottom = 36.dp),
         )
         AddCard(onAddClick = onAddCard)
@@ -78,6 +87,7 @@ private fun SingleCard(
 @Composable
 private fun MultiCards(
     paymentCards: List<PaymentCardUiModel>,
+    onEditCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -88,6 +98,7 @@ private fun MultiCards(
             PaymentCard(
                 paymentCard = card,
                 onSelectBank = {},
+                onEditCard = onEditCard,
                 modifier =
                     Modifier
                         .padding(top = 16.dp),
@@ -107,6 +118,7 @@ private fun EmptyCardPreview() {
 private fun SingleCardPreview() {
     SingleCard(
         onAddCard = {},
+        onEditCard = {},
         paymentCard =
             PaymentCardUiModel(
                 "1234567812345678",
@@ -136,5 +148,6 @@ private fun MultiCardsPreview() {
                     BankType.HYUNDAI.toUiModel(),
                 ),
             ),
+        {},
     )
 }
