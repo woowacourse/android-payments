@@ -33,8 +33,8 @@ fun PinTextField(
             onValueChange(onlyDigits)
         },
         modifier = modifier.fillMaxWidth(),
-        label = { Text(stringResource(id = R.string.new_card_pin_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_pin_hint)) },
+        label = { Text(stringResource(id = R.string.card_pin_label)) },
+        placeholder = { Text(stringResource(id = R.string.card_pin_hint)) },
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,

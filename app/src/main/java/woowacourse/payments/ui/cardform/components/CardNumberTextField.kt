@@ -15,9 +15,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
 import woowacourse.payments.ui.cardform.model.CARD_NUMBER_MAX
 import woowacourse.payments.ui.cardform.model.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
 
 private const val CARD_NUMBER_GROUP_SIZE: Int = 4
 
@@ -42,8 +42,8 @@ fun CardNumberTextField(
             onValueChange(onlyDigits)
         },
         modifier = modifier,
-        label = { Text(stringResource(id = R.string.new_card_number_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_number_hint)) },
+        label = { Text(stringResource(id = R.string.card_number_label)) },
+        placeholder = { Text(stringResource(id = R.string.card_number_hint)) },
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,

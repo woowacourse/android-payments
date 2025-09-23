@@ -29,7 +29,6 @@ import woowacourse.payments.designsystem.theme.Black
 import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
-import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.cardform.components.BankSelector
 import woowacourse.payments.ui.cardform.components.CardFormTopBar
 import woowacourse.payments.ui.cardform.components.CardHolderTextField
@@ -39,6 +38,7 @@ import woowacourse.payments.ui.cardform.components.NewCardPreviewCard
 import woowacourse.payments.ui.cardform.components.PinTextField
 import woowacourse.payments.ui.cardform.model.ActionType
 import woowacourse.payments.ui.cardform.model.rememberCardFormState
+import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
 fun CardFormScreen(
@@ -76,8 +76,8 @@ fun CardFormScreen(
                 title =
                     stringResource(
                         when (actionType) {
-                            ActionType.NEW -> R.string.new_card_add
-                            ActionType.EDIT -> R.string.new_card_edit
+                            ActionType.NEW -> R.string.new_card
+                            ActionType.EDIT -> R.string.edit_card
                         },
                     ),
             )

@@ -33,8 +33,8 @@ fun CardHolderTextField(
             onValueChange(onlyLettersAndSpace)
         },
         modifier = modifier,
-        label = { Text(stringResource(id = R.string.new_card_holder_name_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_holder_name_hint)) },
+        label = { Text(stringResource(id = R.string.card_holder_name_label)) },
+        placeholder = { Text(stringResource(id = R.string.card_holder_name_hint)) },
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.Text,

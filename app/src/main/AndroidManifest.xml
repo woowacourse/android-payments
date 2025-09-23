@@ -13,7 +13,7 @@
         <activity
             android:name=".ui.cardwallet.CardWalletActivity"
             android:exported="true"
-            android:label="@string/new_card_add"
+            android:label="@string/new_card"
             android:theme="@style/Theme.Androidpayments">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
         <activity
             android:name=".ui.cardform.CardFormActivity"
             android:exported="false"
-            android:label="@string/new_card_add"
+            android:label="@string/new_card"
             android:theme="@style/Theme.Androidpayments" />
     </application>
 

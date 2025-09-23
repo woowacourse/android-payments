@@ -23,7 +23,7 @@ fun CardFormTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
-    title: String = stringResource(R.string.new_card_add),
+    title: String = stringResource(R.string.new_card),
 ) {
     TopAppBar(
         title = { Text(title, color = Black) },
@@ -31,7 +31,7 @@ fun CardFormTopBar(
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.new_card_navigate_to_back),
+                    contentDescription = stringResource(R.string.go_back),
                     tint = Black,
                 )
             }
@@ -40,7 +40,7 @@ fun CardFormTopBar(
             IconButton(onClick = onSaveClick) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.new_card_save),
+                    contentDescription = stringResource(R.string.save_card),
                     tint = Black,
                 )
             }
