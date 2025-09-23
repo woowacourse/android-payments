@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
-class CardNumber(
-    val numbers: String
+data class CardNumber(
+    val numbers: String,
 ) {
     init {
         require(numbers.all { it.isDigit() }) { "카드번호는 숫자여야 합니다." }

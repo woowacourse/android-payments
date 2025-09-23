@@ -60,9 +60,19 @@ fun NewCardScreen(
                 onBackClick = onBackClick,
                 onSaveClick = {
                     val cardResult: Result<Card> = newCardStateHolder.getCard()
+                    val originalCard: Card? = card?.toDomainOrNull()
 
                     cardResult
                         .onSuccess {
+                            // 카드의 변경사항이 없을 경우 저장하지 못하도록 함
+                            val newCard: Card = cardResult.getOrThrow()
+                            originalCard?.let {
+                                if (it == newCard) {
+                                    onCardSaveFailed()
+                                    return@onSuccess
+                                }
+                            }
+
                             onSaveClick(
                                 cardResult.getOrThrow().toParcelable(),
                                 newCardStateHolder.isEditMode.value,

@@ -49,10 +49,6 @@ class NewCardStateHolder(
         updateIsCardCompanySelected(isCardCompanySelected)
     }
 
-    private fun updateIsCardCompanySelected(value: Boolean) {
-        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
-    }
-
     fun getCard(): Result<Card> =
         Card.from(
             cardNumber = newCardUiState.value.cardNumber,
@@ -61,4 +57,8 @@ class NewCardStateHolder(
             password = newCardUiState.value.password,
             cardCompany = cardCompanyUiState.value.toDomain(),
         )
+
+    private fun updateIsCardCompanySelected(value: Boolean) {
+        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
+    }
 }

@@ -1,7 +1,7 @@
 package woowacourse.payments.domain
 
-class OwnerName(
-    val name: String
+data class OwnerName(
+    val name: String,
 ) {
     init {
         require(name.length <= MAX_LENGTH)
