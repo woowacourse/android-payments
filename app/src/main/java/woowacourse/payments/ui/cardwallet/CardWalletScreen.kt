@@ -28,7 +28,7 @@ import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
 import woowacourse.payments.ui.cardwallet.model.rememberCardWalletState
 import woowacourse.payments.ui.common.extensions.getParcelableExtraCompat
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.ui.newcard.CardFormActivity
 
 @Composable
 fun CardWalletScreen(modifier: Modifier = Modifier) {
@@ -42,11 +42,11 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                val newCard = data?.getParcelableExtraCompat<CardUiModel>(NewCardActivity.EXTRA_NEW_CARD_RESULT)
-                val added = holder.onCardAdded(newCard)
-                if (added) {
-                    Toast.makeText(context, getString(context, R.string.new_card_success), Toast.LENGTH_SHORT).show()
+                val saved = result.data?.getParcelableExtraCompat<CardUiModel>(CardFormActivity.EXTRA_CARD_RESULT)
+                if (saved != null) {
+                    val existed = holder.updateCard(saved)
+                    val msgRes = if (existed) R.string.edit_card_success else R.string.new_card_success
+                    Toast.makeText(context, getString(context, msgRes), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -76,6 +76,7 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
                 cards = holder.cards,
                 cardWalletState = holder.cardWalletState,
                 navigateToNewCard = { navigateToNewCard(launcher, context) },
+                navigateToEditCard = { card -> navigateToEditCard(launcher, context, card) },
             )
         }
     }
@@ -85,7 +86,15 @@ private fun navigateToNewCard(
     launcher: ActivityResultLauncher<Intent>,
     context: Context,
 ) {
-    launcher.launch(NewCardActivity.newIntent(context))
+    launcher.launch(CardFormActivity.newIntent(context))
+}
+
+private fun navigateToEditCard(
+    launcher: ActivityResultLauncher<Intent>,
+    context: Context,
+    card: CardUiModel,
+) {
+    launcher.launch(CardFormActivity.newIntent(context, card))
 }
 
 @Preview(showBackground = true)

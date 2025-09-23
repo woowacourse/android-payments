@@ -35,8 +35,8 @@ private const val MASKED_DIGITS = "****"
 
 @Composable
 fun PaymentCard(
+    card: CardUiModel?,
     modifier: Modifier = Modifier,
-    card: CardUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -143,6 +143,7 @@ private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
         val card =
             CardUiModel(
+                1L,
                 "1234123412341234",
                 "1225",
                 "공백",

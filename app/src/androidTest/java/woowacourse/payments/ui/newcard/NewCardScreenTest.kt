@@ -5,10 +5,10 @@ package woowacourse.payments.ui.newcard
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.newcard.model.ActionType
 
 class NewCardScreenTest {
     @get:Rule
@@ -18,9 +18,11 @@ class NewCardScreenTest {
     fun 프리뷰_카드를_클릭하면_은행선택_바텀시트가_열린다() {
         // given & when
         composeRule.setContent {
-            NewCardScreen(
-                onSaved = {},
-                onFinish = {},
+            CardFormScreen(
+                actionType = ActionType.NEW,
+                initialCard = null,
+                saveCard = {},
+                navigateToBack = {},
             )
         }
 

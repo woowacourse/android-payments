@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardwallet.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -11,10 +12,13 @@ import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
-fun CardWalletCards(cards: List<CardUiModel>) {
+fun CardWalletCards(
+    cards: List<CardUiModel>,
+    navigateToEditCard: (CardUiModel) -> Unit,
+) {
     Spacer(Modifier.height(12.dp))
     cards.forEach { card ->
-        PaymentCard(card = card)
+        PaymentCard(card = card, modifier = Modifier.clickable { navigateToEditCard(card) })
         Spacer(Modifier.height(36.dp))
     }
 }
@@ -25,9 +29,9 @@ private fun WalletCardsPreview() {
     AndroidpaymentsTheme {
         val cards =
             listOf<CardUiModel>(
-                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
-                CardUiModel("4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
+                CardUiModel(1L, "1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel(2L, "4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
             )
-        CardWalletCards(cards = cards)
+        CardWalletCards(cards = cards, navigateToEditCard = {})
     }
 }

@@ -10,11 +10,7 @@ object CardStorage {
     private val idGenerator: AtomicLong = AtomicLong(1L)
     private val storage: LinkedHashMap<Long, CardResponse> = LinkedHashMap()
 
-    fun getCard(id: Long): Result<CardResponse?> = runCatching { storage[id] }
-
-    fun getAllCards(): Result<List<CardResponse>> = runCatching { storage.values.toList() }
-
-    fun saveCard(cardRequest: CardRequest): Result<Unit> =
+    fun saveCard(cardRequest: CardRequest): Result<Long> =
         runCatching {
             when (cardRequest) {
                 is NewCardRequest -> addCard(cardRequest)
@@ -22,7 +18,7 @@ object CardStorage {
             }
         }
 
-    private fun addCard(cardRequest: CardRequest) {
+    private fun addCard(cardRequest: CardRequest): Long {
         val newCardId = idGenerator.getAndIncrement()
         val savedCard =
             CardResponse(
@@ -33,11 +29,12 @@ object CardStorage {
                 bankType = cardRequest.bankType,
             )
         storage[newCardId] = savedCard
+        return newCardId
     }
 
-    private fun updateCard(cardRequest: EditCardRequest) {
+    private fun updateCard(cardRequest: EditCardRequest): Long {
         val existingCard = storage[cardRequest.id]
-        if (existingCard != null) {
+        return if (existingCard != null) {
             val updatedCard =
                 existingCard.copy(
                     numberDigits = cardRequest.numberDigits,
@@ -46,6 +43,7 @@ object CardStorage {
                     bankType = cardRequest.bankType,
                 )
             storage[cardRequest.id] = updatedCard
+            cardRequest.id
         } else {
             addCard(cardRequest)
         }

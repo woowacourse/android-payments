@@ -19,7 +19,7 @@ import woowacourse.payments.designsystem.theme.Black
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardTopBar(
+fun CardFormTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -57,8 +57,8 @@ fun NewCardTopBar(
 
 @Preview(showBackground = true)
 @Composable
-private fun NewCardTopBarPreview() {
+private fun CardFormTopBarPreview() {
     AndroidpaymentsTheme {
-        NewCardTopBar(onBackClick = {}, onSaveClick = {})
+        CardFormTopBar(onBackClick = {}, onSaveClick = {})
     }
 }
