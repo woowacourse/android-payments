@@ -2,6 +2,7 @@ package woowacourse.payments.ui.screen.cardList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -31,14 +32,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.component.CardListTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardListScreen(
-    stateHolder: CardListStateHolder = remember { CardListStateHolder() },
+    stateHolder: CardListStateHolder,
     navigateToAddCard: () -> Unit,
 ) {
     val uiState = stateHolder.uiState
@@ -51,37 +54,28 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        CardListContent(
-            modifier = Modifier.padding(innerPadding),
-            enableScroll = uiState.enableScroll,
-        ) {
-            if (uiState.cards.isEmpty()) {
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = stringResource(R.string.card_list_add_new_card),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            for (card in uiState.cards) {
-                Spacer(modifier = Modifier.height(32.dp))
-                PaymentCard(card = card)
-            }
-
-            if (uiState.cards.size <= 1) {
-                Spacer(modifier = Modifier.height(32.dp))
-                AddCardBox(onClick = navigateToAddCard)
-            }
+        if (uiState.cards.isEmpty()) {
+            EmptyCardListContent(
+                modifier = Modifier.padding(innerPadding),
+                onClick = navigateToAddCard,
+            )
+        } else {
+            CardListContent(
+                cards = uiState.cards,
+                enableScroll = uiState.cards.size > 1,
+                onClick = navigateToAddCard,
+                modifier = Modifier.padding(innerPadding),
+            )
         }
     }
 }
 
 @Composable
 private fun CardListContent(
+    cards: List<CardUiModel>,
     enableScroll: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -90,24 +84,44 @@ private fun CardListContent(
             modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .let { baseModifier ->
-                    if (enableScroll) {
-                        baseModifier.verticalScroll(scrollState)
-                    } else {
-                        baseModifier
-                    }
-                },
+                .then(if (enableScroll) Modifier.verticalScroll(scrollState) else Modifier),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        content()
-        if (enableScroll) {
-            Spacer(modifier = Modifier.height(40.dp))
+        cards.forEach { card ->
+            Spacer(modifier = Modifier.height(20.dp))
+            PaymentCard(card = card)
+        }
+
+        if (cards.size <= 1) {
+            Spacer(modifier = Modifier.height(32.dp))
+            AddCardBox(onClick = onClick)
         }
     }
 }
 
 @Composable
-fun AddCardBox(onClick: () -> Unit) {
+private fun EmptyCardListContent(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top,
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = stringResource(R.string.card_list_add_new_card),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        AddCardBox(onClick = onClick)
+    }
+}
+
+@Composable
+private fun AddCardBox(onClick: () -> Unit) {
     Box(
         modifier =
             Modifier
@@ -117,7 +131,10 @@ fun AddCardBox(onClick: () -> Unit) {
                 .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
-        Icon(Icons.Default.Add, contentDescription = "카드 추가")
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = stringResource(R.string.card_list_add_card_description),
+        )
     }
 }
 
@@ -127,6 +144,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             emptyList(),
             listOf(
                 CardUiModel(
+                    bankUiModel = BankType.KAKAOBANK.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "HamBeomJoon",
@@ -134,14 +152,16 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             ),
             listOf(
                 CardUiModel(
+                    bankUiModel = BankType.LOTTE.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
+                    bankUiModel = BankType.HYUNDAI.toPresentation(),
                     number = "8734578233123212",
                     expired = "0729",
-                    owner = "Meeple",
+                    owner = "meeple",
                 ),
             ),
         )
@@ -153,8 +173,13 @@ fun CardListScreenPreview(
     @PreviewParameter(CardListPreviewProvider::class) cards: List<CardUiModel>,
 ) {
     AndroidpaymentsTheme {
+        val previewStateHolder =
+            remember {
+                CardListStateHolder(cards)
+            }
+
         CardListScreen(
-            stateHolder = CardListStateHolder(CardListUiState(cards = cards)),
+            stateHolder = previewStateHolder,
             navigateToAddCard = { },
         )
     }

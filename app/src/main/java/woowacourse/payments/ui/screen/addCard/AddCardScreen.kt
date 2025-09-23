@@ -8,13 +8,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
 import woowacourse.payments.ui.component.ExpiredInputField
@@ -22,16 +29,26 @@ import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PasswordInputField
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddCardScreen(
+    stateHolder: AddCardStateHolder,
     onBackPressed: () -> Unit,
     onCardSaved: (CardUiModel) -> Unit,
 ) {
-    val stateHolder =
-        rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder(AddCardUiState()) }
+    val uiState = stateHolder.uiState
     val scrollState = rememberScrollState()
+    val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
+    var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
+
+    LaunchedEffect(showBottomSheetState) {
+        if (showBottomSheetState) {
+            bottomSheetState.show()
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -39,8 +56,7 @@ fun AddCardScreen(
             NewCardTopBar(
                 onBackClick = onBackPressed,
                 onSaveClick = {
-                    stateHolder.validateAll()
-                    if (stateHolder.uiState.isFormValid) {
+                    if (stateHolder.validate()) {
                         onCardSaved(stateHolder.uiState.toCardUiModel())
                     }
                 },
@@ -67,32 +83,43 @@ fun AddCardScreen(
 
             CardNumberInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardNumber = stateHolder.uiState.cardNumber,
+                cardNumber = uiState.cardNumber,
                 onCardNumberChange = { stateHolder.updateCardNumber(it) },
-                error = stateHolder.uiState.cardNumberError,
+                error = uiState.cardNumberError,
             )
 
             ExpiredInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                expired = stateHolder.uiState.expired,
+                expired = uiState.expired,
                 onExpiredChange = { stateHolder.updateExpired(it) },
-                error = stateHolder.uiState.expiredError,
+                error = uiState.expiredError,
             )
 
             CardOwnerInputField(
                 modifier = Modifier.fillMaxWidth(),
-                cardOwner = stateHolder.uiState.cardOwner,
+                cardOwner = uiState.cardOwner,
                 onOwnerChange = { stateHolder.updateCardOwner(it) },
-                error = stateHolder.uiState.ownerError,
+                error = uiState.ownerError,
             )
 
             PasswordInputField(
                 modifier = Modifier.fillMaxWidth(0.5f),
-                password = stateHolder.uiState.password,
+                password = uiState.password,
                 onPasswordChange = { stateHolder.updatePassword(it) },
-                error = stateHolder.uiState.passwordError,
+                error = uiState.passwordError,
             )
         }
+    }
+
+    if (showBottomSheetState) {
+        BankSelectBottomSheet(
+            sheetState = bottomSheetState,
+            onBankSelected = { bank ->
+                stateHolder.updateBank(bank.toPresentation())
+                showBottomSheetState = false
+            },
+            onDismiss = { showBottomSheetState = false },
+        )
     }
 }
 
@@ -100,7 +127,11 @@ fun AddCardScreen(
 @Preview(showBackground = true)
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
+        val preViewStateHolder =
+            rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
+
         AddCardScreen(
+            stateHolder = preViewStateHolder,
             onBackPressed = {},
             onCardSaved = {},
         )

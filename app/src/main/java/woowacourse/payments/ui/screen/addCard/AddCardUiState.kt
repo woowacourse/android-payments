@@ -1,37 +1,44 @@
 package woowacourse.payments.ui.screen.addCard
 
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardOwner
-import woowacourse.payments.domain.Expired
-import woowacourse.payments.domain.Password
+import android.os.Parcelable
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toPresentation
 
+@Parcelize
 data class AddCardUiState(
-    val cardNumber: CardNumber? = null,
-    val expired: Expired? = null,
-    val cardOwner: CardOwner = CardOwner(""),
-    val password: Password? = null,
+    val cardNumber: String = "",
+    val expired: String = "",
+    val cardOwner: String = "",
+    val password: String = "",
+    val bankUiModel: BankUiModel = BankType.NOT_SELECTED.toPresentation(),
     val errors: Set<AddCardError> = emptySet(),
-) {
-    val isFormValid: Boolean get() = errors.isEmpty()
-    val cardNumberError: AddCardError? get() = errors.find { it == AddCardError.CARD_NUMBER_INVALID }
-    val expiredError: AddCardError? get() = errors.find { it == AddCardError.EXPIRED_INVALID }
-    val ownerError: AddCardError? get() = errors.find { it == AddCardError.OWNER_INVALID }
-    val passwordError: AddCardError? get() = errors.find { it == AddCardError.PASSWORD_INVALID }
+    val submitted: Boolean = false,
+) : Parcelable {
+    @IgnoredOnParcel
+    val cardNumberError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.CARD_NUMBER_INVALID } else null
 
-    fun validate(): AddCardUiState {
-        val newErrors = mutableSetOf<AddCardError>()
-        if (cardNumber?.isValid != true) newErrors.add(AddCardError.CARD_NUMBER_INVALID)
-        if (expired?.isValid != true) newErrors.add(AddCardError.EXPIRED_INVALID)
-        if (!cardOwner.isValid) newErrors.add(AddCardError.OWNER_INVALID)
-        if (password?.isValid != true) newErrors.add(AddCardError.PASSWORD_INVALID)
-        return copy(errors = newErrors)
-    }
+    @IgnoredOnParcel
+    val expiredError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.EXPIRED_INVALID } else null
 
-    fun toCardUiModel(): CardUiModel =
-        CardUiModel(
-            number = cardNumber?.value.orEmpty(),
-            expired = expired?.value.orEmpty(),
-            owner = cardOwner.value,
-        )
+    @IgnoredOnParcel
+    val ownerError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.OWNER_INVALID } else null
+
+    @IgnoredOnParcel
+    val passwordError: AddCardError? =
+        if (submitted) errors.find { it == AddCardError.PASSWORD_INVALID } else null
 }
+
+fun AddCardUiState.toCardUiModel(): CardUiModel =
+    CardUiModel(
+        bankUiModel = bankUiModel,
+        number = cardNumber,
+        expired = expired,
+        owner = cardOwner,
+    )

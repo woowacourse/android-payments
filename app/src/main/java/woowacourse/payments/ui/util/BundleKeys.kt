@@ -5,5 +5,6 @@ object BundleKeys {
     const val EXPIRED_KEY = "expired"
     const val CARD_OWNER_KEY = "cardOwner"
     const val PASSWORD_KEY = "password"
+    const val CARD_COMPANY_KEY = "cardCompany"
     const val VALIDATION_ERROR_KEY = "showValidationError"
 }

@@ -19,8 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.formattedExpired
+import woowacourse.payments.ui.model.formattedNumber
+import woowacourse.payments.ui.model.toPresentation
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.theme.GOLD
 
 @Composable
 fun PaymentCard(
@@ -33,18 +38,29 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = Color(0xFF333333),
+                    color = card.bankUiModel.backgroundColor,
                     shape = RoundedCornerShape(5.dp),
                 ),
-        contentAlignment = Alignment.CenterStart,
     ) {
+        Text(
+            text = card.bankUiModel.name,
+            modifier =
+                Modifier
+                    .padding(start = 14.dp, top = 12.dp)
+                    .align(Alignment.TopStart),
+            color = Color.White,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+        )
+
         Box(
             modifier =
                 Modifier
+                    .align(Alignment.CenterStart)
                     .padding(start = 14.dp, bottom = 12.dp)
                     .size(width = 40.dp, height = 26.dp)
                     .background(
-                        color = Color(0xFFCBBA64),
+                        color = GOLD,
                         shape = RoundedCornerShape(4.dp),
                     ),
         )
@@ -54,10 +70,10 @@ fun PaymentCard(
                 Modifier
                     .align(Alignment.BottomStart)
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 14.dp, vertical = 8.dp),
         ) {
             Text(
-                text = card.maskedNumber,
+                text = card.formattedNumber(),
                 color = Color.White,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
@@ -75,7 +91,7 @@ fun PaymentCard(
                 )
 
                 Text(
-                    text = card.formattedExpired,
+                    text = card.formattedExpired(),
                     color = Color.White,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
@@ -87,11 +103,28 @@ fun PaymentCard(
 
 @Composable
 @Preview(showBackground = true)
-fun PaymentPreview() {
+fun BCCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
                 CardUiModel(
+                    bankUiModel = BankType.BC.toPresentation(),
+                    number = "1234567887654321",
+                    expired = "0826",
+                    owner = "으어 글씨가 너무 크다.",
+                ),
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun WooriCardPreview() {
+    AndroidpaymentsTheme {
+        PaymentCard(
+            card =
+                CardUiModel(
+                    bankUiModel = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

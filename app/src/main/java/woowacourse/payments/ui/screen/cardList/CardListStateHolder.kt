@@ -7,20 +7,30 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.model.CardUiModel
 
 class CardListStateHolder(
-    initialState: CardListUiState = CardListUiState(),
+    initialCards: List<CardUiModel> = emptyList(),
 ) {
-    var uiState by mutableStateOf(initialState)
+    var uiState by mutableStateOf(
+        CardListUiState(
+            cards = initialCards,
+            showAddButton = initialCards.size > 1,
+        ),
+    )
         private set
 
     fun addCard(card: CardUiModel) {
-        uiState = uiState.copy(cards = uiState.cards + card)
+        val newCards = uiState.cards + card
+        uiState =
+            uiState.copy(
+                cards = newCards,
+                showAddButton = newCards.size > 1,
+            )
     }
 
     companion object {
         val saver =
             Saver<CardListStateHolder, List<CardUiModel>>(
                 save = { holder -> holder.uiState.cards },
-                restore = { cards -> CardListStateHolder(CardListUiState(cards)) },
+                restore = { cards -> CardListStateHolder(cards) },
             )
     }
 }
