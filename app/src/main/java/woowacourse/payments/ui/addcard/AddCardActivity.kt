@@ -29,6 +29,7 @@ class AddCardActivity : ComponentActivity() {
                     finish()
                 },
                 onCardChange = { newCard -> card = newCard },
+                isCardSavable = card.isValid(),
             )
         }
     }

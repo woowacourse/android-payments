@@ -34,6 +34,7 @@ fun CardScreen(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSheetVisibleInit: Boolean = true,
+    isCardSavable: Boolean = false,
 ) {
     var isSheetVisible by remember { mutableStateOf(isSheetVisibleInit) }
 
@@ -44,7 +45,7 @@ fun CardScreen(
                     titleResId = cardScreenCategory.topBarTitleId,
                     onBackClick = onBackClick,
                     onSaveClick = { onSaveClick() },
-                    isOnSaveClickable = card.isValid(),
+                    isOnSaveClickable = isCardSavable,
                 )
             },
             modifier = modifier.fillMaxSize(),

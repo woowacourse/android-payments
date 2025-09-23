@@ -18,7 +18,8 @@ class EditCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var card by remember { mutableStateOf(intent.getParcelableExtraCompat<Card>(EXTRA_CARD) ?: Card()) }
+            val initCard = intent.getParcelableExtraCompat<Card>(EXTRA_CARD) ?: Card()
+            var card by remember { mutableStateOf(initCard) }
             CardScreen(
                 card = card,
                 cardScreenCategory = CardScreenCategory.Edit,
@@ -31,6 +32,7 @@ class EditCardActivity : ComponentActivity() {
                 },
                 onCardChange = { newCard -> card = newCard },
                 isSheetVisibleInit = false,
+                isCardSavable = card.isValid() && card != initCard,
             )
         }
     }
