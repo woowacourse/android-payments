@@ -28,7 +28,7 @@ import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
 import woowacourse.payments.ui.cardwallet.model.rememberCardWalletState
 import woowacourse.payments.ui.common.extensions.getParcelableExtraCompat
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.CardFormActivity
+import woowacourse.payments.ui.cardform.CardFormActivity
 
 @Composable
 fun CardWalletScreen(modifier: Modifier = Modifier) {

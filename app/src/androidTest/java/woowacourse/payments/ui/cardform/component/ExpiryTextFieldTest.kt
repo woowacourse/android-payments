@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.newcard.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.newcard.components.ExpiryTextField
+import woowacourse.payments.ui.cardform.components.ExpiryTextField
 
 class ExpiryTextFieldTest {
     @get:Rule

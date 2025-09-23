@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.model
+package woowacourse.payments.ui.cardform.model
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable

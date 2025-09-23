@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardform.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -12,14 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.newcard.model.PIN_MAX
+import woowacourse.payments.ui.cardform.model.CARD_HOLDER_MAX
 
 @Composable
-fun PinTextField(
+fun CardHolderTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -29,19 +29,25 @@ fun PinTextField(
     OutlinedTextField(
         value = value,
         onValueChange = { input ->
-            val onlyDigits = input.filter { it.isDigit() }.take(PIN_MAX)
-            onValueChange(onlyDigits)
+            val onlyLettersAndSpace = input.filter { it.isLetterOrDigit() }.take(CARD_HOLDER_MAX)
+            onValueChange(onlyLettersAndSpace)
         },
-        modifier = modifier.fillMaxWidth(),
-        label = { Text(stringResource(id = R.string.new_card_pin_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_pin_hint)) },
+        modifier = modifier,
+        label = { Text(stringResource(id = R.string.new_card_holder_name_label)) },
+        placeholder = { Text(stringResource(id = R.string.new_card_holder_name_hint)) },
         keyboardOptions =
             KeyboardOptions(
-                keyboardType = KeyboardType.NumberPassword,
-                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next,
             ),
-        keyboardActions = KeyboardActions(onDone = { onImeAction() }),
-        visualTransformation = PasswordVisualTransformation(),
+        keyboardActions = KeyboardActions(onNext = { onImeAction() }),
+        supportingText = {
+            Text(
+                text = "${value.length}/$CARD_HOLDER_MAX",
+                textAlign = TextAlign.End,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
         singleLine = true,
         colors = colors,
     )
@@ -49,9 +55,9 @@ fun PinTextField(
 
 @Preview(showBackground = true)
 @Composable
-private fun PinTextFieldPreview() {
+private fun CardHolderTextFieldPreview() {
     AndroidpaymentsTheme {
-        PinTextField(
+        CardHolderTextField(
             value = "",
             onValueChange = {},
             modifier = Modifier,

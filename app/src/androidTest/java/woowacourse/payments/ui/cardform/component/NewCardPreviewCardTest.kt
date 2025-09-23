@@ -1,6 +1,6 @@
 @file:Suppress("ktlint:standard:function-naming")
 
-package woowacourse.payments.ui.newcard.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.newcard.components.NewCardPreviewCard
+import woowacourse.payments.ui.cardform.components.NewCardPreviewCard
 
 class NewCardPreviewCardTest {
     @get:Rule

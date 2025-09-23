@@ -28,7 +28,7 @@ import woowacourse.payments.designsystem.theme.Yellow
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.common.components.BankLabel
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.cardform.model.CARD_NUMBER_SEPARATOR
 import woowacourse.payments.ui.common.mapper.toColor
 
 private const val MASKED_DIGITS = "****"

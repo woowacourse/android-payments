@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardform
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,15 +30,15 @@ import woowacourse.payments.designsystem.theme.GrayHint
 import woowacourse.payments.designsystem.theme.GrayOutline
 import woowacourse.payments.designsystem.theme.GrayText
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.components.BankSelector
-import woowacourse.payments.ui.newcard.components.CardFormTopBar
-import woowacourse.payments.ui.newcard.components.CardHolderTextField
-import woowacourse.payments.ui.newcard.components.CardNumberTextField
-import woowacourse.payments.ui.newcard.components.ExpiryTextField
-import woowacourse.payments.ui.newcard.components.NewCardPreviewCard
-import woowacourse.payments.ui.newcard.components.PinTextField
-import woowacourse.payments.ui.newcard.model.ActionType
-import woowacourse.payments.ui.newcard.model.rememberCardFormState
+import woowacourse.payments.ui.cardform.components.BankSelector
+import woowacourse.payments.ui.cardform.components.CardFormTopBar
+import woowacourse.payments.ui.cardform.components.CardHolderTextField
+import woowacourse.payments.ui.cardform.components.CardNumberTextField
+import woowacourse.payments.ui.cardform.components.ExpiryTextField
+import woowacourse.payments.ui.cardform.components.NewCardPreviewCard
+import woowacourse.payments.ui.cardform.components.PinTextField
+import woowacourse.payments.ui.cardform.model.ActionType
+import woowacourse.payments.ui.cardform.model.rememberCardFormState
 
 @Composable
 fun CardFormScreen(

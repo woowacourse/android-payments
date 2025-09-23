@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardform.components
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
-import woowacourse.payments.ui.newcard.model.CARD_NUMBER_MAX
-import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.cardform.model.CARD_NUMBER_MAX
+import woowacourse.payments.ui.cardform.model.CARD_NUMBER_SEPARATOR
 
 private const val CARD_NUMBER_GROUP_SIZE: Int = 4
 

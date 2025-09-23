@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardform
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import woowacourse.payments.data.storage.CardStorage
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.common.model.toData
-import woowacourse.payments.ui.newcard.model.ActionType
+import woowacourse.payments.ui.cardform.model.ActionType
 
 class CardFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
