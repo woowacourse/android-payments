@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.model.CardUiModel
@@ -23,7 +22,6 @@ class CardListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards = rememberSaveable { mutableStateListOf<CardUiModel>() }
-                val context = LocalContext.current
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
@@ -33,7 +31,7 @@ class CardListActivity : ComponentActivity() {
                             cards += newCard
                             Toast
                                 .makeText(
-                                    context,
+                                    this,
                                     getString(R.string.registration_card_complete_message),
                                     Toast.LENGTH_SHORT,
                                 ).show()
@@ -42,7 +40,7 @@ class CardListActivity : ComponentActivity() {
                 CardListScreen(
                     cards = cards,
                     onRegistrationClick = {
-                        cardAddLauncher.launch(CardRegisterActivity.newIntent(context))
+                        cardAddLauncher.launch(CardRegisterActivity.newIntent(this))
                     },
                 )
             }
