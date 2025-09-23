@@ -6,10 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.AddCardActivity
 import woowacourse.payments.R
@@ -17,25 +13,22 @@ import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun PaymentScreen() {
-    var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
+    val state = rememberPaymentStateHolder()
     val context = LocalContext.current
-    val canAddMore = cards.size < 2
-    val showTopAdd = cards.size >= 2
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult(),
-        ) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = AddCardActivity.parseResult(activityResult.data)
-                if (newCard != null) {
-                    cards = cards + newCard
+            ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                AddCardActivity.parseResult(result.data)?.let { card: CardUiModel ->
+                    state.onCardAdded(card)
                 }
             }
         }
 
-    LaunchedEffect(cards.size) {
-        if (cards.isNotEmpty()) {
+    LaunchedEffect(state.cards.size) {
+        if (state.cards.isNotEmpty()) {
             Toast
                 .makeText(
                     context,
@@ -46,9 +39,9 @@ fun PaymentScreen() {
     }
 
     PaymentContent(
-        cards = cards,
-        showTopAdd = showTopAdd,
-        canAddMore = canAddMore,
+        cards = state.cards,
+        showTopAdd = state.showTopAdd,
+        canAddMore = state.canAddMore,
         onAddCardClick = { cardAddLauncher.launch(AddCardActivity.newIntent(context)) },
     )
 }
