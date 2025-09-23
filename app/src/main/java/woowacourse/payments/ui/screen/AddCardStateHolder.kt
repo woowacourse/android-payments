@@ -29,7 +29,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 number = value,
-                numberError = validateNumber(value),
+                numberError = CardNumber.validate(value),
             )
     }
 
@@ -37,7 +37,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 expiration = value,
-                expirationError = validateExpiration(value),
+                expirationError = ExpirationDate.validate(value),
             )
     }
 
@@ -45,7 +45,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 userName = value,
-                userNameError = validateUserName(value),
+                userNameError = UserName.validate(value),
             )
     }
 
@@ -53,7 +53,7 @@ class AddCardStateHolder(
         uiState =
             uiState.copy(
                 password = value,
-                passwordError = validatePassword(value),
+                passwordError = Password.validate(value),
             )
     }
 
@@ -75,42 +75,33 @@ class AddCardStateHolder(
             return
         }
 
-        val numberErr = validateNumber(uiState.number)
-        val expirationErr = validateExpiration(uiState.expiration)
-        val userNameErr = validateUserName(uiState.userName)
-        val passwordErr = validatePassword(uiState.password)
-
         uiState =
             uiState.copy(
-                numberError = numberErr,
-                expirationError = expirationErr,
-                userNameError = userNameErr,
-                passwordError = passwordErr,
+                numberError = CardNumber.validate(uiState.number),
+                expirationError = ExpirationDate.validate(uiState.expiration),
+                userNameError = UserName.validate(uiState.userName),
+                passwordError = Password.validate(uiState.password),
             )
         if (!uiState.isSaveEnabled) return
 
-        val ym =
-            ExpirationDateParser.parse(uiState.expiration) ?: run {
-                uiState = uiState.copy(expirationError = ValidationErrorType.InvalidFormat)
-                return
-            }
-
-        val card =
-            Card(
-                cardNumber = CardNumber.from(uiState.number),
-                expirationDate = ExpirationDate.from(ym),
-                userName = UserName.from(uiState.userName),
-                password = Password.from(uiState.password),
-                type = uiState.selectedCompany,
-            )
-        onAddCard(card)
+        try {
+            val card =
+                Card(
+                    cardNumber = CardNumber.create(uiState.number),
+                    expirationDate = ExpirationDate.createFromRaw(uiState.expiration),
+                    userName = UserName.create(uiState.userName),
+                    password = Password.create(uiState.password),
+                    type = uiState.selectedCompany,
+                )
+            onAddCard(card)
+        } catch (_: IllegalArgumentException) {
+            uiState =
+                uiState.copy(
+                    numberError = CardNumber.validate(uiState.number),
+                    expirationError = ExpirationDate.validate(uiState.expiration),
+                    userNameError = UserName.validate(uiState.userName),
+                    passwordError = Password.validate(uiState.password),
+                )
+        }
     }
-
-    private fun validateNumber(value: String) = CardNumber.validate(value)
-
-    private fun validateExpiration(value: String) = ExpirationDate.validate(value)
-
-    private fun validateUserName(value: String) = UserName.validate(value)
-
-    private fun validatePassword(value: String) = Password.validate(value)
 }
