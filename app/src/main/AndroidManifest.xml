@@ -24,6 +24,10 @@
             android:name=".AddcardActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
+        <activity
+            android:name=".EditcardActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Androidpayments" />
     </application>
 
 </manifest>
