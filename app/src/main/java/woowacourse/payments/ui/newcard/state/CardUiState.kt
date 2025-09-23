@@ -2,11 +2,8 @@ package woowacourse.payments.ui.newcard.state
 
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.domain.ExpirationDate
-import woowacourse.payments.domain.OwnerName
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.uiModel.NewCardMode
-import woowacourse.payments.ui.newcard.uiModel.toUiModel
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.toUiModel
 
  data class CardUiState(
     val card: Card? = null,

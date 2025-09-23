@@ -1,18 +1,16 @@
 package woowacourse.payments.ui.newcard.state
 
-import android.R.attr.digits
-import android.R.attr.password
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpirationDate
+import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.uiModel.toDomain
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.toDomain
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
@@ -33,7 +31,7 @@ class CardStateHolder(
             isBottomSheetOpen = !uiState.isBottomSheetOpen,
             card = card,
             cardCompany = card.cardCompany,
-            expirationDate = card.expirationDate.value
+            expirationDate = card.expiredDate.value
                 .format(DateTimeFormatter.ofPattern("MMyy")),
             number = card.number.value,
             ownerName = card.ownerName.value ?: "",
@@ -69,7 +67,7 @@ class CardStateHolder(
     fun changeExpirationDate(newExpirationDate: String) {
         val digits = newExpirationDate.filter { it.isDigit() }.take(4)
         val error = if (digits.isEmpty()) null else runCatching {
-            ExpirationDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
+            ExpiredDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
         uiState =
@@ -105,7 +103,7 @@ class CardStateHolder(
             Card.Companion.Card(
                 cardCompany = company,
                 number = uiState.number,
-                expirationDate = YearMonth.parse(
+                expiredDate = YearMonth.parse(
                     uiState.expirationDate.filter { it.isDigit() }.take(4),
                     DateTimeFormatter.ofPattern("MMyy")
                 ),
@@ -116,7 +114,7 @@ class CardStateHolder(
             val old = uiState.card
             val changed = old == null || old.cardCompany != company ||
                     old.number.value != uiState.number ||
-                    old.expirationDate.value != YearMonth.parse(
+                    old.expiredDate.value != YearMonth.parse(
                 uiState.expirationDate.filter { it.isDigit() }.take(4),
                 DateTimeFormatter.ofPattern("MMyy")
             ) ||
