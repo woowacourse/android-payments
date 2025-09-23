@@ -43,7 +43,9 @@ data class PaymentCardUiModel(
             with(paymentCard) {
                 PaymentCardUiModel(
                     id = id,
-                    bankType = BankTypeUiModel.valueOf(bankType.name),
+                    bankType =
+                        runCatching { BankTypeUiModel.valueOf(bankType.name) }
+                            .getOrDefault(BankTypeUiModel.NOT_SELECTED),
                     number = CardNumberUiModel.from(number),
                     expirationDate = CardExpirationDateUiModel.from(expirationDate),
                     cardholderName = CardholderNameUiModel.from(cardholderName),
