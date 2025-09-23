@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.allcards
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -19,9 +18,7 @@ import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.util.getParcelableCompat
-import woowacourse.payments.ui.util.getSerializableCompat
 import woowacourse.payments.ui.util.showToast
 
 class AllCardsActivity : ComponentActivity() {
@@ -34,29 +31,22 @@ class AllCardsActivity : ComponentActivity() {
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
                         val modificationMode =
-                            result.data?.getSerializableCompat<ModificationMode>(
+                            result.data?.getParcelableCompat<ModificationMode>(
                                 CARD_MODIFICATION_MODE_KEY,
-                            )
-                        val cardInfo =
-                            result.data?.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)
+                            ) ?: return@rememberLauncherForActivityResult
 
-                        val index =
-                            result.data?.getSerializableCompat<Int>(CARD_MODIFICATION_INDEX_KEY)
+                        when (modificationMode) {
+                            is ModificationMode.Add -> {
+                                allCards.addCard(modificationMode.cardInfo)
+                                showToast(getString(R.string.allcards_card_added))
+                            }
 
-                        if (modificationMode != null && cardInfo != null) {
-                            when (modificationMode) {
-                                ModificationMode.ADD_CARD -> {
-                                    allCards.addCard(cardInfo)
-                                    showToast(getString(R.string.allcards_card_added))
-                                }
-
-                                ModificationMode.MODIFY_CARD -> {
-                                    allCards.modifyCard(
-                                        cardInfo,
-                                        index,
-                                    )
-                                    showToast(getString(R.string.allcards_card_modified))
-                                }
+                            is ModificationMode.Modify -> {
+                                allCards.modifyCard(
+                                    modificationMode.cardInfo,
+                                    modificationMode.index,
+                                )
+                                showToast(getString(R.string.allcards_card_modified))
                             }
                         }
                     }
@@ -70,7 +60,12 @@ class AllCardsActivity : ComponentActivity() {
                                 Modifier
                                     .padding(horizontal = 20.dp),
                             onPlusCardClick = {
-                                launcher.launch(AddCardActivity.newIntent(this))
+                                launcher.launch(
+                                    AddCardActivity.newIntent(
+                                        this,
+                                        ModificationMode.Add(),
+                                    ),
+                                )
                             },
                         )
                     },
@@ -82,10 +77,23 @@ class AllCardsActivity : ComponentActivity() {
                                 .padding(padding)
                                 .fillMaxWidth(),
                         onPlusCardClick = {
-                            launcher.launch(Intent(this, AddCardActivity::class.java))
+                            launcher.launch(
+                                AddCardActivity.newIntent(
+                                    this,
+                                    ModificationMode.Add(),
+                                ),
+                            )
                         },
                         onCardClick = { cardInfo, index ->
-                            launcher.launch(AddCardActivity.newIntent(this, cardInfo, index))
+                            launcher.launch(
+                                AddCardActivity.newIntent(
+                                    this,
+                                    ModificationMode.Modify(
+                                        cardInfo,
+                                        index,
+                                    ),
+                                ),
+                            )
                         },
                     )
                 }

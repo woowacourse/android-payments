@@ -5,10 +5,19 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
 
-enum class ModificationMode {
-    ADD_CARD,
-    MODIFY_CARD,
-    ;
+sealed class ModificationMode : Parcelable {
+    abstract val cardInfo: CardInfoUiState
+
+    @Parcelize
+    data class Add(
+        override val cardInfo: CardInfoUiState = CardInfoUiState(),
+    ) : ModificationMode()
+
+    @Parcelize
+    data class Modify(
+        override val cardInfo: CardInfoUiState,
+        val index: Int,
+    ) : ModificationMode()
 
     companion object {
         fun isModificationEnabled(

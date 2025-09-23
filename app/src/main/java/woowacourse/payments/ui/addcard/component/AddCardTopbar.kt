@@ -33,8 +33,8 @@ fun AddCardTopbar(
             Text(
                 text =
                     when (modificationMode) {
-                        ModificationMode.ADD_CARD -> stringResource(R.string.payments_addcard_topbar_add_card)
-                        ModificationMode.MODIFY_CARD -> stringResource(R.string.payments_addcard_topbar_modify_card)
+                        is ModificationMode.Add -> stringResource(R.string.payments_addcard_topbar_add_card)
+                        is ModificationMode.Modify -> stringResource(R.string.payments_addcard_topbar_modify_card)
                     },
             )
         },
@@ -53,9 +53,9 @@ fun AddCardTopbar(
                     return@IconButton
                 }
                 when (modificationMode) {
-                    ModificationMode.ADD_CARD -> onAddCardSuccess()
+                    is ModificationMode.Add -> onAddCardSuccess()
 
-                    ModificationMode.MODIFY_CARD -> {
+                    is ModificationMode.Modify -> {
                         if (isModificationEnabled) {
                             onModifyCardSuccess()
                         } else {
@@ -78,7 +78,7 @@ fun AddCardTopbar(
 private fun AddCardTopbarPreView() {
     AndroidpaymentsTheme {
         AddCardTopbar(
-            modificationMode = ModificationMode.ADD_CARD,
+            modificationMode = ModificationMode.Add(),
         )
     }
 }

@@ -94,7 +94,7 @@ private fun AddCardScreenPreview() {
         Scaffold(
             topBar = {
                 AddCardTopbar(
-                    ModificationMode.ADD_CARD,
+                    ModificationMode.Add(),
                 )
             },
         ) { paddingValues ->
