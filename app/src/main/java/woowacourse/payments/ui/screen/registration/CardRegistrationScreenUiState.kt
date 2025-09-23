@@ -19,6 +19,7 @@ data class CardRegistrationScreenUiState(
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
     val bankType: BankTypeUiModel = BankTypeUiModel.NOT_SELECTED,
+    val isModifyingCard: Boolean = true,
     val shouldOpenBankSelector: Boolean = true,
 ) : Parcelable {
     @IgnoredOnParcel
@@ -27,7 +28,8 @@ data class CardRegistrationScreenUiState(
             cardExpirationDate.isValid &&
             cardholderName.isValid &&
             cardPassword.isValid &&
-            bankType != BankTypeUiModel.NOT_SELECTED
+            bankType != BankTypeUiModel.NOT_SELECTED &&
+            isModifyingCard
 
     @IgnoredOnParcel
     val cardNumberErrorMessageResId: Int? =
@@ -83,6 +85,7 @@ data class CardRegistrationScreenUiState(
                     cardholderName = paymentCard.cardholderName,
                     cardPassword = paymentCard.password,
                     bankType = paymentCard.bankType,
+                    isModifyingCard = false,
                 )
             }
     }

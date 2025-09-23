@@ -127,7 +127,7 @@ private fun CardRegistrationScreenContent(
         Spacer(modifier = Modifier.height(12.dp))
 
         CardholderNameTextField(
-            cardholderName = uiState.cardholderName.displayedName,
+            cardholderName = uiState.cardholderName.name,
             onCardholderNameChanged = onCardholderNameChanged,
             maxLength = uiState.cardholderName.maxLength,
             errorMessage = uiState.cardholderNameErrorMessageResId?.let { stringResource(it) },

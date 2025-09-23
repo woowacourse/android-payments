@@ -29,7 +29,7 @@ data class PaymentCardUiModel(
         expirationDate.expirationDate.chunked(2).joinToString(separator)
 
     @IgnoredOnParcel
-    val upperCardholderName: String = cardholderName.displayedName.uppercase()
+    val upperCardholderName: String = cardholderName.name.uppercase()
 
     private fun IntRange.coerceInLength(length: Int): IntRange = (first.coerceAtMost(length)..last.coerceAtMost(length - 1))
 
