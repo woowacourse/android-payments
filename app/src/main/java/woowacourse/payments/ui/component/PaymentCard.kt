@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -37,6 +39,7 @@ private const val EXPIRED_DATE_SEPARATOR = " / "
 
 @Composable
 fun PaymentCard(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     number: String? = null,
     owner: String? = null,
@@ -49,10 +52,10 @@ fun PaymentCard(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
+                .clip(RoundedCornerShape(5.dp))
                 .background(
                     color = colorResource(bankType?.colorRes ?: R.color.card_not_selected),
-                    shape = RoundedCornerShape(5.dp),
-                ),
+                ).clickable(onClick = onClick),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -92,9 +95,11 @@ fun PaymentCard(
 @Composable
 fun PaymentCard(
     card: Card,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     PaymentCard(
+        onClick = onClick,
         modifier = modifier,
         number = card.number,
         owner = card.owner,
@@ -168,6 +173,7 @@ private fun PaymentCardPreview(
     @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: Card?,
 ) {
     PaymentCard(
+        onClick = {},
         number = card?.number,
         owner = card?.owner,
         expiredDate = card?.expiredDate,

@@ -1,6 +1,5 @@
 package woowacourse.payments.cardaddition.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -89,11 +88,11 @@ private fun CardAdditionContent(
         modifier = modifier,
     ) {
         PaymentCard(
+            onClick = onClearBankType,
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 14.dp, bottom = 28.dp)
-                    .clickable(onClick = onClearBankType),
+                    .padding(top = 14.dp, bottom = 28.dp),
             number = state.cardNumber,
             owner = state.holder,
             expiredDate = state.expiredDate,

@@ -16,6 +16,7 @@ import woowacourse.payments.ui.component.PaymentCard
 @Composable
 fun MultipleCardContent(
     cards: List<Card>,
+    onClickCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -25,6 +26,7 @@ fun MultipleCardContent(
     ) {
         items(cards) { card: Card ->
             PaymentCard(
+                onClick = onClickCard,
                 card = card,
                 modifier = Modifier.padding(bottom = 36.dp),
             )
@@ -57,5 +59,6 @@ private fun MultipleCardContentPreview() {
                     bankType = BankType.HANA,
                 ),
             ),
+        onClickCard = {}
     )
 }

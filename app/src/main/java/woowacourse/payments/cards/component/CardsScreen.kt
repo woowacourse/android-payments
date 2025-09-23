@@ -123,11 +123,13 @@ private fun CardsContent(
                         Modifier
                             .fillMaxSize()
                             .verticalScroll(scrollState),
+                    onClickCard = {},
                 )
 
             else ->
                 MultipleCardContent(
                     cards = state.cards,
+                    onClickCard = {},
                     modifier = Modifier.fillMaxSize(),
                 )
         }

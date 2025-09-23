@@ -16,6 +16,7 @@ import woowacourse.payments.ui.component.PaymentCard
 fun OneCardContent(
     card: Card,
     addCard: () -> Unit,
+    onClickCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -24,8 +25,9 @@ fun OneCardContent(
         verticalArrangement = Arrangement.spacedBy(36.dp),
     ) {
         PaymentCard(
-            modifier = Modifier.padding(top = 12.dp),
             card = card,
+            onClick = onClickCard,
+            modifier = Modifier.padding(top = 12.dp),
         )
         PaymentCardAdditionButton(
             onClick = addCard,
@@ -45,5 +47,6 @@ private fun OneCardContentPreview() {
                 bankType = BankType.HANA,
             ),
         addCard = {},
+        onClickCard = {},
     )
 }

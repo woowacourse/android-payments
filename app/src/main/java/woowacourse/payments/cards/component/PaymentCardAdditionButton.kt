@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.stringResource
@@ -35,14 +36,12 @@ fun PaymentCardAdditionButton(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
+                .clip(shape = RoundedCornerShape(5.dp))
                 .background(
                     color = Gray1,
-                    shape = RoundedCornerShape(5.dp),
                 ).semantics {
                     contentDescription = cardAdditionButtonContentDescription
-                }.clickable {
-                    onClick()
-                },
+                }.clickable(onClick = onClick),
     ) {
         Image(
             imageVector = Icons.Default.Add,
