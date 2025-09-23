@@ -1,13 +1,12 @@
 package woowacourse.payments.ui.features.cardlist
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,39 +40,44 @@ fun CardListScreen(
             )
         },
     ) { innerPadding ->
-        Column(
+        LazyColumn(
             modifier =
                 Modifier
                     .padding(innerPadding)
                     .padding(horizontal = 24.dp)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+                    .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             // 카드가 없을 때만 안내 문구 표시
             if (cardUiModels.isEmpty()) {
-                Spacer(modifier = Modifier.height(32.dp))
-                Text(
-                    text = stringResource(R.string.card_list_add_payment_card_title),
-                    fontSize = 18.sp,
-                    letterSpacing = 0.5.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Black700,
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+                item {
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Text(
+                        text = stringResource(R.string.card_list_add_payment_card_title),
+                        fontSize = 18.sp,
+                        letterSpacing = 0.5.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Black700,
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
             } else {
                 // 카드가 1장 이상일 때 카드 목록 표시
-                Spacer(modifier = Modifier.height(12.dp))
-                for (card in cardUiModels) {
-                    PaymentCardPlate(paymentCardUiModel = card)
+                items(
+                    items = cardUiModels,
+                    key = { cardUiModel -> cardUiModel.formattedCardNumber },
+                ) { cardUiModel ->
+                    Spacer(modifier = Modifier.height(12.dp))
+                    PaymentCardPlate(paymentCardUiModel = cardUiModel)
                     Spacer(modifier = Modifier.height(36.dp))
                 }
             }
-
             // 카드가 한장 이하일 때만 '카드 추가' 패널 표시
             if (cardUiModels.size <= 1) {
-                AddPaymentCard(modifier = Modifier.clickable { onAddCard() })
-                Spacer(modifier = Modifier.height(32.dp))
+                item {
+                    AddPaymentCard(modifier = Modifier.clickable { onAddCard() })
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
             }
         }
     }
