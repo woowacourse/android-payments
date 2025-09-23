@@ -77,17 +77,8 @@ fun NewCardScreen(
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     runCatching { newCardUiStateHolder.uiState.toDomain() }
-                        .onSuccess { card: Card ->
-                            when (mode) {
-                                NewCardMode.Add -> onSaveClick(card)
-                                is NewCardMode.Modify -> {
-                                    if (uiState.isModified()) {
-                                        onSaveClick(card)
-                                    } else {
-                                        showModificationGuide()
-                                    }
-                                }
-                            }
+                        .onSuccess { card ->
+                            handleSaveClick(mode, uiState, card, onSaveClick, showModificationGuide)
                         }.onFailure {
                             newCardUiStateHolder.modifyUiState(
                                 NewCardUiEvent.OnChangeCardCompany(
@@ -129,8 +120,20 @@ fun NewCardScreen(
     }
 }
 
+private fun handleSaveClick(
+    mode: NewCardMode,
+    uiState: NewCardUiState,
+    card: Card,
+    onSaveClick: (Card) -> Unit,
+    showModificationGuide: () -> Unit,
+) {
+    when (mode) {
+        NewCardMode.Add -> onSaveClick(card)
+        is NewCardMode.Modify -> if (uiState.isModified()) onSaveClick(card) else showModificationGuide()
+    }
+}
+
 private const val CARD_NUMBER_GROUP_SIZE = 4
-private const val CARD_SEPARATOR = " - "
 private const val CARD_EXPIRE_DATE_GROUP_SIZE = 2
 private const val CARD_EXPIRE_DATE_SEPARATOR = " / "
 private const val CARD_NUMBER_SEPARATOR = " - "
@@ -147,7 +150,7 @@ fun NewCardScreen(
     val cardNumberVisualTransformation =
         CardNumberVisualTransformation(
             groupSize = CARD_NUMBER_GROUP_SIZE,
-            separator = CARD_SEPARATOR,
+            separator = CARD_NUMBER_SEPARATOR,
             maxLength = Card.CARD_MAX_LENGTH,
         )
 

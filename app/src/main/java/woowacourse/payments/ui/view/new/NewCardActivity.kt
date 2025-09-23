@@ -48,6 +48,7 @@ class NewCardActivity : ComponentActivity() {
                 putExtra(cardExtra, card.toSerializationCard())
                 if (mode is NewCardMode.Modify) putExtra(EXTRA_CARD_MODIFY_INDEX, mode.index)
             }
+
         setResult(RESULT_OK, resultIntent)
         finish()
     }
