@@ -1,13 +1,14 @@
 package woowacourse.payments.ui.newcard
 
+import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.ui.cardlist.CardListActivity.Companion.Intent
+import woowacourse.payments.ui.cardlist.CardListActivity.Companion.newIntent
 import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.state.NewCardStatus
@@ -27,15 +28,20 @@ class NewCardActivity : ComponentActivity() {
                 newCardStatus = newCardStatus,
                 cardUiModel = cardUiModel,
                 navigateToBack = ::finish,
-                onSaveCard = ::onSaveCard,
-                onUpdateCard = ::onUpdateCard
+                onClickSaveCard = ::onSaveCard,
+                onClickUpdateCard = { oldCard, newCard -> onUpdateCard(oldCard, newCard) },
+                showToastMessage = ::showToastMessage
             )
         }
     }
 
+    fun showToastMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
     fun onSaveCard(newCard: CardUiModel?) {
         newCard?.let {
-            val intent = Intent(context = this, newCard)
+            val intent = newIntent(context = this, newCard)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -43,8 +49,7 @@ class NewCardActivity : ComponentActivity() {
 
     fun onUpdateCard(oldCard: CardUiModel?, newCard: CardUiModel?) {
         newCard?.let {
-            val intent = Intent(context = this, newCard)
-            intent.putExtra("oldCard", oldCard)
+            val intent = newIntent(context = this, newCard, oldCard)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -53,7 +58,7 @@ class NewCardActivity : ComponentActivity() {
     companion object {
         private const val KEY_INTENT_CARD = "card"
         private const val KEY_INTENT_NEW_CARD_MODE = "new_card_mode"
-        fun Intent(newCardStatus: NewCardStatus, context: Context): Intent {
+        fun Intent(context: Context, newCardStatus: NewCardStatus): Intent {
             when (newCardStatus) {
                 is NewCardStatus.CreateCard -> {
                     val intent = Intent(context, NewCardActivity::class.java)

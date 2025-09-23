@@ -18,21 +18,17 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CardCatalogScreen(
-                onEditCard = ::onEditCard,
             )
         }
     }
 
-    fun onEditCard(cardUiModel: CardUiModel) {
-        val intent = NewCardActivity.Intent(NewCardStatus.EditCard(cardUiModel), this)
-        startActivity(intent)
-    }
-
     companion object {
         private const val EXTRA_NEW_CARD = "newCard"
-        fun Intent(context: Context, newCard: CardUiModel): Intent {
+        private const val EXTRA_OLD_CARD = "oldCard"
+        fun newIntent(context: Context, newCard: CardUiModel, oldCard: CardUiModel? = null): Intent {
             val intent = Intent(context, CardListActivity::class.java)
             intent.putExtra(EXTRA_NEW_CARD, newCard)
+            intent.putExtra(EXTRA_OLD_CARD, oldCard)
             return intent
         }
     }
