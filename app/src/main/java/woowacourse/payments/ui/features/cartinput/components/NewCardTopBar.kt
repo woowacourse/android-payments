@@ -18,12 +18,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card_top_bar_title)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
@@ -49,6 +50,7 @@ fun NewCardTopBar(
 fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
+            title = stringResource(R.string.add_card_top_bar_title),
             onBackClick = {},
             onSaveClick = {},
         )

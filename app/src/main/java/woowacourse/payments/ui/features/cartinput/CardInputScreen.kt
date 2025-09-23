@@ -43,11 +43,11 @@ private val FormFieldSpacing = 30.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardInputScreen(
+    cardUiStateHolder: CardUiStateHolder,
+    screenTitle: String,
     onNavigateBack: () -> Unit,
     onNavigateSave: (PaymentCard) -> Unit,
 ) {
-    val cardUiStateHolder = remember { CardUiStateHolder() }
-
     val uiState by cardUiStateHolder.uiState
     val expireDateUiState by cardUiStateHolder.expireDateUiState
     val paymentCardUiModel by cardUiStateHolder.paymentCardUiModel
@@ -126,6 +126,7 @@ fun CardInputScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                title = screenTitle,
                 onBackClick = onNavigateBack,
                 onSaveClick = attemptSave,
             )
@@ -182,6 +183,6 @@ fun CardInputScreen(
 @Composable
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        CardInputScreen({}, {})
+        CardInputScreen(cardUiStateHolder = CardUiStateHolder(), screenTitle = "카드 입력 화면", {}, {})
     }
 }
