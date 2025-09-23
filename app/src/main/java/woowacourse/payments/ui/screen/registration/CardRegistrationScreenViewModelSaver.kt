@@ -5,7 +5,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.screen.registration.CardRegistrationScreenViewModel.Companion.saver
 
 @Composable
-fun rememberCardRegistrationScreenViewModel(): CardRegistrationScreenViewModel =
+fun rememberCardRegistrationScreenViewModel(initialUiState: CardRegistrationScreenUiState? = null): CardRegistrationScreenViewModel =
     rememberSaveable(saver = saver) {
-        CardRegistrationScreenViewModel()
+        initialUiState?.let(::CardRegistrationScreenViewModel) ?: CardRegistrationScreenViewModel()
     }
