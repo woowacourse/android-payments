@@ -40,8 +40,8 @@ data class CardUiModel(
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
-        cardNumber = CardNumberFormat.formatted(cardNumber),
-        expirationDate = ExpirationDateFormat.formatted(expirationDate),
+        cardNumber = cardNumber.value,
+        expirationDate = expirationDate.value.format(ExpirationDateFormat.formatPattern),
         cardholderName = cardholderName.value,
         passcode = passcode.value,
         cardCompany = cardCompany.toUiModel(),

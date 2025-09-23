@@ -20,6 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.format.CardNumberFormat
+import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -60,7 +62,7 @@ fun PaymentCard(
             )
 
             Text(
-                text = card.cardNumber,
+                text = CardNumberFormat.formatted(card.cardNumber),
                 color = Color.White,
                 fontSize = 12.sp,
                 modifier = Modifier.testTag("payment card card number"),
@@ -78,7 +80,7 @@ fun PaymentCard(
                 )
 
                 Text(
-                    text = card.expirationDate,
+                    text = ExpirationDateFormat.formatted(card.expirationDate),
                     color = Color.White,
                     fontSize = 12.sp,
                     modifier = Modifier.testTag("payment card expiration date"),
@@ -103,8 +105,8 @@ private fun PaymentCardWithDetailPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    "1234 - 1234 - **** - ****",
-                    "34 / 12",
+                    "1234123412341234",
+                    "1234",
                     "CREW",
                     "1234",
                     CardCompany.BC_CARD.toUiModel(),

@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.format
 
 import androidx.compose.ui.text.AnnotatedString
-import woowacourse.payments.domain.ExpirationDate
 import java.time.format.DateTimeFormatter
 
 object ExpirationDateFormat {
@@ -15,6 +14,6 @@ object ExpirationDateFormat {
             SEPARATOR,
         )
 
-    fun formatted(expirationDate: ExpirationDate): String =
-        visualTransformation.filter(AnnotatedString(expirationDate.value.format(formatPattern))).text.text
+    fun formatted(expirationDate: String): String =
+        visualTransformation.filter(AnnotatedString(expirationDate.format(formatPattern))).text.text
 }
