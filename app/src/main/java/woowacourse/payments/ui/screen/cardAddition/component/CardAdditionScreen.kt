@@ -26,7 +26,6 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
-import woowacourse.payments.ui.screen.cardAddition.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,7 +52,7 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(stateHolder.uiState.toUiModel()) },
+                onSaveClick = { onSaveClick(stateHolder.cardUiModel) },
                 isCompletable = stateHolder.isCompletable,
             )
         },

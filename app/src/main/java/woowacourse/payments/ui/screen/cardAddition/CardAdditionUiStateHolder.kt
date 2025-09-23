@@ -8,6 +8,7 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 
 class CardAdditionUiStateHolder(
@@ -17,7 +18,7 @@ class CardAdditionUiStateHolder(
         private set
     var hasShownSheet by mutableStateOf(false)
         private set
-
+    val cardUiModel by derivedStateOf { uiState.toUiModel() }
     val isCompletable by derivedStateOf { uiState.isValidCard }
 
     fun updateCardState(
@@ -40,6 +41,14 @@ class CardAdditionUiStateHolder(
     fun updateSheetVisible() {
         hasShownSheet = hasShownSheet.not()
     }
+
+    private fun CardAdditionUiState.toUiModel(): CardUiModel =
+        CardUiModel(
+            number = cardNumber.value,
+            expiredDate = expiredDate.value,
+            ownerName = ownerName,
+            issuingBank = issuingBank,
+        )
 
     companion object {
         val Saver: Saver<CardAdditionUiStateHolder, *> =
