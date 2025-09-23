@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,11 +14,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
+import woowacourse.payments.ui.addcard.model.VendorModalUiModel
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
+import woowacourse.payments.ui.util.getParcelableCompat
 
 class AddCardActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -25,8 +28,19 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cardInfo = rememberSaveable { CardInfoUiState() }
-            val vendorModal = rememberSaveable { VendorModalUiState() }
+            val initialCardInfo = intent.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)
+            val cardInfo =
+                rememberSaveable {
+                    initialCardInfo ?: CardInfoUiState()
+                }
+            val vendorModal =
+                rememberSaveable {
+                    VendorModalUiState(
+                        VendorModalUiModel(
+                            isVisible = initialCardInfo == null,
+                        ),
+                    )
+                }
 
             AndroidpaymentsTheme {
                 Scaffold(
@@ -61,5 +75,14 @@ class AddCardActivity : ComponentActivity() {
             },
         )
         finish()
+    }
+
+    companion object {
+        fun newIntent(
+            context: Context,
+            cardInfo: CardInfoUiState = CardInfoUiState(),
+        ) = Intent(context, AddCardActivity::class.java).apply {
+            putExtra(CARD_INFO_KEY, cardInfo)
+        }
     }
 }

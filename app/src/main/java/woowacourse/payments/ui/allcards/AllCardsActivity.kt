@@ -22,6 +22,7 @@ import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.util.getParcelableCompat
 
 class AllCardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class AllCardsActivity : ComponentActivity() {
             val launcher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        result.data?.getCardInfoCompat()?.let {
+                        result.data?.getParcelableCompat<CardInfoUiState>(CARD_INFO_KEY)?.let {
                             allCards.addCard(it)
                         }
                     }
@@ -46,7 +47,7 @@ class AllCardsActivity : ComponentActivity() {
                                 Modifier
                                     .padding(horizontal = 20.dp),
                             onPlusCardClick = {
-                                launcher.launch(Intent(this, AddCardActivity::class.java))
+                                launcher.launch(AddCardActivity.newIntent(this))
                             },
                         )
                     },
@@ -70,18 +71,14 @@ class AllCardsActivity : ComponentActivity() {
                         onPlusCardClick = {
                             launcher.launch(Intent(this, AddCardActivity::class.java))
                         },
+                        onCardClick = { cardInfo ->
+                            launcher.launch(AddCardActivity.newIntent(this, cardInfo))
+                        },
                     )
                 }
             }
         }
     }
-
-    private fun Intent.getCardInfoCompat() =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            getParcelableExtra(CARD_INFO_KEY, CardInfoUiState::class.java)
-        } else {
-            getParcelableExtra(CARD_INFO_KEY)
-        }
 
     companion object {
         const val CARD_INFO_KEY = "cardInfo"
