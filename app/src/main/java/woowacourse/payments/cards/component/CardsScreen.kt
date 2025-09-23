@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -35,13 +34,14 @@ import woowacourse.payments.cardaddition.CardAdditionActivity
 import woowacourse.payments.cards.CardsStateHolder
 import woowacourse.payments.cards.CardsUiEvent
 import woowacourse.payments.cards.CardsUiState
+import woowacourse.payments.cards.rememberCardsStateHolder
 import woowacourse.payments.getParcelableCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
     modifier: Modifier = Modifier,
-    stateHolder: CardsStateHolder = rememberSaveable(saver = CardsStateHolder.Saver) { CardsStateHolder() },
+    stateHolder: CardsStateHolder = rememberCardsStateHolder(),
 ) {
     val state: CardsUiState = stateHolder.uiState
     var event by remember { mutableStateOf<CardsUiEvent?>(null) }
