@@ -15,12 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
@@ -43,6 +45,7 @@ fun AddCardScreen(
     val scrollState = rememberScrollState()
     val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
+    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(showBottomSheetState) {
         if (showBottomSheetState) {
@@ -115,8 +118,10 @@ fun AddCardScreen(
         BankSelectBottomSheet(
             sheetState = bottomSheetState,
             onBankSelected = { bank ->
-                stateHolder.updateBank(bank.toPresentation())
-                showBottomSheetState = false
+                coroutineScope.launch { bottomSheetState.hide() }.invokeOnCompletion {
+                    showBottomSheetState = false
+                    stateHolder.updateBank(bank.toPresentation())
+                }
             },
             onDismiss = { showBottomSheetState = false },
         )

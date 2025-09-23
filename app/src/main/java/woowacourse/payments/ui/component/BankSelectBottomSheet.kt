@@ -26,8 +26,6 @@ fun BankSelectBottomSheet(
     onBankSelected: (BankType) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState,
@@ -48,13 +46,7 @@ fun BankSelectBottomSheet(
                 BankType.entries.filterNot { it == NOT_SELECTED }.forEach { bank ->
                     BankItem(
                         bankType = bank,
-                        onClick = {
-                            onBankSelected(bank)
-                            coroutineScope.launch {
-                                sheetState.hide()
-                                onDismiss()
-                            }
-                        },
+                        onClick = { onBankSelected(bank) },
                         modifier = Modifier,
                     )
                 }
