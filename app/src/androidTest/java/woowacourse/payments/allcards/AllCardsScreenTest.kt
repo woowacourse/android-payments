@@ -6,6 +6,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.cards
@@ -72,5 +73,32 @@ class AllCardsScreenTest {
         composeTestRule
             .onNodeWithText("추가")
             .assertDoesNotExist()
+    }
+
+    @Test
+    fun 카드_클릭_시_올바른_데이터와_함께_지정된_동작을_수행한다() {
+        // given
+        var isClicked = false
+        val expectedCardInfo = cards.first()
+        val expectedCardIndex = 0
+
+        composeTestRule.setContent {
+            AllCardsScreen(
+                singleAllCardUiState,
+                onCardClick = { cardInfo, idx ->
+                    isClicked = true
+                    assert(expectedCardInfo == cardInfo)
+                    assert(expectedCardIndex == idx)
+                },
+            )
+        }
+
+        // when
+        composeTestRule
+            .onNodeWithText("홍길동", substring = true)
+            .performClick()
+
+        // then
+        assert(isClicked == true)
     }
 }
