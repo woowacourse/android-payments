@@ -32,7 +32,6 @@ fun CardCatalogColumn(
             is CardListUiStatus.EmptyCardList -> {
                 item { InformationText() }
                 item { EmptyPaymentCard {
-                    Log.d("test", "동작")
                     onAddCard() } }
             }
 
