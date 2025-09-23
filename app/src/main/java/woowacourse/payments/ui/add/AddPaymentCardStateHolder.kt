@@ -16,6 +16,8 @@ class AddPaymentCardStateHolder private constructor(
 ) {
     val state: AddPaymentCardUiState get() = uiState.value
 
+    private var cardId: String? = null
+
     fun onCardNumberChange(new: String) = update { it.copy(cardNumber = new) }
 
     fun onExpiryChange(new: String) = update { it.copy(expiry = new) }
@@ -38,11 +40,28 @@ class AddPaymentCardStateHolder private constructor(
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
     val isBankValid: Boolean get() = (state.bank != null)
 
+    fun beginEdit(card: PaymentCard) {
+        cardId = card.id
+        update {
+            it.copy(
+                cardNumber = card.cardNumber.value,
+                expiry = card.expiry.value,
+                owner = card.owner,
+                pin = card.pin.value,
+                bank = card.bank,
+                isEditing = true,
+            )
+        }
+    }
+
     fun buildResult(): PaymentCard? {
         val bank = state.bank ?: return null
-        return PaymentCard
-            .create(state.cardNumber, state.expiry, state.owner, state.pin, bank)
-            .getOrNull()
+        val newCard =
+            PaymentCard
+                .create(state.cardNumber, state.expiry, state.owner, state.pin, bank)
+                .getOrNull() ?: return null
+
+        return cardId?.let { newCard.copy(id = it) } ?: newCard
     }
 
     private fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {

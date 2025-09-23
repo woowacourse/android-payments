@@ -23,7 +23,7 @@ fun PaymentCardsContent(
     modifier: Modifier = Modifier,
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
-    onEditCard: () -> Unit,
+    onEditCard: (String) -> Unit,
 ) {
     when (paymentCards.size) {
         0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
@@ -32,7 +32,7 @@ fun PaymentCardsContent(
                 modifier = modifier,
                 paymentCard = paymentCards.first(),
                 onAddCard = onAddCard,
-                onEditCard = onEditCard,
+                onEditCard = { onEditCard(paymentCards.first().id) },
             )
 
         else ->
@@ -87,7 +87,7 @@ private fun SingleCard(
 @Composable
 private fun MultiCards(
     paymentCards: List<PaymentCardUiModel>,
-    onEditCard: () -> Unit,
+    onEditCard: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -98,7 +98,7 @@ private fun MultiCards(
             PaymentCard(
                 paymentCard = card,
                 onSelectBank = {},
-                onEditCard = onEditCard,
+                onEditCard = { onEditCard(card.id) },
                 modifier =
                     Modifier
                         .padding(top = 16.dp),
@@ -121,6 +121,7 @@ private fun SingleCardPreview() {
         onEditCard = {},
         paymentCard =
             PaymentCardUiModel(
+                "0",
                 "1234567812345678",
                 "0511",
                 "minjeong",
@@ -136,12 +137,14 @@ private fun MultiCardsPreview() {
         paymentCards =
             listOf(
                 PaymentCardUiModel(
+                    "1",
                     "1234123456785678",
                     "1215",
                     "minjeong",
                     BankType.SHINHAN.toUiModel(),
                 ),
                 PaymentCardUiModel(
+                    "2",
                     "1111222233334444",
                     "1234",
                     "junseo",

@@ -12,6 +12,9 @@ class AddPaymentCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val editingCardId = intent.getStringExtra(EXTRA_CARD_ID)
+
         setContent {
             AndroidpaymentsTheme {
                 AddPaymentCardScreen(
@@ -20,12 +23,15 @@ class AddPaymentCardActivity : ComponentActivity() {
                         setResult(RESULT_OK)
                         finish()
                     },
+                    cardId = editingCardId,
                 )
             }
         }
     }
 
     companion object {
+        const val EXTRA_CARD_ID = "extra_card_id"
+
         fun newIntent(context: Context): Intent = Intent(context, AddPaymentCardActivity::class.java)
     }
 }

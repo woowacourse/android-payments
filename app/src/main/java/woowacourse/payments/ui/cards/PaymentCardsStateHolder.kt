@@ -16,7 +16,7 @@ class PaymentCardsStateHolder private constructor(
     fun refreshFromStore() =
         update {
             val cards = PaymentCardStore.getAll().map { it.toUiModel() }
-            it.copy(cards)
+            it.copy(cards = cards)
         }
 
     private inline fun update(block: (PaymentCardsUiState) -> PaymentCardsUiState) {

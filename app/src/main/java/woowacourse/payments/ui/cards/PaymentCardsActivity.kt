@@ -41,7 +41,13 @@ class PaymentCardsActivity : ComponentActivity() {
                 PaymentCardsScreen(
                     paymentCards = stateHolder.state.cards,
                     onAddCard = { cardAddLauncher.launch(AddPaymentCardActivity.newIntent(this)) },
-                    onEditCard = { cardAddLauncher.launch(AddPaymentCardActivity.newIntent(this)) },
+                    onEditCard = { id ->
+                        val intent =
+                            AddPaymentCardActivity
+                                .newIntent(this)
+                                .putExtra(AddPaymentCardActivity.EXTRA_CARD_ID, id)
+                        cardAddLauncher.launch(intent)
+                    },
                 )
             }
         }

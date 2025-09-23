@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -31,8 +32,13 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun AddPaymentCardScreen(
     onBack: () -> Unit,
     onSave: () -> Unit,
+    cardId: String? = null,
     stateHolder: AddPaymentCardStateHolder = rememberAddPaymentCardStateHolder(),
 ) {
+    LaunchedEffect(cardId) {
+        if (cardId != null) PaymentCardStore.findById(cardId)?.let { stateHolder.beginEdit(it) }
+    }
+
     val state = stateHolder.state
 
     val canSave by remember(state.cardNumber, state.expiry, state.pin) {
@@ -46,6 +52,7 @@ fun AddPaymentCardScreen(
     val previewCard =
         remember(state.cardNumber, state.expiry, state.owner, state.bank) {
             PaymentCardUiModel(
+                id = cardId ?: "",
                 cardNumber = state.cardNumber,
                 expiry = state.expiry,
                 owner = state.owner,
@@ -63,7 +70,11 @@ fun AddPaymentCardScreen(
                         stateHolder.showSheet()
                     } else {
                         stateHolder.buildResult()?.let { card ->
-                            PaymentCardStore.add(card)
+                            if (state.isEditing) {
+                                PaymentCardStore.update(card)
+                            } else {
+                                PaymentCardStore.add(card)
+                            }
                             onSave()
                         }
                     }

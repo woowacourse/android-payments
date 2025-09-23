@@ -14,7 +14,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentCardsScreen(
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
-    onEditCard: () -> Unit,
+    onEditCard: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
