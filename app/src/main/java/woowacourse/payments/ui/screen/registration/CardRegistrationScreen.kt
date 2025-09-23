@@ -40,7 +40,7 @@ fun CardRegistrationScreen(
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
             is CardRegistrationScreenUiEvent.RegisteredCard ->
-                uiEvent.paymentCard.let(onRegistrationComplete)
+                uiEvent.paymentCard.run(onRegistrationComplete)
 
             null -> Unit
         }
