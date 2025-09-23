@@ -15,4 +15,13 @@
     <string name="add_card_confirm">카드가 추가되었습니다.</string>
     <string name="add">추가</string>
     <string name="topbar_title_payments">Payments</string>
+
+    <string name="card_company_bc">BC카드</string>
+    <string name="card_company_shinhan">신한카드</string>
+    <string name="card_company_kakao">카카오뱅크</string>
+    <string name="card_company_hyundai">현대카드</string>
+    <string name="card_company_woori">우리카드</string>
+    <string name="card_company_lotte">롯데카드</string>
+    <string name="card_company_hana">하나카드</string>
+    <string name="card_company_kb">국민카드</string>
 </resources>
