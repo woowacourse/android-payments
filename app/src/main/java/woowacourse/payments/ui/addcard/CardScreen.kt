@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardScreenCategory
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.model.CardScreenCategory
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.theme.Dimens
 import woowacourse.payments.ui.theme.Dimens.AddCardComposableComponentPadding
@@ -73,7 +73,7 @@ fun CardScreen(
                         Modifier
                             .align(Alignment.CenterHorizontally)
                             .clickable { isSheetVisible = true },
-                    bank = card.bank,
+                    bank = card.bank.toUiModel(),
                 )
                 CardNumberField(
                     card.number,

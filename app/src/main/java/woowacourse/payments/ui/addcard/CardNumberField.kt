@@ -19,7 +19,7 @@ fun CardNumberField(
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = cardNumber.toString(),
+        value = cardNumber.toUiModel().toString(),
         onValueChange = { onValueChange(it) },
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_card_number_placeholder_text)) },

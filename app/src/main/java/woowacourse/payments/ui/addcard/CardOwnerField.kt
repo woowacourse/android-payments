@@ -19,7 +19,7 @@ fun CardOwnerField(
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = cardOwner.toString(),
+        value = cardOwner.toUiModel().toString(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_card_owner_placeholder_text)) },

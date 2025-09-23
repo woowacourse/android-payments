@@ -19,7 +19,7 @@ fun ExpirationDateField(
     modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
-        value = expirationDate.toCombinedFormat(),
+        value = expirationDate.toUiModel().toCombinedFormat(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_expiration_date_placeholder_text)) },

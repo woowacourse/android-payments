@@ -15,11 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankTypeUiModel
 
 @Composable
 fun BankSelectBtn(
-    bank: BankType,
+    bank: BankTypeUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -41,7 +41,7 @@ fun BankSelectBtn(
 @Composable
 private fun BankSelectBtnPreview() {
     BankSelectBtn(
-        bank = BankType.BC,
+        bank = BankTypeUiModel.BC,
         onClick = {},
     )
 }

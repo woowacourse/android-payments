@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardScreenCategory
+import woowacourse.payments.ui.model.CardScreenCategory
 
 class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,7 @@ class AddCardActivity : ComponentActivity() {
                 onBackClick = { finish() },
                 onSaveClick = {
                     val resultIntent = Intent()
-                    resultIntent.putExtra(EXTRA_CARD, card)
+                    resultIntent.putExtra(EXTRA_CARD, card.toUiModel())
                     setResult(RESULT_OK, resultIntent)
                     finish()
                 },

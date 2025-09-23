@@ -9,8 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardScreenCategory
+import woowacourse.payments.ui.model.CardScreenCategory
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 class EditCardActivity : ComponentActivity() {
@@ -18,7 +18,7 @@ class EditCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val initCard = intent.getParcelableExtraCompat<Card>(EXTRA_CARD) ?: Card()
+            val initCard = requireNotNull(intent.getParcelableExtraCompat<CardUiModel>(EXTRA_CARD)).toDomain()
             var card by remember { mutableStateOf(initCard) }
             CardScreen(
                 card = card,
@@ -26,7 +26,7 @@ class EditCardActivity : ComponentActivity() {
                 onBackClick = { finish() },
                 onSaveClick = {
                     val resultIntent = Intent()
-                    resultIntent.putExtra(EXTRA_CARD, card)
+                    resultIntent.putExtra(EXTRA_CARD, card.toUiModel())
                     setResult(RESULT_OK, resultIntent)
                     finish()
                 },

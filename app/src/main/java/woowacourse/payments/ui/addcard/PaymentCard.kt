@@ -13,14 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankTypeUiModel
 
 @Composable
 fun PaymentCard(
-    bank: BankType,
+    bank: BankTypeUiModel,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -62,6 +62,6 @@ fun PaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     PaymentCard(
-        bank = BankType.BC,
+        bank = BankTypeUiModel.BC,
     )
 }

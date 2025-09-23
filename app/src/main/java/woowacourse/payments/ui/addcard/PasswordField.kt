@@ -19,7 +19,7 @@ fun PasswordField(
     onValueChange: (String) -> Unit = {},
 ) {
     OutlinedTextField(
-        value = password.toString(),
+        value = password.toUiModel().toString(),
         onValueChange = onValueChange,
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_password_placeholder_text)) },

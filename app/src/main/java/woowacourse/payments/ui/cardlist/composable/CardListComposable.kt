@@ -79,7 +79,7 @@ fun GenerateCardListView(modifier: Modifier = Modifier) {
                                         navigateToEditCard(context, editCardLauncher, card)
                                     },
                                 ),
-                        content = { RegisterPaymentCard(card) },
+                        content = { RegisterPaymentCard(card.toUiModel()) },
                     )
                 }
                 if (cards.size <= 1) {

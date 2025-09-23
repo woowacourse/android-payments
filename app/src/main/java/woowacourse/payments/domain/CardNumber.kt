@@ -1,17 +1,15 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
 import androidx.core.text.isDigitsOnly
 import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.model.CardNumberUiModel
 
-@Parcelize
 data class CardNumber(
     val firstNumber: String = "",
     val secondNumber: String = "",
     val thirdNumber: String = "",
     val fourthNumber: String = "",
-) : Parcelable {
+) {
     @IgnoredOnParcel
     private val parts = listOf(firstNumber, secondNumber, thirdNumber, fourthNumber)
 
@@ -20,24 +18,15 @@ data class CardNumber(
         require(parts.all { it.length <= CARD_NUMBER_PART_LENGTH })
     }
 
-    override fun toString(): String = parts.joinToString("")
-
     fun isValid(): Boolean = !parts.any { it.length != CARD_NUMBER_PART_LENGTH }
 
-    fun toMaskedString(
-        mask: String = "*",
-        startNumberIndex: Int = 3,
-    ): String {
-        val maskedParts =
-            parts.mapIndexed { index, part ->
-                if (index >= (startNumberIndex - 1)) {
-                    mask.repeat(part.length)
-                } else {
-                    part
-                }
-            }
-        return maskedParts.joinToString(" - ")
-    }
+    fun toUiModel(): CardNumberUiModel =
+        CardNumberUiModel(
+            firstNumber = firstNumber,
+            secondNumber = secondNumber,
+            thirdNumber = thirdNumber,
+            fourthNumber = fourthNumber,
+        )
 
     companion object {
         const val CARD_NUMBER_MAX_LENGTH = 16

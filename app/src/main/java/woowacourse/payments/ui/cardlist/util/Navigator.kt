@@ -27,6 +27,6 @@ fun navigateToEditCard(
     card: Card,
 ) {
     val intent = Intent(context, EditCardActivity::class.java)
-    intent.putExtra(EditCardActivity.EXTRA_CARD, card)
+    intent.putExtra(EditCardActivity.EXTRA_CARD, card.toUiModel())
     editCardLauncher.launch(intent)
 }

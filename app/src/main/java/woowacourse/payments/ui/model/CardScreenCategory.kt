@@ -1,4 +1,4 @@
-package woowacourse.payments.domain
+package woowacourse.payments.ui.model
 
 import androidx.annotation.StringRes
 import woowacourse.payments.R
