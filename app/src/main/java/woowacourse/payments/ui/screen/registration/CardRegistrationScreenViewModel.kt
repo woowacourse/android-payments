@@ -128,8 +128,11 @@ class CardRegistrationScreenViewModel(
                 cardholderName = CardholderName.from(currentUiState.cardholderName.name),
                 password = CardPassword.from(currentUiState.cardPassword.password),
             ).onSuccess { paymentCard ->
-                _uiEvent.value =
+                if (originalCard == null) {
                     CardRegistrationScreenUiEvent.RegisteredCard(PaymentCardUiModel.from(paymentCard))
+                } else {
+                    CardRegistrationScreenUiEvent.UpdatedCard(PaymentCardUiModel.from(paymentCard))
+                }.let(_uiEvent::setValue)
             }
     }
 

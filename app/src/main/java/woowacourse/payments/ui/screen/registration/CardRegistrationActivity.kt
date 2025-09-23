@@ -19,8 +19,12 @@ class CardRegistrationActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 CardRegistrationScreen(
                     onBackClick = ::finish,
-                    onRegistrationComplete = { newCard ->
+                    onRegisteredCard = { newCard ->
                         setResult(RESULT_OK, Intent().putExtra(EXTRA_NEW_CARD, newCard))
+                        finish()
+                    },
+                    onUpdatedCard = { updatedCard ->
+                        setResult(RESULT_OK, Intent().putExtra(EXTRA_EDIT_CARD, updatedCard))
                         finish()
                     },
                     viewModel =
@@ -35,7 +39,7 @@ class CardRegistrationActivity : ComponentActivity() {
     private fun extractEditCardFromIntent(): PaymentCardUiModel? = intent.getParcelableExtraCompat(EXTRA_EDIT_CARD)
 
     companion object {
-        private const val EXTRA_EDIT_CARD = "EXTRA_EDIT_CARD"
+        const val EXTRA_EDIT_CARD = "EXTRA_EDIT_CARD"
         const val EXTRA_NEW_CARD = "EXTRA_NEW_CARD"
 
         fun newIntent(

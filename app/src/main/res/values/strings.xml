@@ -61,6 +61,7 @@
 
     <!-- cards_screen -->
     <string name="cards_screen_card_registered_message">카드가 추가되었습니다</string>
+    <string name="cards_screen_card_updated_message">카드 정보가 수정되었어요</string>
     <string name="cards_screen_registration_message">새로운 카드를 등록해주세요</string>
     <string name="cards_screen_registration_button_content_description">카드 등록</string>
 

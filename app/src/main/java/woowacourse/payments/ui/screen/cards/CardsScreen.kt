@@ -58,12 +58,17 @@ fun CardsScreen(
     val context = LocalContext.current
     val uiState = viewModel.uiState.observeAsState().value ?: return
     val uiEvent = viewModel.uiEvent.observeAsState().value
-    val launcher = rememberCardAddLauncher(viewModel::addCard)
+    val launcher = rememberCardAddLauncher(viewModel::addCard, viewModel::updateCard)
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
             is CardsScreenUiEvent.RegisteredCard -> {
                 val resId = R.string.cards_screen_card_registered_message
+                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+            }
+
+            is CardsScreenUiEvent.UpdatedCard -> {
+                val resId = R.string.cards_screen_card_updated_message
                 Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
             }
 
@@ -90,13 +95,20 @@ fun CardsScreen(
 }
 
 @Composable
-private fun rememberCardAddLauncher(onCardAdded: (PaymentCardUiModel) -> Unit) =
-    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
-        result.data
-            ?.getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_NEW_CARD)
-            ?.let(onCardAdded)
-    }
+private fun rememberCardAddLauncher(
+    onCardAdded: (PaymentCardUiModel) -> Unit,
+    onCardUpdated: (PaymentCardUiModel) -> Unit,
+) = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+
+    result.data
+        ?.getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_NEW_CARD)
+        ?.let(onCardAdded)
+
+    result.data
+        ?.getParcelableExtraCompat<PaymentCardUiModel>(CardRegistrationActivity.EXTRA_EDIT_CARD)
+        ?.let(onCardUpdated)
+}
 
 @Composable
 private fun CardsScreenContent(

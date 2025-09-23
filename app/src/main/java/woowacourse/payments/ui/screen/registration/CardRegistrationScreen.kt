@@ -29,7 +29,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardRegistrationScreen(
-    onRegistrationComplete: (PaymentCardUiModel) -> Unit,
+    onRegisteredCard: (PaymentCardUiModel) -> Unit,
+    onUpdatedCard: (PaymentCardUiModel) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
@@ -40,7 +41,10 @@ fun CardRegistrationScreen(
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
             is CardRegistrationScreenUiEvent.RegisteredCard ->
-                uiEvent.paymentCard.run(onRegistrationComplete)
+                uiEvent.paymentCard.run(onRegisteredCard)
+
+            is CardRegistrationScreenUiEvent.UpdatedCard ->
+                uiEvent.paymentCard.run(onUpdatedCard)
 
             null -> Unit
         }
@@ -150,7 +154,8 @@ private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
             onBackClick = {},
-            onRegistrationComplete = {},
+            onRegisteredCard = {},
+            onUpdatedCard = {},
             viewModel =
                 CardRegistrationScreenViewModel(
                     CardRegistrationScreenUiState(shouldOpenBankSelector = false),

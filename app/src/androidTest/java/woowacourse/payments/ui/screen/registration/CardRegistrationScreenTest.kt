@@ -118,7 +118,8 @@ class CardRegistrationScreenTest {
             CardRegistrationScreen(
                 viewModel = viewModel,
                 onBackClick = {},
-                onRegistrationComplete = {},
+                onRegisteredCard = {},
+                onUpdatedCard = {},
             )
         }
     }
