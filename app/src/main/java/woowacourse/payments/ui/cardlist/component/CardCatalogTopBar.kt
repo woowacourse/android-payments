@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardcatalog.component
+package woowacourse.payments.ui.cardlist.component
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardlist.state.CardListUiStatus
 import woowacourse.payments.ui.theme.Black
 import woowacourse.payments.ui.theme.Black1D
 
@@ -18,8 +19,8 @@ import woowacourse.payments.ui.theme.Black1D
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardCatalogTopBar(
-    cardsSize: Int,
-    onAddNewCardClick: () -> Unit,
+    cardListStatus: CardListUiStatus,
+    onAddCard: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -32,11 +33,18 @@ fun CardCatalogTopBar(
             )
         },
         actions = {
-            if (cardsSize >= 2) {
-                TextButton(onClick = {
-                    onAddNewCardClick()
-                }) {
-                    Text(text = stringResource(R.string.payments_top_bar_icon_name), fontSize = 18.sp, fontWeight = FontWeight.W700, color = Black)
+            when (cardListStatus) {
+                is CardListUiStatus.EmptyCardList -> null
+                is CardListUiStatus.OneCardList -> null
+                is CardListUiStatus.MultiCardList -> {
+                    TextButton(onClick = { onAddCard() }) {
+                        Text(
+                            text = stringResource(R.string.payments_top_bar_icon_name),
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.W700,
+                            color = Black
+                        )
+                    }
                 }
             }
         },
@@ -47,11 +55,11 @@ fun CardCatalogTopBar(
 @Preview
 @Composable
 fun CardCatalogTopBarPreview() {
-    CardCatalogTopBar(0, onAddNewCardClick = {})
+    CardCatalogTopBar(CardListUiStatus.EmptyCardList, {})
 }
 
 @Preview
 @Composable
 fun CardCatalogTopBarPreview1() {
-    CardCatalogTopBar(2, onAddNewCardClick = {})
+    CardCatalogTopBar(CardListUiStatus.EmptyCardList, {})
 }

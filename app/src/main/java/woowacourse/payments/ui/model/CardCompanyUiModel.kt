@@ -1,87 +1,83 @@
-package woowacourse.payments.ui.newcard.uiModel
+package woowacourse.payments.ui.model
 
+import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.ui.graphics.Color
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.theme.Black
-import woowacourse.payments.ui.theme.SymbolColorBC
-import woowacourse.payments.ui.theme.SymbolColorHANA
-import woowacourse.payments.ui.theme.SymbolColorHYUNDAE
-import woowacourse.payments.ui.theme.SymbolColorKAKAO
-import woowacourse.payments.ui.theme.SymbolColorKB
-import woowacourse.payments.ui.theme.SymbolColorLOTTE
-import woowacourse.payments.ui.theme.SymbolColorSHINHAN
-import woowacourse.payments.ui.theme.SymbolColorWOORI
+import woowacourse.payments.ui.theme.SymbolColor
 
-sealed interface CardCompanyUiModel {
+
+@Parcelize
+sealed interface CardCompanyUiModel : Parcelable {
     data class Default(
         @StringRes val displayName: Int = R.string.card_company_default,
-        val color: Color = Black
+        val color: Int = Black.value.toInt()
     ) : CardCompanyUiModel
 
     data class SelectCardCompany(
         @StringRes val displayName: Int,
-        val color: Color,
+        val color: Int,
         @DrawableRes val logo: Int,
         val company: CardCompany,
     ) : CardCompanyUiModel
 }
 
 fun CardCompany.toUiModel(): CardCompanyUiModel.SelectCardCompany = cardCompanyMap.getValue(this)
-fun CardCompanyUiModel.toDomain(): CardCompany? =
+fun CardCompanyUiModel.toDomain(): CardCompany =
     when (this) {
-        is CardCompanyUiModel.Default -> null
+        is CardCompanyUiModel.Default -> throw IllegalArgumentException()
         is CardCompanyUiModel.SelectCardCompany -> this.company
     }
 
 val cardCompanyMap: Map<CardCompany, CardCompanyUiModel.SelectCardCompany> = mapOf(
     CardCompany.BC to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_bc,
-        SymbolColorBC,
+        SymbolColor.BC.value.toInt(),
         R.drawable.symbol_mark_bc,
         CardCompany.BC
     ),
     CardCompany.SHINHAN to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_shinhan,
-        SymbolColorSHINHAN,
+        SymbolColor.SHINHAN.value.toInt(),
         R.drawable.symbol_mark_shinhan,
         CardCompany.SHINHAN
     ),
     CardCompany.KAKAO to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_kakao,
-        SymbolColorKAKAO,
+        SymbolColor.KAKAO.value.toInt(),
         R.drawable.symbol_mark_kakao,
         CardCompany.KAKAO
     ),
     CardCompany.HYUNDAE to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_hyundae,
-        SymbolColorHYUNDAE,
+        SymbolColor.HYUNDAE.value.toInt(),
         R.drawable.symbol_mark_hyundae,
         CardCompany.HYUNDAE
     ),
     CardCompany.WOORI to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_woori,
-        SymbolColorWOORI,
+        SymbolColor.WOORI.value.toInt(),
         R.drawable.symbol_mark_woori,
         CardCompany.WOORI
     ),
     CardCompany.LOTTE to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_lotte,
-        SymbolColorLOTTE,
+        SymbolColor.LOTTE.value.toInt(),
         R.drawable.symbol_mark_lotte,
         CardCompany.LOTTE
     ),
     CardCompany.HANA to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_hana,
-        SymbolColorHANA,
+        SymbolColor.HANA.value.toInt(),
         R.drawable.symbol_mark_hana,
         CardCompany.HANA
     ),
     CardCompany.KB to CardCompanyUiModel.SelectCardCompany(
         R.string.card_company_kb,
-        SymbolColorKB,
+        SymbolColor.HANA.value.toInt(),
         R.drawable.symbol_mark_kb,
         CardCompany.KB
     ),
