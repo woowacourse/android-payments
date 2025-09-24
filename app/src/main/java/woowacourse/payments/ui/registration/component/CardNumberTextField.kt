@@ -21,7 +21,7 @@ import woowacourse.payments.ui.model.CardNumberUiModel
 @Composable
 fun CardNumberTextField(
     cardNumber: CardNumberUiModel,
-    onCardNumberChanged: (CardNumberUiModel) -> Unit,
+    onCardNumberChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val cardNumberTextFieldDescription = stringResource(R.string.card_number_text_field_description)
@@ -38,12 +38,7 @@ fun CardNumberTextField(
             )
         },
         value = cardNumber.value,
-        onValueChange = { newValue ->
-            val newCardNumber: CardNumberUiModel =
-                runCatching { CardNumberUiModel(newValue) }.getOrNull() ?: return@OutlinedTextField
-            if (!newCardNumber.isValid) return@OutlinedTextField
-            onCardNumberChanged(newCardNumber)
-        },
+        onValueChange = { newValue -> onCardNumberChanged(newValue) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         visualTransformation = CreditCardVisualTransformation,
     )

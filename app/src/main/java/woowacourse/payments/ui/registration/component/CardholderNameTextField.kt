@@ -26,7 +26,7 @@ import woowacourse.payments.ui.model.CardholderNameUiModel
 @Composable
 fun CardholderNameTextField(
     cardholderName: CardholderNameUiModel,
-    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
+    onCardholderNameChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val cardholderNameTextFieldDescription =
@@ -44,13 +44,7 @@ fun CardholderNameTextField(
             )
         },
         value = cardholderName.value,
-        onValueChange = { newValue ->
-            val newCardholderName: CardholderNameUiModel =
-                runCatching { CardholderNameUiModel(newValue.uppercase()) }.getOrNull()
-                    ?: return@OutlinedTextField
-            if (!newCardholderName.isValid) return@OutlinedTextField
-            onCardholderNameChanged(newCardholderName)
-        },
+        onValueChange = { newValue -> onCardholderNameChanged(newValue) },
         supportingText = {
             Text(
                 text =
@@ -70,10 +64,10 @@ fun CardholderNameTextField(
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun CardholderNameTextFieldPreview() {
-    var cardholderName by remember { mutableStateOf(CardholderNameUiModel()) }
+    var cardholderName by remember { mutableStateOf("12312312312312231231232opi2o22") }
     Column(modifier = Modifier.padding(12.dp)) {
         CardholderNameTextField(
-            cardholderName = cardholderName,
+            cardholderName = CardholderNameUiModel(cardholderName),
             onCardholderNameChanged = { newValue -> cardholderName = newValue },
         )
     }
