@@ -2,11 +2,13 @@ package woowacourse.payments.view.cardediting
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import woowacourse.payments.R
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.EXTRA_NEW_CARD
@@ -30,7 +32,25 @@ class CardEditingActivity : ComponentActivity() {
                 CardEditingScreen(
                     stateHolder = stateHolder,
                     onBackClick = ::finish,
-                    onCheckClick = ::editCard,
+                    onCardSaveSuccess = {
+                        Toast
+                            .makeText(
+                                this,
+                                getString(R.string.card_editing_edit_card_success_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+
+                        setResult(RESULT_OK)
+                        finish()
+                    },
+                    onCardSaveFailure = {
+                        Toast
+                            .makeText(
+                                this,
+                                getString(R.string.card_addition_add_card_failure_message),
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                    },
                     modifier = Modifier.fillMaxSize(),
                 )
             }

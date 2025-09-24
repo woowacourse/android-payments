@@ -26,15 +26,12 @@ import woowacourse.payments.R
 import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.EXTRA_CARD
-import woowacourse.payments.view.EXTRA_NEW_CARD
-import woowacourse.payments.view.EXTRA_OLD_CARD
 import woowacourse.payments.view.cardaddition.CardAdditionActivity
 import woowacourse.payments.view.cardediting.CardEditingActivity
 import woowacourse.payments.view.cards.CardsStateHolder
 import woowacourse.payments.view.cards.CardsUiEvent
 import woowacourse.payments.view.cards.CardsUiState
 import woowacourse.payments.view.cards.rememberCardsStateHolder
-import woowacourse.payments.view.getParcelableExtraCompat
 import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -49,7 +46,9 @@ fun CardsScreen(
 
     val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            stateHolder.fetchCards()
+            if (result.resultCode == Activity.RESULT_OK) {
+                stateHolder.fetchCards()
+            }
         }
 
     val navigateToCardAdditionActivity: () -> Unit =
@@ -58,28 +57,14 @@ fun CardsScreen(
     val cardEditLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val old: CardUiModel =
-                    result.data?.getParcelableExtraCompat(EXTRA_OLD_CARD)
-                        ?: return@rememberLauncherForActivityResult
-
-                val new: CardUiModel =
-                    result.data?.getParcelableExtraCompat(EXTRA_NEW_CARD)
-                        ?: return@rememberLauncherForActivityResult
-
-                stateHolder.editCard(
-                    old = old,
-                    new = new,
-                )
+                stateHolder.fetchCards()
             }
         }
 
     val navigateToEditingActivity: (card: CardUiModel) -> Unit =
         { card ->
             cardEditLauncher.launch(
-                Intent(context, CardEditingActivity::class.java).putExtra(
-                    EXTRA_CARD,
-                    card,
-                ),
+                Intent(context, CardEditingActivity::class.java).putExtra(EXTRA_CARD, card),
             )
         }
 
@@ -89,7 +74,7 @@ fun CardsScreen(
                 Toast
                     .makeText(
                         context,
-                        context.getString(R.string.cards_edit_card_success_message),
+                        context.getString(R.string.card_editing_edit_card_success_message),
                         Toast.LENGTH_SHORT,
                     ).show()
 

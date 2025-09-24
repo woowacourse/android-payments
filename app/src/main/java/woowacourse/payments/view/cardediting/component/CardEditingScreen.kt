@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.cardediting.CardEditingStateHolder
+import woowacourse.payments.view.cardediting.CardEditingUiEvent
 import woowacourse.payments.view.cardediting.CardEditingUiState
 import woowacourse.payments.view.ui.component.BankSelectBottomSheet
 import woowacourse.payments.view.ui.component.CardNumberTextField
@@ -31,14 +33,26 @@ import woowacourse.payments.view.ui.component.PaymentCard
 fun CardEditingScreen(
     stateHolder: CardEditingStateHolder,
     onBackClick: () -> Unit,
-    onCheckClick: (old: CardUiModel, new: CardUiModel) -> Unit,
+    onCardSaveSuccess: () -> Unit,
+    onCardSaveFailure: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state: CardEditingUiState = stateHolder.uiState
+    val event: CardEditingUiEvent? = stateHolder.uiEvent
     val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
         BankSelectBottomSheet(onSelectBankType = stateHolder::updateBankType)
+    }
+
+    LaunchedEffect(event) {
+        when (event) {
+            CardEditingUiEvent.EditCardSuccess -> onCardSaveSuccess()
+            CardEditingUiEvent.EditCardFailure -> onCardSaveFailure()
+            null -> Unit
+        }
+
+        stateHolder.clearEvent()
     }
 
     Scaffold(
@@ -46,7 +60,7 @@ fun CardEditingScreen(
         topBar = {
             CardEditingTopAppBar(
                 onBackClick = onBackClick,
-                onCheckClick = { onCheckClick(state.original, state.edited) },
+                onCheckClick = stateHolder::editCard,
                 checkEnabled = state.canEditCard,
             )
         },
@@ -137,9 +151,10 @@ private fun CardEditingScreenPreview(
     @PreviewParameter(CardEditingScreenPreviewParameterProvider::class) state: CardEditingUiState,
 ) {
     CardEditingScreen(
-        onBackClick = {},
-        onCheckClick = { _, _ -> },
         stateHolder = CardEditingStateHolder(state),
+        onBackClick = {},
+        onCardSaveSuccess = {},
+        onCardSaveFailure = {},
     )
 }
 

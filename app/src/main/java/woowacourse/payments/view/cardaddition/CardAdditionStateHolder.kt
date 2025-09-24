@@ -19,7 +19,7 @@ class CardAdditionStateHolder(
 ) {
     var uiState: CardAdditionUiState by mutableStateOf(initialState)
         private set
-    var event by mutableStateOf<CardAdditionUiEvent?>(null)
+    var uiEvent by mutableStateOf<CardAdditionUiEvent?>(null)
         private set
 
     fun updateCardNumber(value: String) {
@@ -51,16 +51,16 @@ class CardAdditionStateHolder(
     }
 
     fun clearEvent() {
-        event = null
+        uiEvent = null
     }
 
     fun addCard() {
         runCatching {
             repository.addCard(uiState.card.toDomain())
         }.onSuccess {
-            event = CardAdditionUiEvent.AddCardSuccess
+            uiEvent = CardAdditionUiEvent.AddCardSuccess
         }.onFailure {
-            event = CardAdditionUiEvent.AddCardFailure
+            uiEvent = CardAdditionUiEvent.AddCardFailure
         }
     }
 }

@@ -40,7 +40,7 @@ fun CardAdditionScreen(
     stateHolder: CardAdditionStateHolder = rememberCardAdditionStateHolder(),
 ) {
     val state: CardAdditionUiState = stateHolder.uiState
-    val event: CardAdditionUiEvent? = stateHolder.event
+    val event: CardAdditionUiEvent? = stateHolder.uiEvent
 
     val scrollState = rememberScrollState()
 
