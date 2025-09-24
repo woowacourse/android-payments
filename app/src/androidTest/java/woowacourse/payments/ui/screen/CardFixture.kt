@@ -8,6 +8,7 @@ val DEFAULT_CARD =
         number = "1234567812345678",
         expiredDate = "0925",
         ownerName = "INHYEOP LEE",
+        password = "",
         issuingBank = IssuingBank.NOT_SELECTED,
     )
 
@@ -18,6 +19,7 @@ val MULTIPLE_CARD =
             number = "0000000000000000",
             expiredDate = "1025",
             ownerName = "BEOMJUN HAM",
+            password = "",
             issuingBank = IssuingBank.NOT_SELECTED,
         ),
     )

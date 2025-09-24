@@ -1,10 +1,12 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 import java.lang.Character.isDigit
 
 @Parcelize
+@Immutable
 data class CardUiModel(
     val number: String,
     val expiredDate: String,
