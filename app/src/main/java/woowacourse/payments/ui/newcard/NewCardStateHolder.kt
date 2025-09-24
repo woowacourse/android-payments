@@ -49,6 +49,7 @@ class NewCardStateHolder {
 
         return cardNumber != initialCard.cardNumber.value ||
             cardHolder != initialCard.cardHolder.value ||
-            expirationDateUiState.expirationDate.value != initialCard.expirationDate.value
+            expirationDateUiState.expirationDate.value != initialCard.expirationDate.value ||
+            bank.type != initialCard.bankType
     }
 }
