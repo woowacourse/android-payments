@@ -23,6 +23,7 @@ class CardListScreenTest {
             CardListScreen(
                 cards = emptyList(),
                 onRegistrationClick = { clicked = true },
+                onCardClick = { },
             )
         }
 
@@ -58,6 +59,7 @@ class CardListScreenTest {
             CardListScreen(
                 cards = listOf(card),
                 onRegistrationClick = { clicked = true },
+                onCardClick = {},
             )
         }
 
@@ -99,7 +101,7 @@ class CardListScreenTest {
                 ),
             )
         composeTestRule.setContent {
-            CardListScreen(cards = cards, onRegistrationClick = {})
+            CardListScreen(cards = cards, onRegistrationClick = {}, onCardClick = {})
         }
 
         // then:

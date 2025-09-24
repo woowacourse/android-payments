@@ -16,7 +16,7 @@ class CardRegisterTopBarTest {
     fun `타이틀이_표시된다`() {
         // given:
         composeTestRule.setContent {
-            CardRegisterTopBar(onBackClick = {}, onSaveClick = {})
+            CardRegisterTopBar(onBackClick = {}, onSaveClick = {}, editMode = true)
         }
 
         // then:
@@ -33,6 +33,7 @@ class CardRegisterTopBarTest {
             CardRegisterTopBar(
                 onBackClick = { clicked = true },
                 onSaveClick = {},
+                editMode = true,
             )
         }
 
@@ -53,6 +54,7 @@ class CardRegisterTopBarTest {
             CardRegisterTopBar(
                 onBackClick = {},
                 onSaveClick = { clicked = true },
+                editMode = true,
             )
         }
 

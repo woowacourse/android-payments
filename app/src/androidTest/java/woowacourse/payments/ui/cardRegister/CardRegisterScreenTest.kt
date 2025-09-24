@@ -22,6 +22,9 @@ class CardRegisterScreenTest {
                 onBackClick = { backClicked = true },
                 onSaveClick = {},
                 isNotValidInput = {},
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
@@ -43,6 +46,9 @@ class CardRegisterScreenTest {
                 onBackClick = {},
                 onSaveClick = {},
                 isNotValidInput = { invalidInputCalled = true },
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
@@ -66,6 +72,9 @@ class CardRegisterScreenTest {
                     if (card.number == "1111222233334444") savedCard = true
                 },
                 isNotValidInput = {},
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
