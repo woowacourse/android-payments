@@ -1,8 +1,11 @@
 package woowacourse.payments.ui.newcard.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.common.model.CardUiModel
 
-sealed interface CardUpdateType {
+@Parcelize
+sealed interface CardUpdateType : Parcelable {
     data object Add : CardUpdateType
 
     data class Edit(
