@@ -8,15 +8,14 @@ import kotlinx.parcelize.Parcelize
 class CardPasswordUiModel(
     val value: String = "",
 ) : Parcelable {
-    val isValid: Boolean get() = value.length <= VALID_LENGTH
-    val isError: Boolean get() = value.length != VALID_LENGTH
-
     init {
-        require(value.isDigitsOnly()) { ERROR_INVALID_FORMAT }
+        require(value.isDigitsOnly())
+        require(value.length <= REQUIRE_CARD_PASSWORD_LENGTH)
     }
 
+    fun isValid(): Boolean = value.length == REQUIRE_CARD_PASSWORD_LENGTH
+
     companion object {
-        private const val ERROR_INVALID_FORMAT = "카드 비밀번호는 숫자로만 구성되어야 합니다."
-        private const val VALID_LENGTH = 4
+        private const val REQUIRE_CARD_PASSWORD_LENGTH = 4
     }
 }

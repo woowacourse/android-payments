@@ -2,19 +2,25 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import androidx.core.text.isDigitsOnly
-import kotlinx.parcelize.Parcelize
 import java.time.YearMonth
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardExpirationDateUiModel(
     val value: String = "",
+    val errorMessage: String? = null,
 ) : Parcelable {
-    val isValid: Boolean get() = value.length <= REQUIRE_CARD_EXPIRATION_DATE_LENGTH
-    val isError: Boolean
-        get() = value.length == REQUIRE_CARD_EXPIRATION_DATE_LENGTH && isInValidFutureOrCurrentMonth()
-
     init {
-        require(value.isDigitsOnly()) { ERROR_INVALID_INPUT }
+        require(value.isDigitsOnly())
+        require(value.length <= REQUIRE_CARD_EXPIRATION_DATE_LENGTH)
+    }
+
+    fun isValid(): Boolean = !(value.length == REQUIRE_CARD_EXPIRATION_DATE_LENGTH && isInValidFutureOrCurrentMonth())
+
+    fun toValidatedCardExpirationDateUiModel(): CardExpirationDateUiModel {
+        if (this.value.length != REQUIRE_CARD_EXPIRATION_DATE_LENGTH) return this
+        if (isInValidFutureOrCurrentMonth()) return this.copy(errorMessage = "유효하지 않은 입력입니다.") // 에러 문구가 어쩌다 여기까지..
+        return this
     }
 
     private fun isInValidFutureOrCurrentMonth(now: YearMonth = YearMonth.now()): Boolean {
@@ -27,9 +33,8 @@ data class CardExpirationDateUiModel(
     }
 
     companion object {
-        private const val ERROR_INVALID_INPUT = "유효하지 않은 입력입니다."
+        const val REQUIRE_CARD_EXPIRATION_DATE_LENGTH = 4
         private const val YEAR_OFFSET = 2_000
         private const val INVALID_INPUT = Int.MIN_VALUE
-        private const val REQUIRE_CARD_EXPIRATION_DATE_LENGTH = 4
     }
 }
