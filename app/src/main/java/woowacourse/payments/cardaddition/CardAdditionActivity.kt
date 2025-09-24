@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import woowacourse.payments.Card
+import woowacourse.payments.CardUiModel
 import woowacourse.payments.EXTRA_CARD
 import woowacourse.payments.cardaddition.component.CardAdditionScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -27,10 +27,9 @@ class CardAdditionActivity : ComponentActivity() {
         }
     }
 
-    private fun saveCard(card: Card?) {
-        if (card == null) return
-
+    private fun saveCard(card: CardUiModel) {
         setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD, card))
+
         finish()
     }
 }

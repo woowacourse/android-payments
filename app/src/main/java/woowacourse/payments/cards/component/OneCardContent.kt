@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
-import woowacourse.payments.Card
+import woowacourse.payments.CardUiModel
 import woowacourse.payments.ui.component.PaymentCard
 
 @Composable
 fun OneCardContent(
-    card: Card,
+    card: CardUiModel,
     addCard: () -> Unit,
-    onClickCard: () -> Unit,
+    onClickCard: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -26,7 +26,7 @@ fun OneCardContent(
     ) {
         PaymentCard(
             card = card,
-            onClick = onClickCard,
+            onClick = { onClickCard(card) },
             modifier = Modifier.padding(top = 12.dp),
         )
         PaymentCardAdditionButton(
@@ -40,9 +40,9 @@ fun OneCardContent(
 private fun OneCardContentPreview() {
     OneCardContent(
         card =
-            Card(
+            CardUiModel(
                 number = "1234".repeat(4),
-                owner = "CREW",
+                holder = "CREW",
                 expiredDate = "0421",
                 bankType = BankType.HANA,
             ),

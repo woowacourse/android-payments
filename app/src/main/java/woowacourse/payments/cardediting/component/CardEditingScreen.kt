@@ -1,7 +1,6 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.cardediting.component
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -11,51 +10,55 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
 import woowacourse.payments.CardUiModel
-import woowacourse.payments.cardaddition.CardAdditionStateHolder
-import woowacourse.payments.cardaddition.CardAdditionUiState
-import woowacourse.payments.cardaddition.rememberCardAdditionStateHolder
+import woowacourse.payments.cardaddition.component.BankSelectBottomSheet
+import woowacourse.payments.cardaddition.component.CardAdditionTopAppBar
+import woowacourse.payments.cardaddition.component.CardNumberTextField
+import woowacourse.payments.cardaddition.component.CardOwnerNameTextField
+import woowacourse.payments.cardaddition.component.ExpiredDateTextField
+import woowacourse.payments.cardaddition.component.PasswordTextField
+import woowacourse.payments.cardediting.CardEditingStateHolder
+import woowacourse.payments.cardediting.CardEditingUiState
 import woowacourse.payments.ui.component.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardAdditionScreen(
+fun CardEditingScreen(
+    stateHolder: CardEditingStateHolder,
     onBackClick: () -> Unit,
-    onCheckClick: (CardUiModel) -> Unit,
+    onCheckClick: (old: CardUiModel, new: CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
-    stateHolder: CardAdditionStateHolder = rememberCardAdditionStateHolder(),
 ) {
-    val state: CardAdditionUiState = stateHolder.uiState
+    val state: CardEditingUiState = stateHolder.uiState
     val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
-        BankSelectBottomSheet(stateHolder::updateBankType)
+        BankSelectBottomSheet(onSelectBankType = stateHolder::updateBankType)
     }
 
     Scaffold(
-        modifier = modifier.testTag("CardAdditionScreen"),
+        modifier = modifier,
         topBar = {
             CardAdditionTopAppBar(
                 onBackClick = onBackClick,
-                onCheckClick = { onCheckClick(state.card) },
-                checkEnabled = state.canAddCard,
+                onCheckClick = { onCheckClick(state.original, state.edited) },
+                checkEnabled = state.canEditCard,
             )
         },
-    ) { paddingValues: PaddingValues ->
-        CardAdditionContent(
-            card = state.card,
+    ) { paddingValues ->
+        CardEditingContent(
+            card = state.edited,
             onCardNumberChange = stateHolder::updateCardNumber,
             isNumberError = !state.isValidCardNumber,
             onExpiredDateChange = stateHolder::updateExpiredDate,
             isExpiredDateError = !state.isValidExpiredDate,
             onHolderChange = stateHolder::updateHolder,
-            holderMaxLength = state.card.holderMaxLength,
+            holderMaxLength = state.edited.holderMaxLength,
             onPasswordChange = stateHolder::updatePassword,
             isPasswordError = !state.isValidPassword,
             onClearBankType = { stateHolder.updateBankType(null) },
@@ -69,7 +72,7 @@ fun CardAdditionScreen(
 }
 
 @Composable
-private fun CardAdditionContent(
+private fun CardEditingContent(
     card: CardUiModel,
     onCardNumberChange: (String) -> Unit,
     isNumberError: Boolean,
@@ -82,9 +85,7 @@ private fun CardAdditionContent(
     onClearBankType: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-    ) {
+    Column(modifier = modifier) {
         PaymentCard(
             onClick = onClearBankType,
             modifier =
@@ -109,9 +110,7 @@ private fun CardAdditionContent(
             value = card.expiredDate,
             onValueChange = onExpiredDateChange,
             isError = isExpiredDateError,
-            modifier =
-                Modifier
-                    .padding(top = 18.dp),
+            modifier = Modifier.padding(top = 18.dp),
         )
         CardOwnerNameTextField(
             value = card.holder,
@@ -134,21 +133,21 @@ private fun CardAdditionContent(
 @ExperimentalMaterial3Api
 @Preview
 @Composable
-private fun CardAdditionScreenPreview(
-    @PreviewParameter(CardAdditionScreenPreviewParameterProvider::class) state: CardAdditionUiState,
+private fun CardEditingScreenPreview(
+    @PreviewParameter(CardEditingScreenPreviewParameterProvider::class) state: CardEditingUiState,
 ) {
-    CardAdditionScreen(
+    CardEditingScreen(
         onBackClick = {},
-        onCheckClick = {},
-        stateHolder = CardAdditionStateHolder(state),
+        onCheckClick = { _, _ -> },
+        stateHolder = CardEditingStateHolder(state),
     )
 }
 
-private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvider<CardAdditionUiState> {
-    override val values: Sequence<CardAdditionUiState> =
+private class CardEditingScreenPreviewParameterProvider : PreviewParameterProvider<CardEditingUiState> {
+    override val values: Sequence<CardEditingUiState> =
         sequenceOf(
-            CardAdditionUiState(
-                card =
+            CardEditingUiState(
+                original =
                     CardUiModel(
                         bankType = BankType.BC,
                         number = "",
@@ -157,8 +156,8 @@ private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvi
                         password = "",
                     ),
             ),
-            CardAdditionUiState(
-                card =
+            CardEditingUiState(
+                original =
                     CardUiModel(
                         bankType = BankType.BC,
                         number = "1234",
@@ -167,8 +166,8 @@ private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvi
                         password = "12",
                     ),
             ),
-            CardAdditionUiState(
-                card =
+            CardEditingUiState(
+                original =
                     CardUiModel(
                         bankType = BankType.BC,
                         number = "1234".repeat(4),

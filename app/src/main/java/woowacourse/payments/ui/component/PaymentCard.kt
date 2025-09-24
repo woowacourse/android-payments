@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.BankType
-import woowacourse.payments.Card
+import woowacourse.payments.CardUiModel
 import woowacourse.payments.R
 import woowacourse.payments.ui.theme.CardIcChip
 
@@ -94,7 +94,7 @@ fun PaymentCard(
 
 @Composable
 fun PaymentCard(
-    card: Card,
+    card: CardUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -102,7 +102,7 @@ fun PaymentCard(
         onClick = onClick,
         modifier = modifier,
         number = card.number,
-        owner = card.owner,
+        owner = card.holder,
         expiredDate = card.expiredDate,
         bankType = card.bankType,
     )
@@ -170,24 +170,24 @@ private val String.markedCardNumber: String
 @Preview
 @Composable
 private fun PaymentCardPreview(
-    @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: Card?,
+    @PreviewParameter(PaymentCardPreviewParameterProvider::class) card: CardUiModel?,
 ) {
     PaymentCard(
         onClick = {},
         number = card?.number,
-        owner = card?.owner,
+        owner = card?.holder,
         expiredDate = card?.expiredDate,
         bankType = card?.bankType,
     )
 }
 
 private class PaymentCardPreviewParameterProvider :
-    CollectionPreviewParameterProvider<Card?>(
+    CollectionPreviewParameterProvider<CardUiModel?>(
         listOf(
             null,
-            Card(
+            CardUiModel(
                 number = "1234".repeat(4),
-                owner = "CREW",
+                holder = "CREW",
                 expiredDate = "0421",
                 bankType = BankType.BC,
             ),

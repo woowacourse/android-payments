@@ -24,6 +24,10 @@
             android:name=".cardaddition.CardAdditionActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
+        <activity
+            android:name=".cardediting.CardEditingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Androidpayments" />
     </application>
 
 </manifest>

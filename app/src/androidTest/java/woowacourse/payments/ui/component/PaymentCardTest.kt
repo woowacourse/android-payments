@@ -20,7 +20,7 @@ class PaymentCardTest {
                 card =
                     Card(
                         number = "1234".repeat(4),
-                        owner = "CREW",
+                        holder = "CREW",
                         expiredDate = "0421",
                         bankType = BankType.BC,
                     ),

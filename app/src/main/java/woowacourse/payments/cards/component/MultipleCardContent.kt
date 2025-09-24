@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
-import woowacourse.payments.Card
+import woowacourse.payments.CardUiModel
 import woowacourse.payments.ui.component.PaymentCard
 
 @Composable
 fun MultipleCardContent(
-    cards: List<Card>,
-    onClickCard: () -> Unit,
+    cards: List<CardUiModel>,
+    onClickCard: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -24,9 +24,9 @@ fun MultipleCardContent(
         contentPadding = PaddingValues(top = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(cards) { card: Card ->
+        items(cards) { card: CardUiModel ->
             PaymentCard(
-                onClick = onClickCard,
+                onClick = { onClickCard(card) },
                 card = card,
                 modifier = Modifier.padding(bottom = 36.dp),
             )
@@ -40,25 +40,25 @@ private fun MultipleCardContentPreview() {
     MultipleCardContent(
         cards =
             listOf(
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.BC,
                 ),
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.KB,
                 ),
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.HANA,
                 ),
             ),
-        onClickCard = {}
+        onClickCard = {},
     )
 }

@@ -17,25 +17,24 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.BankType
-import woowacourse.payments.Card
+import woowacourse.payments.CardUiModel
 import woowacourse.payments.EXTRA_CARD
+import woowacourse.payments.EXTRA_NEW_CARD
+import woowacourse.payments.EXTRA_OLD_CARD
 import woowacourse.payments.R
 import woowacourse.payments.cardaddition.CardAdditionActivity
+import woowacourse.payments.cardediting.CardEditingActivity
 import woowacourse.payments.cards.CardsStateHolder
 import woowacourse.payments.cards.CardsUiEvent
 import woowacourse.payments.cards.CardsUiState
 import woowacourse.payments.cards.rememberCardsStateHolder
-import woowacourse.payments.getParcelableCompat
+import woowacourse.payments.getParcelableExtraCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -44,21 +43,51 @@ fun CardsScreen(
     stateHolder: CardsStateHolder = rememberCardsStateHolder(),
 ) {
     val state: CardsUiState = stateHolder.uiState
-    var event by remember { mutableStateOf<CardsUiEvent?>(null) }
+    val event: CardsUiEvent? = stateHolder.event
 
     val context = LocalContext.current
+
     val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val card: Card =
-                    result.data?.getParcelableCompat(EXTRA_CARD)
+                val card: CardUiModel =
+                    result.data?.getParcelableExtraCompat(EXTRA_CARD)
                         ?: return@rememberLauncherForActivityResult
+
                 stateHolder.addCard(card)
-                event = CardsUiEvent.AddCardSuccess
             }
         }
+
     val navigateToCardAdditionActivity: () -> Unit =
         { cardAddLauncher.launch(Intent(context, CardAdditionActivity::class.java)) }
+
+    val cardEditLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val old: CardUiModel =
+                    result.data?.getParcelableExtraCompat(EXTRA_OLD_CARD)
+                        ?: return@rememberLauncherForActivityResult
+
+                val new: CardUiModel =
+                    result.data?.getParcelableExtraCompat(EXTRA_NEW_CARD)
+                        ?: return@rememberLauncherForActivityResult
+
+                stateHolder.editCard(
+                    old = old,
+                    new = new,
+                )
+            }
+        }
+
+    val navigateToEditingActivity: (card: CardUiModel) -> Unit =
+        { card ->
+            cardEditLauncher.launch(
+                Intent(context, CardEditingActivity::class.java).putExtra(
+                    EXTRA_CARD,
+                    card,
+                ),
+            )
+        }
 
     LaunchedEffect(event) {
         when (event) {
@@ -69,11 +98,25 @@ fun CardsScreen(
                         context.getString(R.string.cards_add_card_success_message),
                         Toast.LENGTH_SHORT,
                     ).show()
+
+                stateHolder.fetchCards()
+            }
+
+            CardsUiEvent.EditCardSuccess -> {
+                Toast
+                    .makeText(
+                        context,
+                        context.getString(R.string.cards_edit_card_success_message),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+
+                stateHolder.fetchCards()
             }
 
             null -> Unit
         }
-        event = null
+
+        stateHolder.clearEvent()
     }
 
     Scaffold(
@@ -87,6 +130,7 @@ fun CardsScreen(
         CardsContent(
             state = state,
             navigateToCardAdditionActivity = navigateToCardAdditionActivity,
+            navigateToCardEditingActivity = navigateToEditingActivity,
             modifier =
                 Modifier
                     .fillMaxSize()
@@ -99,6 +143,7 @@ fun CardsScreen(
 private fun CardsContent(
     state: CardsUiState,
     navigateToCardAdditionActivity: () -> Unit,
+    navigateToCardEditingActivity: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -123,13 +168,13 @@ private fun CardsContent(
                         Modifier
                             .fillMaxSize()
                             .verticalScroll(scrollState),
-                    onClickCard = {},
+                    onClickCard = navigateToCardEditingActivity,
                 )
 
             else ->
                 MultipleCardContent(
                     cards = state.cards,
-                    onClickCard = {},
+                    onClickCard = navigateToCardEditingActivity,
                     modifier = Modifier.fillMaxSize(),
                 )
         }
@@ -139,7 +184,7 @@ private fun CardsContent(
 @Preview
 @Composable
 private fun CardsScreenPreview(
-    @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: List<Card>,
+    @PreviewParameter(CardsScreenPreviewParameterProvider::class) cards: List<CardUiModel>,
 ) {
     AndroidpaymentsTheme {
         CardsScreen(
@@ -148,34 +193,34 @@ private fun CardsScreenPreview(
     }
 }
 
-private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<List<Card>> {
-    override val values: Sequence<List<Card>> =
+private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<List<CardUiModel>> {
+    override val values: Sequence<List<CardUiModel>> =
         sequenceOf(
             emptyList(),
             listOf(
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.BC,
                 ),
             ),
             listOf(
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.KB,
                 ),
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.HANA,
                 ),
-                Card(
+                CardUiModel(
                     number = "1234".repeat(4),
-                    owner = "CREW",
+                    holder = "CREW",
                     expiredDate = "0421",
                     bankType = BankType.KAKAO,
                 ),
