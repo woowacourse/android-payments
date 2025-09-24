@@ -40,7 +40,13 @@ class AddCardStateHolder(
     }
 
     val cardPreview by derivedStateOf {
-        CardUiModel.EMPTY.copy(cardCompany = uiState.selectedCompany.toUiModel())
+        CardUiModel.EMPTY.copy(
+            cardCompany = uiState.selectedCompany.toUiModel(),
+            cardNumberRaw = uiState.number,
+            expirationDateRaw = uiState.expiration,
+            userName = uiState.userName,
+            password = uiState.password,
+        )
     }
 
     private val hasChanges by derivedStateOf {

@@ -5,9 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun AddCardScreen(
@@ -57,4 +61,24 @@ fun AddCardScreen(
         onDismissSheet = stateHolder::onDismissSheet,
         onSaveClick = { stateHolder.onSaveClick(onAddCard) },
     )
+}
+
+@Preview(name = "수정을 위한 화면")
+@Composable
+private fun AddCardScreenPreview() {
+    AndroidpaymentsTheme {
+        AddCardScreen(
+            onBackPressed = {},
+            onAddCard = {},
+            initialShowSheet = false,
+            initialCard =
+                CardUiModel(
+                    cardCompany = CardCompanyType.BC.toUiModel(),
+                    cardNumberRaw = "1111111111111111",
+                    expirationDateRaw = "1199",
+                    userName = "KIMJOY",
+                    password = "1111",
+                ),
+        )
+    }
 }
