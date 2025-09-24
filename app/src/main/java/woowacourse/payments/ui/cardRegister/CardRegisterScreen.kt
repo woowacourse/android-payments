@@ -109,9 +109,13 @@ fun CardRegisterScreen(
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
                 card =
-                    CardUiModel(
-                        cardCompany = cardRegisterState.cardCompany,
-                    ),
+                    if (editMode) {
+                        cardRegisterState.cardUiModel
+                    } else {
+                        CardUiModel(
+                            cardCompany = cardRegisterState.cardCompany,
+                        )
+                    },
             )
             PaymentTextField(
                 text = cardRegisterState.cardNumber,
