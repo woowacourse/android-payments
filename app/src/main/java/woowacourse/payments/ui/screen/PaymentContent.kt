@@ -67,8 +67,8 @@ private fun PaymentScreenOneCardPreview() {
         val sampleCard =
             CardUiModel(
                 cardCompany = CardCompanyType.BC.toUiModel(),
-                cardNumberRaw = "1111 - 2222 - **** - ****",
-                expirationDateRaw = "04 / 21",
+                cardNumberRaw = "1111222233334444",
+                expirationDateRaw = "0421",
                 userName = "GAHYUNKIM",
                 password = "1234",
             )
@@ -88,7 +88,7 @@ private fun PaymentScreenThreeCardsPreview() {
     val sampleCard =
         CardUiModel(
             cardCompany = CardCompanyType.BC.toUiModel(),
-            cardNumberRaw = "11112222********",
+            cardNumberRaw = "1111222233334444",
             expirationDateRaw = "0421",
             userName = "JOY",
             password = "1234",

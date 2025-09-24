@@ -63,9 +63,22 @@ fun AddCardScreen(
     )
 }
 
+@Preview(name = "카드 추가 기본 화면")
+@Composable
+private fun AddCardScreenPreview_Default() {
+    AndroidpaymentsTheme {
+        AddCardScreen(
+            onBackPressed = {},
+            onAddCard = {},
+            initialShowSheet = false,
+            initialCard = CardUiModel.EMPTY,
+        )
+    }
+}
+
 @Preview(name = "수정을 위한 화면")
 @Composable
-private fun AddCardScreenPreview() {
+private fun AddCardScreenPreview_Edit() {
     AndroidpaymentsTheme {
         AddCardScreen(
             onBackPressed = {},
