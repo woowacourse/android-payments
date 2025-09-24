@@ -42,8 +42,9 @@ fun CardNumber.toFormattedString(): String {
 
 fun CardExpiry.toFormattedString(): String {
     val year = this.value.year % 100
-    val month = this.value.monthValue.toString().padStart(2, '0').padStart(2, '0')
-    return "$month$year"
+    val month = this.value.monthValue.toString().padStart(2, '0')
+    val yearStr = year.toString().padStart(2, '0')
+    return "$month$yearStr"
 }
 
 fun CardPassword.toFormattedString(): String {
