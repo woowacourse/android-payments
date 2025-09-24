@@ -17,8 +17,7 @@ class CardListActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CardCatalogScreen(
-            )
+            CardCatalogScreen()
         }
     }
 
