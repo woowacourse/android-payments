@@ -17,7 +17,7 @@ class ExpirationDateTextFieldTest {
 
     @Before
     fun setUp() {
-        val stateHolder = SubmitCardScreenUiStateHolder()
+        val stateHolder = SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder()
         composeTestRule.setContent {
             ExpirationDateTextField(
                 stateHolder.expirationDate,

@@ -21,7 +21,7 @@ class CardListScreenTest {
         val cards = mutableStateListOf<CardUiModel>()
 
         // when
-        composeTestRule.setContent { CardListScreen(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards, {}, { _, _ -> }) }
 
         // then
         composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertIsDisplayed()
@@ -33,7 +33,7 @@ class CardListScreenTest {
         val cards = mutableStateListOf(CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListScreen(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards, {}, { _, _ -> }) }
 
         // then
         composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertDoesNotExist()
@@ -45,7 +45,7 @@ class CardListScreenTest {
         val cards = mutableStateListOf<CardUiModel>()
 
         // when
-        composeTestRule.setContent { CardListScreen(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards, {}, { _, _ -> }) }
 
         // then
         composeTestRule.onNodeWithTag("카드 추가 버튼").assertIsDisplayed()
@@ -58,7 +58,7 @@ class CardListScreenTest {
         val cards = mutableStateListOf(CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListScreen(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards, {}, { _, _ -> }) }
 
         // then
         composeTestRule.onNodeWithTag("카드 추가 버튼").assertIsDisplayed()
@@ -71,7 +71,7 @@ class CardListScreenTest {
         val cards = mutableStateListOf(CARD_FIXTURE, CARD_FIXTURE)
 
         // when
-        composeTestRule.setContent { CardListScreen(cards) {} }
+        composeTestRule.setContent { CardListScreen(cards, {}, { _, _ -> }) }
 
         // then
         composeTestRule.onNodeWithText("추가").assertIsDisplayed()
