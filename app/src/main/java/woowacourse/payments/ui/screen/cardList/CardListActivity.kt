@@ -30,10 +30,10 @@ class CardListActivity : ComponentActivity() {
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { result ->
                         if (result.resultCode == RESULT_OK) {
-                            val newCard =
+                            val card =
                                 result.data?.getParcelableExtraCompat<CardUiModel>(NEW_CARD_KEY)
-                            newCard?.let {
-                                stateHolder.addCard(it)
+                            card?.let {
+                                stateHolder.upsertCard(it)
                                 Toast
                                     .makeText(
                                         this,
@@ -46,8 +46,9 @@ class CardListActivity : ComponentActivity() {
 
                 CardListScreen(
                     stateHolder = stateHolder,
-                    navigateToAddCard = {
+                    navigateToAddCard = { cardToEdit ->
                         val intent = Intent(this@CardListActivity, AddCardActivity::class.java)
+                        cardToEdit?.let { intent.putExtra(EDIT_CARD_KEY, it) }
                         addCardLauncher.launch(intent)
                     },
                 )
@@ -57,5 +58,6 @@ class CardListActivity : ComponentActivity() {
 
     companion object {
         const val NEW_CARD_KEY = "NEW_CARD"
+        const val EDIT_CARD_KEY = "EDIT_CARD"
     }
 }

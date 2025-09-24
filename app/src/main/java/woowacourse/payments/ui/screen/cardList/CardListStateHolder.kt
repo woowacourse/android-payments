@@ -18,15 +18,15 @@ class CardListStateHolder(
     )
         private set
 
-    fun addCard(card: CardUiModel) {
-        val cardWithId =
-            if (card.id == 0L) {
-                card.copy(id = nextId++)
+    fun upsertCard(card: CardUiModel) {
+        val index = uiState.cards.indexOfFirst { it.id == card.id }
+        val newCards =
+            if (index >= 0) {
+                uiState.cards.toMutableList().apply { this[index] = card }
             } else {
-                card
+                uiState.cards + card.copy(id = nextId++)
             }
 
-        val newCards = uiState.cards + cardWithId
         uiState =
             uiState.copy(
                 cards = newCards,
