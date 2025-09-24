@@ -2,6 +2,7 @@ package woowacourse.payments.ui.addcard
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -101,7 +102,8 @@ fun SubmitCardScreen(
                 modifier =
                     Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 30.dp),
+                        .padding(vertical = 30.dp)
+                        .clickable { stateHolder.onCardCompaniesRequested() },
                 card = stateHolder.card,
             )
 

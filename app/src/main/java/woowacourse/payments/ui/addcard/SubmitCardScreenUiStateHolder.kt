@@ -37,6 +37,9 @@ sealed class SubmitCardScreenUiStateHolder(
     var isPasscodeError: Boolean by mutableStateOf(false)
         private set
 
+    var showCardCompanies: Boolean by mutableStateOf(true)
+        private set
+
     var shouldMoveFocus: Boolean by mutableStateOf(false)
         private set
 
@@ -75,6 +78,11 @@ sealed class SubmitCardScreenUiStateHolder(
 
     fun onCardCompanySelected(company: CardCompanyUiModel) {
         cardCompany = company
+        showCardCompanies = false
+    }
+
+    fun onCardCompaniesRequested() {
+        showCardCompanies = true
     }
 
     fun onFocusMoved() {

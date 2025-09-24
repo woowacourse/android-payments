@@ -10,11 +10,7 @@ import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +29,6 @@ fun CardCompanyBottomSheet(
     onDismissed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var visible: Boolean by remember { mutableStateOf(true) }
     val sheetState: SheetState = rememberModalBottomSheetState { false }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
@@ -41,32 +36,28 @@ fun CardCompanyBottomSheet(
         sheetState.expand()
     }
 
-    if (visible) {
-        ModalBottomSheet(
-            modifier = modifier,
-            sheetState = sheetState,
-            onDismissRequest = onDismissed,
+    ModalBottomSheet(
+        modifier = modifier,
+        sheetState = sheetState,
+        onDismissRequest = onDismissed,
+    ) {
+        FlowRow(
+            maxItemsInEachRow = MAX_ITEMS_PER_ROW,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 36.dp),
         ) {
-            FlowRow(
-                maxItemsInEachRow = MAX_ITEMS_PER_ROW,
-                horizontalArrangement = Arrangement.Center,
-                verticalArrangement = Arrangement.Center,
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 36.dp),
-            ) {
-                cardCompanies.forEach { company: CardCompanyUiModel ->
-                    CardCompanyButton(
-                        company,
-                        {
-                            onCompanySelected(company)
-                            coroutineScope
-                                .launch { sheetState.hide() }
-                                .invokeOnCompletion { visible = false }
-                        },
-                    )
-                }
+            cardCompanies.forEach { company: CardCompanyUiModel ->
+                CardCompanyButton(
+                    company,
+                    {
+                        onCompanySelected(company)
+                        coroutineScope.launch { sheetState.hide() }
+                    },
+                )
             }
         }
     }

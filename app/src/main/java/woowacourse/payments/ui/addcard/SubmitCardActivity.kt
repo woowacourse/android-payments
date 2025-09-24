@@ -44,11 +44,13 @@ class SubmitCardActivity : ComponentActivity() {
                     onBackClick = { finish() },
                 )
 
-                CardCompanyBottomSheet(
-                    SubmitCardScreenUiStateHolder.CARD_COMPANIES,
-                    stateHolder::onCardCompanySelected,
-                    { finish() },
-                )
+                if (stateHolder.showCardCompanies) {
+                    CardCompanyBottomSheet(
+                        SubmitCardScreenUiStateHolder.CARD_COMPANIES,
+                        stateHolder::onCardCompanySelected,
+                        { finish() },
+                    )
+                }
             }
         }
     }
