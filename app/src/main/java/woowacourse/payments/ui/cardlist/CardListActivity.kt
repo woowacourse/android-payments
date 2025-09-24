@@ -1,7 +1,6 @@
 package woowacourse.payments.ui.cardlist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -21,6 +20,7 @@ class CardListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards: MutableList<CardUiModel> = rememberSaveable { mutableStateListOf() }
+                var selectedCard: CardUiModel? = null
 
                 val newCardLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -29,13 +29,15 @@ class CardListActivity : ComponentActivity() {
                                 ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_CARD_KEY)
                                 ?.let { newCard: CardUiModel ->
                                     cards.add(newCard)
-                                    Log.d("jiyuneel", "카드 추가")
                                 }
                         } else if (result.resultCode == NewCardActivity.RESULT_CODE_EDIT) {
                             result.data
                                 ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_CARD_KEY)
                                 ?.let { newCard: CardUiModel ->
-                                    Log.d("jiyuneel", "카드 수정")
+                                    val index = cards.indexOf(selectedCard)
+                                    if (index != -1) {
+                                        cards[index] = newCard
+                                    }
                                 }
                         }
                     }
@@ -44,9 +46,11 @@ class CardListActivity : ComponentActivity() {
                     cards = cards,
                     onAddCardClick = {
                         newCardLauncher.launch(NewCardActivity.newIntent(this, null))
+                        selectedCard = null
                     },
                     onCardClick = { card: CardUiModel ->
                         newCardLauncher.launch(NewCardActivity.newIntent(this, card))
+                        selectedCard = card
                     },
                 )
             }

@@ -21,9 +21,10 @@ fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isEdit: Boolean = false,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card)) },
+        title = { if (isEdit) Text(stringResource(R.string.edit_card)) else Text(stringResource(R.string.add_card)) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(

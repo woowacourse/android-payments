@@ -71,6 +71,7 @@ fun NewCardScreen(
                 canSave = uiState.isCardValid,
                 onBackClick = onBackClick,
                 onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
+                isEdit = card != null,
             )
         },
     ) { innerPadding: PaddingValues ->

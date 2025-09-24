@@ -27,8 +27,13 @@ class NewCardActivity : ComponentActivity() {
                     companies = CardCompany.entries.map(CardCompany::toUiModel),
                     onBackClick = { finish() },
                     onSaveClick = { newCard: CardUiModel ->
-                        if (card == null) saveCard(newCard) else editCard(newCard)
-                        showToast(getString(R.string.card_added_message))
+                        if (card == null) {
+                            saveCard(newCard)
+                            showToast(getString(R.string.card_added_message))
+                        } else {
+                            editCard(newCard)
+                            showToast(getString(R.string.card_edited_message))
+                        }
                         finish()
                     },
                 )
