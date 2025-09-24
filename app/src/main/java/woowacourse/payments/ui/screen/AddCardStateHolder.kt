@@ -15,26 +15,54 @@ import woowacourse.payments.ui.model.toUiModel
 
 class AddCardStateHolder(
     initialShowSheet: Boolean,
-    initial: CardUiModel? = null,
+    private val initial: CardUiModel? = null,
 ) {
     var uiState by mutableStateOf(
-        AddCardUiState(showCompanySheet = initialShowSheet).let { base ->
+        AddCardUiState(showCompanySheet = initialShowSheet).let { cardUiState ->
             initial?.let { cardUiModel ->
-                base.copy(
+                cardUiState.copy(
                     number = cardUiModel.cardNumberRaw,
                     expiration = cardUiModel.expirationDateRaw,
                     userName = cardUiModel.userName ?: "",
                     password = cardUiModel.password,
                     selectedCompany = cardUiModel.cardCompany.type,
                 )
-            } ?: base
+            } ?: cardUiState
         },
     )
         private set
 
+    var uiEvent by mutableStateOf<AddCardUiEvent?>(null)
+        private set
+
+    fun consumeEvent() {
+        uiEvent = null
+    }
+
     val cardPreview by derivedStateOf {
         CardUiModel.EMPTY.copy(cardCompany = uiState.selectedCompany.toUiModel())
     }
+
+    val isEditing: Boolean get() = initial != null
+
+    private val hasChanges by derivedStateOf {
+        val init = initial ?: return@derivedStateOf true
+        uiState.number != init.cardNumberRaw ||
+            uiState.expiration != init.expirationDateRaw ||
+            uiState.userName != (init.userName ?: "") ||
+            uiState.password != init.password ||
+            uiState.selectedCompany != init.cardCompany.type
+    }
+
+    private val isValid by derivedStateOf {
+        uiState.selectedCompany != CardCompanyType.NOT_SELECTED &&
+            uiState.numberError == null &&
+            uiState.expirationError == null &&
+            uiState.userNameError == null &&
+            uiState.passwordError == null
+    }
+
+    val isSaveEnabled by derivedStateOf { isValid && (!isEditing || hasChanges) }
 
     fun onNumberChange(value: String) {
         uiState =
@@ -81,11 +109,6 @@ class AddCardStateHolder(
     }
 
     fun onSaveClick(onAddCard: (Card) -> Unit) {
-        if (uiState.selectedCompany == CardCompanyType.NOT_SELECTED) {
-            uiState = uiState.copy(showCompanySheet = true)
-            return
-        }
-
         uiState =
             uiState.copy(
                 numberError = CardNumber.validationErrorType(uiState.number),
@@ -93,7 +116,18 @@ class AddCardStateHolder(
                 userNameError = UserName.validationErrorType(uiState.userName),
                 passwordError = Password.validationErrorType(uiState.password),
             )
-        if (!uiState.isSaveEnabled) return
+
+        if (uiState.selectedCompany == CardCompanyType.NOT_SELECTED) {
+            uiState = uiState.copy(showCompanySheet = true)
+            return
+        }
+
+        if (isEditing && !hasChanges) {
+            uiEvent = AddCardUiEvent.ShowNoChangesToast
+            return
+        }
+
+        if (!isSaveEnabled) return
 
         try {
             val card =
@@ -105,6 +139,7 @@ class AddCardStateHolder(
                     type = uiState.selectedCompany,
                 )
             onAddCard(card)
+            uiEvent = AddCardUiEvent.ShowCardAddedToast
         } catch (_: IllegalArgumentException) {
             uiState =
                 uiState.copy(

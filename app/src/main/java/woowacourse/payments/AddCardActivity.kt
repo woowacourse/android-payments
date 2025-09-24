@@ -24,7 +24,7 @@ class AddCardActivity : ComponentActivity() {
                 AddCardScreen(
                     onBackPressed = { finish() },
                     onAddCard = { card -> setCardResultAndFinish(card) },
-                    initialShowSheet = initial == null, // 새로 추가일 때만 바텀시트 오픈
+                    initialShowSheet = initial == null,
                     initialCard = initial,
                 )
             }
@@ -34,7 +34,7 @@ class AddCardActivity : ComponentActivity() {
     private fun setCardResultAndFinish(card: Card) {
         val resultIntent =
             Intent().apply {
-                putExtra(EXTRA_CARD_RESULT, card.toUiModel()) // ✅ 키 통일
+                putExtra(EXTRA_CARD_RESULT, card.toUiModel())
             }
         setResult(RESULT_OK, resultIntent)
         finish()
