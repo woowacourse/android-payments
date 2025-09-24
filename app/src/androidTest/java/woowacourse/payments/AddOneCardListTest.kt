@@ -32,6 +32,7 @@ class AddOneCardListTest {
                         ),
                     ),
                 onAddClick = {},
+                onClick = {},
             )
         }
     }
