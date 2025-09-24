@@ -29,7 +29,7 @@ import woowacourse.payments.ui.newcard.NewCardScreenActivity
 @Composable
 fun CardWalletScreen(
     cardList: List<CardUiModel>,
-    onCardAddResult: (CardUiModel) -> Unit,
+    onCardAddOrUpdate: (CardUiModel, Int?) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -40,8 +40,13 @@ fun CardWalletScreen(
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data
                     ?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
-                    ?.let {
-                        onCardAddResult(it)
+                    ?.let { updatedCard ->
+                        val index =
+                            result.data?.getIntExtra(
+                                NewCardScreenActivity.EXISTING_CARD_INDEX,
+                                -1,
+                            )
+                        onCardAddOrUpdate(updatedCard, if (index == -1) null else index)
                     }
             }
         }
@@ -97,7 +102,12 @@ fun CardWalletScreen(
                     Spacer(modifier = Modifier.height(36.dp))
                     EmptyCard(
                         onClick = {
-                            val intent = NewCardScreenActivity.newIntent(context)
+                            val intent =
+                                NewCardScreenActivity.newIntent(
+                                    context,
+                                    existingCard = cardList.first(),
+                                    index = 0,
+                                )
                             cardAddLauncher.launch(intent)
                         },
                     )
