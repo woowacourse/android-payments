@@ -80,7 +80,7 @@ class CardRegisterScreenTest {
 
         // when:
         composeTestRule.onNodeWithText("카드 번호").performTextInput("1111222233334444")
-        composeTestRule.onNodeWithText("만료일").performTextInput("0421")
+        composeTestRule.onNodeWithText("만료일").performTextInput("0426")
         composeTestRule.onNodeWithText("비밀번호").performTextInput("1234")
 
         composeTestRule
