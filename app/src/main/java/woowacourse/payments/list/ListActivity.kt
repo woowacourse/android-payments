@@ -60,10 +60,11 @@ class ListActivity : ComponentActivity() {
                     },
                     onClick = { card ->
                         val index = cardState.cards.indexOf(card)
-                        val intent = Intent(this, EditActivity::class.java).apply {
-                            putExtra("card", card)
-                            putExtra("index", index)
-                        }
+                        val intent =
+                            Intent(this, EditActivity::class.java).apply {
+                                putExtra("card", card)
+                                putExtra("index", index)
+                            }
                         cardEditLauncher.launch(intent)
                     },
                 )

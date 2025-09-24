@@ -46,11 +46,12 @@ fun CardCompanyItem(
 private fun CardCompanyItemPreview() {
     AndroidpaymentsTheme {
         CardCompanyItem(
-            cardCompanyUiModel = CardCompanyUiModel(
-                company = CardCompany.BC,
-                iconRes = R.drawable.ic_bc,
-                color = DarkGray,
-            ),
+            cardCompanyUiModel =
+                CardCompanyUiModel(
+                    company = CardCompany.BC,
+                    iconRes = R.drawable.ic_bc,
+                    color = DarkGray,
+                ),
         )
     }
 }

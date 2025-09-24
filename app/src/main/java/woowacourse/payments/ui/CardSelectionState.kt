@@ -9,17 +9,18 @@ import woowacourse.payments.list.CardUiModel
 class CardSelectionState {
     var selectedCompany by mutableStateOf(CardCompany.NOT_SELECTED)
     val cardState: PaymentCardState
-        get() = if (selectedCompany == CardCompany.NOT_SELECTED) {
-            PaymentCardState.Empty
-        } else {
-            PaymentCardState.CardInfo(
-                CardUiModel(
-                    company = selectedCompany,
-                    number = "",
-                    name = null,
-                    expiry = "",
-                    password = ""
+        get() =
+            if (selectedCompany == CardCompany.NOT_SELECTED) {
+                PaymentCardState.Empty
+            } else {
+                PaymentCardState.CardInfo(
+                    CardUiModel(
+                        company = selectedCompany,
+                        number = "",
+                        name = null,
+                        expiry = "",
+                        password = "",
+                    ),
                 )
-            )
-        }
+            }
 }

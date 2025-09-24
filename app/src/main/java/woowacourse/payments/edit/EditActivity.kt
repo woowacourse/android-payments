@@ -43,8 +43,9 @@ class EditActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val card = intent.parcelable<CardUiModel>("card")
-                    ?: error("Card not provided")
+                val card =
+                    intent.parcelable<CardUiModel>("card")
+                        ?: error("Card not provided")
 
                 val newCardState = NewCardState()
                 newCardState.onNameChange(card.name ?: "")
@@ -65,7 +66,7 @@ class EditActivity : ComponentActivity() {
                         modalBottomSheetState,
                         onClick = { cardSelectionState.selectedCompany = it.company },
                         onDismissRequest = { finish() },
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
 
@@ -77,56 +78,62 @@ class EditActivity : ComponentActivity() {
                 }
 
                 Scaffold(
-                    topBar = { NewCardTopBar(
-                        title = { Text(text = stringResource(R.string.edit_card_top_bar_title)) },
-                        onBackClick = {
-                            finish()
-                        },
-                        onSaveClick = {
-                            val updatedCard = Card(
-                                company = cardSelectionState.selectedCompany,
-                                number = CardNumber(newCardState.cardNumber),
-                                expiry = CardExpiry.fromString(newCardState.cardExpiry),
-                                password = CardPassword(newCardState.cardPassword),
-                                name = CardName(newCardState.cardName),
-                            )
-
-                            val originCard = Card(
-                                company = card.company,
-                                number = CardNumber(card.number),
-                                expiry = CardExpiry.fromString(card.expiry),
-                                password = CardPassword(card.password),
-                            )
-
-                            if (updatedCard != originCard) {
-                                val index = intent.getIntExtra("index", -1)
-                                val data = Intent().apply {
-                                    putExtra("card", updatedCard.toUiModel())
-                                    putExtra("index", index)
-                                }
-                                setResult(RESULT_OK, data)
+                    topBar = {
+                        NewCardTopBar(
+                            title = { Text(text = stringResource(R.string.edit_card_top_bar_title)) },
+                            onBackClick = {
                                 finish()
-                            }
-                        },
-                        isSaveEnabled =
-                            runCatching {
-                                Card(
-                                    company = cardSelectionState.selectedCompany,
-                                    number = CardNumber(newCardState.cardNumber),
-                                    expiry = CardExpiry.fromString(newCardState.cardExpiry),
-                                    password = CardPassword(newCardState.cardPassword),
-                                    name = CardName(newCardState.cardName),
-                                )
-                            }.isSuccess,
-                    ) }
+                            },
+                            onSaveClick = {
+                                val updatedCard =
+                                    Card(
+                                        company = cardSelectionState.selectedCompany,
+                                        number = CardNumber(newCardState.cardNumber),
+                                        expiry = CardExpiry.fromString(newCardState.cardExpiry),
+                                        password = CardPassword(newCardState.cardPassword),
+                                        name = CardName(newCardState.cardName),
+                                    )
+
+                                val originCard =
+                                    Card(
+                                        company = card.company,
+                                        number = CardNumber(card.number),
+                                        expiry = CardExpiry.fromString(card.expiry),
+                                        password = CardPassword(card.password),
+                                    )
+
+                                if (updatedCard != originCard) {
+                                    val index = intent.getIntExtra("index", -1)
+                                    val data =
+                                        Intent().apply {
+                                            putExtra("card", updatedCard.toUiModel())
+                                            putExtra("index", index)
+                                        }
+                                    setResult(RESULT_OK, data)
+                                    finish()
+                                }
+                            },
+                            isSaveEnabled =
+                                runCatching {
+                                    Card(
+                                        company = cardSelectionState.selectedCompany,
+                                        number = CardNumber(newCardState.cardNumber),
+                                        expiry = CardExpiry.fromString(newCardState.cardExpiry),
+                                        password = CardPassword(newCardState.cardPassword),
+                                        name = CardName(newCardState.cardName),
+                                    )
+                                }.isSuccess,
+                        )
+                    },
                 ) { innerPadding ->
                     CardInformationForm(
                         newCardState = newCardState,
                         cardSelectionState = cardSelectionState,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding),
-                        mode = "EDIT"
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding),
+                        mode = "EDIT",
                     )
                 }
             }

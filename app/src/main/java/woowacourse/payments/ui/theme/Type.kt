@@ -36,9 +36,10 @@ val Typography =
      */
     )
 
-val PaymentCardTextStyle = TextStyle(
-    color = Color.White,
-    fontSize = 12.sp,
-    lineHeight = 14.sp,
-    letterSpacing = 2.sp
-)
+val PaymentCardTextStyle =
+    TextStyle(
+        color = Color.White,
+        fontSize = 12.sp,
+        lineHeight = 14.sp,
+        letterSpacing = 2.sp,
+    )

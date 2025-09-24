@@ -17,14 +17,20 @@ data class CardUiModel(
     val company: CardCompany = CardCompany.NOT_SELECTED,
 ) : Parcelable {
     val maskedNumber: String
-        get() = if (number.isNotEmpty()) {
-            (number.take(8) + "*".repeat(8)).chunked(4).joinToString(" - ")
-        } else ""
+        get() =
+            if (number.isNotEmpty()) {
+                (number.take(8) + "*".repeat(8)).chunked(4).joinToString(" - ")
+            } else {
+                ""
+            }
 
     val maskedExpiry: String
-        get() = if (expiry.isNotEmpty()) {
-            expiry.take(2) + " / " + expiry.takeLast(2)
-        } else ""
+        get() =
+            if (expiry.isNotEmpty()) {
+                expiry.take(2) + " / " + expiry.takeLast(2)
+            } else {
+                ""
+            }
 
     val maskedPassword: String
         get() = "****"

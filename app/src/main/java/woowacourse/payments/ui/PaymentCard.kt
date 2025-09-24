@@ -21,7 +21,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.newCard.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -36,9 +35,11 @@ fun PaymentCard(
 ) {
     when (state) {
         PaymentCardState.Empty -> EmptyPaymentCard(modifier)
-        is PaymentCardState.CardInfo -> PaymentCardContent(
-            card = state.card,
-            onClick = { onClick?.invoke(state.card) })
+        is PaymentCardState.CardInfo ->
+            PaymentCardContent(
+                card = state.card,
+                onClick = { onClick?.invoke(state.card) },
+            )
     }
 }
 
@@ -59,7 +60,7 @@ fun PaymentCardContent(
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(horizontal = 16.dp)
-                .clickable { onClick(card) }
+                .clickable { onClick(card) },
     ) {
         Column(
             modifier =
@@ -114,9 +115,7 @@ fun PaymentCardContent(
 }
 
 @Composable
-fun EmptyPaymentCard(
-    modifier: Modifier = Modifier,
-) {
+fun EmptyPaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =

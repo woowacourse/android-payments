@@ -26,7 +26,7 @@ fun LimitedUppercaseTextField(
         value = text,
         onValueChange = { newText ->
             onValueChange(
-                newText.filter { regex.matches(it.toString()) }.uppercase().take(maxLength)
+                newText.filter { regex.matches(it.toString()) }.uppercase().take(maxLength),
             )
         },
         label = { Text(text = label) },

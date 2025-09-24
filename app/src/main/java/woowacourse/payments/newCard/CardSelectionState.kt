@@ -7,7 +7,7 @@ import woowacourse.payments.domain.CardCompany
 
 class CardSelectionState(
     selectedCompany: CardCompany = CardCompany.NOT_SELECTED,
-    isShowBottomSheet: Boolean = true
+    isShowBottomSheet: Boolean = true,
 ) {
     var selectedCompany by mutableStateOf(selectedCompany)
     var isShowBottomSheet by mutableStateOf(isShowBottomSheet)

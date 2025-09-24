@@ -72,7 +72,6 @@ class NewCardState {
             passwordErrorMessage = ""
             isPasswordError = false
         }
-
     }
 
     fun onNameChange(new: String) {

@@ -27,7 +27,7 @@ fun CardInformationForm(
     mode: String = "ADD",
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
     ) {
         Spacer(modifier = Modifier.height(14.dp))
         Box(
@@ -38,39 +38,41 @@ fun CardInformationForm(
         ) {
             if (mode == "ADD") {
                 PaymentCard(
-                    state = PaymentCardState.CardInfo(
-                        CardUiModel(
-                            company = cardSelectionState.selectedCompany,
-                            number = "",
-                            name = "",
-                            expiry = "",
-                            password = "",
-                        )
-                    )
+                    state =
+                        PaymentCardState.CardInfo(
+                            CardUiModel(
+                                company = cardSelectionState.selectedCompany,
+                                number = "",
+                                name = "",
+                                expiry = "",
+                                password = "",
+                            ),
+                        ),
                 )
             } else {
-                val initialCard = remember {
-                    CardUiModel(
-                        company = cardSelectionState.selectedCompany,
-                        number = newCardState.cardNumber,
-                        name = newCardState.cardName,
-                        expiry = newCardState.cardExpiry,
-                        password = newCardState.cardPassword,
-                    )
-                }
-                PaymentCard(
-                    state = PaymentCardState.CardInfo(
+                val initialCard =
+                    remember {
                         CardUiModel(
                             company = cardSelectionState.selectedCompany,
-                            number = initialCard.number,
-                            name = initialCard.name,
-                            expiry = initialCard.expiry,
+                            number = newCardState.cardNumber,
+                            name = newCardState.cardName,
+                            expiry = newCardState.cardExpiry,
                             password = newCardState.cardPassword,
                         )
-                    )
+                    }
+                PaymentCard(
+                    state =
+                        PaymentCardState.CardInfo(
+                            CardUiModel(
+                                company = cardSelectionState.selectedCompany,
+                                number = initialCard.number,
+                                name = initialCard.name,
+                                expiry = initialCard.expiry,
+                                password = newCardState.cardPassword,
+                            ),
+                        ),
                 )
             }
-
         }
         Spacer(modifier = Modifier.height(30.dp))
         DigitTextField(

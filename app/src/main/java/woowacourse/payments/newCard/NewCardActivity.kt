@@ -45,7 +45,7 @@ class NewCardActivity : ComponentActivity() {
                         modalBottomSheetState,
                         onClick = { cardSelectionState.selectedCompany = it.company },
                         onDismissRequest = { finish() },
-                        modifier = Modifier
+                        modifier = Modifier,
                     )
                 }
 
@@ -60,7 +60,7 @@ class NewCardActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
                         NewCardTopBar(
-                            title = { Text(text = stringResource(R.string.add_new_card_top_bar_title))  },
+                            title = { Text(text = stringResource(R.string.add_new_card_top_bar_title)) },
                             onBackClick = {
                                 finish()
                             },

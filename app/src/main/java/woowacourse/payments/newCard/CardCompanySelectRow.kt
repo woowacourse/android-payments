@@ -28,9 +28,10 @@ fun CardCompanySelectRow(
         companies.forEach { company ->
             CardCompanyItem(
                 company,
-                modifier = Modifier
-                    .width(80.dp)
-                    .clickable { onClick(company) }
+                modifier =
+                    Modifier
+                        .width(80.dp)
+                        .clickable { onClick(company) },
             )
         }
     }
@@ -42,8 +43,10 @@ private fun CardCompanySelectRowPreview() {
     AndroidpaymentsTheme {
         CardCompanySelectRow(
             onClick = {},
-            companies = CardCompany.entries
-                .filter { it != CardCompany.NOT_SELECTED }
-                .map { it.toUiModel() })
+            companies =
+                CardCompany.entries
+                    .filter { it != CardCompany.NOT_SELECTED }
+                    .map { it.toUiModel() },
+        )
     }
 }
