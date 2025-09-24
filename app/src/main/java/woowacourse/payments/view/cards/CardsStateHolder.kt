@@ -34,14 +34,6 @@ class CardsStateHolder(
         event = null
     }
 
-    fun addCard(card: CardUiModel) {
-        runCatching {
-            repository.addCard(card.toDomain())
-        }.onSuccess {
-            event = CardsUiEvent.AddCardSuccess
-        }
-    }
-
     fun editCard(
         old: CardUiModel,
         new: CardUiModel,

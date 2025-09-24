@@ -9,6 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.cardaddition.CardAdditionStateHolder
+import woowacourse.payments.view.cardaddition.CardAdditionUiEvent
 import woowacourse.payments.view.cardaddition.CardAdditionUiState
 import woowacourse.payments.view.cardaddition.rememberCardAdditionStateHolder
 import woowacourse.payments.view.ui.component.BankSelectBottomSheet
@@ -32,15 +34,28 @@ import woowacourse.payments.view.ui.component.PaymentCard
 @Composable
 fun CardAdditionScreen(
     onBackClick: () -> Unit,
-    onCheckClick: (CardUiModel) -> Unit,
+    onCardSaveSuccess: () -> Unit,
+    onCardSaveFailure: () -> Unit,
     modifier: Modifier = Modifier,
     stateHolder: CardAdditionStateHolder = rememberCardAdditionStateHolder(),
 ) {
     val state: CardAdditionUiState = stateHolder.uiState
+    val event: CardAdditionUiEvent? = stateHolder.event
+
     val scrollState = rememberScrollState()
 
     if (!state.isBankSelected) {
         BankSelectBottomSheet(stateHolder::updateBankType)
+    }
+
+    LaunchedEffect(event) {
+        when (event) {
+            CardAdditionUiEvent.AddCardSuccess -> onCardSaveSuccess()
+            CardAdditionUiEvent.AddCardFailure -> onCardSaveFailure()
+            null -> Unit
+        }
+
+        stateHolder.clearEvent()
     }
 
     Scaffold(
@@ -48,7 +63,7 @@ fun CardAdditionScreen(
         topBar = {
             CardAdditionTopAppBar(
                 onBackClick = onBackClick,
-                onCheckClick = { onCheckClick(state.card) },
+                onCheckClick = stateHolder::addCard,
                 checkEnabled = state.canAddCard,
             )
         },
@@ -144,8 +159,8 @@ private fun CardAdditionScreenPreview(
 ) {
     CardAdditionScreen(
         onBackClick = {},
-        onCheckClick = {},
-        stateHolder = CardAdditionStateHolder(state),
+        onCardSaveSuccess = {},
+        onCardSaveFailure = {},
     )
 }
 

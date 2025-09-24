@@ -49,13 +49,7 @@ fun CardsScreen(
 
     val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val card: CardUiModel =
-                    result.data?.getParcelableExtraCompat(EXTRA_CARD)
-                        ?: return@rememberLauncherForActivityResult
-
-                stateHolder.addCard(card)
-            }
+            stateHolder.fetchCards()
         }
 
     val navigateToCardAdditionActivity: () -> Unit =
@@ -91,17 +85,6 @@ fun CardsScreen(
 
     LaunchedEffect(event) {
         when (event) {
-            CardsUiEvent.AddCardSuccess -> {
-                Toast
-                    .makeText(
-                        context,
-                        context.getString(R.string.cards_add_card_success_message),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-
-                stateHolder.fetchCards()
-            }
-
             CardsUiEvent.EditCardSuccess -> {
                 Toast
                     .makeText(

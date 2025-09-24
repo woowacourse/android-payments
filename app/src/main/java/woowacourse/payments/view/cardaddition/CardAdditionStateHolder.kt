@@ -7,13 +7,19 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardsRepository
+import woowacourse.payments.domain.MockCardsRepository
 import woowacourse.payments.view.BankTypeUiModel
+import woowacourse.payments.view.toDomain
 import java.lang.Character.isDigit
 
 class CardAdditionStateHolder(
     initialState: CardAdditionUiState = CardAdditionUiState(),
+    private val repository: CardsRepository = MockCardsRepository,
 ) {
     var uiState: CardAdditionUiState by mutableStateOf(initialState)
+        private set
+    var event by mutableStateOf<CardAdditionUiEvent?>(null)
         private set
 
     fun updateCardNumber(value: String) {
@@ -42,6 +48,20 @@ class CardAdditionStateHolder(
 
     fun updateBankType(newBankType: BankTypeUiModel?) {
         uiState = uiState.copy(card = uiState.card.copy(bankType = newBankType))
+    }
+
+    fun clearEvent() {
+        event = null
+    }
+
+    fun addCard() {
+        runCatching {
+            repository.addCard(uiState.card.toDomain())
+        }.onSuccess {
+            event = CardAdditionUiEvent.AddCardSuccess
+        }.onFailure {
+            event = CardAdditionUiEvent.AddCardFailure
+        }
     }
 }
 
