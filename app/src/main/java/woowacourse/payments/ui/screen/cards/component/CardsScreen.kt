@@ -49,9 +49,8 @@ fun CardsScreen(
     val stateHolder =
         rememberSaveable(saver = CardsUiStateHolder.Saver) { CardsUiStateHolder(initialState) }
     val context = LocalContext.current
-    val addCardLauncher = rememberCardLauncher { newCard -> stateHolder.update(newCard) }
-    val editCardLauncher =
-        rememberCardLauncher { editedCard -> stateHolder.replaceCard(editedCard) }
+    val addCardLauncher = rememberCardLauncher(stateHolder::update)
+    val editCardLauncher = rememberCardLauncher(stateHolder::replaceCard)
 
     LaunchedEffect(stateHolder.uiEvent) {
         when (stateHolder.uiEvent) {
@@ -61,6 +60,7 @@ fun CardsScreen(
             CardsUiEvent.EditCardSuccess -> context.showToast(R.string.cards_card_edit_success)
             CardsUiEvent.None -> Unit
         }
+        stateHolder.consumeEvent()
     }
 
     Scaffold(

@@ -45,6 +45,10 @@ class CardsUiStateHolder(
         cardToEdit = card
     }
 
+    fun consumeEvent() {
+        uiEvent = CardsUiEvent.None
+    }
+
     companion object {
         val Saver: Saver<CardsUiStateHolder, CardsUiState> =
             Saver(
