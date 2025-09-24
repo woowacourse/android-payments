@@ -21,14 +21,18 @@ class CardWalletActivity : ComponentActivity() {
 
                 CardWalletScreen(
                     cardList = cardList,
-                    onCardAddResult = { newCard ->
-                        cardList.add(newCard)
-                        Toast
-                            .makeText(
-                                context,
-                                context.getString(R.string.add_card_confirm),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                    onCardAddOrUpdate = { newCard, index ->
+                        if (index != null) {
+                            cardList[index] = newCard
+                        } else {
+                            cardList.add(newCard)
+                            Toast
+                                .makeText(
+                                    this,
+                                    getString(R.string.add_card_confirm),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                        }
                     },
                 )
             }
