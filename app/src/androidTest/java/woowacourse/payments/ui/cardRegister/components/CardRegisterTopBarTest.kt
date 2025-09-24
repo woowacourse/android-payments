@@ -13,10 +13,23 @@ class CardRegisterTopBarTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun `타이틀이_표시된다`() {
+    fun `편집_모드_일_경우_카드_수정_타이틀이_표시된다`() {
         // given:
         composeTestRule.setContent {
             CardRegisterTopBar(onBackClick = {}, onSaveClick = {}, editMode = true)
+        }
+
+        // then:
+        composeTestRule
+            .onNodeWithText("카드 수정")
+            .assertExists()
+    }
+
+    @Test
+    fun `편집_모드가_아닐_경우_카드_추가_타이틀이_표시된다`() {
+        // given:
+        composeTestRule.setContent {
+            CardRegisterTopBar(onBackClick = {}, onSaveClick = {}, editMode = false)
         }
 
         // then:
