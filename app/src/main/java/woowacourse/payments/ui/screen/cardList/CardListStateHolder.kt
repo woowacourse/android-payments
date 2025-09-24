@@ -9,6 +9,7 @@ import woowacourse.payments.ui.model.CardUiModel
 class CardListStateHolder(
     initialCards: List<CardUiModel> = emptyList(),
 ) {
+    private var nextId = 0L
     var uiState by mutableStateOf(
         CardListUiState(
             cards = initialCards,
@@ -18,7 +19,14 @@ class CardListStateHolder(
         private set
 
     fun addCard(card: CardUiModel) {
-        val newCards = uiState.cards + card
+        val cardWithId =
+            if (card.id == 0L) {
+                card.copy(id = nextId++)
+            } else {
+                card
+            }
+
+        val newCards = uiState.cards + cardWithId
         uiState =
             uiState.copy(
                 cards = newCards,

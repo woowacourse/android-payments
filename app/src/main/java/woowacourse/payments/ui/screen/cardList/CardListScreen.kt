@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -77,24 +79,24 @@ private fun CardListContent(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-
-    Column(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
-                .then(if (enableScroll) Modifier.verticalScroll(scrollState) else Modifier),
+    LazyColumn(
+        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        userScrollEnabled = enableScroll,
     ) {
-        cards.forEach { card ->
+        items(
+            items = cards,
+            key = { it.id },
+        ) { card ->
             Spacer(modifier = Modifier.height(20.dp))
             PaymentCard(card = card)
         }
 
         if (cards.size <= 1) {
-            Spacer(modifier = Modifier.height(32.dp))
-            AddCardBox(onClick = onClick)
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+                AddCardBox(onClick = onClick)
+            }
         }
     }
 }
@@ -144,6 +146,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             emptyList(),
             listOf(
                 CardUiModel(
+                    id = 0,
                     bankUiModel = BankType.KAKAOBANK.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
@@ -152,12 +155,14 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             ),
             listOf(
                 CardUiModel(
+                    id = 1,
                     bankUiModel = BankType.LOTTE.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
+                    id = 2,
                     bankUiModel = BankType.HYUNDAI.toPresentation(),
                     number = "8734578233123212",
                     expired = "0729",

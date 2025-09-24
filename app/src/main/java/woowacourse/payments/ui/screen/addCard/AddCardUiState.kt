@@ -36,6 +36,7 @@ data class AddCardUiState(
 
 fun AddCardUiState.toCardUiModel(): CardUiModel =
     CardUiModel(
+        id = 0L,
         bankUiModel =
             when (cardCompanySelectionState) {
                 is CardCompanySelectionState.NotSelected -> BankUiModel.Companion.NOT_SELECTED

@@ -108,6 +108,7 @@ fun BCCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
+                    id = 0,
                     bankUiModel = BankType.BC.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
@@ -124,6 +125,7 @@ fun WooriCardPreview() {
         PaymentCard(
             card =
                 CardUiModel(
+                    id = 0,
                     bankUiModel = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
