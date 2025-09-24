@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
 import woowacourse.payments.CardUiModel
 import woowacourse.payments.cardaddition.component.BankSelectBottomSheet
-import woowacourse.payments.cardaddition.component.CardAdditionTopAppBar
 import woowacourse.payments.cardaddition.component.CardNumberTextField
 import woowacourse.payments.cardaddition.component.CardOwnerNameTextField
 import woowacourse.payments.cardaddition.component.ExpiredDateTextField
@@ -45,7 +44,7 @@ fun CardEditingScreen(
     Scaffold(
         modifier = modifier.testTag("CardEditingScreen"),
         topBar = {
-            CardAdditionTopAppBar(
+            CardEditingTopAppBar(
                 onBackClick = onBackClick,
                 onCheckClick = { onCheckClick(state.original, state.edited) },
                 checkEnabled = state.canEditCard,
