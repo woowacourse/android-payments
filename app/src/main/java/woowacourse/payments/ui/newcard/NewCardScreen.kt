@@ -88,6 +88,7 @@ fun NewCardScreen(
             PaymentCard(
                 card = stateHolder.card,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = { showBottomSheet = true },
             )
             Spacer(modifier = Modifier.height(20.dp))
 
