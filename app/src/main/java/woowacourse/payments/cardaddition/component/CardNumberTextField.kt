@@ -44,6 +44,7 @@ fun CardNumberTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
+                    modifier = Modifier.testTag("CardNumberTextFieldSupportingText"),
                 )
             }
         },

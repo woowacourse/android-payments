@@ -18,7 +18,7 @@ class CardAdditionStateHolderTest {
         stateHolder.updateCardNumber("123NaN")
 
         // then
-        assertThat(stateHolder.uiState.cardNumber).isEqualTo("123")
+        assertThat(stateHolder.uiState.card.number).isEqualTo("123")
     }
 
     @Test
@@ -27,6 +27,6 @@ class CardAdditionStateHolderTest {
         stateHolder.updateHolder("GIO".repeat(11))
 
         // then
-        assertThat(stateHolder.uiState.holder).isEqualTo("GIO".repeat(10))
+        assertThat(stateHolder.uiState.card.holder).isEqualTo("GIO".repeat(10))
     }
 }

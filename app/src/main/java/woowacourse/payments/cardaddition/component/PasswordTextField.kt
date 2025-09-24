@@ -43,6 +43,7 @@ fun PasswordTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
+                    modifier = Modifier.testTag("PasswordTextFieldSupportingText")
                 )
             }
         },

@@ -49,8 +49,8 @@ class CardAdditionScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
-            .assertIsDisplayed()
+            .onNodeWithTag("CardNumberTextFieldSupportingText", useUnmergedTree = true)
+            .assertTextEquals("올바른 형식이 아닙니다.")
     }
 
     @Test
@@ -75,8 +75,8 @@ class CardAdditionScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
-            .assertIsDisplayed()
+            .onNodeWithTag("ExpiredDateTextFieldSupportingText", useUnmergedTree = true)
+            .assertTextEquals("올바른 형식이 아닙니다.")
     }
 
     @Test
@@ -88,8 +88,8 @@ class CardAdditionScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
-            .assertIsDisplayed()
+            .onNodeWithTag("ExpiredDateTextFieldSupportingText", useUnmergedTree = true)
+            .assertTextEquals("올바른 형식이 아닙니다.")
     }
 
     @Test
@@ -127,8 +127,8 @@ class CardAdditionScreenTest {
 
         // then
         composeRule
-            .onNodeWithText("올바른 형식이 아닙니다.")
-            .assertIsDisplayed()
+            .onNodeWithTag("PasswordTextFieldSupportingText", useUnmergedTree = true)
+            .assertTextEquals("올바른 형식이 아닙니다.")
     }
 
     @Test

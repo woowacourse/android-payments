@@ -8,7 +8,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.cards
+import woowacourse.payments.cardUiModels
 import woowacourse.payments.cards.CardsStateHolder
 import woowacourse.payments.cards.CardsUiState
 
@@ -22,7 +22,7 @@ class CardsScreenTest {
 
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(0))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(0))),
             )
         }
 
@@ -37,7 +37,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(0))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(0))),
             )
         }
 
@@ -57,7 +57,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(1))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
             )
         }
 
@@ -72,7 +72,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(1))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
             )
         }
 
@@ -92,7 +92,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(3))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
             )
         }
 
@@ -107,7 +107,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards(3))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
             )
         }
 

@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,6 +43,7 @@ fun ExpiredDateTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
+                    modifier = Modifier.testTag("ExpiredDateTextFieldSupportingText")
                 )
             }
         },
