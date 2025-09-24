@@ -73,7 +73,7 @@ fun CardCatalogScreen(
             CardCatalogTopAppBar(
                 isAddButtonVisible = cardCatalogStateHolder.cardUiState.isAddCardButtonVisible,
                 onCardAddClick = {
-                    val intent = CardRegistrationActivity.newIntent(context, RegistrationState.ADD)
+                    val intent = CardRegistrationActivity.newIntent(context, RegistrationState.Add)
                     cardCatalogLauncher.launch(intent)
                 },
             )
@@ -83,12 +83,11 @@ fun CardCatalogScreen(
             uiState = cardCatalogStateHolder.cardUiState,
             modifier = modifier.padding(innerPadding),
             onAddNewCardClick = {
-                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.ADD)
+                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.Add)
                 cardCatalogLauncher.launch(intent)
             },
             onModifyCardClick = { paymentCard ->
-                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.MODIFY)
-                intent.putExtra(PAYMENT_CARD_UI_MODEL_KEY, paymentCard)
+                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.Modify(paymentCard))
                 cardCatalogLauncher.launch(intent)
             }
         )

@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -61,6 +62,18 @@ fun CardRegistrationScreen(
 
     var bottomSheetState by rememberSaveable { mutableStateOf(true) }
 
+    LaunchedEffect(registrationState) {
+        if (registrationState is RegistrationState.Modify) {
+            val card = registrationState.paymentCardUiModel
+            uiState = CardRegistrationScreenUiState(
+                cardNumber = card.number,
+                cardExpirationDate = card.expirationDate,
+                cardholderName = card.cardholderName,
+                cardPassword = ""
+            )
+        }
+    }
+
     Scaffold(
         topBar = {
             CardRegistrationTopAppBar(
@@ -78,7 +91,7 @@ fun CardRegistrationScreen(
                     )
                 },
                 isSaveButtonEnabled = isRegistrableCard,
-                topBarTitle = if (registrationState == RegistrationState.ADD)
+                topBarTitle = if (registrationState == RegistrationState.Add)
                                     stringResource(R.string.card_registration_bar_title)
                             else "카드 수정",
             )
@@ -213,7 +226,7 @@ private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
         CardRegistrationScreen(
             onBackPressed = {}, onCardRegistered = {},
-            registrationState = RegistrationState.ADD,
+            registrationState = RegistrationState.Add,
         )
     }
 }

@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.content.IntentCompat.getSerializableExtra
 import woowacourse.payments.ui.catalog.CardCatalogActivity
 import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
+import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.getSerializableExtraCompat
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.screen.CardRegistrationScreen
@@ -27,7 +28,7 @@ class CardRegistrationActivity : ComponentActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
                     },
-                    registrationState = intent.getSerializableExtraCompat<RegistrationState>(
+                    registrationState = intent.getParcelableExtraCompat<RegistrationState>(
                         REGISTRATION_STATE_KEY
                     ) ?: return@AndroidpaymentsTheme,
                 )
