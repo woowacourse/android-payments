@@ -1,5 +1,7 @@
 package woowacourse.payments.ui.addcard
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,9 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
@@ -27,18 +31,53 @@ import woowacourse.payments.ui.model.CardUiModel
 @Composable
 fun SubmitCardScreen(
     stateHolder: SubmitCardScreenUiStateHolder,
-    onSaveSuccess: (card: CardUiModel) -> Unit,
-    onSaveFailure: () -> Unit,
+    onSubmitClick: (card: CardUiModel) -> Unit,
     onBackClick: () -> Unit,
 ) {
+    val context: Context = LocalContext.current
     val focusManager: FocusManager = LocalFocusManager.current
 
-    fun saveCard() {
+    fun submitCard() {
         if (stateHolder.isError) {
-            onSaveFailure()
+            Toast
+                .makeText(
+                    context,
+                    context.getString(R.string.submit_card_failure_message),
+                    Toast.LENGTH_SHORT,
+                ).show()
             return
         }
-        onSaveSuccess(stateHolder.card)
+
+        when (stateHolder) {
+            is SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder -> {
+                Toast
+                    .makeText(
+                        context,
+                        context.getString(R.string.submit_card_add_success_message),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+            }
+
+            is SubmitCardScreenUiStateHolder.EditCardScreenUiStateHolder -> {
+                if (!stateHolder.isChanged) {
+                    Toast
+                        .makeText(
+                            context,
+                            context.getString(R.string.submit_card_edit_failure_message),
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                    return
+                }
+                Toast
+                    .makeText(
+                        context,
+                        context.getString(R.string.submit_card_edit_success_message),
+                        Toast.LENGTH_SHORT,
+                    ).show()
+            }
+        }
+
+        onSubmitClick(stateHolder.card)
     }
 
     LaunchedEffect(stateHolder.shouldMoveFocus) {
@@ -53,7 +92,7 @@ fun SubmitCardScreen(
         topBar = {
             SubmitCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { saveCard() },
+                onSaveClick = { submitCard() },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -105,8 +144,7 @@ fun SubmitCardScreen(
 private fun SubmitCardScreenPreview() {
     SubmitCardScreen(
         stateHolder = remember { SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder() },
-        onSaveSuccess = { _ -> },
-        onSaveFailure = {},
+        onSubmitClick = { _ -> },
         onBackClick = {},
     )
 }

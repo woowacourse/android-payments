@@ -111,6 +111,8 @@ sealed class SubmitCardScreenUiStateHolder(
     class EditCardScreenUiStateHolder(
         val initCard: CardUiModel,
     ) : SubmitCardScreenUiStateHolder(initCard) {
+        val isChanged: Boolean get() = card != initCard
+
         override val isError: Boolean
             get() {
                 if (card == initCard) return true

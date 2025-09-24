@@ -3,12 +3,10 @@ package woowacourse.payments.ui.addcard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.remember
-import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
@@ -42,23 +40,7 @@ class SubmitCardActivity : ComponentActivity() {
 
                 SubmitCardScreen(
                     stateHolder = stateHolder,
-                    onSaveSuccess = { card: CardUiModel ->
-                        Toast
-                            .makeText(
-                                this,
-                                R.string.submit_card_add_success_message,
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        submitAddedCard(type, card)
-                    },
-                    onSaveFailure = {
-                        Toast
-                            .makeText(
-                                this,
-                                R.string.submit_card_failure_message,
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                    },
+                    onSubmitClick = { card: CardUiModel -> submitCard(type, card) },
                     onBackClick = { finish() },
                 )
 
@@ -71,7 +53,7 @@ class SubmitCardActivity : ComponentActivity() {
         }
     }
 
-    private fun submitAddedCard(
+    private fun submitCard(
         type: CardScreenType,
         card: CardUiModel,
     ) {
