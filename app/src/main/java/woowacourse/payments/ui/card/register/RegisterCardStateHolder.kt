@@ -10,8 +10,20 @@ import woowacourse.payments.ui.model.toUiModel
 
 class RegisterCardStateHolder(
     private val onCardSaved: (newCardUiModel: CardUiModel) -> Unit,
+    cardToEdit: CardUiModel? = null,
 ) {
-    var uiState by mutableStateOf(RegisterCardUiState())
+    private val isEditMode = cardToEdit != null
+
+    var uiState by mutableStateOf(
+        RegisterCardUiState(
+            cardNumber = cardToEdit?.number ?: "",
+            expirationDate = cardToEdit?.expirationDate ?: "",
+            cardHolderName = cardToEdit?.cardHolderName ?: "",
+            password = "",
+            selectedBank = cardToEdit?.bankName?.let { Bank.fromName(it) },
+            showBottomSheet = !isEditMode,
+        ),
+    )
         private set
 
     fun updateCardNumber(cardNumber: String) {
@@ -42,7 +54,8 @@ class RegisterCardStateHolder(
         createCard()
             .onSuccess { newCard ->
                 onCardSaved(newCard.toUiModel())
-                uiState = uiState.copy(toastMessage = "카드 생성에 성공했습니다.")
+                val message = if (isEditMode) "카드가 수정되었습니다." else "카드 생성에 성공했습니다."
+                uiState = uiState.copy(toastMessage = message)
             }.onFailure { errorMessage ->
                 uiState = uiState.copy(toastMessage = errorMessage.message ?: "카드 생성에 실패했습니다.")
             }

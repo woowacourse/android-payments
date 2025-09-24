@@ -34,7 +34,13 @@ fun RegisterCardScreen(
 ) {
     val context = LocalContext.current
 
-    val stateHolder = remember { RegisterCardStateHolder(onCardSaved) }
+    val stateHolder =
+        remember {
+            RegisterCardStateHolder(
+                onCardSaved = onCardSaved,
+                cardToEdit = cardToEdit,
+            )
+        }
     val uiState = stateHolder.uiState
 
     Scaffold(
@@ -57,6 +63,9 @@ fun RegisterCardScreen(
                     Modifier
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
+                cardNumber = uiState.cardNumber,
+                expiredDate = uiState.expirationDate,
+                ownerName = uiState.cardHolderName,
                 bankName = uiState.selectedBank?.name,
                 backgroundColor = uiState.selectedBank?.color() ?: DEFAULT_CARD_COLOR,
                 onClick = {},
