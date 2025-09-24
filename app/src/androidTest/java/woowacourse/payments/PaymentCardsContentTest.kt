@@ -12,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.BankType
 import woowacourse.payments.ui.cards.components.PaymentCardsContent
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 
@@ -29,6 +30,7 @@ class PaymentCardsContentTest {
                     modifier = Modifier,
                     paymentCards = paymentCards,
                     onAddCard = {},
+                    onEditCard = {},
                 )
             }
         }
@@ -43,7 +45,7 @@ class PaymentCardsContentTest {
 
     @Test
     fun 한개면_SingleCard_표시() {
-        val one = listOf(PaymentCardUiModel("1234567812345678", "0527", "Alice", BankType.NOT_SELECTED.toUiModel()))
+        val one = listOf(PaymentCardUiModel("", "1234567812345678", "0527", "Alice", BankUiModel.PlaceHolder))
         setContentWithTag(one, Tags.SINGLE_CARD)
         composeRule.onNodeWithTag(Tags.SINGLE_CARD).assertIsDisplayed()
     }
@@ -52,8 +54,8 @@ class PaymentCardsContentTest {
     fun 두개_이상이면_MultiCards_표시() {
         val many =
             listOf(
-                PaymentCardUiModel("1234567812345678", "0527", "Alice", BankType.NOT_SELECTED.toUiModel()),
-                PaymentCardUiModel("8765432187654321", "1128", "Bob", BankType.NOT_SELECTED.toUiModel()),
+                PaymentCardUiModel("1", "1234567812345678", "0527", "Alice", BankUiModel.PlaceHolder),
+                PaymentCardUiModel("2", "8765432187654321", "1128", "Bob", BankUiModel.PlaceHolder),
             )
         setContentWithTag(many, Tags.MULTI_CARDS)
         composeRule.onNodeWithTag(Tags.MULTI_CARDS).assertIsDisplayed()
