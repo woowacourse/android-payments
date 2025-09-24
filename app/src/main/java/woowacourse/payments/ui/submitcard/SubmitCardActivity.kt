@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import android.content.Context
 import android.content.Intent
@@ -7,10 +7,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.remember
-import woowacourse.payments.ui.addcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.submitcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class SubmitCardActivity : ComponentActivity() {

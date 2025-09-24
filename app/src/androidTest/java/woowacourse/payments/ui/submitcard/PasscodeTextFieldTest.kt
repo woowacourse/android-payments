@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
+import woowacourse.payments.ui.submitcard.textfields.PasscodeTextField
 
 @Suppress("ktlint:standard:function-naming")
 class PasscodeTextFieldTest {

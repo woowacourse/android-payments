@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard.bottomsheet
+package woowacourse.payments.ui.submitcard.bottomsheet
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

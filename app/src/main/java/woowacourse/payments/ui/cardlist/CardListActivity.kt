@@ -10,11 +10,11 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import woowacourse.payments.ui.addcard.CardScreenType
-import woowacourse.payments.ui.addcard.SubmitCardActivity
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.submitcard.CardScreenType
+import woowacourse.payments.ui.submitcard.SubmitCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {

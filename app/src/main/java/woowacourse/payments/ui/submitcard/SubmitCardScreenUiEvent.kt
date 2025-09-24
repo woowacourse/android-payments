@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 sealed interface SubmitCardScreenUiEvent {
     object ShowCardSubmitFailureMessage : SubmitCardScreenUiEvent

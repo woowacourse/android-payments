@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import android.content.Context
 import android.widget.Toast
@@ -22,12 +22,12 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.addcard.textfields.CardHolderNameTextField
-import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
-import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
-import woowacourse.payments.ui.addcard.textfields.PasscodeTextField
 import woowacourse.payments.ui.common.composable.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.submitcard.textfields.CardHolderNameTextField
+import woowacourse.payments.ui.submitcard.textfields.CardNumberTextField
+import woowacourse.payments.ui.submitcard.textfields.ExpirationDateTextField
+import woowacourse.payments.ui.submitcard.textfields.PasscodeTextField
 
 @Composable
 fun SubmitCardScreen(

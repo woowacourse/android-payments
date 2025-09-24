@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard.bottomsheet
+package woowacourse.payments.ui.submitcard.bottomsheet
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

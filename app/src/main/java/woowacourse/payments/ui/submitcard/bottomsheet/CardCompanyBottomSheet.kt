@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard.bottomsheet
+package woowacourse.payments.ui.submitcard.bottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import woowacourse.payments.ui.addcard.SubmitCardScreenUiStateHolder
 import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.submitcard.SubmitCardScreenUiStateHolder
 
 private const val MAX_ITEMS_PER_ROW = 4
 
