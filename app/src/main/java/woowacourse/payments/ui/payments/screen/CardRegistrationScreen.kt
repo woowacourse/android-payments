@@ -93,7 +93,7 @@ fun CardRegistrationScreen(
                 isSaveButtonEnabled = isRegistrableCard,
                 topBarTitle = if (registrationState == RegistrationState.Add)
                                     stringResource(R.string.card_registration_bar_title)
-                            else "카드 수정",
+                            else stringResource(R.string.card_registration_modify_bar_title),
             )
         },
     ) { innerPadding ->

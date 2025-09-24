@@ -48,4 +48,5 @@
     <string name="bank_ui_model_hana_bank_name">하나카드</string>
     <string name="bank_ui_model_kb_bank_name">국민카드</string>
     <string name="bank_ui_model_not_selected_bank_name">선택되지 않은 카드사</string>
+    <string name="card_registration_modify_bar_title">카드 수정</string>
 </resources>
