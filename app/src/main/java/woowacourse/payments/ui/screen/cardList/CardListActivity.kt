@@ -2,7 +2,6 @@ package woowacourse.payments.ui.screen.cardList
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -34,7 +33,6 @@ class CardListActivity : ComponentActivity() {
                             val newCard =
                                 result.data?.getParcelableExtraCompat<CardUiModel>(NEW_CARD_KEY)
                             newCard?.let {
-                                Log.d("CardList", "추가된 카드 id=${newCard.id}")
                                 stateHolder.addCard(it)
                                 Toast
                                     .makeText(
