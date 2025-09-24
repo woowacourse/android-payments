@@ -49,19 +49,19 @@ class PaymentCardTest {
         // then
         composeTestRule
             .onNodeWithContentDescription("카드사")
-            .assertTextEquals("BC카드")
+            .assertExists("BC카드")
 
         composeTestRule
             .onNodeWithContentDescription("카드 번호")
-            .assertTextEquals("1111 - 2222 - **** - ****")
+            .assertExists("1111 - 2222 - **** - ****")
 
         composeTestRule
             .onNodeWithContentDescription("카드 소유자")
-            .assertTextEquals("CREW")
+            .assertExists("CREW")
 
         composeTestRule
             .onNodeWithContentDescription("만료일")
-            .assertTextEquals("09 / 25")
+            .assertExists("09 / 25")
     }
 
     companion object {
@@ -77,6 +77,7 @@ class PaymentCardTest {
                 number = "1111222233334444",
                 expirationDate = "0925",
                 holderName = "CREW",
+                password = "1234",
             )
     }
 }

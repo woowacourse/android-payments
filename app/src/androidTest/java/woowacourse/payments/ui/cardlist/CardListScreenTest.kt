@@ -19,7 +19,7 @@ class CardListScreenTest {
     fun 카드가_없으면_추가_메시지와_카드_추가_버튼이_표시된다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(cards = emptyList())
+            CardListScreen(cards = emptyList(), onAddCardClick = {})
         }
 
         // when & then
@@ -36,7 +36,7 @@ class CardListScreenTest {
     fun 카드가_없으면_상단바에_카드_추가_버튼이_표시되지_않는다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(cards = emptyList())
+            CardListScreen(cards = emptyList(), onAddCardClick = {})
         }
 
         // when & then
@@ -49,7 +49,7 @@ class CardListScreenTest {
     fun 카드가_1개이면_카드_추가_버튼이_표시된다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(cards = listOf(CARD))
+            CardListScreen(cards = listOf(CARD), onAddCardClick = {})
         }
 
         // when & then
@@ -62,7 +62,7 @@ class CardListScreenTest {
     fun 카드가_1개이면_상단바에_카드_추가_버튼이_표시되지_않는다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(cards = listOf(CARD))
+            CardListScreen(cards = listOf(CARD), onAddCardClick = {})
         }
 
         // when & then
@@ -75,9 +75,7 @@ class CardListScreenTest {
     fun 카드가_2개_이상이면_카드_추가_버튼이_표시되지_않는다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(
-                cards = List(2) { CARD },
-            )
+            CardListScreen(cards = List(2) { CARD }, onAddCardClick = {})
         }
 
         // then
@@ -90,9 +88,7 @@ class CardListScreenTest {
     fun 카드가_2개_이상이면_상단바에_카드_추가_버튼이_표시된다() {
         // given
         composeTestRule.setContent {
-            CardListScreen(
-                cards = List(2) { CARD },
-            )
+            CardListScreen(cards = List(2) { CARD }, onAddCardClick = {})
         }
 
         // when & then
@@ -114,6 +110,7 @@ class CardListScreenTest {
                 number = "1111222233334444",
                 expirationDate = "0925",
                 holderName = "CREW",
+                password = "1234",
             )
     }
 }
