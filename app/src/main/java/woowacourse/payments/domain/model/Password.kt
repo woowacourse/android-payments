@@ -8,6 +8,9 @@ value class Password private constructor(
 ) {
     companion object {
         const val PASSWORD_LENGTH = 4
+        private const val MASK_CHARACTER = "*"
+
+        override fun toString(): String = MASK_CHARACTER.repeat(PASSWORD_LENGTH)
 
         fun create(value: String): Password {
             require(value.length == PASSWORD_LENGTH) { "비밀번호는 ${PASSWORD_LENGTH}자리여야 합니다." }

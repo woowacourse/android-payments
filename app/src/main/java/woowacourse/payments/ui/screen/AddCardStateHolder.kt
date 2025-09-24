@@ -43,8 +43,6 @@ class AddCardStateHolder(
         CardUiModel.EMPTY.copy(cardCompany = uiState.selectedCompany.toUiModel())
     }
 
-    val isEditing: Boolean get() = initial != null
-
     private val hasChanges by derivedStateOf {
         val init = initial ?: return@derivedStateOf true
         uiState.number != init.cardNumberRaw ||
@@ -62,7 +60,7 @@ class AddCardStateHolder(
             uiState.passwordError == null
     }
 
-    val isSaveEnabled by derivedStateOf { isValid && (!isEditing || hasChanges) }
+    val isSaveEnabled by derivedStateOf { isValid && (initial != null || hasChanges) }
 
     fun onNumberChange(value: String) {
         uiState =
@@ -122,7 +120,7 @@ class AddCardStateHolder(
             return
         }
 
-        if (isEditing && !hasChanges) {
+        if (initial != null && !hasChanges) {
             uiEvent = AddCardUiEvent.ShowNoChangesToast
             return
         }
