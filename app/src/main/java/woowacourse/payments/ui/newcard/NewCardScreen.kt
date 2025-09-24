@@ -16,8 +16,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.component.CardCompanySelectBottomSheet
 import woowacourse.payments.ui.component.CardExpiryDate
 import woowacourse.payments.ui.component.CardHolderName
@@ -30,9 +32,12 @@ import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun NewCardScreen(
+    existingCard: CardUiModel? = null,
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
+    val isEditMode = existingCard != null
+
     var cardNumber by remember { mutableStateOf("") }
     var cardExpiryDate by remember { mutableStateOf("") }
     var cardHolderName by remember { mutableStateOf("") }
@@ -45,10 +50,26 @@ fun NewCardScreen(
         showBottomSheet = true
     }
 
+    val isChanges =
+        !isEditMode ||
+            existingCard?.let {
+                it.cardNumber != cardNumber ||
+                    it.cardExpiryDate != cardExpiryDate ||
+                    it.cardHolderName != cardHolderName ||
+                    it.cardPassword != cardPassword ||
+                    it.cardCompanyUiModel != selectedCardCompany
+            } == true
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                title =
+                    if (isEditMode) {
+                        stringResource(R.string.card_edit)
+                    } else {
+                        stringResource(R.string.card_add)
+                    },
                 onBackClick = { onBackClick() },
                 onSaveClick = {
                     onSaveClick(
@@ -61,6 +82,7 @@ fun NewCardScreen(
                         ),
                     )
                 },
+                isSaveEnabled = isChanges,
             )
         },
     ) { innerPadding ->
