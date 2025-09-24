@@ -12,32 +12,26 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import woowacourse.payments.ui.common.component.PaymentCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.registration.component.CardCompanySelectBottomSheet
 import woowacourse.payments.ui.registration.component.CardExpirationDateTextField
 import woowacourse.payments.ui.registration.component.CardNumberTextField
 import woowacourse.payments.ui.registration.component.CardPasswordTextField
 import woowacourse.payments.ui.registration.component.CardRegistrationTopAppBar
 import woowacourse.payments.ui.registration.component.CardholderNameTextField
-import woowacourse.payments.ui.registration.state.CardRegistrationScreenUiState
-import woowacourse.payments.ui.registration.state.toCardUiModel
+import woowacourse.payments.ui.registration.state.CardRegistrationStateHolder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -46,142 +40,96 @@ fun CardRegistrationScreen(
     onCardRegistered: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var uiState by rememberSaveable { mutableStateOf(CardRegistrationScreenUiState()) }
+    val stateHolder =
+        rememberSaveable(saver = CardRegistrationStateHolder.Saver) { CardRegistrationStateHolder() }
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        sheetState.show()
+    }
 
     Scaffold(
         topBar = {
             CardRegistrationTopAppBar(
-                onBackClick = {
-                    onBackPressed()
-                },
-                onSaveClick = {
-                    onCardRegistered(
-                        CardUiModel(
-                            cardCompanyUiModel = uiState.cardCompany,
-                            cardholderNameUiModel = uiState.cardholderName,
-                            cardNumberUiModel = uiState.cardNumber,
-                            cardExpirationDateUiModel = uiState.cardExpirationDate,
-                        ),
-                    )
-                },
-                isSaveButtonEnabled = uiState.isRegistrableCard,
+                onBackClick = onBackPressed,
+                onSaveClick = { onCardRegistered(stateHolder.uiState.card) },
+                isSaveButtonEnabled = stateHolder.isRegistrableCard(),
             )
         },
     ) { innerPadding ->
-        CardRegistrationScreenContent(
-            uiState = uiState,
-            sheetState = sheetState,
-            onCardClick = {
-                uiState = uiState.copy(isBottomSheetOpen = true)
-            },
-            onCardNumberChanged = { newCardNumber ->
-                uiState = uiState.copy(cardNumber = newCardNumber)
-            },
-            onCardExpirationDateChanged = { newCardExpirationDate ->
-                uiState =
-                    uiState.copy(
-                        cardExpirationDate = newCardExpirationDate,
-                    )
-            },
-            onCardExpirationDateErrorMessageChanged = { errorMessage ->
-                uiState = uiState.copy(cardExpirationDateErrorMessage = errorMessage)
-            },
-            onCardholderNameChanged = { newCardholderName ->
-                uiState = uiState.copy(cardholderName = newCardholderName)
-            },
-            onCardPasswordChanged = { newCardPassword ->
-                uiState = uiState.copy(cardPassword = newCardPassword)
-            },
-            onCardCompanySelected = { newCardCompany ->
-                uiState = uiState.copy(isBottomSheetOpen = false, cardCompany = newCardCompany)
-            },
-            onBottomSheetDismissRequest = {
-                uiState = uiState.copy(isBottomSheetOpen = false)
-            },
-            modifier = modifier.padding(innerPadding),
-        )
-    }
-}
+        if (sheetState.isVisible) {
+            CardCompanySelectBottomSheet(
+                sheetState = sheetState,
+                onCardCompanyClick = { cardCompany: CardCompanyUiModel ->
+                    coroutineScope.launch { sheetState.hide() }
+                    stateHolder.updateCardCompany(cardCompany)
+                },
+                onDismissRequest =
+                    { coroutineScope.launch { sheetState.hide() } },
+            )
+        }
 
-@Composable
-private fun CardRegistrationScreenContent(
-    uiState: CardRegistrationScreenUiState,
-    sheetState: SheetState,
-    onCardClick: () -> Unit,
-    onCardNumberChanged: (CardNumberUiModel) -> Unit,
-    onCardExpirationDateChanged: (CardExpirationDateUiModel) -> Unit,
-    onCardExpirationDateErrorMessageChanged: (String?) -> Unit,
-    onCardholderNameChanged: (CardholderNameUiModel) -> Unit,
-    onCardPasswordChanged: (CardPasswordUiModel) -> Unit,
-    onCardCompanySelected: (CardCompanyUiModel) -> Unit,
-    onBottomSheetDismissRequest: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    if (uiState.isBottomSheetOpen) {
-        CardCompanySelectBottomSheet(
-            onCardCompanyClick = {
-                onCardCompanySelected(it)
-            },
-            onDismissRequest = {
-                onBottomSheetDismissRequest()
-            },
-            sheetState = sheetState,
-        )
-    }
-
-    Column(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
-    ) {
-        Spacer(modifier = Modifier.height(16.dp))
-
-        PaymentCard(
+        Column(
             modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .clickable { onCardClick() },
-            card = uiState.toCardUiModel(),
-        )
+                modifier
+                    .padding(innerPadding)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Spacer(modifier = Modifier.height(40.dp))
+            PaymentCard(
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .clickable { coroutineScope.launch { sheetState.show() } },
+                card = stateHolder.uiState.card,
+            )
 
-        CardNumberTextField(
-            modifier = Modifier.fillMaxWidth(),
-            cardNumber = uiState.cardNumber,
-            onCardNumberChanged = onCardNumberChanged,
-        )
+            Spacer(modifier = Modifier.height(40.dp))
 
-        Spacer(modifier = Modifier.height(24.dp))
+            CardNumberTextField(
+                modifier = Modifier.fillMaxWidth(),
+                cardNumber = stateHolder.uiState.cardNumber,
+                onCardNumberChanged = { number: String ->
+                    stateHolder.updateCardNumber(number = number)
+                },
+            )
 
-        CardExpirationDateTextField(
-            cardExpirationDate = uiState.cardExpirationDate,
-            onCardExpirationDateChanged = onCardExpirationDateChanged,
-            errorMessage = uiState.cardExpirationDateErrorMessage,
-            onErrorMessageChanged = onCardExpirationDateErrorMessageChanged,
-        )
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
+            CardExpirationDateTextField(
+                cardExpirationDate = stateHolder.uiState.cardExpirationDate,
+                onCardExpirationDateChanged = { expirationDate: String ->
+                    stateHolder.updateCardExpirationDate(expirationDate)
+                },
+            )
 
-        CardholderNameTextField(
-            modifier = Modifier.fillMaxWidth(),
-            cardholderName = uiState.cardholderName,
-            onCardholderNameChanged = onCardholderNameChanged,
-        )
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
+            CardholderNameTextField(
+                modifier = Modifier.fillMaxWidth(),
+                cardholderName = stateHolder.uiState.cardholderName,
+                onCardholderNameChanged = { name: String ->
+                    stateHolder.updateCardholderName(name)
+                },
+            )
 
-        CardPasswordTextField(
-            cardPassword = uiState.cardPassword,
-            onCardPasswordChanged = onCardPasswordChanged,
-        )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            CardPasswordTextField(
+                cardPassword = stateHolder.uiState.cardPassword,
+                onCardPasswordChanged = { password: String ->
+                    stateHolder.updatePassword(password)
+                },
+            )
+        }
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(showBackground = true)
 @Composable
 private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
