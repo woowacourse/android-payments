@@ -45,7 +45,9 @@ class ListActivity : ComponentActivity() {
                             val editedCard = activityResult.data?.parcelable<CardUiModel>("card")
                             editedCard?.let { updated ->
                                 cardState = CardScreenUiState.from(
-                                    cardState.cards.map { if (it == updated) updated else it }
+                                    cardState.cards.map { existing ->
+                                        if (existing.number == updated.number) updated else existing
+                                    }
                                 )
                             }
                         }
