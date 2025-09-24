@@ -18,15 +18,17 @@ class CardInputScreenTest {
         compose.setContent {
             AndroidpaymentsTheme {
                 CardInputScreen(
+                    cardUiStateHolder = CardUiStateHolder(),
+                    screenTitle = "카드 입력 화면",
                     onNavigateBack = { },
-                    onNavigateSave = { },
+                    onNavigateSave = { _, _ -> },
                 )
             }
         }
     }
 
     @Test
-    fun 카드_추가_화면의_모든_입력_필드가_표시된다() {
+    fun 카드_입력_화면의_모든_입력_필드가_표시된다() {
         val numberLabel = compose.activity.getString(R.string.add_card_number_field_title)
         val expiryLabel = compose.activity.getString(R.string.add_card_expire_date_field_title)
         val ownerLabel = compose.activity.getString(R.string.add_card_owner_name_field_title)

@@ -24,6 +24,7 @@ class PaymentCardPlateTest {
     val compose = createAndroidComposeRule<ComponentActivity>()
     val dummyPaymentKakaoCardUiModel =
         PaymentCardUiModel(
+            -1,
             CardCompanyUiModel.KAKAO,
             "1234 - 1234 - 1234 - 1234",
             "02 / 26",
