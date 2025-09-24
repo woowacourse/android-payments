@@ -38,4 +38,5 @@
     <string name="payment_card_top_bar_add_card">추가</string>
     <string name="desc_add">더하기</string>
     <string name="toast_card_add">카드가 추가되었습니다</string>
+    <string name="toast_card_edit">카드가 수정되었습니다</string>
 </resources>

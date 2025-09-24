@@ -29,10 +29,21 @@ class PaymentCardsActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                         if (result.resultCode == RESULT_OK) {
                             stateHolder.refreshFromStore()
+
+                            val mode =
+                                result.data?.getStringExtra(AddPaymentCardActivity.EXTRA_RESULT_MODE)
+
+                            val messageRes =
+                                when (mode) {
+                                    AddPaymentCardActivity.RESULT_MODE_EDIT -> R.string.toast_card_edit
+                                    AddPaymentCardActivity.RESULT_MODE_ADD -> R.string.toast_card_add
+                                    else -> R.string.toast_card_add
+                                }
+
                             Toast
                                 .makeText(
                                     this,
-                                    getString(R.string.toast_card_add),
+                                    getString(messageRes),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                         }
