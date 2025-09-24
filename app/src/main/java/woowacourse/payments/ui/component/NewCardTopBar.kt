@@ -11,20 +11,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.R
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.new_card_top_bar_title)) },
+        title = { Text(title) },
         modifier = modifier,
         actions = {
             IconButton(onClick = { onSaveClick() }) {
@@ -51,6 +50,7 @@ fun NewCardTopBar(
 fun CardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
+            title = "카드 추가",
             onBackClick = {},
             onSaveClick = {},
         )

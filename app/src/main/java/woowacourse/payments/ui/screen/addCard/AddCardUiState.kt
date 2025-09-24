@@ -5,6 +5,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toDomain
 import woowacourse.payments.ui.model.toPresentation
 
 @Parcelize
@@ -53,4 +54,5 @@ fun CardUiModel.toAddCardUiState(): AddCardUiState =
         expired = this.expired,
         cardOwner = this.owner,
         password = "****",
+        cardCompanySelectionState = CardCompanySelectionState.Selected(bankUiModel.toDomain()),
     )

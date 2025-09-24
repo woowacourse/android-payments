@@ -12,11 +12,14 @@ import woowacourse.payments.domain.Password
 
 class AddCardStateHolder(
     initialState: AddCardUiState = AddCardUiState(),
+    private val originalState: AddCardUiState = initialState,
 ) {
     val allBanks: List<BankType> = BankType.entries
 
     var uiState by mutableStateOf(initialState)
         private set
+
+    val isEditMode: Boolean = originalState != AddCardUiState()
 
     fun updateCardNumber(newNumber: String) {
         uiState = uiState.copy(cardNumber = newNumber)
@@ -54,6 +57,12 @@ class AddCardStateHolder(
         uiState = uiState.copy(errors = errors, submitted = true)
         return errors.isEmpty()
     }
+
+    fun hasChanges(): Boolean =
+        uiState.cardNumber != originalState.cardNumber ||
+            uiState.expired != originalState.expired ||
+            uiState.cardOwner != originalState.cardOwner ||
+            uiState.cardCompanySelectionState != originalState.cardCompanySelectionState
 
     companion object {
         val saver: Saver<AddCardStateHolder, AddCardUiState> =

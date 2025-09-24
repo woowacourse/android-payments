@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.addCard
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -41,6 +43,7 @@ fun AddCardScreen(
     onCardSaved: (CardUiModel) -> Unit,
 ) {
     val uiState = stateHolder.uiState
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
     val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
     var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
@@ -56,10 +59,15 @@ fun AddCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                title = if (stateHolder.isEditMode) "카드 수정" else "카드 추가",
                 onBackClick = onBackPressed,
                 onSaveClick = {
+                    if (!stateHolder.hasChanges()) {
+                        Toast.makeText(context, "변경된 사항이 없습니다", Toast.LENGTH_SHORT).show()
+                        return@NewCardTopBar
+                    }
                     if (stateHolder.validate()) {
-                        onCardSaved(stateHolder.uiState.toCardUiModel())
+                        onCardSaved(uiState.toCardUiModel())
                     }
                 },
             )
