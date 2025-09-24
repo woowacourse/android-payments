@@ -10,7 +10,7 @@ import woowacourse.payments.domain.CardCompany
 
 @Parcelize
 data class CardCompanyUiModel(
-    val company: CardCompany,
+    val cardCompany: CardCompany,
     @StringRes val nameRes: Int,
     @DrawableRes val logoRes: Int,
     @ColorLong val cardColor: Long,

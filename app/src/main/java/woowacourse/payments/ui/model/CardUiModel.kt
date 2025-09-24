@@ -8,7 +8,6 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardholderName
 import woowacourse.payments.domain.ExpirationDate
 import woowacourse.payments.domain.Passcode
-import woowacourse.payments.ui.format.CardNumberFormat
 import woowacourse.payments.ui.format.ExpirationDateFormat
 import java.time.YearMonth
 
@@ -29,7 +28,7 @@ data class CardUiModel(
                 ExpirationDate(yearMonth),
                 CardholderName(cardholderName),
                 Passcode(passcode),
-                cardCompany.company,
+                cardCompany.cardCompany,
             )
         }.getOrNull()
 
