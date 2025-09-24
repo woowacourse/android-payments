@@ -44,7 +44,11 @@ class NewCardStateHolder {
         _id = newId
     }
 
-    fun isModified(initialCard: PaymentCardUiModel): Boolean =
-        cardNumber != initialCard.cardNumber.value || cardHolder != initialCard.cardHolder.value ||
+    fun isModified(initialCard: PaymentCardUiModel?): Boolean {
+        if (initialCard == null) return true
+
+        return cardNumber != initialCard.cardNumber.value ||
+            cardHolder != initialCard.cardHolder.value ||
             expirationDateUiState.expirationDate.value != initialCard.expirationDate.value
+    }
 }

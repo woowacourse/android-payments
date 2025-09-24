@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -55,11 +56,9 @@ fun NewCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                isSavable = newCardStateHolder.isModified(initialCard),
                 onBackClick = { onBackPress() },
                 onSaveClick = {
-                    initialCard?.let {
-                        if (!newCardStateHolder.isModified(it)) return@NewCardTopBar
-                    }
                     onSaved(
                         runCatching {
                             PaymentCardUiModel(
