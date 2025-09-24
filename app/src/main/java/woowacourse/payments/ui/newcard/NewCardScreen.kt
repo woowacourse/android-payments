@@ -62,13 +62,14 @@ fun NewCardScreen(
         }
     }
 
-    CompanySelectBottomSheet(
-        companies = companies,
-        onCompanySelected = { stateHolder.onCompanySelected(it) },
-        sheetState = bottomSheetState,
-        showBottomSheet = showBottomSheet,
-        onDisMiss = { showBottomSheet = false },
-    )
+    if (showBottomSheet) {
+        CompanySelectBottomSheet(
+            companies = companies,
+            onCompanySelected = { stateHolder.onCompanySelected(it) },
+            sheetState = bottomSheetState,
+            onDisMiss = { showBottomSheet = false },
+        )
+    }
 
     val scrollState = rememberScrollState()
     Scaffold(

@@ -20,21 +20,18 @@ import woowacourse.payments.ui.newcard.model.toUiModel
 fun CompanySelectBottomSheet(
     companies: List<CardCompanyUiModel>,
     onCompanySelected: (CardCompanyUiModel) -> Unit,
-    showBottomSheet: Boolean = true,
     sheetState: SheetState = rememberModalBottomSheetState(),
     onDisMiss: () -> Unit = {},
 ) {
-    if (showBottomSheet) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = onDisMiss,
-        ) {
-            CompanySelectRow(
-                companies = companies,
-                onCompanySelected = onCompanySelected,
-                modifier = Modifier.padding(top = 60.dp, bottom = 80.dp),
-            )
-        }
+    ModalBottomSheet(
+        sheetState = sheetState,
+        onDismissRequest = onDisMiss,
+    ) {
+        CompanySelectRow(
+            companies = companies,
+            onCompanySelected = onCompanySelected,
+            modifier = Modifier.padding(top = 60.dp, bottom = 80.dp),
+        )
     }
 }
 
