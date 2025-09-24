@@ -1,0 +1,53 @@
+package woowacourse.payments.view.cardediting
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import woowacourse.payments.view.CardUiModel
+import woowacourse.payments.view.EXTRA_CARD
+import woowacourse.payments.view.EXTRA_NEW_CARD
+import woowacourse.payments.view.EXTRA_OLD_CARD
+import woowacourse.payments.view.cardediting.component.CardEditingScreen
+import woowacourse.payments.view.getParcelableExtraCompat
+import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
+
+class CardEditingActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val card: CardUiModel = intent.getParcelableExtraCompat(EXTRA_CARD) ?: return finish()
+
+        enableEdgeToEdge()
+        setContent {
+            AndroidpaymentsTheme {
+                val stateHolder: CardEditingStateHolder =
+                    rememberCardEditingStateHolder(CardEditingUiState(card))
+
+                CardEditingScreen(
+                    stateHolder = stateHolder,
+                    onBackClick = ::finish,
+                    onCheckClick = ::editCard,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
+        }
+    }
+
+    private fun editCard(
+        old: CardUiModel,
+        new: CardUiModel,
+    ) {
+        val result =
+            Intent()
+                .putExtra(EXTRA_OLD_CARD, old)
+                .putExtra(EXTRA_NEW_CARD, new)
+
+        setResult(RESULT_OK, result)
+
+        finish()
+    }
+}
