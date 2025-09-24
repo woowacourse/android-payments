@@ -44,8 +44,9 @@ fun NewCardScreen(
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
+    val initialUiState: NewCardUiState = card?.toUiState() ?: NewCardUiState()
     val stateHolder: NewCardStateHolder =
-        rememberNewCardState(card?.toUiState() ?: NewCardUiState())
+        rememberNewCardState(initialUiState)
     val uiState: NewCardUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()
@@ -68,7 +69,7 @@ fun NewCardScreen(
     Scaffold(
         topBar = {
             NewCardTopBar(
-                canSave = uiState.isCardValid,
+                canSave = uiState != initialUiState && uiState.isCardValid,
                 onBackClick = onBackClick,
                 onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
                 isEdit = card != null,
