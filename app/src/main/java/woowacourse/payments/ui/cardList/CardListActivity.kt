@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.model.CardUiModel
@@ -22,7 +22,7 @@ class CardListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards =
-                    rememberSaveable { mutableStateOf<List<CardUiModel>>(emptyList<CardUiModel>()) }
+                    remember { mutableStateOf(emptyList<CardUiModel>()) }
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         when (activityResult.resultCode) {
