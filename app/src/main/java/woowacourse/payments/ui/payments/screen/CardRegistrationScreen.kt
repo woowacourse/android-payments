@@ -83,12 +83,23 @@ fun CardRegistrationScreen(
                 },
                 onSaveClick = {
                     onCardRegistered(
-                        PaymentCardUiModel(
-                            number = uiState.cardNumber,
-                            expirationDate = uiState.cardExpirationDate,
-                            cardholderName = uiState.cardholderName,
-                            bankUiModel = cardRegistrationStateHolder.uiState,
-                        ),
+                        if (registrationState is RegistrationState.Modify) {
+                            PaymentCardUiModel(
+                                number = uiState.cardNumber,
+                                expirationDate = uiState.cardExpirationDate,
+                                cardholderName = uiState.cardholderName,
+                                bankUiModel = cardRegistrationStateHolder.uiState,
+                                order = registrationState.paymentCardUiModel.order,
+                            )
+                        } else{
+                            PaymentCardUiModel(
+                                number = uiState.cardNumber,
+                                expirationDate = uiState.cardExpirationDate,
+                                cardholderName = uiState.cardholderName,
+                                bankUiModel = cardRegistrationStateHolder.uiState,
+                                order = System.currentTimeMillis(),
+                            )
+                        }
                     )
                 },
                 isSaveButtonEnabled = isRegistrableCard,
@@ -160,6 +171,7 @@ private fun CardRegistrationScreenContent(
                     expirationDate = uiState.cardExpirationDate,
                     cardholderName = uiState.cardholderName,
                     bankUiModel = cardRegistrationStateHolder.uiState,
+                    order = 0L,
                 ),
         )
 

@@ -26,7 +26,27 @@ sealed class CardUiState : Parcelable {
     fun addCard(newCard: PaymentCardUiModel): CardUiState =
         when (this) {
             Empty -> Single(newCard)
-            is Single -> Multiple(persistentListOf(paymentCard, newCard))
-            is Multiple -> Multiple((paymentCards + newCard).toImmutableList())
+            is Single -> {
+                if (paymentCard.order == newCard.order) {
+                    Single(newCard)
+                } else {
+                    Multiple(
+                        persistentListOf(paymentCard, newCard)
+                            .sortedBy { it.order }
+                            .toImmutableList()
+                    )
+                }
+            }
+            is Multiple -> {
+                val updated = paymentCards
+                    .map { if (it.order == newCard.order) newCard else it }
+                    .let { list ->
+                        if (list.any { it.order == newCard.order }) list else list + newCard
+                    }
+                    .sortedBy { it.order }
+                    .toImmutableList()
+
+                Multiple(updated)
+            }
         }
 }

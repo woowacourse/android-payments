@@ -206,6 +206,7 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                     expirationDate = "1234",
                     cardholderName = "CREW",
                     bankUiModel = BankUiModel.KB,
+                    order = 0L,
                 ),
             ),
             CardUiState.Multiple(
@@ -215,12 +216,14 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                         expirationDate = "1234",
                         cardholderName = "CREW",
                         bankUiModel = BankUiModel.KB,
+                        order = 0L,
                     ),
                     PaymentCardUiModel(
                         number = "1234123412341231",
                         expirationDate = "1234",
                         cardholderName = "CREW",
                         bankUiModel = BankUiModel.SHINHAN,
+                        order = 0L,
                     ),
                 ),
             ),

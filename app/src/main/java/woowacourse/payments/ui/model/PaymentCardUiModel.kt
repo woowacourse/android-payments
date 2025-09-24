@@ -10,6 +10,7 @@ data class PaymentCardUiModel(
     val expirationDate: String,
     val cardholderName: String,
     val bankUiModel: BankUiModel,
+    val order: Long,
 ) : Parcelable {
     fun formatNumber(
         separator: String = CARD_NUMBER_BASE_SEPARATOR,
