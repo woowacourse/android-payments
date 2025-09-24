@@ -33,13 +33,14 @@ class CardListActivity : ComponentActivity() {
                             val card =
                                 result.data?.getParcelableExtraCompat<CardUiModel>(NEW_CARD_KEY)
                             card?.let {
-                                stateHolder.upsertCard(it)
-                                Toast
-                                    .makeText(
-                                        this,
-                                        R.string.card_list_add_card_toast,
-                                        Toast.LENGTH_SHORT,
-                                    ).show()
+                                val isUpdate = stateHolder.upsertCard(it)
+                                val messageRes =
+                                    if (isUpdate) {
+                                        R.string.card_list_update_card_toast
+                                    } else {
+                                        R.string.card_list_add_card_toast
+                                    }
+                                Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

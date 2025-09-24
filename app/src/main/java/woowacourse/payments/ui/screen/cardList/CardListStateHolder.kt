@@ -18,8 +18,10 @@ class CardListStateHolder(
     )
         private set
 
-    fun upsertCard(card: CardUiModel) {
+    fun upsertCard(card: CardUiModel): Boolean {
         val index = uiState.cards.indexOfFirst { it.id == card.id && card.id != 0L }
+        val isUpdate = index >= 0
+
         val newCards =
             if (index >= 0) {
                 // 기존 카드 수정
@@ -35,6 +37,8 @@ class CardListStateHolder(
                 cards = newCards,
                 showAddButton = newCards.size > 1,
             )
+
+        return isUpdate
     }
 
     companion object {
