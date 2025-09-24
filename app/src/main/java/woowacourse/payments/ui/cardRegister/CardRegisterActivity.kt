@@ -20,7 +20,7 @@ class CardRegisterActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 CardRegisterScreen(
-                    editMode = intent.getBooleanExtra("EDIT_MODE", false),
+                    editMode = intent.getBooleanExtra(EDIT_MODE_KEY, false),
                     onBackClick = { finish() },
                     onSaveClick = { card: CardUiModel ->
                         val intent =
@@ -66,7 +66,8 @@ class CardRegisterActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EDIT_CARD_KEY = "woowacourse.payments.ui.cardRegister"
+        private const val EDIT_CARD_KEY = "woowacourse.payments.ui.cardRegister.EDIT_CARD_KEY"
+        private const val EDIT_MODE_KEY = "woowacourse.payments.ui.cardRegister.EDIT_MODE_KEY"
         const val NEW_CARD_SAVE_RESULT_OK = 100
         const val EDIT_CARD_SAVE_RESULT_OK = 101
 
@@ -76,7 +77,7 @@ class CardRegisterActivity : ComponentActivity() {
             card: CardUiModel? = null,
         ): Intent =
             Intent(context, CardRegisterActivity::class.java).apply {
-                putExtra("EDIT_MODE", editMode)
+                putExtra(EDIT_MODE_KEY, editMode)
                 putExtra(EDIT_CARD_KEY, card)
             }
     }
