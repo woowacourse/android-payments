@@ -76,6 +76,7 @@ fun CardRegistrationScreen(
                     )
                 },
                 isSaveButtonEnabled = isRegistrableCard,
+                topBarTitle = stringResource(R.string.card_registration_bar_title),
             )
         },
     ) { innerPadding ->
