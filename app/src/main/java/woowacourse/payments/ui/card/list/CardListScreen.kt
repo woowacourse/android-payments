@@ -32,11 +32,17 @@ fun CardListScreen() {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val newCard =
+                val card =
                     result.data?.getParcelableExtra<CardUiModel>(
                         CardRegisterActivity.EXTRA_NEW_CARD,
                     )
-                newCard?.let { stateHolder.addNewCard(it) }
+                card?.let {
+                    if (stateHolder.contains(it.id)) {
+                        stateHolder.updateCard(it)
+                    } else {
+                        stateHolder.addNewCard(it)
+                    }
+                }
             }
         }
 
