@@ -9,7 +9,7 @@ import woowacourse.payments.ui.model.CardUiModel
 class CardListStateHolder(
     initialCards: List<CardUiModel> = emptyList(),
 ) {
-    private var nextId = 0L
+    private var nextId = (initialCards.maxOfOrNull { it.id } ?: 0L) + 1L
     var uiState by mutableStateOf(
         CardListUiState(
             cards = initialCards,
@@ -19,12 +19,15 @@ class CardListStateHolder(
         private set
 
     fun upsertCard(card: CardUiModel) {
-        val index = uiState.cards.indexOfFirst { it.id == card.id }
+        val index = uiState.cards.indexOfFirst { it.id == card.id && card.id != 0L }
         val newCards =
             if (index >= 0) {
+                // 기존 카드 수정
                 uiState.cards.toMutableList().apply { this[index] = card }
             } else {
-                uiState.cards + card.copy(id = nextId++)
+                // 새 카드 추가
+                val cardWithNewId = card.copy(id = nextId++)
+                uiState.cards + cardWithNewId
             }
 
         uiState =

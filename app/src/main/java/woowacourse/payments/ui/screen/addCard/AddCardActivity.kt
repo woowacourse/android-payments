@@ -29,7 +29,11 @@ class AddCardActivity : ComponentActivity() {
                     onBackPressed = { finish() },
                     onCardSaved = { cardUiModel ->
                         val cardWithId =
-                            cardToEdit?.let { cardUiModel.copy(id = it.id) } ?: cardUiModel
+                            cardToEdit?.let {
+                                cardUiModel.copy(id = it.id)
+                            } ?: cardUiModel.copy(
+                                id = 0L,
+                            )
                         val resultIntent = Intent().apply { putExtra(NEW_CARD_KEY, cardWithId) }
                         setResult(RESULT_OK, resultIntent)
                         finish()
