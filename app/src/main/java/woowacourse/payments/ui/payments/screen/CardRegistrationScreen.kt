@@ -29,6 +29,7 @@ import woowacourse.payments.ui.common.component.PaymentCardField
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationScreenUiState
 import woowacourse.payments.ui.payments.CardRegistrationStateHolder
+import woowacourse.payments.ui.payments.RegistrationState
 import woowacourse.payments.ui.payments.component.BankSelectBottomSheet
 import woowacourse.payments.ui.payments.component.CardExpirationDateTextField
 import woowacourse.payments.ui.payments.component.CardNumberTextField
@@ -41,6 +42,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardRegistrationScreen(
     onCardRegistered: (PaymentCardUiModel) -> Unit,
+    registrationState: RegistrationState,
     modifier: Modifier = Modifier,
     paymentCardValidator: PaymentCardValidator = DefaultPaymentCardValidator(),
     cardRegistrationStateHolder: CardRegistrationStateHolder =
@@ -76,7 +78,9 @@ fun CardRegistrationScreen(
                     )
                 },
                 isSaveButtonEnabled = isRegistrableCard,
-                topBarTitle = stringResource(R.string.card_registration_bar_title),
+                topBarTitle = if (registrationState == RegistrationState.ADD)
+                                    stringResource(R.string.card_registration_bar_title)
+                            else "카드 수정",
             )
         },
     ) { innerPadding ->
@@ -131,9 +135,11 @@ private fun CardRegistrationScreenContent(
 
         PaymentCardField(
             modifier =
-                Modifier.align(Alignment.CenterHorizontally).clickable {
-                    onBottomSheetStateChanged(true)
-                },
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clickable {
+                        onBottomSheetStateChanged(true)
+                    },
             paymentCardUiModel =
                 PaymentCardUiModel(
                     number = uiState.cardNumber,
@@ -159,9 +165,9 @@ private fun CardRegistrationScreenContent(
             onCardExpirationDateChanged = { newValue ->
                 val isValid =
                     newValue.length != InputType.ExpiryDate.maxLength ||
-                        paymentCardValidator.validateCardExpirationDate(
-                            newValue,
-                        )
+                            paymentCardValidator.validateCardExpirationDate(
+                                newValue,
+                            )
                 onUiStateChanged(
                     uiState.copy(
                         cardExpirationDate = newValue,
@@ -198,13 +204,16 @@ private fun CardRegistrationScreenContent(
 
 private fun CardRegistrationScreenUiState.isRegistrable(paymentCardValidator: PaymentCardValidator): Boolean =
     paymentCardValidator.validateCardNumber(cardNumber) &&
-        paymentCardValidator.validateCardExpirationDate(cardExpirationDate) &&
-        paymentCardValidator.validateCardPassword(cardPassword)
+            paymentCardValidator.validateCardExpirationDate(cardExpirationDate) &&
+            paymentCardValidator.validateCardPassword(cardPassword)
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
 @Composable
 private fun CardRegistrationScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen(onBackPressed = {}, onCardRegistered = {})
+        CardRegistrationScreen(
+            onBackPressed = {}, onCardRegistered = {},
+            registrationState = RegistrationState.ADD,
+        )
     }
 }

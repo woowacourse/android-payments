@@ -39,6 +39,7 @@ import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.showShortToast
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.CardRegistrationActivity
+import woowacourse.payments.ui.payments.RegistrationState
 import woowacourse.payments.ui.payments.model.BankUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -71,7 +72,7 @@ fun CardCatalogScreen(
             CardCatalogTopAppBar(
                 isAddButtonVisible = cardCatalogStateHolder.cardUiState.isAddCardButtonVisible,
                 onCardAddClick = {
-                    val intent = CardRegistrationActivity.newIntent(context)
+                    val intent = CardRegistrationActivity.newIntent(context, RegistrationState.ADD)
                     cardCatalogLauncher.launch(intent)
                 },
             )
@@ -81,7 +82,7 @@ fun CardCatalogScreen(
             uiState = cardCatalogStateHolder.cardUiState,
             modifier = modifier.padding(innerPadding),
             onAddNewCardClick = {
-                val intent = CardRegistrationActivity.newIntent(context)
+                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.ADD)
                 cardCatalogLauncher.launch(intent)
             },
         )

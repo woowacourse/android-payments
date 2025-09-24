@@ -6,7 +6,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.IntentCompat.getSerializableExtra
 import woowacourse.payments.ui.catalog.CardCatalogActivity
+import woowacourse.payments.ui.catalog.CardCatalogActivity.Companion.PAYMENT_CARD_UI_MODEL_KEY
+import woowacourse.payments.ui.common.getSerializableExtraCompat
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.payments.screen.CardRegistrationScreen
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -24,12 +27,21 @@ class CardRegistrationActivity : ComponentActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
                     },
+                    registrationState = intent.getSerializableExtraCompat<RegistrationState>(REGISTRATION_STATE_KEY) ?: return@AndroidpaymentsTheme,
                 )
             }
         }
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, CardRegistrationActivity::class.java)
+        private const val REGISTRATION_STATE_KEY =
+            "woowacourse.payments.ui.payments.REGISTRATION_STATE_KEY"
+
+        fun newIntent(
+            context: Context,
+            registrationState: RegistrationState,
+        ): Intent =
+            Intent(context, CardRegistrationActivity::class.java)
+                .putExtra(REGISTRATION_STATE_KEY, registrationState)
     }
 }
