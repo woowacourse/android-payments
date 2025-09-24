@@ -15,14 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.ui.cards.model.CardsState
+import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.debug.fixture.cardUiModelSample
-import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSamples
+import woowacourse.payments.ui.debug.fixture.cardUiModelSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardsTopBar(
-    cardsState: CardsState,
+    cardsUiState: CardsUiState,
     onAddClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,10 +33,14 @@ fun CardsTopBar(
             )
         },
         actions = {
-            when (cardsState) {
-                is CardsState.Multiple -> CreateCardButton(onAddClick)
-                CardsState.None -> {}
-                is CardsState.Single -> {}
+            when (cardsUiState) {
+                is CardsUiState.Success -> {
+                    when (cardsUiState.content) {
+                        is CardsUiState.Success.Content.Multiple -> CreateCardButton(onAddClick)
+                        CardsUiState.Success.Content.None -> null
+                        is CardsUiState.Success.Content.Single -> null
+                    }
+                }
             }
         },
         modifier = modifier.padding(4.dp, 18.dp),
@@ -64,17 +68,19 @@ fun CreateCardButton(
 @Preview(showBackground = true)
 @Composable
 fun NoneNewCardsTopBarPreview() {
-    CardsTopBar(CardsState.None, {})
+    CardsTopBar(CardsUiState.Success(CardsUiState.Success.Content.None), {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SingleNewCardsTopBarPreview() {
-    CardsTopBar(CardsState.Single(cardUiModelSample), {})
+    CardsTopBar(CardsUiState.Success(CardsUiState.Success.Content.Single(cardUiModelSample)), {})
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MultipleNewCardsTopBarPreview() {
-    CardsTopBar(CardsState.Multiple(paymentCardUiModelSamples), {})
+    CardsTopBar(
+        CardsUiState.Success(CardsUiState.Success.Content.Multiple(cardUiModelSamples)),
+        {})
 }

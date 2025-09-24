@@ -14,7 +14,7 @@ val cardUiModelSample =
         1
     )
 
-val paymentCardUiModelSamples =
+val cardUiModelSamples =
     listOf(
         cardUiModelSample,
         cardUiModelSample,

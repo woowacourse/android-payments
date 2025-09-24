@@ -17,19 +17,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
-import woowacourse.payments.ui.cards.model.CardsState
+import woowacourse.payments.ui.cards.model.CardsUiEvent
+import woowacourse.payments.ui.cards.model.CardsUiState
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.utils.ext.parcelable
 
 @Composable
 fun CardsScreen(modifier: Modifier = Modifier) {
-    val cardsStateHolder =
-        rememberSaveable(saver = CardsStateHolderSaver()) {
-            CardsStateHolder(CardsState.of(emptyList()))
-        }
+    val cardsUiStateHolder = rememberSaveable(saver = CardsStateHolderSaver()) {
+        CardsStateHolder(emptyList())
+    }
     val localContext = LocalContext.current
-    val cardAddLauncher = cardAddLauncher(cardsStateHolder, localContext)
+    val cardAddLauncher = cardAddLauncher(cardsUiStateHolder)
     val onAddClick = {
         val intent = NewCardActivity.instance(localContext)
         cardAddLauncher.launch(intent)
@@ -38,11 +38,12 @@ fun CardsScreen(modifier: Modifier = Modifier) {
         val intent = NewCardActivity.instance(localContext, it)
         cardAddLauncher.launch(intent)
     }
+    handleEvent(cardsUiStateHolder.cardsUiEvent, localContext)
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
-                cardsState = cardsStateHolder.cardsState,
+                cardsUiState = cardsUiStateHolder.cardsUiState,
                 onAddClick = onAddClick,
             )
         },
@@ -51,15 +52,22 @@ fun CardsScreen(modifier: Modifier = Modifier) {
             modifier = modifier.padding(innerPadding),
             contentAlignment = Alignment.TopCenter,
         ) {
-            when (val cardUiState = cardsStateHolder.cardsState) {
-                CardsState.None -> NonCardsSection(onAddClick)
-                is CardsState.Single -> SingleCardsSection(
-                    cardUiState.card,
-                    onAddClick,
-                    onUpdateClick
-                )
+            when (val cardsUiState = cardsUiStateHolder.cardsUiState) {
+                is CardsUiState.Success -> {
+                    when (val content = cardsUiState.content) {
+                        is CardsUiState.Success.Content.Multiple -> MultiCardsSection(
+                            content.cards,
+                            onUpdateClick
+                        )
 
-                is CardsState.Multiple -> MultiCardsSection(cardUiState.cards, onUpdateClick)
+                        CardsUiState.Success.Content.None -> NonCardsSection(onAddClick)
+                        is CardsUiState.Success.Content.Single -> SingleCardsSection(
+                            content.card,
+                            onAddClick,
+                            onUpdateClick
+                        )
+                    }
+                }
             }
         }
     }
@@ -68,7 +76,6 @@ fun CardsScreen(modifier: Modifier = Modifier) {
 @Composable
 fun cardAddLauncher(
     cardsStateHolder: CardsStateHolder,
-    context: Context,
 ) = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.StartActivityForResult(),
 ) { activityResult ->
@@ -77,13 +84,29 @@ fun cardAddLauncher(
         val cardUiModel = intent?.parcelable<CardUiModel>(
             NEW_CARD_KEY,
         ) ?: return@rememberLauncherForActivityResult
-        cardsStateHolder.addCard(cardUiModel)
-        Toast
-            .makeText(
-                context,
-                context.getString(R.string.created_card_message),
+        cardsStateHolder.upsertCard(cardUiModel)
+    }
+}
+
+fun handleEvent(uiEvent: CardsUiEvent?, localContext: Context) {
+    when (uiEvent) {
+        CardsUiEvent.AddCard -> {
+            Toast.makeText(
+                localContext,
+                localContext.getString(R.string.created_card_message),
                 Toast.LENGTH_SHORT,
             ).show()
+        }
+
+        CardsUiEvent.UpdateCard -> {
+            Toast.makeText(
+                localContext,
+                localContext.getString(R.string.updated_card_message),
+                Toast.LENGTH_SHORT,
+            ).show()
+        }
+
+        null -> {}
     }
 }
 
