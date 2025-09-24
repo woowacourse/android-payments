@@ -60,7 +60,7 @@ fun CardRegistrationScreen(
     }
     val expiredCardMessage = stringResource(R.string.card_registration_screen_expired_card)
 
-    var bottomSheetState by rememberSaveable { mutableStateOf(true) }
+    var bottomSheetState by rememberSaveable { mutableStateOf(registrationState == RegistrationState.Add) }
 
     LaunchedEffect(registrationState) {
         if (registrationState is RegistrationState.Modify) {
@@ -69,8 +69,9 @@ fun CardRegistrationScreen(
                 cardNumber = card.number,
                 cardExpirationDate = card.expirationDate,
                 cardholderName = card.cardholderName,
-                cardPassword = ""
+                cardPassword = "",
             )
+            cardRegistrationStateHolder.updateState(card.bankUiModel)
         }
     }
 
