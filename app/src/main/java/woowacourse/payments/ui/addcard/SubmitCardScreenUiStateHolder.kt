@@ -43,6 +43,9 @@ sealed class SubmitCardScreenUiStateHolder(
     var shouldMoveFocus: Boolean by mutableStateOf(false)
         private set
 
+    var uiEvent: SubmitCardScreenUiEvent? by mutableStateOf(null)
+        private set
+
     val card: CardUiModel
         get() = CardUiModel(cardNumber, expirationDate, cardholderName, passcode, cardCompany)
 
@@ -89,6 +92,14 @@ sealed class SubmitCardScreenUiStateHolder(
 
     fun onCardCompaniesRequested() {
         showCardCompanies = true
+    }
+
+    fun dispatchEvent(event: SubmitCardScreenUiEvent) {
+        uiEvent = event
+    }
+
+    fun onEventDispatched() {
+        uiEvent = null
     }
 
     fun onFocusMoved() {
