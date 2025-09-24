@@ -6,6 +6,7 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -85,6 +86,11 @@ fun CardCatalogScreen(
                 val intent = CardRegistrationActivity.newIntent(context, RegistrationState.ADD)
                 cardCatalogLauncher.launch(intent)
             },
+            onModifyCardClick = { paymentCard ->
+                val intent = CardRegistrationActivity.newIntent(context, RegistrationState.MODIFY)
+                intent.putExtra(PAYMENT_CARD_UI_MODEL_KEY, paymentCard)
+                cardCatalogLauncher.launch(intent)
+            }
         )
     }
 }
@@ -92,8 +98,9 @@ fun CardCatalogScreen(
 @Composable
 fun CardCatalogScreenContent(
     uiState: CardUiState,
-    modifier: Modifier = Modifier,
     onAddNewCardClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    onModifyCardClick: (PaymentCardUiModel) -> Unit,
 ) {
     Column(
         modifier =
@@ -111,11 +118,13 @@ fun CardCatalogScreenContent(
                 SingleCardCatalogScreenContent(
                     paymentCardUiModel = uiState.paymentCard,
                     onAddNewCardClick = onAddNewCardClick,
+                    onModifyCardClick = onModifyCardClick,
                 )
 
             is CardUiState.Multiple ->
                 MultipleCardCatalogScreenContent(
                     paymentCardUiModels = uiState.paymentCards,
+                    onModifyCardClick = onModifyCardClick,
                 )
         }
     }
@@ -145,10 +154,13 @@ private fun EmptyCardCatalogScreenContent(
 private fun SingleCardCatalogScreenContent(
     paymentCardUiModel: PaymentCardUiModel,
     onAddNewCardClick: () -> Unit,
+    onModifyCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = Modifier)
+        PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = Modifier.clickable {
+            onModifyCardClick(paymentCardUiModel)
+        })
 
         AddCardButton(
             onClick = { onAddNewCardClick() },
@@ -160,12 +172,15 @@ private fun SingleCardCatalogScreenContent(
 @Composable
 private fun MultipleCardCatalogScreenContent(
     paymentCardUiModels: ImmutableList<PaymentCardUiModel>,
+    onModifyCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn{
+    LazyColumn {
         items(paymentCardUiModels.size) { index ->
             Spacer(modifier = Modifier.height(36.dp))
-            PaymentCardField(paymentCardUiModel = paymentCardUiModels[index], modifier = modifier)
+            PaymentCardField(paymentCardUiModel = paymentCardUiModels[index], modifier = modifier.clickable {
+                onModifyCardClick(paymentCardUiModels[index])
+            })
         }
     }
 }

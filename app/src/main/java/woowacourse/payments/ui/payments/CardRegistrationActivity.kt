@@ -27,7 +27,9 @@ class CardRegistrationActivity : ComponentActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
                     },
-                    registrationState = intent.getSerializableExtraCompat<RegistrationState>(REGISTRATION_STATE_KEY) ?: return@AndroidpaymentsTheme,
+                    registrationState = intent.getSerializableExtraCompat<RegistrationState>(
+                        REGISTRATION_STATE_KEY
+                    ) ?: return@AndroidpaymentsTheme,
                 )
             }
         }
