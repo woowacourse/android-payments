@@ -34,17 +34,22 @@ import woowacourse.payments.ui.newcard.components.CardPasswordTextField
 import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
+import woowacourse.payments.ui.newcard.model.CardUpdateType
 import woowacourse.payments.ui.newcard.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
-    card: CardUiModel? = null,
-    companies: List<CardCompanyUiModel> = emptyList(),
-    onBackClick: () -> Unit = {},
-    onSaveClick: (CardUiModel) -> Unit = {},
+    updateType: CardUpdateType,
+    companies: List<CardCompanyUiModel>,
+    onBackClick: () -> Unit,
+    onSaveClick: (CardUiModel) -> Unit,
 ) {
-    val initialUiState: NewCardUiState = card?.toUiState() ?: NewCardUiState()
+    val initialUiState: NewCardUiState =
+        when (updateType) {
+            CardUpdateType.Add -> NewCardUiState()
+            is CardUpdateType.Edit -> updateType.card.toUiState()
+        }
     val stateHolder: NewCardStateHolder =
         rememberNewCardState(initialUiState)
     val uiState: NewCardUiState = stateHolder.uiState
@@ -62,17 +67,17 @@ fun NewCardScreen(
         onCompanySelected = { stateHolder.onCompanySelected(it) },
         sheetState = bottomSheetState,
         showBottomSheet = showBottomSheet,
-        onDisMiss = onBackClick,
+        onDisMiss = { showBottomSheet = false },
     )
 
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             NewCardTopBar(
+                updateType = updateType,
                 canSave = uiState != initialUiState && uiState.isCardValid,
                 onBackClick = onBackClick,
                 onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
-                isEdit = card != null,
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -123,5 +128,10 @@ fun NewCardScreen(
 @Preview
 @Composable
 private fun NewCardScreenPreview() {
-    NewCardScreen(companies = CardCompany.entries.map(CardCompany::toUiModel))
+    NewCardScreen(
+        updateType = CardUpdateType.Add,
+        companies = CardCompany.entries.map(CardCompany::toUiModel),
+        onBackClick = {},
+        onSaveClick = {},
+    )
 }

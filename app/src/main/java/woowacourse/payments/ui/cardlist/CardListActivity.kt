@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -10,6 +11,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.ui.newcard.model.CardUpdateType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableCompat
 
@@ -20,23 +22,22 @@ class CardListActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val cards: MutableList<CardUiModel> = rememberSaveable { mutableStateListOf() }
-                var selectedCard: CardUiModel? = null
+                var cardUpdateType: CardUpdateType = CardUpdateType.Add
 
                 val newCardLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                        if (result.resultCode == NewCardActivity.RESULT_CODE_SAVE) {
+                        if (result.resultCode == Activity.RESULT_OK) {
                             result.data
                                 ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_CARD_KEY)
                                 ?.let { newCard: CardUiModel ->
-                                    cards.add(newCard)
-                                }
-                        } else if (result.resultCode == NewCardActivity.RESULT_CODE_EDIT) {
-                            result.data
-                                ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_CARD_KEY)
-                                ?.let { newCard: CardUiModel ->
-                                    val index = cards.indexOf(selectedCard)
-                                    if (index != -1) {
-                                        cards[index] = newCard
+                                    when (val type = cardUpdateType) {
+                                        CardUpdateType.Add -> cards.add(newCard)
+                                        is CardUpdateType.Edit -> {
+                                            val index = cards.indexOf(type.card)
+                                            if (index != -1) {
+                                                cards[index] = newCard
+                                            }
+                                        }
                                     }
                                 }
                         }
@@ -46,11 +47,11 @@ class CardListActivity : ComponentActivity() {
                     cards = cards,
                     onAddCardClick = {
                         newCardLauncher.launch(NewCardActivity.newIntent(this, null))
-                        selectedCard = null
+                        cardUpdateType = CardUpdateType.Add
                     },
                     onCardClick = { card: CardUiModel ->
                         newCardLauncher.launch(NewCardActivity.newIntent(this, card))
-                        selectedCard = card
+                        cardUpdateType = CardUpdateType.Edit(card)
                     },
                 )
             }

@@ -13,18 +13,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.newcard.model.CardUpdateType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
+    updateType: CardUpdateType,
     canSave: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
-    isEdit: Boolean = false,
 ) {
     TopAppBar(
-        title = { if (isEdit) Text(stringResource(R.string.edit_card)) else Text(stringResource(R.string.add_card)) },
+        title = {
+            when (updateType) {
+                CardUpdateType.Add -> Text(stringResource(R.string.add_card))
+                is CardUpdateType.Edit -> Text(stringResource(R.string.edit_card))
+            }
+        },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
@@ -51,5 +57,10 @@ fun NewCardTopBar(
 @Preview
 @Composable
 private fun NewCardTopBarPreview() {
-    NewCardTopBar(canSave = true, onBackClick = {}, onSaveClick = {})
+    NewCardTopBar(
+        updateType = CardUpdateType.Add,
+        canSave = true,
+        onBackClick = {},
+        onSaveClick = {},
+    )
 }
