@@ -57,8 +57,8 @@ fun CardsScreen(
         when (stateHolder.uiEvent) {
             CardsUiEvent.AddCardFailure -> context.showToast(R.string.cards_card_addition_failure)
             CardsUiEvent.AddCardSuccess -> context.showToast(R.string.cards_card_addition_success)
-            CardsUiEvent.EditCardFailure -> Unit
-            CardsUiEvent.EditCardSuccess -> Unit
+            CardsUiEvent.EditCardFailure -> context.showToast(R.string.cards_card_edit_failure)
+            CardsUiEvent.EditCardSuccess -> context.showToast(R.string.cards_card_edit_success)
             CardsUiEvent.None -> Unit
         }
     }

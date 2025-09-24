@@ -34,6 +34,8 @@
     <string name="cards_top_bar_add_button">추가</string>
     <string name="cards_card_addition_success">카드가 추가되었습니다</string>
     <string name="cards_card_addition_failure">카드 추가에 실패했습니다</string>
+    <string name="cards_card_edit_success">카드가 수정되었습니다</string>
+    <string name="cards_card_edit_failure">카드 수정에 실패했습니다</string>
     <string name="cards_card_addition_notice">새로운 카드를 등록해주세요</string>
     <string name="cards_card_addition_button_description">카드 추가</string>
     <string name="cards_card_number_description">카드 번호</string>
