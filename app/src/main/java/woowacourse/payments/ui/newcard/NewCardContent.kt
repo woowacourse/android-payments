@@ -27,7 +27,6 @@ fun NewCardContent(
         modifier =
             modifier,
     ) {
-        Spacer(modifier = Modifier.height(14.dp))
         CardSample(
             newCardUiState.bankUiModel,
             Modifier

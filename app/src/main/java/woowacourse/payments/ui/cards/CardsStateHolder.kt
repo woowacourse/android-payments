@@ -6,7 +6,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import woowacourse.payments.ui.cards.model.CardsState
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 
 class CardsStateHolderSaver : Saver<CardsStateHolder, CardsState> {
     override fun SaverScope.save(value: CardsStateHolder): CardsState? = value.cardsState
@@ -20,7 +20,7 @@ class CardsStateHolder(
     var cardsState by mutableStateOf(cardsState)
         private set
 
-    fun addCard(cardUiModel: PaymentCardUiModel) {
+    fun addCard(cardUiModel: CardUiModel) {
         cardsState = cardsState.addCard(cardUiModel)
     }
 }

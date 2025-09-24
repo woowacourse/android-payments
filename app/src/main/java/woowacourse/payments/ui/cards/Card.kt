@@ -12,16 +12,16 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.cards.core.mapper.asColor
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 
 @Composable
-fun PaymentCard(
-    paymentCardUiModel: PaymentCardUiModel,
-    onCardClick: (PaymentCardUiModel) -> Unit,
+fun Card(
+    cardUiModel: CardUiModel,
+    onCardClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = paymentCardUiModel.bankUiModel
+    val bankUiModel = cardUiModel.bankUiModel
     Box(
         modifier =
             modifier
@@ -33,10 +33,10 @@ fun PaymentCard(
                 ),
     ) {
         CardContent(
-            paymentCardUiModel,
+            cardUiModel,
             Modifier
                 .padding(15.dp)
-                .clickable{onCardClick(paymentCardUiModel)},
+                .clickable{onCardClick(cardUiModel)},
         )
     }
 }
@@ -44,5 +44,5 @@ fun PaymentCard(
 @Preview(showBackground = true)
 @Composable
 fun PaymentCardPreview() {
-    PaymentCard(paymentCardUiModelSample,{})
+    Card(cardUiModelSample,{})
 }

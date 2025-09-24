@@ -18,12 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.ui.components.CardChip
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 
 @Composable
 fun CardContent(
-    paymentCardUiModel: PaymentCardUiModel,
+    cardUiModel: CardUiModel,
     modifier: Modifier = Modifier,
 ) {
     val cardContentStyle =
@@ -34,7 +34,7 @@ fun CardContent(
         )
     Column(modifier) {
         Text(
-            paymentCardUiModel.bankUiModel.name,
+            cardUiModel.bankUiModel.name,
             color = Color.White,
             fontSize = 12.sp,
         )
@@ -42,7 +42,7 @@ fun CardContent(
         CardChip()
         Spacer(Modifier.height(8.dp))
         Text(
-            text = paymentCardUiModel.maskCardNumbersFromBack(),
+            text = cardUiModel.maskCardNumbersFromBack(),
             style = cardContentStyle,
             letterSpacing = 0.17.em,
             textAlign = TextAlign.Center,
@@ -55,7 +55,7 @@ fun CardContent(
             Modifier.fillMaxWidth(),
         ) {
             Text(
-                text = paymentCardUiModel.ownerName,
+                text = cardUiModel.ownerName,
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -63,7 +63,7 @@ fun CardContent(
                 letterSpacing = 0.10.em,
             )
             Text(
-                text = paymentCardUiModel.formatCardExpiry(),
+                text = cardUiModel.formatCardExpiry(),
                 style = cardContentStyle,
                 letterSpacing = 0.08.em,
                 textAlign = TextAlign.Right,
@@ -75,5 +75,5 @@ fun CardContent(
 @Preview
 @Composable
 fun PaymentCardContentPreview() {
-    CardContent(paymentCardUiModelSample)
+    CardContent(cardUiModelSample)
 }

@@ -1,10 +1,10 @@
 package woowacourse.payments.ui.newcard.update
 
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 
 
 class UpdateCardStateHolder(
 ) {
-    fun isCardUpdated(currentCard: PaymentCardUiModel, updatedCard: PaymentCardUiModel) =
+    fun isCardUpdated(currentCard: CardUiModel, updatedCard: CardUiModel) =
         currentCard != updatedCard
 } 

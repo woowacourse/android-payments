@@ -2,27 +2,27 @@ package woowacourse.payments.ui.cards.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
 sealed interface CardsState : Parcelable {
-    fun addCard(card: PaymentCardUiModel): CardsState
+    fun addCard(card: CardUiModel): CardsState
 
     data object None : CardsState {
-        override fun addCard(card: PaymentCardUiModel) = Single(card)
+        override fun addCard(card: CardUiModel) = Single(card)
     }
 
     data class Single(
-        val card: PaymentCardUiModel,
+        val card: CardUiModel,
     ) : CardsState {
-        override fun addCard(card: PaymentCardUiModel): CardsState =
+        override fun addCard(card: CardUiModel): CardsState =
             if (this.card.id == card.id) Single(card) else Multiple(listOf(this.card, card))
     }
 
     data class Multiple(
-        val cards: List<PaymentCardUiModel>,
+        val cards: List<CardUiModel>,
     ) : CardsState {
-        override fun addCard(card: PaymentCardUiModel): CardsState =
+        override fun addCard(card: CardUiModel): CardsState =
             if (cards.any { it.id == card.id }) {
                 copy(cards = cards.map { if (it.id == card.id) card else it })
             } else {
@@ -31,7 +31,7 @@ sealed interface CardsState : Parcelable {
     }
 
     companion object {
-        fun of(paymentCards: List<PaymentCardUiModel>): CardsState =
+        fun of(paymentCards: List<CardUiModel>): CardsState =
             when (paymentCards.size) {
                 0 -> None
                 1 -> Single(paymentCards.first())

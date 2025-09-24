@@ -8,7 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.ui.Modifier
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -25,7 +25,7 @@ class CardsActivity : ComponentActivity() {
     companion object {
         const val NEW_CARD_KEY = "new_card_key"
 
-        fun intent(context: Context, cardUiModel: PaymentCardUiModel) = Intent(
+        fun intent(context: Context, cardUiModel: CardUiModel) = Intent(
             context,
             CardsActivity::class.java
         ).putExtra(NEW_CARD_KEY, cardUiModel)

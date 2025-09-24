@@ -9,14 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 
 @Composable
 fun SingleCardsSection(
-    card: PaymentCardUiModel,
+    card: CardUiModel,
     onAddClick: () -> Unit,
-    onUpdateClick: (PaymentCardUiModel) -> Unit,
+    onUpdateClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -25,7 +25,7 @@ fun SingleCardsSection(
         modifier = modifier,
     ) {
         Spacer(Modifier.height(12.dp))
-        PaymentCard(card, onUpdateClick)
+        Card(card, onUpdateClick)
         NewCard(onAddClick)
     }
 }
@@ -33,5 +33,5 @@ fun SingleCardsSection(
 @Preview(showBackground = true)
 @Composable
 fun SingleCardsSectionPreview() {
-    SingleCardsSection(paymentCardUiModelSample, {}, {})
+    SingleCardsSection(cardUiModelSample, {}, {})
 }

@@ -2,11 +2,9 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import kotlin.random.Random
-import kotlin.random.nextLong
 
 @Parcelize
-data class PaymentCardUiModel(
+data class CardUiModel(
     val bankUiModel: BankUiModel,
     val cardNumbers: String,
     val cardExpiry: String,

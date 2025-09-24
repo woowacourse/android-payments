@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -9,10 +8,9 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
-import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpiryValidator
 import woowacourse.payments.ui.model.BankUiModel
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
@@ -48,9 +46,9 @@ class NewCardStateHolder(
 
     val hasBankType get() = cardCreateState.bankUiModel != null
 
-    fun newCard(cardId: Long? = null): PaymentCardUiModel =
+    fun newCard(cardId: Long? = null): CardUiModel =
         cardCreateState.run {
-            PaymentCardUiModel(
+            CardUiModel(
                 requireNotNull(bankUiModel),
                 cardNumber,
                 expiryDate,
@@ -60,14 +58,14 @@ class NewCardStateHolder(
             )
         }
 
-    fun updateCardInfo(paymentCardUiModel: PaymentCardUiModel) {
-        val error = validateExpiryDate(paymentCardUiModel.cardExpiry)
+    fun updateCardInfo(cardUiModel: CardUiModel) {
+        val error = validateExpiryDate(cardUiModel.cardExpiry)
         cardCreateState = cardCreateState.copy(
-            bankUiModel = paymentCardUiModel.bankUiModel,
-            cardNumber = paymentCardUiModel.cardNumbers,
-            expiryDate = paymentCardUiModel.cardExpiry,
-            ownerName = paymentCardUiModel.ownerName,
-            password = paymentCardUiModel.password,
+            bankUiModel = cardUiModel.bankUiModel,
+            cardNumber = cardUiModel.cardNumbers,
+            expiryDate = cardUiModel.cardExpiry,
+            ownerName = cardUiModel.ownerName,
+            password = cardUiModel.password,
             expiryDateErrorTextRes = error?.toErrorResourceId(),
         )
     }

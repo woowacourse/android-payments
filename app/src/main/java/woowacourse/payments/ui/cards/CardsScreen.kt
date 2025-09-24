@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
 import woowacourse.payments.ui.cards.model.CardsState
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.utils.ext.parcelable
 
@@ -34,7 +34,7 @@ fun CardsScreen(modifier: Modifier = Modifier) {
         val intent = NewCardActivity.instance(localContext)
         cardAddLauncher.launch(intent)
     }
-    val onUpdateClick: (PaymentCardUiModel) -> Unit = {
+    val onUpdateClick: (CardUiModel) -> Unit = {
         val intent = NewCardActivity.instance(localContext, it)
         cardAddLauncher.launch(intent)
     }
@@ -74,7 +74,7 @@ fun cardAddLauncher(
 ) { activityResult ->
     if (activityResult.resultCode == RESULT_OK) {
         val intent = activityResult.data
-        val cardUiModel = intent?.parcelable<PaymentCardUiModel>(
+        val cardUiModel = intent?.parcelable<CardUiModel>(
             NEW_CARD_KEY,
         ) ?: return@rememberLauncherForActivityResult
         cardsStateHolder.addCard(cardUiModel)

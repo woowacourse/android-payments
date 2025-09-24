@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.model.CardsState
-import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
+import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSamples
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -70,7 +70,7 @@ fun NoneNewCardsTopBarPreview() {
 @Preview(showBackground = true)
 @Composable
 fun SingleNewCardsTopBarPreview() {
-    CardsTopBar(CardsState.Single(paymentCardUiModelSample), {})
+    CardsTopBar(CardsState.Single(cardUiModelSample), {})
 }
 
 @Preview(showBackground = true)

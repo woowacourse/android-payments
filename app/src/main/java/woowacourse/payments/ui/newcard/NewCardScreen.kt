@@ -1,18 +1,17 @@
 package woowacourse.payments.ui.newcard
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.create.CreateCardScreen
 import woowacourse.payments.ui.newcard.model.NewCardMode
 import woowacourse.payments.ui.newcard.update.UpdateCardScreen
 
 @Composable
 fun NewCardScreen(
-    onSaveClick: (PaymentCardUiModel) -> Unit,
+    onSaveClick: (CardUiModel) -> Unit,
     onBackClick: () -> Unit,
     mode: NewCardMode,
     modifier: Modifier = Modifier,
