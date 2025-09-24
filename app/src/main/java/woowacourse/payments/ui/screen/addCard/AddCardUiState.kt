@@ -46,3 +46,11 @@ fun AddCardUiState.toCardUiModel(): CardUiModel =
         expired = expired,
         owner = cardOwner,
     )
+
+fun CardUiModel.toAddCardUiState(): AddCardUiState =
+    AddCardUiState(
+        cardNumber = this.number,
+        expired = this.expired,
+        cardOwner = this.owner,
+        password = "****",
+    )
