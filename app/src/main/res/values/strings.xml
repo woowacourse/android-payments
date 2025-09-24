@@ -18,6 +18,7 @@
     <string name="submit_card_add_success_message">카드가 추가되었습니다.</string>
 
     <!-- 카드 제출 화면 : 카드 수정 -->
+    <string name="submit_card_edit_title">카드 수정</string>
     <string name="submit_card_edit_success_message">카드가 수정되었습니다.</string>
     <string name="submit_card_edit_failure_message">카드 정보가 기존과 동일합니다.</string>
 

@@ -85,6 +85,7 @@ fun SubmitCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             SubmitCardTopBar(
+                stateHolder = stateHolder,
                 onBackClick = onBackClick,
                 onSubmitClick = { submitCard() },
             )
