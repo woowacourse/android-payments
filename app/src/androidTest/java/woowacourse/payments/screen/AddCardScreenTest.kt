@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
 import woowacourse.payments.ui.screen.addCard.AddCardScreen
+import woowacourse.payments.ui.screen.addCard.AddCardStateHolder
 
 class AddCardScreenTest {
     @get:Rule
@@ -20,6 +21,7 @@ class AddCardScreenTest {
         // given
         composeTestRule.setContent {
             AddCardScreen(
+                stateHolder = AddCardStateHolder(),
                 onBackPressed = {},
                 onCardSaved = {},
             )
@@ -30,22 +32,22 @@ class AddCardScreenTest {
         assertAll(
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Card Number Input Field")
+                    .onNodeWithContentDescription("카드 번호 Input Field")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Expired Input Field")
+                    .onNodeWithContentDescription("만료일 Input Field")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Card Owner Input Field")
+                    .onNodeWithContentDescription("카드 소유자 Input Field")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Password Input Field")
+                    .onNodeWithContentDescription("비밀번호 Input Field")
                     .assertIsDisplayed()
             },
         )
@@ -56,23 +58,31 @@ class AddCardScreenTest {
         // given
         composeTestRule.setContent {
             AddCardScreen(
+                stateHolder = AddCardStateHolder(),
                 onBackPressed = {},
                 onCardSaved = {},
             )
         }
+        composeTestRule.onNodeWithText("BC카드").performClick()
+        composeTestRule.waitForIdle()
 
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("카드 번호 Input Field")
+            .performClick()
             .performTextInput("1234")
+
         composeTestRule
-            .onNodeWithContentDescription("Expired Input Field")
+            .onNodeWithContentDescription("만료일 Input Field")
+            .performClick()
             .performTextInput("11")
         composeTestRule
-            .onNodeWithContentDescription("Card Owner Input Field")
+            .onNodeWithContentDescription("카드 소유자 Input Field")
+            .performClick()
             .performTextInput("11")
         composeTestRule
-            .onNodeWithContentDescription("Password Input Field")
+            .onNodeWithContentDescription("비밀번호 Input Field")
+            .performClick()
             .performTextInput("12")
         composeTestRule.onNodeWithContentDescription("완료").performClick()
 
@@ -80,22 +90,22 @@ class AddCardScreenTest {
         assertAll(
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Card Number Input Error")
+                    .onNodeWithContentDescription("카드 번호 Input Field Error")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Expired Input Error")
+                    .onNodeWithContentDescription("만료일 Input Field Error")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Card Owner Input Error")
+                    .onNodeWithContentDescription("카드 소유자 Input Field Error")
                     .assertIsDisplayed()
             },
             {
                 composeTestRule
-                    .onNodeWithContentDescription("Password Input Error")
+                    .onNodeWithContentDescription("비밀번호 Input Field Error")
                     .assertIsDisplayed()
             },
         )

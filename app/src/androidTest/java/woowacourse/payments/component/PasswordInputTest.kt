@@ -12,7 +12,6 @@ import androidx.compose.ui.test.performClick
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.component.PasswordInputField
 
 class PasswordInputTest {
@@ -25,8 +24,8 @@ class PasswordInputTest {
             var password by remember { mutableStateOf("") }
 
             PasswordInputField(
-                password = Password(password),
-                onPasswordChange = { password = it?.value ?: "" },
+                password = password,
+                onPasswordChange = { password = it },
             )
         }
     }
@@ -35,7 +34,7 @@ class PasswordInputTest {
     fun 초기_화면에_비밀번호_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithContentDescription("Password Input Field")
+            .onNodeWithContentDescription("비밀번호 Input Field")
             .assertIsDisplayed()
     }
 
@@ -43,12 +42,12 @@ class PasswordInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Password Input Field")
+            .onNodeWithContentDescription("비밀번호 Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("Password Input Field")
+            .onNodeWithContentDescription("비밀번호 Input Field")
             .assertIsDisplayed()
 
         composeTestRule

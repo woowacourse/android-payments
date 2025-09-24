@@ -43,5 +43,5 @@
     <string name="password_invalid">올바른 비밀번호가 아닙니다</string>
 
     <!-- BankItem -->
-    <string name="bank_item_content_description">%s 은행 아이콘</string>
+    <string name="bank_item_content_description">%s 아이콘</string>
 </resources>

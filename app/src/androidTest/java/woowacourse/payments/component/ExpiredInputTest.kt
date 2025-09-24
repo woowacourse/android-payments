@@ -13,7 +13,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.Expired
 import woowacourse.payments.ui.component.ExpiredInputField
 
 class ExpiredInputTest {
@@ -26,8 +25,8 @@ class ExpiredInputTest {
             var expired by remember { mutableStateOf("") }
 
             ExpiredInputField(
-                expired = Expired(expired),
-                onExpiredChange = { expired = it?.value ?: "" },
+                expired = expired,
+                onExpiredChange = { expired = it },
             )
         }
     }
@@ -36,7 +35,7 @@ class ExpiredInputTest {
     fun 초기_화면에_만료일_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithContentDescription("Expired Input Field")
+            .onNodeWithContentDescription("만료일 Input Field")
             .assertIsDisplayed()
     }
 
@@ -44,12 +43,12 @@ class ExpiredInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Expired Input Field")
+            .onNodeWithContentDescription("만료일 Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("Expired Input Field")
+            .onNodeWithContentDescription("만료일 Input Field")
             .assertIsDisplayed()
 
         composeTestRule
@@ -61,7 +60,7 @@ class ExpiredInputTest {
     fun 만료일을_입력하면_2글자_기준으로_기호가_삽입된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Expired Input Field")
+            .onNodeWithContentDescription("만료일 Input Field")
             .performTextInput("1029")
 
         // then
