@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 
 @Parcelize
-enum class BankType(
+enum class BankTypeUiModel(
     @StringRes val cardNameRes: Int,
     @DrawableRes val imageRes: Int,
     @ColorRes val colorRes: Int,

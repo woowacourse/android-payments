@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.view.BankType
+import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.view.cardaddition.CardAdditionUiState
@@ -155,7 +155,7 @@ private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvi
             CardAdditionUiState(
                 card =
                     CardUiModel(
-                        bankType = BankType.BC,
+                        bankType = BankTypeUiModel.BC,
                         number = "",
                         expiredDate = "",
                         holder = "",
@@ -165,7 +165,7 @@ private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvi
             CardAdditionUiState(
                 card =
                     CardUiModel(
-                        bankType = BankType.BC,
+                        bankType = BankTypeUiModel.BC,
                         number = "1234",
                         expiredDate = "125",
                         holder = "",
@@ -175,7 +175,7 @@ private class CardAdditionScreenPreviewParameterProvider : PreviewParameterProvi
             CardAdditionUiState(
                 card =
                     CardUiModel(
-                        bankType = BankType.BC,
+                        bankType = BankTypeUiModel.BC,
                         number = "1234".repeat(4),
                         expiredDate = "1225",
                         holder = "CREW",

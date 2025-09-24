@@ -1,6 +1,5 @@
 package woowacourse.payments.domain
 
-import woowacourse.payments.view.BankType
 import java.time.YearMonth
 
 data class Card(

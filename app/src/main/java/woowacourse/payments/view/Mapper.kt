@@ -1,5 +1,6 @@
 package woowacourse.payments.view
 
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import java.time.YearMonth
 
@@ -9,8 +10,41 @@ fun Card.toUiModel(): CardUiModel =
         expiredDate = expiredDate.displayString,
         holder = holder ?: "",
         password = password,
-        bankType = bankType,
+        bankType = bankType.toUiModel(),
     )
+
+fun CardUiModel.toDomain(): Card =
+    Card(
+        bankType = bankType?.toDomain() ?: throw IllegalArgumentException("은행이 선택되지 않았습니다."),
+        number = number,
+        expiredDate = expiredDate,
+        password = password,
+        holder = holder,
+    )
+
+fun BankType.toUiModel(): BankTypeUiModel =
+    when (this) {
+        BankType.BC -> BankTypeUiModel.BC
+        BankType.SHINHAN -> BankTypeUiModel.SHINHAN
+        BankType.KAKAO -> BankTypeUiModel.KAKAO
+        BankType.HYUNDAI -> BankTypeUiModel.HYUNDAI
+        BankType.WOORI -> BankTypeUiModel.WOORI
+        BankType.LOTTE -> BankTypeUiModel.LOTTE
+        BankType.HANA -> BankTypeUiModel.HANA
+        BankType.KB -> BankTypeUiModel.KB
+    }
+
+fun BankTypeUiModel.toDomain(): BankType =
+    when (this) {
+        BankTypeUiModel.BC -> BankType.BC
+        BankTypeUiModel.SHINHAN -> BankType.SHINHAN
+        BankTypeUiModel.KAKAO -> BankType.KAKAO
+        BankTypeUiModel.HYUNDAI -> BankType.HYUNDAI
+        BankTypeUiModel.WOORI -> BankType.WOORI
+        BankTypeUiModel.LOTTE -> BankType.LOTTE
+        BankTypeUiModel.HANA -> BankType.HANA
+        BankTypeUiModel.KB -> BankType.KB
+    }
 
 private val YearMonth.displayString: String
     get() {
@@ -18,12 +52,3 @@ private val YearMonth.displayString: String
         val year: String = (year % 100).toString().padStart(2, '0')
         return "$month$year"
     }
-
-fun CardUiModel.toDomain(): Card =
-    Card(
-        bankType = bankType ?: throw IllegalArgumentException("은행이 선택되지 않았습니다."),
-        number = number,
-        expiredDate = expiredDate,
-        password = password,
-        holder = holder,
-    )

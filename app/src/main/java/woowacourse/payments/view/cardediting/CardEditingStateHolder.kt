@@ -7,7 +7,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
-import woowacourse.payments.view.BankType
+import woowacourse.payments.view.BankTypeUiModel
 import java.lang.Character.isDigit
 
 class CardEditingStateHolder(
@@ -39,7 +39,7 @@ class CardEditingStateHolder(
         uiState = uiState.copy(edited = uiState.edited.copy(password = newPassword))
     }
 
-    fun updateBankType(newBankType: BankType?) {
+    fun updateBankType(newBankType: BankTypeUiModel?) {
         uiState = uiState.copy(edited = uiState.edited.copy(bankType = newBankType))
     }
 }

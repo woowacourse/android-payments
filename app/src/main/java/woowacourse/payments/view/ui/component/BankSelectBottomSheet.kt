@@ -30,14 +30,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.view.BankType
+import woowacourse.payments.view.BankTypeUiModel
 
 private const val COLUMN_COUNT = 4
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
-    onSelectBankType: (BankType) -> Unit,
+    onSelectBankType: (BankTypeUiModel) -> Unit,
     modifier: Modifier = Modifier,
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { sheetValue: SheetValue -> false }),
 ) {
@@ -59,7 +59,7 @@ fun BankSelectBottomSheet(
 
 @Composable
 private fun Banks(
-    onSelectBank: (BankType) -> Unit,
+    onSelectBank: (BankTypeUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     FlowRow(
@@ -67,7 +67,7 @@ private fun Banks(
         verticalArrangement = Arrangement.spacedBy(3.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        BankType.entries.forEach { bankType: BankType ->
+        BankTypeUiModel.entries.forEach { bankType: BankTypeUiModel ->
             BankButton(
                 bankType = bankType,
                 onClick = onSelectBank,
@@ -82,8 +82,8 @@ private fun Banks(
 
 @Composable
 private fun BankButton(
-    bankType: BankType,
-    onClick: (BankType) -> Unit,
+    bankType: BankTypeUiModel,
+    onClick: (BankTypeUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val cardName: String = stringResource(bankType.cardNameRes)
@@ -135,7 +135,7 @@ private fun BankSelectRowPreview() {
 @Composable
 private fun BankButtonPreview() {
     BankButton(
-        bankType = BankType.BC,
+        bankType = BankTypeUiModel.BC,
         onClick = {},
     )
 }

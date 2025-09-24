@@ -10,5 +10,5 @@ data class CardUiModel(
     val holder: String = "",
     val holderMaxLength: Int = 30,
     val password: String = "",
-    val bankType: BankType? = null,
+    val bankType: BankTypeUiModel? = null,
 ) : Parcelable

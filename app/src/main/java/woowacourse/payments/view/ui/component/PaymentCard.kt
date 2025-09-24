@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.view.BankType
+import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.ui.theme.CardIcChip
 
@@ -44,7 +44,7 @@ fun PaymentCard(
     number: String? = null,
     owner: String? = null,
     expiredDate: String? = null,
-    bankType: BankType? = null,
+    bankType: BankTypeUiModel? = null,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -190,7 +190,7 @@ private class PaymentCardPreviewParameterProvider :
                 number = "1234".repeat(4),
                 holder = "CREW",
                 expiredDate = "0421",
-                bankType = BankType.BC,
+                bankType = BankTypeUiModel.BC,
             ),
         ),
     )

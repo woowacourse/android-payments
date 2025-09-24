@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.R
-import woowacourse.payments.view.BankType
+import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.EXTRA_NEW_CARD
@@ -202,7 +202,7 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Lis
                     number = "1234".repeat(4),
                     holder = "CREW",
                     expiredDate = "0421",
-                    bankType = BankType.BC,
+                    bankType = BankTypeUiModel.BC,
                 ),
             ),
             listOf(
@@ -210,19 +210,19 @@ private class CardsScreenPreviewParameterProvider : PreviewParameterProvider<Lis
                     number = "1234".repeat(4),
                     holder = "CREW",
                     expiredDate = "0421",
-                    bankType = BankType.KB,
+                    bankType = BankTypeUiModel.KB,
                 ),
                 CardUiModel(
                     number = "1234".repeat(4),
                     holder = "CREW",
                     expiredDate = "0421",
-                    bankType = BankType.HANA,
+                    bankType = BankTypeUiModel.HANA,
                 ),
                 CardUiModel(
                     number = "1234".repeat(4),
                     holder = "CREW",
                     expiredDate = "0421",
-                    bankType = BankType.KAKAO,
+                    bankType = BankTypeUiModel.KAKAO,
                 ),
             ),
         )
