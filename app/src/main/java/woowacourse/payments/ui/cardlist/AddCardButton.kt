@@ -39,7 +39,7 @@ fun AddCardButton(
         Icon(
             imageVector = Icons.Default.Add,
             tint = Color.Gray,
-            contentDescription = stringResource(R.string.add_card_button_description),
+            contentDescription = stringResource(R.string.submit_card_add_button_description),
         )
     }
 }

@@ -8,11 +8,11 @@ import woowacourse.payments.ui.model.CardUiModel
 sealed interface CardScreenType : Parcelable {
     val card: CardUiModel
 
-    object New : CardScreenType {
+    object AddCard : CardScreenType {
         override val card: CardUiModel = CardUiModel.EMPTY
     }
 
-    class Edit(
+    class EditCard(
         val index: Int,
         override val card: CardUiModel,
     ) : CardScreenType

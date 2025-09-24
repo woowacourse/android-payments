@@ -16,18 +16,18 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCardTopBar(
+fun SubmitCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card_title)) },
+        title = { Text(stringResource(R.string.submit_card_add_title)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.add_card_back_button_description),
+                    contentDescription = stringResource(R.string.submit_card_back_button_description),
                 )
             }
         },
@@ -35,7 +35,7 @@ fun AddCardTopBar(
             IconButton(onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.add_card_save_button_description),
+                    contentDescription = stringResource(R.string.submit_card_save_button_description),
                 )
             }
         },
@@ -43,10 +43,10 @@ fun AddCardTopBar(
     )
 }
 
-@Preview(showBackground = true, name = "카드 추가 상단 바")
+@Preview(showBackground = true, name = "카드 정보 제출 상단 바")
 @Composable
-private fun AddCardTopBarPreview() {
-    AddCardTopBar(
+private fun SubmitCardTopBarPreview() {
+    SubmitCardTopBar(
         onBackClick = {},
         onSaveClick = {},
     )

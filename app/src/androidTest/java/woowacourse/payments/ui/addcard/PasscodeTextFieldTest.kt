@@ -17,7 +17,7 @@ class PasscodeTextFieldTest {
 
     @Before
     fun setUp() {
-        val stateHolder = AddCardScreenUiStateHolder()
+        val stateHolder = SubmitCardScreenUiStateHolder()
         composeTestRule.setContent {
             PasscodeTextField(
                 stateHolder.passcode,

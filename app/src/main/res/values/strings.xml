@@ -5,13 +5,14 @@
     <string name="card_list_add_card_guide_text">새로운 카드를 등록해주세요</string>
     <string name="card_list_add_card_button_text">추가</string>
 
-    <string name="add_card_title">카드 추가</string>
-    <string name="add_card_back_button_description">뒤로 가기</string>
-    <string name="add_card_save_button_description">완료</string>
-    <string name="add_card_company_icon_description">카드사 아이콘</string>
-    <string name="add_card_button_description">카드 추가</string>
-    <string name="add_card_failure_message">카드 정보를 다시 확인해주세요.</string>
-    <string name="add_card_success_message">카드가 추가되었습니다.</string>
+    <string name="submit_card_back_button_description">뒤로 가기</string>
+    <string name="submit_card_save_button_description">완료</string>
+    <string name="submit_card_card_company_icon_description">카드사 아이콘</string>
+    <string name="submit_card_failure_message">카드 정보를 다시 확인해주세요.</string>
+
+    <string name="submit_card_add_title">카드 추가</string>
+    <string name="submit_card_add_button_description">카드 추가</string>
+    <string name="submit_card_add_success_message">카드가 추가되었습니다.</string>
 
     <string name="card_number_label">카드 번호</string>
     <string name="card_number_placeholder">0000 - 0000 - 0000 - 0000</string>

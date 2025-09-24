@@ -16,7 +16,7 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
-class AddCardScreenUiStateHolder(
+class SubmitCardScreenUiStateHolder(
     val type: CardScreenType,
 ) {
     var cardNumber: String by mutableStateOf(type.card.cardNumber)

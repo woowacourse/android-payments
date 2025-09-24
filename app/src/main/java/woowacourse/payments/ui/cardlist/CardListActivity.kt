@@ -11,8 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.addcard.CardScreenType
+import woowacourse.payments.ui.addcard.SubmitCardActivity
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
@@ -34,21 +34,21 @@ class CardListActivity : ComponentActivity() {
                                 result.data ?: return@rememberLauncherForActivityResult
                             val type: CardScreenType =
                                 data.getParcelableExtraCompat<CardScreenType>(
-                                    ExtraKeys.KEY_CARD_SCREEN_TYPE,
+                                    ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE,
                                 ) ?: return@rememberLauncherForActivityResult
                             when (type) {
-                                is CardScreenType.New -> {
+                                is CardScreenType.AddCard -> {
                                     val card: Card =
                                         data
-                                            .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_ADDED_CARD)
+                                            .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_SUBMITTED_CARD)
                                             ?.toCardOrNull()
                                             ?: return@rememberLauncherForActivityResult
                                     cards.add(card.toUiModel())
                                 }
 
-                                is CardScreenType.Edit -> {
+                                is CardScreenType.EditCard -> {
                                     cards[type.index] = data.getParcelableExtraCompat<CardUiModel>(
-                                        ExtraKeys.KEY_ADDED_CARD,
+                                        ExtraKeys.KEY_SUBMITTED_CARD,
                                     ) ?: return@rememberLauncherForActivityResult
                                 }
                             }
@@ -59,17 +59,17 @@ class CardListActivity : ComponentActivity() {
                     cards = cards,
                     onNavigateToAddCard = {
                         launcher.launch(
-                            AddCardActivity.intent(
+                            SubmitCardActivity.intent(
                                 this,
-                                CardScreenType.New,
+                                CardScreenType.AddCard,
                             ),
                         )
                     },
                     onNavigateToEditCard = { index: Int, card: CardUiModel ->
                         launcher.launch(
-                            AddCardActivity.intent(
+                            SubmitCardActivity.intent(
                                 this,
-                                CardScreenType.Edit(index, card),
+                                CardScreenType.EditCard(index, card),
                             ),
                         )
                     },

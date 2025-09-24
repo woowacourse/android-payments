@@ -25,15 +25,15 @@ import woowacourse.payments.ui.common.composable.PaymentCard
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
-fun AddCardScreen(
-    stateHolder: AddCardScreenUiStateHolder,
+fun SubmitCardScreen(
+    stateHolder: SubmitCardScreenUiStateHolder,
     onSaveSuccess: (card: CardUiModel) -> Unit,
     onSaveFailure: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val focusManager: FocusManager = LocalFocusManager.current
 
-    fun saveAddedCard() {
+    fun saveCard() {
         if (stateHolder.isError) {
             onSaveFailure()
             return
@@ -51,9 +51,9 @@ fun AddCardScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            AddCardTopBar(
+            SubmitCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { saveAddedCard() },
+                onSaveClick = { saveCard() },
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -102,9 +102,9 @@ fun AddCardScreen(
 
 @Preview(showBackground = true, name = "카드 추가 화면")
 @Composable
-private fun AddCardScreenPreview() {
-    AddCardScreen(
-        stateHolder = remember { AddCardScreenUiStateHolder(CardScreenType.New) },
+private fun SubmitCardScreenPreview() {
+    SubmitCardScreen(
+        stateHolder = remember { SubmitCardScreenUiStateHolder(CardScreenType.AddCard) },
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},

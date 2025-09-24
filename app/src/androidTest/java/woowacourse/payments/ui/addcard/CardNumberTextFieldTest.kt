@@ -17,7 +17,7 @@ class CardNumberTextFieldTest {
 
     @Before
     fun setUp() {
-        val stateHolder = AddCardScreenUiStateHolder()
+        val stateHolder = SubmitCardScreenUiStateHolder()
         composeTestRule.setContent {
             CardNumberTextField(
                 stateHolder.cardNumber,

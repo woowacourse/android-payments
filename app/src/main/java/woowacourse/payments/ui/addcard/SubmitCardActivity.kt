@@ -15,39 +15,46 @@ import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class AddCardActivity : ComponentActivity() {
+class SubmitCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         val type: CardScreenType =
-            intent.getParcelableExtraCompat<CardScreenType>(ExtraKeys.KEY_CARD_SCREEN_TYPE) ?: run {
-                finish()
-                return
-            }
+            intent.getParcelableExtraCompat<CardScreenType>(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE)
+                ?: run {
+                    finish()
+                    return
+                }
 
         setContent {
             AndroidpaymentsTheme {
-                val stateHolder = remember { AddCardScreenUiStateHolder(type) }
+                val stateHolder = remember { SubmitCardScreenUiStateHolder(type) }
 
-                AddCardScreen(
+                SubmitCardScreen(
                     stateHolder = stateHolder,
                     onSaveSuccess = { card: CardUiModel ->
                         Toast
-                            .makeText(this, R.string.add_card_success_message, Toast.LENGTH_SHORT)
-                            .show()
+                            .makeText(
+                                this,
+                                R.string.submit_card_add_success_message,
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         submitAddedCard(type, card)
                     },
                     onSaveFailure = {
                         Toast
-                            .makeText(this, R.string.add_card_failure_message, Toast.LENGTH_SHORT)
-                            .show()
+                            .makeText(
+                                this,
+                                R.string.submit_card_failure_message,
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     },
                     onBackClick = { finish() },
                 )
 
                 CardCompanyBottomSheet(
-                    AddCardScreenUiStateHolder.CARD_COMPANIES,
+                    SubmitCardScreenUiStateHolder.CARD_COMPANIES,
                     stateHolder::onCardCompanySelected,
                     { finish() },
                 )
@@ -61,8 +68,8 @@ class AddCardActivity : ComponentActivity() {
     ) {
         val result: Intent =
             Intent().apply {
-                putExtra(ExtraKeys.KEY_CARD_SCREEN_TYPE, type)
-                putExtra(ExtraKeys.KEY_ADDED_CARD, card)
+                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE, type)
+                putExtra(ExtraKeys.KEY_SUBMITTED_CARD, card)
             }
         setResult(RESULT_OK, result)
         finish()
@@ -73,8 +80,8 @@ class AddCardActivity : ComponentActivity() {
             context: Context,
             mode: CardScreenType,
         ): Intent =
-            Intent(context, AddCardActivity::class.java).apply {
-                putExtra(ExtraKeys.KEY_CARD_SCREEN_TYPE, mode)
+            Intent(context, SubmitCardActivity::class.java).apply {
+                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE, mode)
             }
     }
 }

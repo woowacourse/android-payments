@@ -36,7 +36,7 @@ fun CardCompanyButton(
     ) {
         Image(
             painter = painterResource(company.logoRes),
-            contentDescription = stringResource(R.string.add_card_company_icon_description),
+            contentDescription = stringResource(R.string.submit_card_card_company_icon_description),
             modifier = Modifier.size(37.dp),
         )
         Spacer(Modifier.height(9.dp))
