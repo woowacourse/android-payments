@@ -8,7 +8,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.CardCompanyType
@@ -16,7 +15,6 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.screen.AddCardContent
 import woowacourse.payments.ui.screen.AddCardUiState
-import kotlin.math.exp
 
 @Suppress("ktlint:standard:function-naming")
 class AddCardScreenTest {
