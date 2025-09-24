@@ -9,9 +9,10 @@ data class Card(
     val bank: Bank,
 ) {
     companion object {
-        private var id = 0L
+        private var currentId = 0L
 
         fun newCard(
+            id: Long? = null,
             number: String,
             expirationDate: String,
             cardHolderName: String,
@@ -20,7 +21,7 @@ data class Card(
         ): Result<Card> =
             runCatching {
                 Card(
-                    id = generateId(),
+                    id = id ?: generateId(),
                     number = CardNumber(number),
                     expirationDate = ExpirationDate(expirationDate),
                     cardHolderName = CardHolderName(cardHolderName),
@@ -29,6 +30,6 @@ data class Card(
                 )
             }
 
-        private fun generateId(): Long = id++
+        private fun generateId(): Long = currentId++
     }
 }
