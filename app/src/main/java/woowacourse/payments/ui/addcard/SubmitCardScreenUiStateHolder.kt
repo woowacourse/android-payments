@@ -17,7 +17,7 @@ import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
 class SubmitCardScreenUiStateHolder(
-    val type: CardScreenType,
+    private val type: CardScreenType,
 ) {
     var cardNumber: String by mutableStateOf(type.card.cardNumber)
         private set
@@ -45,6 +45,7 @@ class SubmitCardScreenUiStateHolder(
 
     val isError: Boolean
         get() {
+            if (type is CardScreenType.EditCard && type.card == card) return true
             updateCardNumberError()
             updateExpirationDateError()
             updatePasscodeError()
