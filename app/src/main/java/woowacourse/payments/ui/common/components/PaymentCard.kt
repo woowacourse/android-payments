@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Composable
 fun PaymentCard(
@@ -45,14 +46,13 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(card?.color ?: 0xFF333333),
+                    color = Color(card?.cardCompany?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(horizontal = 12.dp),
+                ).padding(horizontal = 12.dp),
     ) {
         Column {
             Text(
-                text = card?.companyName?.let { stringResource(it) } ?: "",
+                text = card?.cardCompany?.name?.let { stringResource(it) } ?: "",
                 fontSize = 12.sp,
                 color = Color.White,
                 letterSpacing = 2.sp,
@@ -122,10 +122,15 @@ private fun PaymentCardPreview(
 }
 
 private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<CardUiModel?> {
+    private val cardCompany: CardCompanyUiModel =
+        CardCompanyUiModel(
+            name = R.string.bc_card,
+            logo = R.drawable.bc,
+            color = 0xFFF04651,
+        )
     private val card: CardUiModel =
         CardUiModel(
-            companyName = R.string.bc_card,
-            color = 0xFFF04651,
+            cardCompany = cardCompany,
             number = "1111222233334444",
             expirationDate = "0925",
             holderName = "CREW",

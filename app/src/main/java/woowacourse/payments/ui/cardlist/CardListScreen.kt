@@ -32,6 +32,7 @@ import woowacourse.payments.ui.cardlist.components.CardListTopBar
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 import woowacourse.payments.ui.util.getParcelableCompat
 
 @Composable
@@ -97,10 +98,15 @@ private fun CardListScreenPreview(
 }
 
 private class CardListScreenPreviewParameterProvider : PreviewParameterProvider<List<CardUiModel>> {
+    private val cardCompany: CardCompanyUiModel =
+        CardCompanyUiModel(
+            name = R.string.bc_card,
+            logo = R.drawable.bc,
+            color = 0xFFF04651,
+        )
     private val card: CardUiModel =
         CardUiModel(
-            companyName = R.string.bc_card,
-            color = 0xFFF04651,
+            cardCompany = cardCompany,
             number = "1111 - 2222 - 3333 - 4444",
             expirationDate = "09 / 25",
             holderName = "CREW",

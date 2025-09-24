@@ -8,6 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class CardListScreenTest {
@@ -101,10 +102,15 @@ class CardListScreenTest {
     }
 
     companion object {
+        private val COMPANY =
+            CardCompanyUiModel(
+                name = R.string.bc_card,
+                logo = R.drawable.bc,
+                color = 0xFFF04651,
+            )
         private val CARD =
             CardUiModel(
-                companyName = R.string.bc_card,
-                color = 0xFFF04651,
+                cardCompany = COMPANY,
                 number = "1111222233334444",
                 expirationDate = "0925",
                 holderName = "CREW",
