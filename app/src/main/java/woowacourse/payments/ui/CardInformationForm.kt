@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +24,7 @@ fun CardInformationForm(
     newCardState: NewCardState,
     cardSelectionState: CardSelectionState,
     modifier: Modifier = Modifier,
+    mode: String = "ADD",
 ) {
     Column(
         modifier = modifier
@@ -34,17 +36,41 @@ fun CardInformationForm(
                     .fillMaxWidth(),
             contentAlignment = Alignment.Center,
         ) {
-            PaymentCard(
-                state = PaymentCardState.CardInfo(
-                    CardUiModel(
-                        company = cardSelectionState.selectedCompany,
-                        number = "",
-                        name = null,
-                        expiry = "",
-                        password = "",
+            if (mode == "ADD") {
+                PaymentCard(
+                    state = PaymentCardState.CardInfo(
+                        CardUiModel(
+                            company = cardSelectionState.selectedCompany,
+                            number = "",
+                            name = "",
+                            expiry = "",
+                            password = "",
+                        )
                     )
                 )
-            )
+            } else {
+                val initialCard = remember {
+                    CardUiModel(
+                        company = cardSelectionState.selectedCompany,
+                        number = newCardState.cardNumber,
+                        name = newCardState.cardName,
+                        expiry = newCardState.cardExpiry,
+                        password = newCardState.cardPassword,
+                    )
+                }
+                PaymentCard(
+                    state = PaymentCardState.CardInfo(
+                        CardUiModel(
+                            company = cardSelectionState.selectedCompany,
+                            number = initialCard.number,
+                            name = initialCard.name,
+                            expiry = initialCard.expiry,
+                            password = newCardState.cardPassword,
+                        )
+                    )
+                )
+            }
+
         }
         Spacer(modifier = Modifier.height(30.dp))
         DigitTextField(

@@ -32,6 +32,7 @@ import woowacourse.payments.ui.CardInformationForm
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
 
+@OptIn(ExperimentalMaterial3Api::class)
 class EditActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,10 +109,11 @@ class EditActivity : ComponentActivity() {
                 ) { innerPadding ->
                     CardInformationForm(
                         newCardState = newCardState,
-                        cardSelectionState = CardSelectionState(),
+                        cardSelectionState = cardSelectionState,
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding),
+                        mode = "EDIT"
                     )
                 }
             }
