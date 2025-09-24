@@ -11,8 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -98,8 +97,7 @@ fun CardCatalogScreenContent(
     Column(
         modifier =
             modifier
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState()),
+                .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (uiState) {
@@ -163,9 +161,11 @@ private fun MultipleCardCatalogScreenContent(
     paymentCardUiModels: ImmutableList<PaymentCardUiModel>,
     modifier: Modifier = Modifier,
 ) {
-    paymentCardUiModels.forEach { paymentCard ->
-        Spacer(modifier = Modifier.height(36.dp))
-        PaymentCardField(paymentCardUiModel = paymentCard, modifier = modifier)
+    LazyColumn{
+        items(paymentCardUiModels.size) { index ->
+            Spacer(modifier = Modifier.height(36.dp))
+            PaymentCardField(paymentCardUiModel = paymentCardUiModels[index], modifier = modifier)
+        }
     }
 }
 
