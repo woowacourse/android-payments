@@ -1,6 +1,7 @@
 package woowacourse.payments.domain
 
 data class Card(
+    val id: Long,
     val number: CardNumber,
     val expirationDate: ExpirationDate,
     val cardHolderName: CardHolderName,
@@ -8,6 +9,8 @@ data class Card(
     val bank: Bank,
 ) {
     companion object {
+        private var id = 0L
+
         fun newCard(
             number: String,
             expirationDate: String,
@@ -17,6 +20,7 @@ data class Card(
         ): Result<Card> =
             runCatching {
                 Card(
+                    id = generateId(),
                     number = CardNumber(number),
                     expirationDate = ExpirationDate(expirationDate),
                     cardHolderName = CardHolderName(cardHolderName),
@@ -24,5 +28,7 @@ data class Card(
                     bank = bank,
                 )
             }
+
+        private fun generateId(): Long = id++
     }
 }

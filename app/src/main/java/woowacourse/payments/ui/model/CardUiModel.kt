@@ -8,6 +8,7 @@ import woowacourse.payments.domain.color
 
 @Parcelize
 data class CardUiModel(
+    val id: Long,
     val number: String,
     val expirationDate: String,
     val cardHolderName: String,
@@ -20,6 +21,7 @@ fun Card.toUiModel(): CardUiModel {
     val formattedExpirationDate = formatExpirationDate(this.expirationDate.expirationDate)
 
     return CardUiModel(
+        id = this.id,
         number = maskedNumber,
         expirationDate = formattedExpirationDate,
         cardHolderName = this.cardHolderName.cardHolderName,
