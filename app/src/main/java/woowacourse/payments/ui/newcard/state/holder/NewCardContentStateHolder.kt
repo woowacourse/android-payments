@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.state.holder
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.derivedStateOf
@@ -11,42 +11,28 @@ import androidx.core.text.isDigitsOnly
 import woowacourse.payments.domain.CardExpiryValidator
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.NewCardUiState
+import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
 import kotlin.random.Random
 
-class NewCardStateHolderSaver : Saver<NewCardStateHolder, NewCardUiState> {
-    override fun SaverScope.save(value: NewCardStateHolder): NewCardUiState? =
+class NewCardContentStateHolderSaver : Saver<NewCardContentStateHolder, NewCardContentUiState> {
+    override fun SaverScope.save(value: NewCardContentStateHolder): NewCardContentUiState? =
         value.cardCreateState
 
-    override fun restore(value: NewCardUiState): NewCardStateHolder? =
-        NewCardStateHolder(value)
+    override fun restore(value: NewCardContentUiState): NewCardContentStateHolder? =
+        NewCardContentStateHolder(value)
 }
 
-class NewCardStateHolder(
-    initial: NewCardUiState = NewCardUiState(),
-) {
+class NewCardContentStateHolder(
+    initial: NewCardContentUiState = NewCardContentUiState(),
+) : NewCardContentStateAction {
     var cardCreateState by mutableStateOf(initial)
         private set
 
-    val isCardCreatable: Boolean by derivedStateOf {
-        hasBankType &&
-                cardCreateState.run {
-                    isCardNumberCreatable(cardNumber) &&
-                            isExpiryDateCreatable(
-                                expiryDate,
-                                expiryDateErrorTextRes,
-                            ) &&
-                            isOwnerNameCreatable(ownerName) &&
-                            isPasswordCreatable(password)
-                }
-    }
+    override val hasBank get() = cardCreateState.bankUiModel != null
 
-
-    val hasBankType get() = cardCreateState.bankUiModel != null
-
-    fun newCard(cardId: Long? = null): CardUiModel =
+    override fun newCard(cardId: Long?): CardUiModel =
         cardCreateState.run {
             CardUiModel(
                 requireNotNull(bankUiModel),
@@ -58,29 +44,17 @@ class NewCardStateHolder(
             )
         }
 
-    fun updateCardInfo(cardUiModel: CardUiModel) {
-        val error = validateExpiryDate(cardUiModel.cardExpiry)
-        cardCreateState = cardCreateState.copy(
-            bankUiModel = cardUiModel.bankUiModel,
-            cardNumber = cardUiModel.cardNumbers,
-            expiryDate = cardUiModel.cardExpiry,
-            ownerName = cardUiModel.ownerName,
-            password = cardUiModel.password,
-            expiryDateErrorTextRes = error?.toErrorResourceId(),
-        )
-    }
-
-    fun updateCardBank(bankUiModel: BankUiModel) {
+    override fun updateCardBank(bankUiModel: BankUiModel) {
         cardCreateState = cardCreateState.copy(bankUiModel = bankUiModel)
     }
 
-    fun updateCardNumber(cardNumber: String) {
+    override fun updateCardNumber(cardNumber: String) {
         val value = cardNumber.trim()
         if (!isCardNumberAcceptable(value)) return
         cardCreateState = cardCreateState.copy(cardNumber = value)
     }
 
-    fun updateExpiryDate(expiryDate: String) {
+    override fun updateExpiryDate(expiryDate: String) {
         val value = expiryDate.trim()
         if (!isExpiryDateAcceptable(value)) return
         val error = validateExpiryDate(value)
@@ -90,13 +64,13 @@ class NewCardStateHolder(
         )
     }
 
-    fun updateOwnerName(ownerName: String) {
+    override fun updateOwnerName(ownerName: String) {
         val value = ownerName.trim()
         if (!isOwnerNameAcceptable(value)) return
         cardCreateState = cardCreateState.copy(ownerName = value)
     }
 
-    fun updatePassword(password: String) {
+    override fun updatePassword(password: String) {
         val value = password.trim()
         if (!isPasswordAcceptable(value)) return
         cardCreateState = cardCreateState.copy(password = value)
@@ -112,22 +86,6 @@ class NewCardStateHolder(
 
     private fun isPasswordAcceptable(password: String): Boolean =
         password.length <= CARD_PASSWORD_MAX && password.isDigitsOnly()
-
-    private fun isCardNumberCreatable(number: String): Boolean =
-        number.length == CARD_NUMBERS_MAX && number.isDigitsOnly()
-
-    private fun isExpiryDateCreatable(
-        expiry: String,
-        @StringRes errorRes: Int?,
-    ): Boolean =
-        expiry.length == CARD_EXPIRY_DATE_MAX &&
-                expiry.isDigitsOnly() &&
-                errorRes == null
-
-    private fun isOwnerNameCreatable(name: String): Boolean = name.length <= CARD_OWNER_NAME_MAX
-
-    private fun isPasswordCreatable(password: String): Boolean =
-        password.length == CARD_PASSWORD_MAX && password.isDigitsOnly()
 
     private fun validateExpiryDate(expiry: String): CardExpiryValidator? {
         val digits = expiry.filter(Char::isDigit)

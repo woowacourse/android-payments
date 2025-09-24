@@ -18,12 +18,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.CARD_OWNER_NAME_MAX
+import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder.Companion.CARD_OWNER_NAME_MAX
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.newcard.model.NewCardUiState
+import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
@@ -37,7 +37,7 @@ private val KEYBOARD_OPTIONS_PIN = KeyboardOptions(keyboardType = KeyboardType.N
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardInputSection(
-    newCardUiState: NewCardUiState,
+    newCardContentUiState: NewCardContentUiState,
     onCardNumbersChange: (String) -> Unit,
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
@@ -58,7 +58,7 @@ fun NewCardInputSection(
         modifier = modifier,
     ) {
         OutlinedTextField(
-            value = newCardUiState.cardNumber,
+            value = newCardContentUiState.cardNumber,
             onValueChange = onCardNumbersChange,
             modifier =
                 Modifier
@@ -71,10 +71,10 @@ fun NewCardInputSection(
         )
 
         val expiryDateErrorTextRes =
-            newCardUiState.expiryDateErrorTextRes?.let { stringResource(it) }
+            newCardContentUiState.expiryDateErrorTextRes?.let { stringResource(it) }
 
         OutlinedTextField(
-            value = newCardUiState.expiryDate,
+            value = newCardContentUiState.expiryDate,
             onValueChange = onCardExpiryDateChange,
             modifier =
                 Modifier
@@ -96,7 +96,7 @@ fun NewCardInputSection(
         )
 
         OutlinedTextField(
-            value = newCardUiState.ownerName,
+            value = newCardContentUiState.ownerName,
             onValueChange = onCardOwnerNameChange,
             modifier =
                 Modifier
@@ -106,7 +106,7 @@ fun NewCardInputSection(
             placeholder = { Text(stringResource(R.string.owner_placeholder)) },
             supportingText = {
                 Text(
-                    "${newCardUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
+                    "${newCardContentUiState.ownerName.length}/$CARD_OWNER_NAME_MAX",
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.End,
                 )
@@ -114,7 +114,7 @@ fun NewCardInputSection(
         )
 
         OutlinedTextField(
-            value = newCardUiState.password,
+            value = newCardContentUiState.password,
             onValueChange = onCardPasswordChange,
             modifier =
                 Modifier
@@ -131,7 +131,7 @@ fun NewCardInputSection(
 @Composable
 fun NewCardInputSectionPreview() {
     NewCardInputSection(
-        NewCardUiState(
+        NewCardContentUiState(
             cardNumber = "12345678",
             expiryDate = "13/22",
             ownerName = "동전감전장전공전구전사전기전상전무전중전체전고전신전생전수전",
