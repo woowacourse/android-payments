@@ -51,7 +51,7 @@ fun CardListScreen() {
     }
 
     fun launchCardEdit(card: CardUiModel) {
-        launcher.launch(CardRegisterActivity.editCardIntent(card))
+        launcher.launch(CardRegisterActivity.editCardIntent(context, card))
     }
 
     Scaffold(

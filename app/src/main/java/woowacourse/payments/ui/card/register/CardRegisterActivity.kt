@@ -36,8 +36,11 @@ class CardRegisterActivity : ComponentActivity() {
 
         fun newIntent(context: Context): Intent = Intent(context, CardRegisterActivity::class.java)
 
-        fun editCardIntent(card: CardUiModel): Intent =
-            Intent().apply {
+        fun editCardIntent(
+            context: Context,
+            card: CardUiModel,
+        ): Intent =
+            Intent(context, CardRegisterActivity::class.java).apply {
                 putExtra(EXTRA_EDIT_CARD, card)
             }
 
