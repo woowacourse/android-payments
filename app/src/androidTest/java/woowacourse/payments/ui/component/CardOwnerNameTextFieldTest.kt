@@ -1,4 +1,4 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember

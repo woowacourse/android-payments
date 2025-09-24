@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.BankType
 import woowacourse.payments.CardUiModel
-import woowacourse.payments.cardaddition.component.BankSelectBottomSheet
-import woowacourse.payments.cardaddition.component.CardNumberTextField
-import woowacourse.payments.cardaddition.component.CardOwnerNameTextField
-import woowacourse.payments.cardaddition.component.ExpiredDateTextField
-import woowacourse.payments.cardaddition.component.PasswordTextField
+import woowacourse.payments.ui.component.BankSelectBottomSheet
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardOwnerNameTextField
+import woowacourse.payments.ui.component.ExpiredDateTextField
+import woowacourse.payments.ui.component.PasswordTextField
 import woowacourse.payments.cardediting.CardEditingStateHolder
 import woowacourse.payments.cardediting.CardEditingUiState
 import woowacourse.payments.ui.component.PaymentCard

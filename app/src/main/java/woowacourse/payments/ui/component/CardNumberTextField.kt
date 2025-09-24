@@ -1,5 +1,6 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -12,14 +13,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
+import woowacourse.payments.ui.GroupingVisualTransformation
 
 @Composable
-fun PasswordTextField(
+fun CardNumberTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isError: Boolean,
@@ -28,13 +29,13 @@ fun PasswordTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.testTag("PasswordTextField"),
+        modifier = modifier.testTag("CardNumberTextField"),
         label = {
-            Text(text = stringResource(R.string.password_label))
+            Text(text = stringResource(R.string.card_number_label))
         },
         placeholder = {
             Text(
-                text = stringResource(R.string.password_placeholder),
+                text = stringResource(R.string.card_number_placeholder),
                 color = Color.Gray,
             )
         },
@@ -43,32 +44,40 @@ fun PasswordTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
-                    modifier = Modifier.testTag("PasswordTextFieldSupportingText")
+                    modifier = Modifier.testTag("CardNumberTextFieldSupportingText"),
                 )
             }
         },
         isError = isError,
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation =
+            GroupingVisualTransformation(
+                CARD_NUMBER_GROUP_SIZE,
+                CARD_NUMBER_SEPARATOR,
+            ),
         keyboardOptions =
             KeyboardOptions(
-                keyboardType = KeyboardType.NumberPassword,
-                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next,
             ),
     )
 }
 
 @Preview
 @Composable
-private fun PasswordTextFieldPreview(
-    @PreviewParameter(PasswordTextFieldPreviewParameterProvider::class) isError: Boolean,
+private fun CardNumberTextFieldPreview(
+    @PreviewParameter(CardNumberTextFieldPreviewParameterProvider::class) isError: Boolean,
 ) {
-    val (password: String, setPassword: (String) -> Unit) = remember { mutableStateOf("") }
+    val (cardNumber: String, setCardNumber: (String) -> Unit) = remember { mutableStateOf("") }
 
-    PasswordTextField(
-        value = password,
-        onValueChange = setPassword,
+    CardNumberTextField(
+        value = cardNumber,
+        onValueChange = setCardNumber,
         isError = isError,
+        modifier = Modifier.fillMaxWidth(),
     )
 }
 
-private class PasswordTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
+private class CardNumberTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
+
+private const val CARD_NUMBER_GROUP_SIZE: Int = 4
+private const val CARD_NUMBER_SEPARATOR: String = " - "

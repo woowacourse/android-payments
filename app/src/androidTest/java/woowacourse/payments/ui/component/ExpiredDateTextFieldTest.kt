@@ -1,4 +1,4 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -10,33 +10,38 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class PasswordTextFieldTest {
+class ExpiredDateTextFieldTest {
     @get:Rule
     val composeRule = createComposeRule()
 
     @Before
     fun setUp() {
         composeRule.setContent {
-            val (password: String, setPassword: (String) -> Unit) = remember { mutableStateOf("") }
+            val (expiredDate: String, setExpiredDate: (String) -> Unit) =
+                remember {
+                    mutableStateOf(
+                        "",
+                    )
+                }
 
-            PasswordTextField(
-                value = password,
-                onValueChange = setPassword,
+            ExpiredDateTextField(
+                value = expiredDate,
+                onValueChange = setExpiredDate,
                 isError = false,
             )
         }
     }
 
     @Test
-    fun `비밀번호는_노출되어서는_안_된다`() {
+    fun `만료일의_경우_입력할_때_자동으로_기호가_삽입된다`() {
         // when
         composeRule
             .onNodeWithText("")
-            .performTextInput("1234")
+            .performTextInput("1225")
 
         // then
         composeRule
-            .onNodeWithText("\u2022".repeat(4))
+            .onNodeWithText("12 / 25")
             .assertIsDisplayed()
     }
 }

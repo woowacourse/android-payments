@@ -1,4 +1,4 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
@@ -12,14 +12,14 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
-import woowacourse.payments.ui.GroupingVisualTransformation
 
 @Composable
-fun ExpiredDateTextField(
+fun PasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isError: Boolean,
@@ -28,13 +28,13 @@ fun ExpiredDateTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier,
+        modifier = modifier.testTag("PasswordTextField"),
         label = {
-            Text(text = stringResource(R.string.expired_date_label))
+            Text(text = stringResource(R.string.password_label))
         },
         placeholder = {
             Text(
-                text = stringResource(R.string.expired_date_placeholder),
+                text = stringResource(R.string.password_placeholder),
                 color = Color.Gray,
             )
         },
@@ -43,41 +43,32 @@ fun ExpiredDateTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
-                    modifier = Modifier.testTag("ExpiredDateTextFieldSupportingText")
+                    modifier = Modifier.testTag("PasswordTextFieldSupportingText"),
                 )
             }
         },
         isError = isError,
-        visualTransformation =
-            GroupingVisualTransformation(
-                EXPIRED_DATE_GROUP_SIZE,
-                EXPIRED_DATE_DELIMITER,
-            ),
+        visualTransformation = PasswordVisualTransformation(),
         keyboardOptions =
             KeyboardOptions(
-                keyboardType = KeyboardType.Number,
-                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.NumberPassword,
+                imeAction = ImeAction.Done,
             ),
     )
 }
 
 @Preview
 @Composable
-private fun ExpiredDateTextFieldPreview(
-    @PreviewParameter(
-        ExpiredDateTextFieldPreviewParameterProvider::class,
-    ) isError: Boolean,
+private fun PasswordTextFieldPreview(
+    @PreviewParameter(PasswordTextFieldPreviewParameterProvider::class) isError: Boolean,
 ) {
-    val (expiredDate: String, setExpiredDate: (String) -> Unit) = remember { mutableStateOf("") }
+    val (password: String, setPassword: (String) -> Unit) = remember { mutableStateOf("") }
 
-    ExpiredDateTextField(
-        value = expiredDate,
-        onValueChange = setExpiredDate,
+    PasswordTextField(
+        value = password,
+        onValueChange = setPassword,
         isError = isError,
     )
 }
 
-private class ExpiredDateTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
-
-private const val EXPIRED_DATE_GROUP_SIZE: Int = 2
-private const val EXPIRED_DATE_DELIMITER: String = " / "
+private class PasswordTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))

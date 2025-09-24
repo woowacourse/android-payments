@@ -1,4 +1,4 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

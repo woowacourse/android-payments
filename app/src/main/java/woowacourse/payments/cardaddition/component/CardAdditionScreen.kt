@@ -21,6 +21,11 @@ import woowacourse.payments.CardUiModel
 import woowacourse.payments.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.cardaddition.CardAdditionUiState
 import woowacourse.payments.cardaddition.rememberCardAdditionStateHolder
+import woowacourse.payments.ui.component.BankSelectBottomSheet
+import woowacourse.payments.ui.component.CardNumberTextField
+import woowacourse.payments.ui.component.CardOwnerNameTextField
+import woowacourse.payments.ui.component.ExpiredDateTextField
+import woowacourse.payments.ui.component.PasswordTextField
 import woowacourse.payments.ui.component.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -1,6 +1,5 @@
-package woowacourse.payments.cardaddition.component
+package woowacourse.payments.ui.component
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,7 +19,7 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.GroupingVisualTransformation
 
 @Composable
-fun CardNumberTextField(
+fun ExpiredDateTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isError: Boolean,
@@ -29,13 +28,13 @@ fun CardNumberTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        modifier = modifier.testTag("CardNumberTextField"),
+        modifier = modifier,
         label = {
-            Text(text = stringResource(R.string.card_number_label))
+            Text(text = stringResource(R.string.expired_date_label))
         },
         placeholder = {
             Text(
-                text = stringResource(R.string.card_number_placeholder),
+                text = stringResource(R.string.expired_date_placeholder),
                 color = Color.Gray,
             )
         },
@@ -44,15 +43,15 @@ fun CardNumberTextField(
                 Text(
                     text = stringResource(R.string.text_field_invalid_format_message),
                     color = Color.Red,
-                    modifier = Modifier.testTag("CardNumberTextFieldSupportingText"),
+                    modifier = Modifier.testTag("ExpiredDateTextFieldSupportingText"),
                 )
             }
         },
         isError = isError,
         visualTransformation =
             GroupingVisualTransformation(
-                CARD_NUMBER_GROUP_SIZE,
-                CARD_NUMBER_SEPARATOR,
+                EXPIRED_DATE_GROUP_SIZE,
+                EXPIRED_DATE_DELIMITER,
             ),
         keyboardOptions =
             KeyboardOptions(
@@ -64,20 +63,21 @@ fun CardNumberTextField(
 
 @Preview
 @Composable
-private fun CardNumberTextFieldPreview(
-    @PreviewParameter(CardNumberTextFieldPreviewParameterProvider::class) isError: Boolean,
+private fun ExpiredDateTextFieldPreview(
+    @PreviewParameter(
+        ExpiredDateTextFieldPreviewParameterProvider::class,
+    ) isError: Boolean,
 ) {
-    val (cardNumber: String, setCardNumber: (String) -> Unit) = remember { mutableStateOf("") }
+    val (expiredDate: String, setExpiredDate: (String) -> Unit) = remember { mutableStateOf("") }
 
-    CardNumberTextField(
-        value = cardNumber,
-        onValueChange = setCardNumber,
+    ExpiredDateTextField(
+        value = expiredDate,
+        onValueChange = setExpiredDate,
         isError = isError,
-        modifier = Modifier.fillMaxWidth(),
     )
 }
 
-private class CardNumberTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
+private class ExpiredDateTextFieldPreviewParameterProvider : CollectionPreviewParameterProvider<Boolean>(listOf(false, true))
 
-private const val CARD_NUMBER_GROUP_SIZE: Int = 4
-private const val CARD_NUMBER_SEPARATOR: String = " - "
+private const val EXPIRED_DATE_GROUP_SIZE: Int = 2
+private const val EXPIRED_DATE_DELIMITER: String = " / "
