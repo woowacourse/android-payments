@@ -86,6 +86,7 @@ class CardListScreenTest {
         val cards =
             listOf(
                 CardUiModel(
+                    id = "1",
                     "1111222233334444",
                     "0421",
                     "CREW",
@@ -93,6 +94,7 @@ class CardListScreenTest {
                     cardCompany = CardCompanyUiType.HANA,
                 ),
                 CardUiModel(
+                    id = "2",
                     "5555666677778888",
                     "0522",
                     "Moong",
