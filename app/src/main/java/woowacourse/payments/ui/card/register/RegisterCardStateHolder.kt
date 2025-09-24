@@ -10,7 +10,7 @@ import woowacourse.payments.ui.model.toUiModel
 
 class RegisterCardStateHolder(
     private val onCardSaved: (newCardUiModel: CardUiModel) -> Unit,
-    cardToEdit: CardUiModel? = null,
+    private val cardToEdit: CardUiModel? = null,
 ) {
     private val isEditMode = cardToEdit != null
 
@@ -66,6 +66,7 @@ class RegisterCardStateHolder(
 
         return Card
             .newCard(
+                id = cardToEdit?.id,
                 number = uiState.cardNumber,
                 expirationDate = uiState.expirationDate,
                 cardHolderName = uiState.cardHolderName,
