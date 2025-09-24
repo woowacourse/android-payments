@@ -42,13 +42,12 @@ class ListActivity : ComponentActivity() {
                 val cardEditLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
-                            val editedCard = activityResult.data?.parcelable<CardUiModel>("card")
-                            editedCard?.let { updated ->
-                                cardState = CardScreenUiState.from(
-                                    cardState.cards.map { existing ->
-                                        if (existing.number == updated.number) updated else existing
-                                    }
-                                )
+                            val updatedCard = activityResult.data?.parcelable<CardUiModel>("card")
+                            val index = activityResult.data?.getIntExtra("index", -1) ?: -1
+                            if (updatedCard != null && index != -1) {
+                                val newList = cardState.cards.toMutableList()
+                                newList[index] = updatedCard
+                                cardState = CardScreenUiState.from(newList)
                             }
                         }
                     }
@@ -60,8 +59,10 @@ class ListActivity : ComponentActivity() {
                         cardAddLauncher.launch(intent)
                     },
                     onClick = { card ->
+                        val index = cardState.cards.indexOf(card)
                         val intent = Intent(this, EditActivity::class.java).apply {
                             putExtra("card", card)
+                            putExtra("index", index)
                         }
                         cardEditLauncher.launch(intent)
                     },

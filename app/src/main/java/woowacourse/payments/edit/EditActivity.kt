@@ -99,8 +99,10 @@ class EditActivity : ComponentActivity() {
                             )
 
                             if (updatedCard != originCard) {
+                                val index = intent.getIntExtra("index", -1)
                                 val data = Intent().apply {
                                     putExtra("card", updatedCard.toUiModel())
+                                    putExtra("index", index)
                                 }
                                 setResult(RESULT_OK, data)
                                 finish()
