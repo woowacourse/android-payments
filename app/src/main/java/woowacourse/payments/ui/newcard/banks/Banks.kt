@@ -11,18 +11,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
 
 private const val COLUMN_COUNT = 4
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Banks(
-    onSelectCard: (BankType) -> Unit,
+    onSelectCard: (BankUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bankTypes by remember { mutableStateOf(BankType.entries) }
+    val bankUiModels by remember { mutableStateOf(BankType.entries.map { it.toLocalBankUiModel() }) }
     FlowRow(
         modifier =
             modifier
@@ -31,7 +32,7 @@ fun Banks(
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        bankTypes.forEach {
+        bankUiModels.forEach {
             Bank(
                 it,
                 onSelectCard,

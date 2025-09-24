@@ -29,7 +29,7 @@ fun NewCardContent(
     ) {
         Spacer(modifier = Modifier.height(14.dp))
         CardSample(
-            newCardUiState.bankType,
+            newCardUiState.bankUiModel,
             Modifier
                 .align(Alignment.CenterHorizontally)
                 .clickable(onClick = onClickCardSample),

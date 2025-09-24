@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cards
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,6 +18,7 @@ import woowacourse.payments.ui.debug.fixture.paymentCardUiModelSample
 @Composable
 fun PaymentCard(
     paymentCardUiModel: PaymentCardUiModel,
+    onCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val bankUiModel = paymentCardUiModel.bankUiModel
@@ -33,7 +35,8 @@ fun PaymentCard(
         CardContent(
             paymentCardUiModel,
             Modifier
-                .padding(15.dp),
+                .padding(15.dp)
+                .clickable{onCardClick(paymentCardUiModel)},
         )
     }
 }
@@ -41,5 +44,5 @@ fun PaymentCard(
 @Preview(showBackground = true)
 @Composable
 fun PaymentCardPreview() {
-    PaymentCard(paymentCardUiModelSample)
+    PaymentCard(paymentCardUiModelSample,{})
 }
