@@ -55,8 +55,7 @@ fun PaymentCardContent(
                 .size(208.dp, 124.dp)
                 .shadow(8.dp)
                 .background(
-                    color = card?.company?.toUiModel()?.color
-                        ?: CardCompany.NOT_SELECTED.toUiModel().color,
+                    color = card.company.toUiModel().color,
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(horizontal = 16.dp)
@@ -91,7 +90,7 @@ fun PaymentCardContent(
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = card.number,
+                        text = card.maskedNumber,
                         style = PaymentCardTextStyle,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -104,7 +103,7 @@ fun PaymentCardContent(
                             style = PaymentCardTextStyle,
                         )
                         Text(
-                            text = card.expiry,
+                            text = card.maskedExpiry,
                             style = PaymentCardTextStyle,
                         )
                     }

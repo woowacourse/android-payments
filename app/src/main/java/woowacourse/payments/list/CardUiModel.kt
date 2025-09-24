@@ -15,23 +15,33 @@ data class CardUiModel(
     val password: String,
     val name: String? = null,
     val company: CardCompany = CardCompany.NOT_SELECTED,
-) : Parcelable
+) : Parcelable {
+    val maskedNumber: String
+        get() = if (number.isNotEmpty()) {
+            (number.take(8) + "*".repeat(8)).chunked(4).joinToString(" - ")
+        } else ""
+
+    val maskedExpiry: String
+        get() = if (expiry.isNotEmpty()) {
+            expiry.take(2) + " / " + expiry.takeLast(2)
+        } else ""
+
+    val maskedPassword: String
+        get() = "****"
+}
 
 fun CardNumber.toFormattedString(): String {
-    val value = this.value.joinToString("") { it.value.toString() }
-    val visible = value.substring(0, 8)
-    val masked = "*".repeat(8)
-    return (visible + masked).chunked(4).joinToString(" - ")
+    return this.value.joinToString("") { it.value.toString() }
 }
 
 fun CardExpiry.toFormattedString(): String {
     val year = this.value.year % 100
     val month = this.value.monthValue.toString().padStart(2, '0').padStart(2, '0')
-    return "$month / $year"
+    return "$month$year"
 }
 
 fun CardPassword.toFormattedString(): String {
-    return this.value.joinToString("") { it.value.toString() }.replace(Regex("\\d"), "*")
+    return this.value.joinToString("") { it.value.toString() }
 }
 
 fun Card.toUiModel(): CardUiModel {

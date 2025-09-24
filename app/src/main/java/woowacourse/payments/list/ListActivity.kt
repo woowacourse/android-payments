@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.edit.EditActivity
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.newCard.NewCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -38,13 +39,30 @@ class ListActivity : ComponentActivity() {
                         }
                     }
 
+                val cardEditLauncher =
+                    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                        if (activityResult.resultCode == RESULT_OK) {
+                            val editedCard = activityResult.data?.parcelable<CardUiModel>("card")
+                            editedCard?.let { updated ->
+                                cardState = CardScreenUiState.from(
+                                    cardState.cards.map { if (it == updated) updated else it }
+                                )
+                            }
+                        }
+                    }
+
                 CardListScreen(
                     uiState = cardState,
                     onAddClick = {
                         val intent = Intent(this, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
                     },
-                    onClick = {},
+                    onClick = { card ->
+                        val intent = Intent(this, EditActivity::class.java).apply {
+                            putExtra("card", card)
+                        }
+                        cardEditLauncher.launch(intent)
+                    },
                 )
             }
         }
