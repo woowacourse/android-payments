@@ -22,7 +22,8 @@ class CardAdditionScreenTest {
         composeRule.setContent {
             CardAdditionScreen(
                 onBackClick = {},
-                onCheckClick = {},
+                onCardSaveSuccess = {},
+                onCardSaveFailure = {},
             )
         }
     }
