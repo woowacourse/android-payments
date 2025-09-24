@@ -63,11 +63,7 @@ fun AddCardScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(vertical = 30.dp),
-                card =
-                    when (stateHolder.type) {
-                        is CardScreenType.New -> CardUiModel.EMPTY.copy(cardCompany = stateHolder.cardCompany)
-                        is CardScreenType.Edit -> stateHolder.type.card
-                    },
+                card = stateHolder.card,
             )
 
             Column(
