@@ -42,7 +42,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardListScreen(
     stateHolder: CardListStateHolder,
-    navigateToAddCard: () -> Unit,
+    navigateToAddCard: (cardToEdit: CardUiModel?) -> Unit,
 ) {
     val uiState = stateHolder.uiState
 
@@ -50,20 +50,25 @@ fun CardListScreen(
         topBar = {
             CardListTopBar(
                 showAddButton = uiState.showAddButton,
-                onAddClick = navigateToAddCard,
+                onAddClick = { navigateToAddCard(null) },
             )
         },
     ) { innerPadding ->
         if (uiState.cards.isEmpty()) {
             EmptyCardListContent(
                 modifier = Modifier.padding(innerPadding),
-                onClick = navigateToAddCard,
+                onClick = { navigateToAddCard(null) },
             )
         } else {
             CardListContent(
                 cards = uiState.cards,
                 enableScroll = uiState.cards.size > 1,
-                onClick = navigateToAddCard,
+                onCardClicked = { cardId ->
+                    val card =
+                        stateHolder.uiState.cards.find { it.id == cardId } ?: return@CardListContent
+                    navigateToAddCard(card)
+                },
+                onAddClicked = { navigateToAddCard(null) },
                 modifier = Modifier.padding(innerPadding),
             )
         }
@@ -74,7 +79,8 @@ fun CardListScreen(
 private fun CardListContent(
     cards: List<CardUiModel>,
     enableScroll: Boolean,
-    onClick: () -> Unit,
+    onCardClicked: (Long) -> Unit,
+    onAddClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -90,13 +96,13 @@ private fun CardListContent(
             key = { it.id },
         ) { card ->
             Spacer(modifier = Modifier.height(20.dp))
-            PaymentCard(card = card)
+            PaymentCard(card = card, modifier = Modifier.clickable { onCardClicked(card.id) })
         }
 
         if (cards.size <= 1) {
             item {
                 Spacer(modifier = Modifier.height(32.dp))
-                AddCardBox(onClick = onClick)
+                AddCardBox(onClick = onAddClicked)
             }
         }
     }
