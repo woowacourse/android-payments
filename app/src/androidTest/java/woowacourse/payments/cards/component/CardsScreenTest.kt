@@ -88,6 +88,26 @@ class CardsScreenTest {
     }
 
     @Test
+    fun `카드_목록에_카드가_한_개_있을_때_카드를_선택하면_카드_수정_화면으로_이동한다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+            )
+        }
+
+        // when
+        composeRule
+            .onNodeWithTag("PaymentCard")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardEditingScreen")
+            .assertIsDisplayed()
+    }
+
+    @Test
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_UI가_노출된다`() {
         // given
         composeRule.setContent {
@@ -119,6 +139,26 @@ class CardsScreenTest {
         // then
         composeRule
             .onNodeWithTag("CardAdditionScreen")
+            .assertIsDisplayed()
+    }
+
+    @Test
+    fun `카드_목록에_카드가_여러_개_있을_때_카드를_선택하면_카드_수정_화면으로_이동한다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+            )
+        }
+
+        // when
+        composeRule
+            .onNodeWithTag("PaymentCard")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardEditingScreen")
             .assertIsDisplayed()
     }
 }

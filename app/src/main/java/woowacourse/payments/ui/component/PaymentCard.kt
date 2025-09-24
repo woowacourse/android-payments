@@ -55,7 +55,8 @@ fun PaymentCard(
                 .clip(RoundedCornerShape(5.dp))
                 .background(
                     color = colorResource(bankType?.colorRes ?: R.color.card_not_selected),
-                ).clickable(onClick = onClick),
+                ).clickable(onClick = onClick)
+                .testTag("PaymentCard"),
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
