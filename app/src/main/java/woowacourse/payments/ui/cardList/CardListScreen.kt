@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardList
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -65,7 +64,6 @@ fun CardListScreen(
                 )
             }
             cards.forEach { card ->
-                Log.d("moongchi", "CardListScreen: card")
                 Spacer(modifier = Modifier.height(36.dp))
                 PaymentCard(card = card, onClick = { onCardClick(card) })
             }

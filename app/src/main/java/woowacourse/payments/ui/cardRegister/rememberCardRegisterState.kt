@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardRegister
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.common.model.CardCompanyUiType
@@ -26,4 +25,4 @@ fun rememberCardRegisterState(
             initialSelectedCardCompany = card?.cardCompany ?: selectedCardCompany,
             originalCardUiModel = card,
         )
-    }.also { Log.d("moongchi", "rememberCardRegisterState: state: ${card}") }
+    }

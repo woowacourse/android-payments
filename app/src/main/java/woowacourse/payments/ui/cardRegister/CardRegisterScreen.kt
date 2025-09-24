@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.cardRegister
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -65,22 +64,9 @@ fun CardRegisterScreen(
                         !cardRegisterState.isChanged() -> isNotChangedInput(cardUiModel)
 
                         cardRegisterState.isChanged() && cardRegisterState.isEditingMode() ->
-                            onEditingSaveClick(
-                                cardUiModel,
-                            ).also {
-                                Log.d(
-                                    "moongchi11",
-                                    "CardRegisterScreenedit3: $cardUiModel",
-                                )
-                            }
+                            onEditingSaveClick(cardUiModel)
 
-                        else ->
-                            onSaveClick(cardUiModel).also {
-                                Log.d(
-                                    "moongchi22",
-                                    "CardRegisterScreensave: $cardUiModel",
-                                )
-                            }
+                        else -> onSaveClick(cardUiModel)
                     }
                 },
             )
