@@ -41,12 +41,14 @@ fun AddPaymentCardScreen(
 
     val state = stateHolder.state
 
-    val canSave by remember(state.cardNumber, state.expiry, state.pin) {
-        derivedStateOf {
-            stateHolder.isCardNumberValid &&
-                stateHolder.isExpiryValid &&
-                stateHolder.isPinValid
-        }
+    val canSave by remember(
+        state.cardNumber,
+        state.expiry,
+        state.pin,
+        state.owner,
+        state.bank,
+    ) {
+        derivedStateOf { stateHolder.canSave }
     }
 
     val previewCard =

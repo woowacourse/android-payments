@@ -17,16 +17,37 @@ class AddPaymentCardStateHolder private constructor(
     val state: AddPaymentCardUiState get() = uiState.value
 
     private var cardId: String? = null
+    private var isEdited: Boolean = false
 
-    fun onCardNumberChange(new: String) = update { it.copy(cardNumber = new) }
+    fun onCardNumberChange(new: String) =
+        update {
+            isEdited = true
+            it.copy(cardNumber = new)
+        }
 
-    fun onExpiryChange(new: String) = update { it.copy(expiry = new) }
+    fun onExpiryChange(new: String) =
+        update {
+            isEdited = true
+            it.copy(expiry = new)
+        }
 
-    fun onOwnerChange(new: String) = update { it.copy(owner = new) }
+    fun onOwnerChange(new: String) =
+        update {
+            isEdited = true
+            it.copy(owner = new)
+        }
 
-    fun onPinChange(new: String) = update { it.copy(pin = new) }
+    fun onPinChange(new: String) =
+        update {
+            isEdited = true
+            it.copy(pin = new)
+        }
 
-    fun onBankChange(new: BankType) = update { it.copy(bank = new) }
+    fun onBankChange(new: BankType) =
+        update {
+            isEdited = true
+            it.copy(bank = new)
+        }
 
     fun showSheet() = update { it.copy(isSheetVisible = true) }
 
@@ -39,6 +60,12 @@ class AddPaymentCardStateHolder private constructor(
     val isPinValid: Boolean
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
     val isBankValid: Boolean get() = (state.bank != null)
+    val canSave: Boolean
+        get() =
+            isEdited &&
+                isCardNumberValid &&
+                isExpiryValid &&
+                isPinValid
 
     fun beginEdit(card: PaymentCard) {
         cardId = card.id
@@ -52,6 +79,7 @@ class AddPaymentCardStateHolder private constructor(
                 isEditing = true,
             )
         }
+        isEdited = false
     }
 
     fun buildResult(): PaymentCard? {
