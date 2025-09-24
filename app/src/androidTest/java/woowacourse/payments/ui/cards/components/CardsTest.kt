@@ -30,6 +30,7 @@ class CardsTest {
                 scrollState = rememberScrollState(),
                 onAddClick = {},
                 cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
+                onEditClick = {},
             )
         }
 
@@ -46,6 +47,7 @@ class CardsTest {
             Cards(
                 scrollState = rememberScrollState(),
                 onAddClick = {},
+                onEditClick = {},
             )
         }
 
@@ -67,6 +69,7 @@ class CardsTest {
                 scrollState = rememberScrollState(),
                 onAddClick = {},
                 cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
+                onEditClick = {},
             )
         }
 
@@ -84,6 +87,7 @@ class CardsTest {
                 scrollState = rememberScrollState(),
                 onAddClick = {},
                 cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD)),
+                onEditClick = {},
             )
         }
 
@@ -101,6 +105,7 @@ class CardsTest {
                 scrollState = rememberScrollState(),
                 onAddClick = {},
                 cardsStateHolder = CardsStateHolder(listOf(HWANNOW_CARD, JUNSEO511_CARD)),
+                onEditClick = {},
             )
         }
 
