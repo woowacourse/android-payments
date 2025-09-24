@@ -105,8 +105,6 @@ fun CardWalletScreen(
                             val intent =
                                 NewCardScreenActivity.newIntent(
                                     context,
-                                    existingCard = cardList.first(),
-                                    index = 0,
                                 )
                             cardAddLauncher.launch(intent)
                         },
@@ -115,8 +113,19 @@ fun CardWalletScreen(
 
                 else -> {
                     Spacer(modifier = Modifier.height(12.dp))
-                    repeat(cardList.size) {
-                        RegisteredCard(cardList[it])
+                    repeat(cardList.size) { index ->
+                        RegisteredCard(
+                            cardUiModel = cardList[index],
+                            onClick = {
+                                val intent =
+                                    NewCardScreenActivity.newIntent(
+                                        context,
+                                        existingCard = cardList[index],
+                                        index = index,
+                                    )
+                                cardAddLauncher.launch(intent)
+                            },
+                        )
                         Spacer(modifier = Modifier.height(36.dp))
                     }
                 }
