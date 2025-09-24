@@ -34,6 +34,10 @@ fun CardsScreen(modifier: Modifier = Modifier) {
         val intent = NewCardActivity.instance(localContext)
         cardAddLauncher.launch(intent)
     }
+    val onUpdateClick: (PaymentCardUiModel) -> Unit = {
+        val intent = NewCardActivity.instance(localContext, it)
+        cardAddLauncher.launch(intent)
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -49,8 +53,13 @@ fun CardsScreen(modifier: Modifier = Modifier) {
         ) {
             when (val cardUiState = cardsStateHolder.cardsState) {
                 CardsState.None -> NonCardsSection(onAddClick)
-                is CardsState.Single -> SingleCardsSection(onAddClick, cardUiState.card)
-                is CardsState.Multiple -> MultiCardsSection(cardUiState.cards)
+                is CardsState.Single -> SingleCardsSection(
+                    cardUiState.card,
+                    onAddClick,
+                    onUpdateClick
+                )
+
+                is CardsState.Multiple -> MultiCardsSection(cardUiState.cards, onUpdateClick)
             }
         }
     }
@@ -65,10 +74,9 @@ fun cardAddLauncher(
 ) { activityResult ->
     if (activityResult.resultCode == RESULT_OK) {
         val intent = activityResult.data
-        val cardUiModel =
-            intent?.parcelable<PaymentCardUiModel>(
-                NEW_CARD_KEY,
-            ) ?: return@rememberLauncherForActivityResult
+        val cardUiModel = intent?.parcelable<PaymentCardUiModel>(
+            NEW_CARD_KEY,
+        ) ?: return@rememberLauncherForActivityResult
         cardsStateHolder.addCard(cardUiModel)
         Toast
             .makeText(

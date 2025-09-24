@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cards
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,6 +25,9 @@ class CardsActivity : ComponentActivity() {
     companion object {
         const val NEW_CARD_KEY = "new_card_key"
 
-        fun intent(cardUiModel: PaymentCardUiModel) = Intent().putExtra(NEW_CARD_KEY, cardUiModel)
+        fun intent(context: Context, cardUiModel: PaymentCardUiModel) = Intent(
+            context,
+            CardsActivity::class.java
+        ).putExtra(NEW_CARD_KEY, cardUiModel)
     }
 }

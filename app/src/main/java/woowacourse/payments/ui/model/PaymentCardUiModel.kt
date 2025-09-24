@@ -2,6 +2,8 @@ package woowacourse.payments.ui.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlin.random.Random
+import kotlin.random.nextLong
 
 @Parcelize
 data class PaymentCardUiModel(
@@ -9,6 +11,8 @@ data class PaymentCardUiModel(
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,
+    val password: String,
+    val id: Long
 ) : Parcelable {
     fun maskCardNumbersFromBack(
         visibleGroups: Int = 2,

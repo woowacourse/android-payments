@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -10,21 +11,22 @@ import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpiryValidator
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.newcard.model.NewCardUiState
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
+import kotlin.random.Random
 
-class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, NewCardUiState> {
-    override fun SaverScope.save(value: CreateCardStateHolder): NewCardUiState? =
+class NewCardStateHolderSaver : Saver<NewCardStateHolder, NewCardUiState> {
+    override fun SaverScope.save(value: NewCardStateHolder): NewCardUiState? =
         value.cardCreateState
 
-    override fun restore(value: NewCardUiState): CreateCardStateHolder? =
-        CreateCardStateHolder(value)
+    override fun restore(value: NewCardUiState): NewCardStateHolder? =
+        NewCardStateHolder(value)
 }
 
-class CreateCardStateHolder(
+class NewCardStateHolder(
     initial: NewCardUiState = NewCardUiState(),
 ) {
     var cardCreateState by mutableStateOf(initial)
@@ -44,20 +46,34 @@ class CreateCardStateHolder(
     }
 
 
-    val hasBankType get() = cardCreateState.bankType == null
+    val hasBankType get() = cardCreateState.bankUiModel != null
 
-    fun newCard(): PaymentCardUiModel =
+    fun newCard(cardId: Long? = null): PaymentCardUiModel =
         cardCreateState.run {
             PaymentCardUiModel(
-                requireNotNull(bankType?.toLocalBankUiModel()),
+                requireNotNull(bankUiModel),
                 cardNumber,
                 expiryDate,
                 ownerName,
+                password,
+                cardId ?: Random.nextLong(1, 10000)
             )
         }
 
-    fun updateCardBank(bankType: BankType) {
-        cardCreateState = cardCreateState.copy(bankType = bankType)
+    fun updateCardInfo(paymentCardUiModel: PaymentCardUiModel) {
+        val error = validateExpiryDate(paymentCardUiModel.cardExpiry)
+        cardCreateState = cardCreateState.copy(
+            bankUiModel = paymentCardUiModel.bankUiModel,
+            cardNumber = paymentCardUiModel.cardNumbers,
+            expiryDate = paymentCardUiModel.cardExpiry,
+            ownerName = paymentCardUiModel.ownerName,
+            password = paymentCardUiModel.password,
+            expiryDateErrorTextRes = error?.toErrorResourceId(),
+        )
+    }
+
+    fun updateCardBank(bankUiModel: BankUiModel) {
+        cardCreateState = cardCreateState.copy(bankUiModel = bankUiModel)
     }
 
     fun updateCardNumber(cardNumber: String) {
@@ -69,9 +85,11 @@ class CreateCardStateHolder(
     fun updateExpiryDate(expiryDate: String) {
         val value = expiryDate.trim()
         if (!isExpiryDateAcceptable(value)) return
-        cardCreateState = cardCreateState.copy(expiryDate = value)
-        val error = validateExpiryDate(cardCreateState.expiryDate)
-        cardCreateState = cardCreateState.copy(expiryDateErrorTextRes = error?.toErrorResourceId())
+        val error = validateExpiryDate(value)
+        cardCreateState = cardCreateState.copy(
+            expiryDate = value,
+            expiryDateErrorTextRes = error?.toErrorResourceId(),
+        )
     }
 
     fun updateOwnerName(ownerName: String) {

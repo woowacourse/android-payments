@@ -15,13 +15,19 @@ sealed interface CardsState : Parcelable {
     data class Single(
         val card: PaymentCardUiModel,
     ) : CardsState {
-        override fun addCard(card: PaymentCardUiModel): CardsState = Multiple(listOf(this.card, card))
+        override fun addCard(card: PaymentCardUiModel): CardsState =
+            if (this.card.id == card.id) Single(card) else Multiple(listOf(this.card, card))
     }
 
     data class Multiple(
         val cards: List<PaymentCardUiModel>,
     ) : CardsState {
-        override fun addCard(card: PaymentCardUiModel): CardsState = this.copy(this.cards + card)
+        override fun addCard(card: PaymentCardUiModel): CardsState =
+            if (cards.any { it.id == card.id }) {
+                copy(cards = cards.map { if (it.id == card.id) card else it })
+            } else {
+                copy(cards = cards + card)
+            }
     }
 
     companion object {

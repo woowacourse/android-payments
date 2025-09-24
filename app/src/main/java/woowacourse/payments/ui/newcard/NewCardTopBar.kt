@@ -19,11 +19,12 @@ import woowacourse.payments.R
 fun NewCardTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    title: String,
     isCreatable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.card_create_title)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
@@ -47,5 +48,5 @@ fun NewCardTopBar(
 @Preview
 @Composable
 fun NewCardTopBarPreview() {
-    NewCardTopBar({}, {}, true)
+    NewCardTopBar({}, {}, "", true)
 }

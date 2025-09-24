@@ -19,15 +19,15 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.cards.core.mapper.asColor
 import woowacourse.payments.ui.components.CardChip
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.theme.Gray33
 
 @Composable
 fun CardSample(
-    bankType: BankType?,
+    bankUiModel: BankUiModel?,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = bankType?.toLocalBankUiModel()
     Box(
         modifier =
             modifier
@@ -56,5 +56,5 @@ fun CardSample(
 @Preview(showBackground = true)
 @Composable
 fun CreateCardPreview() {
-    CardSample(BankType.BC)
+    CardSample(null)
 }
