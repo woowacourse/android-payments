@@ -12,10 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpiry
@@ -75,25 +78,33 @@ class EditActivity : ComponentActivity() {
 
                 Scaffold(
                     topBar = { NewCardTopBar(
+                        title = { Text(text = stringResource(R.string.edit_card_top_bar_title)) },
                         onBackClick = {
                             finish()
                         },
                         onSaveClick = {
-                            val data =
-                                Intent().apply {
-                                    putExtra(
-                                        "card",
-                                        Card(
-                                            company = cardSelectionState.selectedCompany,
-                                            number = CardNumber(newCardState.cardNumber),
-                                            expiry = CardExpiry.fromString(newCardState.cardExpiry),
-                                            password = CardPassword(newCardState.cardPassword),
-                                            name = CardName(newCardState.cardName),
-                                        ).toUiModel(),
-                                    )
+                            val updatedCard = Card(
+                                company = cardSelectionState.selectedCompany,
+                                number = CardNumber(newCardState.cardNumber),
+                                expiry = CardExpiry.fromString(newCardState.cardExpiry),
+                                password = CardPassword(newCardState.cardPassword),
+                                name = CardName(newCardState.cardName),
+                            )
+
+                            val originCard = Card(
+                                company = card.company,
+                                number = CardNumber(card.number),
+                                expiry = CardExpiry.fromString(card.expiry),
+                                password = CardPassword(card.password),
+                            )
+
+                            if (updatedCard != originCard) {
+                                val data = Intent().apply {
+                                    putExtra("card", updatedCard.toUiModel())
                                 }
-                            setResult(RESULT_OK, data)
-                            finish()
+                                setResult(RESULT_OK, data)
+                                finish()
+                            }
                         },
                         isSaveEnabled =
                             runCatching {
