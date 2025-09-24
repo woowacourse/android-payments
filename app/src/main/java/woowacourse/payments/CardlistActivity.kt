@@ -9,7 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.AddcardActivity.Companion.getPaymentCardUiModelByAddCard
 import woowacourse.payments.EditcardActivity.Companion.getPaymentCardUiModelByEditCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
@@ -22,7 +22,7 @@ class CardlistActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cardUiModels = remember { mutableStateListOf<PaymentCardUiModel>() }
+                val cardUiModels = rememberSaveable { mutableStateListOf<PaymentCardUiModel>() }
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(

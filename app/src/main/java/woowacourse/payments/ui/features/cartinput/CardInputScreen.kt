@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -17,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +61,7 @@ fun CardInputScreen(
     val paymentCardUiModel by cardUiStateHolder.paymentCardUiModel
 
     val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember { mutableStateOf(dbId == EMPTY_DB_ID) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(dbId == EMPTY_DB_ID) }
 
     var isSavingInProgress by remember { mutableStateOf(false) }
 
@@ -155,7 +158,8 @@ fun CardInputScreen(
                 Modifier
                     .padding(innerPadding)
                     .padding(horizontal = 24.dp)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
         ) {
             Spacer(modifier = Modifier.height(14.dp))
             PaymentCardPlate(
