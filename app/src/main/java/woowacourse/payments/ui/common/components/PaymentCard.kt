@@ -50,8 +50,9 @@ fun PaymentCard(
                 .background(
                     color = Color(card?.cardCompany?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 12.dp)
-                .clickable(onClick = onClick),
+                )
+                .clickable(onClick = onClick)
+                .padding(horizontal = 12.dp),
     ) {
         Column {
             Text(
@@ -137,6 +138,7 @@ private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<Car
             number = "1111222233334444",
             expirationDate = "0925",
             holderName = "CREW",
+            password = "1234",
         )
 
     override val values: Sequence<CardUiModel?> =

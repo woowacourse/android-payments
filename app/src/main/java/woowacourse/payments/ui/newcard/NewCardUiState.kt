@@ -12,7 +12,7 @@ data class NewCardUiState(
     val cardExpirationDate: String = "",
     val isCardExpirationDateValid: Boolean = false,
     val cardHolderName: String = "",
-    val isCardHolderNameValid: Boolean = false,
+    val isCardHolderNameValid: Boolean = true,
     val cardPassword: String = "",
     val isCardPasswordValid: Boolean = false,
 ) : Parcelable {

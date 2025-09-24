@@ -11,6 +11,7 @@ data class CardUiModel(
     val number: String,
     val expirationDate: String,
     val holderName: String,
+    val password: String,
 ) : Parcelable
 
 fun NewCardUiState.toUiModel(): CardUiModel? =
@@ -21,6 +22,7 @@ fun NewCardUiState.toUiModel(): CardUiModel? =
                 number = cardNumber,
                 expirationDate = cardExpirationDate,
                 holderName = cardHolderName.trim(),
+                password = cardPassword,
             )
         }
 
@@ -28,7 +30,11 @@ fun CardUiModel.toUiState(): NewCardUiState =
     NewCardUiState(
         cardCompany = cardCompany,
         cardNumber = number,
+        isCardNumberValid = true,
         cardExpirationDate = expirationDate,
+        isCardExpirationDateValid = true,
         cardHolderName = holderName,
-        cardPassword = "",
+        isCardHolderNameValid = true,
+        cardPassword = password,
+        isCardPasswordValid = true,
     )

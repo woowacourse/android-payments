@@ -93,6 +93,7 @@ private class CardListScreenPreviewParameterProvider : PreviewParameterProvider<
             number = "1111 - 2222 - 3333 - 4444",
             expirationDate = "09 / 25",
             holderName = "CREW",
+            password = "1234",
         )
 
     override val values: Sequence<List<CardUiModel>> =
