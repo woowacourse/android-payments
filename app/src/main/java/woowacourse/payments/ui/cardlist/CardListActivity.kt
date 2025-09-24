@@ -47,7 +47,9 @@ class CardListActivity : ComponentActivity() {
                                 }
 
                                 is CardScreenType.Edit -> {
-                                    cards[type.index] = type.card
+                                    cards[type.index] = data.getParcelableExtraCompat<CardUiModel>(
+                                        ExtraKeys.KEY_ADDED_CARD,
+                                    ) ?: return@rememberLauncherForActivityResult
                                 }
                             }
                         }
