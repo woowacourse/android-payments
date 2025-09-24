@@ -29,7 +29,16 @@ class SubmitCardActivity : ComponentActivity() {
 
         setContent {
             AndroidpaymentsTheme {
-                val stateHolder = remember { SubmitCardScreenUiStateHolder(type) }
+                val stateHolder =
+                    remember {
+                        when (type) {
+                            is CardScreenType.AddCard -> SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder()
+                            is CardScreenType.EditCard ->
+                                SubmitCardScreenUiStateHolder.EditCardScreenUiStateHolder(
+                                    type.card,
+                                )
+                        }
+                    }
 
                 SubmitCardScreen(
                     stateHolder = stateHolder,

@@ -104,7 +104,7 @@ fun SubmitCardScreen(
 @Composable
 private fun SubmitCardScreenPreview() {
     SubmitCardScreen(
-        stateHolder = remember { SubmitCardScreenUiStateHolder(CardScreenType.AddCard) },
+        stateHolder = remember { SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder() },
         onSaveSuccess = { _ -> },
         onSaveFailure = {},
         onBackClick = {},

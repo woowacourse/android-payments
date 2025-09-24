@@ -16,18 +16,18 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
-class SubmitCardScreenUiStateHolder(
-    private val type: CardScreenType,
+sealed class SubmitCardScreenUiStateHolder(
+    initCard: CardUiModel,
 ) {
-    var cardNumber: String by mutableStateOf(type.card.cardNumber)
+    var cardNumber: String by mutableStateOf(initCard.cardNumber)
         private set
-    var expirationDate: String by mutableStateOf(type.card.expirationDate)
+    var expirationDate: String by mutableStateOf(initCard.expirationDate)
         private set
-    var cardholderName: String by mutableStateOf(type.card.cardholderName)
+    var cardholderName: String by mutableStateOf(initCard.cardholderName)
         private set
-    var passcode: String by mutableStateOf(type.card.passcode)
+    var passcode: String by mutableStateOf(initCard.passcode)
         private set
-    var cardCompany: CardCompanyUiModel by mutableStateOf(type.card.cardCompany)
+    var cardCompany: CardCompanyUiModel by mutableStateOf(initCard.cardCompany)
         private set
 
     var isCardNumberError: Boolean by mutableStateOf(false)
@@ -43,14 +43,7 @@ class SubmitCardScreenUiStateHolder(
     val card: CardUiModel
         get() = CardUiModel(cardNumber, expirationDate, cardholderName, passcode, cardCompany)
 
-    val isError: Boolean
-        get() {
-            if (type is CardScreenType.EditCard && type.card == card) return true
-            updateCardNumberError()
-            updateExpirationDateError()
-            updatePasscodeError()
-            return isCardNumberError || isExpirationDateError || isPasscodeError
-        }
+    abstract val isError: Boolean
 
     fun onCardNumberChanged(newValue: String) {
         val filteredValue: String =
@@ -88,11 +81,11 @@ class SubmitCardScreenUiStateHolder(
         shouldMoveFocus = false
     }
 
-    private fun updateCardNumberError() {
+    internal fun updateCardNumberError() {
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
     }
 
-    private fun updateExpirationDateError() {
+    internal fun updateExpirationDateError() {
         isExpirationDateError =
             runCatching {
                 val yearMonth =
@@ -101,8 +94,31 @@ class SubmitCardScreenUiStateHolder(
             }.isFailure
     }
 
-    private fun updatePasscodeError() {
+    internal fun updatePasscodeError() {
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
+    }
+
+    class AddCardScreenUiStateHolder : SubmitCardScreenUiStateHolder(CardUiModel.EMPTY) {
+        override val isError: Boolean
+            get() {
+                updateCardNumberError()
+                updateExpirationDateError()
+                updatePasscodeError()
+                return isCardNumberError || isExpirationDateError || isPasscodeError
+            }
+    }
+
+    class EditCardScreenUiStateHolder(
+        val initCard: CardUiModel,
+    ) : SubmitCardScreenUiStateHolder(initCard) {
+        override val isError: Boolean
+            get() {
+                if (card == initCard) return true
+                updateCardNumberError()
+                updateExpirationDateError()
+                updatePasscodeError()
+                return isCardNumberError || isExpirationDateError || isPasscodeError
+            }
     }
 
     companion object {
