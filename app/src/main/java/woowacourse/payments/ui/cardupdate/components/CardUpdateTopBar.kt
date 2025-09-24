@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.model.CardUpdateType
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

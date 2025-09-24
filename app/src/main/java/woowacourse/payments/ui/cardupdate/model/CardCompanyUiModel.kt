@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.model
+package woowacourse.payments.ui.cardupdate.model
 
 import android.os.Parcelable
 import androidx.annotation.DrawableRes

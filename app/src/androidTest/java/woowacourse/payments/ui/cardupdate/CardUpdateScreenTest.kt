@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -7,11 +7,11 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.newcard.model.CardUpdateType
-import woowacourse.payments.ui.newcard.model.toUiModel
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
+import woowacourse.payments.ui.cardupdate.model.toUiModel
 
 @Suppress("ktlint:standard:function-naming")
-class NewCardScreenTest {
+class CardUpdateScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 

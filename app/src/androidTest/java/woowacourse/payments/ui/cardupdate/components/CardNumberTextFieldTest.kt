@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @Suppress("ktlint:standard:function-naming")
-class CardExpirationDateTextFieldTest {
+class CardNumberTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -21,20 +21,20 @@ class CardExpirationDateTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var text by remember { mutableStateOf("") }
-            CardExpirationDateTextField(value = text, onValueChange = { text = it }, isValid = true)
+            CardNumberTextField(value = text, onValueChange = { text = it }, isValid = true)
         }
     }
 
     @Test
-    fun 카드_만료일_필드에_값을_입력하면_자동으로_기호가_삽입된다() {
+    fun 카드_번호_필드에_값을_입력하면_자동으로_기호가_삽입된다() {
         // given
-        val input = "1234"
+        val input = "1234".repeat(4)
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 번호")
             .performTextInput(input)
-        val expected = "12 / 34"
+        val expected = "1234 - 1234 - 1234 - 1234"
 
         // then
         composeTestRule
@@ -43,15 +43,15 @@ class CardExpirationDateTextFieldTest {
     }
 
     @Test
-    fun 카드_만료일_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
+    fun 카드_번호_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
         // given
-        val input = "12345"
+        val input = "1234".repeat(5)
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 번호")
             .performTextInput(input)
-        val expected = "12 / 34"
+        val expected = "1234 - 1234 - 1234 - 1234"
 
         // then
         composeTestRule
@@ -62,13 +62,13 @@ class CardExpirationDateTextFieldTest {
     @Test
     fun 숫자가_아닌_값은_입력되지_않는다() {
         // given
-        val input = "12a"
+        val input = "123a"
 
         // when
         composeTestRule
-            .onNodeWithText("만료일")
+            .onNodeWithText("카드 번호")
             .performTextInput(input)
-        val expected = "12"
+        val expected = "123"
 
         // then
         composeTestRule

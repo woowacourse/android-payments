@@ -12,9 +12,9 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import woowacourse.payments.ui.cardupdate.CardUpdateActivity
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.NewCardActivity
-import woowacourse.payments.ui.newcard.model.CardUpdateType
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableCompat
 
@@ -33,7 +33,7 @@ class CardListActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                         if (result.resultCode == Activity.RESULT_OK) {
                             result.data
-                                ?.getParcelableCompat<CardUiModel>(NewCardActivity.INTENT_CARD_KEY)
+                                ?.getParcelableCompat<CardUiModel>(CardUpdateActivity.INTENT_CARD_KEY)
                                 ?.let { newCard: CardUiModel ->
                                     when (val type = cardUpdateType) {
                                         CardUpdateType.Add -> cards.add(newCard)
@@ -51,11 +51,11 @@ class CardListActivity : ComponentActivity() {
                 CardListScreen(
                     cards = cards,
                     onAddCardClick = {
-                        newCardLauncher.launch(NewCardActivity.newIntent(this, null))
+                        newCardLauncher.launch(CardUpdateActivity.newIntent(this, null))
                         cardUpdateType = CardUpdateType.Add
                     },
                     onCardClick = { card: CardUiModel ->
-                        newCardLauncher.launch(NewCardActivity.newIntent(this, card))
+                        newCardLauncher.launch(CardUpdateActivity.newIntent(this, card))
                         cardUpdateType = CardUpdateType.Edit(card)
                     },
                 )

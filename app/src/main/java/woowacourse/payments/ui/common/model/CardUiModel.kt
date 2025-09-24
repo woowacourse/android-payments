@@ -2,8 +2,8 @@ package woowacourse.payments.ui.common.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.newcard.NewCardUiState
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.CardUpdateUiState
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 
 @Parcelize
 data class CardUiModel(
@@ -14,7 +14,7 @@ data class CardUiModel(
     val password: String,
 ) : Parcelable
 
-fun NewCardUiState.toUiModel(): CardUiModel? =
+fun CardUpdateUiState.toUiModel(): CardUiModel? =
     cardCompany
         ?.let { company: CardCompanyUiModel ->
             CardUiModel(
@@ -26,8 +26,8 @@ fun NewCardUiState.toUiModel(): CardUiModel? =
             )
         }
 
-fun CardUiModel.toUiState(): NewCardUiState =
-    NewCardUiState(
+fun CardUiModel.toUiState(): CardUpdateUiState =
+    CardUpdateUiState(
         cardCompany = cardCompany,
         cardNumber = number,
         isCardNumberValid = true,

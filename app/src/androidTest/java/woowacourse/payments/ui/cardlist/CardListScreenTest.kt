@@ -7,8 +7,8 @@ import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class CardListScreenTest {

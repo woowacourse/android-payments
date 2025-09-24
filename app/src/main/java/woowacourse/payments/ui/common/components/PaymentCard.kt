@@ -27,8 +27,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Composable
 fun PaymentCard(
@@ -50,8 +50,7 @@ fun PaymentCard(
                 .background(
                     color = Color(card?.cardCompany?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable(onClick = onClick)
+                ).clickable(onClick = onClick)
                 .padding(horizontal = 12.dp),
     ) {
         Column {

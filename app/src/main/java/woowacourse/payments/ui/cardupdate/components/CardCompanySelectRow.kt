@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardCompany
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.model.toUiModel
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.model.toUiModel
 
 private const val COLUMN_COUNT = 4
 

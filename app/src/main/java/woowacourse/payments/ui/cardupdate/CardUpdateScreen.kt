@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,18 +24,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.cardupdate.components.CardExpirationDateTextField
+import woowacourse.payments.ui.cardupdate.components.CardHolderNameTextField
+import woowacourse.payments.ui.cardupdate.components.CardNumberTextField
+import woowacourse.payments.ui.cardupdate.components.CardPasswordTextField
+import woowacourse.payments.ui.cardupdate.components.CompanySelectBottomSheet
+import woowacourse.payments.ui.cardupdate.components.NewCardTopBar
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
+import woowacourse.payments.ui.cardupdate.model.toUiModel
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.common.model.toUiState
-import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
-import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
-import woowacourse.payments.ui.newcard.components.CardNumberTextField
-import woowacourse.payments.ui.newcard.components.CardPasswordTextField
-import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
-import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.model.CardUpdateType
-import woowacourse.payments.ui.newcard.model.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,14 +45,14 @@ fun NewCardScreen(
     onBackClick: () -> Unit,
     onSaveClick: (CardUiModel) -> Unit,
 ) {
-    val initialUiState: NewCardUiState =
+    val initialUiState: CardUpdateUiState =
         when (updateType) {
-            CardUpdateType.Add -> NewCardUiState()
+            CardUpdateType.Add -> CardUpdateUiState()
             is CardUpdateType.Edit -> updateType.card.toUiState()
         }
-    val stateHolder: NewCardStateHolder =
+    val stateHolder: CardUpdateStateHolder =
         rememberNewCardState(initialUiState)
-    val uiState: NewCardUiState = stateHolder.uiState
+    val uiState: CardUpdateUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()
 

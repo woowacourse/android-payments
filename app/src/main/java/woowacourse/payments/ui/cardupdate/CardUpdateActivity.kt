@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import android.content.Context
 import android.content.Intent
@@ -9,13 +9,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
+import woowacourse.payments.ui.cardupdate.model.toUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CardUpdateType
-import woowacourse.payments.ui.newcard.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableCompat
 
-class NewCardActivity : ComponentActivity() {
+class CardUpdateActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -59,7 +59,7 @@ class NewCardActivity : ComponentActivity() {
             context: Context,
             card: CardUiModel?,
         ): Intent =
-            Intent(context, NewCardActivity::class.java).apply {
+            Intent(context, CardUpdateActivity::class.java).apply {
                 putExtra(INTENT_CARD_KEY, card)
             }
     }

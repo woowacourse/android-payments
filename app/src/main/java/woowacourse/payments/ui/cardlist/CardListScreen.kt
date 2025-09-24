@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardlist.components.AddPaymentCard
 import woowacourse.payments.ui.cardlist.components.CardListTopBar
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 
 @Composable
 fun CardListScreen(

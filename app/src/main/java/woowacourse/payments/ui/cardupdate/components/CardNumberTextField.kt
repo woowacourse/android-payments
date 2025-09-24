@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
