@@ -6,6 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertTrue
 import woowacourse.payments.ui.HWANNOW_CARD
 import woowacourse.payments.ui.updateInitialCard
 
@@ -62,6 +63,6 @@ class NewCardScreenTest {
             .performClick()
 
         // then
-        isSaved = true
+        assertTrue(isSaved)
     }
 }
