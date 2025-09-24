@@ -23,3 +23,12 @@ fun NewCardUiState.toUiModel(): CardUiModel? =
                 holderName = cardHolderName.trim(),
             )
         }
+
+fun CardUiModel.toUiState(): NewCardUiState =
+    NewCardUiState(
+        cardCompany = cardCompany,
+        cardNumber = number,
+        cardExpirationDate = expirationDate,
+        cardHolderName = holderName,
+        cardPassword = "",
+    )

@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
+import woowacourse.payments.ui.common.model.toUiState
 import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
@@ -38,11 +39,13 @@ import woowacourse.payments.ui.newcard.model.toUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
+    card: CardUiModel? = null,
     companies: List<CardCompanyUiModel> = emptyList(),
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
-    stateHolder: NewCardStateHolder = rememberNewCardState(),
 ) {
+    val stateHolder: NewCardStateHolder =
+        rememberNewCardState(card?.toUiState() ?: NewCardUiState())
     val uiState: NewCardUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()

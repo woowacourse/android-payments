@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.common.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 fun PaymentCard(
     modifier: Modifier = Modifier,
     card: CardUiModel? = null,
+    onClick: () -> Unit = {},
 ) {
     val cardCompanyDescription = stringResource(R.string.card_company_description)
     val cardNumberDescription = stringResource(R.string.card_number_description)
@@ -48,7 +50,8 @@ fun PaymentCard(
                 .background(
                     color = Color(card?.cardCompany?.color ?: 0xFF333333),
                     shape = RoundedCornerShape(5.dp),
-                ).padding(horizontal = 12.dp),
+                ).padding(horizontal = 12.dp)
+                .clickable(onClick = onClick),
     ) {
         Column {
             Text(

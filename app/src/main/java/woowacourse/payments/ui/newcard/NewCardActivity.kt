@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,18 +12,22 @@ import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.getParcelableCompat
 
 class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val card: CardUiModel? = intent.getParcelableCompat(INTENT_CARD_KEY)
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
+                    card = card,
                     companies = CardCompany.entries.map(CardCompany::toUiModel),
                     onBackClick = { finish() },
-                    onSaveClick = { card: CardUiModel ->
-                        saveCard(card)
+                    onSaveClick = { newCard: CardUiModel ->
+                        if (card == null) saveCard(newCard) else editCard(newCard)
                         showToast(getString(R.string.card_added_message))
                         finish()
                     },
@@ -34,8 +37,13 @@ class NewCardActivity : ComponentActivity() {
     }
 
     private fun saveCard(card: CardUiModel) {
-        val intent = Intent().apply { putExtra(INTENT_NEW_CARD_KEY, card) }
-        setResult(Activity.RESULT_OK, intent)
+        val intent = Intent().apply { putExtra(INTENT_CARD_KEY, card) }
+        setResult(RESULT_CODE_SAVE, intent)
+    }
+
+    private fun editCard(card: CardUiModel) {
+        val intent = Intent().apply { putExtra(INTENT_CARD_KEY, card) }
+        setResult(RESULT_CODE_EDIT, intent)
     }
 
     private fun showToast(message: String) {
@@ -43,8 +51,16 @@ class NewCardActivity : ComponentActivity() {
     }
 
     companion object {
-        const val INTENT_NEW_CARD_KEY = "new_card"
+        const val RESULT_CODE_SAVE = 0
+        const val RESULT_CODE_EDIT = 1
+        const val INTENT_CARD_KEY = "card"
 
-        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
+        fun newIntent(
+            context: Context,
+            card: CardUiModel?,
+        ): Intent =
+            Intent(context, NewCardActivity::class.java).apply {
+                putExtra(INTENT_CARD_KEY, card)
+            }
     }
 }
