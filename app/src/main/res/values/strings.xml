@@ -6,7 +6,7 @@
     <string name="card_list_add_card_button_text">추가</string>
 
     <string name="submit_card_back_button_description">뒤로 가기</string>
-    <string name="submit_card_save_button_description">완료</string>
+    <string name="submit_card_submit_button_description">완료</string>
     <string name="submit_card_card_company_icon_description">카드사 아이콘</string>
     <string name="submit_card_failure_message">카드 정보를 다시 확인해주세요.</string>
 

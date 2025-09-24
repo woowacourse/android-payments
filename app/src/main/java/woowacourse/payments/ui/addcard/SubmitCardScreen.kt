@@ -92,7 +92,7 @@ fun SubmitCardScreen(
         topBar = {
             SubmitCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { submitCard() },
+                onSubmitClick = { submitCard() },
             )
         },
     ) { innerPadding: PaddingValues ->

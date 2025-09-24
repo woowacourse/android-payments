@@ -17,8 +17,8 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubmitCardTopBar(
+    onSubmitClick: () -> Unit,
     onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -32,10 +32,10 @@ fun SubmitCardTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = { onSubmitClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.submit_card_save_button_description),
+                    contentDescription = stringResource(R.string.submit_card_submit_button_description),
                 )
             }
         },
@@ -47,7 +47,7 @@ fun SubmitCardTopBar(
 @Composable
 private fun SubmitCardTopBarPreview() {
     SubmitCardTopBar(
+        onSubmitClick = {},
         onBackClick = {},
-        onSaveClick = {},
     )
 }
