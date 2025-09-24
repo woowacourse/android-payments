@@ -44,6 +44,10 @@ fun CardListScreen() {
         launcher.launch(CardRegisterActivity.newIntent(context))
     }
 
+    fun launchCardEdit(card: CardUiModel) {
+        launcher.launch(CardRegisterActivity.editCardIntent(card))
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -78,11 +82,15 @@ fun CardListScreen() {
                     OneCardScreen(
                         card = (stateHolder.uiState as CardListUiState.Single).card,
                         onAddNewCardClick = { launchCardRegister() },
+                        onEditCardClick = { selectedCard -> launchCardEdit(selectedCard) },
                     )
                 }
 
                 is CardListUiState.Multiple -> {
-                    MultipleCardsScreen(cards = (stateHolder.uiState as CardListUiState.Multiple).cards)
+                    MultipleCardsScreen(
+                        cards = (stateHolder.uiState as CardListUiState.Multiple).cards,
+                        onEditCardClick = { selectedCard -> launchCardEdit(selectedCard) },
+                    )
                 }
             }
         }

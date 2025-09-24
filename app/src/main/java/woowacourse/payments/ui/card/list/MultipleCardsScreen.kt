@@ -17,7 +17,7 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun MultipleCardsScreen(cards: List<CardUiModel>) {
+fun MultipleCardsScreen(cards: List<CardUiModel>, onEditCardClick: (CardUiModel) -> Unit) {
     Column(
         modifier =
             Modifier
@@ -32,6 +32,7 @@ fun MultipleCardsScreen(cards: List<CardUiModel>) {
                 ownerName = card.cardHolderName,
                 bankName = card.bankName,
                 backgroundColor = Color(card.bankColor),
+                onClick = { onEditCardClick(card) },
             )
             Spacer(modifier = Modifier.height(36.dp))
         }
@@ -44,6 +45,7 @@ fun MultipleCardsScreenPreview() {
     val cards =
         listOf(
             CardUiModel(
+                id = 1,
                 number = "1234 - 5678 - **** - ****",
                 expirationDate = "11/24",
                 cardHolderName = "TAMA ONE",
@@ -51,6 +53,7 @@ fun MultipleCardsScreenPreview() {
                 bankColor = 0xFFFBC02D,
             ),
             CardUiModel(
+                id = 2,
                 number = "1234 - 5678 - **** - ****",
                 expirationDate = "11/24",
                 cardHolderName = "TAMA TWO",
@@ -58,6 +61,7 @@ fun MultipleCardsScreenPreview() {
                 bankColor = 0xFFFBC02D,
             ),
             CardUiModel(
+                id = 3,
                 number = "1234 - 5678 - **** - ****",
                 expirationDate = "11/24",
                 cardHolderName = "TAMA THREE",
@@ -68,6 +72,7 @@ fun MultipleCardsScreenPreview() {
     AndroidpaymentsTheme {
         MultipleCardsScreen(
             cards = cards,
+            onEditCardClick = {},
         )
     }
 }

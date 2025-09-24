@@ -15,6 +15,7 @@ class CardRegisterActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         val cardToEdit = intent.getParcelableExtra<CardUiModel>(EXTRA_EDIT_CARD)
+
         setContent {
             AndroidpaymentsTheme {
                 RegisterCardScreen(

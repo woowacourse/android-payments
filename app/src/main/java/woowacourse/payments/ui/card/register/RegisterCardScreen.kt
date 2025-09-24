@@ -28,6 +28,7 @@ import woowacourse.payments.ui.theme.DEFAULT_CARD_COLOR
 
 @Composable
 fun RegisterCardScreen(
+    cardToEdit: CardUiModel? = null,
     onCardSaved: (newCardUiModel: CardUiModel) -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -58,6 +59,7 @@ fun RegisterCardScreen(
                         .align(Alignment.CenterHorizontally),
                 bankName = uiState.selectedBank?.name,
                 backgroundColor = uiState.selectedBank?.color() ?: DEFAULT_CARD_COLOR,
+                onClick = {},
             )
             CardNumberTextField(
                 value = uiState.cardNumber,

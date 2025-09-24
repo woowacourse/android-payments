@@ -26,6 +26,7 @@ fun PaymentCard(
     ownerName: String? = null,
     bankName: String? = null,
     backgroundColor: Color,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier =
@@ -90,5 +91,6 @@ fun PaymentCardPreview() {
         ownerName = "TAMA SEO",
         bankName = "국민카드",
         backgroundColor = Color(0xFF333333),
+        onClick = {}
     )
 }

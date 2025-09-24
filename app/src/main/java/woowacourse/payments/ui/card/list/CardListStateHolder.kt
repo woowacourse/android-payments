@@ -19,6 +19,11 @@ class CardListStateHolder {
         updateUiState()
     }
 
+    fun updateCard(updatedCard: CardUiModel) {
+        cards = cards.map { if (it.id == updatedCard.id) updatedCard else it }
+        updateUiState()
+    }
+
     private fun updateUiState() {
         uiState =
             when {
