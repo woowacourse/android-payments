@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.domain.Card
+import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class RegisterCardActivity : ComponentActivity() {
@@ -14,11 +15,15 @@ class RegisterCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        val registeredCard =
+            intent.getParcelableExtraCompat<Card>(KEY_CARD_TO_EDIT)
+
         setContent {
             AndroidpaymentsTheme {
                 CardRegisterScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card -> navigateToCards(card) },
+                    card = registeredCard,
                 )
             }
         }
@@ -27,7 +32,7 @@ class RegisterCardActivity : ComponentActivity() {
     private fun navigateToCards(card: Card) {
         val intent =
             Intent().apply {
-                putExtra(KEY_NEW_CARD, card)
+                putExtra(KEY_CARD_TO_SAVE, card)
             }
 
         setResult(RESULT_OK, intent)
@@ -35,8 +40,15 @@ class RegisterCardActivity : ComponentActivity() {
     }
 
     companion object {
-        const val KEY_NEW_CARD: String = "new_card"
+        const val KEY_CARD_TO_SAVE: String = "card_to_save"
+        private const val KEY_CARD_TO_EDIT = "card_to_edit"
 
-        fun newIntent(context: Context): Intent = Intent(context, RegisterCardActivity::class.java)
+        fun newIntent(
+            context: Context,
+            card: Card? = null,
+        ): Intent =
+            Intent(context, RegisterCardActivity::class.java).apply {
+                card?.let { putExtra(KEY_CARD_TO_EDIT, it) }
+            }
     }
 }

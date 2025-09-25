@@ -32,21 +32,35 @@ import woowacourse.payments.ui.toYearMonth
 
 @Composable
 fun CardRegisterScreen(
+    card: Card?,
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val stateHolder = rememberSaveable { CardInputFieldStateHolder() }
+    val stateHolder =
+        rememberSaveable {
+            CardInputFieldStateHolder().apply {
+                card?.let { setupRegisteredCardInfo(it) }
+            }
+        }
 
     Scaffold(
         topBar = {
             CardTopBar(
-                title = stringResource(R.string.card_register_top_bar_title),
+                title =
+                    if (card == null) {
+                        stringResource(R.string.card_register_top_bar_title)
+                    } else {
+                        stringResource(
+                            R.string.card_edit_top_bar_title,
+                        )
+                    },
                 onBackClick = onBackClick,
                 onSaveClick = {
                     val result =
                         Card.create(
+                            id = card?.id,
                             cardNumber = stateHolder.cardNumber,
                             expiryDate = stateHolder.expiryDate.toYearMonth(),
                             cardOwner = stateHolder.cardOwner,
@@ -81,6 +95,7 @@ fun CardRegisterScreen(
                 stateHolder = stateHolder,
                 onBackClick = onBackClick,
                 modifier = modifier,
+                card = card,
             )
         },
     )
@@ -89,6 +104,7 @@ fun CardRegisterScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CardRegisterContent(
+    card: Card?,
     innerPadding: PaddingValues,
     stateHolder: CardInputFieldStateHolder,
     onBackClick: () -> Unit,
@@ -118,6 +134,7 @@ private fun CardRegisterContent(
                 Modifier
                     .padding(top = 14.dp, bottom = 40.dp)
                     .align(Alignment.CenterHorizontally),
+            card = card,
         )
         CardInputFields(stateHolder = stateHolder)
     }
@@ -140,6 +157,7 @@ private fun RegisterCardScreenPreview() {
         CardRegisterScreen(
             onBackClick = { },
             onSaveClick = { },
+            card = null,
         )
     }
 }

@@ -11,16 +11,12 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.editcard.EditCardActivity
-import woowacourse.payments.ui.editcard.EditCardActivity.Companion.KEY_EDITED_CARD
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.registercard.RegisterCardActivity
-import woowacourse.payments.ui.registercard.RegisterCardActivity.Companion.KEY_NEW_CARD
+import woowacourse.payments.ui.registercard.RegisterCardActivity.Companion.KEY_CARD_TO_SAVE
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
-    private var cardToEditIndex: Int = INITIAL_INDEX
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,8 +28,17 @@ class CardsActivity : ComponentActivity() {
                         ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
                         if (activityResult.resultCode == RESULT_OK) {
-                            updateCardsViewFromRegisterCard(activityResult, stateHolder)
-                            updateCardsViewFromEditCard(activityResult, stateHolder)
+                            val newCard =
+                                activityResult.data?.getParcelableExtraCompat<Card>(KEY_CARD_TO_SAVE)
+                                    ?: return@rememberLauncherForActivityResult
+                            val cardIndex =
+                                stateHolder.cardsState.indexOfFirst { it.id == newCard.id }
+
+                            if (cardIndex == INVALID_INDEX) {
+                                stateHolder.cardsState.add(newCard)
+                            } else {
+                                stateHolder.cardsState[cardIndex] = newCard
+                            }
                         }
                     }
 
@@ -42,35 +47,9 @@ class CardsActivity : ComponentActivity() {
                     onCardAddClick = { navigateToRegisterCard(launcher) },
                     onCardClick = { cardToEdit ->
                         navigateToEditCard(cardToEdit, launcher)
-                        cardToEditIndex = stateHolder.cardsState.indexOfFirst { it == cardToEdit }
                     },
                 )
             }
-        }
-    }
-
-    private fun updateCardsViewFromRegisterCard(
-        activityResult: ActivityResult,
-        stateHolder: CardsStateHolder,
-    ) {
-        val newCard =
-            activityResult.data?.getParcelableExtraCompat<Card>(KEY_NEW_CARD)
-                ?: return
-        stateHolder.cardsState.add(newCard)
-    }
-
-    private fun updateCardsViewFromEditCard(
-        activityResult: ActivityResult,
-        stateHolder: CardsStateHolder,
-    ) {
-        val editedCard =
-            activityResult.data?.getParcelableExtraCompat<Card>(
-                KEY_EDITED_CARD,
-            ) ?: return
-
-        if (cardToEditIndex != INITIAL_INDEX) {
-            stateHolder.cardsState[cardToEditIndex] =
-                editedCard
         }
     }
 
@@ -83,11 +62,11 @@ class CardsActivity : ComponentActivity() {
         card: Card,
         launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
     ) {
-        val intent = EditCardActivity.newIntent(this, card)
+        val intent = RegisterCardActivity.newIntent(this, card)
         launcher.launch(intent)
     }
 
     companion object {
-        private const val INITIAL_INDEX: Int = -1
+        private const val INVALID_INDEX: Int = -1
     }
 }

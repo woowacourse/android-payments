@@ -25,7 +25,6 @@ fun RegisteredCards(
     ) {
         Spacer(modifier = Modifier.height(12.dp))
         cards.forEach { card ->
-
             PaymentCard(
                 bankViewType = card.bankType.toBankViewType(),
                 modifier = Modifier.padding(bottom = 36.dp),
@@ -42,6 +41,7 @@ private fun RegisteredCardsPreview() {
     val card =
         Card
             .create(
+                id = -1L,
                 cardNumber = "1234123412341234",
                 expiryDate = YearMonth.of(2035, 12),
                 cardOwner = "쥐돌킹",
