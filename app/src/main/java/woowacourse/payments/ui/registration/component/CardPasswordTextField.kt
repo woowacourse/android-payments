@@ -44,7 +44,7 @@ fun CardPasswordTextField(
         },
         value = cardPassword.value,
         onValueChange = { newValue -> onCardPasswordChanged(newValue) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = PasswordVisualTransformation(),
     )
 }

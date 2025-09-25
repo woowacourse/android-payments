@@ -39,7 +39,7 @@ fun CardNumberTextField(
         },
         value = cardNumber.value,
         onValueChange = { newValue -> onCardNumberChanged(newValue) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = CreditCardVisualTransformation,
     )
 }

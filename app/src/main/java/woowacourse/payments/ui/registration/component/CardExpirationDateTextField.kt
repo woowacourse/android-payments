@@ -40,7 +40,7 @@ fun CardExpirationDateTextField(
         onValueChange = { newExpirationDate: String -> onCardExpirationDateChanged(newExpirationDate) },
         isError = cardExpirationDate.errorMessage != null,
         supportingText = { if (cardExpirationDate.errorMessage != null) Text(text = cardExpirationDate.errorMessage) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = ExpirationDateVisualTransformation,
     )
 }
