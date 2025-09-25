@@ -43,10 +43,12 @@ fun NewCardScreen(
     var cardPassword by rememberSaveable { mutableStateOf(existingCard?.cardPassword ?: "") }
 
     var selectedCardCompany by rememberSaveable { mutableStateOf<CardCompanyUiModel?>(null) }
-    var showBottomSheet by rememberSaveable { mutableStateOf(existingCard == null) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
-        showBottomSheet = true
+        if (existingCard == null) {
+            showBottomSheet = true
+        }
     }
 
     val isChanges =
