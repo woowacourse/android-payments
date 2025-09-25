@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -38,13 +37,13 @@ fun NewCardScreen(
 ) {
     val isEditMode = existingCard != null
 
-    var cardNumber by remember { mutableStateOf("") }
-    var cardExpiryDate by remember { mutableStateOf("") }
-    var cardHolderName by remember { mutableStateOf("") }
-    var cardPassword by remember { mutableStateOf("") }
+    var cardNumber by rememberSaveable { mutableStateOf(existingCard?.cardNumber ?: "") }
+    var cardExpiryDate by rememberSaveable { mutableStateOf(existingCard?.cardExpiryDate ?: "") }
+    var cardHolderName by rememberSaveable { mutableStateOf(existingCard?.cardHolderName ?: "") }
+    var cardPassword by rememberSaveable { mutableStateOf(existingCard?.cardPassword ?: "") }
 
     var selectedCardCompany by rememberSaveable { mutableStateOf<CardCompanyUiModel?>(null) }
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(existingCard == null) }
 
     LaunchedEffect(Unit) {
         showBottomSheet = true
