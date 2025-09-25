@@ -22,7 +22,7 @@ import woowacourse.payments.ui.card.register.component.CardExpirationDateTextFie
 import woowacourse.payments.ui.card.register.component.CardHolderNameTextField
 import woowacourse.payments.ui.card.register.component.CardNumberTextField
 import woowacourse.payments.ui.card.register.component.CardPasswordTextField
-import woowacourse.payments.ui.card.register.component.NewCardTopBar
+import woowacourse.payments.ui.card.register.component.RegisterTopAppBar
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.DEFAULT_CARD_COLOR
 
@@ -45,9 +45,10 @@ fun RegisterCardScreen(
 
     Scaffold(
         topBar = {
-            NewCardTopBar(
+            RegisterTopAppBar(
                 onBackClick = onBackClick,
                 onSaveClick = { stateHolder.saveCard() },
+                isEditMode = cardToEdit != null,
             )
         },
     ) { innerPadding ->
