@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package woowacourse.payments.ui.registration
 
 import androidx.compose.foundation.clickable
@@ -10,18 +8,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import woowacourse.payments.ui.common.component.PaymentCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
@@ -42,12 +35,6 @@ fun CardRegistrationScreen(
 ) {
     val stateHolder =
         rememberSaveable(saver = CardRegistrationStateHolder.Saver) { CardRegistrationStateHolder() }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-        sheetState.show()
-    }
 
     Scaffold(
         topBar = {
@@ -58,15 +45,14 @@ fun CardRegistrationScreen(
             )
         },
     ) { innerPadding ->
-        if (sheetState.isVisible) {
+        if (stateHolder.isBottomSheetOpen) {
             CardCompanySelectBottomSheet(
-                sheetState = sheetState,
                 onCardCompanyClick = { cardCompany: CardCompanyUiModel ->
-                    coroutineScope.launch { sheetState.hide() }
+                    stateHolder.updateBottomSheetVisible(false)
                     stateHolder.updateCardCompany(cardCompany)
                 },
                 onDismissRequest =
-                    { coroutineScope.launch { sheetState.hide() } },
+                    { stateHolder.updateBottomSheetVisible(false) },
             )
         }
 
@@ -84,7 +70,7 @@ fun CardRegistrationScreen(
                 modifier =
                     Modifier
                         .align(Alignment.CenterHorizontally)
-                        .clickable { coroutineScope.launch { sheetState.show() } },
+                        .clickable { stateHolder.updateBottomSheetVisible(true) },
                 card = stateHolder.uiState.card,
             )
 

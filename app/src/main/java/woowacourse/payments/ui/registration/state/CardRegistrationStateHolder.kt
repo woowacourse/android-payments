@@ -13,8 +13,14 @@ import woowacourse.payments.ui.model.CardholderNameUiModel
 
 class CardRegistrationStateHolder(
     uiState: CardRegistrationScreenUiState = CardRegistrationScreenUiState(),
+    isBottomSheetOpen: Boolean = true,
 ) {
     var uiState by mutableStateOf(uiState)
+    var isBottomSheetOpen by mutableStateOf(isBottomSheetOpen)
+
+    fun updateBottomSheetVisible(isOpen: Boolean) {
+        isBottomSheetOpen = isOpen
+    }
 
     fun updateCardNumber(number: String) {
         val newCardNumber = runCatching { CardNumberUiModel(number) }.getOrNull() ?: return
@@ -70,12 +76,24 @@ class CardRegistrationStateHolder(
         }
 
     companion object {
+        private const val SAVER_UI_STATE_KEY = "uiState"
+        private const val SAVER_IS_BOTTOM_SHEET_OPEN_KEY = "isBottomSheetOpen"
+
         val Saver: Saver<CardRegistrationStateHolder, *> =
             mapSaver(
-                save = { holder -> mapOf("uiState" to holder.uiState) },
+                save = { holder ->
+                    mapOf(
+                        SAVER_UI_STATE_KEY to holder.uiState,
+                        SAVER_IS_BOTTOM_SHEET_OPEN_KEY to holder.isBottomSheetOpen,
+                    )
+                },
                 restore = { map ->
-                    val uiState = map["uiState"] as CardRegistrationScreenUiState
-                    CardRegistrationStateHolder(uiState = uiState)
+                    val uiState = map[SAVER_UI_STATE_KEY] as CardRegistrationScreenUiState
+                    val isBottomSheetOpen = map[SAVER_IS_BOTTOM_SHEET_OPEN_KEY] as Boolean
+                    CardRegistrationStateHolder(
+                        uiState = uiState,
+                        isBottomSheetOpen = isBottomSheetOpen,
+                    )
                 },
             )
     }
