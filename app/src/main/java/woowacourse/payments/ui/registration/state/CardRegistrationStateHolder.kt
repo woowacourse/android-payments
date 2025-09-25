@@ -24,11 +24,8 @@ class CardRegistrationStateHolder(
 
     fun updateCardNumber(number: String) {
         val newCardNumber = runCatching { CardNumberUiModel(number) }.getOrNull() ?: return
-        uiState =
-            uiState.copy(
-                cardNumber = newCardNumber,
-                card = uiState.card.copy(cardNumberUiModel = newCardNumber),
-            )
+        val updatedCard = uiState.card.copy(cardNumberUiModel = newCardNumber)
+        uiState = uiState.copy(card = updatedCard)
     }
 
     fun updateCardExpirationDate(expirationDate: String) {
@@ -36,43 +33,35 @@ class CardRegistrationStateHolder(
             runCatching { CardExpirationDateUiModel(expirationDate) }.getOrNull() ?: return
         val validatedCardExpirationDate =
             newCardExpirationDate.toValidatedCardExpirationDateUiModel()
-        uiState =
-            uiState.copy(
-                cardExpirationDate = validatedCardExpirationDate,
-                card = uiState.card.copy(cardExpirationDateUiModel = validatedCardExpirationDate),
-            )
+        val updatedCard = uiState.card.copy(cardExpirationDateUiModel = validatedCardExpirationDate)
+        uiState = uiState.copy(card = updatedCard)
     }
 
     fun updateCardholderName(name: String) {
         val newCardholderName =
             runCatching { CardholderNameUiModel(name.uppercase()) }.getOrNull() ?: return
-        uiState =
-            uiState.copy(
-                cardholderName = newCardholderName,
-                card = uiState.card.copy(cardholderNameUiModel = newCardholderName),
-            )
+        val updatedCard = uiState.card.copy(cardholderNameUiModel = newCardholderName)
+        uiState = uiState.copy(card = updatedCard)
     }
 
     fun updatePassword(password: String) {
         val newPassword = runCatching { CardPasswordUiModel(password) }.getOrNull() ?: return
-        uiState = uiState.copy(cardPassword = newPassword)
+        val updatedCard = uiState.card.copy(cardPasswordUiModel = newPassword)
+        uiState = uiState.copy(card = updatedCard)
     }
 
     fun updateCardCompany(cardCompany: CardCompanyUiModel) {
         if (cardCompany == CardCompanyUiModel.NOT_SELECT) return
-        uiState =
-            uiState.copy(
-                cardCompany = cardCompany,
-                card = uiState.card.copy(cardCompanyUiModel = cardCompany),
-            )
+        val updatedCard = uiState.card.copy(cardCompanyUiModel = cardCompany)
+        uiState = uiState.copy(card = updatedCard)
     }
 
     fun isRegistrableCard(): Boolean =
-        uiState.run {
-            cardNumber.isValid() &&
-                cardExpirationDate.isValid() &&
-                cardPassword.isValid() &&
-                cardCompany.isSelect()
+        uiState.card.run {
+            cardNumberUiModel.isValid() &&
+                cardExpirationDateUiModel.isValid() &&
+                cardPasswordUiModel.isValid() &&
+                cardCompanyUiModel.isSelect()
         }
 
     companion object {

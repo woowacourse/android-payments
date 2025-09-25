@@ -11,6 +11,7 @@ data class CardUiModel(
     val cardholderNameUiModel: CardholderNameUiModel = CardholderNameUiModel(),
     val cardNumberUiModel: CardNumberUiModel = CardNumberUiModel(),
     val cardExpirationDateUiModel: CardExpirationDateUiModel = CardExpirationDateUiModel(),
+    val cardPasswordUiModel: CardPasswordUiModel = CardPasswordUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
     val cardholderName: String? get() = cardholderNameUiModel.nameOrNull()

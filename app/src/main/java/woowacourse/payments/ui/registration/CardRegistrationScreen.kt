@@ -78,7 +78,7 @@ fun CardRegistrationScreen(
 
             CardNumberTextField(
                 modifier = Modifier.fillMaxWidth(),
-                cardNumber = stateHolder.uiState.cardNumber,
+                cardNumber = stateHolder.uiState.card.cardNumberUiModel,
                 onCardNumberChanged = { number: String ->
                     stateHolder.updateCardNumber(number = number)
                 },
@@ -87,7 +87,7 @@ fun CardRegistrationScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             CardExpirationDateTextField(
-                cardExpirationDate = stateHolder.uiState.cardExpirationDate,
+                cardExpirationDate = stateHolder.uiState.card.cardExpirationDateUiModel,
                 onCardExpirationDateChanged = { expirationDate: String ->
                     stateHolder.updateCardExpirationDate(expirationDate)
                 },
@@ -97,7 +97,7 @@ fun CardRegistrationScreen(
 
             CardholderNameTextField(
                 modifier = Modifier.fillMaxWidth(),
-                cardholderName = stateHolder.uiState.cardholderName,
+                cardholderName = stateHolder.uiState.card.cardholderNameUiModel,
                 onCardholderNameChanged = { name: String ->
                     stateHolder.updateCardholderName(name)
                 },
@@ -106,7 +106,7 @@ fun CardRegistrationScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             CardPasswordTextField(
-                cardPassword = stateHolder.uiState.cardPassword,
+                cardPassword = stateHolder.uiState.card.cardPasswordUiModel,
                 onCardPasswordChanged = { password: String ->
                     stateHolder.updatePassword(password)
                 },
