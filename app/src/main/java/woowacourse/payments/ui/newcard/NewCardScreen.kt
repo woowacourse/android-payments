@@ -51,13 +51,13 @@ fun NewCardScreen(
 
     val isChanges =
         !isEditMode ||
-            existingCard?.let {
-                it.cardNumber != cardNumber ||
-                    it.cardExpiryDate != cardExpiryDate ||
-                    it.cardHolderName != cardHolderName ||
-                    it.cardPassword != cardPassword ||
-                    it.cardCompanyUiModel != selectedCardCompany
-            } == true
+            existingCard?.isDifferentFrom(
+                cardNumber,
+                cardExpiryDate,
+                cardHolderName,
+                cardPassword,
+                selectedCardCompany,
+            ) == true
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
