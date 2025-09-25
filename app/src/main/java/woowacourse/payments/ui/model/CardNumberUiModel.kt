@@ -7,7 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CardNumberUiModel(
     val value: String = "",
-    val errorMessage: String? = null,
 ) : Parcelable {
     init {
         require(value.isDigitsOnly())

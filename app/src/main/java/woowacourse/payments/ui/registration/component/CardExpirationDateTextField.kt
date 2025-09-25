@@ -20,6 +20,7 @@ fun CardExpirationDateTextField(
     cardExpirationDate: CardExpirationDateUiModel,
     onCardExpirationDateChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
+    errorMessage: String? = null,
 ) {
     val cardExpirationDateTextFieldDescription =
         stringResource(R.string.card_expiration_date_text_field_description)
@@ -38,8 +39,8 @@ fun CardExpirationDateTextField(
         },
         value = cardExpirationDate.value,
         onValueChange = { newExpirationDate: String -> onCardExpirationDateChanged(newExpirationDate) },
-        isError = cardExpirationDate.errorMessage != null,
-        supportingText = { if (cardExpirationDate.errorMessage != null) Text(text = cardExpirationDate.errorMessage) },
+        isError = errorMessage != null,
+        supportingText = { errorMessage?.let { Text(text = it) } },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         visualTransformation = ExpirationDateVisualTransformation,
     )
