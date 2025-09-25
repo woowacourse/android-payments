@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.Bank
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.domain.color
 import woowacourse.payments.ui.card.component.PaymentCard
 import woowacourse.payments.ui.card.register.component.BankSelectBottomSheet
 import woowacourse.payments.ui.card.register.component.CardExpirationDateTextField
@@ -24,7 +24,6 @@ import woowacourse.payments.ui.card.register.component.CardNumberTextField
 import woowacourse.payments.ui.card.register.component.CardPasswordTextField
 import woowacourse.payments.ui.card.register.component.RegisterTopAppBar
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.theme.DEFAULT_CARD_COLOR
 
 @Composable
 fun RegisterCardScreen(
@@ -42,6 +41,7 @@ fun RegisterCardScreen(
             )
         }
     val uiState = stateHolder.uiState
+    val cardPreview = uiState.toUiModel()
 
     Scaffold(
         topBar = {
@@ -64,11 +64,11 @@ fun RegisterCardScreen(
                     Modifier
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
-                cardNumber = uiState.cardNumber,
-                expiredDate = uiState.expirationDate,
-                ownerName = uiState.cardHolderName,
-                bankName = uiState.selectedBank?.name,
-                backgroundColor = uiState.selectedBank?.color() ?: DEFAULT_CARD_COLOR,
+                cardNumber = cardPreview.maskedNumber,
+                expiredDate = cardPreview.formattedExpirationDate,
+                ownerName = cardPreview.cardHolderName,
+                bankName = cardPreview.bankName,
+                backgroundColor = Color(cardPreview.bankColor),
                 onClick = {},
             )
             CardNumberTextField(

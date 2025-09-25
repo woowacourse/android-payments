@@ -2,7 +2,7 @@ package woowacourse.payments.domain
 
 data class Card(
     val id: Long,
-    val number: CardNumber,
+    val cardNumber: CardNumber,
     val expirationDate: ExpirationDate,
     val cardHolderName: CardHolderName,
     val password: Password,
@@ -22,7 +22,7 @@ data class Card(
             runCatching {
                 Card(
                     id = id ?: generateId(),
-                    number = CardNumber(number),
+                    cardNumber = CardNumber(number),
                     expirationDate = ExpirationDate(expirationDate),
                     cardHolderName = CardHolderName(cardHolderName),
                     password = Password(password),

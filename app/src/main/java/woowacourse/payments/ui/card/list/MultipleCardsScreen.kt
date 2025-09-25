@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.card.component.PaymentCard
@@ -17,7 +16,10 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun MultipleCardsScreen(cards: List<CardUiModel>, onEditCardClick: (CardUiModel) -> Unit) {
+fun MultipleCardsScreen(
+    cards: List<CardUiModel>,
+    onEditCardClick: (CardUiModel) -> Unit,
+) {
     Column(
         modifier =
             Modifier
@@ -27,8 +29,8 @@ fun MultipleCardsScreen(cards: List<CardUiModel>, onEditCardClick: (CardUiModel)
     ) {
         cards.forEach { card ->
             PaymentCard(
-                cardNumber = card.number,
-                expiredDate = card.expirationDate,
+                cardNumber = card.maskedNumber,
+                expiredDate = card.formattedExpirationDate,
                 ownerName = card.cardHolderName,
                 bankName = card.bankName,
                 backgroundColor = Color(card.bankColor),
@@ -46,27 +48,33 @@ fun MultipleCardsScreenPreview() {
         listOf(
             CardUiModel(
                 id = 1,
-                number = "1234 - 5678 - **** - ****",
-                expirationDate = "11/24",
+                number = "1234567812345678",
+                expirationDate = "1124",
                 cardHolderName = "TAMA ONE",
                 bankName = "국민카드",
                 bankColor = 0xFFFBC02D,
+                maskedNumber = "1234 - 5678 - **** - ****",
+                formattedExpirationDate = "11/24",
             ),
             CardUiModel(
                 id = 2,
-                number = "1234 - 5678 - **** - ****",
-                expirationDate = "11/24",
+                number = "1234567812345678",
+                expirationDate = "1124",
                 cardHolderName = "TAMA TWO",
                 bankName = "신한카드",
                 bankColor = 0xFFFBC02D,
+                maskedNumber = "1234 - 5678 - **** - ****",
+                formattedExpirationDate = "11/24",
             ),
             CardUiModel(
                 id = 3,
-                number = "1234 - 5678 - **** - ****",
-                expirationDate = "11/24",
+                number = "1234567812345678",
+                expirationDate = "1124",
                 cardHolderName = "TAMA THREE",
                 bankName = "카카오뱅크",
                 bankColor = 0xFFFBC02D,
+                maskedNumber = "1234 - 5678 - **** - ****",
+                formattedExpirationDate = "11/24",
             ),
         )
     AndroidpaymentsTheme {

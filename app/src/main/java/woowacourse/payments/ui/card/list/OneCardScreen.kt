@@ -28,8 +28,8 @@ fun OneCardScreen(
     ) {
         Spacer(modifier = Modifier.padding(top = 36.dp))
         PaymentCard(
-            cardNumber = card.number,
-            expiredDate = card.expirationDate,
+            cardNumber = card.maskedNumber,
+            expiredDate = card.formattedExpirationDate,
             ownerName = card.cardHolderName,
             bankName = card.bankName,
             backgroundColor = Color(card.bankColor),
@@ -46,11 +46,14 @@ fun OneCardScreenPreview() {
     val card =
         CardUiModel(
             id = 1,
-            number = "1234 - 5678 - **** - ****",
-            expirationDate = "11/24",
+            number = "1234567812345678",
+            maskedNumber = "1234 - 5678 - **** - ****",
+            expirationDate = "1124",
+            formattedExpirationDate = "11/24",
             cardHolderName = "TAMA ONE",
             bankName = "국민카드",
             bankColor = 0xFFFBC02D,
+
         )
 
     AndroidpaymentsTheme {
