@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardUiModel(
+    val id: Long? = null,
     val cardCompanyUiModel: CardCompanyUiModel = CardCompanyUiModel.NOT_SELECT,
     val cardholderNameUiModel: CardholderNameUiModel = CardholderNameUiModel(),
     val cardNumberUiModel: CardNumberUiModel = CardNumberUiModel(),
