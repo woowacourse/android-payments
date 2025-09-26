@@ -62,18 +62,18 @@ private fun CardListTopBarWithTwoCardsPreview() {
             remember {
                 mutableStateListOf(
                     Card(
-                        CardNumber("1234123412341234"),
-                        ExpirationDate(YearMonth.of(2034, 12)),
-                        CardholderName("디랙"),
-                        Passcode("1234"),
-                        CardCompany.BC_CARD,
+                        cardNumber = CardNumber("1234123412341234"),
+                        expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
+                        cardholderName = CardholderName("디랙"),
+                        passcode = Passcode("1234"),
+                        cardCompany = CardCompany.BC_CARD,
                     ).toUiModel(),
                     Card(
-                        CardNumber("1234123412341234"),
-                        ExpirationDate(YearMonth.of(2034, 12)),
-                        CardholderName("디랙"),
-                        Passcode("1234"),
-                        CardCompany.BC_CARD,
+                        cardNumber = CardNumber("1234123412341234"),
+                        expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
+                        cardholderName = CardholderName("디랙"),
+                        passcode = Passcode("1234"),
+                        cardCompany = CardCompany.BC_CARD,
                     ).toUiModel(),
                 )
             },

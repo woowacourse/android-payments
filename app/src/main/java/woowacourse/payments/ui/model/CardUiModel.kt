@@ -24,11 +24,11 @@ data class CardUiModel(
             val yearMonth: YearMonth =
                 YearMonth.parse(expirationDate, ExpirationDateFormat.formatPattern)
             Card(
-                CardNumber(cardNumber),
-                ExpirationDate(yearMonth),
-                CardholderName(cardholderName),
-                Passcode(passcode),
-                cardCompany.cardCompany,
+                cardNumber = CardNumber(cardNumber),
+                expirationDate = ExpirationDate(yearMonth),
+                cardholderName = CardholderName(cardholderName),
+                passcode = Passcode(passcode),
+                cardCompany = cardCompany.cardCompany,
             )
         }.getOrNull()
 
