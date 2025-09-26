@@ -87,6 +87,7 @@ fun CardRegisterScreen(
                         }
                 },
                 modifier = modifier,
+                canSave = stateHolder.canSave,
             )
         },
         content = { innerPadding ->

@@ -45,9 +45,7 @@ class CardsActivity : ComponentActivity() {
                 CardsScreen(
                     stateHolder,
                     onCardAddClick = { navigateToRegisterCard(launcher) },
-                    onCardClick = { cardToEdit ->
-                        navigateToEditCard(cardToEdit, launcher)
-                    },
+                    onCardClick = { cardToEdit -> navigateToEditCard(cardToEdit, launcher) },
                 )
             }
         }

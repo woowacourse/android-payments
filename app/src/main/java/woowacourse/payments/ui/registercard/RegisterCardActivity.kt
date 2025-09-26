@@ -41,7 +41,7 @@ class RegisterCardActivity : ComponentActivity() {
 
     companion object {
         const val KEY_CARD_TO_SAVE: String = "card_to_save"
-        private const val KEY_CARD_TO_EDIT = "card_to_edit"
+        private const val KEY_CARD_TO_EDIT: String = "card_to_edit"
 
         fun newIntent(
             context: Context,

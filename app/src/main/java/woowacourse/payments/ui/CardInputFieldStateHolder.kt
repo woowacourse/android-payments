@@ -64,7 +64,7 @@ class CardInputFieldStateHolder : Parcelable {
                 cardOwner != (card.cardOwner ?: cardOwner) ||
                 password != card.password ||
                 selectedBankViewType != card.bankType.toBankViewType()
-        } ?: false
+        } ?: true
     }
 
     @IgnoredOnParcel
