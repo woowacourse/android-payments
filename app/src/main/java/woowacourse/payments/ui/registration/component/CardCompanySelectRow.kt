@@ -11,12 +11,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.model.CardCompaniesUiModel
 import woowacourse.payments.ui.model.CardCompanyUiModel
 
 private const val COLUMN_COUNT = 4
 
 @Composable
 fun CardCompanySelectRow(
+    cardCompanies: CardCompaniesUiModel,
     onCardCompanyClick: (CardCompanyUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -27,18 +29,16 @@ fun CardCompanySelectRow(
         verticalArrangement = Arrangement.spacedBy(24.dp),
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        CardCompanyUiModel.entries
-            .filter { cardCompany: CardCompanyUiModel -> cardCompany != CardCompanyUiModel.NOT_SELECT }
-            .forEach { cardCompany: CardCompanyUiModel ->
-                CardCompanyItem(
-                    companyLogo = painterResource(cardCompany.image),
-                    companyName = stringResource(cardCompany.companyName),
-                    modifier =
-                        Modifier
-                            .fillMaxWidth(1f / COLUMN_COUNT)
-                            .clickable { onCardCompanyClick(cardCompany) },
-                )
-            }
+        cardCompanies.items.forEach { cardCompany: CardCompanyUiModel ->
+            CardCompanyItem(
+                companyLogo = painterResource(cardCompany.image),
+                companyName = stringResource(cardCompany.companyName),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(1f / COLUMN_COUNT)
+                        .clickable { onCardCompanyClick(cardCompany) },
+            )
+        }
     }
 }
 
@@ -46,6 +46,7 @@ fun CardCompanySelectRow(
 @Composable
 private fun CardCompanySelectRowPreview() {
     CardCompanySelectRow(
+        cardCompanies = CardCompaniesUiModel(emptyList()),
         onCardCompanyClick = {},
     )
 }

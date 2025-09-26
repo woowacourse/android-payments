@@ -52,6 +52,7 @@ fun CardRegistrationScreen(
     ) { innerPadding ->
         if (stateHolder.uiState.isBottomSheetOpen) {
             CardCompanySelectBottomSheet(
+                cardCompanies = viewModel.loadCardCompanies(),
                 onCardCompanyClick = { cardCompany: CardCompanyUiModel ->
                     stateHolder.updateBottomSheetVisible(false)
                     stateHolder.updateCardCompany(cardCompany)

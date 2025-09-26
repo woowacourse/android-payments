@@ -7,10 +7,12 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.ui.model.CardCompaniesUiModel
 import woowacourse.payments.ui.model.CardCompanyUiModel
 
 @Composable
 fun CardCompanySelectBottomSheet(
+    cardCompanies: CardCompaniesUiModel,
     onCardCompanyClick: (CardCompanyUiModel) -> Unit,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
@@ -20,6 +22,7 @@ fun CardCompanySelectBottomSheet(
         modifier = modifier,
     ) {
         CardCompanySelectRow(
+            cardCompanies = cardCompanies,
             onCardCompanyClick = onCardCompanyClick,
         )
     }
@@ -29,6 +32,7 @@ fun CardCompanySelectBottomSheet(
 @Composable
 private fun CardCompanySelectBottomSheetPreview() {
     CardCompanySelectBottomSheet(
+        cardCompanies = CardCompaniesUiModel(emptyList()),
         onCardCompanyClick = {},
         onDismissRequest = {},
     )
