@@ -10,6 +10,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.ui.cardform.state.CardAction
 
 class CardFormScreenTest {
     @get:Rule
@@ -19,8 +20,9 @@ class CardFormScreenTest {
     fun setup() {
         composeTestRule.setContent {
             CardFormScreen(
+                cardAction = CardAction.Register,
                 onBackPressed = {},
-                onCardRegistered = {},
+                onSaveClick = { },
             )
         }
     }

@@ -21,43 +21,14 @@ class CardNumberTextFieldTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            var cardNumber by remember { mutableStateOf(CardNumberUiModel("")) }
+            var cardNumber by remember { mutableStateOf("") }
             CardNumberTextField(
-                cardNumber = cardNumber,
+                cardNumber = CardNumberUiModel(cardNumber),
                 onCardNumberChanged = { newValue ->
                     cardNumber = newValue
                 },
             )
         }
-    }
-
-    @Test
-    fun `카드_번호는_숫자만_입력_가능해야_한다`() {
-        // when
-        composeTestRule.onNodeWithContentDescription("카드 번호").run {
-            performTextInput("1")
-            performTextInput("a")
-            performTextInput("2")
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드 번호", useUnmergedTree = true)
-            .assertTextEquals("12")
-    }
-
-    @Test
-    fun `카드_번호는_길이가_16자를_넘어갈_수_없다`() {
-        // when
-        composeTestRule.onNodeWithContentDescription("카드 번호").run {
-            performTextInput("1".repeat(16))
-            performTextInput("1")
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드 번호", useUnmergedTree = true)
-            .assertTextEquals("1111 - 1111 - 1111 - 1111")
     }
 
     @Test

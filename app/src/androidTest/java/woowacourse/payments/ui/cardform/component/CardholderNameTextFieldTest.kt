@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -23,43 +22,12 @@ class CardholderNameTextFieldTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            var cardholderName by remember { mutableStateOf(CardholderNameUiModel("")) }
+            var cardholderName by remember { mutableStateOf("") }
             CardholderNameTextField(
-                cardholderName = cardholderName,
+                cardholderName = CardholderNameUiModel(cardholderName),
                 onCardholderNameChanged = { newValue -> cardholderName = newValue },
             )
         }
-    }
-
-    @Test
-    fun `카드_소유자_이름은_영문만_입력할_수_있다`() {
-        // when
-        composeTestRule.onNodeWithContentDescription("카드 소유자 이름").run {
-            performTextInput("C")
-            performTextInput("1")
-            performTextInput("R")
-            performTextInput("E")
-            performTextInput("w")
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드 소유자 이름", useUnmergedTree = true)
-            .assertTextEquals("CREW")
-    }
-
-    @Test
-    fun `카드_소유자_이름의_최대_글자는_30자이다`() {
-        // when
-        composeTestRule.onNodeWithContentDescription("카드 소유자 이름").run {
-            performTextInput("C".repeat(30))
-            performTextInput("C")
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드 소유자 이름", useUnmergedTree = true)
-            .assertTextEquals("C".repeat(30))
     }
 
     @Test

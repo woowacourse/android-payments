@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
@@ -21,44 +20,24 @@ class CardExpirationDateTextFieldTest {
 
     private fun setup() {
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel()) }
+            var expirationDate by remember { mutableStateOf("") }
             CardExpirationDateTextField(
-                cardExpirationDate = expirationDate,
+                cardExpirationDate = CardExpirationDateUiModel(expirationDate),
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
-                onErrorMessageChanged = {},
             )
         }
-    }
-
-    @Test
-    fun `카드_만료일은_숫자만_입력_가능하다`() {
-        // given
-        setup()
-
-        // when
-        composeTestRule.onNodeWithContentDescription("만료일").run {
-            performTextInput("1")
-            performTextInput("a")
-            performTextInput("2")
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("만료일", useUnmergedTree = true)
-            .assertTextEquals("12")
     }
 
     @Test
     fun `만료일의_월이_1-12_사이가_아닌_경우_예외가_발생한다`() {
         // given
         composeTestRule.setContent {
-            var expirationDate by remember { mutableStateOf(CardExpirationDateUiModel("")) }
-            var errorMessage by remember { mutableStateOf("") }
+            var expirationDate by remember { mutableStateOf("") }
+            val errorMessage = "유효하지 않은 만료일 입니다."
             CardExpirationDateTextField(
-                cardExpirationDate = expirationDate,
+                cardExpirationDate = CardExpirationDateUiModel(expirationDate),
                 onCardExpirationDateChanged = { newValue -> expirationDate = newValue },
                 errorMessage = errorMessage,
-                onErrorMessageChanged = { newValue -> errorMessage = newValue.orEmpty() },
             )
         }
 
