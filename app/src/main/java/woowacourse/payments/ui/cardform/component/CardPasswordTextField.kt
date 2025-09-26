@@ -49,7 +49,7 @@ fun CardPasswordTextField(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(showBackground = true)
 @Composable
 private fun CardPasswordTextFieldPreview() {
     var cardPassword by remember { mutableStateOf("1234") }

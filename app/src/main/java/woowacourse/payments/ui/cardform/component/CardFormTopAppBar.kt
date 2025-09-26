@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,11 +59,23 @@ fun CardFormTopAppBar(
     )
 }
 
-// @Preview
-// @Composable
-// private fun CardFormTopAppBarPreview() {
-//    CardFormTopAppBar(
-//        onBackClick = {},
-//        onSaveClick = {},
-//    )
-// }
+@Preview(showBackground = true, name = "저장 버튼 비활성화 ")
+@Composable
+private fun DisableSaveButtonPreview() {
+    CardFormTopAppBar(
+        onBackClick = {},
+        onSaveClick = {},
+        title = "여기는 타이틀 위치",
+    )
+}
+
+@Preview(showBackground = true, name = "저장 버튼 활성화 ")
+@Composable
+private fun EnableSaveButtonPreview() {
+    CardFormTopAppBar(
+        onBackClick = {},
+        onSaveClick = {},
+        title = "여기는 타이틀 위치",
+        isSaveButtonEnabled = true,
+    )
+}

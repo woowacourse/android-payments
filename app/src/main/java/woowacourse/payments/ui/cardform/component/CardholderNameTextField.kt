@@ -1,8 +1,6 @@
 package woowacourse.payments.ui.cardform.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -19,7 +17,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardholderNameUiModel
 
@@ -61,14 +58,21 @@ fun CardholderNameTextField(
     )
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(showBackground = true, name = "이름 미작성")
 @Composable
-private fun CardholderNameTextFieldPreview() {
-    var cardholderName by remember { mutableStateOf("12312312312312231231232opi2o22") }
-    Column(modifier = Modifier.padding(12.dp)) {
-        CardholderNameTextField(
-            cardholderName = CardholderNameUiModel(cardholderName),
-            onCardholderNameChanged = { newValue -> cardholderName = newValue },
-        )
-    }
+private fun PlaceholderPreview() {
+    CardholderNameTextField(
+        cardholderName = CardholderNameUiModel(),
+        onCardholderNameChanged = { },
+    )
+}
+
+@Preview(showBackground = true, name = "이름 작성")
+@Composable
+private fun WriteNamePreview() {
+    var cardholderName by remember { mutableStateOf("CN") }
+    CardholderNameTextField(
+        cardholderName = CardholderNameUiModel(cardholderName),
+        onCardholderNameChanged = { newValue -> cardholderName = newValue },
+    )
 }

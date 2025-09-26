@@ -46,7 +46,7 @@ fun CardCompanySelectRow(
 @Composable
 private fun CardCompanySelectRowPreview() {
     CardCompanySelectRow(
-        cardCompanies = CardCompaniesUiModel(emptyList()),
+        cardCompanies = CardCompaniesUiModel(CardCompanyUiModel.entries.take(8)),
         onCardCompanyClick = {},
     )
 }

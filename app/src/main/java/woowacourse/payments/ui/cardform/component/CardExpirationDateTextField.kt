@@ -61,5 +61,6 @@ private fun InValidCardExpirationDateTextFieldPreview() {
     CardExpirationDateTextField(
         cardExpirationDate = CardExpirationDateUiModel("0125"),
         onCardExpirationDateChanged = {},
+        errorMessage = "유효하지 않은 만료일입니다",
     )
 }

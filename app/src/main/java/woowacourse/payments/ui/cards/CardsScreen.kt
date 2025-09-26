@@ -14,28 +14,36 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import toDomain
 import woowacourse.payments.R
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardRepository
 import woowacourse.payments.ui.cards.component.CardsTopAppBar
 import woowacourse.payments.ui.cards.component.RegistrationBox
 import woowacourse.payments.ui.cards.state.CardsUiState
 import woowacourse.payments.ui.cards.state.CardsViewModel
 import woowacourse.payments.ui.common.component.PaymentCard
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
+import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
     onRegistrationClick: () -> Unit,
     onCardClick: (CardUiModel) -> Unit,
+    viewModel: CardsViewModel,
     modifier: Modifier = Modifier,
-    viewModel: CardsViewModel = remember { CardsViewModel() },
 ) {
     val scrollState = rememberScrollState()
     val uiState by viewModel.uiState.collectAsState()
@@ -112,61 +120,88 @@ private fun RegistrationGuideText() {
         textAlign = TextAlign.Center,
     )
 }
-//
-// @Preview(showBackground = true, name = "데이터 존재 X")
-// @Composable
-// private fun NoContentPreview() {
-//    val uiState = CardsScreenUiState(emptyList())
-//    CardsScreen(
-//        onRegistrationClick = {},
-//        uiState = uiState,
-//    )
-// }
-//
-// @Preview(showBackground = true, name = "데이터 1개 존재")
-// @Composable
-// private fun HasOneContentPreview() {
-//    val uiState =
-//        CardsScreenUiState(
-//            listOf(
-//                CardUiModel(
-//                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
-//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
-//                ),
-//            ),
-//        )
-//
-//    AndroidpaymentsTheme {
-//        CardsScreen(
-//            onRegistrationClick = {},
-//            uiState = uiState,
-//        )
-//    }
-// }
-//
-// @Preview(showBackground = true, name = "데이터 2개 이상 존재")
-// @Composable
-// private fun HasMultipleContentPreview() {
-//    val uiState =
-//        CardsScreenUiState(
-//            listOf(
-//                CardUiModel(
-//                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
-//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
-//                ),
-//                CardUiModel(
-//                    cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
-//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
-//                ),
-//            ),
-//        )
-//    AndroidpaymentsTheme {
-//        CardsScreen(
-//            onRegistrationClick = {},
-//            uiState = uiState,
-//        )
-//    }
-// }
+
+@Preview(showBackground = true, name = "데이터 존재 X")
+@Composable
+private fun NoContentPreview() {
+    val viewModel = CardsViewModel(CardsFixture(emptyList()), CardsUiState.Empty)
+    CardsScreen(
+        onRegistrationClick = { },
+        onCardClick = {},
+        viewModel = viewModel,
+    )
+}
+
+@Preview(showBackground = true, name = "데이터 1개 존재")
+@Composable
+private fun HasOneContentPreview() {
+    val card =
+        CardUiModel(
+            cardCompanyUiModel = CardCompanyUiModel.BC,
+            cardholderNameUiModel = CardholderNameUiModel("CREW"),
+            cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+            cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+        )
+    val viewModel =
+        CardsViewModel(
+            CardsFixture(listOf(card.toDomain())),
+            CardsUiState.Single(card),
+        )
+
+    AndroidpaymentsTheme {
+        CardsScreen(
+            onRegistrationClick = { },
+            onCardClick = {},
+            viewModel = viewModel,
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "데이터 2개 이상 존재")
+@Composable
+private fun HasMultipleContentPreview() {
+    val cards =
+        listOf(
+            CardUiModel(
+                cardCompanyUiModel = CardCompanyUiModel.HYUNDAE,
+                cardholderNameUiModel = CardholderNameUiModel("CREW"),
+                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+            ),
+            CardUiModel(
+                cardCompanyUiModel = CardCompanyUiModel.KAKAO,
+                cardholderNameUiModel = CardholderNameUiModel("CN"),
+                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+                cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
+            ),
+        )
+    val viewModel =
+        CardsViewModel(
+            CardsFixture(cards.map { it.toDomain() }),
+            CardsUiState.Multiple(cards),
+        )
+
+    AndroidpaymentsTheme {
+        CardsScreen(
+            onRegistrationClick = { },
+            onCardClick = {},
+            viewModel = viewModel,
+        )
+    }
+}
+
+private data class CardsFixture(
+    private val cards: List<Card>,
+) : CardRepository {
+    override fun findAll(): List<Card> = cards
+
+    override fun add(card: Card) {}
+
+    override fun update(
+        cardId: Long,
+        updateCard: Card,
+    ) {
+    }
+
+    override fun findById(cardId: Long): Card = cards[0]
+}

@@ -32,7 +32,7 @@ fun CardCompanySelectBottomSheet(
 @Composable
 private fun CardCompanySelectBottomSheetPreview() {
     CardCompanySelectBottomSheet(
-        cardCompanies = CardCompaniesUiModel(emptyList()),
+        cardCompanies = CardCompaniesUiModel(CardCompanyUiModel.entries.take(8)),
         onCardCompanyClick = {},
         onDismissRequest = {},
     )
