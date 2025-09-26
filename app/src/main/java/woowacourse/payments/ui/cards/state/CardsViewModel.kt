@@ -5,10 +5,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import toDomain
 import toUiModel
-import woowacourse.payments.data.CardStorage
+import woowacourse.payments.domain.CardRepository
 import woowacourse.payments.ui.model.CardUiModel
 
 class CardsViewModel(
+    private val repository: CardRepository,
     initialState: CardsUiState = CardsUiState.Empty,
 ) {
     private val _uiState = MutableStateFlow(initialState)
@@ -20,7 +21,7 @@ class CardsViewModel(
 
     fun registrationCard(cardUiModel: CardUiModel) {
         val card = cardUiModel.toDomain()
-        CardStorage.add(card)
+        repository.add(card)
         updateUiState()
     }
 
@@ -29,12 +30,12 @@ class CardsViewModel(
         updateCard: CardUiModel,
     ) {
         val card = updateCard.toDomain()
-        CardStorage.update(cardId, card)
+        repository.update(cardId, card)
         updateUiState()
     }
 
     private fun updateUiState() {
-        val cards = CardStorage.findAll()
+        val cards = repository.findAll()
         val cardUiModels = cards.map { it.toUiModel() }
 
         _uiState.value =

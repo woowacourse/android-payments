@@ -1,7 +1,7 @@
 package woowacourse.payments.data
 
-import java.util.concurrent.atomic.AtomicLong
 import woowacourse.payments.domain.Card
+import java.util.concurrent.atomic.AtomicLong
 
 object CardStorage {
     private var insertId = AtomicLong(1)
