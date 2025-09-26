@@ -6,14 +6,10 @@ import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
 sealed interface CardScreenType : Parcelable {
-    val card: CardUiModel
-
-    object AddCard : CardScreenType {
-        override val card: CardUiModel = CardUiModel.EMPTY
-    }
+    object AddCard : CardScreenType
 
     class EditCard(
         val index: Int,
-        override val card: CardUiModel,
+        val card: CardUiModel,
     ) : CardScreenType
 }
