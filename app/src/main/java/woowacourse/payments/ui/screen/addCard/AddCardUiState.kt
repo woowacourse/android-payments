@@ -38,7 +38,7 @@ data class AddCardUiState(
 fun AddCardUiState.toCardUiModel(): CardUiModel =
     CardUiModel(
         id = 0L,
-        bankUiModel =
+        bank =
             when (cardCompanySelectionState) {
                 is CardCompanySelectionState.NotSelected -> BankUiModel.Companion.NOT_SELECTED
                 is CardCompanySelectionState.Selected -> cardCompanySelectionState.bank.toPresentation()
@@ -54,5 +54,5 @@ fun CardUiModel.toAddCardUiState(): AddCardUiState =
         expired = this.expired,
         cardOwner = this.owner,
         password = "****",
-        cardCompanySelectionState = CardCompanySelectionState.Selected(bankUiModel.toDomain()),
+        cardCompanySelectionState = CardCompanySelectionState.Selected(bank.toDomain()),
     )

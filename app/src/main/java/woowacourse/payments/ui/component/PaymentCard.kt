@@ -38,12 +38,12 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = card.bankUiModel.color,
+                    color = card.bank.color,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = card.bankUiModel.name,
+            text = card.bank.name,
             modifier =
                 Modifier
                     .padding(start = 14.dp, top = 12.dp)
@@ -109,7 +109,7 @@ private fun BCCardPreview() {
             card =
                 CardUiModel(
                     id = 0,
-                    bankUiModel = BankType.BC.toPresentation(),
+                    bank = BankType.BC.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
@@ -126,7 +126,7 @@ private fun WooriCardPreview() {
             card =
                 CardUiModel(
                     id = 0,
-                    bankUiModel = BankType.WOORI.toPresentation(),
+                    bank = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

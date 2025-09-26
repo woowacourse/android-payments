@@ -13,7 +13,7 @@ object CardUiModelFixture {
     val card1 =
         CardUiModel(
             id = 0L,
-            bankUiModel = BankFixture.BC,
+            bank = BankFixture.BC,
             number = "1234567887654321",
             expired = "1221",
             owner = "aaaa",
@@ -22,7 +22,7 @@ object CardUiModelFixture {
     val card2 =
         CardUiModel(
             id = 1L,
-            bankUiModel = BankFixture.SHINHAN,
+            bank = BankFixture.SHINHAN,
             number = "8765432112345678",
             expired = "1122",
             owner = "bbbb",

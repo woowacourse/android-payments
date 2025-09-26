@@ -154,7 +154,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             listOf(
                 CardUiModel(
                     id = 0,
-                    bankUiModel = BankType.KAKAOBANK.toPresentation(),
+                    bank = BankType.KAKAOBANK.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "HamBeomJoon",
@@ -163,14 +163,14 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             listOf(
                 CardUiModel(
                     id = 1,
-                    bankUiModel = BankType.LOTTE.toPresentation(),
+                    bank = BankType.LOTTE.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
                     id = 2,
-                    bankUiModel = BankType.HYUNDAI.toPresentation(),
+                    bank = BankType.HYUNDAI.toPresentation(),
                     number = "8734578233123212",
                     expired = "0729",
                     owner = "meeple",
