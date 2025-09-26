@@ -22,9 +22,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import woowacourse.payments.R
 import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardNumberInputField
 import woowacourse.payments.ui.component.CardOwnerInputField
@@ -59,11 +61,23 @@ fun AddCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
-                title = if (stateHolder.isEditMode) "카드 수정" else "카드 추가",
+                title =
+                    if (stateHolder.isEditMode) {
+                        stringResource(R.string.add_card_modify_title)
+                    } else {
+                        stringResource(
+                            R.string.add_card_add_title,
+                        )
+                    },
                 onBackClick = onBackPressed,
                 onSaveClick = {
                     if (!stateHolder.hasChanges()) {
-                        Toast.makeText(context, "변경된 사항이 없습니다", Toast.LENGTH_SHORT).show()
+                        Toast
+                            .makeText(
+                                context,
+                                R.string.add_card_no_modify_toast,
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         return@NewCardTopBar
                     }
                     if (stateHolder.validate()) {

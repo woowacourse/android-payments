@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">android-payments</string>
 
+    <!-- AddCardScreen -->
+    <string name="add_card_modify_title">카드 수정</string>
+    <string name="add_card_add_title">카드 추가</string>
+    <string name="add_card_no_modify_toast">변경된 사항이 없습니다</string>
+
     <!-- CardListScreen -->
     <string name="card_list_add_new_card">새로운 카드를 등록해주세요</string>
     <string name="card_list_add_card_description">카드 추가 버튼</string>
