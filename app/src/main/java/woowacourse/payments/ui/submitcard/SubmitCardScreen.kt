@@ -38,19 +38,6 @@ fun SubmitCardScreen(
     val context: Context = LocalContext.current
     val focusManager: FocusManager = LocalFocusManager.current
 
-    LaunchedEffect(stateHolder.uiEvent) {
-        val message: String =
-            when (stateHolder.uiEvent) {
-                SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage -> context.getString(R.string.submit_card_failure_message)
-                SubmitCardScreenUiEvent.ShowCardAddSuccessMessage -> context.getString(R.string.submit_card_add_success_message)
-                SubmitCardScreenUiEvent.ShowCardEditSuccessMessage -> context.getString(R.string.submit_card_edit_success_message)
-                SubmitCardScreenUiEvent.ShowCardEditFailureMessage -> context.getString(R.string.submit_card_edit_failure_message)
-                null -> return@LaunchedEffect
-            }
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        stateHolder.onEventDispatched()
-    }
-
     fun submitCard() {
         if (stateHolder.isError) {
             stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage)
@@ -72,6 +59,19 @@ fun SubmitCardScreen(
         }
 
         onSubmitClick(stateHolder.card)
+    }
+
+    LaunchedEffect(stateHolder.uiEvent) {
+        val message: String =
+            when (stateHolder.uiEvent) {
+                SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage -> context.getString(R.string.submit_card_failure_message)
+                SubmitCardScreenUiEvent.ShowCardAddSuccessMessage -> context.getString(R.string.submit_card_add_success_message)
+                SubmitCardScreenUiEvent.ShowCardEditSuccessMessage -> context.getString(R.string.submit_card_edit_success_message)
+                SubmitCardScreenUiEvent.ShowCardEditFailureMessage -> context.getString(R.string.submit_card_edit_failure_message)
+                null -> return@LaunchedEffect
+            }
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        stateHolder.onEventDispatched()
     }
 
     LaunchedEffect(stateHolder.shouldMoveFocus) {
