@@ -181,7 +181,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListScreenPreview(
+private fun CardListScreenPreview(
     @PreviewParameter(CardListPreviewProvider::class) cards: List<CardUiModel>,
 ) {
     AndroidpaymentsTheme {

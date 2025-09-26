@@ -56,7 +56,7 @@ fun BankSelectBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun BankSelectBottomSheetPreview() {
+private fun BankSelectBottomSheetPreview() {
     BankSelectBottomSheet(
         sheetState = rememberModalBottomSheetState(),
         banks = emptyList(),

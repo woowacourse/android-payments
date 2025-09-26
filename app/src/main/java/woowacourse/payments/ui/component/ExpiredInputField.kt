@@ -65,7 +65,7 @@ fun ExpiredInputField(
 
 @Composable
 @Preview(showBackground = true)
-fun ExpiredInputPreview() {
+private fun ExpiredInputPreview() {
     AndroidpaymentsTheme {
         ExpiredInputField(
             expired = "",
@@ -76,7 +76,7 @@ fun ExpiredInputPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun ExpiredInputErrorPreview() {
+private fun ExpiredInputErrorPreview() {
     AndroidpaymentsTheme {
         ExpiredInputField(
             expired = "",

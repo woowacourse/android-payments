@@ -57,7 +57,7 @@ fun BankItem(
 
 @Preview(showBackground = true)
 @Composable
-fun BankSelectItemPreview() {
+private fun BankSelectItemPreview() {
     BankItem(
         bankType = BankType.KB,
         onClick = {},

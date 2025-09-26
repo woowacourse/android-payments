@@ -63,7 +63,7 @@ fun CardNumberInputField(
 
 @Composable
 @Preview(showBackground = true)
-fun CardNumberInputPreview() {
+private fun CardNumberInputPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
             cardNumber = "",
@@ -74,7 +74,7 @@ fun CardNumberInputPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun CardNumberInputErrorPreview() {
+private fun CardNumberInputErrorPreview() {
     AndroidpaymentsTheme {
         CardNumberInputField(
             cardNumber = "",

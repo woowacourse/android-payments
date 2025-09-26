@@ -47,7 +47,7 @@ fun NewCardTopBar(
 @Composable
 @Preview(name = "기본 상태", showBackground = true)
 @Preview(name = "다크 모드", uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
-fun CardTopBarPreview() {
+private fun CardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
             title = "카드 추가",

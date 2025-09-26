@@ -103,7 +103,7 @@ fun PaymentCard(
 
 @Composable
 @Preview(showBackground = true)
-fun BCCardPreview() {
+private fun BCCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
@@ -120,7 +120,7 @@ fun BCCardPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun WooriCardPreview() {
+private fun WooriCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =

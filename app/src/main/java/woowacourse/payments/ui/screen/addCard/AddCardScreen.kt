@@ -138,7 +138,7 @@ fun AddCardScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun AddCardScreenPreview() {
+private fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
         val preViewStateHolder =
             rememberSaveable(saver = AddCardStateHolder.saver) { AddCardStateHolder() }
