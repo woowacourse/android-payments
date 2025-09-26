@@ -17,7 +17,8 @@
     <!-- card_expiration_date_text_field -->
     <string name="card_expiration_date_text_field_label">만료일</string>
     <string name="card_expiration_date_text_field_placeholder">MM / YY</string>
-    <string name="card_expiration_date_text_field_invalid_format">유효하지 않은 만료일 입니다.</string>
+    <string name="card_expiration_date_text_field_invalid_format_error_message">유효하지 않은 만료일 입니다.</string>
+    <string name="card_expiration_date_text_field_past_date_error_message">유효기간이 지난 만료일 입니다.</string>
     <string name="card_expiration_date_text_field_description">만료일</string>
 
     <!-- cardholder_name_text_field -->

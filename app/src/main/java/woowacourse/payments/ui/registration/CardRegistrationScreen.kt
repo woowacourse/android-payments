@@ -13,9 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.domain.CardExpirationErrorCode
 import woowacourse.payments.ui.common.component.PaymentCard
+import woowacourse.payments.ui.common.component.toMessageResource
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.registration.component.CardCompanySelectBottomSheet
@@ -25,6 +28,7 @@ import woowacourse.payments.ui.registration.component.CardPasswordTextField
 import woowacourse.payments.ui.registration.component.CardRegistrationTopAppBar
 import woowacourse.payments.ui.registration.component.CardholderNameTextField
 import woowacourse.payments.ui.registration.state.CardRegistrationStateHolder
+import woowacourse.payments.ui.registration.state.CardRegistrationViewModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -32,6 +36,7 @@ fun CardRegistrationScreen(
     onBackPressed: () -> Unit,
     onCardRegistered: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: CardRegistrationViewModel = CardRegistrationViewModel(),
 ) {
     val stateHolder =
         rememberSaveable(saver = CardRegistrationStateHolder.Saver) { CardRegistrationStateHolder() }
@@ -41,11 +46,11 @@ fun CardRegistrationScreen(
             CardRegistrationTopAppBar(
                 onBackClick = onBackPressed,
                 onSaveClick = { onCardRegistered(stateHolder.uiState.card) },
-                isSaveButtonEnabled = stateHolder.isRegistrableCard(),
+                isSaveButtonEnabled = stateHolder.isRegistrableCard,
             )
         },
     ) { innerPadding ->
-        if (stateHolder.isBottomSheetOpen) {
+        if (stateHolder.uiState.isBottomSheetOpen) {
             CardCompanySelectBottomSheet(
                 onCardCompanyClick = { cardCompany: CardCompanyUiModel ->
                     stateHolder.updateBottomSheetVisible(false)
@@ -90,7 +95,12 @@ fun CardRegistrationScreen(
                 cardExpirationDate = stateHolder.uiState.card.cardExpirationDateUiModel,
                 onCardExpirationDateChanged = { expirationDate: String ->
                     stateHolder.updateCardExpirationDate(expirationDate)
+                    val errorCode: CardExpirationErrorCode? =
+                        viewModel.validateCardExpirationDate(expirationDate)
+                    errorCode?.let { stateHolder.updateExpirationDateErrorMessage(errorCode.toMessageResource()) }
                 },
+                errorMessage =
+                    stateHolder.cardExpirationErrorMessageResource?.let { stringResource(it) },
             )
 
             Spacer(modifier = Modifier.height(12.dp))
