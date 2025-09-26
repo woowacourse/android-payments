@@ -11,38 +11,38 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.cards.component.CardsTopAppBar
 import woowacourse.payments.ui.cards.component.RegistrationBox
-import woowacourse.payments.ui.cards.state.CardsScreenUiState
+import woowacourse.payments.ui.cards.state.CardsUiState
+import woowacourse.payments.ui.cards.state.CardsViewModel
 import woowacourse.payments.ui.common.component.PaymentCard
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
     onRegistrationClick: () -> Unit,
-    uiState: CardsScreenUiState,
     modifier: Modifier = Modifier,
+    viewModel: CardsViewModel = remember { CardsViewModel() },
 ) {
     val scrollState = rememberScrollState()
+    val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
             CardsTopAppBar(
                 onRegistrationClick = onRegistrationClick,
-                isVisibleRegistrationButton = uiState.isVisibleRegistrationButtonInTopBar(),
+                isVisibleRegistrationButton = uiState is CardsUiState.Multiple,
             )
         },
     ) { innerPadding ->
@@ -59,7 +59,7 @@ fun CardsScreen(
 
 @Composable
 private fun CardsScreenContent(
-    uiState: CardsScreenUiState,
+    uiState: CardsUiState,
     onRegistrationClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -70,17 +70,24 @@ private fun CardsScreenContent(
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (uiState.hasNoContent()) {
-            RegistrationGuideText()
-        }
+        when (uiState) {
+            is CardsUiState.Empty -> {
+                RegistrationGuideText()
+                RegistrationBox(onRegistrationClick)
+            }
 
-        uiState.value.forEach { card: CardUiModel ->
-            PaymentCard(card = card)
-            Spacer(modifier = Modifier.height(20.dp))
-        }
+            is CardsUiState.Single -> {
+                PaymentCard(card = uiState.card)
+                Spacer(modifier = Modifier.height(10.dp))
+                RegistrationBox(onRegistrationClick)
+            }
 
-        if (uiState.isVisibleRegistrationBoxInContent()) {
-            RegistrationBox(onRegistrationClick)
+            is CardsUiState.Multiple -> {
+                uiState.cards.forEach { card: CardUiModel ->
+                    PaymentCard(card = card)
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
+            }
         }
     }
 }
