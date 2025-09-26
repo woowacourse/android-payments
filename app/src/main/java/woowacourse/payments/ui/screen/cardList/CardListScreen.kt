@@ -62,7 +62,7 @@ fun CardListScreen(
         } else {
             CardListContent(
                 cards = uiState.cards,
-                enableScroll = uiState.cards.size > 1,
+                enableScroll = uiState.enableScroll,
                 onCardClicked = { cardId ->
                     val card =
                         stateHolder.uiState.cards.find { it.id == cardId } ?: return@CardListContent

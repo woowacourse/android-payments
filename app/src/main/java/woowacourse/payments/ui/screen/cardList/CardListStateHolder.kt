@@ -10,12 +10,7 @@ class CardListStateHolder(
     initialCards: List<CardUiModel> = emptyList(),
 ) {
     private var nextId = (initialCards.maxOfOrNull { it.id } ?: 0L) + 1L
-    var uiState by mutableStateOf(
-        CardListUiState(
-            cards = initialCards,
-            showAddButton = initialCards.size > 1,
-        ),
-    )
+    var uiState by mutableStateOf(CardListUiState(cards = initialCards))
         private set
 
     fun upsertCard(card: CardUiModel): Boolean {
@@ -31,12 +26,7 @@ class CardListStateHolder(
                 val cardWithNewId = card.copy(id = nextId++)
                 uiState.cards + cardWithNewId
             }
-
-        uiState =
-            uiState.copy(
-                cards = newCards,
-                showAddButton = newCards.size > 1,
-            )
+        uiState = uiState.copy(cards = newCards)
 
         return isUpdate
     }
