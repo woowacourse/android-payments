@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration
+package woowacourse.payments.ui.cardform
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -11,14 +11,14 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class CardRegistrationScreenTest {
+class CardFormScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setup() {
         composeTestRule.setContent {
-            CardRegistrationScreen(
+            CardFormScreen(
                 onBackPressed = {},
                 onCardRegistered = {},
             )

@@ -1,11 +1,11 @@
-package woowacourse.payments.ui.registration.state
+package woowacourse.payments.ui.cardform.state
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
-data class CardRegistrationScreenUiState(
+data class CardFormScreenUiState(
     val card: CardUiModel = CardUiModel(),
     val isBottomSheetOpen: Boolean = true,
 ) : Parcelable

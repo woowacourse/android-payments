@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration
+package woowacourse.payments.ui.cardform
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -17,33 +17,33 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardExpirationErrorCode
+import woowacourse.payments.ui.cardform.component.CardCompanySelectBottomSheet
+import woowacourse.payments.ui.cardform.component.CardExpirationDateTextField
+import woowacourse.payments.ui.cardform.component.CardFormTopAppBar
+import woowacourse.payments.ui.cardform.component.CardNumberTextField
+import woowacourse.payments.ui.cardform.component.CardPasswordTextField
+import woowacourse.payments.ui.cardform.component.CardholderNameTextField
+import woowacourse.payments.ui.cardform.state.CardFormStateHolder
+import woowacourse.payments.ui.cardform.state.CardFormViewModel
 import woowacourse.payments.ui.common.component.PaymentCard
 import woowacourse.payments.ui.common.component.toMessageResource
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.registration.component.CardCompanySelectBottomSheet
-import woowacourse.payments.ui.registration.component.CardExpirationDateTextField
-import woowacourse.payments.ui.registration.component.CardNumberTextField
-import woowacourse.payments.ui.registration.component.CardPasswordTextField
-import woowacourse.payments.ui.registration.component.CardRegistrationTopAppBar
-import woowacourse.payments.ui.registration.component.CardholderNameTextField
-import woowacourse.payments.ui.registration.state.CardRegistrationStateHolder
-import woowacourse.payments.ui.registration.state.CardRegistrationViewModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
-fun CardRegistrationScreen(
+fun CardFormScreen(
     onBackPressed: () -> Unit,
     onCardRegistered: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: CardRegistrationViewModel = CardRegistrationViewModel(),
+    viewModel: CardFormViewModel = CardFormViewModel(),
 ) {
     val stateHolder =
-        rememberSaveable(saver = CardRegistrationStateHolder.Saver) { CardRegistrationStateHolder() }
+        rememberSaveable(saver = CardFormStateHolder.Saver) { CardFormStateHolder() }
 
     Scaffold(
         topBar = {
-            CardRegistrationTopAppBar(
+            CardFormTopAppBar(
                 onBackClick = onBackPressed,
                 onSaveClick = { onCardRegistered(stateHolder.uiState.card) },
                 isSaveButtonEnabled = stateHolder.isRegistrableCard,
@@ -128,9 +128,9 @@ fun CardRegistrationScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardRegistrationScreenPreview() {
+private fun CardFormScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegistrationScreen(
+        CardFormScreen(
             onBackPressed = {},
             onCardRegistered = {},
         )

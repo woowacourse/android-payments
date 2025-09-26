@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,7 +18,7 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardRegistrationTopAppBar(
+fun CardFormTopAppBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -30,7 +30,7 @@ fun CardRegistrationTopAppBar(
         stringResource(R.string.card_registration_top_app_bar_save_icon_description)
 
     TopAppBar(
-        title = { Text(stringResource(R.string.card_registration_top_app_bar_title)) },
+        title = { Text(stringResource(R.string.card_form_top_app_bar_title)) },
         navigationIcon = {
             IconButton(
                 modifier = Modifier.semantics { contentDescription = previousButtonDescription },
@@ -60,8 +60,8 @@ fun CardRegistrationTopAppBar(
 
 @Preview
 @Composable
-private fun CardRegistrationTopAppBarPreview() {
-    CardRegistrationTopAppBar(
+private fun CardFormTopAppBarPreview() {
+    CardFormTopAppBar(
         onBackClick = {},
         onSaveClick = {},
     )

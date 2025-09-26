@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration.state
+package woowacourse.payments.ui.cardform.state
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
@@ -12,8 +12,8 @@ import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 
-class CardRegistrationStateHolder(
-    uiState: CardRegistrationScreenUiState = CardRegistrationScreenUiState(),
+class CardFormStateHolder(
+    uiState: CardFormScreenUiState = CardFormScreenUiState(),
 ) {
     var uiState by mutableStateOf(uiState)
     var cardExpirationErrorMessageResource: Int? by mutableStateOf(null)
@@ -71,12 +71,12 @@ class CardRegistrationStateHolder(
     companion object {
         private const val SAVER_UI_STATE_KEY = "uiState"
 
-        val Saver: Saver<CardRegistrationStateHolder, *> =
+        val Saver: Saver<CardFormStateHolder, *> =
             mapSaver(
                 save = { holder -> mapOf(SAVER_UI_STATE_KEY to holder.uiState) },
                 restore = { map ->
-                    val uiState = map[SAVER_UI_STATE_KEY] as CardRegistrationScreenUiState
-                    CardRegistrationStateHolder(uiState = uiState)
+                    val uiState = map[SAVER_UI_STATE_KEY] as CardFormScreenUiState
+                    CardFormStateHolder(uiState = uiState)
                 },
             )
     }

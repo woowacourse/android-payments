@@ -9,11 +9,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardform.CardFormActivity
 import woowacourse.payments.ui.cards.state.CardsViewModel
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.common.showToast
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.registration.CardRegistrationActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -40,7 +40,7 @@ class CardsActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 CardsScreen(
                     onRegistrationClick = {
-                        val intent = CardRegistrationActivity.newIntent(this)
+                        val intent = CardFormActivity.newIntent(this)
                         cardAddLauncher.launch(intent)
                     },
                     viewModel = viewModel,

@@ -102,61 +102,61 @@ private fun RegistrationGuideText() {
         textAlign = TextAlign.Center,
     )
 }
-
-@Preview(showBackground = true, name = "데이터 존재 X")
-@Composable
-private fun NoContentPreview() {
-    val uiState = CardsScreenUiState(emptyList())
-    CardsScreen(
-        onRegistrationClick = {},
-        uiState = uiState,
-    )
-}
-
-@Preview(showBackground = true, name = "데이터 1개 존재")
-@Composable
-private fun HasOneContentPreview() {
-    val uiState =
-        CardsScreenUiState(
-            listOf(
-                CardUiModel(
-                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
-                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
-                ),
-            ),
-        )
-
-    AndroidpaymentsTheme {
-        CardsScreen(
-            onRegistrationClick = {},
-            uiState = uiState,
-        )
-    }
-}
-
-@Preview(showBackground = true, name = "데이터 2개 이상 존재")
-@Composable
-private fun HasMultipleContentPreview() {
-    val uiState =
-        CardsScreenUiState(
-            listOf(
-                CardUiModel(
-                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
-                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
-                ),
-                CardUiModel(
-                    cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
-                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                    cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
-                ),
-            ),
-        )
-    AndroidpaymentsTheme {
-        CardsScreen(
-            onRegistrationClick = {},
-            uiState = uiState,
-        )
-    }
-}
+//
+// @Preview(showBackground = true, name = "데이터 존재 X")
+// @Composable
+// private fun NoContentPreview() {
+//    val uiState = CardsScreenUiState(emptyList())
+//    CardsScreen(
+//        onRegistrationClick = {},
+//        uiState = uiState,
+//    )
+// }
+//
+// @Preview(showBackground = true, name = "데이터 1개 존재")
+// @Composable
+// private fun HasOneContentPreview() {
+//    val uiState =
+//        CardsScreenUiState(
+//            listOf(
+//                CardUiModel(
+//                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+//                ),
+//            ),
+//        )
+//
+//    AndroidpaymentsTheme {
+//        CardsScreen(
+//            onRegistrationClick = {},
+//            uiState = uiState,
+//        )
+//    }
+// }
+//
+// @Preview(showBackground = true, name = "데이터 2개 이상 존재")
+// @Composable
+// private fun HasMultipleContentPreview() {
+//    val uiState =
+//        CardsScreenUiState(
+//            listOf(
+//                CardUiModel(
+//                    cardholderNameUiModel = CardholderNameUiModel("CREW"),
+//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1299"),
+//                ),
+//                CardUiModel(
+//                    cardholderNameUiModel = CardholderNameUiModel("CREW ABCDEFGHIJK"),
+//                    cardNumberUiModel = CardNumberUiModel("1111222233334444"),
+//                    cardExpirationDateUiModel = CardExpirationDateUiModel("1188"),
+//                ),
+//            ),
+//        )
+//    AndroidpaymentsTheme {
+//        CardsScreen(
+//            onRegistrationClick = {},
+//            uiState = uiState,
+//        )
+//    }
+// }

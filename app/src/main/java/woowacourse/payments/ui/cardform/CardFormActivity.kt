@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration
+package woowacourse.payments.ui.cardform
 
 import android.content.Context
 import android.content.Intent
@@ -10,13 +10,13 @@ import woowacourse.payments.ui.cards.CardsActivity
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class CardRegistrationActivity : ComponentActivity() {
+class CardFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                CardRegistrationScreen(
+                CardFormScreen(
                     onBackPressed = { finish() },
                     onCardRegistered = { registeredCard: CardUiModel ->
                         val intent = CardsActivity.newIntent(this, registeredCard)
@@ -29,6 +29,6 @@ class CardRegistrationActivity : ComponentActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, CardRegistrationActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, CardFormActivity::class.java)
     }
 }

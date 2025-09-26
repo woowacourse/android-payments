@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registration.state
+package woowacourse.payments.ui.cardform.state
 
 import toUiModel
 import woowacourse.payments.domain.CardCompany
@@ -8,7 +8,7 @@ import woowacourse.payments.domain.CardExpirationDateStatus
 import woowacourse.payments.domain.CardExpirationErrorCode
 import woowacourse.payments.ui.model.CardCompaniesUiModel
 
-class CardRegistrationViewModel {
+class CardFormViewModel {
     fun loadCardCompanies(): CardCompaniesUiModel {
         val cardCompanies = CardCompany.entries.map { it.toUiModel() }
         return CardCompaniesUiModel(items = cardCompanies)

@@ -28,7 +28,7 @@
     <string name="cardholder_name_text_field_description">카드 소유자 이름</string>
 
     <!-- card_registration_top_bar -->
-    <string name="card_registration_top_app_bar_title">카드 추가</string>
+    <string name="card_form_top_app_bar_title">카드 추가</string>
     <string name="card_registration_top_app_bar_save_icon_description">완료</string>
     <string name="card_registration_top_app_bar_previous_button_description">뒤로 가기</string>
 
