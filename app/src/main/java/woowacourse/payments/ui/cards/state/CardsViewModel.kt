@@ -20,17 +20,28 @@ class CardsViewModel(
 
     fun registrationCard(cardUiModel: CardUiModel) {
         val card = cardUiModel.toDomain()
-        CardStorage.addCard(card)
+        CardStorage.add(card)
+        updateUiState()
+    }
+
+    fun updateCard(
+        cardId: Long,
+        updateCard: CardUiModel,
+    ) {
+        val card = updateCard.toDomain()
+        CardStorage.update(cardId, card)
         updateUiState()
     }
 
     private fun updateUiState() {
-        val cards = CardStorage.cards.map { it.value.toUiModel() }.toList()
+        val cards = CardStorage.findAll()
+        val cardUiModels = cards.map { it.toUiModel() }
+
         _uiState.value =
             when {
                 cards.isEmpty() -> CardsUiState.Empty
-                cards.size == 1 -> CardsUiState.Single(cards[0])
-                else -> CardsUiState.Multiple(cards)
+                cards.size == 1 -> CardsUiState.Single(cardUiModels[0])
+                else -> CardsUiState.Multiple(cardUiModels)
             }
     }
 }
