@@ -39,7 +39,12 @@ fun CardExpirationDateUiModel.toDomain(): CardExpirationDate {
     return cardExpirationDateStatus.toDomain()
 }
 
-fun CardExpirationDate.toUiModel(): CardExpirationDateUiModel = CardExpirationDateUiModel("${this.month}${this.year}")
+fun CardExpirationDate.toUiModel(): CardExpirationDateUiModel =
+    if (month <= 10) {
+        CardExpirationDateUiModel("0${this.month}${this.year}")
+    } else {
+        CardExpirationDateUiModel("${this.month}${this.year}")
+    }
 
 fun CardExpirationDateStatus.toDomain(): CardExpirationDate = CardExpirationDate.from(this)
 
@@ -50,8 +55,7 @@ fun CardUiModel.toDomain(): Card =
         cardNumber = cardNumberUiModel.value,
         cardPassword = cardPasswordUiModel.value,
         cardCompany =
-            cardCompanyUiModel.toUiModel()
-                ?: run { throw IllegalStateException("존재하지 않는 카드사 입니다") },
+            cardCompanyUiModel.toUiModel() ?: throw IllegalStateException("존재하지 않는 카드사 입니다"),
         cardExpirationDate = cardExpirationDateUiModel.toDomain(),
     )
 
@@ -63,6 +67,7 @@ fun String.toPasswordUiModel(): CardPasswordUiModel = CardPasswordUiModel(this)
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
+        id = id,
         cardCompanyUiModel = cardCompany.toUiModel(),
         cardholderNameUiModel = cardholderName.toCardholderUiModel() ?: CardholderNameUiModel(),
         cardNumberUiModel = cardNumber.toCardNumberUiModel(),
