@@ -1,11 +1,11 @@
 package woowacourse.payments.ui.submitcard
 
 sealed interface SubmitCardScreenUiEvent {
-    object ShowCardSubmitFailureMessage : SubmitCardScreenUiEvent
+    data object ShowCardSubmitFailureMessage : SubmitCardScreenUiEvent
 
-    object ShowCardAddSuccessMessage : SubmitCardScreenUiEvent
+    data object ShowCardAddSuccessMessage : SubmitCardScreenUiEvent
 
-    object ShowCardEditSuccessMessage : SubmitCardScreenUiEvent
+    data object ShowCardEditSuccessMessage : SubmitCardScreenUiEvent
 
-    object ShowCardEditFailureMessage : SubmitCardScreenUiEvent
+    data object ShowCardEditFailureMessage : SubmitCardScreenUiEvent
 }
