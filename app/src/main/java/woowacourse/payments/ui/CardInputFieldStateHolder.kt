@@ -38,7 +38,7 @@ class CardInputFieldStateHolder : Parcelable {
 
     @IgnoredOnParcel
     val isExpiryDateError by derivedStateOf {
-        expiryDate.isNotEmpty() && expiryDate.length != EXPIRY_DATE_MAX_LENGTH
+        expiryDate.isNotEmpty() && (expiryDate.length != EXPIRY_DATE_MAX_LENGTH || expiryDate.toYearMonth() == null)
     }
 
     @IgnoredOnParcel
