@@ -55,7 +55,10 @@ fun CardAdditionScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
+            val titleRes =
+                if (card == null) R.string.card_addition_top_bar_title else R.string.card_edit_top_bar_title
             CardAdditionTopBar(
+                title = stringResource(titleRes),
                 onBackClick = onBackClick,
                 onSaveClick = { onSaveClick(stateHolder.card) },
                 isCompletable = stateHolder.isCompletable,

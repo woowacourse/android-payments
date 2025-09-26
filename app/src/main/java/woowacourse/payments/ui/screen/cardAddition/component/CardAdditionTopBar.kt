@@ -20,6 +20,7 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionTopBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -27,7 +28,7 @@ fun CardAdditionTopBar(
 ) {
     val context = LocalContext.current
     TopAppBar(
-        title = { Text(stringResource(R.string.card_addition_top_bar_title)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
@@ -59,5 +60,9 @@ fun CardAdditionTopBar(
 @Preview
 @Composable
 private fun CardAdditionTopBarPreview() {
-    CardAdditionTopBar(onBackClick = {}, onSaveClick = {})
+    CardAdditionTopBar(
+        title = "카드 추가",
+        onBackClick = {},
+        onSaveClick = {},
+    )
 }
