@@ -14,8 +14,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.domain.CardExpirationErrorCode
 import woowacourse.payments.ui.cardform.component.CardCompanySelectBottomSheet
 import woowacourse.payments.ui.cardform.component.CardExpirationDateTextField
@@ -23,30 +23,57 @@ import woowacourse.payments.ui.cardform.component.CardFormTopAppBar
 import woowacourse.payments.ui.cardform.component.CardNumberTextField
 import woowacourse.payments.ui.cardform.component.CardPasswordTextField
 import woowacourse.payments.ui.cardform.component.CardholderNameTextField
+import woowacourse.payments.ui.cardform.state.CardAction
+import woowacourse.payments.ui.cardform.state.CardFormScreenUiState
 import woowacourse.payments.ui.cardform.state.CardFormStateHolder
 import woowacourse.payments.ui.cardform.state.CardFormViewModel
 import woowacourse.payments.ui.common.component.PaymentCard
 import woowacourse.payments.ui.common.component.toMessageResource
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardFormScreen(
+    cardAction: CardAction,
     onBackPressed: () -> Unit,
-    onCardRegistered: (CardUiModel) -> Unit,
+    onSaveClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CardFormViewModel = CardFormViewModel(),
 ) {
+    val originCard =
+        when (cardAction) {
+            CardAction.Register -> CardUiModel()
+            is CardAction.Modify -> viewModel.loadCard(cardId = cardAction.cardId)
+        }
+    val initialCardFormStateHolder =
+        when (cardAction) {
+            CardAction.Register -> CardFormStateHolder()
+            is CardAction.Modify ->
+                CardFormStateHolder(
+                    uiState = CardFormScreenUiState(card = originCard, isBottomSheetOpen = false),
+                )
+        }
+
     val stateHolder =
-        rememberSaveable(saver = CardFormStateHolder.Saver) { CardFormStateHolder() }
+        rememberSaveable(saver = CardFormStateHolder.Saver) { initialCardFormStateHolder }
 
     Scaffold(
         topBar = {
             CardFormTopAppBar(
+                title =
+                    when (cardAction) {
+                        CardAction.Register -> stringResource(R.string.card_form_top_app_bar_registration_title)
+                        is CardAction.Modify -> stringResource(R.string.card_form_top_app_bar_modify_title)
+                    },
                 onBackClick = onBackPressed,
-                onSaveClick = { onCardRegistered(stateHolder.uiState.card) },
-                isSaveButtonEnabled = stateHolder.isRegistrableCard,
+                onSaveClick = { onSaveClick(stateHolder.uiState.card) },
+                isSaveButtonEnabled =
+                    when (cardAction) {
+                        CardAction.Register -> stateHolder.isRegistrableCard
+                        is CardAction.Modify ->
+                            stateHolder.isRegistrableCard &&
+                                viewModel.isModify(originCard, stateHolder.uiState.card)
+                    },
             )
         },
     ) { innerPadding ->

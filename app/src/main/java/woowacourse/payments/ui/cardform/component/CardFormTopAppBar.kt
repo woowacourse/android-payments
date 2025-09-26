@@ -13,12 +13,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardFormTopAppBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -30,7 +30,7 @@ fun CardFormTopAppBar(
         stringResource(R.string.card_registration_top_app_bar_save_icon_description)
 
     TopAppBar(
-        title = { Text(stringResource(R.string.card_form_top_app_bar_title)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(
                 modifier = Modifier.semantics { contentDescription = previousButtonDescription },
@@ -58,11 +58,11 @@ fun CardFormTopAppBar(
     )
 }
 
-@Preview
-@Composable
-private fun CardFormTopAppBarPreview() {
-    CardFormTopAppBar(
-        onBackClick = {},
-        onSaveClick = {},
-    )
-}
+// @Preview
+// @Composable
+// private fun CardFormTopAppBarPreview() {
+//    CardFormTopAppBar(
+//        onBackClick = {},
+//        onSaveClick = {},
+//    )
+// }
