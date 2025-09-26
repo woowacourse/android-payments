@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cards
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,6 +33,7 @@ import woowacourse.payments.ui.model.CardUiModel
 @Composable
 fun CardsScreen(
     onRegistrationClick: () -> Unit,
+    onCardClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CardsViewModel = remember { CardsViewModel() },
 ) {
@@ -49,6 +51,7 @@ fun CardsScreen(
         CardsScreenContent(
             uiState = uiState,
             onRegistrationClick = onRegistrationClick,
+            onCardClick = onCardClick,
             modifier =
                 modifier
                     .padding(innerPadding)
@@ -61,6 +64,7 @@ fun CardsScreen(
 private fun CardsScreenContent(
     uiState: CardsUiState,
     onRegistrationClick: () -> Unit,
+    onCardClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -77,14 +81,20 @@ private fun CardsScreenContent(
             }
 
             is CardsUiState.Single -> {
-                PaymentCard(card = uiState.card)
+                PaymentCard(
+                    card = uiState.card,
+                    modifier = Modifier.clickable { onCardClick(uiState.card) },
+                )
                 Spacer(modifier = Modifier.height(10.dp))
                 RegistrationBox(onRegistrationClick)
             }
 
             is CardsUiState.Multiple -> {
                 uiState.cards.forEach { card: CardUiModel ->
-                    PaymentCard(card = card)
+                    PaymentCard(
+                        card = card,
+                        modifier = Modifier.clickable { onCardClick(card) },
+                    )
                     Spacer(modifier = Modifier.height(10.dp))
                 }
             }

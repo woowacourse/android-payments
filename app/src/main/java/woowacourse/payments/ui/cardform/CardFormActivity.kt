@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.ui.cardform.state.CardAction
 import woowacourse.payments.ui.cards.CardsActivity
+import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -16,10 +18,13 @@ class CardFormActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
+                val cardAction =
+                    intent.getParcelableExtraCompat<CardAction>(EXTRA_ACTION) ?: CardAction.Register
                 CardFormScreen(
+                    cardAction = cardAction,
                     onBackPressed = { finish() },
-                    onCardRegistered = { registeredCard: CardUiModel ->
-                        val intent = CardsActivity.newIntent(this, registeredCard)
+                    onSaveClick = { saveCard: CardUiModel ->
+                        val intent = CardsActivity.newIntent(this, saveCard, cardAction)
                         setResult(RESULT_OK, intent)
                         finish()
                     },
@@ -29,6 +34,14 @@ class CardFormActivity : ComponentActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context): Intent = Intent(context, CardFormActivity::class.java)
+        private const val EXTRA_ACTION = "EXTRA_ACTION"
+
+        fun newIntent(
+            context: Context,
+            action: CardAction,
+        ): Intent =
+            Intent(context, CardFormActivity::class.java).apply {
+                putExtra(EXTRA_ACTION, action)
+            }
     }
 }

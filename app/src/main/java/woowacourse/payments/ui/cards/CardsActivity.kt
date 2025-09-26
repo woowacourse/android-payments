@@ -23,16 +23,25 @@ class CardsActivity : ComponentActivity() {
         setContent {
             val viewModel = CardsViewModel()
 
-            val cardAddLauncher =
+            val cardFormLauncher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
                     if (activityResult.resultCode == RESULT_OK) {
-                        val newCard: CardUiModel? =
-                            activityResult.data?.getParcelableExtraCompat(
-                                EXTRA_CARDS_REGISTER_NEW_CARD,
-                            )
-                        newCard?.let {
-                            viewModel.registrationCard(newCard)
-                            showToast(messageResource = R.string.cards_screen_registration_toast)
+                        val card: CardUiModel? =
+                            activityResult.data?.getParcelableExtraCompat(EXTRA_CARD)
+                        val action: CardAction? =
+                            activityResult.data?.getParcelableExtraCompat(EXTRA_ACTION)
+                        action?.let {
+                            when (action) {
+                                CardAction.Register -> {
+                                    card?.let { viewModel.registrationCard(card) }
+                                    showToast(messageResource = R.string.cards_screen_registration_toast)
+                                }
+
+                                is CardAction.Modify -> {
+                                    card?.let { viewModel.updateCard(action.cardId, card) }
+                                    showToast(messageResource = R.string.cards_screen_modify_toast)
+                                }
+                            }
                         }
                     }
                 }
@@ -40,8 +49,18 @@ class CardsActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 CardsScreen(
                     onRegistrationClick = {
-                        val intent = CardFormActivity.newIntent(this)
-                        cardAddLauncher.launch(intent)
+                        val intent = CardFormActivity.newIntent(this, CardAction.Register)
+                        cardFormLauncher.launch(intent)
+                    },
+                    onCardClick = { card: CardUiModel ->
+                        val intent =
+                            CardFormActivity.newIntent(
+                                this,
+                                CardAction.Modify(
+                                    card.id ?: throw IllegalArgumentException("키 값 유실"),
+                                ),
+                            )
+                        cardFormLauncher.launch(intent)
                     },
                     viewModel = viewModel,
                 )
@@ -50,14 +69,17 @@ class CardsActivity : ComponentActivity() {
     }
 
     companion object {
-        private const val EXTRA_CARDS_REGISTER_NEW_CARD = "EXTRA_CARDS_REGISTER_NEW_CARD"
+        private const val EXTRA_CARD = "EXTRA_CARD"
+        private const val EXTRA_ACTION = "EXTRA_ACTION"
 
         fun newIntent(
             context: Context,
-            newCard: CardUiModel,
+            card: CardUiModel,
+            action: CardAction,
         ): Intent =
             Intent(context, CardsActivity::class.java).apply {
-                putExtra(EXTRA_CARDS_REGISTER_NEW_CARD, newCard)
+                putExtra(EXTRA_CARD, card)
+                putExtra(EXTRA_ACTION, action)
             }
     }
 }
