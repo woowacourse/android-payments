@@ -72,7 +72,7 @@ fun CardListScreen(
             }
 
             if (cards.size <= 1) {
-                AddCardButton { onNavigateToAddCard() }
+                AddCardButton({ onNavigateToAddCard() })
             }
         }
     }

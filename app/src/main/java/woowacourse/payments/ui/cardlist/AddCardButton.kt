@@ -21,8 +21,8 @@ import woowacourse.payments.R
 
 @Composable
 fun AddCardButton(
-    modifier: Modifier = Modifier,
     onAddCard: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -47,5 +47,5 @@ fun AddCardButton(
 @Preview(showBackground = true, name = "카드 추가 버튼")
 @Composable
 private fun AddCardButtonPreview() {
-    AddCardButton {}
+    AddCardButton({})
 }
