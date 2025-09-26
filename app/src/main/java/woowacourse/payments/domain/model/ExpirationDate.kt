@@ -38,7 +38,7 @@ value class ExpirationDate private constructor(
             clock: Clock = Clock.systemDefaultZone(),
         ): ValidationErrorType? {
             if (raw.isBlank()) return ValidationErrorType.InvalidFormat
-            if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) ValidationErrorType.InvalidFormat
+            if (raw.count(Char::isDigit) < EXPIRATION_DATE_LENGTH) return ValidationErrorType.InvalidFormat
 
             val yearMonth =
                 ExpirationDateParser.parseOrNull(raw) ?: return ValidationErrorType.InvalidFormat
