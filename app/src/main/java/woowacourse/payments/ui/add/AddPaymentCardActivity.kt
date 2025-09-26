@@ -22,7 +22,7 @@ class AddPaymentCardActivity : ComponentActivity() {
                     onBack = { finish() },
                     onSave = {
                         val resultIntent =
-                            Intent().apply {
+                            intent.apply {
                                 putExtra(
                                     EXTRA_RESULT_MODE,
                                     if (isEditingFromIntent) RESULT_MODE_EDIT else RESULT_MODE_ADD,
