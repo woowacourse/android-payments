@@ -36,7 +36,7 @@ fun PaymentCardsContent(
                 modifier = modifier,
                 paymentCard = paymentCards.first(),
                 onAddCard = onAddCard,
-                onEditCard = { onEditCard(paymentCards.first().id) },
+                onEditCard = onEditCard,
             )
 
         else ->
@@ -71,7 +71,7 @@ private fun EmptyCard(
 private fun SingleCard(
     paymentCard: PaymentCardUiModel,
     onAddCard: () -> Unit,
-    onEditCard: () -> Unit,
+    onEditCard: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -81,7 +81,7 @@ private fun SingleCard(
         PaymentCard(
             paymentCard = paymentCard,
             onSelectBank = {},
-            onEditCard = onEditCard,
+            onEditCard = { onEditCard(paymentCard.id) },
             modifier = Modifier.padding(top = 12.dp, bottom = 36.dp),
         )
         AddCard(onAddClick = onAddCard)
