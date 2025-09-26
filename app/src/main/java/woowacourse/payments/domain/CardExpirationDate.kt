@@ -11,7 +11,7 @@ class CardExpirationDate private constructor(
         private const val INVALID_INPUT = Int.MIN_VALUE
         const val REQUIRE_CARD_EXPIRATION_DATE_LENGTH = 4
 
-        fun from(value: String): CardExpirationDateStatus {
+        fun toCardExpirationDateStatus(value: String): CardExpirationDateStatus {
             if (value.length != REQUIRE_CARD_EXPIRATION_DATE_LENGTH) {
                 return CardExpirationDateStatus.Error(CardExpirationErrorCode.INVALID_LENGTH)
             }
@@ -20,6 +20,15 @@ class CardExpirationDate private constructor(
             val year: Int = value.takeLast(2).toIntOrNull() ?: INVALID_INPUT
             return validateExpirationDate(month = month, year = year)
         }
+
+        fun from(cardExpirationDateStatus: CardExpirationDateStatus): CardExpirationDate =
+            when (cardExpirationDateStatus) {
+                is CardExpirationDateStatus.Error -> throw IllegalArgumentException(
+                    "만료일 객체를 생성할 수 없어요 ${cardExpirationDateStatus.errorCode}",
+                )
+
+                is CardExpirationDateStatus.Success -> cardExpirationDateStatus.cardExpirationDate
+            }
 
         private fun validateExpirationDate(
             month: Int,

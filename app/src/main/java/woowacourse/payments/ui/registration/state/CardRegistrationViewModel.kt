@@ -17,7 +17,10 @@ class CardRegistrationViewModel {
     fun validateCardExpirationDate(input: String): CardExpirationErrorCode? {
         if (input.length > REQUIRE_CARD_EXPIRATION_DATE_LENGTH) return null
 
-        return when (val result: CardExpirationDateStatus = CardExpirationDate.from(input)) {
+        return when (
+            val result: CardExpirationDateStatus =
+                CardExpirationDate.toCardExpirationDateStatus(input)
+        ) {
             is CardExpirationDateStatus.Success -> null
             is CardExpirationDateStatus.Error -> result.errorCode
         }
