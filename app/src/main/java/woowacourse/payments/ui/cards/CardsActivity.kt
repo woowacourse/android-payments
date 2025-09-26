@@ -22,25 +22,12 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val stateHolder = rememberSaveable { CardsStateHolder() }
+
             AndroidpaymentsTheme {
                 val launcher =
                     rememberLauncherForActivityResult(
                         ActivityResultContracts.StartActivityForResult(),
-                    ) { activityResult ->
-                        if (activityResult.resultCode == RESULT_OK) {
-                            val newCard =
-                                activityResult.data?.getParcelableExtraCompat<Card>(KEY_CARD_TO_SAVE)
-                                    ?: return@rememberLauncherForActivityResult
-                            val cardIndex =
-                                stateHolder.cardsState.indexOfFirst { it.id == newCard.id }
-
-                            if (cardIndex == INVALID_INDEX) {
-                                stateHolder.cardsState.add(newCard)
-                            } else {
-                                stateHolder.cardsState[cardIndex] = newCard
-                            }
-                        }
-                    }
+                    ) { activityResult -> updateCardsView(activityResult, stateHolder) }
 
                 CardsScreen(
                     stateHolder,
@@ -48,6 +35,19 @@ class CardsActivity : ComponentActivity() {
                     onCardClick = { cardToEdit -> navigateToEditCard(cardToEdit, launcher) },
                 )
             }
+        }
+    }
+
+    private fun updateCardsView(
+        activityResult: ActivityResult,
+        stateHolder: CardsStateHolder,
+    ) {
+        if (activityResult.resultCode == RESULT_OK) {
+            val newCard =
+                activityResult.data?.getParcelableExtraCompat<Card>(KEY_CARD_TO_SAVE)
+                    ?: return
+
+            stateHolder.updateCardsView(newCard)
         }
     }
 
@@ -62,9 +62,5 @@ class CardsActivity : ComponentActivity() {
     ) {
         val intent = RegisterCardActivity.newIntent(this, card)
         launcher.launch(intent)
-    }
-
-    companion object {
-        private const val INVALID_INDEX: Int = -1
     }
 }

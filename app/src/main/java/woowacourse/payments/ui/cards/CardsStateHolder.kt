@@ -18,4 +18,18 @@ class CardsStateHolder : Parcelable {
     val isRegisteredCardsVisible by derivedStateOf { cardsState.size >= 1 }
 
     val isRegisterCardButtonVisible by derivedStateOf { cardsState.size > 1 }
+
+    fun updateCardsView(newCard: Card) {
+        val cardIndex = cardsState.indexOfFirst { it.id == newCard.id }
+
+        if (cardIndex == INVALID_INDEX) {
+            cardsState.add(newCard)
+        } else {
+            cardsState[cardIndex] = newCard
+        }
+    }
+
+    companion object {
+        private const val INVALID_INDEX: Int = -1
+    }
 }
