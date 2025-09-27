@@ -11,7 +11,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.AddCardActivity
 import woowacourse.payments.ui.mapper.CardMapper.toDomain
-import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
@@ -19,30 +18,29 @@ fun PaymentScreen() {
     val paymentStateHolder = rememberPaymentStateHolder()
     val context = LocalContext.current
 
-    var editIndex by remember { mutableStateOf<Int?>(null) }
+    var editId by remember { mutableStateOf<Long?>(null) }
 
     val cardLauncher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
         ) { result ->
-            val index = editIndex
-            editIndex = null
-            paymentStateHolder.apply(index, AddCardActivity.parseResult(result.data)?.toDomain())
+            val id = editId
+            editId = null
+            val card = AddCardActivity.parseResult(result.data)?.toDomain()
+            paymentStateHolder.applyById(id, card)
         }
 
     PaymentContent(
         cards = paymentStateHolder.uiCards,
         showTopAdd = paymentStateHolder.showTopAdd,
         onAddCardClick = {
-            editIndex = null
+            editId = null
             cardLauncher.launch(AddCardActivity.newIntent(context))
         },
-        onCardClick = { index ->
-            val domain = paymentStateHolder.cards.getOrNull(index) ?: return@PaymentContent
-            editIndex = index
-            cardLauncher.launch(
-                AddCardActivity.newIntent(context, domain.toUiModel()),
-            )
+        onCardClick = { id ->
+            val card = paymentStateHolder.uiCards.getOrNull(id) ?: return@PaymentContent
+            editId = card.id
+            cardLauncher.launch(AddCardActivity.newIntent(context, card))
         },
     )
 }

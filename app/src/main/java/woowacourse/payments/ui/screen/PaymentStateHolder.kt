@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import woowacourse.payments.domain.model.Card
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 
 class PaymentStateHolder {
@@ -19,27 +20,32 @@ class PaymentStateHolder {
     val uiCards by derivedStateOf { cards.map { it.toUiModel() } }
     val showTopAdd by derivedStateOf { cards.size >= MIN_CARDS_FOR_TOP_ADD }
 
+    private var nextId = 1L
+
+    private fun assignIdIfNeeded(card: Card): Card = if (card.id == CardUiModel.UNASSIGNED_ID) card.copy(id = nextId++) else card
+
     private fun add(card: Card) {
-        _cards += card
+        _cards += assignIdIfNeeded(card)
     }
 
-    private fun updateIfChanged(
-        index: Int,
+    private fun updateIfChangedById(
+        id: Long,
         edited: Card,
     ): Boolean {
-        if (index !in _cards.indices) return false
-        val before = _cards[index]
-        if (before == edited) return false
-        _cards[index] = edited
+        val index = _cards.indexOfFirst { it.id == id }
+        if (index < 0) return false
+        val fixed = assignIdIfNeeded(edited).copy(id = id)
+        if (_cards[index] == fixed) return false
+        _cards[index] = fixed
         return true
     }
 
-    fun apply(
-        index: Int?,
+    fun applyById(
+        id: Long?,
         card: Card?,
     ) {
         if (card == null) return
-        if (index == null) add(card) else updateIfChanged(index, card)
+        if (id == null) add(card) else updateIfChangedById(id, card)
     }
 }
 

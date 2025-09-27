@@ -10,6 +10,7 @@ import woowacourse.payments.ui.text.ExpirationDateFormatter
 
 @Parcelize
 data class CardUiModel(
+    val id: Long,
     val cardCompany: CardCompanyUiModel,
     val cardNumberRaw: String,
     val expirationDateRaw: String,
@@ -23,8 +24,10 @@ data class CardUiModel(
         get() = ExpirationDateFormatter.format(expirationDateRaw)
 
     companion object {
+        const val UNASSIGNED_ID: Long = -1L
         val EMPTY =
             CardUiModel(
+                id = UNASSIGNED_ID,
                 cardCompany = CardCompanyType.NOT_SELECTED.toUiModel(),
                 cardNumberRaw = "",
                 expirationDateRaw = "",
@@ -37,6 +40,7 @@ data class CardUiModel(
 @SuppressLint("DefaultLocale")
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
+        id = this.id,
         cardCompany = type.toUiModel(),
         cardNumberRaw = cardNumber.value,
         expirationDateRaw =

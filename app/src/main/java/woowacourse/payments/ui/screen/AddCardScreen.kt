@@ -10,6 +10,7 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -86,6 +87,7 @@ private fun AddCardScreenPreview_Edit() {
             initialShowSheet = false,
             initialCard =
                 CardUiModel(
+                    id =  UNASSIGNED_ID,
                     cardCompany = CardCompanyType.BC.toUiModel(),
                     cardNumberRaw = "1111111111111111",
                     expirationDateRaw = "1199",

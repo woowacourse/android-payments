@@ -12,6 +12,7 @@ import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.components.PaymentCards
 import woowacourse.payments.ui.components.PaymentTopBar
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -64,6 +65,7 @@ private fun PaymentScreenOneCardPreview() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
+                id = UNASSIGNED_ID,
                 cardCompany = CardCompanyType.BC.toUiModel(),
                 cardNumberRaw = "1111222233334444",
                 expirationDateRaw = "0421",
@@ -84,6 +86,7 @@ private fun PaymentScreenOneCardPreview() {
 private fun PaymentScreenThreeCardsPreview() {
     val sampleCard =
         CardUiModel(
+            id = UNASSIGNED_ID,
             cardCompany = CardCompanyType.BC.toUiModel(),
             cardNumberRaw = "1111222233334444",
             expirationDateRaw = "0421",

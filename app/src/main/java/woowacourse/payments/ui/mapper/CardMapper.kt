@@ -10,6 +10,7 @@ import woowacourse.payments.ui.model.CardUiModel
 object CardMapper {
     fun CardUiModel.toDomain(): Card =
         Card(
+            id = this.id,
             type = cardCompany.type,
             cardNumber = CardNumber.create(cardNumberRaw),
             expirationDate = ExpirationDate.createFromRaw(expirationDateRaw),

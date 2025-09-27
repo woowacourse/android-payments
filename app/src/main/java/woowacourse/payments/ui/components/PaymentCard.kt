@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -119,6 +120,7 @@ private fun PaymentCardPreview_BC() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
+                id = UNASSIGNED_ID,
                 cardNumberRaw = "1111222233334444",
                 expirationDateRaw = "0421",
                 userName = "KIMGAHYUN",
@@ -141,6 +143,7 @@ private fun PaymentCardPreview_Kb() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
+                id = UNASSIGNED_ID,
                 cardCompany = CardCompanyType.KB.toUiModel(),
                 cardNumberRaw = "1111222233334444",
                 expirationDateRaw = "0421",

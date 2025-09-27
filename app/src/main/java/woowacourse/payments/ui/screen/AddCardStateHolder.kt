@@ -41,6 +41,7 @@ class AddCardStateHolder(
 
     val cardPreview by derivedStateOf {
         CardUiModel.EMPTY.copy(
+            id = initial?.id ?: CardUiModel.UNASSIGNED_ID,
             cardCompany = uiState.selectedCompany.toUiModel(),
             cardNumberRaw = uiState.number,
             expirationDateRaw = uiState.expiration,
@@ -136,6 +137,7 @@ class AddCardStateHolder(
         try {
             val card =
                 Card(
+                    id = initial?.id ?: CardUiModel.UNASSIGNED_ID,
                     cardNumber = CardNumber.create(uiState.number),
                     expirationDate = ExpirationDate.createFromRaw(uiState.expiration),
                     userName = UserName.create(uiState.userName),

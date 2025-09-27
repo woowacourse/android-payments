@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -109,6 +110,7 @@ private fun PaymentCards_Many_Preview() {
 @Composable
 private fun sampleCard(): CardUiModel =
     CardUiModel(
+        id = UNASSIGNED_ID,
         cardCompany = CardCompanyType.BC.toUiModel(),
         cardNumberRaw = "11112222********",
         expirationDateRaw = "1226",
