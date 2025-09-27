@@ -8,7 +8,9 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder
 
 class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiState> {
@@ -23,6 +25,7 @@ class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiStat
 class CreateCardStateHolder(
     private val newCardContentStateHolder: NewCardContentStateHolder = NewCardContentStateHolder()
 ) {
+    fun selectableCardBanks() = BankType.entries.map { it.toLocalBankUiModel() }
     fun updateCardBank(bankUiModel: woowacourse.payments.ui.model.BankUiModel) {
         newCardContentStateHolder.updateCardBank(bankUiModel)
         uiState = uiState.copy(

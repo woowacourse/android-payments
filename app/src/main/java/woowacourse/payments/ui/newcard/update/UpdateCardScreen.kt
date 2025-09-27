@@ -58,12 +58,14 @@ fun UpdateCardScreen(
     }
 
     if (showBottomSheet) {
-        BanksBottomSheet(sheetState = modalBottomSheetState, onSelectCard = { bank ->
-            updateCardStateHolder.updateCardBank(bank)
-            showBottomSheet = false
-        }, onDismissRequest = {
-            showBottomSheet = false
-        })
+        BanksBottomSheet(
+            banks = updateCardStateHolder.selectableCardBanks(),
+            sheetState = modalBottomSheetState, onSelectCard = { bank ->
+                updateCardStateHolder.updateCardBank(bank)
+                showBottomSheet = false
+            }, onDismissRequest = {
+                showBottomSheet = false
+            })
     }
 
     Scaffold(

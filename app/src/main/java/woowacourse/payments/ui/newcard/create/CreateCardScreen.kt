@@ -52,6 +52,7 @@ fun CreateCardScreen(
 
     if (showBottomSheet) {
         BanksBottomSheet(
+            banks = stateHolder.selectableCardBanks(),
             sheetState = modalBottomSheetState,
             onSelectCard = { bank ->
                 stateHolder.updateCardBank(bank)

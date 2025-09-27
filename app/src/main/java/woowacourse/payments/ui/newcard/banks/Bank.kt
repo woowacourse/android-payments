@@ -25,13 +25,13 @@ import woowacourse.payments.ui.newcard.banks.BanksTestTag.BANK_CONTAINER_TAG
 @Composable
 fun Bank(
     bankUiModel: BankUiModel,
-    onSelectedCard: (BankUiModel) -> Unit,
+    onSelectBank: (BankUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
             modifier
-                .clickable { onSelectedCard(bankUiModel) }
+                .clickable { onSelectBank(bankUiModel) }
                 .testTag(BANK_CONTAINER_TAG),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -51,7 +51,7 @@ fun Bank(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun BankPreview() {
     Bank(BankType.BC.toLocalBankUiModel(), {})
