@@ -6,7 +6,7 @@ import java.time.YearMonth
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
-        number = number,
+        number = number.value,
         expiredDate = expiredDate.displayString,
         holder = holder ?: "",
         password = password,

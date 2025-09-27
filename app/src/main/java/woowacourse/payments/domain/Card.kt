@@ -4,13 +4,12 @@ import java.time.YearMonth
 
 data class Card(
     val bankType: BankType,
-    val number: String,
+    val number: CardNumber,
     val expiredDate: YearMonth,
     val password: String,
     val holder: String? = null,
 ) {
     init {
-        require(number.length == NUMBER_LENGTH) { "카드 번호는 ${NUMBER_LENGTH}자리여야 합니다." }
         require(password.length == PASSWORD_LENGTH) { "카드 비밀번호는 ${PASSWORD_LENGTH}자리여야 합니다." }
     }
 
@@ -25,7 +24,7 @@ data class Card(
      */
     constructor(
         bankType: BankType,
-        number: String,
+        number: CardNumber,
         expiredDate: String,
         password: String,
         holder: String? = null,
@@ -38,9 +37,36 @@ data class Card(
     )
 
     companion object {
-        const val NUMBER_LENGTH: Int = 16
         const val EXPIRED_DATE_LENGTH: Int = 4
         const val PASSWORD_LENGTH: Int = 4
+
+        operator fun invoke(
+            bankType: BankType,
+            number: String,
+            expiredDate: YearMonth,
+            password: String,
+            holder: String? = null,
+        ) = Card(
+            bankType = bankType,
+            number = CardNumber(number),
+            expiredDate = expiredDate,
+            password = password,
+            holder = holder,
+        )
+
+        operator fun invoke(
+            bankType: BankType,
+            number: String,
+            expiredDate: String,
+            password: String,
+            holder: String? = null,
+        ) = Card(
+            bankType = bankType,
+            number = CardNumber(number),
+            expiredDate = expiredDate,
+            password = password,
+            holder = holder,
+        )
 
         private fun String.toYearMonth(): YearMonth {
             require(this.length == EXPIRED_DATE_LENGTH) { "만료일은 ${EXPIRED_DATE_LENGTH}자리여야 합니다." }

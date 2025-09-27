@@ -5,6 +5,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.Card.Companion.EXPIRED_DATE_LENGTH
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.view.CardUiModel
 import java.time.Month
 
@@ -13,7 +14,7 @@ data class CardAdditionUiState(
     val card: CardUiModel = CardUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
-    val isValidCardNumber: Boolean = card.number.length == Card.NUMBER_LENGTH
+    val isValidCardNumber: Boolean = runCatching { CardNumber(card.number) }.isSuccess
 
     @IgnoredOnParcel
     val isValidExpiredDate: Boolean =

@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.view.CardUiModel
 import java.time.Month
 
@@ -13,8 +14,7 @@ data class CardEditingUiState(
     val edited: CardUiModel = original,
 ) : Parcelable {
     @IgnoredOnParcel
-    val isValidCardNumber: Boolean =
-        edited.number.length == Card.NUMBER_LENGTH
+    val isValidCardNumber: Boolean = runCatching { CardNumber(edited.number) }.isSuccess
 
     @IgnoredOnParcel
     val isValidExpiredDate: Boolean =

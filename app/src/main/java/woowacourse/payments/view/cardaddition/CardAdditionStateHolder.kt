@@ -23,7 +23,7 @@ class CardAdditionStateHolder(
         private set
 
     fun updateCardNumber(value: String) {
-        val newCardNumber: String = value.filter(::isDigit).take(Card.NUMBER_LENGTH)
+        val newCardNumber: String = value.filter(::isDigit).take(CARD_NUMBER_MAX_LENGTH)
 
         uiState = uiState.copy(card = uiState.card.copy(number = newCardNumber))
     }
@@ -62,6 +62,10 @@ class CardAdditionStateHolder(
         }.onFailure {
             uiEvent = CardAdditionUiEvent.AddCardFailure
         }
+    }
+
+    companion object {
+        private const val CARD_NUMBER_MAX_LENGTH = 16
     }
 }
 

@@ -23,7 +23,7 @@ class CardEditingStateHolder(
         private set
 
     fun updateCardNumber(value: String) {
-        val newCardNumber = value.filter(::isDigit).take(Card.NUMBER_LENGTH)
+        val newCardNumber = value.filter(::isDigit).take(CARD_NUMBER_MAX_LENGTH)
 
         uiState = uiState.copy(edited = uiState.edited.copy(number = newCardNumber))
     }
@@ -61,6 +61,10 @@ class CardEditingStateHolder(
         }.onFailure {
             uiEvent = CardEditingUiEvent.EditCardFailure
         }
+    }
+
+    companion object {
+        private const val CARD_NUMBER_MAX_LENGTH = 16
     }
 }
 
