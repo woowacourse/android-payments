@@ -11,7 +11,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.cardaddition.CardAdditionActivity
 import woowacourse.payments.view.cardediting.CardEditingActivity
 import woowacourse.payments.view.cards.component.CardsScreen
@@ -37,14 +36,8 @@ class CardsActivity : ComponentActivity() {
                     { cardsUpdateLauncher.launch(Intent(this, CardAdditionActivity::class.java)) }
 
                 val navigateToEditingActivity: (card: CardUiModel) -> Unit =
-                    { card ->
-                        cardsUpdateLauncher.launch(
-                            Intent(this, CardEditingActivity::class.java).putExtra(
-                                EXTRA_CARD,
-                                card,
-                            ),
-                        )
-                    }
+                    { card -> cardsUpdateLauncher.launch(CardEditingActivity.intent(this, card)) }
+
                 CardsScreen(
                     stateHolder,
                     addCard = navigateToCardAdditionActivity,

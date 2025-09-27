@@ -1,5 +1,6 @@
 package woowacourse.payments.view.cardediting
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -9,7 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import woowacourse.payments.R
-import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.EXTRA_NEW_CARD
 import woowacourse.payments.view.EXTRA_OLD_CARD
 import woowacourse.payments.view.cardediting.component.CardEditingScreen
@@ -69,5 +69,14 @@ class CardEditingActivity : ComponentActivity() {
         setResult(RESULT_OK, result)
 
         finish()
+    }
+
+    companion object {
+        fun intent(
+            context: Context,
+            card: CardUiModel,
+        ): Intent = Intent(context, CardEditingActivity::class.java).putExtra(EXTRA_CARD, card)
+
+        private const val EXTRA_CARD = "woowacourse.payments.CARD"
     }
 }
