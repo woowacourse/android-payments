@@ -124,23 +124,22 @@ class CardsScreenTest {
 
     @Test
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
-        // TODO: 변경에 의한 테스트 실패
-//        // given
-//        composeRule.setContent {
-//            CardsScreen(
-//                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
-//            )
-//        }
-//
-//        // when
-//        composeRule
-//            .onNodeWithContentDescription("새 카드 등록 버튼")
-//            .performClick()
-//
-//        // then
-//        composeRule
-//            .onNodeWithTag("CardAdditionScreen")
-//            .assertIsDisplayed()
+        // given
+        composeRule.setContent {
+            CardsScreen(
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
+            )
+        }
+
+        // when
+        composeRule
+            .onNodeWithContentDescription("새 카드 등록 버튼")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("CardAdditionScreen")
+            .assertIsDisplayed()
     }
 
     @Test
