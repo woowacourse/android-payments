@@ -17,7 +17,7 @@ import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
 sealed class SubmitCardStateHolder(
-    initCard: CardUiModel,
+    private val initCard: CardUiModel,
 ) {
     var cardNumber: String by mutableStateOf(initCard.cardNumber)
         private set
@@ -47,7 +47,15 @@ sealed class SubmitCardStateHolder(
         private set
 
     val card: CardUiModel
-        get() = CardUiModel(cardNumber, expirationDate, cardholderName, passcode, cardCompany)
+        get() =
+            CardUiModel(
+                initCard.id,
+                cardNumber,
+                expirationDate,
+                cardholderName,
+                passcode,
+                cardCompany,
+            )
 
     val isError: Boolean
         get() {

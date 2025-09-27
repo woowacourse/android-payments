@@ -12,7 +12,8 @@ import woowacourse.payments.ui.format.ExpirationDateFormat
 import java.time.YearMonth
 
 @Parcelize
-data class CardUiModel(
+class CardUiModel(
+    val id: Long = System.currentTimeMillis(),
     val cardNumber: String,
     val expirationDate: String,
     val cardholderName: String,
@@ -24,6 +25,7 @@ data class CardUiModel(
             val yearMonth: YearMonth =
                 YearMonth.parse(expirationDate, ExpirationDateFormat.formatPattern)
             Card(
+                id = id,
                 cardNumber = CardNumber(cardNumber),
                 expirationDate = ExpirationDate(yearMonth),
                 cardholderName = CardholderName(cardholderName),
@@ -33,12 +35,20 @@ data class CardUiModel(
         }.getOrNull()
 
     companion object {
-        val EMPTY = CardUiModel("", "", "", "", CardCompany.NONE.toUiModel())
+        val EMPTY =
+            CardUiModel(
+                cardNumber = "",
+                expirationDate = "",
+                cardholderName = "",
+                passcode = "",
+                cardCompany = CardCompany.NONE.toUiModel(),
+            )
     }
 }
 
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
+        id = id,
         cardNumber = cardNumber.value,
         expirationDate = expirationDate.value.format(ExpirationDateFormat.formatPattern),
         cardholderName = cardholderName.value,

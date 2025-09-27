@@ -105,11 +105,11 @@ private fun PaymentCardWithDetailPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    "1234123412341234",
-                    "1234",
-                    "CREW",
-                    "1234",
-                    CardCompany.BC_CARD.toUiModel(),
+                    cardNumber = "1234123412341234",
+                    expirationDate = "1234",
+                    cardholderName = "CREW",
+                    passcode = "1234",
+                    cardCompany = CardCompany.BC_CARD.toUiModel(),
                 ),
         )
     }

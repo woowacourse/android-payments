@@ -8,11 +8,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.submitcard.CardScreenType
 import woowacourse.payments.ui.submitcard.SubmitCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -23,30 +24,24 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cards = remember { mutableStateListOf<CardUiModel>() }
+                val stateHolder = remember { CardListStateHolder() }
 
                 val launcher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                         if (result.resultCode == RESULT_OK) {
                             val data: Intent =
                                 result.data ?: return@rememberLauncherForActivityResult
-                            val type: CardScreenType =
-                                data.getParcelableExtraCompat<CardScreenType>(
-                                    ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE,
-                                ) ?: return@rememberLauncherForActivityResult
-                            val card: CardUiModel =
+                            val card: Card =
                                 data
                                     .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_SUBMITTED_CARD)
+                                    ?.toCardOrNull()
                                     ?: return@rememberLauncherForActivityResult
-                            when (type) {
-                                is CardScreenType.AddCard -> cards.add(card)
-                                is CardScreenType.EditCard -> cards[type.index] = card
-                            }
+                            stateHolder.updateCards(card)
                         }
                     }
 
                 CardListScreen(
-                    cards = cards,
+                    cards = stateHolder.cards.map(Card::toUiModel),
                     onNavigateToAddCard = {
                         launcher.launch(
                             SubmitCardActivity.intent(

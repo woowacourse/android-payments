@@ -62,6 +62,7 @@ private fun CardListTopBarWithTwoCardsPreview() {
             remember {
                 mutableStateListOf(
                     Card(
+                        id = 0,
                         cardNumber = CardNumber("1234123412341234"),
                         expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
                         cardholderName = CardholderName("디랙"),
@@ -69,6 +70,7 @@ private fun CardListTopBarWithTwoCardsPreview() {
                         cardCompany = CardCompany.BC_CARD,
                     ).toUiModel(),
                     Card(
+                        id = 0,
                         cardNumber = CardNumber("1234123412341234"),
                         expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
                         cardholderName = CardholderName("디랙"),
