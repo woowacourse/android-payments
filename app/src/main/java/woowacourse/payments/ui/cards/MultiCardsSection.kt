@@ -24,7 +24,7 @@ fun MultiCardsSection(
         modifier = modifier,
     ) {
         items(cards) { card ->
-            Card(card, onUpdateClick) {
+            Card(card, modifier.clickable { onUpdateClick(card) }) {
                 CardContent(
                     card,
                     Modifier.padding(15.dp),

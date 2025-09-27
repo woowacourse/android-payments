@@ -20,20 +20,14 @@ import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 @Composable
 fun Card(
     cardUiModel: CardUiModel,
-    onCardClick: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit
 ) {
     Box(
-        modifier =
-            modifier
-                .shadow(8.dp)
-                .width(width = 208.dp)
-                .background(
-                    color = cardUiModel.bankUiModel.cardColor.asColor(),
-                    shape = RoundedCornerShape(5.dp),
-                )
-                .clickable { onCardClick(cardUiModel) },
+        modifier = modifier.background(
+            color = cardUiModel.bankUiModel.cardColor.asColor(),
+            shape = RoundedCornerShape(5.dp),
+        )
     ) {
         content()
     }
@@ -42,7 +36,12 @@ fun Card(
 @Preview(showBackground = true)
 @Composable
 fun PaymentCardPreview() {
-    Card(cardUiModelSample, {}) {
+    Card(
+        cardUiModelSample,
+        modifier = Modifier
+            .shadow(8.dp)
+            .width(width = 208.dp)
+    ) {
         CardContent(
             cardUiModel = cardUiModelSample,
             Modifier
