@@ -147,7 +147,7 @@ class CardsScreenTest {
         // given
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
             )
         }
 
