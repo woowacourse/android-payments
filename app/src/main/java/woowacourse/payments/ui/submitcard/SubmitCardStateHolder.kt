@@ -114,11 +114,11 @@ sealed class SubmitCardStateHolder(
         shouldMoveFocus = false
     }
 
-    internal fun updateCardNumberError() {
+    private fun updateCardNumberError() {
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
     }
 
-    internal fun updateExpirationDateError() {
+    private fun updateExpirationDateError() {
         isExpirationDateError =
             runCatching {
                 val yearMonth =
@@ -127,7 +127,7 @@ sealed class SubmitCardStateHolder(
             }.isFailure
     }
 
-    internal fun updatePasscodeError() {
+    private fun updatePasscodeError() {
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
