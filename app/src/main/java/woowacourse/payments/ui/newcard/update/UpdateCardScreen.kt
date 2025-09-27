@@ -25,6 +25,7 @@ import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateCardScreen(
+    updateCardStateHolder: UpdateCardStateHolder,
     currentCard: CardUiModel,
     onSaveClick: (CardUiModel) -> Unit,
     onBackClick: () -> Unit,
@@ -32,9 +33,7 @@ fun UpdateCardScreen(
 ) {
     val updateCardStateHolder =
         rememberSaveable(saver = UpdateCardStateHolderSaver()) {
-            UpdateCardStateHolder(
-                NewCardContentStateHolder()
-            )
+            updateCardStateHolder
         }
     val isUpdatable by remember {
         derivedStateOf {

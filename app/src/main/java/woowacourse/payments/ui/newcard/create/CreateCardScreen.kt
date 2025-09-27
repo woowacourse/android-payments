@@ -27,12 +27,13 @@ import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCardScreen(
+    createCardStateHolder: CreateCardStateHolder,
     onSaveClick: (CardUiModel) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val stateHolder =
-        rememberSaveable(saver = CreateCardStateHolderSaver()) { CreateCardStateHolder() }
+        rememberSaveable(saver = CreateCardStateHolderSaver()) { createCardStateHolder }
     var showBottomSheet by remember { mutableStateOf(!stateHolder.hasBank) }
     val context = LocalContext.current
     val modalBottomSheetState = rememberModalBottomSheetState()

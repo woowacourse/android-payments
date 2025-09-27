@@ -22,7 +22,7 @@ class UpdateCardStateHolderSaver : Saver<UpdateCardStateHolder, UpdateCardUiStat
 }
 
 class UpdateCardStateHolder(
-    private val newCardContentStateHolder: NewCardContentStateHolder,
+    private val newCardContentStateHolder: NewCardContentStateHolder = NewCardContentStateHolder(),
 ) {
 
     var uiState by mutableStateOf(UpdateCardUiState())

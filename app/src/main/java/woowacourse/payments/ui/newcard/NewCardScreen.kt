@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.create.CreateCardScreen
+import woowacourse.payments.ui.newcard.create.CreateCardStateHolder
 import woowacourse.payments.ui.newcard.model.NewCardMode
 import woowacourse.payments.ui.newcard.update.UpdateCardScreen
+import woowacourse.payments.ui.newcard.update.UpdateCardStateHolder
 
 @Composable
 fun NewCardScreen(
@@ -16,11 +18,12 @@ fun NewCardScreen(
 ) {
     when (mode) {
         NewCardMode.Create -> {
-            CreateCardScreen(onSaveClick, onBackClick, modifier)
+            CreateCardScreen(CreateCardStateHolder(), onSaveClick, onBackClick, modifier)
         }
 
         is NewCardMode.Update -> {
             UpdateCardScreen(
+                UpdateCardStateHolder(),
                 mode.cardUiModel,
                 onSaveClick,
                 onBackClick,
