@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,13 +61,10 @@ fun CardListScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(36.dp),
             ) {
-                items(count = cards.size) { index: Int ->
+                items(items = cards, key = (CardUiModel::id)) { card: CardUiModel ->
                     PaymentCard(
-                        card = cards[index],
-                        modifier =
-                            Modifier.clickable {
-                                onNavigateToEditCard(cards[index])
-                            },
+                        card = card,
+                        modifier = Modifier.clickable { onNavigateToEditCard(card) },
                     )
                 }
             }
