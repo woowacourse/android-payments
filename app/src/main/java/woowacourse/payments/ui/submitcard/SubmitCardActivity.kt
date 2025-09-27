@@ -18,8 +18,8 @@ class SubmitCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val type: CardScreenType =
-            intent.getParcelableExtraCompat<CardScreenType>(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE)
+        val mode: SubmitCardMode =
+            intent.getParcelableExtraCompat<SubmitCardMode>(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_MODE)
                 ?: run {
                     finish()
                     return
@@ -29,18 +29,18 @@ class SubmitCardActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 val stateHolder =
                     remember {
-                        when (type) {
-                            is CardScreenType.AddCard -> SubmitCardStateHolder.AddCardStateHolder()
-                            is CardScreenType.EditCard ->
+                        when (mode) {
+                            is SubmitCardMode.Add -> SubmitCardStateHolder.AddCardStateHolder()
+                            is SubmitCardMode.Edit ->
                                 SubmitCardStateHolder.EditCardStateHolder(
-                                    type.card,
+                                    mode.card,
                                 )
                         }
                     }
 
                 SubmitCardScreen(
                     stateHolder = stateHolder,
-                    onSubmitClick = { card: CardUiModel -> submitCard(type, card) },
+                    onSubmitClick = { card: CardUiModel -> submitCard(mode, card) },
                     onBackClick = { finish() },
                 )
 
@@ -56,12 +56,12 @@ class SubmitCardActivity : ComponentActivity() {
     }
 
     private fun submitCard(
-        type: CardScreenType,
+        mode: SubmitCardMode,
         card: CardUiModel,
     ) {
         val result: Intent =
             Intent().apply {
-                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE, type)
+                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_MODE, mode)
                 putExtra(ExtraKeys.KEY_SUBMITTED_CARD, card)
             }
         setResult(RESULT_OK, result)
@@ -71,10 +71,10 @@ class SubmitCardActivity : ComponentActivity() {
     companion object {
         fun intent(
             context: Context,
-            mode: CardScreenType,
+            mode: SubmitCardMode,
         ): Intent =
             Intent(context, SubmitCardActivity::class.java).apply {
-                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_TYPE, mode)
+                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_MODE, mode)
             }
     }
 }

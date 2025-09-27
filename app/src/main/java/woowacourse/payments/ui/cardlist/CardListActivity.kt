@@ -14,8 +14,8 @@ import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
-import woowacourse.payments.ui.submitcard.CardScreenType
 import woowacourse.payments.ui.submitcard.SubmitCardActivity
+import woowacourse.payments.ui.submitcard.SubmitCardMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
@@ -46,7 +46,7 @@ class CardListActivity : ComponentActivity() {
                         launcher.launch(
                             SubmitCardActivity.intent(
                                 this,
-                                CardScreenType.AddCard,
+                                SubmitCardMode.Add,
                             ),
                         )
                     },
@@ -54,7 +54,7 @@ class CardListActivity : ComponentActivity() {
                         launcher.launch(
                             SubmitCardActivity.intent(
                                 this,
-                                CardScreenType.EditCard(index, card),
+                                SubmitCardMode.Edit(index, card),
                             ),
                         )
                     },

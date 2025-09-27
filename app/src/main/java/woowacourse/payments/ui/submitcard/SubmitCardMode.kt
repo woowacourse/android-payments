@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
-sealed interface CardScreenType : Parcelable {
-    object AddCard : CardScreenType
+sealed interface SubmitCardMode : Parcelable {
+    object Add : SubmitCardMode
 
-    class EditCard(
+    class Edit(
         val index: Int,
         val card: CardUiModel,
-    ) : CardScreenType
+    ) : SubmitCardMode
 }
