@@ -53,7 +53,7 @@ fun BanksBottomSheet(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(widthDp=360, heightDp=640)
+@Preview(widthDp = 360, heightDp = 640)
 @Composable
 fun BanksBottomSheetPreview() {
     val sheetState = rememberModalBottomSheetState()
