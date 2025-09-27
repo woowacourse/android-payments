@@ -17,10 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.newcard.components.NewCardContent
-import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder
-import woowacourse.payments.ui.newcard.components.NewCardTopBar
 import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
+import woowacourse.payments.ui.newcard.components.NewCardContent
+import woowacourse.payments.ui.newcard.components.NewCardTopBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

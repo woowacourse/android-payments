@@ -40,7 +40,7 @@ fun CardsScreen(modifier: Modifier = Modifier) {
     }
     handleEvent(cardsUiStateHolder.cardsUiEvent, localContext)
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         topBar = {
             CardsTopBar(
                 cardsUiState = cardsUiStateHolder.cardsUiState,
@@ -49,7 +49,9 @@ fun CardsScreen(modifier: Modifier = Modifier) {
         },
     ) { innerPadding ->
         Box(
-            modifier = modifier.padding(innerPadding),
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize(),
             contentAlignment = Alignment.TopCenter,
         ) {
             when (val cardsUiState = cardsUiStateHolder.cardsUiState) {
@@ -113,5 +115,5 @@ fun handleEvent(uiEvent: CardsUiEvent?, localContext: Context) {
 @Preview(showBackground = true)
 @Composable
 fun CardsScreenPreview() {
-    CardsScreen()
+    CardsScreen(modifier = Modifier)
 }

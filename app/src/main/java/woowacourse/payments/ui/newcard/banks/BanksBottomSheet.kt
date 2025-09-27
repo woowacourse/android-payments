@@ -3,6 +3,7 @@ package woowacourse.payments.ui.newcard.banks
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -52,7 +53,7 @@ fun BanksBottomSheet(
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(widthDp=360, heightDp=640)
 @Composable
 fun BanksBottomSheetPreview() {
     val sheetState = rememberModalBottomSheetState()

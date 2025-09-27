@@ -24,7 +24,6 @@ fun BanksGrid(
     FlowRow(
         modifier =
             modifier
-                .fillMaxWidth()
                 .testTag(BanksTestTag.BANK_BOARD_TAG),
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = columnCount,
@@ -33,7 +32,7 @@ fun BanksGrid(
     }
 }
 
-@Preview(showBackground = true)
+@Preview(heightDp = 250, showBackground = true)
 @Composable
 fun BanksPreview() {
     val banks = BankType.entries.map { it.toLocalBankUiModel() }
@@ -43,10 +42,9 @@ fun BanksPreview() {
     ) { bank ->
         Bank(
             bankUiModel = bank,
-            onSelectBank = {}, // 상위 캡처
+            onSelectBank = {},
             modifier = Modifier
                 .weight(1f, fill = true)
-                .fillMaxWidth()
         )
     }
 }

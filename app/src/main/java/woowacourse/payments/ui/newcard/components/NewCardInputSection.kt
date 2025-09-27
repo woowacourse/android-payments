@@ -127,7 +127,7 @@ fun NewCardInputSection(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun NewCardInputSectionPreview() {
     NewCardInputSection(
