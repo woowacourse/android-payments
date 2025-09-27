@@ -12,7 +12,7 @@ import woowacourse.payments.ui.format.ExpirationDateFormat
 import java.time.YearMonth
 
 @Parcelize
-class CardUiModel(
+data class CardUiModel(
     val id: Long,
     val cardNumber: String,
     val expirationDate: String,

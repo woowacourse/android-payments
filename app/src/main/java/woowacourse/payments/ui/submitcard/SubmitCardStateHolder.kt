@@ -43,7 +43,7 @@ sealed class SubmitCardStateHolder(
         private set
 
     var uiEvent: SubmitCardScreenUiEvent? by mutableStateOf(null)
-        private set
+        internal set
 
     val card: CardUiModel
         get() =
@@ -101,10 +101,6 @@ sealed class SubmitCardStateHolder(
         showCardCompanies = true
     }
 
-    fun dispatchEvent(event: SubmitCardScreenUiEvent) {
-        uiEvent = event
-    }
-
     fun onEventDispatched() {
         uiEvent = null
     }
@@ -112,6 +108,8 @@ sealed class SubmitCardStateHolder(
     fun onFocusMoved() {
         shouldMoveFocus = false
     }
+
+    abstract fun checkSubmission(onSuccess: () -> Unit)
 
     private fun updateCardNumberError() {
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
@@ -130,12 +128,34 @@ sealed class SubmitCardStateHolder(
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
-    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel.EMPTY)
+    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel.EMPTY) {
+        override fun checkSubmission(onSuccess: () -> Unit) {
+            if (isError) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage
+                return
+            }
+            uiEvent = SubmitCardScreenUiEvent.ShowCardAddSuccessMessage
+            onSuccess()
+        }
+    }
 
     class EditCardStateHolder(
         private val initCard: CardUiModel,
     ) : SubmitCardStateHolder(initCard) {
         val isChanged: Boolean get() = card != initCard
+
+        override fun checkSubmission(onSuccess: () -> Unit) {
+            if (isError) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage
+                return
+            }
+            if (!isChanged) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardEditFailureMessage
+                return
+            }
+            uiEvent = SubmitCardScreenUiEvent.ShowCardEditSuccessMessage
+            onSuccess()
+        }
     }
 
     companion object {

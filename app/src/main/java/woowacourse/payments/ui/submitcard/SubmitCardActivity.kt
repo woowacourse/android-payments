@@ -9,7 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.remember
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.submitcard.bottomsheet.CardCompanyBottomSheet
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -40,7 +39,17 @@ class SubmitCardActivity : ComponentActivity() {
 
                 SubmitCardScreen(
                     stateHolder = stateHolder,
-                    onSubmitClick = { card: CardUiModel -> submitCard(mode, card) },
+                    onSubmitClick = {
+                        stateHolder.checkSubmission {
+                            val result: Intent =
+                                Intent().apply {
+                                    putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_MODE, mode)
+                                    putExtra(ExtraKeys.KEY_SUBMITTED_CARD, stateHolder.card)
+                                }
+                            setResult(RESULT_OK, result)
+                            finish()
+                        }
+                    },
                     onBackClick = { finish() },
                 )
 
@@ -53,19 +62,6 @@ class SubmitCardActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private fun submitCard(
-        mode: SubmitCardMode,
-        card: CardUiModel,
-    ) {
-        val result: Intent =
-            Intent().apply {
-                putExtra(ExtraKeys.KEY_SUBMIT_CARD_SCREEN_MODE, mode)
-                putExtra(ExtraKeys.KEY_SUBMITTED_CARD, card)
-            }
-        setResult(RESULT_OK, result)
-        finish()
     }
 
     companion object {

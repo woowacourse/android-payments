@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.common.composable.PaymentCard
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.submitcard.textfields.CardHolderNameTextField
 import woowacourse.payments.ui.submitcard.textfields.CardNumberTextField
 import woowacourse.payments.ui.submitcard.textfields.ExpirationDateTextField
@@ -32,34 +31,11 @@ import woowacourse.payments.ui.submitcard.textfields.PasscodeTextField
 @Composable
 fun SubmitCardScreen(
     stateHolder: SubmitCardStateHolder,
-    onSubmitClick: (card: CardUiModel) -> Unit,
+    onSubmitClick: () -> Unit,
     onBackClick: () -> Unit,
 ) {
     val context: Context = LocalContext.current
     val focusManager: FocusManager = LocalFocusManager.current
-
-    fun submitCard() {
-        if (stateHolder.isError) {
-            stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage)
-            return
-        }
-
-        when (stateHolder) {
-            is SubmitCardStateHolder.AddCardStateHolder -> {
-                stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardAddSuccessMessage)
-            }
-
-            is SubmitCardStateHolder.EditCardStateHolder -> {
-                if (!stateHolder.isChanged) {
-                    stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardEditFailureMessage)
-                    return
-                }
-                stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardEditSuccessMessage)
-            }
-        }
-
-        onSubmitClick(stateHolder.card)
-    }
 
     LaunchedEffect(stateHolder.uiEvent) {
         val message: String =
@@ -87,7 +63,7 @@ fun SubmitCardScreen(
             SubmitCardTopBar(
                 stateHolder = stateHolder,
                 onBackClick = onBackClick,
-                onSubmitClick = { submitCard() },
+                onSubmitClick = onSubmitClick,
             )
         },
     ) { innerPadding: PaddingValues ->
@@ -140,7 +116,7 @@ fun SubmitCardScreen(
 private fun SubmitCardScreenPreview() {
     SubmitCardScreen(
         stateHolder = remember { SubmitCardStateHolder.AddCardStateHolder() },
-        onSubmitClick = { _ -> },
+        onSubmitClick = {},
         onBackClick = {},
     )
 }
