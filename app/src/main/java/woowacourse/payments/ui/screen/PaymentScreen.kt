@@ -33,7 +33,6 @@ fun PaymentScreen() {
     PaymentContent(
         cards = state.uiCards,
         showTopAdd = state.showTopAdd,
-        canAddMore = state.canAddMore,
         onAddCardClick = { cardLauncher.launch(AddCardActivity.newIntent(context)) },
         onCardClick = { _, index ->
             state

@@ -19,7 +19,6 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentContent(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
-    canAddMore: Boolean,
     onAddCardClick: () -> Unit,
     onCardClick: (CardUiModel, Int) -> Unit,
 ) {
@@ -34,9 +33,9 @@ fun PaymentContent(
     ) { innerPadding ->
         PaymentCards(
             cards = cards,
-            canAddMore = canAddMore,
             onAddCardClick = onAddCardClick,
             onCardClick = onCardClick,
+            showTopAdd = showTopAdd,
             modifier =
                 Modifier
                     .padding(innerPadding)
@@ -53,7 +52,6 @@ private fun PaymentScreenEmptyPreview() {
         PaymentContent(
             cards = emptyList(),
             showTopAdd = false,
-            canAddMore = true,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
         )
@@ -75,7 +73,6 @@ private fun PaymentScreenOneCardPreview() {
         PaymentContent(
             cards = listOf(sampleCard),
             showTopAdd = false,
-            canAddMore = true,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
         )
@@ -103,7 +100,6 @@ private fun PaymentScreenThreeCardsPreview() {
         PaymentContent(
             cards = cards,
             showTopAdd = true,
-            canAddMore = false,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
         )

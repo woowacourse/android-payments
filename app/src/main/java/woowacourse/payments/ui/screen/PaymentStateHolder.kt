@@ -3,6 +3,7 @@ package woowacourse.payments.ui.screen
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -11,23 +12,20 @@ import woowacourse.payments.ui.model.toUiModel
 
 class PaymentStateHolder {
     companion object {
-        const val MAX_CARDS = 2
+        const val MIN_CARDS_FOR_TOP_ADD = 2
     }
 
-    var cards by mutableStateOf(emptyList<Card>())
+    var cards = mutableStateListOf<Card>()
         private set
 
     val uiCards by derivedStateOf { cards.map { it.toUiModel() } }
-    val canAddMore by derivedStateOf { cards.size < MAX_CARDS }
-    val showTopAdd by derivedStateOf { !canAddMore }
+    val showTopAdd by derivedStateOf { cards.size >= MIN_CARDS_FOR_TOP_ADD }
 
     var editingIndex: Int? by mutableStateOf(null)
         private set
 
     fun onCardAdded(card: Card) {
-        if (canAddMore) {
-            cards = cards + card
-        }
+        cards += card
     }
 
     fun beginEditAt(index: Int): Boolean =
@@ -42,7 +40,7 @@ class PaymentStateHolder {
                 return
             }
         if (index in cards.indices) {
-            cards = cards.toMutableList().apply { this[index] = edited }
+            cards = cards.apply { this[index] = edited }
         }
         editingIndex = null
     }

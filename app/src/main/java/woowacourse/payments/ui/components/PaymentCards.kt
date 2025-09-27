@@ -24,9 +24,9 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCards(
     cards: List<CardUiModel>,
-    canAddMore: Boolean,
+    showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (CardUiModel, Int) -> Unit,
+    onCardClick: (card: CardUiModel, cardIndex: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -54,7 +54,7 @@ fun PaymentCards(
                     Spacer(Modifier.height(16.dp))
                 }
             }
-            if (canAddMore) {
+            if (!showTopAdd) {
                 item {
                     Spacer(Modifier.height(24.dp))
                     AddCardButton(onClick = onAddCardClick)
@@ -70,7 +70,7 @@ private fun PaymentCards_Empty_Preview() {
     AndroidpaymentsTheme {
         PaymentCards(
             cards = emptyList(),
-            canAddMore = true,
+            showTopAdd = false,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
@@ -84,7 +84,7 @@ private fun PaymentCards_One_Preview() {
     AndroidpaymentsTheme {
         PaymentCards(
             cards = listOf(sampleCard()),
-            canAddMore = true,
+            showTopAdd = false,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
@@ -98,7 +98,7 @@ private fun PaymentCards_Many_Preview() {
     AndroidpaymentsTheme {
         PaymentCards(
             cards = List(3) { sampleCard() },
-            canAddMore = false,
+            showTopAdd = true,
             onAddCardClick = {},
             onCardClick = { _, _ -> },
             modifier = Modifier.fillMaxSize(),
