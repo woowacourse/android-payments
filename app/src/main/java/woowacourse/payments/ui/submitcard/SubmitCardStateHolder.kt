@@ -16,7 +16,7 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
-sealed class SubmitCardScreenUiStateHolder(
+sealed class SubmitCardStateHolder(
     initCard: CardUiModel,
 ) {
     var cardNumber: String by mutableStateOf(initCard.cardNumber)
@@ -123,11 +123,11 @@ sealed class SubmitCardScreenUiStateHolder(
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
-    class AddCardScreenUiStateHolder : SubmitCardScreenUiStateHolder(CardUiModel.EMPTY)
+    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel.EMPTY)
 
-    class EditCardScreenUiStateHolder(
+    class EditCardStateHolder(
         val initCard: CardUiModel,
-    ) : SubmitCardScreenUiStateHolder(initCard) {
+    ) : SubmitCardStateHolder(initCard) {
         val isChanged: Boolean get() = card != initCard
     }
 

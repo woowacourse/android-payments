@@ -17,7 +17,7 @@ import woowacourse.payments.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SubmitCardTopBar(
-    stateHolder: SubmitCardScreenUiStateHolder,
+    stateHolder: SubmitCardStateHolder,
     onSubmitClick: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -26,8 +26,8 @@ fun SubmitCardTopBar(
         title = {
             Text(
                 when (stateHolder) {
-                    is SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder -> stringResource(R.string.submit_card_add_title)
-                    is SubmitCardScreenUiStateHolder.EditCardScreenUiStateHolder -> stringResource(R.string.submit_card_edit_title)
+                    is SubmitCardStateHolder.AddCardStateHolder -> stringResource(R.string.submit_card_add_title)
+                    is SubmitCardStateHolder.EditCardStateHolder -> stringResource(R.string.submit_card_edit_title)
                 },
             )
         },
@@ -55,7 +55,7 @@ fun SubmitCardTopBar(
 @Composable
 private fun SubmitCardTopBarPreview() {
     SubmitCardTopBar(
-        stateHolder = SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder(),
+        stateHolder = SubmitCardStateHolder.AddCardStateHolder(),
         onSubmitClick = {},
         onBackClick = {},
     )

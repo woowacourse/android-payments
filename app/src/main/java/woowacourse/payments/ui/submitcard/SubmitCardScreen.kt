@@ -31,7 +31,7 @@ import woowacourse.payments.ui.submitcard.textfields.PasscodeTextField
 
 @Composable
 fun SubmitCardScreen(
-    stateHolder: SubmitCardScreenUiStateHolder,
+    stateHolder: SubmitCardStateHolder,
     onSubmitClick: (card: CardUiModel) -> Unit,
     onBackClick: () -> Unit,
 ) {
@@ -45,11 +45,11 @@ fun SubmitCardScreen(
         }
 
         when (stateHolder) {
-            is SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder -> {
+            is SubmitCardStateHolder.AddCardStateHolder -> {
                 stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardAddSuccessMessage)
             }
 
-            is SubmitCardScreenUiStateHolder.EditCardScreenUiStateHolder -> {
+            is SubmitCardStateHolder.EditCardStateHolder -> {
                 if (!stateHolder.isChanged) {
                     stateHolder.dispatchEvent(SubmitCardScreenUiEvent.ShowCardEditFailureMessage)
                     return
@@ -139,7 +139,7 @@ fun SubmitCardScreen(
 @Composable
 private fun SubmitCardScreenPreview() {
     SubmitCardScreen(
-        stateHolder = remember { SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder() },
+        stateHolder = remember { SubmitCardStateHolder.AddCardStateHolder() },
         onSubmitClick = { _ -> },
         onBackClick = {},
     )

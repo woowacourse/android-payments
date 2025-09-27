@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import woowacourse.payments.ui.model.CardCompanyUiModel
-import woowacourse.payments.ui.submitcard.SubmitCardScreenUiStateHolder
+import woowacourse.payments.ui.submitcard.SubmitCardStateHolder
 
 private const val MAX_ITEMS_PER_ROW = 4
 
@@ -66,5 +66,5 @@ fun CardCompanyBottomSheet(
 @Preview(showBackground = true)
 @Composable
 fun CardCompanyBottomSheetPreview() {
-    CardCompanyBottomSheet(SubmitCardScreenUiStateHolder.CARD_COMPANIES, {}, {})
+    CardCompanyBottomSheet(SubmitCardStateHolder.CARD_COMPANIES, {}, {})
 }

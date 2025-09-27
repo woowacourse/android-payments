@@ -30,9 +30,9 @@ class SubmitCardActivity : ComponentActivity() {
                 val stateHolder =
                     remember {
                         when (type) {
-                            is CardScreenType.AddCard -> SubmitCardScreenUiStateHolder.AddCardScreenUiStateHolder()
+                            is CardScreenType.AddCard -> SubmitCardStateHolder.AddCardStateHolder()
                             is CardScreenType.EditCard ->
-                                SubmitCardScreenUiStateHolder.EditCardScreenUiStateHolder(
+                                SubmitCardStateHolder.EditCardStateHolder(
                                     type.card,
                                 )
                         }
@@ -46,7 +46,7 @@ class SubmitCardActivity : ComponentActivity() {
 
                 if (stateHolder.showCardCompanies) {
                     CardCompanyBottomSheet(
-                        SubmitCardScreenUiStateHolder.CARD_COMPANIES,
+                        SubmitCardStateHolder.CARD_COMPANIES,
                         stateHolder::onCardCompanySelected,
                         { finish() },
                     )
