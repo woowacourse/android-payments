@@ -30,7 +30,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.view.BankTypeUiModel
+import woowacourse.payments.view.ui.model.BankTypeUiModel
 
 private const val COLUMN_COUNT = 4
 

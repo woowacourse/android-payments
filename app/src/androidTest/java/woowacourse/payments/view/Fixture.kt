@@ -1,5 +1,8 @@
 package woowacourse.payments.view
 
+import woowacourse.payments.view.ui.model.BankTypeUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
+
 val CardUiModel: CardUiModel =
     CardUiModel(
         number = "1234".repeat(4),

@@ -1,4 +1,4 @@
-package woowacourse.payments.view
+package woowacourse.payments.view.ui.model
 
 import YearMonthParser
 import android.os.Parcelable

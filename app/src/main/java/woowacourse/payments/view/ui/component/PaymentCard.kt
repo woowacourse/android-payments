@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
-import woowacourse.payments.view.BankTypeUiModel
-import woowacourse.payments.view.CardUiModel
+import woowacourse.payments.view.ui.model.BankTypeUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
 import woowacourse.payments.view.ui.theme.CardIcChip
 
 private const val CARD_NUMBER_MASK = "*"

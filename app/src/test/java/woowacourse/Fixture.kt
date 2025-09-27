@@ -1,7 +1,7 @@
 package woowacourse
 
-import woowacourse.payments.view.BankTypeUiModel
-import woowacourse.payments.view.CardUiModel
+import woowacourse.payments.view.ui.model.BankTypeUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
 
 val CardUiModel: CardUiModel =
     CardUiModel(

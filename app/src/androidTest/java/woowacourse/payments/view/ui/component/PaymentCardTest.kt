@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.view.CardUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
 
 class PaymentCardTest {
     @get:Rule

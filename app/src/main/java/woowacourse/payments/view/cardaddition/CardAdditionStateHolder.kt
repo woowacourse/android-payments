@@ -8,8 +8,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.CardsRepository
 import woowacourse.payments.domain.MockCardsRepository
-import woowacourse.payments.view.BankTypeUiModel
 import woowacourse.payments.view.toDomain
+import woowacourse.payments.view.ui.model.BankTypeUiModel
 import java.lang.Character.isDigit
 
 class CardAdditionStateHolder(

@@ -9,12 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import woowacourse.payments.R
-import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.EXTRA_NEW_CARD
 import woowacourse.payments.view.EXTRA_OLD_CARD
 import woowacourse.payments.view.cardediting.component.CardEditingScreen
 import woowacourse.payments.view.getParcelableExtraCompat
+import woowacourse.payments.view.ui.model.CardUiModel
 import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 
 class CardEditingActivity : ComponentActivity() {

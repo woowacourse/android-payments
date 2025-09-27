@@ -5,6 +5,8 @@ import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.view.ui.model.BankTypeUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
 import java.time.YearMonth
 
 fun Card.toUiModel(): CardUiModel =

@@ -8,9 +8,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.view.BankTypeUiModel
-import woowacourse.payments.view.CardUiModel
 import woowacourse.payments.view.ui.component.PaymentCard
+import woowacourse.payments.view.ui.model.BankTypeUiModel
+import woowacourse.payments.view.ui.model.CardUiModel
 
 @Composable
 fun OneCardContent(
