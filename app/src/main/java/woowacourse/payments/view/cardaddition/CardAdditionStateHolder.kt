@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardsRepository
 import woowacourse.payments.domain.MockCardsRepository
 import woowacourse.payments.view.BankTypeUiModel
@@ -29,7 +28,7 @@ class CardAdditionStateHolder(
     }
 
     fun updateExpiredDate(value: String) {
-        val newExpiredDate: String = value.filter(::isDigit).take(Card.EXPIRED_DATE_LENGTH)
+        val newExpiredDate: String = value.filter(::isDigit).take(CARD_EXPIRED_DATE_MAX_LENGTH)
 
         uiState = uiState.copy(card = uiState.card.copy(expiredDate = newExpiredDate))
     }
@@ -66,6 +65,7 @@ class CardAdditionStateHolder(
 
     companion object {
         private const val CARD_NUMBER_MAX_LENGTH = 16
+        private const val CARD_EXPIRED_DATE_MAX_LENGTH = 4
         private const val CARD_PASSWORD_MAX_LENGTH = 4
     }
 }

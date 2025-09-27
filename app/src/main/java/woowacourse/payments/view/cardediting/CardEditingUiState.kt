@@ -1,13 +1,12 @@
 package woowacourse.payments.view.cardediting
 
+import YearMonthParser
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.view.CardUiModel
-import java.time.Month
 
 @Parcelize
 data class CardEditingUiState(
@@ -18,13 +17,7 @@ data class CardEditingUiState(
     val isValidCardNumber: Boolean = runCatching { CardNumber(edited.number) }.isSuccess
 
     @IgnoredOnParcel
-    val isValidExpiredDate: Boolean =
-        run {
-            if (edited.expiredDate.length != Card.EXPIRED_DATE_LENGTH) return@run false
-
-            val month: Int = edited.expiredDate.take(2).toIntOrNull() ?: return@run false
-            runCatching { Month.of(month) }.isSuccess
-        }
+    val isValidExpiredDate: Boolean = YearMonthParser.isValid(edited.expiredDate)
 
     @IgnoredOnParcel
     val isValidPassword: Boolean = runCatching { CardPassword(edited.password) }.isSuccess
