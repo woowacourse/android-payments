@@ -13,7 +13,7 @@ import java.time.YearMonth
 
 @Parcelize
 class CardUiModel(
-    val id: Long = System.currentTimeMillis(),
+    val id: Long,
     val cardNumber: String,
     val expirationDate: String,
     val cardholderName: String,
@@ -35,14 +35,16 @@ class CardUiModel(
         }.getOrNull()
 
     companion object {
-        val EMPTY =
-            CardUiModel(
-                cardNumber = "",
-                expirationDate = "",
-                cardholderName = "",
-                passcode = "",
-                cardCompany = CardCompany.NONE.toUiModel(),
-            )
+        val EMPTY
+            get() =
+                CardUiModel(
+                    id = System.currentTimeMillis(),
+                    cardNumber = "",
+                    expirationDate = "",
+                    cardholderName = "",
+                    passcode = "",
+                    cardCompany = CardCompany.NONE.toUiModel(),
+                )
     }
 }
 

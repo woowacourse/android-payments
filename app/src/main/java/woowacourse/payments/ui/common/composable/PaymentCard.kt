@@ -105,6 +105,7 @@ private fun PaymentCardWithDetailPreview() {
         PaymentCard(
             card =
                 CardUiModel(
+                    id = 0,
                     cardNumber = "1234123412341234",
                     expirationDate = "1234",
                     cardholderName = "CREW",
