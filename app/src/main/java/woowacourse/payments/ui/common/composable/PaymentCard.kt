@@ -29,7 +29,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: CardUiModel = CardUiModel.EMPTY,
+    card: CardUiModel = CardUiModel(),
 ) {
     Box(
         modifier

@@ -16,7 +16,7 @@ class PaymentCardTest {
     @Test
     fun 카드_정보가_없으면_빈_카드가_표시된다() {
         // given
-        val card: CardUiModel = CardUiModel.EMPTY
+        val card = CardUiModel()
 
         // when
         composeTestRule.setContent { PaymentCard(card = card) }

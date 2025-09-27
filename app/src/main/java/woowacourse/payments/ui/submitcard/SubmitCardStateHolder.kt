@@ -128,7 +128,7 @@ sealed class SubmitCardStateHolder(
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
     }
 
-    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel.EMPTY) {
+    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel()) {
         override fun checkSubmission(onSuccess: () -> Unit) {
             if (isError) {
                 uiEvent = SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage

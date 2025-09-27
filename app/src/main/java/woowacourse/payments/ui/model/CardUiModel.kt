@@ -13,12 +13,12 @@ import java.time.YearMonth
 
 @Parcelize
 data class CardUiModel(
-    val id: Long,
-    val cardNumber: String,
-    val expirationDate: String,
-    val cardholderName: String,
-    val passcode: String,
-    val cardCompany: CardCompanyUiModel,
+    val id: Long = System.currentTimeMillis(),
+    val cardNumber: String = "",
+    val expirationDate: String = "",
+    val cardholderName: String = "",
+    val passcode: String = "",
+    val cardCompany: CardCompanyUiModel = CardCompany.NONE.toUiModel(),
 ) : Parcelable {
     fun toCardOrNull(): Card? =
         runCatching {
@@ -33,19 +33,6 @@ data class CardUiModel(
                 cardCompany = cardCompany.cardCompany,
             )
         }.getOrNull()
-
-    companion object {
-        val EMPTY
-            get() =
-                CardUiModel(
-                    id = System.currentTimeMillis(),
-                    cardNumber = "",
-                    expirationDate = "",
-                    cardholderName = "",
-                    passcode = "",
-                    cardCompany = CardCompany.NONE.toUiModel(),
-                )
-    }
 }
 
 fun Card.toUiModel(): CardUiModel =
