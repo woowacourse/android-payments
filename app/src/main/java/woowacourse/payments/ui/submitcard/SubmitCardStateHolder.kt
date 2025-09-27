@@ -134,7 +134,7 @@ sealed class SubmitCardStateHolder(
     class AddCardStateHolder : SubmitCardStateHolder(CardUiModel.EMPTY)
 
     class EditCardStateHolder(
-        val initCard: CardUiModel,
+        private val initCard: CardUiModel,
     ) : SubmitCardStateHolder(initCard) {
         val isChanged: Boolean get() = card != initCard
     }
