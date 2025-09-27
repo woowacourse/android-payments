@@ -18,8 +18,6 @@ class CardsStateHolder(
 ) {
     var uiState: CardsUiState by mutableStateOf(initialState)
         private set
-    var event by mutableStateOf<CardsUiEvent?>(null)
-        private set
 
     fun fetchCards() {
         runCatching {
@@ -27,10 +25,6 @@ class CardsStateHolder(
         }.onSuccess { cards: List<CardUiModel> ->
             uiState = uiState.copy(cards = cards)
         }
-    }
-
-    fun clearEvent() {
-        event = null
     }
 }
 

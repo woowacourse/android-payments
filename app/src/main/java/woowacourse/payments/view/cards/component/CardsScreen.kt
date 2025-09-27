@@ -2,7 +2,6 @@ package woowacourse.payments.view.cards.component
 
 import android.app.Activity
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
@@ -16,18 +15,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import woowacourse.payments.R
 import woowacourse.payments.view.EXTRA_CARD
 import woowacourse.payments.view.cardaddition.CardAdditionActivity
 import woowacourse.payments.view.cardediting.CardEditingActivity
 import woowacourse.payments.view.cards.CardsStateHolder
-import woowacourse.payments.view.cards.CardsUiEvent
 import woowacourse.payments.view.cards.CardsUiState
 import woowacourse.payments.view.cards.rememberCardsStateHolder
 import woowacourse.payments.view.ui.model.BankTypeUiModel
@@ -40,7 +36,6 @@ fun CardsScreen(
     stateHolder: CardsStateHolder = rememberCardsStateHolder(),
 ) {
     val state: CardsUiState = stateHolder.uiState
-    val event: CardsUiEvent? = stateHolder.event
 
     val context = LocalContext.current
 
@@ -67,25 +62,6 @@ fun CardsScreen(
                 Intent(context, CardEditingActivity::class.java).putExtra(EXTRA_CARD, card),
             )
         }
-
-    LaunchedEffect(event) {
-        when (event) {
-            CardsUiEvent.EditCardSuccess -> {
-                Toast
-                    .makeText(
-                        context,
-                        context.getString(R.string.card_editing_edit_card_success_message),
-                        Toast.LENGTH_SHORT,
-                    ).show()
-
-                stateHolder.fetchCards()
-            }
-
-            null -> Unit
-        }
-
-        stateHolder.clearEvent()
-    }
 
     Scaffold(
         modifier = modifier,
