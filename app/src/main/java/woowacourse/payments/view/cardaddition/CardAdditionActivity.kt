@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import woowacourse.payments.R
 import woowacourse.payments.view.cardaddition.component.CardAdditionScreen
-import woowacourse.payments.view.ui.model.CardUiModel
 import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 
 class CardAdditionActivity : ComponentActivity() {
@@ -42,8 +41,5 @@ class CardAdditionActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    private fun saveCard(card: CardUiModel) {
     }
 }
