@@ -9,7 +9,6 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardsRepository
 import woowacourse.payments.domain.MockCardsRepository
-import woowacourse.payments.view.toDomain
 import woowacourse.payments.view.toUiModel
 import woowacourse.payments.view.ui.model.CardUiModel
 
@@ -32,17 +31,6 @@ class CardsStateHolder(
 
     fun clearEvent() {
         event = null
-    }
-
-    fun editCard(
-        old: CardUiModel,
-        new: CardUiModel,
-    ) {
-        runCatching {
-            repository.editCard(old.toDomain(), new.toDomain())
-        }.onSuccess {
-            event = CardsUiEvent.EditCardSuccess
-        }
     }
 }
 
