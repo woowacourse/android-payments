@@ -27,8 +27,7 @@ sealed class SubmitCardStateHolder(
         private set
     var passcode: String by mutableStateOf(initCard.passcode)
         private set
-    var cardCompany: CardCompanyUiModel by mutableStateOf(initCard.cardCompany)
-        private set
+    private var cardCompany: CardCompanyUiModel by mutableStateOf(initCard.cardCompany)
 
     var isCardNumberError: Boolean by mutableStateOf(false)
         private set
