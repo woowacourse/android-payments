@@ -33,6 +33,7 @@ class PaymentCardTest {
 
     private val card =
         Card(
+            id = 0L,
             type = CardCompanyType.BC,
             cardNumber = CardNumber.create("1111222233334444"),
             expirationDate = ExpirationDate.create(yearMonth, testClock),

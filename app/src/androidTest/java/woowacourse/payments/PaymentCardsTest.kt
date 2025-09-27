@@ -27,6 +27,7 @@ class PaymentCardsTest {
 
     private val sampleCard =
         Card(
+            id = 0L,
             type = CardCompanyType.BC,
             cardNumber = CardNumber.create("1111222233334444"),
             expirationDate = ExpirationDate.create(yearMonth, testClock),
@@ -41,9 +42,9 @@ class PaymentCardsTest {
         composeTestRule.setContent {
             PaymentCards(
                 cards = cards,
-                canAddMore = true,
+                showTopAdd = false,
                 onAddCardClick = {},
-                onCardClick = { _, _ -> },
+                onCardClick = {},
             )
         }
 
@@ -63,9 +64,9 @@ class PaymentCardsTest {
         composeTestRule.setContent {
             PaymentCards(
                 cards = cards,
-                canAddMore = true,
+                showTopAdd = false,
                 onAddCardClick = {},
-                onCardClick = { _, _ -> },
+                onCardClick = {},
             )
         }
 
@@ -81,9 +82,9 @@ class PaymentCardsTest {
         composeTestRule.setContent {
             PaymentCards(
                 cards = cards,
-                canAddMore = false,
+                showTopAdd = true,
                 onAddCardClick = {},
-                onCardClick = { _, _ -> },
+                onCardClick = {},
             )
         }
 
