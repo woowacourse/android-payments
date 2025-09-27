@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.cards.core.mapper.asColor
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 
@@ -25,7 +26,9 @@ fun SingleCardsSection(
         modifier = modifier,
     ) {
         Spacer(Modifier.height(12.dp))
-        Card(card, onUpdateClick)
+        Card(card, onUpdateClick) {
+            CardContent(card)
+        }
         NewCard(onAddClick)
     }
 }

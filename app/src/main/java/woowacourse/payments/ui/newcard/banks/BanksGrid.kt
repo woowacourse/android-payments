@@ -19,7 +19,7 @@ fun BanksGrid(
     banks: List<BankUiModel>,
     columnCount: Int,
     modifier: Modifier = Modifier,
-    item: @Composable FlowRowScope.(BankUiModel) -> Unit
+    item: @Composable FlowRowScope.() -> Unit
 ) {
     FlowRow(
         modifier =
@@ -28,7 +28,7 @@ fun BanksGrid(
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = columnCount,
     ) {
-        banks.forEach { bank -> item(bank) }
+        banks.forEach { bank -> item() }
     }
 }
 
