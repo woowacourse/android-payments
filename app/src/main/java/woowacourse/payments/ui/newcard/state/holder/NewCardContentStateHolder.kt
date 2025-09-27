@@ -1,11 +1,7 @@
 package woowacourse.payments.ui.newcard.state.holder
 
-import androidx.annotation.StringRes
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.domain.CardExpiryValidator
@@ -16,23 +12,15 @@ import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
 import kotlin.random.Random
 
-class NewCardContentStateHolderSaver : Saver<NewCardContentStateHolder, NewCardContentUiState> {
-    override fun SaverScope.save(value: NewCardContentStateHolder): NewCardContentUiState? =
-        value.cardCreateState
-
-    override fun restore(value: NewCardContentUiState): NewCardContentStateHolder? =
-        NewCardContentStateHolder(value)
-}
-
 class NewCardContentStateHolder(
     initial: NewCardContentUiState = NewCardContentUiState(),
-) : NewCardContentStateAction {
+) {
     var cardCreateState by mutableStateOf(initial)
         private set
 
-    override val hasBank get() = cardCreateState.bankUiModel != null
+    val hasBank get() = cardCreateState.bankUiModel != null
 
-    override fun newCard(cardId: Long?): CardUiModel =
+    fun newCard(cardId: Long?): CardUiModel =
         cardCreateState.run {
             CardUiModel(
                 requireNotNull(bankUiModel),
@@ -44,17 +32,17 @@ class NewCardContentStateHolder(
             )
         }
 
-    override fun updateCardBank(bankUiModel: BankUiModel) {
+    fun updateCardBank(bankUiModel: BankUiModel) {
         cardCreateState = cardCreateState.copy(bankUiModel = bankUiModel)
     }
 
-    override fun updateCardNumber(cardNumber: String) {
+    fun updateCardNumber(cardNumber: String) {
         val value = cardNumber.trim()
         if (!isCardNumberAcceptable(value)) return
         cardCreateState = cardCreateState.copy(cardNumber = value)
     }
 
-    override fun updateExpiryDate(expiryDate: String) {
+    fun updateExpiryDate(expiryDate: String) {
         val value = expiryDate.trim()
         if (!isExpiryDateAcceptable(value)) return
         val error = validateExpiryDate(value)
@@ -64,13 +52,13 @@ class NewCardContentStateHolder(
         )
     }
 
-    override fun updateOwnerName(ownerName: String) {
+    fun updateOwnerName(ownerName: String) {
         val value = ownerName.trim()
         if (!isOwnerNameAcceptable(value)) return
         cardCreateState = cardCreateState.copy(ownerName = value)
     }
 
-    override fun updatePassword(password: String) {
+    fun updatePassword(password: String) {
         val value = password.trim()
         if (!isPasswordAcceptable(value)) return
         cardCreateState = cardCreateState.copy(password = value)

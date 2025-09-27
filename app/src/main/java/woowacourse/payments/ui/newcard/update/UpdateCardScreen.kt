@@ -43,12 +43,13 @@ fun UpdateCardScreen(
             )
         }
     }
-    var showBottomSheet by remember { mutableStateOf(!updateCardStateHolder.hasBank) }
+    var showBottomSheet by remember { mutableStateOf(false) }
     val modalBottomSheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(Unit) {
         updateCardStateHolder.updateCardInfo(currentCard)
     }
+
     LaunchedEffect(showBottomSheet) {
         if (showBottomSheet) {
             showBottomSheet = true
@@ -71,7 +72,7 @@ fun UpdateCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(updateCardStateHolder.newCard(currentCard.id)) },
+                onSaveClick = { onSaveClick(updateCardStateHolder.updateCard(currentCard.id)) },
                 title = stringResource(R.string.card_update),
                 isCreatable = isUpdatable
             )

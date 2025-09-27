@@ -68,7 +68,7 @@ fun CreateCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(stateHolder.newCard()) },
+                onSaveClick = { onSaveClick(stateHolder.newCard(null)) },
                 title = stringResource(R.string.card_create_title),
                 isCreatable = isCardCreatable,
             )

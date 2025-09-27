@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.newcard.update
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
@@ -8,7 +9,6 @@ import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateAction
 import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder
 
 class UpdateCardStateHolderSaver : Saver<UpdateCardStateHolder, UpdateCardUiState> {
@@ -22,11 +22,13 @@ class UpdateCardStateHolderSaver : Saver<UpdateCardStateHolder, UpdateCardUiStat
 }
 
 class UpdateCardStateHolder(
-    private val newCardContentStateHolder: NewCardContentStateHolder
-) : NewCardContentStateAction by newCardContentStateHolder {
+    private val newCardContentStateHolder: NewCardContentStateHolder,
+) {
 
     var uiState by mutableStateOf(UpdateCardUiState())
         private set
+
+    fun updateCard(cardId: Long) = newCardContentStateHolder.newCard(cardId)
 
     fun updateCardInfo(cardUiModel: CardUiModel) {
         updateCardBank(cardUiModel.bankUiModel)
@@ -34,6 +36,41 @@ class UpdateCardStateHolder(
         updateExpiryDate(cardUiModel.cardExpiry)
         updateOwnerName(cardUiModel.ownerName)
         updatePassword(cardUiModel.password)
+    }
+
+    fun updateCardBank(bankUiModel: woowacourse.payments.ui.model.BankUiModel) {
+        newCardContentStateHolder.updateCardBank(bankUiModel)
+        uiState = uiState.copy(
+            newCardContentUiState = newCardContentStateHolder.cardCreateState
+        )
+    }
+
+    fun updateCardNumber(cardNumber: String) {
+        newCardContentStateHolder.updateCardNumber(cardNumber)
+        uiState = uiState.copy(
+            newCardContentUiState = newCardContentStateHolder.cardCreateState
+        )
+    }
+
+    fun updateExpiryDate(expiryDate: String) {
+        newCardContentStateHolder.updateExpiryDate(expiryDate)
+        uiState = uiState.copy(
+            newCardContentUiState = newCardContentStateHolder.cardCreateState
+        )
+    }
+
+    fun updateOwnerName(ownerName: String) {
+        newCardContentStateHolder.updateOwnerName(ownerName)
+        uiState = uiState.copy(
+            newCardContentUiState = newCardContentStateHolder.cardCreateState
+        )
+    }
+
+    fun updatePassword(password: String) {
+        newCardContentStateHolder.updatePassword(password)
+        uiState = uiState.copy(
+            newCardContentUiState = newCardContentStateHolder.cardCreateState
+        )
     }
 
     fun isCardUpdatable(cardUiModel: CardUiModel) =
@@ -45,13 +82,14 @@ class UpdateCardStateHolder(
                                 expiryDateErrorTextRes,
                             ) &&
                             isOwnerNameCreatable(ownerName) &&
-                            isPasswordCreatable(password)
-                    !isSamePreviousCard(cardUiModel)
+                            isPasswordCreatable(password) &&
+                            !isSamePreviousCard(cardUiModel)
                 }
 
     private fun isSamePreviousCard(cardUiModel: CardUiModel) =
         uiState.newCardContentUiState.run {
-            cardUiModel.cardNumbers == cardNumber &&
+            cardUiModel.bankUiModel == bankUiModel &&
+                    cardUiModel.cardNumbers == cardNumber &&
                     cardUiModel.cardExpiry == expiryDate &&
                     cardUiModel.ownerName == ownerName &&
                     cardUiModel.password == password
