@@ -20,7 +20,7 @@ fun PaymentContent(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (CardUiModel, Int) -> Unit,
+    onCardClick: (Int) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -53,7 +53,7 @@ private fun PaymentScreenEmptyPreview() {
             cards = emptyList(),
             showTopAdd = false,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
         )
     }
 }
@@ -74,7 +74,7 @@ private fun PaymentScreenOneCardPreview() {
             cards = listOf(sampleCard),
             showTopAdd = false,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
         )
     }
 }
@@ -101,7 +101,7 @@ private fun PaymentScreenThreeCardsPreview() {
             cards = cards,
             showTopAdd = true,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
         )
     }
 }

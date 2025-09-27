@@ -26,7 +26,7 @@ fun PaymentCards(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (card: CardUiModel, cardIndex: Int) -> Unit,
+    onCardClick: (cardIndex: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -48,7 +48,7 @@ fun PaymentCards(
             itemsIndexed(cards) { index, card ->
                 PaymentCard(
                     card = card,
-                    onClick = { onCardClick(card, index) },
+                    onClick = { onCardClick(index) },
                 )
                 if (index < cards.lastIndex) {
                     Spacer(Modifier.height(16.dp))
@@ -72,7 +72,7 @@ private fun PaymentCards_Empty_Preview() {
             cards = emptyList(),
             showTopAdd = false,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -86,7 +86,7 @@ private fun PaymentCards_One_Preview() {
             cards = listOf(sampleCard()),
             showTopAdd = false,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
             modifier = Modifier.fillMaxSize(),
         )
     }
@@ -100,7 +100,7 @@ private fun PaymentCards_Many_Preview() {
             cards = List(3) { sampleCard() },
             showTopAdd = true,
             onAddCardClick = {},
-            onCardClick = { _, _ -> },
+            onCardClick = {},
             modifier = Modifier.fillMaxSize(),
         )
     }
