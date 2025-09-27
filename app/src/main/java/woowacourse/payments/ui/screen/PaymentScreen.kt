@@ -16,7 +16,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentScreen() {
-    val state = rememberPaymentStateHolder()
+    val paymentStateHolder = rememberPaymentStateHolder()
     val context = LocalContext.current
 
     var editIndex by remember { mutableStateOf<Int?>(null) }
@@ -27,18 +27,18 @@ fun PaymentScreen() {
         ) { result ->
             val index = editIndex
             editIndex = null
-            state.apply(index, AddCardActivity.parseResult(result.data)?.toDomain())
+            paymentStateHolder.apply(index, AddCardActivity.parseResult(result.data)?.toDomain())
         }
 
     PaymentContent(
-        cards = state.uiCards,
-        showTopAdd = state.showTopAdd,
+        cards = paymentStateHolder.uiCards,
+        showTopAdd = paymentStateHolder.showTopAdd,
         onAddCardClick = {
             editIndex = null
             cardLauncher.launch(AddCardActivity.newIntent(context))
         },
         onCardClick = { index ->
-            val domain = state.cards.getOrNull(index) ?: return@PaymentContent
+            val domain = paymentStateHolder.cards.getOrNull(index) ?: return@PaymentContent
             editIndex = index
             cardLauncher.launch(
                 AddCardActivity.newIntent(context, domain.toUiModel()),
