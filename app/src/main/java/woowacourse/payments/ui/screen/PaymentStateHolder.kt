@@ -4,57 +4,42 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.model.Card
 import woowacourse.payments.ui.model.toUiModel
 
 class PaymentStateHolder {
     companion object {
-        const val MIN_CARDS_FOR_TOP_ADD = 2
+        private const val MIN_CARDS_FOR_TOP_ADD = 2
     }
 
-    var cards = mutableStateListOf<Card>()
-        private set
+    private val _cards = mutableStateListOf<Card>()
+    val cards: List<Card> get() = _cards
 
     val uiCards by derivedStateOf { cards.map { it.toUiModel() } }
     val showTopAdd by derivedStateOf { cards.size >= MIN_CARDS_FOR_TOP_ADD }
 
-    var editingIndex: Int? by mutableStateOf(null)
-        private set
-
-    fun onCardAdded(card: Card) {
-        cards += card
+    private fun add(card: Card) {
+        _cards += card
     }
 
-    fun beginEditAt(index: Int): Boolean =
-        (index in cards.indices).also { valid ->
-            if (valid) editingIndex = index
-        }
-
-    fun commitEdit(edited: Card) {
-        val index =
-            editingIndex ?: run {
-                editingIndex = null
-                return
-            }
-        if (index in cards.indices) {
-            cards = cards.apply { this[index] = edited }
-        }
-        editingIndex = null
+    private fun updateIfChanged(
+        index: Int,
+        edited: Card,
+    ): Boolean {
+        if (index !in _cards.indices) return false
+        val before = _cards[index]
+        if (before == edited) return false
+        _cards[index] = edited
+        return true
     }
 
-    fun applyResult(card: Card) {
-        if (editingIndex != null) {
-            commitEdit(card)
-        } else {
-            onCardAdded(card)
-        }
-    }
-
-    fun cancelEdit() {
-        editingIndex = null
+    fun apply(
+        index: Int?,
+        card: Card?,
+    ) {
+        if (card == null) return
+        if (index == null) add(card) else updateIfChanged(index, card)
     }
 }
 
