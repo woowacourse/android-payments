@@ -10,8 +10,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import woowacourse.payments.R
-import woowacourse.payments.view.EXTRA_NEW_CARD
-import woowacourse.payments.view.EXTRA_OLD_CARD
 import woowacourse.payments.view.cardediting.component.CardEditingScreen
 import woowacourse.payments.view.getParcelableExtraCompat
 import woowacourse.payments.view.ui.model.CardUiModel
@@ -55,20 +53,6 @@ class CardEditingActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    private fun editCard(
-        old: CardUiModel,
-        new: CardUiModel,
-    ) {
-        val result =
-            Intent()
-                .putExtra(EXTRA_OLD_CARD, old)
-                .putExtra(EXTRA_NEW_CARD, new)
-
-        setResult(RESULT_OK, result)
-
-        finish()
     }
 
     companion object {

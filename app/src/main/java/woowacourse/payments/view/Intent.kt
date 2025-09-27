@@ -11,6 +11,3 @@ inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(key: String)
         @Suppress("DEPRECATION")
         getParcelableExtra(key)
     }
-
-const val EXTRA_OLD_CARD = "woowacourse.payments.OLD_CARD"
-const val EXTRA_NEW_CARD = "woowacourse.payments.NEW_CARD"
