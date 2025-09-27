@@ -50,11 +50,11 @@ class CardListActivity : ComponentActivity() {
                             ),
                         )
                     },
-                    onNavigateToEditCard = { index: Int, card: CardUiModel ->
+                    onNavigateToEditCard = { card: CardUiModel ->
                         launcher.launch(
                             SubmitCardActivity.intent(
                                 this,
-                                SubmitCardMode.Edit(index, card),
+                                SubmitCardMode.Edit(card),
                             ),
                         )
                     },

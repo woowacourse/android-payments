@@ -9,7 +9,6 @@ sealed interface SubmitCardMode : Parcelable {
     object Add : SubmitCardMode
 
     class Edit(
-        val index: Int,
         val card: CardUiModel,
     ) : SubmitCardMode
 }

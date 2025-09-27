@@ -35,7 +35,7 @@ import java.time.YearMonth
 fun CardListScreen(
     cards: List<CardUiModel>,
     onNavigateToAddCard: () -> Unit,
-    onNavigateToEditCard: (index: Int, card: CardUiModel) -> Unit,
+    onNavigateToEditCard: (card: CardUiModel) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -65,7 +65,7 @@ fun CardListScreen(
                         card = cards[index],
                         modifier =
                             Modifier.clickable {
-                                onNavigateToEditCard(index, cards[index])
+                                onNavigateToEditCard(cards[index])
                             },
                     )
                 }
@@ -81,7 +81,7 @@ fun CardListScreen(
 @Preview(showBackground = true, name = "카드 목록 (0개)")
 @Composable
 private fun CardListScreenWithNoCardsPreview() {
-    CardListScreen(remember { mutableStateListOf() }, {}, { _, _ -> })
+    CardListScreen(remember { mutableStateListOf() }, {}, { _ -> })
 }
 
 @Preview(showBackground = true, name = "카드 목록 (1개)")
@@ -101,7 +101,7 @@ private fun CardListScreenWithOneCardPreview() {
             )
         },
         {},
-        { _, _ -> },
+        { _ -> },
     )
 }
 
@@ -130,6 +130,6 @@ private fun CardListScreenWithTwoCardsPreview() {
             )
         },
         {},
-        { _, _ -> },
+        { _ -> },
     )
 }
