@@ -6,13 +6,9 @@ data class Card(
     val bankType: BankType,
     val number: CardNumber,
     val expiredDate: YearMonth,
-    val password: String,
+    val password: CardPassword,
     val holder: String? = null,
 ) {
-    init {
-        require(password.length == PASSWORD_LENGTH) { "카드 비밀번호는 ${PASSWORD_LENGTH}자리여야 합니다." }
-    }
-
     /**
      * 만료일을 "MMYY" 형식 문자열로 받아서 [YearMonth]로 변환합니다.
      *
@@ -26,7 +22,7 @@ data class Card(
         bankType: BankType,
         number: CardNumber,
         expiredDate: String,
-        password: String,
+        password: CardPassword,
         holder: String? = null,
     ) : this(
         bankType = bankType,
@@ -38,13 +34,12 @@ data class Card(
 
     companion object {
         const val EXPIRED_DATE_LENGTH: Int = 4
-        const val PASSWORD_LENGTH: Int = 4
 
         operator fun invoke(
             bankType: BankType,
             number: String,
             expiredDate: YearMonth,
-            password: String,
+            password: CardPassword,
             holder: String? = null,
         ) = Card(
             bankType = bankType,
@@ -58,7 +53,7 @@ data class Card(
             bankType: BankType,
             number: String,
             expiredDate: String,
-            password: String,
+            password: CardPassword,
             holder: String? = null,
         ) = Card(
             bankType = bankType,

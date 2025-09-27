@@ -5,6 +5,7 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.view.CardUiModel
 import java.time.Month
 
@@ -26,8 +27,7 @@ data class CardEditingUiState(
         }
 
     @IgnoredOnParcel
-    val isValidPassword: Boolean =
-        edited.password.length == Card.PASSWORD_LENGTH
+    val isValidPassword: Boolean = runCatching { CardPassword(edited.password) }.isSuccess
 
     @IgnoredOnParcel
     val isBankSelected: Boolean =

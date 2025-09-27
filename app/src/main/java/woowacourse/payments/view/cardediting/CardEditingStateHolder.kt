@@ -40,7 +40,7 @@ class CardEditingStateHolder(
     }
 
     fun updatePassword(value: String) {
-        val newPassword = value.filter(::isDigit).take(Card.PASSWORD_LENGTH)
+        val newPassword = value.filter(::isDigit).take(CARD_PASSWORD_MAX_LENGTH)
 
         uiState = uiState.copy(edited = uiState.edited.copy(password = newPassword))
     }
@@ -65,6 +65,7 @@ class CardEditingStateHolder(
 
     companion object {
         private const val CARD_NUMBER_MAX_LENGTH = 16
+        private const val CARD_PASSWORD_MAX_LENGTH = 4
     }
 }
 

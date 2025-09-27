@@ -2,6 +2,7 @@ package woowacourse.payments.view
 
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardPassword
 import java.time.YearMonth
 
 fun Card.toUiModel(): CardUiModel =
@@ -9,7 +10,7 @@ fun Card.toUiModel(): CardUiModel =
         number = number.value,
         expiredDate = expiredDate.displayString,
         holder = holder ?: "",
-        password = password,
+        password = password.value,
         bankType = bankType.toUiModel(),
     )
 
@@ -18,7 +19,7 @@ fun CardUiModel.toDomain(): Card =
         bankType = bankType?.toDomain() ?: throw IllegalArgumentException("은행이 선택되지 않았습니다."),
         number = number,
         expiredDate = expiredDate,
-        password = password,
+        password = CardPassword(password),
         holder = holder,
     )
 
