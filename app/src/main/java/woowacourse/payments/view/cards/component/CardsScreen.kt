@@ -1,11 +1,5 @@
 package woowacourse.payments.view.cards.component
 
-import android.app.Activity
-import android.content.Intent
-import androidx.activity.compose.ManagedActivityResultLauncher
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -16,65 +10,36 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import woowacourse.payments.view.EXTRA_CARD
-import woowacourse.payments.view.cardaddition.CardAdditionActivity
-import woowacourse.payments.view.cardediting.CardEditingActivity
 import woowacourse.payments.view.cards.CardsStateHolder
 import woowacourse.payments.view.cards.CardsUiState
-import woowacourse.payments.view.cards.rememberCardsStateHolder
 import woowacourse.payments.view.ui.model.BankTypeUiModel
 import woowacourse.payments.view.ui.model.CardUiModel
 import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun CardsScreen(
+    stateHolder: CardsStateHolder,
+    addCard: () -> Unit,
+    editCard: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
-    stateHolder: CardsStateHolder = rememberCardsStateHolder(),
 ) {
     val state: CardsUiState = stateHolder.uiState
-
-    val context = LocalContext.current
-
-    val cardAddLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                stateHolder.fetchCards()
-            }
-        }
-
-    val navigateToCardAdditionActivity: () -> Unit =
-        { cardAddLauncher.launch(Intent(context, CardAdditionActivity::class.java)) }
-
-    val cardEditLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                stateHolder.fetchCards()
-            }
-        }
-
-    val navigateToEditingActivity: (card: CardUiModel) -> Unit =
-        { card ->
-            cardEditLauncher.launch(
-                Intent(context, CardEditingActivity::class.java).putExtra(EXTRA_CARD, card),
-            )
-        }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                addCardAction = if (state.cards.size > 1) navigateToCardAdditionActivity else null,
+                addCardAction = if (state.cards.size > 1) addCard else null,
             )
         },
     ) { innerPadding: PaddingValues ->
         CardsContent(
             state = state,
-            navigateToCardAdditionActivity = navigateToCardAdditionActivity,
-            navigateToCardEditingActivity = navigateToEditingActivity,
+            addCard = addCard,
+            editCard = editCard,
             modifier =
                 Modifier
                     .fillMaxSize()
@@ -86,8 +51,8 @@ fun CardsScreen(
 @Composable
 private fun CardsContent(
     state: CardsUiState,
-    navigateToCardAdditionActivity: () -> Unit,
-    navigateToCardEditingActivity: (CardUiModel) -> Unit,
+    addCard: () -> Unit,
+    editCard: (CardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     scrollState: ScrollState = rememberScrollState(),
 ) {
@@ -97,7 +62,7 @@ private fun CardsContent(
         when (state.cards.size) {
             0 ->
                 NoCardContent(
-                    addCard = navigateToCardAdditionActivity,
+                    addCard = addCard,
                     modifier =
                         Modifier
                             .fillMaxSize()
@@ -107,18 +72,18 @@ private fun CardsContent(
             1 ->
                 OneCardContent(
                     card = state.cards.first(),
-                    addCard = navigateToCardAdditionActivity,
+                    addCard = addCard,
                     modifier =
                         Modifier
                             .fillMaxSize()
                             .verticalScroll(scrollState),
-                    onClickCard = navigateToCardEditingActivity,
+                    onClickCard = editCard,
                 )
 
             else ->
                 MultipleCardContent(
                     cards = state.cards,
-                    onClickCard = navigateToCardEditingActivity,
+                    onClickCard = editCard,
                     modifier = Modifier.fillMaxSize(),
                 )
         }
@@ -133,6 +98,8 @@ private fun CardsScreenPreview(
     AndroidpaymentsTheme {
         CardsScreen(
             stateHolder = CardsStateHolder(CardsUiState(cards)),
+            addCard = {},
+            editCard = {},
         )
     }
 }
