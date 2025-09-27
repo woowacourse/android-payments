@@ -44,7 +44,7 @@ fun CardAdditionScreen(
 
     val scrollState = rememberScrollState()
 
-    if (!state.isBankSelected) {
+    if (!state.card.isBankSelected) {
         BankSelectBottomSheet(stateHolder::updateBankType)
     }
 
@@ -64,20 +64,20 @@ fun CardAdditionScreen(
             CardAdditionTopAppBar(
                 onBackClick = onBackClick,
                 onCheckClick = stateHolder::addCard,
-                checkEnabled = state.canAddCard,
+                checkEnabled = state.card.isValid,
             )
         },
     ) { paddingValues: PaddingValues ->
         CardAdditionContent(
             card = state.card,
             onCardNumberChange = stateHolder::updateCardNumber,
-            isNumberError = !state.isValidCardNumber,
+            isNumberError = !state.card.isValidCardNumber,
             onExpiredDateChange = stateHolder::updateExpiredDate,
-            isExpiredDateError = !state.isValidExpiredDate,
+            isExpiredDateError = !state.card.isValidExpiredDate,
             onHolderChange = stateHolder::updateHolder,
             holderMaxLength = state.card.holderMaxLength,
             onPasswordChange = stateHolder::updatePassword,
-            isPasswordError = !state.isValidPassword,
+            isPasswordError = !state.card.isValidPassword,
             onClearBankType = { stateHolder.updateBankType(null) },
             modifier =
                 Modifier

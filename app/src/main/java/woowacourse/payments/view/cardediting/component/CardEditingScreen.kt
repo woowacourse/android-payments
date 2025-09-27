@@ -41,7 +41,7 @@ fun CardEditingScreen(
     val event: CardEditingUiEvent? = stateHolder.uiEvent
     val scrollState = rememberScrollState()
 
-    if (!state.isBankSelected) {
+    if (!state.edited.isBankSelected) {
         BankSelectBottomSheet(onSelectBankType = stateHolder::updateBankType)
     }
 
@@ -68,13 +68,13 @@ fun CardEditingScreen(
         CardEditingContent(
             card = state.edited,
             onCardNumberChange = stateHolder::updateCardNumber,
-            isNumberError = !state.isValidCardNumber,
+            isNumberError = !state.edited.isValidCardNumber,
             onExpiredDateChange = stateHolder::updateExpiredDate,
-            isExpiredDateError = !state.isValidExpiredDate,
+            isExpiredDateError = !state.edited.isValidExpiredDate,
             onHolderChange = stateHolder::updateHolder,
             holderMaxLength = state.edited.holderMaxLength,
             onPasswordChange = stateHolder::updatePassword,
-            isPasswordError = !state.isValidPassword,
+            isPasswordError = !state.edited.isValidPassword,
             onClearBankType = { stateHolder.updateBankType(null) },
             modifier =
                 Modifier
