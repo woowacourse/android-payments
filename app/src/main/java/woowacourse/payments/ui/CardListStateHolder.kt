@@ -14,15 +14,13 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 class CardListStateHolder {
     private val _cardUiModels = mutableStateListOf<PaymentCardUiModel>()
     val cardUiModels: List<PaymentCardUiModel> = _cardUiModels
-
-    @Suppress("ktlint:standard:backing-property-naming")
-    private val _uiEventChannel = Channel<CardListUiEvent>()
-    val uiEventFlow = _uiEventChannel.receiveAsFlow()
+    private val _uiEventFlow = Channel<CardListUiEvent>()
+    val uiEventFlow = _uiEventFlow.receiveAsFlow()
 
     suspend fun onAddCardResult(activityResult: ActivityResult) {
         val newCard = AddcardActivity.getPaymentCardUiModelByAddCard(activityResult) ?: return
         _cardUiModels.add(newCard)
-        _uiEventChannel.send(CardListUiEvent.ShowToast(R.string.card_list_card_added_alert))
+        _uiEventFlow.send(CardListUiEvent.ShowToast(R.string.card_list_card_added_alert))
     }
 
     suspend fun onEditCardResult(activityResult: ActivityResult) {
@@ -30,7 +28,7 @@ class CardListStateHolder {
         val index = _cardUiModels.indexOfFirst { it.dbId == editedCard.dbId }
         if (index != -1) {
             _cardUiModels[index] = editedCard
-            _uiEventChannel.send(CardListUiEvent.ShowToast(R.string.card_list_card_edited_alert))
+            _uiEventFlow.send(CardListUiEvent.ShowToast(R.string.card_list_card_edited_alert))
         }
     }
 
