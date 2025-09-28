@@ -33,13 +33,12 @@ fun NewCardScreen(
     showToastMessage: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val stateHolder = remember { CardStateHolder() }
+    val stateHolder = rememberSaveable { CardStateHolder() }
+    var isBottomSheetOpen by rememberSaveable { mutableStateOf(true) }
+
     LaunchedEffect(cardUiModel) {
         stateHolder.changeCard(cardUiModel?.toDomain())
     }
-    var isBottomSheetOpen by rememberSaveable { mutableStateOf(true) }
-
-
 
     Scaffold(
         modifier = modifier,
@@ -49,7 +48,7 @@ fun NewCardScreen(
                 isPossibleAddCard = stateHolder.uiState.value.isPossibleAddCard,
                 onBackClick = { navigateToBack() },
                 onSaveClick = {
-                    val created = stateHolder.newCard()
+                    val created = stateHolder.newCard(cardUiModel?.toDomain())
                     when (newCardStatus) {
                         is NewCardStatus.CreateCard -> onClickSaveCard(created?.toUiModel())
                         is NewCardStatus.EditCard -> {

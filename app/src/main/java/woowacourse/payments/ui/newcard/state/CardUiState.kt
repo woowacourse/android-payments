@@ -1,25 +1,20 @@
 package woowacourse.payments.ui.newcard.state
 
-import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardCompany
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.toUiModel
 
+@Parcelize
 data class CardUiState(
-    val card: Card? = null,
-
-    val cardCompany: CardCompany? = null,
+    val cardCompanyUiModel: CardCompanyUiModel = CardCompanyUiModel.Default,
     val number: String = "",
     val expiredDate: String = "",
     val ownerName: String = "",
     val password: String = "",
 
     val cardErrorMessage: String? = null,
-) {
-    val cardCompanyUiModel: CardCompanyUiModel
-        get() = cardCompany?.toUiModel() ?: CardCompanyUiModel.Default
-
+) : Parcelable {
     val cardUiModel: CardUiModel
         get() = CardUiModel(
             cardCompanyUiModel = cardCompanyUiModel,
@@ -30,6 +25,6 @@ data class CardUiState(
         )
 
     val isPossibleAddCard: Boolean =
-        if (cardCompany != null && number.length == 16 && expiredDate.length == 4 && password.length == 4) true else false
+        cardCompanyUiModel != CardCompanyUiModel.Default && number.length == 16 && expiredDate.length == 4 && password.length == 4
 
 }
