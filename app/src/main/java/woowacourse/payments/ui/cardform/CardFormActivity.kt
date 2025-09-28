@@ -15,7 +15,7 @@ class CardFormActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val registeredCard =
+        val card =
             intent.getParcelableExtraCompat<Card>(KEY_CARD_TO_EDIT)
 
         setContent {
@@ -23,7 +23,7 @@ class CardFormActivity : ComponentActivity() {
                 CardFormScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card -> navigateToCards(card) },
-                    card = registeredCard,
+                    card = card,
                 )
             }
         }
