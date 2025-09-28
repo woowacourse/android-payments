@@ -48,6 +48,7 @@ fun NewCardScreen(
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
     onFinishRequest: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val newCardUiStateHolder =
         rememberSaveable(mode, saver = NewCardUiStateHolder.Saver) {
@@ -89,7 +90,7 @@ fun NewCardScreen(
                 },
             )
         },
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) { innerPadding ->
         NewCardScreen(
             uiState = newCardUiStateHolder.uiState,
@@ -266,7 +267,7 @@ private fun PaymentCardContent(uiState: NewCardUiState) {
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardScreenAddPreview() {
+private fun NewCardScreenAddPreview() {
     NewCardScreen(
         uiState =
             NewCardUiState(
@@ -283,7 +284,7 @@ fun NewCardScreenAddPreview() {
 
 @Preview(showBackground = true)
 @Composable
-fun NewCardScreenModifyPreview(
+private fun NewCardScreenModifyPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     NewCardScreen(

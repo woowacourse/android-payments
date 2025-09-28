@@ -62,7 +62,7 @@ fun CardCompanyIcon(
 
 @Composable
 @Preview(showBackground = true)
-fun CardCompanyIconPreview() {
+private fun CardCompanyIconPreview() {
     Column {
         CardCompanyIcon(
             company = CardCompany.BC,

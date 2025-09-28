@@ -49,6 +49,7 @@ import woowacourse.payments.ui.view.cards.CardsActivity.Companion.EXTRA_CARD_MOD
 fun CardsScreen(
     onClickAddCard: (ManagedActivityResultLauncher<Intent, ActivityResult>) -> Unit,
     onClickModifyCard: (ManagedActivityResultLauncher<Intent, ActivityResult>, CardState, Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val cardUiStateHolder =
         rememberSaveable(saver = CardUiStateHolder.Saver) { CardUiStateHolder() }
@@ -84,7 +85,7 @@ fun CardsScreen(
                 addButtonVisible = cardUiStateHolder.toolbarActionButtonVisibility,
             )
         },
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
     ) { innerPadding ->
         CardsScreen(
             uiState = cardUiStateHolder.uiState,
@@ -131,7 +132,7 @@ fun CardsScreen(
 @Composable
 private fun EmptyCard(
     onClickAddCard: () -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -161,7 +162,7 @@ private fun SingleCard(
     card: CardState.Registered,
     onClickAddCard: () -> Unit,
     onClickModifyCard: (CardState.Registered, Int) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -190,7 +191,7 @@ private fun SingleCard(
 private fun MultipleCards(
     cards: List<CardState.Registered>,
     onClickModifyCard: (CardState.Registered, Int) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -232,13 +233,13 @@ private fun CardItem(
 
 @Composable
 @Preview(showBackground = true)
-fun CardScreenPreview() {
+private fun CardScreenPreview() {
     CardsScreen(CardsUiState.EMPTY, {}, { _, _ -> })
 }
 
 @Composable
 @Preview(showBackground = true)
-fun SingleCardScreenPreview(
+private fun SingleCardScreenPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     CardsScreen(CardsUiState.SINGLE(card), {}, { _, _ -> })
@@ -246,7 +247,7 @@ fun SingleCardScreenPreview(
 
 @Composable
 @Preview(showBackground = true)
-fun CardsScreenPreview(
+private fun CardsScreenPreview(
     @PreviewParameter(CardsPreviewParameterProvider::class) cards: List<Card>,
 ) {
     CardsScreen(CardsUiState.MULTIPLE(cards), {}, { _, _ -> })

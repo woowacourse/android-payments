@@ -27,6 +27,6 @@ fun CardChip(modifier: Modifier = Modifier) {
 
 @Composable
 @Preview(showBackground = true)
-fun CardChipPreview() {
+private fun CardChipPreview() {
     CardChip()
 }

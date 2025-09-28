@@ -70,6 +70,6 @@ fun BankSelectRow(
 
 @Preview(showBackground = true)
 @Composable
-fun BankSelectRowPreview() {
+private fun BankSelectRowPreview() {
     BankSelectRow(onClick = {})
 }
