@@ -3,6 +3,10 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
 import java.lang.Character.isDigit
 
 @Parcelize
@@ -50,3 +54,12 @@ data class CardUiModel(
         private const val CARD_OWNER_NAME_MAX_LENGTH = 15
     }
 }
+
+fun CardUiModel.toUiState(): CardAdditionUiState =
+    CardAdditionUiState(
+        cardNumber = CardNumber(number),
+        expiredDate = ExpiredDate(expiredDate),
+        ownerName = ownerName,
+        password = CardPassword(password),
+        issuingBank = issuingBank,
+    )
