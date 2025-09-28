@@ -28,6 +28,7 @@ import woowacourse.payments.ui.model.ExpirationDateUiModel.Companion.EXPIRATION_
 import woowacourse.payments.ui.model.PasswordUiModel.Companion.PASSWORD_LENGTH
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.NewCardStateHolderSaver
+import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.UNINITIALIZED_ID
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.NameTextField
@@ -40,22 +41,20 @@ import woowacourse.payments.ui.newcard.dialog.BankBottomSheet
 fun NewCardScreen(
     banks: List<Bank>,
     initialCard: PaymentCardUiModel? = null,
-    newCardStateHolder: NewCardStateHolder =
-        rememberSaveable(saver = NewCardStateHolderSaver) {
-            NewCardStateHolder()
-        },
     onBackPress: () -> Unit = {},
     onSaved: (Result<PaymentCardUiModel>) -> Unit = {},
 ) {
     var isShowBottomSheet by rememberSaveable { mutableStateOf(initialCard == null) }
-
+    val newCardStateHolder: NewCardStateHolder =
+        rememberSaveable(saver = NewCardStateHolderSaver) {
+            NewCardStateHolder(initialCard?.id ?: UNINITIALIZED_ID)
+        }
     val modalBottomSheetState =
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
 
     initialCard?.let {
-        newCardStateHolder.updateId(it.id)
         newCardStateHolder.updateCardNumber(it.cardNumber.value)
         newCardStateHolder.updateCardHolder(it.cardHolder.value)
         newCardStateHolder.updateBank(Bank(it.bankType))

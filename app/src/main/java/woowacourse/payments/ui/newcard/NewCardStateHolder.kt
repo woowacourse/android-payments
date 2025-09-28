@@ -8,10 +8,9 @@ import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.model.NewCardStateHolderSnapshot
 
-class NewCardStateHolder {
-    private var _id = 0
-    val id get() = _id
-
+class NewCardStateHolder(
+    val id: Int = UNINITIALIZED_ID,
+) {
     private var _cardNumber by mutableStateOf("")
     val cardNumber get() = _cardNumber
 
@@ -42,10 +41,6 @@ class NewCardStateHolder {
         _password = newPassword
     }
 
-    fun updateId(newId: Int) {
-        _id = newId
-    }
-
     fun isModified(initialCard: PaymentCardUiModel?): Boolean {
         if (initialCard == null) return true
 
@@ -56,6 +51,8 @@ class NewCardStateHolder {
     }
 
     companion object {
+        const val UNINITIALIZED_ID = 0
+
         val NewCardStateHolderSaver: Saver<NewCardStateHolder, Any> =
             Saver(
                 save = { holder ->
@@ -70,8 +67,7 @@ class NewCardStateHolder {
                 },
                 restore = { restored ->
                     val snapshot = restored as NewCardStateHolderSnapshot
-                    return@Saver NewCardStateHolder().apply {
-                        updateId(snapshot.id)
+                    return@Saver NewCardStateHolder(snapshot.id).apply {
                         updateCardNumber(snapshot.cardNumber)
                         updateCardHolder(snapshot.cardHolder)
                         expirationDateUiState.onValueChanged(snapshot.rawExpirationDate)
