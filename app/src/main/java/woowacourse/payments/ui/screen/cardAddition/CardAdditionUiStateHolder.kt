@@ -5,16 +5,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.CardPassword
-import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
+import woowacourse.payments.ui.model.toUiState
 
 class CardAdditionUiStateHolder(
     private val originalCard: CardUiModel? = null,
 ) {
-    var uiState by mutableStateOf(originalCard?.toState() ?: CardAdditionUiState.EMPTY_CARD)
+    var uiState by mutableStateOf(originalCard?.toUiState() ?: CardAdditionUiState.EMPTY_CARD)
         private set
     var hasShownSheet by mutableStateOf(false)
         private set
@@ -42,58 +40,11 @@ class CardAdditionUiStateHolder(
         hasShownSheet = hasShownSheet.not()
     }
 
-    private fun CardAdditionUiState.toUiModel(): CardUiModel =
-        CardUiModel(
-            number = cardNumber.value,
-            expiredDate = expiredDate.value,
-            ownerName = ownerName,
-            password = password.value,
-            issuingBank = issuingBank,
-        )
-
-    private fun CardUiModel.toState(): CardAdditionUiState =
-        CardAdditionUiState(
-            cardNumber = CardNumber(number),
-            expiredDate = ExpiredDate(expiredDate),
-            ownerName = ownerName,
-            password = CardPassword(password),
-            issuingBank = issuingBank,
-        )
-
     companion object {
-        val Saver: Saver<CardAdditionUiStateHolder, *> =
+        val Saver: Saver<CardAdditionUiStateHolder, CardAdditionUiState> =
             Saver(
-                save = { holder ->
-                    listOf(
-                        holder.originalCard,
-                        holder.uiState.cardNumber.value,
-                        holder.uiState.expiredDate.value,
-                        holder.uiState.ownerName,
-                        holder.uiState.password.value,
-                        holder.uiState.issuingBank,
-                    )
-                },
-                restore = { saved ->
-                    val originalCard = saved[0] as CardUiModel?
-                    val number = saved[1] as String
-                    val date = saved[2] as String
-                    val owner = saved[3] as String
-                    val password = saved[4] as String
-                    val issuingBank = saved[5] as IssuingBank
-
-                    val restoredUiState =
-                        CardAdditionUiState(
-                            cardNumber = CardNumber(number),
-                            expiredDate = ExpiredDate(date),
-                            ownerName = owner,
-                            password = CardPassword(password),
-                            issuingBank = issuingBank,
-                        )
-
-                    CardAdditionUiStateHolder(originalCard).apply {
-                        uiState = restoredUiState
-                    }
-                },
+                save = { stateHolder -> stateHolder.uiState },
+                restore = { uiState -> CardAdditionUiStateHolder(uiState.toUiModel()) },
             )
     }
 }
