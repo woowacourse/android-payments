@@ -4,9 +4,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardExpiryValidator
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.toBankType
 import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 import woowacourse.payments.ui.utils.ext.toErrorResourceId
 import java.time.YearMonth
@@ -20,10 +22,10 @@ class NewCardContentStateHolder(
 
     val hasBank get() = cardCreateState.bankUiModel != null
 
-    fun newCard(cardId: Long?): CardUiModel =
+    fun newCard(cardId: Long?): Card =
         cardCreateState.run {
-            CardUiModel(
-                requireNotNull(bankUiModel),
+            Card(
+                requireNotNull(bankUiModel?.toBankType()),
                 cardNumber,
                 expiryDate,
                 ownerName,

@@ -2,6 +2,7 @@ package woowacourse.payments.ui.cards.non
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,7 +31,6 @@ import woowacourse.payments.R
 import woowacourse.payments.ui.cards.CardAction
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
 import woowacourse.payments.ui.cards.CardsScreen
-import woowacourse.payments.ui.cards.CardsScreen.Single
 import woowacourse.payments.ui.cards.CardsTopBar
 import woowacourse.payments.ui.cards.NewCard
 import woowacourse.payments.ui.newcard.NewCardActivity
@@ -100,7 +100,7 @@ private fun cardAddLauncher(
             NEW_CARD_KEY,
         ) ?: return@rememberLauncherForActivityResult
         when (cardAction) {
-            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardUiModel)
+            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
             is CardAction.Update -> {}
         }
     }
@@ -113,8 +113,8 @@ private fun handleEvent(
 ) {
     when (uiEvent) {
         null -> {}
-        is NonCardsUiEvent.AddCard -> {
-            updateScreen(Single(uiEvent.card))
+        is NonCardsUiEvent.AddedCard -> {
+            updateScreen(CardsScreen.Single(uiEvent.cardId))
             Toast.makeText(
                 localContext,
                 localContext.getString(R.string.created_card_message),

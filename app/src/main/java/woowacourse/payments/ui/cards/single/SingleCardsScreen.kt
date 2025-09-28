@@ -31,6 +31,7 @@ import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
 import woowacourse.payments.ui.cards.CardsScreen
 import woowacourse.payments.ui.cards.CardsTopBar
 import woowacourse.payments.ui.cards.NewCard
+import woowacourse.payments.ui.core.mapper.toCardUiModel
 import woowacourse.payments.ui.debug.fixture.cardUiModelSample
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
@@ -39,11 +40,11 @@ import woowacourse.payments.ui.utils.ext.parcelable
 @Composable
 fun SingleCardScreen(
     onNavigate: (CardsScreen) -> Unit,
-    card: CardUiModel,
+    cardId: Long,
     modifier: Modifier = Modifier
 ) {
     val cardStateHolder = rememberSaveable(saver = SingleCardStateHolderSaver()) {
-        SingleCardStateHolder(card)
+        SingleCardStateHolder(cardId)
     }
     val localContext = LocalContext.current
     val cardAddLauncher = cardAddLauncher(cardStateHolder)
@@ -52,7 +53,7 @@ fun SingleCardScreen(
         cardAddLauncher.launch(intent)
     }
     val onUpdateClick: (CardUiModel) -> Unit = {
-        val intent = NewCardActivity.instance(localContext, it)
+        val intent = NewCardActivity.instance(localContext, it.id)
         cardAddLauncher.launch(intent)
     }
     handleEvent(cardStateHolder.uiEvent, localContext, onNavigate)
@@ -113,8 +114,8 @@ private fun cardAddLauncher(
             NEW_CARD_KEY,
         ) ?: return@rememberLauncherForActivityResult
         when (cardAction) {
-            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardUiModel)
-            is CardAction.Update -> cardsStateHolder.updateCard(cardAction.cardUiModel)
+            is CardAction.Add -> cardsStateHolder.addCard()
+            is CardAction.Update -> cardsStateHolder.updateCard()
         }
     }
 }

@@ -37,3 +37,16 @@ fun BankType.toLocalBankUiModel(): BankUiModel {
         BankType.WOORI -> fromRes("우리카드", R.drawable.ic_woori, BankCardColors.Woori.toArgb())
     }
 }
+
+fun BankUiModel.toBankType(): BankType {
+    return when (this.name) {
+        "BC카드" -> BankType.BC
+        "하나카드" -> BankType.HANA
+        "현대카드" -> BankType.HYUNDAE
+        "카카오뱅크" -> BankType.KAKAO
+        "국민카드" -> BankType.KB
+        "롯데카드" -> BankType.LOTTE
+        "신한카드" -> BankType.SHINHAN
+        else -> BankType.WOORI
+    }
+}

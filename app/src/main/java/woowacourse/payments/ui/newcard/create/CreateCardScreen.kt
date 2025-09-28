@@ -19,16 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.cards.CardsScreen
+import woowacourse.payments.ui.cards.single.SingleCardsUiEvent
+import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardContent
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateCardScreen(
     createCardStateHolder: CreateCardStateHolder,
-    onSaveClick: (CardUiModel) -> Unit,
+    onSaveClick: (Long) -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -70,7 +71,10 @@ fun CreateCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(stateHolder.newCard(null)) },
+                onSaveClick = {
+                    val savedId = stateHolder.createCard(null)
+                    onSaveClick(savedId)
+                },
                 title = stringResource(R.string.card_create_title),
                 isCreatable = isCardCreatable,
             )
@@ -96,4 +100,10 @@ private fun handleDismiss(hasBank: Boolean, context: Context) {
             Toast.LENGTH_SHORT
         ).show()
     }
+}
+
+private fun handleEvent(
+    uiEvent: CreateCardUiEvent?,
+) {
+
 }

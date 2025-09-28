@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import woowacourse.payments.data.CardStore
 import woowacourse.payments.ui.cards.multi.MultiCardsScreen
 import woowacourse.payments.ui.cards.non.NonCardsScreen
 import woowacourse.payments.ui.cards.single.SingleCardScreen
@@ -20,12 +21,12 @@ class CardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var screen by remember { mutableStateOf<CardsScreen>(CardsScreen.Non) }
+            var screen by remember { mutableStateOf(CardsScreen.of(CardStore.fetchAll())) }
             AndroidpaymentsTheme {
                 when (val currentScreen = screen) {
                     CardsScreen.Non -> NonCardsScreen({ screen = it })
-                    is CardsScreen.Single -> SingleCardScreen({ screen = it }, currentScreen.card)
-                    is CardsScreen.Multi -> MultiCardsScreen(currentScreen.cards)
+                    is CardsScreen.Single -> SingleCardScreen({ screen = it },currentScreen.cardId )
+                    is CardsScreen.Multi -> MultiCardsScreen(currentScreen.cardIds)
                 }
             }
         }

@@ -6,12 +6,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.ui.Modifier
 import woowacourse.payments.ui.cards.CardAction
 import woowacourse.payments.ui.cards.CardsActivity
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.newcard.create.CreateCardScreen
+import woowacourse.payments.ui.newcard.create.CreateCardStateHolder
 import woowacourse.payments.ui.newcard.model.NewCardMode
+import woowacourse.payments.ui.newcard.update.UpdateCardScreen
+import woowacourse.payments.ui.newcard.update.UpdateCardStateHolder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.utils.ext.parcelable
 
 class NewCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,28 +22,44 @@ class NewCardActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cardUiModel = intent.parcelable<CardUiModel>(UPDATE_CARD_KEY)
-                val mode = NewCardMode.of(cardUiModel)
-                NewCardScreen(
-                    onBackClick = { onBackPressedDispatcher.onBackPressed() },
-                    onSaveClick = { paymentCard ->
-                        val cardAction = when (mode) {
-                            NewCardMode.Create -> CardAction.Add(paymentCard)
-                            is NewCardMode.Update -> CardAction.Update(paymentCard)
-                        }
-                        val intent = CardsActivity.intent(this, cardAction)
-                        setResult(RESULT_OK, intent)
-                        finish()
-                    },
-                    mode = mode
-                )
+                val cardId = intent.getLongExtra(UPDATE_CARD_KEY, -1)
+                val mode = NewCardMode.of(cardId)
+
+                when (mode) {
+                    NewCardMode.Create -> {
+                        CreateCardScreen(
+                            CreateCardStateHolder(),
+                            {
+                                val intent = CardsActivity.intent(this, CardAction.Add(it))
+                                setResult(RESULT_OK, intent)
+                                finish()
+                            },
+                            { onBackPressedDispatcher.onBackPressed() },
+                            Modifier
+                        )
+                    }
+
+                    is NewCardMode.Update -> {
+                        UpdateCardScreen(
+                            UpdateCardStateHolder(),
+                            mode.cardId,
+                            {
+                                val intent = CardsActivity.intent(this, CardAction.Update(cardId))
+                                setResult(RESULT_OK, intent)
+                                finish()
+                            },
+                            { onBackPressedDispatcher.onBackPressed() },
+                            Modifier
+                        )
+                    }
+                }
             }
         }
     }
 
     companion object {
         const val UPDATE_CARD_KEY = "update_card_key"
-        fun instance(context: Context, cardUiModel: CardUiModel? = null) =
-            Intent(context, NewCardActivity::class.java).putExtra(UPDATE_CARD_KEY, cardUiModel)
+        fun instance(context: Context, cardId: Long? = null) =
+            Intent(context, NewCardActivity::class.java).putExtra(UPDATE_CARD_KEY, cardId)
     }
 }

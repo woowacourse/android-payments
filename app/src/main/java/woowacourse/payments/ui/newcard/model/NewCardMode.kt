@@ -1,14 +1,11 @@
 package woowacourse.payments.ui.newcard.model
 
-import woowacourse.payments.ui.model.CardUiModel
-
 sealed interface NewCardMode {
     data object Create : NewCardMode
-    data class Update(val cardUiModel: CardUiModel) : NewCardMode
+    data class Update(val cardId: Long) : NewCardMode
 
     companion object {
-        fun of(cardUiModel: CardUiModel?): NewCardMode =
-            if (cardUiModel == null) Create
-            else Update(cardUiModel)
+        fun of(cardId: Long): NewCardMode =
+            if (cardId == -1L) Create else Update(cardId)
     }
 }

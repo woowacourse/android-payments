@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardContent
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
@@ -25,8 +25,8 @@ import woowacourse.payments.ui.newcard.components.NewCardTopBar
 @Composable
 fun UpdateCardScreen(
     updateCardStateHolder: UpdateCardStateHolder,
-    currentCard: CardUiModel,
-    onSaveClick: (CardUiModel) -> Unit,
+    cardId: Long,
+    onSaveClick: () -> Unit,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -37,7 +37,7 @@ fun UpdateCardScreen(
     val isUpdatable by remember {
         derivedStateOf {
             updateCardStateHolder.isCardUpdatable(
-                currentCard
+                cardId
             )
         }
     }
@@ -45,7 +45,7 @@ fun UpdateCardScreen(
     val modalBottomSheetState = rememberModalBottomSheetState()
 
     LaunchedEffect(Unit) {
-        updateCardStateHolder.updateCardInfo(currentCard)
+        updateCardStateHolder.updateCardInfo(cardId)
     }
 
     LaunchedEffect(showBottomSheet) {
@@ -72,7 +72,10 @@ fun UpdateCardScreen(
         topBar = {
             NewCardTopBar(
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(updateCardStateHolder.updateCard(currentCard.id)) },
+                onSaveClick = {
+                    updateCardStateHolder.updateCard(cardId)
+                    onSaveClick()
+                },
                 title = stringResource(R.string.card_update),
                 isCreatable = isUpdatable
             )

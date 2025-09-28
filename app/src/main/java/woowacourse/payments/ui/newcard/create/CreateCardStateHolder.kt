@@ -1,15 +1,15 @@
 package woowacourse.payments.ui.newcard.create
 
 import androidx.annotation.StringRes
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import androidx.compose.runtime.setValue
 import androidx.core.text.isDigitsOnly
+import woowacourse.payments.data.CardStore.createCard
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.cards.single.SingleCardsUiEvent
 import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder
 
@@ -25,6 +25,37 @@ class CreateCardStateHolderSaver : Saver<CreateCardStateHolder, CreateCardUiStat
 class CreateCardStateHolder(
     private val newCardContentStateHolder: NewCardContentStateHolder = NewCardContentStateHolder()
 ) {
+
+    var uiState by mutableStateOf(CreateCardUiState(newCardContentStateHolder.cardCreateState))
+        private set
+
+    var uiEvent: CreateCardUiEvent? by mutableStateOf(null)
+        private set
+
+    val isCardCreatable
+        get() =
+            uiState.newCardContentUiState.bankUiModel != null &&
+                    uiState.newCardContentUiState.run {
+                        isCardNumberCreatable(cardNumber) &&
+                                isExpiryDateCreatable(
+                                    expiryDate,
+                                    expiryDateErrorTextRes,
+                                ) &&
+                                isOwnerNameCreatable(ownerName) &&
+                                isPasswordCreatable(password)
+                    }
+
+    val hasBank: Boolean
+        get() = newCardContentStateHolder.hasBank
+
+
+    fun createCard(cardId: Long?): Long {
+        val newCard = newCardContentStateHolder.newCard(cardId)
+        uiEvent = CreateCardUiEvent.CreateCard
+        createCard(newCard)
+        return newCard.id
+    }
+
     fun selectableCardBanks() = BankType.entries.map { it.toLocalBankUiModel() }
     fun updateCardBank(bankUiModel: woowacourse.payments.ui.model.BankUiModel) {
         newCardContentStateHolder.updateCardBank(bankUiModel)
@@ -60,29 +91,6 @@ class CreateCardStateHolder(
             newCardContentUiState = newCardContentStateHolder.cardCreateState
         )
     }
-
-    val hasBank: Boolean
-        get() = newCardContentStateHolder.hasBank
-
-    fun newCard(cardId: Long?): CardUiModel {
-        return newCardContentStateHolder.newCard(cardId)
-    }
-
-    var uiState by mutableStateOf(CreateCardUiState(newCardContentStateHolder.cardCreateState))
-        private set
-
-    val isCardCreatable
-        get() =
-            uiState.newCardContentUiState.bankUiModel != null &&
-                    uiState.newCardContentUiState.run {
-                        isCardNumberCreatable(cardNumber) &&
-                                isExpiryDateCreatable(
-                                    expiryDate,
-                                    expiryDateErrorTextRes,
-                                ) &&
-                                isOwnerNameCreatable(ownerName) &&
-                                isPasswordCreatable(password)
-                    }
 
     private fun isCardNumberCreatable(number: String): Boolean =
         number.length == CARD_NUMBERS_MAX && number.isDigitsOnly()

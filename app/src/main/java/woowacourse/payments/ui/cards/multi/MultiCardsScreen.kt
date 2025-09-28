@@ -8,10 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -37,13 +34,7 @@ import woowacourse.payments.ui.cards.Card
 import woowacourse.payments.ui.cards.CardAction
 import woowacourse.payments.ui.cards.CardContent
 import woowacourse.payments.ui.cards.CardsActivity.Companion.NEW_CARD_KEY
-import woowacourse.payments.ui.cards.CardsScreen
-import woowacourse.payments.ui.cards.CardsScreen.*
 import woowacourse.payments.ui.cards.CardsTopBar
-import woowacourse.payments.ui.cards.NewCard
-import woowacourse.payments.ui.cards.single.SingleCardStateHolder
-import woowacourse.payments.ui.cards.single.SingleCardStateHolderSaver
-import woowacourse.payments.ui.cards.single.SingleCardsUiEvent
 import woowacourse.payments.ui.debug.fixture.cardUiModelSamples
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
@@ -51,11 +42,11 @@ import woowacourse.payments.ui.utils.ext.parcelable
 
 @Composable
 fun MultiCardsScreen(
-    cards: List<CardUiModel>,
+    cardIds: List<Long>,
     modifier: Modifier = Modifier
 ) {
     val cardStateHolder = rememberSaveable(saver = MultiCardsStateHolderSaver()) {
-        MultiCardsStateHolder(cards)
+        MultiCardsStateHolder(cardIds)
     }
     val localContext = LocalContext.current
     val cardAddLauncher = cardAddLauncher(cardStateHolder)
@@ -64,7 +55,7 @@ fun MultiCardsScreen(
         cardAddLauncher.launch(intent)
     }
     val onUpdateClick: (CardUiModel) -> Unit = {
-        val intent = NewCardActivity.instance(localContext, it)
+        val intent = NewCardActivity.instance(localContext, it.id)
         cardAddLauncher.launch(intent)
     }
     handleEvent(cardStateHolder.uiEvent, localContext)
@@ -142,8 +133,8 @@ private fun cardAddLauncher(
             NEW_CARD_KEY,
         ) ?: return@rememberLauncherForActivityResult
         when (cardAction) {
-            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardUiModel)
-            is CardAction.Update -> cardsStateHolder.updateCard(cardAction.cardUiModel)
+            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
+            is CardAction.Update -> cardsStateHolder.updateCard()
         }
     }
 }
