@@ -5,6 +5,7 @@ package woowacourse.payments.edit
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -46,7 +47,11 @@ class EditActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 val card =
                     intent.parcelable<CardUiModel>("card")
-                        ?: error("Card not provided")
+                        ?: run {
+                            Toast.makeText(this, stringResource(R.string.error_card_not_found), Toast.LENGTH_SHORT).show()
+                            finish()
+                            return@AndroidpaymentsTheme
+                        }
 
                 val newCardState = NewCardState()
                 newCardState.onNameChange(card.name ?: "")
