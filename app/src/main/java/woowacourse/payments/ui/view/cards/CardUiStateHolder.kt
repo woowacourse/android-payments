@@ -29,7 +29,8 @@ class CardUiStateHolder(
         index: Int,
         newCard: SerializationCard,
     ) {
-        when (uiState) {
+        val currentState = uiState
+        when (currentState) {
             CardsUiState.EMPTY -> return
             is CardsUiState.SINGLE -> {
                 _uiState.value = CardsUiState.SINGLE(newCard.toDomain())
@@ -38,7 +39,7 @@ class CardUiStateHolder(
             is CardsUiState.MULTIPLE -> {
                 _uiState.value =
                     CardsUiState.MULTIPLE(
-                        (uiState as CardsUiState.MULTIPLE).state.toMutableList().apply {
+                        currentState.state.toMutableList().apply {
                             set(index, newCard.toDomain())
                         },
                     )
