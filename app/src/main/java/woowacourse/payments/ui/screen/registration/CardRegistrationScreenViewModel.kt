@@ -79,27 +79,31 @@ class CardRegistrationScreenViewModel(
     }
 
     fun registerOrUpdateCard() {
-        val currentUiState = _uiState.value ?: return
-        if (!currentUiState.canRegisterCard) return
+        val currentUiState = uiState.value ?: return
+        if (currentUiState.canRegisterCard.not()) return
 
-        PaymentCards
-            .registerOrUpdate(
-                id = currentUiState.cardId,
-                bankType = BankType.valueOf(currentUiState.bankType.name),
-                number = CardNumber.from(currentUiState.cardNumber.number),
-                expirationDate = CardExpirationDate.from(currentUiState.cardExpirationDate.expirationDate),
-                cardholderName = CardholderName.from(currentUiState.cardholderName.name),
-                password = CardPassword.from(currentUiState.cardPassword.password),
-            ).onSuccess { paymentCard ->
-                val paymentCardUiModel = PaymentCardUiModel.from(paymentCard)
-                when (uiState.value?.registrationState ?: return@onSuccess) {
-                    is CardRegistrationState.Register ->
-                        CardRegistrationScreenUiEvent.RegisteredCard(paymentCardUiModel)
+        runCatching {
+            PaymentCards
+                .registerOrUpdate(
+                    id = currentUiState.cardId,
+                    bankType = BankType.valueOf(currentUiState.bankType.name),
+                    number = CardNumber.from(currentUiState.cardNumber.number),
+                    expirationDate = CardExpirationDate.from(currentUiState.cardExpirationDate.expirationDate),
+                    cardholderName = CardholderName.from(currentUiState.cardholderName.name),
+                    password = CardPassword.from(currentUiState.cardPassword.password),
+                ).getOrThrow()
+        }.onSuccess { paymentCard ->
+            val paymentCardUiModel = PaymentCardUiModel.from(paymentCard)
+            when (uiState.value?.registrationState ?: return@onSuccess) {
+                is CardRegistrationState.Register ->
+                    CardRegistrationScreenUiEvent.RegisteredCard(paymentCardUiModel)
 
-                    is CardRegistrationState.Edit ->
-                        CardRegistrationScreenUiEvent.UpdatedCard(paymentCardUiModel)
-                }.let(_uiEvent::setValue)
-            }
+                is CardRegistrationState.Edit ->
+                    CardRegistrationScreenUiEvent.UpdatedCard(paymentCardUiModel)
+            }.let(_uiEvent::setValue)
+        }.onFailure {
+            _uiEvent.value = CardRegistrationScreenUiEvent.RegisterCardFailure
+        }
     }
 
     private fun handleCardNumberError(

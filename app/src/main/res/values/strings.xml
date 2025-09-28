@@ -53,6 +53,7 @@
     <!-- card_registration_screen -->
     <string name="card_expiration_date_invalid_date_error_message">유효하지 않은 만료일입니다.</string>
     <string name="card_expiration_date_expired_error_message">만료된 카드는 등록할 수 없습니다.</string>
+    <string name="card_registration_failure_error_message">카드 등록에 실패했습니다.</string>
 
     <!-- card_registration_top_bar -->
     <string name="card_registration_screen_registration_top_app_bar_title">카드 추가</string>

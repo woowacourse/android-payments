@@ -7,6 +7,8 @@ sealed interface CardRegistrationScreenUiEvent {
         val paymentCard: PaymentCardUiModel,
     ) : CardRegistrationScreenUiEvent
 
+    data object RegisterCardFailure : CardRegistrationScreenUiEvent
+
     data class UpdatedCard(
         val paymentCard: PaymentCardUiModel,
     ) : CardRegistrationScreenUiEvent

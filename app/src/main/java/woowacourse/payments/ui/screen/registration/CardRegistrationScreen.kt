@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.screen.registration
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +43,7 @@ fun CardRegistrationScreen(
     modifier: Modifier = Modifier,
     viewModel: CardRegistrationScreenViewModel = rememberCardRegistrationScreenViewModel(),
 ) {
+    val context = LocalContext.current
     val uiState = viewModel.uiState.observeAsState().value ?: return
     val uiEvent = viewModel.uiEvent.observeAsState().value
     var shouldOpenBankSelector by rememberSaveable { mutableStateOf(uiState.bankType == BankTypeUiModel.NOT_SELECTED) }
@@ -48,6 +51,11 @@ fun CardRegistrationScreen(
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
             is CardRegistrationScreenUiEvent.RegisteredCard -> onRegisteredCard(uiEvent.paymentCard)
+            is CardRegistrationScreenUiEvent.RegisterCardFailure -> {
+                val resId = R.string.card_registration_failure_error_message
+                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
+            }
+
             is CardRegistrationScreenUiEvent.UpdatedCard -> onUpdatedCard(uiEvent.paymentCard)
             null -> Unit
         }
