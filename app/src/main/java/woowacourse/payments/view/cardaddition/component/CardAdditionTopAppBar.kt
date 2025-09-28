@@ -15,19 +15,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.datasource.CollectionPreviewParameterProvider
 import woowacourse.payments.R
+import woowacourse.payments.view.cardaddition.CardAdditionUiEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionTopAppBar(
-    onBackClick: () -> Unit,
-    onCheckClick: () -> Unit,
     checkEnabled: Boolean,
+    onUiEvent: (CardAdditionUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(stringResource(R.string.card_addition_top_bar_title)) },
         navigationIcon = {
-            IconButton(onClick = onBackClick) {
+            IconButton(onClick = { onUiEvent(CardAdditionUiEvent.NavigateBack) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.card_addition_top_bar_navigate_back_content_description),
@@ -36,7 +36,7 @@ fun CardAdditionTopAppBar(
         },
         actions = {
             IconButton(
-                onClick = onCheckClick,
+                onClick = { onUiEvent(CardAdditionUiEvent.AddCard) },
                 enabled = checkEnabled,
             ) {
                 Icon(
@@ -56,8 +56,7 @@ private fun CardAdditionTopBarPreview(
 ) {
     CardAdditionTopAppBar(
         checkEnabled = completable,
-        onBackClick = {},
-        onCheckClick = {},
+        onUiEvent = {},
     )
 }
 

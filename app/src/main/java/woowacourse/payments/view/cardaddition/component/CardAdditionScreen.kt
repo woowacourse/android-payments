@@ -9,7 +9,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -17,10 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.view.cardaddition.CardAdditionStateHolder
 import woowacourse.payments.view.cardaddition.CardAdditionUiEvent
 import woowacourse.payments.view.cardaddition.CardAdditionUiState
-import woowacourse.payments.view.cardaddition.rememberCardAdditionStateHolder
 import woowacourse.payments.view.ui.component.BankSelectBottomSheet
 import woowacourse.payments.view.ui.component.CardNumberTextField
 import woowacourse.payments.view.ui.component.CardOwnerNameTextField
@@ -33,52 +30,30 @@ import woowacourse.payments.view.ui.model.CardUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionScreen(
-    onBackClick: () -> Unit,
-    onCardSaveSuccess: () -> Unit,
-    onCardSaveFailure: () -> Unit,
+    state: CardAdditionUiState,
+    onUiEvent: (CardAdditionUiEvent) -> Unit,
     modifier: Modifier = Modifier,
-    stateHolder: CardAdditionStateHolder = rememberCardAdditionStateHolder(),
 ) {
-    val state: CardAdditionUiState = stateHolder.uiState
-    val event: CardAdditionUiEvent? = stateHolder.uiEvent
-
     val scrollState = rememberScrollState()
 
     if (!state.card.isBankSelected) {
-        BankSelectBottomSheet(stateHolder::updateBankType)
-    }
-
-    LaunchedEffect(event) {
-        when (event) {
-            CardAdditionUiEvent.AddCardSuccess -> onCardSaveSuccess()
-            CardAdditionUiEvent.AddCardFailure -> onCardSaveFailure()
-            null -> Unit
-        }
-
-        stateHolder.clearEvent()
+        BankSelectBottomSheet(
+            onUiEvent = onUiEvent,
+        )
     }
 
     Scaffold(
         modifier = modifier.testTag("CardAdditionScreen"),
         topBar = {
             CardAdditionTopAppBar(
-                onBackClick = onBackClick,
-                onCheckClick = stateHolder::addCard,
                 checkEnabled = state.card.isValid,
+                onUiEvent = onUiEvent,
             )
         },
     ) { paddingValues: PaddingValues ->
         CardAdditionContent(
             card = state.card,
-            onCardNumberChange = stateHolder::updateCardNumber,
-            isNumberError = !state.card.isValidCardNumber,
-            onExpiredDateChange = stateHolder::updateExpiredDate,
-            isExpiredDateError = !state.card.isValidExpiredDate,
-            onHolderChange = stateHolder::updateHolder,
-            holderMaxLength = state.card.holderMaxLength,
-            onPasswordChange = stateHolder::updatePassword,
-            isPasswordError = !state.card.isValidPassword,
-            onClearBankType = { stateHolder.updateBankType(null) },
+            onUiEvent = onUiEvent,
             modifier =
                 Modifier
                     .padding(paddingValues)
@@ -91,22 +66,14 @@ fun CardAdditionScreen(
 @Composable
 private fun CardAdditionContent(
     card: CardUiModel,
-    onCardNumberChange: (String) -> Unit,
-    isNumberError: Boolean,
-    onExpiredDateChange: (String) -> Unit,
-    isExpiredDateError: Boolean,
-    onHolderChange: (String) -> Unit,
-    holderMaxLength: Int,
-    onPasswordChange: (String) -> Unit,
-    isPasswordError: Boolean,
-    onClearBankType: () -> Unit,
+    onUiEvent: (CardAdditionUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         PaymentCard(
-            onClick = onClearBankType,
+            onClick = { onUiEvent(CardAdditionUiEvent.UpdateBankType(null)) },
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
@@ -118,8 +85,8 @@ private fun CardAdditionContent(
         )
         CardNumberTextField(
             value = card.number,
-            onValueChange = onCardNumberChange,
-            isError = isNumberError,
+            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateCardNumber(value)) },
+            isError = !card.isValidCardNumber,
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -127,26 +94,26 @@ private fun CardAdditionContent(
         )
         ExpiredDateTextField(
             value = card.expiredDate,
-            onValueChange = onExpiredDateChange,
-            isError = isExpiredDateError,
+            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateExpiredDate(value)) },
+            isError = !card.isValidExpiredDate,
             modifier =
                 Modifier
                     .padding(top = 18.dp),
         )
         CardOwnerNameTextField(
             value = card.holder,
-            onValueChange = onHolderChange,
+            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateHolder(value)) },
             modifier =
                 Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 18.dp),
-            maxLength = holderMaxLength,
+            maxLength = card.holderMaxLength,
         )
         PasswordTextField(
             value = card.password,
-            onValueChange = onPasswordChange,
-            isError = isPasswordError,
+            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdatePassword(value)) },
+            isError = !card.isValidPassword,
         )
     }
 }
@@ -158,9 +125,8 @@ private fun CardAdditionScreenPreview(
     @PreviewParameter(CardAdditionScreenPreviewParameterProvider::class) state: CardAdditionUiState,
 ) {
     CardAdditionScreen(
-        onBackClick = {},
-        onCardSaveSuccess = {},
-        onCardSaveFailure = {},
+        state = state,
+        onUiEvent = {},
     )
 }
 
