@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.component.BankSelectBottomSheet
 import woowacourse.payments.ui.component.CardExpirationDateTextField
 import woowacourse.payments.ui.component.CardNumberTextField
@@ -50,6 +51,14 @@ fun CardRegistrationScreen(
         modifier = modifier,
         topBar = {
             CardRegistrationTopAppBar(
+                title =
+                    when (uiState.registrationState) {
+                        is CardRegistrationState.Register ->
+                            stringResource(R.string.card_registration_screen_registration_top_app_bar_title)
+
+                        is CardRegistrationState.Edit ->
+                            stringResource(R.string.card_registration_screen_edit_top_app_bar_title)
+                    },
                 onBackClick = onBackClick,
                 onSaveClick = viewModel::registerOrUpdateCard,
                 isSaveButtonEnabled = uiState.canRegisterCard,

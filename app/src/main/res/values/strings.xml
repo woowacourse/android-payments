@@ -55,7 +55,8 @@
     <string name="card_expiration_date_expired_error_message">만료된 카드는 등록할 수 없습니다.</string>
 
     <!-- card_registration_top_bar -->
-    <string name="card_registration_bar_title">카드 추가</string>
+    <string name="card_registration_screen_registration_top_app_bar_title">카드 추가</string>
+    <string name="card_registration_screen_edit_top_app_bar_title">카드 수정</string>
     <string name="icon_previous_content_description">뒤로 가기</string>
     <string name="registration_button_content_description">카드 등록</string>
 

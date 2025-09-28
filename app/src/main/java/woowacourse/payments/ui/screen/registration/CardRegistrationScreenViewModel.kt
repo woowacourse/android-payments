@@ -26,9 +26,6 @@ class CardRegistrationScreenViewModel(
             cardPassword = CardPasswordUiModel(),
         ),
 ) {
-    private val originalCard: PaymentCardUiModel? =
-        if (initialUiState.cardId == null) null else initialUiState.toPaymentCardUiModel()
-
     private var _uiState = MutableLiveData(initialUiState)
     val uiState: LiveData<CardRegistrationScreenUiState> get() = _uiState
 
@@ -39,7 +36,6 @@ class CardRegistrationScreenViewModel(
         _uiState.update {
             copy(
                 bankType = bankType,
-                isModifyingCard = checkModifiedCard(newBankType = bankType),
                 shouldOpenBankSelector = false,
             )
         }
@@ -56,12 +52,7 @@ class CardRegistrationScreenViewModel(
     fun updateCardNumber(cardNumber: String) {
         runCatching { CardNumber.from(cardNumber) }
             .onSuccess { newValue ->
-                _uiState.update {
-                    copy(
-                        cardNumber = CardNumberUiModel.from(newValue),
-                        isModifyingCard = checkModifiedCard(newCardNumber = cardNumber),
-                    )
-                }
+                _uiState.update { copy(cardNumber = CardNumberUiModel.from(newValue)) }
             }.onFailure { exception ->
                 if (exception !is CardNumber.CardNumberException) return@onFailure
                 handleCardNumberError(cardNumber, exception)
@@ -72,12 +63,7 @@ class CardRegistrationScreenViewModel(
         runCatching { CardExpirationDate.from(cardExpirationDate) }
             .onSuccess { newValue ->
                 val newExpirationDate = CardExpirationDateUiModel.from(newValue)
-                _uiState.update {
-                    copy(
-                        cardExpirationDate = newExpirationDate,
-                        isModifyingCard = checkModifiedCard(newCardExpirationDate = cardExpirationDate),
-                    )
-                }
+                _uiState.update { copy(cardExpirationDate = newExpirationDate) }
             }.onFailure { exception ->
                 if (exception !is CardExpirationDate.CardExpirationDateException) return@onFailure
                 handleCardExpirationDateError(cardExpirationDate, exception)
@@ -88,12 +74,7 @@ class CardRegistrationScreenViewModel(
         runCatching { CardholderName.from(cardholderName) }
             .onSuccess { newValue ->
                 val newCardholderName = CardholderNameUiModel.from(newValue)
-                _uiState.update {
-                    copy(
-                        cardholderName = newCardholderName,
-                        isModifyingCard = checkModifiedCard(newCardholderName = cardholderName),
-                    )
-                }
+                _uiState.update { copy(cardholderName = newCardholderName) }
             }.onFailure { exception ->
                 if (exception !is CardholderName.CardholderNameException) return@onFailure
                 handleCardholderNameError(exception)
@@ -103,12 +84,7 @@ class CardRegistrationScreenViewModel(
     fun updateCardPassword(cardPassword: String) {
         runCatching { CardPassword.from(cardPassword) }
             .onSuccess { newValue ->
-                _uiState.update {
-                    copy(
-                        cardPassword = CardPasswordUiModel.from(newValue),
-                        isModifyingCard = checkModifiedCard(newCardPassword = cardPassword),
-                    )
-                }
+                _uiState.update { copy(cardPassword = CardPasswordUiModel.from(newValue)) }
             }.onFailure { exception ->
                 if (exception !is CardPassword.CardPasswordException) return@onFailure
                 handleCardPasswordError(cardPassword, exception)
@@ -128,30 +104,15 @@ class CardRegistrationScreenViewModel(
                 cardholderName = CardholderName.from(currentUiState.cardholderName.name),
                 password = CardPassword.from(currentUiState.cardPassword.password),
             ).onSuccess { paymentCard ->
-                if (originalCard == null) {
-                    CardRegistrationScreenUiEvent.RegisteredCard(PaymentCardUiModel.from(paymentCard))
-                } else {
-                    CardRegistrationScreenUiEvent.UpdatedCard(PaymentCardUiModel.from(paymentCard))
+                val paymentCardUiModel = PaymentCardUiModel.from(paymentCard)
+                when (uiState.value?.registrationState ?: return@onSuccess) {
+                    is CardRegistrationState.Register ->
+                        CardRegistrationScreenUiEvent.RegisteredCard(paymentCardUiModel)
+
+                    is CardRegistrationState.Edit ->
+                        CardRegistrationScreenUiEvent.UpdatedCard(paymentCardUiModel)
                 }.let(_uiEvent::setValue)
             }
-    }
-
-    private fun checkModifiedCard(
-        newCardNumber: String? = null,
-        newCardExpirationDate: String? = null,
-        newCardholderName: String? = null,
-        newCardPassword: String? = null,
-        newBankType: BankTypeUiModel? = null,
-    ): Boolean {
-        with(originalCard ?: return true) {
-            if (newCardNumber != null && newCardNumber != number.number) return true
-            if (newCardExpirationDate != null && newCardExpirationDate != expirationDate.expirationDate) return true
-            if (newCardholderName != null && newCardholderName != cardholderName.name) return true
-            if (newCardPassword != null && newCardPassword != password.password) return true
-            if (newBankType != null && newBankType != bankType) return true
-        }
-
-        return false
     }
 
     private fun handleCardNumberError(
