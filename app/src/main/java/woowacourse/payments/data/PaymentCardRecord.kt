@@ -2,7 +2,7 @@ package woowacourse.payments.data
 
 import woowacourse.payments.ui.features.cartinput.CardUiState
 
-data class PaymentCardShema(
+data class PaymentCardRecord(
     val id: Int = -1,
     val cardUiState: CardUiState,
 )

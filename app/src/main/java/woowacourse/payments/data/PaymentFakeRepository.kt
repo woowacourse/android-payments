@@ -6,13 +6,13 @@ import java.util.concurrent.atomic.AtomicInteger
 object PaymentFakeRepository {
     private val idCounter = AtomicInteger(0)
 
-    private val cardDatabase = mutableListOf<PaymentCardShema>()
+    private val cardDatabase = mutableListOf<PaymentCardRecord>()
 
     fun getCardUiStateById(id: Int): CardUiState? = cardDatabase.find { it.id == id }?.cardUiState
 
     fun addCardToDB(cardUiState: CardUiState): Int {
         val newId = idCounter.incrementAndGet()
-        val newStoredCard = PaymentCardShema(id = newId, cardUiState = cardUiState)
+        val newStoredCard = PaymentCardRecord(id = newId, cardUiState = cardUiState)
         cardDatabase.add(newStoredCard)
         return newId
     }
@@ -25,7 +25,7 @@ object PaymentFakeRepository {
 
         if (index != -1) {
             cardDatabase[index] =
-                PaymentCardShema(id = id, cardUiState = newCardUiState)
+                PaymentCardRecord(id = id, cardUiState = newCardUiState)
         }
     }
 }
