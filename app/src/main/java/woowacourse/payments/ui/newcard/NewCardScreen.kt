@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,7 +11,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -29,6 +27,7 @@ import woowacourse.payments.ui.model.CardNumberUiModel.Companion.CARD_NUMBER_LEN
 import woowacourse.payments.ui.model.ExpirationDateUiModel.Companion.EXPIRATION_DATE_LENGTH
 import woowacourse.payments.ui.model.PasswordUiModel.Companion.PASSWORD_LENGTH
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.NewCardStateHolderSaver
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.NameTextField
@@ -41,7 +40,10 @@ import woowacourse.payments.ui.newcard.dialog.BankBottomSheet
 fun NewCardScreen(
     banks: List<Bank>,
     initialCard: PaymentCardUiModel? = null,
-    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
+    newCardStateHolder: NewCardStateHolder =
+        rememberSaveable(saver = NewCardStateHolderSaver) {
+            NewCardStateHolder()
+        },
     onBackPress: () -> Unit = {},
     onSaved: (Result<PaymentCardUiModel>) -> Unit = {},
 ) {
@@ -51,6 +53,14 @@ fun NewCardScreen(
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
+
+    initialCard?.let {
+        newCardStateHolder.updateId(it.id)
+        newCardStateHolder.updateCardNumber(it.cardNumber.value)
+        newCardStateHolder.updateCardHolder(it.cardHolder.value)
+        newCardStateHolder.updateBank(Bank(it.bankType))
+        newCardStateHolder.expirationDateUiState.onValueChanged(it.expirationDate.value)
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

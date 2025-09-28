@@ -2,9 +2,11 @@ package woowacourse.payments.ui.newcard
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.model.NewCardStateHolderSnapshot
 
 class NewCardStateHolder {
     private var _id = 0
@@ -51,5 +53,32 @@ class NewCardStateHolder {
             cardHolder != initialCard.cardHolder.value ||
             expirationDateUiState.expirationDate.value != initialCard.expirationDate.value ||
             bank.type != initialCard.bankType
+    }
+
+    companion object {
+        val NewCardStateHolderSaver: Saver<NewCardStateHolder, Any> =
+            Saver(
+                save = { holder ->
+                    NewCardStateHolderSnapshot(
+                        id = holder.id,
+                        cardNumber = holder.cardNumber,
+                        cardHolder = holder.cardHolder,
+                        rawExpirationDate = holder.expirationDateUiState.rawExpirationDate,
+                        password = holder.password,
+                        bank = holder.bank,
+                    )
+                },
+                restore = { restored ->
+                    val snapshot = restored as NewCardStateHolderSnapshot
+                    return@Saver NewCardStateHolder().apply {
+                        updateId(snapshot.id)
+                        updateCardNumber(snapshot.cardNumber)
+                        updateCardHolder(snapshot.cardHolder)
+                        expirationDateUiState.onValueChanged(snapshot.rawExpirationDate)
+                        updatePassword(snapshot.password)
+                        updateBank(snapshot.bank)
+                    }
+                },
+            )
     }
 }

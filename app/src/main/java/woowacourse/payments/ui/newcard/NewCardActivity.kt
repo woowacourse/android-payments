@@ -8,27 +8,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.data.BankRepository
-import woowacourse.payments.domain.model.Bank
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.extensions.getParcelableCompat
 
 class NewCardActivity : ComponentActivity() {
-    private val newCardStateHolder = NewCardStateHolder()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val initialCard =
-            intent.getParcelableCompat<PaymentCardUiModel>(EXTRA_NEW_CARD_INITIAL_CARD)?.apply {
-                updateInitialCard(this)
-            }
+        val initialCard = intent.getParcelableCompat<PaymentCardUiModel>(EXTRA_NEW_CARD_INITIAL_CARD)
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
                     banks = BankRepository.getBanks(),
                     initialCard = initialCard,
-                    newCardStateHolder = newCardStateHolder,
                     onBackPress = { finish() },
                     onSaved = { result ->
                         result
@@ -49,14 +42,6 @@ class NewCardActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    private fun updateInitialCard(initialCard: PaymentCardUiModel) {
-        newCardStateHolder.updateId(initialCard.id)
-        newCardStateHolder.updateCardNumber(initialCard.cardNumber.value)
-        newCardStateHolder.updateCardHolder(initialCard.cardHolder.value)
-        newCardStateHolder.updateBank(Bank(initialCard.bankType))
-        newCardStateHolder.expirationDateUiState.onValueChanged(initialCard.expirationDate.value)
     }
 
     companion object {
