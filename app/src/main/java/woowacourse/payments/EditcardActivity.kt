@@ -31,7 +31,7 @@ class EditcardActivity : ComponentActivity() {
                 }
 
         val cardUiState =
-            PaymentInMemoryRepository.getCardUiStateById(initialCardModel.dbId)
+            PaymentInMemoryRepository.findById(initialCardModel.dbId)
                 ?: run {
                     finish()
                     return

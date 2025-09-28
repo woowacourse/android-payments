@@ -8,16 +8,16 @@ object PaymentInMemoryRepository {
 
     private val cardDatabase = mutableListOf<PaymentCardShema>()
 
-    fun getCardUiStateById(id: Int): CardUiState? = cardDatabase.find { it.id == id }?.cardUiState
+    fun findById(id: Int): CardUiState? = cardDatabase.find { it.id == id }?.cardUiState
 
-    fun addCardToDB(cardUiState: CardUiState): Int {
+    fun add(cardUiState: CardUiState): Int {
         val newId = idCounter.incrementAndGet()
         val newStoredCard = PaymentCardShema(id = newId, cardUiState = cardUiState)
         cardDatabase.add(newStoredCard)
         return newId
     }
 
-    fun updateDBCard(
+    fun update(
         id: Int,
         newCardUiState: CardUiState,
     ) {
