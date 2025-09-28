@@ -1,7 +1,6 @@
 package woowacourse.payments.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,25 +28,8 @@ import woowacourse.payments.ui.theme.PaymentCardTextStyle
 
 @Composable
 fun PaymentCard(
-    state: PaymentCardState,
-    modifier: Modifier = Modifier,
-    onClick: ((CardUiModel) -> Unit)? = null,
-) {
-    when (state) {
-        PaymentCardState.Empty -> EmptyPaymentCard(modifier)
-        is PaymentCardState.CardInfo ->
-            PaymentCardContent(
-                card = state.card,
-                onClick = { onClick?.invoke(state.card) },
-            )
-    }
-}
-
-@Composable
-fun PaymentCardContent(
     card: CardUiModel,
     modifier: Modifier = Modifier,
-    onClick: (CardUiModel) -> Unit,
 ) {
     Box(
         contentAlignment = Alignment.CenterStart,
@@ -60,7 +42,6 @@ fun PaymentCardContent(
                     shape = RoundedCornerShape(5.dp),
                 )
                 .padding(horizontal = 16.dp)
-                .clickable { onClick(card) },
     ) {
         Column(
             modifier =
@@ -115,7 +96,7 @@ fun PaymentCardContent(
 }
 
 @Composable
-fun EmptyPaymentCard(modifier: Modifier = Modifier) {
+fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -144,7 +125,9 @@ fun EmptyPaymentCard(modifier: Modifier = Modifier) {
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(state = PaymentCardState.CardInfo(CardUiModel("0000 - 0000 - **** - ****", "10 / 25", "1234", "CREW")))
+        PaymentCard(
+            card = CardUiModel("0000 - 0000 - **** - ****", "10 / 25", "1234", "CREW"),
+        )
     }
 }
 
@@ -152,6 +135,6 @@ private fun PaymentCardPreview() {
 @Composable
 private fun EmptyPaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(state = PaymentCardState.Empty)
+        PaymentCard()
     }
 }

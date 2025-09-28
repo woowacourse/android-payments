@@ -38,16 +38,13 @@ fun CardInformationForm(
         ) {
             if (mode == "ADD") {
                 PaymentCard(
-                    state =
-                        PaymentCardState.CardInfo(
-                            CardUiModel(
-                                company = cardSelectionState.selectedCompany,
-                                number = "",
-                                name = "",
-                                expiry = "",
-                                password = "",
-                            ),
-                        ),
+                    card = CardUiModel(
+                        company = cardSelectionState.selectedCompany,
+                        number = "",
+                        name = "",
+                        expiry = "",
+                        password = "",
+                    ),
                 )
             } else {
                 val initialCard =
@@ -61,15 +58,13 @@ fun CardInformationForm(
                         )
                     }
                 PaymentCard(
-                    state =
-                        PaymentCardState.CardInfo(
-                            CardUiModel(
-                                company = cardSelectionState.selectedCompany,
-                                number = initialCard.number,
-                                name = initialCard.name,
-                                expiry = initialCard.expiry,
-                                password = newCardState.cardPassword,
-                            ),
+                    card =
+                        CardUiModel(
+                            company = cardSelectionState.selectedCompany,
+                            number = initialCard.number,
+                            name = initialCard.name,
+                            expiry = initialCard.expiry,
+                            password = newCardState.cardPassword,
                         ),
                 )
             }
