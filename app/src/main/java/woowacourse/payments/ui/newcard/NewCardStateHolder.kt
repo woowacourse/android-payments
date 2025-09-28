@@ -25,6 +25,13 @@ class NewCardStateHolder(
     private var _bank by mutableStateOf(Bank())
     val bank get() = _bank
 
+    fun updateInitialCard(initialCard: PaymentCardUiModel) {
+        _cardNumber = initialCard.cardNumber.value
+        _cardHolder = initialCard.cardHolder.value
+        expirationDateUiState.onValueChanged(initialCard.expirationDate.value)
+        _bank = Bank(initialCard.bankType)
+    }
+
     fun updateCardNumber(newCardNumber: String) {
         _cardNumber = newCardNumber
     }

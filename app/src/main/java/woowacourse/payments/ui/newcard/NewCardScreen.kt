@@ -55,10 +55,7 @@ fun NewCardScreen(
         )
 
     initialCard?.let {
-        newCardStateHolder.updateCardNumber(it.cardNumber.value)
-        newCardStateHolder.updateCardHolder(it.cardHolder.value)
-        newCardStateHolder.updateBank(Bank(it.bankType))
-        newCardStateHolder.expirationDateUiState.onValueChanged(it.expirationDate.value)
+        newCardStateHolder.updateInitialCard(it)
     }
 
     Scaffold(
