@@ -81,7 +81,7 @@ class EditcardActivity : ComponentActivity() {
                 return null
             }
 
-            val cardDBId = activityResult.data?.getIntExtra(EXTRA_CARD_DB_ID, EMPTY_DB_ID) ?: EMPTY_DB_ID
+            val cardDBId = activityResult.data?.getIntExtra(EXTRA_CARD_DB_ID, EMPTY_DB_ID) ?: return null
             val paymentCardUiModel =
                 activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
                     EXTRA_PAYMENT_CARD_UI_MODEL,
