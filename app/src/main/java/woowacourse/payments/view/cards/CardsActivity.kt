@@ -24,6 +24,8 @@ class CardsActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 val stateHolder: CardsStateHolder = rememberCardsStateHolder()
 
+                val state: CardsUiState = stateHolder.uiState
+
                 val cardsUpdateLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                         if (result.resultCode == RESULT_OK) {
@@ -48,7 +50,7 @@ class CardsActivity : ComponentActivity() {
                 }
 
                 CardsScreen(
-                    stateHolder = stateHolder,
+                    state = state,
                     onUiEvent = onUiEvent,
                     modifier = Modifier.fillMaxSize(),
                 )
