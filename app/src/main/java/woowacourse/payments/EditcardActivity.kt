@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.data.PaymentFakeRepository
 import woowacourse.payments.domain.card.PaymentCard
@@ -38,7 +38,10 @@ class EditcardActivity : ComponentActivity() {
                 }
         setContent {
             AndroidpaymentsTheme {
-                val cardUiStateHolder = remember { CardUiStateHolder(initialUiState = cardUiState) }
+                val cardUiStateHolder =
+                    rememberSaveable(saver = CardUiStateHolder.Saver) {
+                        CardUiStateHolder(initialUiState = cardUiState)
+                    }
                 CardInputScreen(
                     dbId = initialCardModel.dbId,
                     cardUiStateHolder = cardUiStateHolder,
