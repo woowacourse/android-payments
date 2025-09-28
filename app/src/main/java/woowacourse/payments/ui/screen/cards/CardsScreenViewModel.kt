@@ -16,17 +16,13 @@ class CardsScreenViewModel(
     val uiEvent: LiveData<CardsScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun addCard(newCard: PaymentCardUiModel) {
-        updateState(newCard)
+        _uiState.update { addCard(newCard) }
         _uiEvent.value = CardsScreenUiEvent.RegisteredCard
     }
 
     fun updateCard(updatedCard: PaymentCardUiModel) {
-        updateState(updatedCard)
+        _uiState.update { addCard(updatedCard) }
         _uiEvent.value = CardsScreenUiEvent.UpdatedCard
-    }
-
-    private fun updateState(card: PaymentCardUiModel) {
-        _uiState.update { addCard(card) }
     }
 
     companion object {
