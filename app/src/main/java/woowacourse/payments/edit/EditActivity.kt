@@ -54,7 +54,7 @@ class EditActivity : ComponentActivity() {
                 newCardState.onExpiryChange(card.expiry)
                 newCardState.onPasswordChange(card.password)
 
-                val cardSelectionState = remember { CardSelectionState() }
+                val cardSelectionState = CardSelectionState()
                 cardSelectionState.selectedCompany = card.company
                 cardSelectionState.isShowBottomSheet = false
                 val modalBottomSheetState =
@@ -86,24 +86,9 @@ class EditActivity : ComponentActivity() {
                                 finish()
                             },
                             onSaveClick = {
-                                val updatedCard =
-                                    Card(
-                                        company = cardSelectionState.selectedCompany,
-                                        number = CardNumber(newCardState.cardNumber),
-                                        expiry = CardExpiry.fromString(newCardState.cardExpiry),
-                                        password = CardPassword(newCardState.cardPassword),
-                                        name = CardName(newCardState.cardName),
-                                    )
+                                val updatedCard = newCardState.toCard(cardSelectionState.selectedCompany)
 
-                                val originCard =
-                                    Card(
-                                        company = card.company,
-                                        number = CardNumber(card.number),
-                                        expiry = CardExpiry.fromString(card.expiry),
-                                        password = CardPassword(card.password),
-                                    )
-
-                                if (updatedCard != originCard) {
+                                if (updatedCard != card.toCard()) {
                                     val index = intent.getIntExtra("index", -1)
                                     val data =
                                         Intent().apply {

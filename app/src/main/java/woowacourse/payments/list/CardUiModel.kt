@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpiry
+import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 
@@ -34,6 +35,15 @@ data class CardUiModel(
 
     val maskedPassword: String
         get() = "****"
+
+    fun toCard(): Card {
+        return Card(
+            number = CardNumber(this.number),
+            expiry = CardExpiry.fromString(this.expiry),
+            password = CardPassword(this.password),
+            name = CardName(this.name),
+        )
+    }
 }
 
 fun CardNumber.toFormattedString(): String {
