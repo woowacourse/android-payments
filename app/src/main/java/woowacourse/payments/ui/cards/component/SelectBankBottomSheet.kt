@@ -3,6 +3,7 @@ package woowacourse.payments.ui.cards.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -35,13 +36,15 @@ fun SelectBankBottomSheet(
             Box(
                 modifier =
                     Modifier
-                        .fillMaxWidth()
-                        .height(342.dp),
+                        .fillMaxWidth(),
                 contentAlignment = Alignment.Center,
                 content = {
-                    BankSelectRow(onBankClick = { bankType ->
-                        onBankSelectClick(bankType)
-                    })
+                    BankSelectRow(
+                        onBankClick = { bankType ->
+                            onBankSelectClick(bankType)
+                        },
+                        modifier = Modifier.padding(vertical = 36.dp, horizontal = 43.dp),
+                    )
                 },
             )
         },
