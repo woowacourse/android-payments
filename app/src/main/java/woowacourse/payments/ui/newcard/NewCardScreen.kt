@@ -39,7 +39,7 @@ fun NewCardScreen(
         topBar = {
             NewCardTopBar(
                 newCardStatus = newCardStatus,
-                isPossibleAddCard = stateHolder.uiState.isPossibleAddCard,
+                isPossibleAddCard = stateHolder.uiState.value.isPossibleAddCard,
                 onBackClick = { navigateToBack() },
                 onSaveClick = {
                     val created = stateHolder.newCard()
@@ -53,7 +53,7 @@ fun NewCardScreen(
                 }
             )
         }) { paddingValues: PaddingValues ->
-        if (stateHolder.uiState.isBottomSheetOpen) {
+        if (stateHolder.uiState.value.isBottomSheetOpen) {
             SelectedCardCompanyBottomSheet(
                 changeBottomSheet = { stateHolder.changeBottomSheetState() },
                 selectedCardCompany = { cardCompanyUiModel ->
@@ -64,7 +64,7 @@ fun NewCardScreen(
             )
         }
         NewCardColumn(
-            uiState = stateHolder.uiState,
+            uiState = stateHolder.uiState.value,
             selectCardCompany = { stateHolder.changeBottomSheetState() },
             changeNumber = { stateHolder.changeNumber(it) },
             changeExpiredDate = { stateHolder.changeExpiredDate(it) },

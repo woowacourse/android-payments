@@ -1,9 +1,6 @@
 package woowacourse.payments.ui.newcard.state
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
@@ -15,30 +12,19 @@ import java.time.YearMonth
 import java.time.format.DateTimeFormatter
 
 class CardStateHolder(
-    val previousUiState: MutableState<CardUiState> = mutableStateOf(CardUiState())
+    val previousUiState: CardUiState = CardUiState()
 ) {
-    var uiState by previousUiState
-        private set
+    private val _uiState = mutableStateOf(previousUiState)
+    val uiState get() = _uiState
 
     fun changeBottomSheetState() {
-        uiState = uiState.copy(isBottomSheetOpen = !uiState.isBottomSheetOpen)
+        _uiState.value = _uiState.value.copy(isBottomSheetOpen = !_uiState.value.isBottomSheetOpen)
     }
 
-    fun compareToBefore(old: CardUiState, new: CardUiState) {
-        if (old.cardCompanyUiModel != new.cardCompanyUiModel ||
-            old.number != new.number||
-            old.password != new.password ||
-            old.expiredDate != new.expiredDate ||
-            old.ownerName != new.ownerName) {
-        } else {
-
-        }
-
-    }
     fun changeCard(card: Card?) {
         if (card == null) return
-        uiState = uiState.copy(
-            isBottomSheetOpen = !uiState.isBottomSheetOpen,
+        _uiState.value = _uiState.value.copy(
+            isBottomSheetOpen = !_uiState.value.isBottomSheetOpen,
             card = card,
             cardCompany = card.cardCompany,
             expiredDate = card.expiredDate.value
@@ -52,11 +38,11 @@ class CardStateHolder(
     fun selectedCardCompany(newCardCompany: CardCompanyUiModel) {
         when (newCardCompany) {
             is CardCompanyUiModel.Default -> {
-                uiState = uiState.copy(cardCompany = null)
+                _uiState.value = _uiState.value.copy(cardCompany = null)
             }
 
             is CardCompanyUiModel.SelectCardCompany -> {
-                uiState = uiState.copy(
+                _uiState.value = _uiState.value.copy(
                     cardCompany = newCardCompany.toDomain(),
                     isChangeCardCompany = true
                 )
@@ -70,8 +56,12 @@ class CardStateHolder(
             CardNumber(value = sanitized)
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState =
-            uiState.copy(number = newNumber, numberErrorMessage = error, isChangeNumber = true)
+        _uiState.value =
+            _uiState.value.copy(
+                number = newNumber,
+                numberErrorMessage = error,
+                isChangeNumber = true
+            )
     }
 
     fun changeExpiredDate(newExpirationDate: String) {
@@ -80,8 +70,8 @@ class CardStateHolder(
             ExpiredDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState =
-            uiState.copy(
+        _uiState.value =
+            _uiState.value.copy(
                 expiredDate = newExpirationDate,
                 expirationDateErrorMessage = error,
                 isChangeExpirationDate = true
@@ -93,7 +83,8 @@ class CardStateHolder(
             OwnerName(OwnerName(newOwnerName).maxName())
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState = uiState.copy(ownerName = newOwnerName, ownerNameErrorMessage = error)
+        _uiState.value =
+            _uiState.value.copy(ownerName = newOwnerName, ownerNameErrorMessage = error)
     }
 
     fun changePassword(newPassword: String) {
@@ -102,41 +93,41 @@ class CardStateHolder(
             Password(trimmed)
         }.fold(onSuccess = { null }, onFailure = { it.message })
 
-        uiState = uiState.copy(
+        _uiState.value = _uiState.value.copy(
             password = newPassword, passwordErrorMessage = error, isPassword = true
         )
     }
 
     fun newCard(): Card? {
-        val company = uiState.cardCompany ?: return null
+        val company = _uiState.value.cardCompany ?: return null
         return runCatching {
             Card.Companion.Card(
                 cardCompany = company,
-                number = uiState.number,
+                number = _uiState.value.number,
                 expiredDate = YearMonth.parse(
-                    uiState.expiredDate.filter { it.isDigit() }.take(4),
+                    _uiState.value.expiredDate.filter { it.isDigit() }.take(4),
                     DateTimeFormatter.ofPattern("MMyy")
                 ),
-                ownerName = uiState.ownerName,
-                password = uiState.password,
+                ownerName = _uiState.value.ownerName,
+                password = _uiState.value.password,
             )
         }.onSuccess { built ->
-            val old = uiState.card
+            val old = _uiState.value.card
             val changed = old == null || old.cardCompany != company ||
-                    old.number.value != uiState.number ||
+                    old.number.value != _uiState.value.number ||
                     old.expiredDate.value != YearMonth.parse(
-                uiState.expiredDate.filter { it.isDigit() }.take(4),
+                _uiState.value.expiredDate.filter { it.isDigit() }.take(4),
                 DateTimeFormatter.ofPattern("MMyy")
             ) ||
-                    (old.ownerName.value ?: "") != uiState.ownerName ||
-                    old.password.value != uiState.password
+                    (old.ownerName.value ?: "") != _uiState.value.ownerName ||
+                    old.password.value != _uiState.value.password
 
             if (changed) {
-                uiState = uiState.copy(card = built, cardErrorMessage = null)
+                _uiState.value = _uiState.value.copy(card = built, cardErrorMessage = null)
             }
 
         }.onFailure { e ->
-            uiState = uiState.copy(card = null, cardErrorMessage = e.message)
+            _uiState.value = _uiState.value.copy(card = null, cardErrorMessage = e.message)
         }.getOrNull()
     }
 }

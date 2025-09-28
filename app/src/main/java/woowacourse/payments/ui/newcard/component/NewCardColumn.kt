@@ -80,7 +80,7 @@ fun NewCardColumn(
 @Composable
 private fun NewCardColumnPreview() {
     NewCardColumn(
-        CardStateHolder().uiState, {}, {}, {}, {}, {}
+        CardStateHolder().uiState.value, {}, {}, {}, {}, {}
     )
 }
 
