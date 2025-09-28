@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.cards.core.mapper.asPainter
+import woowacourse.payments.ui.core.mapper.asPainter
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.newcard.banks.BanksTestTag.BANK_CONTAINER_TAG

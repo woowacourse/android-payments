@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import woowacourse.payments.ui.cards.CardAction
 import woowacourse.payments.ui.cards.CardsActivity
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.model.NewCardMode
@@ -23,7 +24,11 @@ class NewCardActivity : ComponentActivity() {
                 NewCardScreen(
                     onBackClick = { onBackPressedDispatcher.onBackPressed() },
                     onSaveClick = { paymentCard ->
-                        val intent = CardsActivity.intent(this, paymentCard)
+                        val cardAction = when (mode) {
+                            NewCardMode.Create -> CardAction.Add(paymentCard)
+                            is NewCardMode.Update -> CardAction.Update(paymentCard)
+                        }
+                        val intent = CardsActivity.intent(this, cardAction)
                         setResult(RESULT_OK, intent)
                         finish()
                     },

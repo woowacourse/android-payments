@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.cards.core.mapper.asColor
+import woowacourse.payments.ui.core.mapper.asColor
 import woowacourse.payments.ui.components.CardChip
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.theme.Gray33
