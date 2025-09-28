@@ -10,13 +10,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.AddcardActivity.Companion.getPaymentCardUiModelByAddCard
+import woowacourse.payments.AddCardActivity.Companion.getPaymentCardUiModelByAddCard
 import woowacourse.payments.EditcardActivity.Companion.getPaymentCardUiModelByEditCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class CardlistActivity : ComponentActivity() {
+class CardListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -54,7 +54,7 @@ class CardlistActivity : ComponentActivity() {
                 CardListScreen(
                     cardUiModels = cardUiModels,
                     onAddCard = {
-                        val intent = AddcardActivity.newIntent(this)
+                        val intent = AddCardActivity.newIntent(this)
                         cardAddLauncher.launch(intent)
                     },
                     onEditCard = { cardUiModel ->

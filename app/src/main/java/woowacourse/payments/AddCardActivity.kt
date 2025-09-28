@@ -18,7 +18,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
-class AddcardActivity : ComponentActivity() {
+class AddCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,7 +51,7 @@ class AddcardActivity : ComponentActivity() {
         private const val EXTRA_CARD_DB_ID = "ADD_EXTRA_CARD_ID"
         private const val EXTRA_PAYMENT_CARD_UI_MODEL = "ADD_EXTRA_PAYMENT_CARD"
 
-        fun newIntent(context: Context): Intent = Intent(context, AddcardActivity::class.java)
+        fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
         fun getPaymentCardUiModelByAddCard(activityResult: ActivityResult): PaymentCardUiModel? {
             if (activityResult.resultCode != RESULT_OK) {
