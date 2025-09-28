@@ -15,6 +15,7 @@ import woowacourse.payments.ui.features.cartinput.CardInputScreen
 import woowacourse.payments.ui.features.cartinput.CardUiStateHolder
 import woowacourse.payments.ui.mapper.CardMapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
@@ -75,12 +76,12 @@ class EditcardActivity : ComponentActivity() {
                 putExtra(EXTRA_INITIAL_CARD_UI_MODEL, cardToEdit)
             }
 
-        fun getPaymentCardUiModelByEditCard(activityResult: ActivityResult): PaymentCardUiModel? {
+        fun parsePaymentCardUiModelByEditCard(activityResult: ActivityResult): PaymentCardUiModel? {
             if (activityResult.resultCode != RESULT_OK) {
                 return null
             }
 
-            val cardDBId = activityResult.data?.getIntExtra(EXTRA_CARD_DB_ID, -1) ?: -1
+            val cardDBId = activityResult.data?.getIntExtra(EXTRA_CARD_DB_ID, EMPTY_DB_ID) ?: EMPTY_DB_ID
             val paymentCardUiModel =
                 activityResult.data?.getParcelableExtraCompat<PaymentCardUiModel>(
                     EXTRA_PAYMENT_CARD_UI_MODEL,

@@ -53,7 +53,7 @@ class AddCardActivity : ComponentActivity() {
 
         fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
-        fun getPaymentCardUiModelByAddCard(activityResult: ActivityResult): PaymentCardUiModel? {
+        fun parsePaymentCardUiModelByAddCard(activityResult: ActivityResult): PaymentCardUiModel? {
             if (activityResult.resultCode != RESULT_OK) {
                 return null
             }

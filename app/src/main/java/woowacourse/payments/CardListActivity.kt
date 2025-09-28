@@ -10,8 +10,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.AddCardActivity.Companion.getPaymentCardUiModelByAddCard
-import woowacourse.payments.EditcardActivity.Companion.getPaymentCardUiModelByEditCard
+import woowacourse.payments.AddCardActivity.Companion.parsePaymentCardUiModelByAddCard
+import woowacourse.payments.EditcardActivity.Companion.parsePaymentCardUiModelByEditCard
 import woowacourse.payments.ui.features.cardlist.CardListScreen
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -29,7 +29,7 @@ class CardListActivity : ComponentActivity() {
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
                         val newCard =
-                            getPaymentCardUiModelByAddCard(activityResult)
+                            parsePaymentCardUiModelByAddCard(activityResult)
                                 ?: return@rememberLauncherForActivityResult
                         newCard.let {
                             cardUiModels.add(newCard)
@@ -42,7 +42,7 @@ class CardListActivity : ComponentActivity() {
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
                         val editedCard =
-                            getPaymentCardUiModelByEditCard(activityResult)
+                            parsePaymentCardUiModelByEditCard(activityResult)
                                 ?: return@rememberLauncherForActivityResult
                         val index = cardUiModels.indexOfFirst { it.dbId == editedCard.dbId }
                         if (index != -1) {
