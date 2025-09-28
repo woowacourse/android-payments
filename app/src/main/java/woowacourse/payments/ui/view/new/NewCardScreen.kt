@@ -97,7 +97,7 @@ fun NewCardScreen(
             onCardChange = { event -> newCardUiStateHolder.modifyUiState(event) },
             onClickCard = {
                 newCardUiStateHolder
-                    .modifyUiState(NewCardUiEvent.OnChangeBottomSheet(true))
+                    .modifyUiState(NewCardUiEvent.OnChangeCardCompany())
             },
             modifier = Modifier.padding(innerPadding),
         )
@@ -112,9 +112,6 @@ fun NewCardScreen(
                     NewCardUiEvent.OnChangeCardCompany(
                         CardCompanyState.Selected(company),
                     ),
-                )
-                newCardUiStateHolder.modifyUiState(
-                    NewCardUiEvent.OnChangeBottomSheet(false),
                 )
             },
         )
