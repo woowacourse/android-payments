@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cards
 
-import android.util.Log
 import androidx.compose.runtime.saveable.Saver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,13 +16,11 @@ class CardsScreenViewModel(
     val uiEvent: LiveData<CardsScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun addCard(newCard: PaymentCardUiModel) {
-        Log.i("TEST", "addCard")
         updateState(newCard)
         _uiEvent.value = CardsScreenUiEvent.RegisteredCard
     }
 
     fun updateCard(updatedCard: PaymentCardUiModel) {
-        Log.i("TEST", "updateCard")
         updateState(updatedCard)
         _uiEvent.value = CardsScreenUiEvent.UpdatedCard
     }
