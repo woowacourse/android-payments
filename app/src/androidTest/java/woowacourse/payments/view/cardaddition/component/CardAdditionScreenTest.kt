@@ -6,12 +6,12 @@ import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performImeAction
 import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import woowacourse.payments.view.cardaddition.CardAdditionUiState
 
 class CardAdditionScreenTest {
     @get:Rule
@@ -21,9 +21,8 @@ class CardAdditionScreenTest {
     fun setUp() {
         composeRule.setContent {
             CardAdditionScreen(
-                onBackClick = {},
-                onCardSaveSuccess = {},
-                onCardSaveFailure = {},
+                state = CardAdditionUiState(),
+                onUiEvent = {},
             )
         }
     }
@@ -107,19 +106,6 @@ class CardAdditionScreenTest {
     }
 
     @Test
-    fun `카드_비밀번호는_4글자까지_입력할_수_있다`() {
-        // when
-        composeRule
-            .onNodeWithTag("PasswordTextField")
-            .performTextInput("12345678")
-
-        // then
-        composeRule
-            .onNodeWithText("\u2022".repeat(4))
-            .assertIsDisplayed()
-    }
-
-    @Test
     fun `비밀번호_형식이_올바르지_않을_경우_에러_메시지를_출력한다`() {
         // when
         composeRule
@@ -137,18 +123,5 @@ class CardAdditionScreenTest {
         composeRule
             .onNodeWithTag("BankSelectBottomSheet")
             .assertIsDisplayed()
-    }
-
-    @Test
-    fun `선택한_카드사에_따라_카드_미리보기가_바뀌어야_한다`() {
-        // when
-        composeRule
-            .onNodeWithText("BC카드")
-            .performClick()
-
-        // then
-        composeRule
-            .onNodeWithTag("PaymentCardBankNameText", true)
-            .assertTextEquals("BC카드")
     }
 }
