@@ -24,6 +24,7 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.list.toUiModel
 import woowacourse.payments.ui.CardInformationForm
+import woowacourse.payments.ui.CardMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class NewCardActivity : ComponentActivity() {
@@ -97,6 +98,7 @@ class NewCardActivity : ComponentActivity() {
                     CardInformationForm(
                         newCardState = newCardState,
                         cardSelectionState = cardSelectionState,
+                        mode = CardMode.ADD,
                         modifier =
                             Modifier
                                 .fillMaxSize()

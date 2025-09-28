@@ -32,6 +32,7 @@ import woowacourse.payments.newCard.CardSelectionState
 import woowacourse.payments.newCard.NewCardState
 import woowacourse.payments.newCard.NewCardTopBar
 import woowacourse.payments.ui.CardInformationForm
+import woowacourse.payments.ui.CardMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.parcelable
 
@@ -129,11 +130,11 @@ class EditActivity : ComponentActivity() {
                     CardInformationForm(
                         newCardState = newCardState,
                         cardSelectionState = cardSelectionState,
+                        mode = CardMode.EDIT,
                         modifier =
                             Modifier
                                 .fillMaxSize()
                                 .padding(innerPadding),
-                        mode = "EDIT",
                     )
                 }
             }

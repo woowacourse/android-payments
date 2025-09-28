@@ -23,8 +23,8 @@ import woowacourse.payments.newCard.NewCardState
 fun CardInformationForm(
     newCardState: NewCardState,
     cardSelectionState: CardSelectionState,
+    mode: CardMode,
     modifier: Modifier = Modifier,
-    mode: String = "ADD",
 ) {
     Column(
         modifier = modifier,
@@ -36,37 +36,40 @@ fun CardInformationForm(
                     .fillMaxWidth(),
             contentAlignment = Alignment.Center,
         ) {
-            if (mode == "ADD") {
-                PaymentCard(
-                    card = CardUiModel(
-                        company = cardSelectionState.selectedCompany,
-                        number = "",
-                        name = "",
-                        expiry = "",
-                        password = "",
-                    ),
-                )
-            } else {
-                val initialCard =
-                    remember {
-                        CardUiModel(
+            when (mode) {
+                CardMode.ADD ->  {
+                    PaymentCard(
+                        card = CardUiModel(
                             company = cardSelectionState.selectedCompany,
-                            number = newCardState.cardNumber,
-                            name = newCardState.cardName,
-                            expiry = newCardState.cardExpiry,
-                            password = newCardState.cardPassword,
-                        )
-                    }
-                PaymentCard(
-                    card =
-                        CardUiModel(
-                            company = cardSelectionState.selectedCompany,
-                            number = initialCard.number,
-                            name = initialCard.name,
-                            expiry = initialCard.expiry,
-                            password = newCardState.cardPassword,
+                            number = "",
+                            name = "",
+                            expiry = "",
+                            password = "",
                         ),
-                )
+                    )
+                }
+                CardMode.EDIT -> {
+                    val initialCard =
+                        remember {
+                            CardUiModel(
+                                company = cardSelectionState.selectedCompany,
+                                number = newCardState.cardNumber,
+                                name = newCardState.cardName,
+                                expiry = newCardState.cardExpiry,
+                                password = newCardState.cardPassword,
+                            )
+                        }
+                    PaymentCard(
+                        card =
+                            CardUiModel(
+                                company = cardSelectionState.selectedCompany,
+                                number = initialCard.number,
+                                name = initialCard.name,
+                                expiry = initialCard.expiry,
+                                password = newCardState.cardPassword,
+                            ),
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(30.dp))
