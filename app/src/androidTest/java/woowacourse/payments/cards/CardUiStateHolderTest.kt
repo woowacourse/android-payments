@@ -2,6 +2,7 @@ package woowacourse.payments.cards
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -139,11 +140,13 @@ class CardUiStateHolderTest {
         // then
         assertTrue(holder.uiState is CardsUiState.SINGLE)
         val state = holder.uiState as CardsUiState.SINGLE
-        assertEquals(state.state.number, "2222")
-        assertEquals(state.state.expireDate, "12/24")
-        assertEquals(state.state.ownerName, "정페토")
-        assertEquals(state.state.password, "4567")
-        assertEquals(state.state.company, CardCompany.WOORI)
+        assertAll(
+            { assertEquals(state.state.number, "2222") },
+            { assertEquals(state.state.expireDate, "12/24") },
+            { assertEquals(state.state.ownerName, "정페토") },
+            { assertEquals(state.state.password, "4567") },
+            { assertEquals(state.state.company, CardCompany.WOORI) }
+        )
     }
 
     @Test
@@ -195,10 +198,12 @@ class CardUiStateHolderTest {
         assertTrue(holder.uiState is CardsUiState.MULTIPLE)
         val state = (holder.uiState as CardsUiState.MULTIPLE).state[index]
 
-        assertEquals(state.number, "0000")
-        assertEquals(state.expireDate, "09/08")
-        assertEquals(state.ownerName, "정찬호")
-        assertEquals(state.password, "0908")
-        assertEquals(state.company, CardCompany.KB)
+        assertAll(
+            { assertEquals(state.number, "0000") },
+            { assertEquals(state.expireDate, "09/08") },
+            { assertEquals(state.ownerName, "정찬호") },
+            { assertEquals(state.password, "0908") },
+            { assertEquals(state.company, CardCompany.KB) }
+        )
     }
 }

@@ -4,6 +4,8 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertNotNull
 import woowacourse.payments.ui.view.new.NewCardMode
 import woowacourse.payments.ui.view.new.NewCardUiEvent
 import woowacourse.payments.ui.view.new.NewCardUiState
@@ -79,14 +81,14 @@ class NewCardUiStateHolderTest {
             }
 
         // restore
-        val restored = NewCardUiStateHolder.Saver.restore(saved)
-
-        restored?.uiState?.let {
-            assertEquals(it.number, "12345678")
-            assertEquals(it.expireDate, "0908")
-            assertEquals(it.ownerName, "페토")
-            assertEquals(it.password, "1234")
-            assertEquals(it.mode, NewCardMode.Add)
-        }
+        val restored = NewCardUiStateHolder.Saver.restore(saved)?.uiState
+        assertNotNull(restored)
+        assertAll(
+            { assertEquals(restored.number, "12345678") },
+            { assertEquals(restored.expireDate, "0908") },
+            { assertEquals(restored.ownerName, "페토") },
+            { assertEquals(restored.password, "1234") },
+            { assertEquals(restored.mode, NewCardMode.Add) }
+        )
     }
 }
