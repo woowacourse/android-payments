@@ -1,15 +1,12 @@
 package woowacourse.payments.view.cardaddition.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,11 +16,7 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.view.cardaddition.CardAdditionUiEvent
 import woowacourse.payments.view.cardaddition.CardAdditionUiState
 import woowacourse.payments.view.ui.component.BankSelectBottomSheet
-import woowacourse.payments.view.ui.component.CardNumberTextField
-import woowacourse.payments.view.ui.component.CardOwnerNameTextField
-import woowacourse.payments.view.ui.component.ExpiredDateTextField
-import woowacourse.payments.view.ui.component.PasswordTextField
-import woowacourse.payments.view.ui.component.PaymentCard
+import woowacourse.payments.view.ui.component.CardForm
 import woowacourse.payments.view.ui.model.BankTypeUiModel
 import woowacourse.payments.view.ui.model.CardUiModel
 
@@ -55,69 +48,18 @@ fun CardAdditionScreen(
             )
         },
     ) { paddingValues: PaddingValues ->
-        CardAdditionContent(
+        CardForm(
             card = state.card,
-            onUiEvent = onUiEvent,
+            onCardNumberChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateCardNumber(value)) },
+            onExpiredDateChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateExpiredDate(value)) },
+            onHolderChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateHolder(value)) },
+            onPasswordChange = { value -> onUiEvent(CardAdditionUiEvent.UpdatePassword(value)) },
+            onClearBankType = { onUiEvent(CardAdditionUiEvent.UpdateBankType(null)) },
             modifier =
                 Modifier
                     .padding(paddingValues)
                     .padding(horizontal = 24.dp)
                     .verticalScroll(scrollState),
-        )
-    }
-}
-
-@Composable
-private fun CardAdditionContent(
-    card: CardUiModel,
-    onUiEvent: (CardAdditionUiEvent) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        PaymentCard(
-            onClick = { onUiEvent(CardAdditionUiEvent.UpdateBankType(null)) },
-            modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 14.dp, bottom = 28.dp),
-            number = card.number,
-            owner = card.holder,
-            expiredDate = card.expiredDate,
-            bankType = card.bankType,
-        )
-        CardNumberTextField(
-            value = card.number,
-            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateCardNumber(value)) },
-            isError = !card.isValidCardNumber,
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-        )
-        ExpiredDateTextField(
-            value = card.expiredDate,
-            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateExpiredDate(value)) },
-            isError = !card.isValidExpiredDate,
-            modifier =
-                Modifier
-                    .padding(top = 18.dp),
-        )
-        CardOwnerNameTextField(
-            value = card.holder,
-            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdateHolder(value)) },
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 18.dp),
-            maxLength = card.holderMaxLength,
-        )
-        PasswordTextField(
-            value = card.password,
-            onValueChange = { value -> onUiEvent(CardAdditionUiEvent.UpdatePassword(value)) },
-            isError = !card.isValidPassword,
         )
     }
 }
