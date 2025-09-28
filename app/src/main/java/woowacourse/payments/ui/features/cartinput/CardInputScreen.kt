@@ -27,9 +27,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.data.PaymentFakeRepository.addCardToDB
-import woowacourse.payments.data.PaymentFakeRepository.getCardUiStateById
-import woowacourse.payments.data.PaymentFakeRepository.updateDBCard
+import woowacourse.payments.data.PaymentInMemoryRepository.addCardToDB
+import woowacourse.payments.data.PaymentInMemoryRepository.getCardUiStateById
+import woowacourse.payments.data.PaymentInMemoryRepository.updateDBCard
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
 import woowacourse.payments.ui.features.cartinput.components.CardExpireDateField

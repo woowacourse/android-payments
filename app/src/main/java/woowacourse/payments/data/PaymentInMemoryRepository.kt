@@ -3,7 +3,7 @@ package woowacourse.payments.data
 import woowacourse.payments.ui.features.cartinput.CardUiState
 import java.util.concurrent.atomic.AtomicInteger
 
-object PaymentFakeRepository {
+object PaymentInMemoryRepository {
     private val idCounter = AtomicInteger(0)
 
     private val cardDatabase = mutableListOf<PaymentCardShema>()
