@@ -40,7 +40,6 @@ fun NewCardColumn(
         ) {
             CardNumberTextField(
                 number = uiState.number,
-                numberErrorMessage = uiState.numberErrorMessage,
                 onNumberChange = { changeNumber(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -50,7 +49,6 @@ fun NewCardColumn(
         ) {
             ExpiredDateTextField(
                 expiredDate = uiState.expiredDate,
-                expirationDateErrorMessage = uiState.expirationDateErrorMessage,
                 onExpirationDateChange = { changeExpiredDate(it) },
             )
         }
@@ -59,7 +57,6 @@ fun NewCardColumn(
         ) {
             CardOwnerNameTextField(
                 ownerName = uiState.ownerName,
-                ownerNameErrorMessage = uiState.ownerNameErrorMessage,
                 onOwnerNameChange = { changeOwnerName(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -69,7 +66,6 @@ fun NewCardColumn(
         ) {
             PasswordTextField(
                 password = uiState.password,
-                passwordErrorMessage = uiState.passwordErrorMessage,
                 onPasswordChange = { changePassword(it) }
             )
         }

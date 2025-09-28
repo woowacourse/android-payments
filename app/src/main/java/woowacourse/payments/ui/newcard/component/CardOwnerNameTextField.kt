@@ -16,15 +16,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.OwnerName
 
 @Composable
 fun CardOwnerNameTextField(
     ownerName: String,
     onOwnerNameChange: (String) -> Unit,
-    ownerNameErrorMessage: String? = null,
     modifier: Modifier = Modifier
 ) {
     var isFocused by remember { mutableStateOf(false) }
+
+    val currentError = remember(ownerName, isFocused) {
+        if (isFocused || ownerName.isEmpty()) {
+            null
+        } else {
+            runCatching {
+                OwnerName(ownerName).maxName()
+                null
+            }.getOrElse { it.message }
+        }
+    }
 
     OutlinedTextField(
         value = ownerName,
@@ -43,7 +54,7 @@ fun CardOwnerNameTextField(
         placeholder = {
             Text(text = stringResource(R.string.card_owner_name_placeholder), color = Color.Gray)
         },
-        isError = !isFocused && ownerNameErrorMessage != null,
+        isError = !isFocused && currentError != null,
         supportingText = {
             Text(
                 text = stringResource(
@@ -54,9 +65,9 @@ fun CardOwnerNameTextField(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.End
             )
-            if (!isFocused && ownerNameErrorMessage != null) {
+            if (!isFocused && currentError != null) {
                 Text(
-                    text = ownerNameErrorMessage,
+                    text = currentError,
                     color = MaterialTheme.colorScheme.error
                 )
             }

@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
-import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.toDomain
@@ -51,50 +50,25 @@ class CardStateHolder(
     }
 
     fun changeNumber(newNumber: String) {
-        val sanitized = newNumber.filter { it.isDigit() }.take(16)
-        val error = if (sanitized.isEmpty()) null else runCatching {
-            CardNumber(value = sanitized)
-        }.fold(onSuccess = { null }, onFailure = { it.message })
-
         _uiState.value =
-            _uiState.value.copy(
-                number = newNumber,
-                numberErrorMessage = error,
-                isChangeNumber = true
-            )
+            _uiState.value.copy(number = newNumber, isChangeNumber = true)
     }
 
     fun changeExpiredDate(newExpirationDate: String) {
-        val digits = newExpirationDate.filter { it.isDigit() }.take(4)
-        val error = if (digits.isEmpty()) null else runCatching {
-            ExpiredDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
-        }.fold(onSuccess = { null }, onFailure = { it.message })
-
         _uiState.value =
             _uiState.value.copy(
                 expiredDate = newExpirationDate,
-                expirationDateErrorMessage = error,
                 isChangeExpirationDate = true
             )
     }
 
     fun changeOwnerName(newOwnerName: String) {
-        val error = if (newOwnerName.isEmpty()) null else runCatching {
-            OwnerName(OwnerName(newOwnerName).maxName())
-        }.fold(onSuccess = { null }, onFailure = { it.message })
-
-        _uiState.value =
-            _uiState.value.copy(ownerName = newOwnerName, ownerNameErrorMessage = error)
+        _uiState.value = _uiState.value.copy(ownerName = newOwnerName)
     }
 
     fun changePassword(newPassword: String) {
-        val trimmed = newPassword.take(4)
-        val error = if (trimmed.isEmpty()) null else runCatching {
-            Password(trimmed)
-        }.fold(onSuccess = { null }, onFailure = { it.message })
-
         _uiState.value = _uiState.value.copy(
-            password = newPassword, passwordErrorMessage = error, isPassword = true
+            password = newPassword, isPassword = true
         )
     }
 

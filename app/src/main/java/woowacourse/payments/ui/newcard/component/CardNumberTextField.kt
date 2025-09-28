@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.newcard.component
 
+import android.R.attr.password
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -18,17 +19,29 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.Gray79
 import java.lang.Character.isDigit
 
 @Composable
 fun CardNumberTextField(
     number: String,
-    numberErrorMessage: String? = null,
     onNumberChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    val currentError = remember(number, isFocused) {
+        if (isFocused || number.isEmpty()) {
+            null
+        } else {
+            runCatching {
+                val sanitized = number.filter { it.isDigit() }.take(16)
+                CardNumber(sanitized)
+                null
+            }.getOrElse { it.message }
+        }
+    }
 
     OutlinedTextField(
         value = number,
@@ -50,11 +63,11 @@ fun CardNumberTextField(
                 color = Gray79,
             )
         },
-        isError = !isFocused && numberErrorMessage != null,
+        isError = !isFocused && currentError != null,
         supportingText = {
-            if (!isFocused && numberErrorMessage != null) {
+            if (!isFocused && currentError != null) {
                 Text(
-                    text = numberErrorMessage,
+                    text = currentError,
                     color = MaterialTheme.colorScheme.error
                 )
             }
