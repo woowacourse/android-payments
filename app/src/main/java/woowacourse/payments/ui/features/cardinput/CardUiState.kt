@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput
+package woowacourse.payments.ui.features.cardinput
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

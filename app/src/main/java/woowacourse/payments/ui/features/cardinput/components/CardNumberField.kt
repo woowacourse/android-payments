@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput.components
+package woowacourse.payments.ui.features.cardinput.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -19,57 +19,48 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.domain.card.values.CardNumber.Companion.MAX_LENGTH_CARD_NUMBER
 import woowacourse.payments.ui.components.AppTextField
-import woowacourse.payments.ui.features.cartinput.ExpireDateUiState
-import woowacourse.payments.ui.mapper.messageResId
-import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.MAX_EXPIRE_DATE_INPUT_LENGTH
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.SeparatorVisualTransformation
 
-const val EXPIRE_DATE_CHUNK_SIZE = 2
-const val EXPIRE_DATE_SEPARATOR = " / "
+const val CARD_NUMBER_CHUNK_SIZE = 4
+const val CARD_NUMBER_SEPARATOR = " - "
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardExpireDateField(
+fun CardNumberField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    expireDateUiState: ExpireDateUiState,
     supportingTextHeight: Dp = 20.dp,
 ) {
     var isFocused by remember { mutableStateOf(false) }
-    val showError =
-        expireDateUiState is ExpireDateUiState.Invalid || expireDateUiState is ExpireDateUiState.Typing && !isFocused
+    val isIncomplete = value.isNotEmpty() && value.length < MAX_LENGTH_CARD_NUMBER
+    val showError = isIncomplete && !isFocused
+
     val visualTransformation =
-        remember { SeparatorVisualTransformation(EXPIRE_DATE_CHUNK_SIZE, EXPIRE_DATE_SEPARATOR) }
+        remember { SeparatorVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR) }
 
     AppTextField(
         value = value,
         onValueChange = { newValue ->
-            val filteredValue =
-                newValue.filter { it in '0'..'9' }.take(MAX_EXPIRE_DATE_INPUT_LENGTH)
+            val filteredValue = newValue.filter { it in '0'..'9' }.take(MAX_LENGTH_CARD_NUMBER)
             onValueChange(filteredValue)
         },
         modifier =
             modifier.onFocusChanged { focusState ->
                 isFocused = focusState.isFocused
             },
-        labelText = stringResource(R.string.add_card_expire_date_field_title),
-        placeholderText = stringResource(R.string.add_card_expire_date_field_hint),
+        labelText = stringResource(R.string.add_card_number_field_title),
+        placeholderText = stringResource(R.string.add_card_number_field_hint),
         isError = showError,
         supportingText = {
             Box(modifier = Modifier.height(supportingTextHeight)) {
-                if (showError && expireDateUiState is ExpireDateUiState.Invalid) {
+                if (showError) {
                     Text(
                         modifier = Modifier,
-                        text = stringResource(id = expireDateUiState.reason.messageResId),
-                        color = MaterialTheme.colorScheme.error,
-                    )
-                } else if (showError && expireDateUiState is ExpireDateUiState.Typing) {
-                    Text(
-                        modifier = Modifier,
-                        text = stringResource(id = R.string.add_card_expire_date_incomplete_error_message),
+                        text = stringResource(id = R.string.add_card_number_incomplete_error_message),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
@@ -82,13 +73,12 @@ fun CardExpireDateField(
 
 @Preview(showBackground = true)
 @Composable
-fun CardExpireDateFieldPreview() {
+fun CardNumberFieldPreview() {
     var text by remember { mutableStateOf("") }
     AndroidpaymentsTheme(dynamicColor = false) {
-        CardExpireDateField(
+        CardNumberField(
             value = text,
             onValueChange = { text = it },
-            expireDateUiState = ExpireDateUiState.Empty,
         )
     }
 }

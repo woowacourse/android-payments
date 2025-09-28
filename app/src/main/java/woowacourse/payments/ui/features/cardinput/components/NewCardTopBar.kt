@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput.components
+package woowacourse.payments.ui.features.cardinput.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack

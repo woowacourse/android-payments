@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput
+package woowacourse.payments.ui.features.cardinput
 
 import woowacourse.payments.ui.model.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 

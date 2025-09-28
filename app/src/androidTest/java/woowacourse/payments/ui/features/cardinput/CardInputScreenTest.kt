@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput
+package woowacourse.payments.ui.features.cardinput
 
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule

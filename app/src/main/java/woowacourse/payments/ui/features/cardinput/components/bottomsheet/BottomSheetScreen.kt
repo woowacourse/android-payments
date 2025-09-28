@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput.components.bottomsheet
+package woowacourse.payments.ui.features.cardinput.components.bottomsheet
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow

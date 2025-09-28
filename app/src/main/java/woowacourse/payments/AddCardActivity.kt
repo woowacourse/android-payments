@@ -10,8 +10,8 @@ import androidx.activity.result.ActivityResult
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.domain.card.PaymentCard
-import woowacourse.payments.ui.features.cartinput.CardInputScreen
-import woowacourse.payments.ui.features.cartinput.CardUiStateHolder
+import woowacourse.payments.ui.features.cardinput.CardInputScreen
+import woowacourse.payments.ui.features.cardinput.CardUiStateHolder
 import woowacourse.payments.ui.mapper.CardMapper.toUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput.components
+package woowacourse.payments.ui.features.cardinput.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.cartinput
+package woowacourse.payments.ui.features.cardinput
 
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -30,12 +30,12 @@ import woowacourse.payments.R
 import woowacourse.payments.data.PaymentInMemoryRepository
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
-import woowacourse.payments.ui.features.cartinput.components.CardExpireDateField
-import woowacourse.payments.ui.features.cartinput.components.CardNumberField
-import woowacourse.payments.ui.features.cartinput.components.CardOwnerNameField
-import woowacourse.payments.ui.features.cartinput.components.CardPasswordField
-import woowacourse.payments.ui.features.cartinput.components.NewCardTopBar
-import woowacourse.payments.ui.features.cartinput.components.bottomsheet.BottomSheetScreen
+import woowacourse.payments.ui.features.cardinput.components.CardExpireDateField
+import woowacourse.payments.ui.features.cardinput.components.CardNumberField
+import woowacourse.payments.ui.features.cardinput.components.CardOwnerNameField
+import woowacourse.payments.ui.features.cardinput.components.CardPasswordField
+import woowacourse.payments.ui.features.cardinput.components.NewCardTopBar
+import woowacourse.payments.ui.features.cardinput.components.bottomsheet.BottomSheetScreen
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
