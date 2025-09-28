@@ -7,7 +7,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.R
+import woowacourse.payments.ui.cards.CardsStateHolder.Companion.CardsStateHolderSaver
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
 import woowacourse.payments.ui.newcard.NewCardActivity.Companion.EXTRA_NEW_CARD
@@ -15,12 +17,15 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.util.extensions.getParcelableCompat
 
 class CardsActivity : ComponentActivity() {
-    private val cardsStateHolder = CardsStateHolder()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val cardsStateHolder =
+                rememberSaveable(saver = CardsStateHolderSaver) {
+                    CardsStateHolder()
+                }
+
             val cardAddLauncher =
                 rememberLauncherForActivityResult(
                     contract = ActivityResultContracts.StartActivityForResult(),

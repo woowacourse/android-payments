@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cards
 
+import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.toMutableStateList
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
@@ -32,5 +33,11 @@ class CardsStateHolder(
     companion object {
         private const val MINIMUM_CARD_COUNT_FOR_ADD_BUTTON: Int = 1
         private const val EMPTY_CARDS_SIZE: Int = 0
+
+        val CardsStateHolderSaver =
+            listSaver(
+                save = { holder -> holder.cardList },
+                restore = { CardsStateHolder(it) },
+            )
     }
 }
