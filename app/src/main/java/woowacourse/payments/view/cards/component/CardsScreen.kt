@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.view.cards.CardsStateHolder
+import woowacourse.payments.view.cards.CardsUiEvent
 import woowacourse.payments.view.cards.CardsUiState
 import woowacourse.payments.view.ui.model.BankTypeUiModel
 import woowacourse.payments.view.ui.model.CardUiModel
@@ -22,8 +23,7 @@ import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardsScreen(
     stateHolder: CardsStateHolder,
-    addCard: () -> Unit,
-    editCard: (CardUiModel) -> Unit,
+    onUiEvent: (CardsUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val state: CardsUiState = stateHolder.uiState
@@ -32,14 +32,19 @@ fun CardsScreen(
         modifier = modifier,
         topBar = {
             CardsTopAppBar(
-                addCardAction = if (state.cards.size > 1) addCard else null,
+                addCardAction =
+                    if (state.cards.size > 1) {
+                        { onUiEvent(CardsUiEvent.NavigateToCardAddition) }
+                    } else {
+                        null
+                    },
             )
         },
     ) { innerPadding: PaddingValues ->
         CardsContent(
             state = state,
-            addCard = addCard,
-            editCard = editCard,
+            addCard = { onUiEvent(CardsUiEvent.NavigateToCardAddition) },
+            editCard = { card: CardUiModel -> onUiEvent(CardsUiEvent.NavigateToCardEditing(card)) },
             modifier =
                 Modifier
                     .fillMaxSize()
@@ -98,8 +103,7 @@ private fun CardsScreenPreview(
     AndroidpaymentsTheme {
         CardsScreen(
             stateHolder = CardsStateHolder(CardsUiState(cards)),
-            addCard = {},
-            editCard = {},
+            onUiEvent = {},
         )
     }
 }

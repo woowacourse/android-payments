@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import woowacourse.payments.view.cardaddition.CardAdditionActivity
 import woowacourse.payments.view.cardediting.CardEditingActivity
 import woowacourse.payments.view.cards.component.CardsScreen
-import woowacourse.payments.view.ui.model.CardUiModel
 import woowacourse.payments.view.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -23,7 +22,7 @@ class CardsActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val stateHolder = rememberCardsStateHolder()
+                val stateHolder: CardsStateHolder = rememberCardsStateHolder()
 
                 val cardsUpdateLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -32,16 +31,25 @@ class CardsActivity : ComponentActivity() {
                         }
                     }
 
-                val navigateToCardAdditionActivity: () -> Unit =
-                    { cardsUpdateLauncher.launch(Intent(this, CardAdditionActivity::class.java)) }
+                val onUiEvent: (CardsUiEvent) -> Unit = { event: CardsUiEvent ->
+                    when (event) {
+                        CardsUiEvent.NavigateToCardAddition -> {
+                            cardsUpdateLauncher.launch(
+                                Intent(this, CardAdditionActivity::class.java),
+                            )
+                        }
 
-                val navigateToEditingActivity: (card: CardUiModel) -> Unit =
-                    { card -> cardsUpdateLauncher.launch(CardEditingActivity.intent(this, card)) }
+                        is CardsUiEvent.NavigateToCardEditing -> {
+                            cardsUpdateLauncher.launch(
+                                CardEditingActivity.intent(this, event.card),
+                            )
+                        }
+                    }
+                }
 
                 CardsScreen(
-                    stateHolder,
-                    addCard = navigateToCardAdditionActivity,
-                    editCard = navigateToEditingActivity,
+                    stateHolder = stateHolder,
+                    onUiEvent = onUiEvent,
                     modifier = Modifier.fillMaxSize(),
                 )
             }
