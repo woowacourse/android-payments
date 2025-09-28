@@ -8,7 +8,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -16,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.view.cardediting.CardEditingStateHolder
 import woowacourse.payments.view.cardediting.CardEditingUiEvent
 import woowacourse.payments.view.cardediting.CardEditingUiState
 import woowacourse.payments.view.ui.component.BankSelectBottomSheet
@@ -31,51 +29,34 @@ import woowacourse.payments.view.ui.model.CardUiModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardEditingScreen(
-    stateHolder: CardEditingStateHolder,
-    onBackClick: () -> Unit,
-    onCardSaveSuccess: () -> Unit,
-    onCardSaveFailure: () -> Unit,
+    state: CardEditingUiState,
+    onUiEvent: (CardEditingUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val state: CardEditingUiState = stateHolder.uiState
-    val event: CardEditingUiEvent? = stateHolder.uiEvent
     val scrollState = rememberScrollState()
 
     if (!state.edited.isBankSelected) {
-        BankSelectBottomSheet(onSelectBankType = stateHolder::updateBankType)
-    }
-
-    LaunchedEffect(event) {
-        when (event) {
-            CardEditingUiEvent.EditCardSuccess -> onCardSaveSuccess()
-            CardEditingUiEvent.EditCardFailure -> onCardSaveFailure()
-            null -> Unit
-        }
-
-        stateHolder.clearEvent()
+        BankSelectBottomSheet({ bankType: BankTypeUiModel ->
+            onUiEvent(
+                CardEditingUiEvent.UpdateBankType(
+                    bankType,
+                ),
+            )
+        })
     }
 
     Scaffold(
         modifier = modifier.testTag("CardEditingScreen"),
         topBar = {
             CardEditingTopAppBar(
-                onBackClick = onBackClick,
-                onCheckClick = stateHolder::editCard,
+                onUiEvent = onUiEvent,
                 checkEnabled = state.canEditCard,
             )
         },
     ) { paddingValues ->
         CardEditingContent(
             card = state.edited,
-            onCardNumberChange = stateHolder::updateCardNumber,
-            isNumberError = !state.edited.isValidCardNumber,
-            onExpiredDateChange = stateHolder::updateExpiredDate,
-            isExpiredDateError = !state.edited.isValidExpiredDate,
-            onHolderChange = stateHolder::updateHolder,
-            holderMaxLength = state.edited.holderMaxLength,
-            onPasswordChange = stateHolder::updatePassword,
-            isPasswordError = !state.edited.isValidPassword,
-            onClearBankType = { stateHolder.updateBankType(null) },
+            onUiEvent = onUiEvent,
             modifier =
                 Modifier
                     .padding(paddingValues)
@@ -88,20 +69,12 @@ fun CardEditingScreen(
 @Composable
 private fun CardEditingContent(
     card: CardUiModel,
-    onCardNumberChange: (String) -> Unit,
-    isNumberError: Boolean,
-    onExpiredDateChange: (String) -> Unit,
-    isExpiredDateError: Boolean,
-    onHolderChange: (String) -> Unit,
-    holderMaxLength: Int,
-    onPasswordChange: (String) -> Unit,
-    isPasswordError: Boolean,
-    onClearBankType: () -> Unit,
+    onUiEvent: (CardEditingUiEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         PaymentCard(
-            onClick = onClearBankType,
+            onClick = { onUiEvent(CardEditingUiEvent.UpdateBankType(null)) },
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
@@ -113,8 +86,8 @@ private fun CardEditingContent(
         )
         CardNumberTextField(
             value = card.number,
-            onValueChange = onCardNumberChange,
-            isError = isNumberError,
+            onValueChange = { value -> onUiEvent(CardEditingUiEvent.UpdateCardNumber(value)) },
+            isError = !card.isValidCardNumber,
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -122,24 +95,24 @@ private fun CardEditingContent(
         )
         ExpiredDateTextField(
             value = card.expiredDate,
-            onValueChange = onExpiredDateChange,
-            isError = isExpiredDateError,
+            onValueChange = { value -> onUiEvent(CardEditingUiEvent.UpdateExpiredDate(value)) },
+            isError = !card.isValidExpiredDate,
             modifier = Modifier.padding(top = 18.dp),
         )
         CardOwnerNameTextField(
             value = card.holder,
-            onValueChange = onHolderChange,
+            onValueChange = { value -> onUiEvent(CardEditingUiEvent.UpdateHolder(value)) },
             modifier =
                 Modifier
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
                     .padding(top = 18.dp),
-            maxLength = holderMaxLength,
+            maxLength = card.holderMaxLength,
         )
         PasswordTextField(
             value = card.password,
-            onValueChange = onPasswordChange,
-            isError = isPasswordError,
+            onValueChange = { value -> onUiEvent(CardEditingUiEvent.UpdatePassword(value)) },
+            isError = !card.isValidPassword,
         )
     }
 }
@@ -151,10 +124,8 @@ private fun CardEditingScreenPreview(
     @PreviewParameter(CardEditingScreenPreviewParameterProvider::class) state: CardEditingUiState,
 ) {
     CardEditingScreen(
-        stateHolder = CardEditingStateHolder(state),
-        onBackClick = {},
-        onCardSaveSuccess = {},
-        onCardSaveFailure = {},
+        state = state,
+        onUiEvent = {},
     )
 }
 
