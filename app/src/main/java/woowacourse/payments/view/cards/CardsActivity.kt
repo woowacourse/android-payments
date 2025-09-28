@@ -23,31 +23,14 @@ class CardsActivity : ComponentActivity() {
         setContent {
             AndroidpaymentsTheme {
                 val stateHolder: CardsStateHolder = rememberCardsStateHolder()
-
                 val state: CardsUiState = stateHolder.uiState
-
                 val cardsUpdateLauncher: ManagedActivityResultLauncher<Intent, ActivityResult> =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                         if (result.resultCode == RESULT_OK) {
                             stateHolder.fetchCards()
                         }
                     }
-
-                val onUiEvent: (CardsUiEvent) -> Unit = { event: CardsUiEvent ->
-                    when (event) {
-                        CardsUiEvent.NavigateToCardAddition -> {
-                            cardsUpdateLauncher.launch(
-                                Intent(this, CardAdditionActivity::class.java),
-                            )
-                        }
-
-                        is CardsUiEvent.NavigateToCardEditing -> {
-                            cardsUpdateLauncher.launch(
-                                CardEditingActivity.intent(this, event.card),
-                            )
-                        }
-                    }
-                }
+                val onUiEvent: (CardsUiEvent) -> Unit = onUiEvent(cardsUpdateLauncher)
 
                 CardsScreen(
                     state = state,
@@ -57,4 +40,21 @@ class CardsActivity : ComponentActivity() {
             }
         }
     }
+
+    private fun onUiEvent(cardsUpdateLauncher: ManagedActivityResultLauncher<Intent, ActivityResult>): (CardsUiEvent) -> Unit =
+        { event: CardsUiEvent ->
+            when (event) {
+                CardsUiEvent.NavigateToCardAddition -> {
+                    cardsUpdateLauncher.launch(
+                        Intent(this, CardAdditionActivity::class.java),
+                    )
+                }
+
+                is CardsUiEvent.NavigateToCardEditing -> {
+                    cardsUpdateLauncher.launch(
+                        CardEditingActivity.intent(this, event.card),
+                    )
+                }
+            }
+        }
 }
