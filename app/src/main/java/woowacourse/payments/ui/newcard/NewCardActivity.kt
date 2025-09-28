@@ -35,7 +35,7 @@ class NewCardActivity : ComponentActivity() {
                                 finish()
                             },
                             { onBackPressedDispatcher.onBackPressed() },
-                            Modifier
+                            Modifier,
                         )
                     }
 
@@ -49,7 +49,7 @@ class NewCardActivity : ComponentActivity() {
                                 finish()
                             },
                             { onBackPressedDispatcher.onBackPressed() },
-                            Modifier
+                            Modifier,
                         )
                     }
                 }
@@ -59,7 +59,10 @@ class NewCardActivity : ComponentActivity() {
 
     companion object {
         const val UPDATE_CARD_KEY = "update_card_key"
-        fun instance(context: Context, cardId: Long? = null) =
-            Intent(context, NewCardActivity::class.java).putExtra(UPDATE_CARD_KEY, cardId)
+
+        fun instance(
+            context: Context,
+            cardId: Long? = null,
+        ) = Intent(context, NewCardActivity::class.java).putExtra(UPDATE_CARD_KEY, cardId)
     }
 }

@@ -24,7 +24,7 @@ fun NewCardContent(
 ) {
     Column(
         modifier =
-            modifier,
+        modifier,
     ) {
         CardSample(
             newCardContentUiState.bankUiModel,

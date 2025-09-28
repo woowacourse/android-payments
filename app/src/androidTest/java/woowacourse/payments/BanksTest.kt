@@ -19,7 +19,7 @@ class BanksTest {
     fun `은행_보드에_모든_은행타입이_표시된다`() {
         composeTestRule.setContent {
             BanksGrid(BankType.entries.map { it.toLocalBankUiModel() }, 4) {
-                Bank(it,{})
+                Bank(it, {})
             }
         }
         composeTestRule

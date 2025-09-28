@@ -12,12 +12,11 @@ import woowacourse.payments.ui.model.CardUiModel
 class MultiCardsStateHolderSaver : Saver<MultiCardsStateHolder, List<CardUiModel>> {
     override fun SaverScope.save(value: MultiCardsStateHolder): List<CardUiModel>? = value.cards
 
-    override fun restore(value: List<CardUiModel>): MultiCardsStateHolder? =
-        MultiCardsStateHolder(value.map { it.id })
+    override fun restore(value: List<CardUiModel>): MultiCardsStateHolder? = MultiCardsStateHolder(value.map { it.id })
 }
 
 class MultiCardsStateHolder(
-    initCardIds: List<Long>
+    initCardIds: List<Long>,
 ) {
     var cards: List<CardUiModel> by mutableStateOf(initCardIds.map { CardStore.fetch(it) })
         private set

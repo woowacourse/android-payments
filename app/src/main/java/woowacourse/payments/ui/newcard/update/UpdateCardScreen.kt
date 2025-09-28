@@ -16,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardContent
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
@@ -37,7 +36,7 @@ fun UpdateCardScreen(
     val isUpdatable by remember {
         derivedStateOf {
             updateCardStateHolder.isCardUpdatable(
-                cardId
+                cardId,
             )
         }
     }
@@ -59,12 +58,15 @@ fun UpdateCardScreen(
     if (showBottomSheet) {
         BanksBottomSheet(
             banks = updateCardStateHolder.selectableCardBanks(),
-            sheetState = modalBottomSheetState, onSelectCard = { bank ->
+            sheetState = modalBottomSheetState,
+            onSelectCard = { bank ->
                 updateCardStateHolder.updateCardBank(bank)
                 showBottomSheet = false
-            }, onDismissRequest = {
+            },
+            onDismissRequest = {
                 showBottomSheet = false
-            })
+            },
+        )
     }
 
     Scaffold(
@@ -77,7 +79,7 @@ fun UpdateCardScreen(
                     onSaveClick()
                 },
                 title = stringResource(R.string.card_update),
-                isCreatable = isUpdatable
+                isCreatable = isUpdatable,
             )
         },
     ) { innerPadding ->

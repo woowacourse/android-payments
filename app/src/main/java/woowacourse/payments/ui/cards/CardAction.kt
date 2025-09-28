@@ -6,8 +6,12 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 sealed interface CardAction : Parcelable {
     @Parcelize
-    data class Add(val cardId: Long) : CardAction
+    data class Add(
+        val cardId: Long,
+    ) : CardAction
 
     @Parcelize
-    data class Update(val cardId: Long) : CardAction
+    data class Update(
+        val cardId: Long,
+    ) : CardAction
 }

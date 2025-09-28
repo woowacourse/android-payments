@@ -7,10 +7,19 @@ import woowacourse.payments.ui.model.toLocalBankUiModel
 
 fun Card.toCardUiModel() =
     CardUiModel(
-        bankType.toLocalBankUiModel(), cardNumbers, cardExpiry, ownerName, id
+        bankType.toLocalBankUiModel(),
+        cardNumbers,
+        cardExpiry,
+        ownerName,
+        id,
     )
 
 fun CardUiModel.toCard(password: String) =
     Card(
-        bankUiModel.toBankType(), cardNumbers, cardExpiry, ownerName, password, id
+        bankUiModel.toBankType(),
+        cardNumbers,
+        cardExpiry,
+        ownerName,
+        password,
+        id,
     )

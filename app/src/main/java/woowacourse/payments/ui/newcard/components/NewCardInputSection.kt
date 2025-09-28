@@ -18,12 +18,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder.Companion.CARD_OWNER_NAME_MAX
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
 import woowacourse.payments.ui.newcard.state.NewCardContentUiState
+import woowacourse.payments.ui.newcard.state.holder.NewCardContentStateHolder.Companion.CARD_OWNER_NAME_MAX
 import woowacourse.payments.ui.utils.GroupedSeparatorVisualTransformation
 
 private val CARD_GROUPS = intArrayOf(4, 4, 4, 4)
@@ -85,10 +85,11 @@ fun NewCardInputSection(
             supportingText = {
                 Text(
                     expiryDateErrorTextRes ?: "",
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
                     textAlign = TextAlign.End,
-                    maxLines = 1
+                    maxLines = 1,
                 )
             },
             visualTransformation = expiryDateVisualTransformation,

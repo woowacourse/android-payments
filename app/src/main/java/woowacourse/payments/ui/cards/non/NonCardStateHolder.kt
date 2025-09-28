@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import woowacourse.payments.data.CardStore
 
 class NonCardStateHolder {
-
     var uiEvent: NonCardsUiEvent? by mutableStateOf(null)
         private set
 

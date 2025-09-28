@@ -3,7 +3,6 @@ package woowacourse.payments.ui.newcard.banks
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -16,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.toLocalBankUiModel
-
 
 private const val BANK_COLUMN_COUNT = 4
 
@@ -39,14 +37,15 @@ fun BanksBottomSheet(
             columnCount = BANK_COLUMN_COUNT,
             Modifier
                 .height(250.dp)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
         ) { bank ->
             Bank(
                 bankUiModel = bank,
                 onSelectBank = onSelectCard,
-                modifier = Modifier
-                    .weight(1f, fill = true)
-                    .fillMaxWidth()
+                modifier =
+                    Modifier
+                        .weight(1f, fill = true)
+                        .fillMaxWidth(),
             )
         }
     }

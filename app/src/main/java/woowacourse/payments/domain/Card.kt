@@ -6,5 +6,5 @@ data class Card(
     val cardExpiry: String,
     val ownerName: String,
     val password: String,
-    val id: Long
+    val id: Long,
 )

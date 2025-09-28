@@ -3,7 +3,6 @@ package woowacourse.payments.data
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.core.mapper.toCardUiModel
 
-
 object CardStore {
     val cards = mutableListOf<Card>()
 
@@ -17,8 +16,7 @@ object CardStore {
         cards[index] = newCard
     }
 
-    fun fetch(cardId: Long) =
-        cards.find { it.id == cardId }?.toCardUiModel() ?: throw IllegalStateException()
+    fun fetch(cardId: Long) = cards.find { it.id == cardId }?.toCardUiModel() ?: throw IllegalStateException()
 
     fun fetchAll() = cards.toList()
 }

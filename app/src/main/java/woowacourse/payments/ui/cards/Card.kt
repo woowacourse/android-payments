@@ -12,20 +12,21 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.core.mapper.asColor
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.debug.fixture.cardUiModelSample
+import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
 fun Card(
     cardUiModel: CardUiModel,
     modifier: Modifier = Modifier,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier.background(
-            color = cardUiModel.bankUiModel.cardColor.asColor(),
-            shape = RoundedCornerShape(5.dp),
-        )
+        modifier =
+            modifier.background(
+                color = cardUiModel.bankUiModel.cardColor.asColor(),
+                shape = RoundedCornerShape(5.dp),
+            ),
     ) {
         content()
     }
@@ -36,9 +37,10 @@ fun Card(
 fun PaymentCardPreview() {
     Card(
         cardUiModelSample,
-        modifier = Modifier
-            .shadow(8.dp)
-            .width(width = 208.dp)
+        modifier =
+            Modifier
+                .shadow(8.dp)
+                .width(width = 208.dp),
     ) {
         CardContent(
             cardUiModel = cardUiModelSample,

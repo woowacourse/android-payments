@@ -24,7 +24,8 @@ class BankTest {
         composeTestRule.setContent {
             Bank(BankType.BC.toLocalBankUiModel(), { bankUiModel = it })
         }
-        this@BankTest.composeTestRule
+        this@BankTest
+            .composeTestRule
             .onNodeWithTag(BanksTestTag.BANK_CONTAINER_TAG)
             .assertIsEnabled()
             .performClick()

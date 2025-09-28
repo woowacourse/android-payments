@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -19,7 +18,7 @@ fun BanksGrid(
     banks: List<BankUiModel>,
     columnCount: Int,
     modifier: Modifier = Modifier,
-    item: @Composable FlowRowScope.(BankUiModel) -> Unit
+    item: @Composable FlowRowScope.(BankUiModel) -> Unit,
 ) {
     FlowRow(
         modifier =
@@ -43,8 +42,9 @@ fun BanksPreview() {
         Bank(
             bankUiModel = bank,
             onSelectBank = {},
-            modifier = Modifier
-                .weight(1f, fill = true)
+            modifier =
+                Modifier
+                    .weight(1f, fill = true),
         )
     }
 }

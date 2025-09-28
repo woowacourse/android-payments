@@ -12,13 +12,14 @@ import woowacourse.payments.ui.model.CardUiModel
 class SingleCardStateHolderSaver : Saver<SingleCardStateHolder, CardUiModel> {
     override fun SaverScope.save(value: SingleCardStateHolder): CardUiModel? = value.card
 
-    override fun restore(value: CardUiModel): SingleCardStateHolder? = SingleCardStateHolder(
-        value.id
-    )
+    override fun restore(value: CardUiModel): SingleCardStateHolder? =
+        SingleCardStateHolder(
+            value.id,
+        )
 }
 
 class SingleCardStateHolder(
-    initCardId: Long
+    initCardId: Long,
 ) {
     var card: CardUiModel by mutableStateOf(CardStore.fetch(initCardId))
         private set

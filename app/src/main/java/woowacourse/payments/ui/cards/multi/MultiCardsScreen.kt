@@ -43,11 +43,12 @@ import woowacourse.payments.ui.utils.ext.parcelable
 @Composable
 fun MultiCardsScreen(
     cardIds: List<Long>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val cardStateHolder = rememberSaveable(saver = MultiCardsStateHolderSaver()) {
-        MultiCardsStateHolder(cardIds)
-    }
+    val cardStateHolder =
+        rememberSaveable(saver = MultiCardsStateHolderSaver()) {
+            MultiCardsStateHolder(cardIds)
+        }
     val localContext = LocalContext.current
     val cardAddLauncher = cardAddLauncher(cardStateHolder)
     val onAddClick = {
@@ -65,12 +66,13 @@ fun MultiCardsScreen(
             CardsTopBar {
                 CreateCardButton(onAddClick)
             }
-        }
+        },
     ) { innerPadding ->
         Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
             contentAlignment = Alignment.TopCenter,
         ) {
             MultiCardsSection(cardStateHolder.cards, onUpdateClick)
@@ -90,10 +92,12 @@ fun MultiCardsSection(
     ) {
         items(cards) { card ->
             Card(
-                card, modifier
+                card,
+                modifier
                     .shadow(8.dp)
                     .width(width = 208.dp)
-                    .clickable { onUpdateClick(card) }) {
+                    .clickable { onUpdateClick(card) },
+            ) {
                 CardContent(
                     card,
                     Modifier.padding(15.dp),
@@ -122,22 +126,22 @@ private fun CreateCardButton(
 }
 
 @Composable
-private fun cardAddLauncher(
-    cardsStateHolder: MultiCardsStateHolder,
-) = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.StartActivityForResult(),
-) { activityResult ->
-    if (activityResult.resultCode == RESULT_OK) {
-        val intent = activityResult.data
-        val cardAction = intent?.parcelable<CardAction>(
-            NEW_CARD_KEY,
-        ) ?: return@rememberLauncherForActivityResult
-        when (cardAction) {
-            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
-            is CardAction.Update -> cardsStateHolder.updateCard()
+private fun cardAddLauncher(cardsStateHolder: MultiCardsStateHolder) =
+    rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { activityResult ->
+        if (activityResult.resultCode == RESULT_OK) {
+            val intent = activityResult.data
+            val cardAction =
+                intent?.parcelable<CardAction>(
+                    NEW_CARD_KEY,
+                ) ?: return@rememberLauncherForActivityResult
+            when (cardAction) {
+                is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
+                is CardAction.Update -> cardsStateHolder.updateCard()
+            }
         }
     }
-}
 
 private fun handleEvent(
     uiEvent: MultiCardsUiEvent?,
@@ -145,17 +149,21 @@ private fun handleEvent(
 ) {
     when (uiEvent) {
         null -> {}
-        MultiCardsUiEvent.AddCard -> Toast.makeText(
-            localContext,
-            localContext.getString(R.string.created_card_message),
-            Toast.LENGTH_SHORT,
-        ).show()
+        MultiCardsUiEvent.AddCard ->
+            Toast
+                .makeText(
+                    localContext,
+                    localContext.getString(R.string.created_card_message),
+                    Toast.LENGTH_SHORT,
+                ).show()
 
-        MultiCardsUiEvent.UpdateCard -> Toast.makeText(
-            localContext,
-            localContext.getString(R.string.updated_card_message),
-            Toast.LENGTH_SHORT,
-        ).show()
+        MultiCardsUiEvent.UpdateCard ->
+            Toast
+                .makeText(
+                    localContext,
+                    localContext.getString(R.string.updated_card_message),
+                    Toast.LENGTH_SHORT,
+                ).show()
     }
 }
 
@@ -163,6 +171,7 @@ private fun handleEvent(
 @Composable
 fun MultiCardsSectionPreview() {
     MultiCardsSection(
-        cardUiModelSamples, {}
+        cardUiModelSamples,
+        {},
     )
 }

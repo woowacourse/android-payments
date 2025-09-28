@@ -14,11 +14,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.payments.ui.newcard.components.NewCardInputSection
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
+import woowacourse.payments.ui.newcard.components.NewCardInputSection
 import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 
 @RunWith(AndroidJUnit4::class)
@@ -48,7 +48,8 @@ class NewCardInputSectionTest {
             .onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
             .performTextInput("1234567812345678")
 
-        this@NewCardInputSectionTest.composeTestRule
+        this@NewCardInputSectionTest
+            .composeTestRule
             .onNodeWithText("1234-5678-1234-5678")
             .assertIsDisplayed()
     }

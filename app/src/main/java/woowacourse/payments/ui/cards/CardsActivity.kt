@@ -25,7 +25,7 @@ class CardsActivity : ComponentActivity() {
             AndroidpaymentsTheme {
                 when (val currentScreen = screen) {
                     CardsScreen.Non -> NonCardsScreen({ screen = it })
-                    is CardsScreen.Single -> SingleCardScreen({ screen = it },currentScreen.cardId )
+                    is CardsScreen.Single -> SingleCardScreen({ screen = it }, currentScreen.cardId)
                     is CardsScreen.Multi -> MultiCardsScreen(currentScreen.cardIds)
                 }
             }
@@ -35,9 +35,12 @@ class CardsActivity : ComponentActivity() {
     companion object {
         const val NEW_CARD_KEY = "new_card_key"
 
-        fun intent(context: Context, cardAction: CardAction) = Intent(
+        fun intent(
+            context: Context,
+            cardAction: CardAction,
+        ) = Intent(
             context,
-            CardsActivity::class.java
+            CardsActivity::class.java,
         ).putExtra(NEW_CARD_KEY, cardAction)
     }
 }

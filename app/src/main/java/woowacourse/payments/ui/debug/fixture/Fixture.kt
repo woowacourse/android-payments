@@ -10,7 +10,7 @@ val cardUiModelSample =
         "1234567812345678",
         "1225",
         "빰".repeat(30),
-        1
+        1,
     )
 
 val cardUiModelSamples =

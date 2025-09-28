@@ -25,8 +25,8 @@ data class BankUiModel(
     }
 }
 
-fun BankType.toLocalBankUiModel(): BankUiModel {
-    return when (this) {
+fun BankType.toLocalBankUiModel(): BankUiModel =
+    when (this) {
         BankType.BC -> fromRes("BC카드", R.drawable.ic_bc, BankCardColors.Bc.toArgb())
         BankType.HANA -> fromRes("하나카드", R.drawable.ic_hana, BankCardColors.Hana.toArgb())
         BankType.HYUNDAE -> fromRes("현대카드", R.drawable.ic_hyundae, BankCardColors.Hyundae.toArgb())
@@ -36,10 +36,9 @@ fun BankType.toLocalBankUiModel(): BankUiModel {
         BankType.SHINHAN -> fromRes("신한카드", R.drawable.ic_shinhan, BankCardColors.Shinhan.toArgb())
         BankType.WOORI -> fromRes("우리카드", R.drawable.ic_woori, BankCardColors.Woori.toArgb())
     }
-}
 
-fun BankUiModel.toBankType(): BankType {
-    return when (this.name) {
+fun BankUiModel.toBankType(): BankType =
+    when (this.name) {
         "BC카드" -> BankType.BC
         "하나카드" -> BankType.HANA
         "현대카드" -> BankType.HYUNDAE
@@ -49,4 +48,3 @@ fun BankUiModel.toBankType(): BankType {
         "신한카드" -> BankType.SHINHAN
         else -> BankType.WOORI
     }
-}

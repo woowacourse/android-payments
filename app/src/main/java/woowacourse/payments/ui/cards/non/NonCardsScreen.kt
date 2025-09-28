@@ -2,7 +2,6 @@ package woowacourse.payments.ui.cards.non
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -39,7 +38,7 @@ import woowacourse.payments.ui.utils.ext.parcelable
 @Composable
 fun NonCardsScreen(
     onNavigate: (CardsScreen) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val cardStateHolder = remember { NonCardStateHolder() }
     val localContext = LocalContext.current
@@ -51,12 +50,13 @@ fun NonCardsScreen(
     handleEvent(cardStateHolder.uiEvent, localContext, onNavigate)
     Scaffold(
         modifier = modifier.fillMaxSize(),
-        topBar = { CardsTopBar() }
+        topBar = { CardsTopBar() },
     ) { innerPadding ->
         Box(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize(),
+            modifier =
+                Modifier
+                    .padding(innerPadding)
+                    .fillMaxSize(),
             contentAlignment = Alignment.TopCenter,
         ) {
             NonCardsSection(onAddClick)
@@ -89,37 +89,38 @@ fun NonCardsSection(
 }
 
 @Composable
-private fun cardAddLauncher(
-    cardsStateHolder: NonCardStateHolder,
-) = rememberLauncherForActivityResult(
-    contract = ActivityResultContracts.StartActivityForResult(),
-) { activityResult ->
-    if (activityResult.resultCode == RESULT_OK) {
-        val intent = activityResult.data
-        val cardAction = intent?.parcelable<CardAction>(
-            NEW_CARD_KEY,
-        ) ?: return@rememberLauncherForActivityResult
-        when (cardAction) {
-            is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
-            is CardAction.Update -> {}
+private fun cardAddLauncher(cardsStateHolder: NonCardStateHolder) =
+    rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult(),
+    ) { activityResult ->
+        if (activityResult.resultCode == RESULT_OK) {
+            val intent = activityResult.data
+            val cardAction =
+                intent?.parcelable<CardAction>(
+                    NEW_CARD_KEY,
+                ) ?: return@rememberLauncherForActivityResult
+            when (cardAction) {
+                is CardAction.Add -> cardsStateHolder.addCard(cardAction.cardId)
+                is CardAction.Update -> {}
+            }
         }
     }
-}
 
 private fun handleEvent(
     uiEvent: NonCardsUiEvent?,
     localContext: Context,
-    updateScreen: (CardsScreen) -> Unit
+    updateScreen: (CardsScreen) -> Unit,
 ) {
     when (uiEvent) {
         null -> {}
         is NonCardsUiEvent.AddedCard -> {
             updateScreen(CardsScreen.Single(uiEvent.cardId))
-            Toast.makeText(
-                localContext,
-                localContext.getString(R.string.created_card_message),
-                Toast.LENGTH_SHORT,
-            ).show()
+            Toast
+                .makeText(
+                    localContext,
+                    localContext.getString(R.string.created_card_message),
+                    Toast.LENGTH_SHORT,
+                ).show()
         }
     }
 }

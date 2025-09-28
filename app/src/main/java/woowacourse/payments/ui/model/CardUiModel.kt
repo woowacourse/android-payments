@@ -9,7 +9,7 @@ data class CardUiModel(
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,
-    val id: Long
+    val id: Long,
 ) : Parcelable {
     fun maskCardNumbersFromBack(
         visibleGroups: Int = 2,
@@ -28,4 +28,3 @@ data class CardUiModel(
             .chunked(2)
             .joinToString(separator)
 }
-

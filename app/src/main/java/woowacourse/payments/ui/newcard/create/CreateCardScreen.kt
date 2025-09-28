@@ -19,8 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
-import woowacourse.payments.ui.cards.CardsScreen
-import woowacourse.payments.ui.cards.single.SingleCardsUiEvent
 import woowacourse.payments.ui.newcard.banks.BanksBottomSheet
 import woowacourse.payments.ui.newcard.components.NewCardContent
 import woowacourse.payments.ui.newcard.components.NewCardTopBar
@@ -62,7 +60,7 @@ fun CreateCardScreen(
             onDismissRequest = {
                 handleDismiss(stateHolder.hasBank, context)
                 showBottomSheet = false
-            }
+            },
         )
     }
 
@@ -92,18 +90,19 @@ fun CreateCardScreen(
     }
 }
 
-private fun handleDismiss(hasBank: Boolean, context: Context) {
+private fun handleDismiss(
+    hasBank: Boolean,
+    context: Context,
+) {
     if (!hasBank) {
-        Toast.makeText(
-            context,
-            context.getString(R.string.not_select_bank_message),
-            Toast.LENGTH_SHORT
-        ).show()
+        Toast
+            .makeText(
+                context,
+                context.getString(R.string.not_select_bank_message),
+                Toast.LENGTH_SHORT,
+            ).show()
     }
 }
 
-private fun handleEvent(
-    uiEvent: CreateCardUiEvent?,
-) {
-
+private fun handleEvent(uiEvent: CreateCardUiEvent?) {
 }
