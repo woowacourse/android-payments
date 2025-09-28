@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard
 
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +7,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.ui.cardlist.CardListActivity.Companion.newIntent
+import woowacourse.payments.ui.cardlist.CardListActivity.Companion.createCardIntent
+import woowacourse.payments.ui.cardlist.CardListActivity.Companion.editCardIntent
 import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.state.NewCardStatus
@@ -41,7 +41,7 @@ class NewCardActivity : ComponentActivity() {
 
     fun onSaveCard(newCard: CardUiModel?) {
         newCard?.let {
-            val intent = newIntent(context = this, newCard)
+            val intent = createCardIntent(context = this, newCard)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -49,7 +49,7 @@ class NewCardActivity : ComponentActivity() {
 
     fun onUpdateCard(oldCard: CardUiModel?, newCard: CardUiModel?) {
         newCard?.let {
-            val intent = newIntent(context = this, newCard, oldCard)
+            val intent = editCardIntent(context = this, newCard, oldCard)
             setResult(RESULT_OK, intent)
             finish()
         }

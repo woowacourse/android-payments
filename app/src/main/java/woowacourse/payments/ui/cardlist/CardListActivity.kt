@@ -24,7 +24,13 @@ class CardListActivity : ComponentActivity() {
     companion object {
         private const val EXTRA_NEW_CARD = "newCard"
         private const val EXTRA_OLD_CARD = "oldCard"
-        fun newIntent(context: Context, newCard: CardUiModel, oldCard: CardUiModel? = null): Intent {
+        fun createCardIntent(context: Context, newCard: CardUiModel): Intent {
+            val intent = Intent(context, CardListActivity::class.java)
+            intent.putExtra(EXTRA_NEW_CARD, newCard)
+            return intent
+        }
+
+        fun editCardIntent(context: Context, newCard: CardUiModel, oldCard: CardUiModel? = null): Intent {
             val intent = Intent(context, CardListActivity::class.java)
             intent.putExtra(EXTRA_NEW_CARD, newCard)
             intent.putExtra(EXTRA_OLD_CARD, oldCard)
