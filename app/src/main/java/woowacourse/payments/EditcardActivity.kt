@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
-import woowacourse.payments.data.PaymentFakeRepository
+import woowacourse.payments.data.PaymentInMemoryRepository
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.features.cartinput.CardInputScreen
 import woowacourse.payments.ui.features.cartinput.CardUiStateHolder
@@ -32,7 +32,7 @@ class EditcardActivity : ComponentActivity() {
                 }
 
         val cardUiState =
-            PaymentFakeRepository.getCardUiStateById(initialCardModel.dbId)
+            PaymentInMemoryRepository.findById(initialCardModel.dbId)
                 ?: run {
                     finish()
                     return

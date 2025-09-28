@@ -3,21 +3,21 @@ package woowacourse.payments.data
 import woowacourse.payments.ui.features.cartinput.CardUiState
 import java.util.concurrent.atomic.AtomicInteger
 
-object PaymentFakeRepository {
+object PaymentInMemoryRepository {
     private val idCounter = AtomicInteger(0)
 
     private val cardDatabase = mutableListOf<PaymentCardRecord>()
 
-    fun getCardUiStateById(id: Int): CardUiState? = cardDatabase.find { it.id == id }?.cardUiState
+    fun findById(id: Int): CardUiState? = cardDatabase.find { it.id == id }?.cardUiState
 
-    fun addCardToDB(cardUiState: CardUiState): Int {
+    fun add(cardUiState: CardUiState): Int {
         val newId = idCounter.incrementAndGet()
         val newStoredCard = PaymentCardRecord(id = newId, cardUiState = cardUiState)
         cardDatabase.add(newStoredCard)
         return newId
     }
 
-    fun updateDBCard(
+    fun update(
         id: Int,
         newCardUiState: CardUiState,
     ) {

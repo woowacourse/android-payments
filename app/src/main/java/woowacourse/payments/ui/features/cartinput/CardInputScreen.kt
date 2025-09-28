@@ -27,9 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.data.PaymentFakeRepository.addCardToDB
-import woowacourse.payments.data.PaymentFakeRepository.getCardUiStateById
-import woowacourse.payments.data.PaymentFakeRepository.updateDBCard
+import woowacourse.payments.data.PaymentInMemoryRepository
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
 import woowacourse.payments.ui.features.cartinput.components.CardExpireDateField
@@ -86,17 +84,17 @@ fun CardInputScreen(
             is CardCreationResult.Success -> {
                 isSavingInProgress = false
                 if (dbId != EMPTY_DB_ID) {
-                    val dbState = getCardUiStateById(dbId)
+                    val dbState = PaymentInMemoryRepository.findById(dbId)
 
                     if (dbState == cardUiStateHolder.uiState.value) {
                         isSavingInProgress = false
                         toastMessageResId = R.string.edit_card_same_alert
                     } else {
-                        updateDBCard(dbId, uiState)
+                        PaymentInMemoryRepository.update(dbId, uiState)
                         onNavigateSave(dbId, cardDomainResult.paymentCard)
                     }
                 } else {
-                    val savedDBId = addCardToDB(uiState)
+                    val savedDBId = PaymentInMemoryRepository.add(uiState)
                     onNavigateSave(savedDBId, cardDomainResult.paymentCard)
                 }
             }

@@ -8,12 +8,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import woowacourse.payments.AddCardActivity.Companion.parsePaymentCardUiModelByAddCard
-import woowacourse.payments.EditcardActivity.Companion.parsePaymentCardUiModelByEditCard
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.launch
+import woowacourse.payments.ui.CardListStateHolder
+import woowacourse.payments.ui.CardListUiEvent
 import woowacourse.payments.ui.features.cardlist.CardListScreen
-import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
@@ -22,18 +24,30 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cardUiModels = rememberSaveable { mutableStateListOf<PaymentCardUiModel>() }
+                val scope = rememberCoroutineScope()
+                val context = LocalContext.current
+
+                val stateHolder =
+                    rememberSaveable(saver = CardListStateHolder.Saver) {
+                        CardListStateHolder()
+                    }
+
+                LaunchedEffect(Unit) {
+                    stateHolder.uiEventFlow.collect { event ->
+                        when (event) {
+                            is CardListUiEvent.ShowToast -> {
+                                Toast.makeText(context, event.messageId, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
 
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
-                        val newCard =
-                            parsePaymentCardUiModelByAddCard(activityResult)
-                                ?: return@rememberLauncherForActivityResult
-                        newCard.let {
-                            cardUiModels.add(newCard)
-                            showToast(this, R.string.card_list_card_added_alert)
+                        scope.launch {
+                            stateHolder.onAddCardResult(activityResult)
                         }
                     }
 
@@ -41,18 +55,13 @@ class CardListActivity : ComponentActivity() {
                     rememberLauncherForActivityResult(
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { activityResult ->
-                        val editedCard =
-                            parsePaymentCardUiModelByEditCard(activityResult)
-                                ?: return@rememberLauncherForActivityResult
-                        val index = cardUiModels.indexOfFirst { it.dbId == editedCard.dbId }
-                        if (index != -1) {
-                            cardUiModels[index] = editedCard
-                            showToast(this, R.string.card_list_card_edited_alert)
+                        scope.launch {
+                            stateHolder.onEditCardResult(activityResult)
                         }
                     }
 
                 CardListScreen(
-                    cardUiModels = cardUiModels,
+                    cardUiModels = stateHolder.cardUiModels,
                     onAddCard = {
                         val intent = AddCardActivity.newIntent(this)
                         cardAddLauncher.launch(intent)
@@ -64,12 +73,5 @@ class CardListActivity : ComponentActivity() {
                 )
             }
         }
-    }
-
-    private fun showToast(
-        context: Context,
-        messageId: Int,
-    ) {
-        Toast.makeText(context, messageId, Toast.LENGTH_SHORT).show()
     }
 }
