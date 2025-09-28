@@ -6,7 +6,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.model.CardUiModel
@@ -33,6 +37,9 @@ fun NewCardScreen(
     LaunchedEffect(cardUiModel) {
         stateHolder.changeCard(cardUiModel?.toDomain())
     }
+    var isBottomSheetOpen by rememberSaveable { mutableStateOf(true) }
+
+
 
     Scaffold(
         modifier = modifier,
@@ -53,9 +60,9 @@ fun NewCardScreen(
                 }
             )
         }) { paddingValues: PaddingValues ->
-        if (stateHolder.uiState.value.isBottomSheetOpen) {
+        if (isBottomSheetOpen) {
             SelectedCardCompanyBottomSheet(
-                changeBottomSheet = { stateHolder.changeBottomSheetState() },
+                changeBottomSheet = { isBottomSheetOpen = !isBottomSheetOpen },
                 selectedCardCompany = { cardCompanyUiModel ->
                     stateHolder.selectedCardCompany(
                         cardCompanyUiModel
@@ -65,7 +72,7 @@ fun NewCardScreen(
         }
         NewCardColumn(
             uiState = stateHolder.uiState.value,
-            selectCardCompany = { stateHolder.changeBottomSheetState() },
+            selectCardCompany = { isBottomSheetOpen = !isBottomSheetOpen },
             changeNumber = { stateHolder.changeNumber(it) },
             changeExpiredDate = { stateHolder.changeExpiredDate(it) },
             changeOwnerName = { stateHolder.changeOwnerName(it) },

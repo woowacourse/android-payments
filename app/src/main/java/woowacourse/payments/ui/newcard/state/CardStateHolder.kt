@@ -16,14 +16,9 @@ class CardStateHolder(
     private val _uiState = mutableStateOf(previousUiState)
     val uiState get() = _uiState
 
-    fun changeBottomSheetState() {
-        _uiState.value = _uiState.value.copy(isBottomSheetOpen = !_uiState.value.isBottomSheetOpen)
-    }
-
     fun changeCard(card: Card?) {
         if (card == null) return
         _uiState.value = _uiState.value.copy(
-            isBottomSheetOpen = !_uiState.value.isBottomSheetOpen,
             card = card,
             cardCompany = card.cardCompany,
             expiredDate = card.expiredDate.value
@@ -43,7 +38,6 @@ class CardStateHolder(
             is CardCompanyUiModel.SelectCardCompany -> {
                 _uiState.value = _uiState.value.copy(
                     cardCompany = newCardCompany.toDomain(),
-                    isChangeCardCompany = true
                 )
             }
         }
@@ -51,14 +45,13 @@ class CardStateHolder(
 
     fun changeNumber(newNumber: String) {
         _uiState.value =
-            _uiState.value.copy(number = newNumber, isChangeNumber = true)
+            _uiState.value.copy(number = newNumber)
     }
 
     fun changeExpiredDate(newExpirationDate: String) {
         _uiState.value =
             _uiState.value.copy(
-                expiredDate = newExpirationDate,
-                isChangeExpirationDate = true
+                expiredDate = newExpirationDate
             )
     }
 
@@ -68,7 +61,7 @@ class CardStateHolder(
 
     fun changePassword(newPassword: String) {
         _uiState.value = _uiState.value.copy(
-            password = newPassword, isPassword = true
+            password = newPassword
         )
     }
 

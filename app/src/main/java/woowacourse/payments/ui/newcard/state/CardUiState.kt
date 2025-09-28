@@ -16,16 +16,6 @@ data class CardUiState(
     val password: String = "",
 
     val cardErrorMessage: String? = null,
-
-    val newCardStatus: NewCardStatus = NewCardStatus.CreateCard,
-
-    val isBottomSheetOpen: Boolean = true,
-
-    val isChangeCardCompany: Boolean = false,
-    val isChangeNumber: Boolean = false,
-    val isChangeExpirationDate: Boolean = false,
-    val isChangeOwnerName: Boolean = false,
-    val isPassword: Boolean = false,
 ) {
     val cardCompanyUiModel: CardCompanyUiModel
         get() = cardCompany?.toUiModel() ?: CardCompanyUiModel.Default
