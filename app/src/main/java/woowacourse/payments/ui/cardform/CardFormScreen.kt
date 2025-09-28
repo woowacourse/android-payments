@@ -53,17 +53,21 @@ fun CardFormScreen(
             CardAction.Register -> CardUiModel()
             is CardAction.Modify -> viewModel.loadCard(cardId = cardAction.cardId)
         }
-    val initialCardFormStateHolder =
-        when (cardAction) {
-            CardAction.Register -> CardFormStateHolder()
-            is CardAction.Modify ->
-                CardFormStateHolder(
-                    uiState = CardFormScreenUiState(card = originCard, isBottomSheetOpen = false),
-                )
-        }
 
     val stateHolder =
-        rememberSaveable(saver = CardFormStateHolder.Saver) { initialCardFormStateHolder }
+        rememberSaveable(saver = CardFormStateHolder.Saver) {
+            when (cardAction) {
+                CardAction.Register -> CardFormStateHolder()
+                is CardAction.Modify ->
+                    CardFormStateHolder(
+                        uiState =
+                            CardFormScreenUiState(
+                                card = originCard,
+                                isBottomSheetOpen = false,
+                            ),
+                    )
+            }
+        }
 
     Scaffold(
         topBar = {
