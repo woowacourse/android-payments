@@ -99,6 +99,6 @@ class PaymentCardTest {
 
         // then
         Assertions.assertTrue(expectedColor == Red80)
-        composeTestRule.onNodeWithText("BC 카드").assertIsDisplayed()
+        composeTestRule.onNodeWithText("BC카드").assertIsDisplayed()
     }
 }
