@@ -37,9 +37,13 @@ fun CardAdditionScreen(
     val scrollState = rememberScrollState()
 
     if (!state.card.isBankSelected) {
-        BankSelectBottomSheet(
-            onUiEvent = onUiEvent,
-        )
+        BankSelectBottomSheet(onSelectBankType = { bankType: BankTypeUiModel ->
+            onUiEvent(
+                CardAdditionUiEvent.UpdateBankType(
+                    bankType,
+                ),
+            )
+        })
     }
 
     Scaffold(

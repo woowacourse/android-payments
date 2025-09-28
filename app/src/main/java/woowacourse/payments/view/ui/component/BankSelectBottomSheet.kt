@@ -30,7 +30,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.view.cardaddition.CardAdditionUiEvent
 import woowacourse.payments.view.ui.model.BankTypeUiModel
 
 private const val COLUMN_COUNT = 4
@@ -38,7 +37,7 @@ private const val COLUMN_COUNT = 4
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
-    onUiEvent: (CardAdditionUiEvent) -> Unit,
+    onSelectBankType: (BankTypeUiModel) -> Unit,
     modifier: Modifier = Modifier,
     modalBottomSheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { sheetValue: SheetValue -> false }),
 ) {
@@ -49,9 +48,7 @@ fun BankSelectBottomSheet(
         properties = ModalBottomSheetProperties(shouldDismissOnBackPress = false),
     ) {
         Banks(
-            onSelectBank = { bankType: BankTypeUiModel ->
-                onUiEvent(CardAdditionUiEvent.UpdateBankType(bankType))
-            },
+            onSelectBank = onSelectBankType,
             modifier =
                 Modifier
                     .fillMaxWidth()
@@ -120,7 +117,7 @@ private fun BankSelectBottomSheetPreview() {
     LaunchedEffect(Unit) { modalBottomSheetState.show() }
 
     BankSelectBottomSheet(
-        onUiEvent = {},
+        onSelectBankType = {},
         modalBottomSheetState = modalBottomSheetState,
     )
 }
