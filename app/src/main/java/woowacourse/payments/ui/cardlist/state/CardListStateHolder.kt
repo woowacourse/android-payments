@@ -8,38 +8,14 @@ import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
 data class CardListStateHolder(
-    val cardListUiState: CardListUiStatus = CardListUiStatus.EmptyCardList
+    private val initialCards: List<CardUiModel> = emptyList()
 ) : Parcelable {
-    private val _uiState: MutableState<CardListUiStatus> =  mutableStateOf(cardListUiState)
-    val uiState get() = _uiState
+    private val _cards = mutableStateOf(initialCards)
 
-    fun addCard(card: CardUiModel) {
-        when (val s = _uiState.value) {
-            is CardListUiStatus.EmptyCardList -> {
-                _uiState.value = CardListUiStatus.OneCardList(card)
-            }
+    val cards get() = _cards
 
-            is CardListUiStatus.OneCardList -> {
-                _uiState.value = CardListUiStatus.MultiCardList(listOf(s.card, card))
-            }
-
-            is CardListUiStatus.MultiCardList -> {
-                _uiState.value = CardListUiStatus.MultiCardList(s.card + card)
-            }
-        }
-    }
-
+    fun addCard(card: CardUiModel) { _cards.value = _cards.value + card }
     fun replaceCard(old: CardUiModel, new: CardUiModel) {
-        when (val s = _uiState.value) {
-            is CardListUiStatus.EmptyCardList -> null
-            is CardListUiStatus.OneCardList -> {
-                _uiState.value = CardListUiStatus.OneCardList(new)
-            }
-
-            is CardListUiStatus.MultiCardList -> {
-                _uiState.value =
-                    CardListUiStatus.MultiCardList(s.card.map { card -> if (card == old) new else card })
-            }
-        }
+        _cards.value = _cards.value.map { if (it == old) new else it }
     }
 }

@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.cardlist.component.CardCatalogColumn
 import woowacourse.payments.ui.cardlist.component.CardCatalogTopBar
 import woowacourse.payments.ui.cardlist.state.CardListStateHolder
+import woowacourse.payments.ui.cardlist.state.CardListUiStatus
 import woowacourse.payments.ui.core.getParcelableCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.NewCardActivity
@@ -27,6 +31,19 @@ fun CardCatalogScreen(
     val stateHolder = rememberSaveable { CardListStateHolder() }
 
     val context = LocalContext.current
+
+    val cards by stateHolder.cards
+
+    val cardListUiStatus by remember(cards) {
+        derivedStateOf {
+            when (cards.size) {
+                0 -> CardListUiStatus.EmptyCardList
+                1 -> CardListUiStatus.OneCardList(cards.first())
+                else -> CardListUiStatus.MultiCardList(cards)
+            }
+        }
+    }
+
 
     val cardAddLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
@@ -59,7 +76,7 @@ fun CardCatalogScreen(
         modifier = modifier,
         topBar = {
             CardCatalogTopBar(
-                cardListStatus = stateHolder.uiState.value,
+                cardListStatus = cardListUiStatus,
                 onAddCard = {
                     navigateToCreate()
                 },
@@ -67,7 +84,7 @@ fun CardCatalogScreen(
         }
     ) { paddingValues: PaddingValues ->
         CardCatalogColumn(
-            cardListStatus = stateHolder.uiState.value,
+            cardListStatus = cardListUiStatus,
             onAddCard = {
                 navigateToCreate()
             },
