@@ -36,7 +36,7 @@ import woowacourse.payments.ui.common.extension.getParcelableCompat
 import woowacourse.payments.ui.common.extension.showToast
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionActivity
-import woowacourse.payments.ui.screen.cardAddition.CardAdditionActivity.Companion.EXTRA_CARD
+import woowacourse.payments.ui.screen.cardAddition.CardAdditionActivity.Companion.EXTRA_NEW_CARD
 import woowacourse.payments.ui.screen.cards.CardsUiEvent
 import woowacourse.payments.ui.screen.cards.CardsUiState
 import woowacourse.payments.ui.screen.cards.CardsUiStateHolder
@@ -94,7 +94,7 @@ private fun rememberCardLauncher(onNewCard: (CardUiModel?) -> Unit): ManagedActi
         contract = ActivityResultContracts.StartActivityForResult(),
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_CARD)
+            val card = result.data?.getParcelableCompat<CardUiModel>(EXTRA_NEW_CARD)
             onNewCard(card)
         }
     }

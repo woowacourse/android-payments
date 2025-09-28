@@ -15,7 +15,7 @@ class CardAdditionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val card = intent.getParcelableCompat<CardUiModel>(EXTRA_CARD)
+        val card = intent.getParcelableCompat<CardUiModel>(EXTRA_EDIT_CARD)
         setContent {
             AndroidpaymentsTheme {
                 CardAdditionScreen(
@@ -30,14 +30,15 @@ class CardAdditionActivity : ComponentActivity() {
     private fun navigateToCards(card: CardUiModel) {
         val intent =
             Intent().apply {
-                putExtra(EXTRA_CARD, card)
+                putExtra(EXTRA_NEW_CARD, card)
             }
         setResult(RESULT_OK, intent)
         finish()
     }
 
     companion object {
-        const val EXTRA_CARD = "EXTRA_CARD"
+        const val EXTRA_NEW_CARD = "EXTRA_NEW_CARD"
+        private const val EXTRA_EDIT_CARD = "EXTRA_EDIT_CARD"
 
         fun newIntent(context: Context): Intent = Intent(context, CardAdditionActivity::class.java)
 
@@ -46,7 +47,7 @@ class CardAdditionActivity : ComponentActivity() {
             card: CardUiModel,
         ): Intent =
             Intent(context, CardAdditionActivity::class.java).apply {
-                putExtra(EXTRA_CARD, card)
+                putExtra(EXTRA_EDIT_CARD, card)
             }
     }
 }
