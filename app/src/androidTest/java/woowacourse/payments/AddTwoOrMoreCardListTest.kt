@@ -24,13 +24,13 @@ class AddTwoOrMoreCardListTest {
                     CardScreenUiState.from(
                         listOf(
                             CardUiModel(
-                                "1234 - 1234 - **** - ****",
+                                "1234123412341234",
                                 "12 / 34",
                                 "9999",
                                 "PARK JIWON",
                             ),
                             CardUiModel(
-                                "7890 - 7890 - **** - ****",
+                                "7890789078907890",
                                 "09 / 99",
                                 "1234",
                                 "TOMATO BASIL ADE",
