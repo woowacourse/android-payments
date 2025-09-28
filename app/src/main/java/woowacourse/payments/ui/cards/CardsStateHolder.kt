@@ -10,10 +10,6 @@ class CardsStateHolder(
     private val _cardList = cards.toMutableStateList()
     val cardList get() = _cardList.toList()
 
-    fun addCard(card: PaymentCardUiModel) {
-        _cardList.add(card)
-    }
-
     fun isAddableWithAddCard(): Boolean = cardList.size <= MINIMUM_CARD_COUNT_FOR_ADD_BUTTON
 
     fun isAddableWithTopBar(): Boolean = cardList.size > MINIMUM_CARD_COUNT_FOR_ADD_BUTTON
