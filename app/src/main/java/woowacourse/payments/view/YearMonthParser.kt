@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter
 
 object YearMonthParser {
     private const val EXPIRED_DATE_LENGTH = 4
-    private val Formatter = DateTimeFormatter.ofPattern("yyMM")
+    private val Formatter = DateTimeFormatter.ofPattern("MMyy")
 
     fun parse(text: String): YearMonth {
         require(text.length == EXPIRED_DATE_LENGTH) {
