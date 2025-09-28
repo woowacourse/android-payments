@@ -204,7 +204,7 @@ fun CardInputScreen(
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
         CardInputScreen(
-            EMPTY_DB_ID,
+            1,
             cardUiStateHolder = CardUiStateHolder(),
             screenTitle = "카드 입력 화면",
             {},
