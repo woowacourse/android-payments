@@ -11,7 +11,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,6 +28,7 @@ import woowacourse.payments.ui.component.CardNumberTextField
 import woowacourse.payments.ui.component.CardPasswordTextField
 import woowacourse.payments.ui.component.CardholderNameTextField
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.toBankName
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -38,6 +43,7 @@ fun CardRegistrationScreen(
 ) {
     val uiState = viewModel.uiState.observeAsState().value ?: return
     val uiEvent = viewModel.uiEvent.observeAsState().value
+    var shouldOpenBankSelector by rememberSaveable { mutableStateOf(uiState.bankType == BankTypeUiModel.NOT_SELECTED) }
 
     LaunchedEffect(uiEvent) {
         when (uiEvent) {
@@ -67,7 +73,7 @@ fun CardRegistrationScreen(
     ) { innerPadding ->
         CardRegistrationScreenContent(
             uiState = uiState,
-            onCardClick = viewModel::openBankSelectorBottomSheet,
+            onCardClick = { shouldOpenBankSelector = true },
             onCardNumberChanged = viewModel::updateCardNumber,
             onCardExpirationDateChanged = viewModel::updateCardExpirationDate,
             onCardholderNameChanged = viewModel::updateCardholderName,
@@ -75,10 +81,13 @@ fun CardRegistrationScreen(
             modifier = Modifier.padding(innerPadding),
         )
 
-        if (uiState.shouldOpenBankSelector) {
+        if (shouldOpenBankSelector) {
             BankSelectBottomSheet(
-                onBankSelected = viewModel::updateBank,
-                onDismissRequest = viewModel::closeBankSelectorBottomSheet,
+                onBankSelected = { bank ->
+                    viewModel.updateBank(bank)
+                    shouldOpenBankSelector = false
+                },
+                onDismissRequest = { shouldOpenBankSelector = false },
             )
         }
     }
@@ -163,7 +172,7 @@ private fun CardRegistrationScreenPreview() {
             onUpdatedCard = {},
             viewModel =
                 CardRegistrationScreenViewModel(
-                    CardRegistrationScreenUiState(shouldOpenBankSelector = false),
+                    CardRegistrationScreenUiState(),
                 ),
         )
     }

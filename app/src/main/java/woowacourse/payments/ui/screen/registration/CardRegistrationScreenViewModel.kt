@@ -33,20 +33,7 @@ class CardRegistrationScreenViewModel(
     val uiEvent: LiveData<CardRegistrationScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun updateBank(bankType: BankTypeUiModel) {
-        _uiState.update {
-            copy(
-                bankType = bankType,
-                shouldOpenBankSelector = false,
-            )
-        }
-    }
-
-    fun openBankSelectorBottomSheet() {
-        _uiState.update { copy(shouldOpenBankSelector = true) }
-    }
-
-    fun closeBankSelectorBottomSheet() {
-        _uiState.update { copy(shouldOpenBankSelector = false) }
+        _uiState.update { copy(bankType = bankType) }
     }
 
     fun updateCardNumber(cardNumber: String) {
