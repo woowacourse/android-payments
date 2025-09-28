@@ -2,6 +2,7 @@ package woowacourse.payments.ui.newcard
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +18,7 @@ import woowacourse.payments.ui.newcard.component.SelectedCardCompanyBottomSheet
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.state.NewCardStatus
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardScreen(
     newCardStatus: NewCardStatus,
@@ -53,7 +55,6 @@ fun NewCardScreen(
         }) { paddingValues: PaddingValues ->
         if (stateHolder.uiState.isBottomSheetOpen) {
             SelectedCardCompanyBottomSheet(
-                cardCompanyUiModel = stateHolder.uiState.cardCompanyUiModel,
                 changeBottomSheet = { stateHolder.changeBottomSheetState() },
                 selectedCardCompany = { cardCompanyUiModel ->
                     stateHolder.selectedCardCompany(
