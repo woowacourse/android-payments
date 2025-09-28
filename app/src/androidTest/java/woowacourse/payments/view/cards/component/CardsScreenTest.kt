@@ -2,6 +2,8 @@ package woowacourse.payments.view.cards.component
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithTag
+import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -10,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.view.cardUiModels
 import woowacourse.payments.view.cards.CardsStateHolder
+import woowacourse.payments.view.cards.CardsUiEvent
 import woowacourse.payments.view.cards.CardsUiState
 
 class CardsScreenTest {
@@ -19,10 +22,10 @@ class CardsScreenTest {
     @Test
     fun `카드_목록이_비어있을_때에는_새_카드를_등록하라는_안내가_노출된다`() {
         // given
-
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(0))),
+                onUiEvent = {},
             )
         }
 
@@ -35,9 +38,12 @@ class CardsScreenTest {
     @Test
     fun `카드_목록이_비어있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
+        var receivedEvent: CardsUiEvent? = null
+
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(0))),
+                onUiEvent = { event -> receivedEvent = event },
             )
         }
 
@@ -47,9 +53,7 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        composeRule
-            .onNodeWithTag("CardAdditionScreen")
-            .assertIsDisplayed()
+        assert(receivedEvent is CardsUiEvent.NavigateToCardAddition)
     }
 
     @Test
@@ -58,6 +62,7 @@ class CardsScreenTest {
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+                onUiEvent = {},
             )
         }
 
@@ -70,9 +75,11 @@ class CardsScreenTest {
     @Test
     fun `카드_목록에_카드가_한_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
+        var receivedEvent: CardsUiEvent? = null
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+                onUiEvent = { event -> receivedEvent = event },
             )
         }
 
@@ -82,17 +89,18 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        composeRule
-            .onNodeWithTag("CardAdditionScreen")
-            .assertIsDisplayed()
+        assert(receivedEvent is CardsUiEvent.NavigateToCardAddition)
     }
 
     @Test
     fun `카드_목록에_카드가_한_개_있을_때_카드를_선택하면_카드_수정_화면으로_이동한다`() {
         // given
+        var receivedEvent: CardsUiEvent? = null
+        val cards = cardUiModels(1)
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(1))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards)),
+                onUiEvent = { event -> receivedEvent = event },
             )
         }
 
@@ -102,9 +110,7 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        composeRule
-            .onNodeWithTag("CardEditingScreen")
-            .assertIsDisplayed()
+        assert(receivedEvent is CardsUiEvent.NavigateToCardEditing)
     }
 
     @Test
@@ -113,6 +119,7 @@ class CardsScreenTest {
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
+                onUiEvent = {},
             )
         }
 
@@ -125,9 +132,11 @@ class CardsScreenTest {
     @Test
     fun `카드_목록에_카드가_여러_개_있을_때_카드_추가_화면으로_이동할_수_있다`() {
         // given
+        var receivedEvent: CardsUiEvent? = null
         composeRule.setContent {
             CardsScreen(
                 stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
+                onUiEvent = { event -> receivedEvent = event },
             )
         }
 
@@ -137,28 +146,28 @@ class CardsScreenTest {
             .performClick()
 
         // then
-        composeRule
-            .onNodeWithTag("CardAdditionScreen")
-            .assertIsDisplayed()
+        assert(receivedEvent is CardsUiEvent.NavigateToCardAddition)
     }
 
     @Test
     fun `카드_목록에_카드가_여러_개_있을_때_카드를_선택하면_카드_수정_화면으로_이동한다`() {
         // given
+        var receivedEvent: CardsUiEvent? = null
+        val cards = cardUiModels(3)
         composeRule.setContent {
             CardsScreen(
-                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cardUiModels(3))),
+                stateHolder = CardsStateHolder(initialState = CardsUiState(cards = cards)),
+                onUiEvent = { event -> receivedEvent = event },
             )
         }
 
         // when
         composeRule
-            .onNodeWithTag("PaymentCard")
+            .onAllNodesWithTag("PaymentCard")
+            .onFirst()
             .performClick()
 
         // then
-        composeRule
-            .onNodeWithTag("CardEditingScreen")
-            .assertIsDisplayed()
+        assert(receivedEvent is CardsUiEvent.NavigateToCardEditing)
     }
 }
