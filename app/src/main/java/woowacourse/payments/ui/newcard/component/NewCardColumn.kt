@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,9 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.ui.cardlist.component.PaymentCard
-import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.newcard.state.CardStateHolder
 import woowacourse.payments.ui.newcard.state.CardUiState
 

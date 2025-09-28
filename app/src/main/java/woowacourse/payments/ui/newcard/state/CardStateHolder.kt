@@ -2,9 +2,6 @@ package woowacourse.payments.ui.newcard.state
 
 import androidx.compose.runtime.mutableStateOf
 import woowacourse.payments.domain.Card
-import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.ExpiredDate
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.toDomain
 import java.time.YearMonth

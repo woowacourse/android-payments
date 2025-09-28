@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.digits
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -21,7 +20,6 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.ExpiredDate
-import woowacourse.payments.domain.OwnerName
 import java.lang.Character.isDigit
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter

@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.password
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -20,7 +19,6 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardNumber
-import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.theme.Gray79
 import java.lang.Character.isDigit
 
