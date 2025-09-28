@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registercard
+package woowacourse.payments.ui.cardform
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-class RegisterCardActivity : ComponentActivity() {
+class CardFormActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,7 +20,7 @@ class RegisterCardActivity : ComponentActivity() {
 
         setContent {
             AndroidpaymentsTheme {
-                CardRegisterScreen(
+                CardFormScreen(
                     onBackClick = { finish() },
                     onSaveClick = { card -> navigateToCards(card) },
                     card = registeredCard,
@@ -47,7 +47,7 @@ class RegisterCardActivity : ComponentActivity() {
             context: Context,
             card: Card? = null,
         ): Intent =
-            Intent(context, RegisterCardActivity::class.java).apply {
+            Intent(context, CardFormActivity::class.java).apply {
                 card?.let { putExtra(KEY_CARD_TO_EDIT, it) }
             }
     }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.registercard.ExpiryDateVisualTransformation
 
 @Composable
-fun ExpiryDateInputField(
+fun PasswordInputField(
     text: String,
     onValueChange: (String) -> Unit,
     isError: Boolean,
@@ -23,14 +23,14 @@ fun ExpiryDateInputField(
         modifier = Modifier.fillMaxWidth(0.5f),
         value = text,
         onValueChange = onValueChange,
-        label = { Text(stringResource(R.string.expiry_date_label)) },
+        label = { Text(stringResource(R.string.password_label)) },
         placeholder = {
             Text(
-                text = stringResource(R.string.expiry_date_place_holder),
+                text = stringResource(R.string.password_place_holder),
                 color = Color.Gray,
             )
         },
-        visualTransformation = ExpiryDateVisualTransformation(),
+        visualTransformation = PasswordVisualTransformation(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = isError,
@@ -39,8 +39,8 @@ fun ExpiryDateInputField(
 
 @Preview(showBackground = true)
 @Composable
-private fun ExpiryDateInputFieldPreview() {
-    ExpiryDateInputField(
+private fun PasswordInputFieldPreview() {
+    PasswordInputField(
         text = "",
         onValueChange = { },
         isError = false,

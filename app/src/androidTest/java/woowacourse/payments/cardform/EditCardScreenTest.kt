@@ -1,4 +1,4 @@
-package woowacourse.payments.editcard
+package woowacourse.payments.cardform
 
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.editcard.EditCardScreen
+import woowacourse.payments.ui.cardform.CardFormScreen
 import java.time.YearMonth
 
 class EditCardScreenTest {
@@ -32,10 +32,11 @@ class EditCardScreenTest {
                     cardOwner = "뭉치",
                     password = "1234",
                     bankType = BankType.BC,
+                    id = 1L,
                 ).getOrNull()!!
 
         composeTestRule.setContent {
-            EditCardScreen(
+            CardFormScreen(
                 card = card,
                 onBackClick = {},
                 onSaveClick = {},

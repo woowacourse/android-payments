@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.registercard
+package woowacourse.payments.ui.cardform
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -22,16 +22,16 @@ import woowacourse.payments.R
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.CardInputFieldStateHolder
+import woowacourse.payments.ui.cardform.component.CardInputFields
+import woowacourse.payments.ui.cardform.component.CardTopBar
 import woowacourse.payments.ui.cards.component.SelectBankBottomSheet
-import woowacourse.payments.ui.component.CardInputFields
-import woowacourse.payments.ui.component.CardTopBar
 import woowacourse.payments.ui.component.PaymentCard
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.toBankType
 import woowacourse.payments.ui.toYearMonth
 
 @Composable
-fun CardRegisterScreen(
+fun CardFormScreen(
     card: Card?,
     onBackClick: () -> Unit,
     onSaveClick: (Card) -> Unit,
@@ -91,7 +91,7 @@ fun CardRegisterScreen(
             )
         },
         content = { innerPadding ->
-            CardRegisterContent(
+            CardFormContent(
                 innerPadding = innerPadding,
                 stateHolder = stateHolder,
                 onBackClick = onBackClick,
@@ -104,7 +104,7 @@ fun CardRegisterScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CardRegisterContent(
+private fun CardFormContent(
     card: Card?,
     innerPadding: PaddingValues,
     stateHolder: CardInputFieldStateHolder,
@@ -153,9 +153,9 @@ private fun CardRegisterContent(
 
 @Preview
 @Composable
-private fun RegisterCardScreenPreview() {
+private fun CardFormScreenPreview() {
     AndroidpaymentsTheme {
-        CardRegisterScreen(
+        CardFormScreen(
             onBackClick = { },
             onSaveClick = { },
             card = null,

@@ -1,4 +1,4 @@
-package woowacourse.payments.registercard
+package woowacourse.payments.cardform
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasSetTextAction
@@ -9,7 +9,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.registercard.CardRegisterScreen
+import woowacourse.payments.ui.cardform.CardFormScreen
 
 class RegisterCardScreenTest {
     @get:Rule
@@ -18,7 +18,8 @@ class RegisterCardScreenTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            CardRegisterScreen(
+            CardFormScreen(
+                card = null,
                 onBackClick = { },
                 onSaveClick = { },
             )

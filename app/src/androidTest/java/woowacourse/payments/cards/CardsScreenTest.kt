@@ -47,6 +47,7 @@ class CardsScreenTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when
@@ -69,6 +70,7 @@ class CardsScreenTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when
@@ -92,6 +94,7 @@ class CardsScreenTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when
@@ -122,6 +125,7 @@ class CardsScreenTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when

@@ -11,7 +11,7 @@ import org.junit.Test
 import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.CardInputFieldStateHolder
-import woowacourse.payments.ui.component.CardInputFields
+import woowacourse.payments.ui.cardform.component.CardInputFields
 import java.time.YearMonth
 
 class CardInputFieldsTest {
@@ -31,6 +31,7 @@ class CardInputFieldsTest {
                     cardOwner = "뭉치",
                     password = "1234",
                     bankType = BankType.BC,
+                    id = 1L,
                 ).getOrNull()!!
 
         stateHolder = CardInputFieldStateHolder()
