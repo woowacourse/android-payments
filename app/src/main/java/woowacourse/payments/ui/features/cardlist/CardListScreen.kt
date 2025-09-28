@@ -116,19 +116,17 @@ fun CardListScreenOneCardPreview() {
 @Preview(showBackground = true)
 @Composable
 fun CardListScreenManyCardPreview() {
-    val dummyPaymentCardUiModel =
-        PaymentCardUiModel(
-            -1,
-            CardCompanyUiModel.BC,
-            "1234 - 1234 - 1234 - 1234",
-            "02 / 26",
-            "CREW",
-        )
-    val dummyPaymentCardList5 =
-        List(5) { index ->
-            dummyPaymentCardUiModel
-        }
     AndroidpaymentsTheme {
+        val dummyPaymentCardList5 =
+            List(5) { index ->
+                PaymentCardUiModel(
+                    dbId = index,
+                    cardCompanyUiModel = CardCompanyUiModel.BC,
+                    formattedCardNumber = "1234 - 1234 - 1234 - 1234",
+                    formattedExpireDate = "02 / 26",
+                    ownerName = "CREW",
+                )
+            }
         CardListScreen({}, {}, dummyPaymentCardList5)
     }
 }
