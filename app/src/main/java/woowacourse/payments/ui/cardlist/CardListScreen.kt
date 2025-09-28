@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +24,7 @@ import woowacourse.payments.ui.newcard.state.NewCardStatus
 fun CardCatalogScreen(
     modifier: Modifier = Modifier
 ) {
-    val stateHolder = CardListStateHolder()
+    val stateHolder = rememberSaveable { CardListStateHolder() }
 
     val context = LocalContext.current
 
@@ -44,7 +45,7 @@ fun CardCatalogScreen(
         }
 
 
-    fun  navigateToCreate(){
+    fun navigateToCreate() {
         val intent = NewCardActivity.Intent(context, NewCardStatus.CreateCard)
         cardAddLauncher.launch(intent)
     }
@@ -58,7 +59,7 @@ fun CardCatalogScreen(
         modifier = modifier,
         topBar = {
             CardCatalogTopBar(
-                cardListStatus = stateHolder.uiState,
+                cardListStatus = stateHolder.uiState.value,
                 onAddCard = {
                     navigateToCreate()
                 },
@@ -66,7 +67,7 @@ fun CardCatalogScreen(
         }
     ) { paddingValues: PaddingValues ->
         CardCatalogColumn(
-            cardListStatus = stateHolder.uiState,
+            cardListStatus = stateHolder.uiState.value,
             onAddCard = {
                 navigateToCreate()
             },
