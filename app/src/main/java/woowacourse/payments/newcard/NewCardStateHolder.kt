@@ -63,6 +63,6 @@ class NewCardStateHolder(
     }
 
     private fun updateIsCardCompanySelected(value: Boolean) {
-        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
+        newCardUiState.value = newCardUiState.value.copy(shouldShowCardCompanySelection = value)
     }
 }

@@ -39,7 +39,7 @@ fun NewCardScreen(
     newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder(card) },
     sheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { false }),
 ) {
-    if (!newCardStateHolder.newCardUiState.value.isCardCompanySelected) {
+    if (!newCardStateHolder.newCardUiState.value.shouldShowCardCompanySelection) {
         ModalBottomSheet(
             onDismissRequest = {},
             sheetState = sheetState,
