@@ -17,9 +17,6 @@ class NewCardStateHolder(
     var isEditMode = mutableStateOf(false)
         private set
 
-    val isCardCompanySelected
-        get() = cardCompanyUiState.value != CardCompanyUiState.from(CardCompany.NONE)
-
     init {
         setupCardDetails(card)
     }
@@ -42,6 +39,9 @@ class NewCardStateHolder(
 
     fun updateCardCompanyUiState(value: CardCompanyUiState) {
         cardCompanyUiState.value = value
+
+        val isCardCompanySelected = value != CardCompanyUiState.from(CardCompany.NONE)
+        updateIsCardCompanySelected(isCardCompanySelected)
     }
 
     fun getCard(): Result<Card> =
@@ -60,5 +60,9 @@ class NewCardStateHolder(
             newCardUiState.value = card.toUiStateOrNull() ?: NewCardUiState()
             isEditMode.value = true
         }
+    }
+
+    private fun updateIsCardCompanySelected(value: Boolean) {
+        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
     }
 }
