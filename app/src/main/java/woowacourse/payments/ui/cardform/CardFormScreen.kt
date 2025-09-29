@@ -35,7 +35,7 @@ import woowacourse.payments.ui.cardform.state.CardFormScreenUiState
 import woowacourse.payments.ui.cardform.state.CardFormStateHolder
 import woowacourse.payments.ui.cardform.state.CardFormViewModel
 import woowacourse.payments.ui.common.component.PaymentCard
-import woowacourse.payments.ui.common.component.toMessageResource
+import woowacourse.payments.ui.common.toMessageResource
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
