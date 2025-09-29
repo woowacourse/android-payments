@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import androidx.annotation.ColorLong
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
@@ -9,10 +10,10 @@ import woowacourse.payments.domain.CardCompany
 
 @Parcelize
 data class CardCompanyUiModel(
-    val company: CardCompany,
+    val cardCompany: CardCompany,
     @StringRes val nameRes: Int,
     @DrawableRes val logoRes: Int,
-    val cardColor: Long,
+    @ColorLong val cardColor: Long,
 ) : Parcelable
 
 fun CardCompany.toUiModel(): CardCompanyUiModel =

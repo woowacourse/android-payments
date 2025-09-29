@@ -5,7 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.CARD_FIXTURE
+import woowacourse.payments.CARD_FIXTURE_0
 import woowacourse.payments.ui.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
@@ -16,7 +16,7 @@ class PaymentCardTest {
     @Test
     fun 카드_정보가_없으면_빈_카드가_표시된다() {
         // given
-        val card: CardUiModel = CardUiModel.EMPTY
+        val card = CardUiModel()
 
         // when
         composeTestRule.setContent { PaymentCard(card = card) }
@@ -31,7 +31,7 @@ class PaymentCardTest {
     @Test
     fun 카드_정보가_있으면_카드_정보를_포함한_카드가_표시된다() {
         // given
-        val card: CardUiModel = CARD_FIXTURE
+        val card: CardUiModel = CARD_FIXTURE_0
 
         // when
         composeTestRule.setContent { PaymentCard(card = card) }

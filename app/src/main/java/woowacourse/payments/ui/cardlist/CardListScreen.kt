@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.cardlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,7 @@ import java.time.YearMonth
 fun CardListScreen(
     cards: List<CardUiModel>,
     onNavigateToAddCard: () -> Unit,
+    onNavigateToEditCard: (card: CardUiModel) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -58,13 +61,16 @@ fun CardListScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(36.dp),
             ) {
-                items(count = cards.size) { index: Int ->
-                    PaymentCard(card = cards[index])
+                items(items = cards, key = (CardUiModel::id)) { card: CardUiModel ->
+                    PaymentCard(
+                        card = card,
+                        modifier = Modifier.clickable { onNavigateToEditCard(card) },
+                    )
                 }
             }
 
             if (cards.size <= 1) {
-                AddCardButton { onNavigateToAddCard() }
+                AddCardButton({ onNavigateToAddCard() })
             }
         }
     }
@@ -73,7 +79,7 @@ fun CardListScreen(
 @Preview(showBackground = true, name = "카드 목록 (0개)")
 @Composable
 private fun CardListScreenWithNoCardsPreview() {
-    CardListScreen(remember { mutableStateListOf() }) {}
+    CardListScreen(remember { mutableStateListOf() }, {}, { _ -> })
 }
 
 @Preview(showBackground = true, name = "카드 목록 (1개)")
@@ -83,15 +89,18 @@ private fun CardListScreenWithOneCardPreview() {
         remember {
             mutableStateListOf(
                 Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                    CardCompany.BC_CARD,
+                    id = 0,
+                    cardNumber = CardNumber("1234123412341234"),
+                    expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
+                    cardholderName = CardholderName("디랙"),
+                    passcode = Passcode("1234"),
+                    cardCompany = CardCompany.BC_CARD,
                 ).toUiModel(),
             )
         },
-    ) {}
+        {},
+        { _ -> },
+    )
 }
 
 @Preview(showBackground = true, name = "카드 목록 (2개)")
@@ -101,20 +110,24 @@ private fun CardListScreenWithTwoCardsPreview() {
         remember {
             mutableStateListOf(
                 Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                    CardCompany.BC_CARD,
+                    id = 0,
+                    cardNumber = CardNumber("1234123412341234"),
+                    expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
+                    cardholderName = CardholderName("디랙"),
+                    passcode = Passcode("1234"),
+                    cardCompany = CardCompany.BC_CARD,
                 ).toUiModel(),
                 Card(
-                    CardNumber("1234123412341234"),
-                    ExpirationDate(YearMonth.of(2034, 12)),
-                    CardholderName("디랙"),
-                    Passcode("1234"),
-                    CardCompany.BC_CARD,
+                    id = 0,
+                    cardNumber = CardNumber("1234123412341234"),
+                    expirationDate = ExpirationDate(YearMonth.of(2034, 12)),
+                    cardholderName = CardholderName("디랙"),
+                    passcode = Passcode("1234"),
+                    cardCompany = CardCompany.BC_CARD,
                 ).toUiModel(),
             )
         },
-    ) {}
+        {},
+        { _ -> },
+    )
 }

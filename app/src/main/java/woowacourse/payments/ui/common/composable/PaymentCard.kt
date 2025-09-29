@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.common.composable
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,12 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.format.CardNumberFormat
+import woowacourse.payments.ui.format.ExpirationDateFormat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -28,10 +29,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    card: CardUiModel = CardUiModel.EMPTY,
+    card: CardUiModel = CardUiModel(),
 ) {
-    val context: Context = LocalContext.current
-
     Box(
         modifier
             .shadow(8.dp)
@@ -47,10 +46,10 @@ fun PaymentCard(
                 .padding(start = 16.dp, end = 16.dp, top = 15.dp),
         ) {
             Text(
-                text = context.getString(card.cardCompany.nameRes),
+                text = stringResource(card.cardCompany.nameRes),
                 color = Color.White,
                 fontSize = 12.sp,
-                modifier = Modifier.testTag("payment card card company name")
+                modifier = Modifier.testTag("payment card card company name"),
             )
 
             Box(
@@ -63,10 +62,10 @@ fun PaymentCard(
             )
 
             Text(
-                text = card.cardNumber,
+                text = CardNumberFormat.formatted(card.cardNumber),
                 color = Color.White,
                 fontSize = 12.sp,
-                modifier = Modifier.testTag("payment card card number")
+                modifier = Modifier.testTag("payment card card number"),
             )
 
             Row(
@@ -77,14 +76,14 @@ fun PaymentCard(
                     text = card.cardholderName,
                     color = Color.White,
                     fontSize = 12.sp,
-                    modifier = Modifier.testTag("payment card cardholder name")
+                    modifier = Modifier.testTag("payment card cardholder name"),
                 )
 
                 Text(
-                    text = card.expirationDate,
+                    text = ExpirationDateFormat.formatted(card.expirationDate),
                     color = Color.White,
                     fontSize = 12.sp,
-                    modifier = Modifier.testTag("payment card expiration date")
+                    modifier = Modifier.testTag("payment card expiration date"),
                 )
             }
         }
@@ -106,11 +105,12 @@ private fun PaymentCardWithDetailPreview() {
         PaymentCard(
             card =
                 CardUiModel(
-                    "1234 - 1234 - **** - ****",
-                    "34 / 12",
-                    "CREW",
-                    "1234",
-                    CardCompany.BC_CARD.toUiModel(),
+                    id = 0,
+                    cardNumber = "1234123412341234",
+                    expirationDate = "1234",
+                    cardholderName = "CREW",
+                    passcode = "1234",
+                    cardCompany = CardCompany.BC_CARD.toUiModel(),
                 ),
         )
     }

@@ -8,16 +8,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.common.ExtraKeys
 import woowacourse.payments.ui.common.getParcelableExtraCompat
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
+import woowacourse.payments.ui.submitcard.SubmitCardActivity
+import woowacourse.payments.ui.submitcard.SubmitCardMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardListActivity : ComponentActivity() {
@@ -26,21 +24,42 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
+                val stateHolder = remember { CardListStateHolder() }
 
                 val launcher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
                         if (result.resultCode == RESULT_OK) {
-                            result.data?.toCardOrNull()?.let { card: Card ->
-                                cards += card.toUiModel()
-                            }
+                            val data: Intent =
+                                result.data ?: return@rememberLauncherForActivityResult
+                            val card: Card =
+                                data
+                                    .getParcelableExtraCompat<CardUiModel>(ExtraKeys.KEY_SUBMITTED_CARD)
+                                    ?.toCardOrNull()
+                                    ?: return@rememberLauncherForActivityResult
+                            stateHolder.updateCards(card)
                         }
                     }
 
-                CardListScreen(cards) { launcher.launch(AddCardActivity.intent(this)) }
+                CardListScreen(
+                    cards = stateHolder.cards.map(Card::toUiModel),
+                    onNavigateToAddCard = {
+                        launcher.launch(
+                            SubmitCardActivity.intent(
+                                this,
+                                SubmitCardMode.Add,
+                            ),
+                        )
+                    },
+                    onNavigateToEditCard = { card: CardUiModel ->
+                        launcher.launch(
+                            SubmitCardActivity.intent(
+                                this,
+                                SubmitCardMode.Edit(card),
+                            ),
+                        )
+                    },
+                )
             }
         }
     }
-
-    private fun Intent.toCardOrNull(): Card? = getParcelableExtraCompat<CardUiModel>(ExtraKeys.CARD_KEY)?.let(CardUiModel::toCardOrNull)
 }

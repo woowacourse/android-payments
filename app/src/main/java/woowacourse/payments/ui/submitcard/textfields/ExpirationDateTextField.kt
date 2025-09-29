@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard.textfields
+package woowacourse.payments.ui.submitcard.textfields
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

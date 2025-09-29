@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -16,26 +16,34 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCardTopBar(
+fun SubmitCardTopBar(
+    stateHolder: SubmitCardStateHolder,
+    onSubmitClick: () -> Unit,
     onBackClick: () -> Unit,
-    onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card_title)) },
+        title = {
+            Text(
+                when (stateHolder) {
+                    is SubmitCardStateHolder.AddCardStateHolder -> stringResource(R.string.submit_card_add_title)
+                    is SubmitCardStateHolder.EditCardStateHolder -> stringResource(R.string.submit_card_edit_title)
+                },
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.add_card_back_button_description),
+                    contentDescription = stringResource(R.string.submit_card_back_button_description),
                 )
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(onClick = { onSubmitClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.add_card_save_button_description),
+                    contentDescription = stringResource(R.string.submit_card_submit_button_description),
                 )
             }
         },
@@ -43,11 +51,12 @@ fun AddCardTopBar(
     )
 }
 
-@Preview(showBackground = true, name = "카드 추가 상단 바")
+@Preview(showBackground = true, name = "카드 정보 제출 상단 바")
 @Composable
-private fun AddCardTopBarPreview() {
-    AddCardTopBar(
+private fun SubmitCardTopBarPreview() {
+    SubmitCardTopBar(
+        stateHolder = SubmitCardStateHolder.AddCardStateHolder(),
+        onSubmitClick = {},
         onBackClick = {},
-        onSaveClick = {},
     )
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.textfields.ExpirationDateTextField
+import woowacourse.payments.ui.submitcard.textfields.ExpirationDateTextField
 
 @Suppress("ktlint:standard:function-naming")
 class ExpirationDateTextFieldTest {
@@ -17,12 +17,12 @@ class ExpirationDateTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = SubmitCardStateHolder.AddCardStateHolder()
         composeTestRule.setContent {
             ExpirationDateTextField(
-                uiState.expirationDate,
-                uiState.isExpirationDateError,
-                { newValue: String -> uiState.onExpirationDateChanged(newValue) },
+                stateHolder.expirationDate,
+                stateHolder.isExpirationDateError,
+                { newValue: String -> stateHolder.onExpirationDateChanged(newValue) },
             )
         }
     }

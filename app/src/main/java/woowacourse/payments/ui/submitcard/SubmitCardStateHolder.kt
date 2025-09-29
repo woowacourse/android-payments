@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,17 +16,18 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 import java.time.YearMonth
 
-class AddCardScreenUiStateHolder {
-    var cardNumber: String by mutableStateOf("")
+sealed class SubmitCardStateHolder(
+    private val initCard: CardUiModel,
+) {
+    var cardNumber: String by mutableStateOf(initCard.cardNumber)
         private set
-    var expirationDate: String by mutableStateOf("")
+    var expirationDate: String by mutableStateOf(initCard.expirationDate)
         private set
-    var cardholderName: String by mutableStateOf("")
+    var cardholderName: String by mutableStateOf(initCard.cardholderName)
         private set
-    var passcode: String by mutableStateOf("")
+    var passcode: String by mutableStateOf(initCard.passcode)
         private set
-    var cardCompany: CardCompanyUiModel by mutableStateOf(CardCompany.NONE.toUiModel())
-        private set
+    private var cardCompany: CardCompanyUiModel by mutableStateOf(initCard.cardCompany)
 
     var isCardNumberError: Boolean by mutableStateOf(false)
         private set
@@ -35,11 +36,25 @@ class AddCardScreenUiStateHolder {
     var isPasscodeError: Boolean by mutableStateOf(false)
         private set
 
+    var showCardCompanies: Boolean by mutableStateOf(true)
+        private set
+
     var shouldMoveFocus: Boolean by mutableStateOf(false)
         private set
 
+    var uiEvent: SubmitCardScreenUiEvent? by mutableStateOf(null)
+        internal set
+
     val card: CardUiModel
-        get() = CardUiModel(cardNumber, expirationDate, cardholderName, passcode, cardCompany)
+        get() =
+            CardUiModel(
+                initCard.id,
+                cardNumber,
+                expirationDate,
+                cardholderName,
+                passcode,
+                cardCompany,
+            )
 
     val isError: Boolean
         get() {
@@ -79,11 +94,22 @@ class AddCardScreenUiStateHolder {
 
     fun onCardCompanySelected(company: CardCompanyUiModel) {
         cardCompany = company
+        showCardCompanies = false
+    }
+
+    fun onCardCompaniesRequested() {
+        showCardCompanies = true
+    }
+
+    fun onEventDispatched() {
+        uiEvent = null
     }
 
     fun onFocusMoved() {
         shouldMoveFocus = false
     }
+
+    abstract fun checkSubmission(onSuccess: () -> Unit)
 
     private fun updateCardNumberError() {
         isCardNumberError = runCatching { CardNumber(cardNumber) }.isFailure
@@ -100,6 +126,36 @@ class AddCardScreenUiStateHolder {
 
     private fun updatePasscodeError() {
         isPasscodeError = runCatching { Passcode(passcode) }.isFailure
+    }
+
+    class AddCardStateHolder : SubmitCardStateHolder(CardUiModel()) {
+        override fun checkSubmission(onSuccess: () -> Unit) {
+            if (isError) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage
+                return
+            }
+            uiEvent = SubmitCardScreenUiEvent.ShowCardAddSuccessMessage
+            onSuccess()
+        }
+    }
+
+    class EditCardStateHolder(
+        private val initCard: CardUiModel,
+    ) : SubmitCardStateHolder(initCard) {
+        val isChanged: Boolean get() = card != initCard
+
+        override fun checkSubmission(onSuccess: () -> Unit) {
+            if (isError) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardSubmitFailureMessage
+                return
+            }
+            if (!isChanged) {
+                uiEvent = SubmitCardScreenUiEvent.ShowCardEditFailureMessage
+                return
+            }
+            uiEvent = SubmitCardScreenUiEvent.ShowCardEditSuccessMessage
+            onSuccess()
+        }
     }
 
     companion object {

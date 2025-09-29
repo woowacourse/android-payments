@@ -7,7 +7,7 @@ object CardNumberFormat {
     const val REQUIRED_LENGTH = 16
     private const val CHUNK_SIZE = 4
     private const val SEPARATOR = " - "
-    private const val MASK_SIZE = 8
+    private const val SHOW_SIZE = 8
     private const val MASK = "*"
     val visualTransformation =
         UniformlySeparatingVisualTransformation(
@@ -15,9 +15,9 @@ object CardNumberFormat {
             SEPARATOR,
         )
 
-    fun formatted(cardNumber: CardNumber): String {
+    fun formatted(cardNumber: String): String {
         val maskedText: String =
-            cardNumber.value.take(cardNumber.value.length - MASK_SIZE) + MASK.repeat(MASK_SIZE)
+            cardNumber.take(SHOW_SIZE) + MASK.repeat((cardNumber.length - SHOW_SIZE).coerceAtLeast(0))
         return visualTransformation.filter(AnnotatedString(maskedText)).text.text
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.addcard
+package woowacourse.payments.ui.submitcard
 
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
@@ -8,7 +8,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.addcard.textfields.CardNumberTextField
+import woowacourse.payments.ui.submitcard.textfields.CardNumberTextField
 
 @Suppress("ktlint:standard:function-naming")
 class CardNumberTextFieldTest {
@@ -17,12 +17,12 @@ class CardNumberTextFieldTest {
 
     @Before
     fun setUp() {
-        val uiState = AddCardScreenUiStateHolder()
+        val stateHolder = SubmitCardStateHolder.AddCardStateHolder()
         composeTestRule.setContent {
             CardNumberTextField(
-                uiState.cardNumber,
-                uiState.isCardNumberError,
-                { newValue: String -> uiState.onCardNumberChanged(newValue) },
+                stateHolder.cardNumber,
+                stateHolder.isCardNumberError,
+                { newValue: String -> stateHolder.onCardNumberChanged(newValue) },
             )
         }
     }
