@@ -63,7 +63,7 @@ class AddCardTopbarTest {
                 modificationMode =
                     ModificationMode.Modify(
                         cardInfo = CardInfoUiState(),
-                        index = 0,
+                        id = 0,
                     ),
                 isAddCardEnabled = true,
                 isModificationEnabled = true,
@@ -89,7 +89,7 @@ class AddCardTopbarTest {
                 modificationMode =
                     ModificationMode.Modify(
                         cardInfo = CardInfoUiState(),
-                        index = 0,
+                        id = 0,
                     ),
                 isAddCardEnabled = false,
                 isModificationEnabled = true,
@@ -115,7 +115,7 @@ class AddCardTopbarTest {
                 modificationMode =
                     ModificationMode.Modify(
                         cardInfo = CardInfoUiState(),
-                        index = 0,
+                        id = 0,
                     ),
                 isAddCardEnabled = true,
                 isModificationEnabled = false,

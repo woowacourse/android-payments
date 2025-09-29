@@ -85,10 +85,9 @@ class AllCardsScreenTest {
         composeTestRule.setContent {
             AllCardsScreen(
                 singleAllCardUiState,
-                onCardClick = { cardInfo, idx ->
+                onCardClick = { cardInfo ->
                     isClicked = true
                     assert(expectedCardInfo == cardInfo)
-                    assert(expectedCardIndex == idx)
                 },
             )
         }
