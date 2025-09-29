@@ -1,7 +1,5 @@
 package woowacourse.payments.ui.newcard.component
 
-import android.R.attr.password
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,34 +10,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.cardcatalog.component.PaymentCard
+import woowacourse.payments.ui.cardlist.component.PaymentCard
 import woowacourse.payments.ui.newcard.state.CardStateHolder
+import woowacourse.payments.ui.newcard.state.CardUiState
 
 @Composable
 fun NewCardColumn(
-    stateHolder: CardStateHolder,
-    modifier: Modifier = Modifier
+    uiState: CardUiState,
+    selectCardCompany: () -> Unit,
+    changeNumber: (String) -> Unit,
+    changeExpiredDate: (String) -> Unit,
+    changeOwnerName: (String) -> Unit,
+    changePassword: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 24.dp)
+        modifier = modifier.padding(horizontal = 24.dp),
     ) {
         PaymentCard(
-            card = null,
-            cardCompanyUiModel = stateHolder.uiState.cardCompanyUiModel,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 14.dp, bottom = 28.dp)
-                .clickable(
-                    onClick = { stateHolder.changeBottomSheetState() }
-                ),
+            onEditCard = { selectCardCompany() },
+            cardUiModel = uiState.cardUiModel,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Box(
             modifier = Modifier.height(86.dp)
         ) {
             CardNumberTextField(
-                number = stateHolder.uiState.number,
-                numberErrorMessage = stateHolder.uiState.numberErrorMessage,
-                onNumberChange = { stateHolder.changeNumber(it) },
+                number = uiState.number,
+                onNumberChange = { changeNumber(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -47,18 +45,16 @@ fun NewCardColumn(
             modifier = Modifier.height(86.dp)
         ) {
             ExpiredDateTextField(
-                expiredDate = stateHolder.uiState.expirationDate,
-                expirationDateErrorMessage = stateHolder.uiState.expirationDateErrorMessage,
-                onExpirationDateChange = { stateHolder.changeExpirationDate(it) },
+                expiredDate = uiState.expiredDate,
+                onExpirationDateChange = { changeExpiredDate(it) },
             )
         }
         Box(
             modifier = Modifier.height(86.dp)
         ) {
             CardOwnerNameTextField(
-                ownerName = stateHolder.uiState.ownerName,
-                ownerNameErrorMessage = stateHolder.uiState.ownerNameErrorMessage,
-                onOwnerNameChange = { stateHolder.changeOwnerName(it) },
+                ownerName = uiState.ownerName,
+                onOwnerNameChange = { changeOwnerName(it) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -66,9 +62,8 @@ fun NewCardColumn(
             modifier = Modifier.height(86.dp)
         ) {
             PasswordTextField(
-                password = stateHolder.uiState.password,
-                passwordErrorMessage = stateHolder.uiState.passwordErrorMessage,
-                onPasswordChange = { stateHolder.changePassword(it) }
+                password = uiState.password,
+                onPasswordChange = { changePassword(it) }
             )
         }
     }
@@ -78,7 +73,7 @@ fun NewCardColumn(
 @Composable
 private fun NewCardColumnPreview() {
     NewCardColumn(
-        CardStateHolder()
+        CardStateHolder().uiState.value, {}, {}, {}, {}, {}
     )
 }
 

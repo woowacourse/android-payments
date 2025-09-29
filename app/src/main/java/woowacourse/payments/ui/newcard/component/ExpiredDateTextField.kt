@@ -19,16 +19,29 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.ExpiredDate
 import java.lang.Character.isDigit
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ExpiredDateTextField(
     expiredDate: String,
-    expirationDateErrorMessage: String? = null,
     onExpirationDateChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    val currentError = remember(expiredDate, isFocused) {
+        if (isFocused || expiredDate.isEmpty()) {
+            null
+        } else {
+            runCatching {
+                val digits = expiredDate.filter { it.isDigit() }.take(4)
+                ExpiredDate(value = YearMonth.parse(digits, DateTimeFormatter.ofPattern("MMyy")))
+                null
+            }.getOrElse { it.message }
+        }
+    }
 
     OutlinedTextField(
         value = expiredDate,
@@ -46,11 +59,11 @@ fun ExpiredDateTextField(
                 color = Color.Gray
             )
         },
-        isError = !isFocused && expirationDateErrorMessage != null,
+        isError = !isFocused && currentError != null,
         supportingText = {
-            if (!isFocused && expirationDateErrorMessage != null) {
+            if (!isFocused && currentError != null) {
                 Text(
-                    text = expirationDateErrorMessage,
+                    text = currentError,
                     color = MaterialTheme.colorScheme.error
                 )
             }

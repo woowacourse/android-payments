@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.uiModel.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.uiModel.cardCompanyMap
+import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.cardCompanyMap
 
 private const val COLUMN_COUNT = 4
 
@@ -30,13 +30,10 @@ fun SelectedBankRow(
         verticalArrangement = Arrangement.SpaceEvenly,
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
-        repeat(cardCompanyMap.entries.filterNot { it == CardCompanyUiModel.Default() }.size) { index: Int ->
-            if (selectedBank != CardCompanyUiModel.Default()) {
-                val cardCompanyType = cardCompanyMap.entries.toList()[index].value
-                SelectableCardCompanyLogo(
-                    cardCompany = cardCompanyType,
-                    selectedBank = { selectedBank -> selectedBank(selectedBank) })
-            }
+        cardCompanyMap.entries.filterNot { it == CardCompanyUiModel.Default }.forEach { cardCompanyType ->
+            SelectableCardCompanyLogo(
+                cardCompany = cardCompanyType.value,
+                selectedBank = { selectedBank -> selectedBank(selectedBank) })
         }
     }
 }

@@ -8,7 +8,7 @@ import java.time.YearMonth
 
 @Parcelize
 @JvmInline
-value class ExpirationDate(
+value class ExpiredDate(
     val value: YearMonth
 ) : Parcelable {
     init {

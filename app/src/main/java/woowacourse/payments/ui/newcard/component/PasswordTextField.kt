@@ -17,15 +17,26 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.domain.Password
 
 @Composable
 fun PasswordTextField(
     password: String,
     onPasswordChange: (String) -> Unit,
-    passwordErrorMessage: String?,
     modifier: Modifier = Modifier
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    val currentError = remember(password, isFocused) {
+        if (isFocused || password.isEmpty()) {
+            null
+        } else {
+            runCatching {
+                val trimmed = password.take(4)
+                Password(trimmed)
+                null
+            }.getOrElse { it.message }
+        }
+    }
 
     OutlinedTextField(
         value = password,
@@ -44,11 +55,11 @@ fun PasswordTextField(
         placeholder = {
             Text(text = stringResource(R.string.password_placeholder), color = Color.Gray)
         },
-        isError = !isFocused && passwordErrorMessage != null,
+        isError = !isFocused && currentError != null,
         supportingText = {
-            if (!isFocused && passwordErrorMessage != null) {
+            if (!isFocused && currentError != null) {
                 Text(
-                    text = passwordErrorMessage,
+                    text = currentError,
                     color = MaterialTheme.colorScheme.error
                 )
             }
@@ -66,7 +77,6 @@ private fun PasswordTextFieldPreview() {
     PasswordTextField(
         password = password,
         onPasswordChange = { password = it },
-        passwordErrorMessage = null
     )
 }
 
