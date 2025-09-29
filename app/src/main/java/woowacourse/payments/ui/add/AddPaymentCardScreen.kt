@@ -101,7 +101,7 @@ fun AddPaymentCardScreen(
             PaymentCard(
                 paymentCard = previewCard,
                 onSelectBank = { stateHolder.showSheet() },
-                onEditCard = {},
+                onEditCard = { stateHolder.showSheet() },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
 
