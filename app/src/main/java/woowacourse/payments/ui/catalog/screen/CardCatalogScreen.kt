@@ -207,6 +207,7 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                     cardholderName = "CREW",
                     bankUiModel = BankUiModel.KB,
                     id = 0L,
+                    cardPassword = "1234",
                 ),
             ),
             CardUiState.Multiple(
@@ -217,6 +218,7 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                         cardholderName = "CREW",
                         bankUiModel = BankUiModel.KB,
                         id = 0L,
+                        cardPassword = "1234",
                     ),
                     PaymentCardUiModel(
                         number = "1234123412341231",
@@ -224,6 +226,7 @@ private class CardCatalogScreenPreviewParameterProvider : PreviewParameterProvid
                         cardholderName = "CREW",
                         bankUiModel = BankUiModel.SHINHAN,
                         id = 0L,
+                        cardPassword = "1234",
                     ),
                 ),
             ),

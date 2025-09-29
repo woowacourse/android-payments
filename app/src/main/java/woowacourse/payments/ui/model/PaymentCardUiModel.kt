@@ -10,6 +10,7 @@ data class PaymentCardUiModel(
     val number: String,
     val expirationDate: String,
     val cardholderName: String,
+    val cardPassword: String,
     val bankUiModel: BankUiModel,
 ) : Parcelable {
     fun formatNumber(

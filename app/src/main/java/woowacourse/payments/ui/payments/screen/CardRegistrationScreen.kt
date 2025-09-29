@@ -69,7 +69,7 @@ fun CardRegistrationScreen(
                 cardNumber = card.number,
                 cardExpirationDate = card.expirationDate,
                 cardholderName = card.cardholderName,
-                cardPassword = "",
+                cardPassword = card.cardPassword,
             )
             cardRegistrationStateHolder.updateState(card.bankUiModel)
         }
@@ -90,6 +90,7 @@ fun CardRegistrationScreen(
                                 cardholderName = uiState.cardholderName,
                                 bankUiModel = cardRegistrationStateHolder.uiState,
                                 id = registrationState.paymentCardUiModel.id,
+                                cardPassword = uiState.cardPassword,
                             )
                         } else{
                             PaymentCardUiModel(
@@ -98,6 +99,7 @@ fun CardRegistrationScreen(
                                 cardholderName = uiState.cardholderName,
                                 bankUiModel = cardRegistrationStateHolder.uiState,
                                 id = System.currentTimeMillis(),
+                                cardPassword = uiState.cardPassword,
                             )
                         }
                     )
@@ -172,6 +174,7 @@ private fun CardRegistrationScreenContent(
                     cardholderName = uiState.cardholderName,
                     bankUiModel = cardRegistrationStateHolder.uiState,
                     id = 0L,
+                    cardPassword = "1234",
                 ),
         )
 
