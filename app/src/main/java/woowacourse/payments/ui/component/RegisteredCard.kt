@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.W500
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,15 @@ fun RegisteredCard(
                 .fillMaxWidth(),
     ) {
         val companyName = stringResource(card.company.toNameResource())
-        NewCardName(companyName)
+
+        Text(
+            text = companyName,
+            fontSize = 12.sp,
+            color = Color.White,
+            fontWeight = W500,
+            letterSpacing = 0.1.sp,
+            modifier = Modifier.padding(horizontal = 13.dp),
+        )
 
         CardChip()
 
@@ -100,7 +109,7 @@ private fun formatExpireDate(
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFF000000)
-fun RegisteredCardPreview(
+private fun RegisteredCardPreview(
     @PreviewParameter(OneCardPreviewParameterProvider::class) card: Card,
 ) {
     RegisteredCard(

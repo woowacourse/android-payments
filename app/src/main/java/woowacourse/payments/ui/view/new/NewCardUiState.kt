@@ -12,11 +12,28 @@ data class NewCardUiState(
     val expireDate: String = "",
     val ownerName: String = "",
     val password: String = "",
-    val company: CardCompanyState = CardCompanyState.Empty,
+    val cardCompanyState: CardCompanyState = CardCompanyState.Empty,
+    val mode: NewCardMode = NewCardMode.Add,
+    val isBottomSheetOpen: Boolean = true,
 ) : Parcelable {
+    fun isModified(): Boolean {
+        return when (mode) {
+            NewCardMode.Add -> return true
+            is NewCardMode.Modify -> {
+                val originCard = mode.card
+
+                number != originCard.number ||
+                    expireDate != originCard.expireDate ||
+                    ownerName != originCard.ownerName ||
+                    password != originCard.password ||
+                    (cardCompanyState as CardCompanyState.Selected).company != mode.card.company
+            }
+        }
+    }
+
     val cardState
         get() =
-            when (company) {
+            when (cardCompanyState) {
                 CardCompanyState.Empty -> CardState.Pending
                 is CardCompanyState.Selected ->
                     CardState.Registered(
@@ -25,7 +42,7 @@ data class NewCardUiState(
                             expireDate = expireDate,
                             ownerName = ownerName,
                             password = password,
-                            company = company.company,
+                            company = cardCompanyState.company,
                         ),
                     )
             }
@@ -37,7 +54,7 @@ data class NewCardUiState(
             ownerName = ownerName,
             password = password,
             company =
-                (company as? CardCompanyState.Selected)?.company
+                (cardCompanyState as? CardCompanyState.Selected)?.company
                     ?: throw IllegalStateException(CARD_COMPANY_NOT_SELECTED),
         )
 

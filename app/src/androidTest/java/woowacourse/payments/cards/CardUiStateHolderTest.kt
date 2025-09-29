@@ -2,6 +2,7 @@ package woowacourse.payments.cards
 
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.SaverScope
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -105,5 +106,104 @@ class CardUiStateHolderTest {
         assertTrue(restored.uiState is CardsUiState.MULTIPLE)
         val state = restored.uiState as CardsUiState.MULTIPLE
         assertEquals(state.state, listOf(card1, card2))
+    }
+
+    @Test
+    fun `카드가_한장일_때_상태가_수정된다`() {
+        // given
+        val holder =
+            CardUiStateHolder(
+                CardsUiState.SINGLE(
+                    state =
+                        Card(
+                            "1111",
+                            "12/34",
+                            "페토",
+                            "1234",
+                            CardCompany.BC,
+                        ),
+                ),
+            )
+
+        // when
+        holder.modifyCardAt(
+            0,
+            Card(
+                "2222",
+                "12/24",
+                "정페토",
+                "4567",
+                CardCompany.WOORI,
+            ).toSerializationCard(),
+        )
+
+        // then
+        assertTrue(holder.uiState is CardsUiState.SINGLE)
+        val state = holder.uiState as CardsUiState.SINGLE
+        assertAll(
+            { assertEquals(state.state.number, "2222") },
+            { assertEquals(state.state.expireDate, "12/24") },
+            { assertEquals(state.state.ownerName, "정페토") },
+            { assertEquals(state.state.password, "4567") },
+            { assertEquals(state.state.company, CardCompany.WOORI) }
+        )
+    }
+
+    @Test
+    fun `카드가_3장일_때_두_번째_카드가_수정된다`() {
+        // given
+        val index = 1
+        val holder =
+            CardUiStateHolder(
+                CardsUiState.MULTIPLE(
+                    listOf(
+                        Card(
+                            "1111",
+                            "12/34",
+                            "페토",
+                            "1234",
+                            CardCompany.BC,
+                        ),
+                        Card(
+                            "222",
+                            "12/34",
+                            "페토",
+                            "1234",
+                            CardCompany.BC,
+                        ),
+                        Card(
+                            "3333",
+                            "12/34",
+                            "박찬호",
+                            "1234",
+                            CardCompany.BC,
+                        ),
+                    ),
+                ),
+            )
+
+        // when
+        holder.modifyCardAt(
+            index,
+            Card(
+                "0000",
+                "09/08",
+                "정찬호",
+                "0908",
+                CardCompany.KB,
+            ).toSerializationCard(),
+        )
+
+        // then
+        assertTrue(holder.uiState is CardsUiState.MULTIPLE)
+        val state = (holder.uiState as CardsUiState.MULTIPLE).state[index]
+
+        assertAll(
+            { assertEquals(state.number, "0000") },
+            { assertEquals(state.expireDate, "09/08") },
+            { assertEquals(state.ownerName, "정찬호") },
+            { assertEquals(state.password, "0908") },
+            { assertEquals(state.company, CardCompany.KB) }
+        )
     }
 }

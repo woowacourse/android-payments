@@ -25,6 +25,28 @@ class CardUiStateHolder(
             }
     }
 
+    fun modifyCardAt(
+        index: Int,
+        newCard: SerializationCard,
+    ) {
+        val currentState = uiState
+        when (currentState) {
+            CardsUiState.EMPTY -> return
+            is CardsUiState.SINGLE -> {
+                _uiState.value = CardsUiState.SINGLE(newCard.toDomain())
+            }
+
+            is CardsUiState.MULTIPLE -> {
+                _uiState.value =
+                    CardsUiState.MULTIPLE(
+                        currentState.state.toMutableList().apply {
+                            set(index, newCard.toDomain())
+                        },
+                    )
+            }
+        }
+    }
+
     companion object {
         private const val KEY_CARD = "card"
 
@@ -37,6 +59,7 @@ class CardUiStateHolder(
                             mapOf(
                                 KEY_CARD to currentUiState.state.toSerializationCard(),
                             )
+
                         is CardsUiState.MULTIPLE ->
                             mapOf(
                                 KEY_CARD to currentUiState.state.map { it.toSerializationCard() },

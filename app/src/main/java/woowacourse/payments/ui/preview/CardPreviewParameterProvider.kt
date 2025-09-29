@@ -22,9 +22,9 @@ class CardsPreviewParameterProvider : PreviewParameterProvider<List<Card>> {
     override val values: Sequence<List<Card>>
         get() =
             sequenceOf(
-                CardCompany.entries.map { company ->
+                CardCompany.entries.mapIndexed { index, company ->
                     Card(
-                        number = "1111222233334444",
+                        number = "111122223333444$index",
                         expireDate = "0908",
                         ownerName = "peto",
                         password = "",

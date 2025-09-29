@@ -4,7 +4,7 @@ import woowacourse.payments.ui.state.CardCompanyState
 
 sealed interface NewCardUiEvent {
     data class OnChangeCardCompany(
-        val cardCompany: CardCompanyState,
+        val cardCompany: CardCompanyState = CardCompanyState.Empty,
     ) : NewCardUiEvent
 
     data class OnChangeCardNumber(

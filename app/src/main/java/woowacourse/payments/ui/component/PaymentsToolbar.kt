@@ -45,7 +45,7 @@ fun PaymentToolbar(
 
 @Preview(showBackground = true)
 @Composable
-fun PaymentToolbarPreview() {
+private fun PaymentToolbarPreview() {
     PaymentToolbar(
         addButtonVisible = true,
         onAddClick = {},

@@ -4,13 +4,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import woowacourse.payments.ui.state.CardCompanyState
 
-class NewCardUiStateHolder(
-    initialState: NewCardUiState = NewCardUiState(),
+class NewCardUiStateHolder private constructor(
+    initialState: NewCardUiState,
 ) {
     private val _uiState = mutableStateOf(initialState)
     val uiState: NewCardUiState get() = _uiState.value
 
-    fun updateCard(event: NewCardUiEvent) {
+    fun modifyUiState(event: NewCardUiEvent) {
         when (event) {
             is NewCardUiEvent.OnChangeCardNumber -> updateNumber(event.cardNumber)
             is NewCardUiEvent.OnChangeExpireDate -> updateExpireDate(event.expireDate)
@@ -37,7 +37,8 @@ class NewCardUiStateHolder(
     }
 
     private fun updateCardBankType(company: CardCompanyState) {
-        _uiState.value = _uiState.value.copy(company = company)
+        val bottomSheetState = _uiState.value.isBottomSheetOpen
+        _uiState.value = _uiState.value.copy(cardCompanyState = company, isBottomSheetOpen = !bottomSheetState)
     }
 
     companion object {
@@ -51,10 +52,34 @@ class NewCardUiStateHolder(
                             expireDate = restored.expireDate,
                             ownerName = restored.ownerName,
                             password = restored.password,
-                            company = restored.company,
+                            cardCompanyState = restored.cardCompanyState,
+                            isBottomSheetOpen = restored.isBottomSheetOpen,
+                            mode = restored.mode,
                         ),
                     )
                 },
             )
+
+        fun NewCardUiStateHolder(mode: NewCardMode): NewCardUiStateHolder {
+            val uiState =
+                when (mode) {
+                    NewCardMode.Add -> NewCardUiState()
+
+                    is NewCardMode.Modify -> {
+                        val card = mode.card
+                        NewCardUiState(
+                            number = card.number,
+                            expireDate = card.expireDate,
+                            ownerName = card.ownerName,
+                            password = card.password,
+                            cardCompanyState = CardCompanyState.Selected(card.company),
+                            mode = mode,
+                            isBottomSheetOpen = false,
+                        )
+                    }
+                }
+
+            return NewCardUiStateHolder(uiState)
+        }
     }
 }
