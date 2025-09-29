@@ -65,6 +65,16 @@ fun PaymentCards(
     }
 }
 
+private fun sampleCard(): CardUiModel =
+    CardUiModel(
+        id = UNASSIGNED_ID,
+        cardCompany = CardCompanyType.BC.toUiModel(),
+        cardNumberRaw = "11112222********",
+        expirationDateRaw = "1226",
+        userName = "JOY",
+        password = "1234",
+    )
+
 @Preview(name = "카드 없음", showBackground = true)
 @Composable
 private fun PaymentCards_Empty_Preview() {
@@ -106,14 +116,3 @@ private fun PaymentCards_Many_Preview() {
         )
     }
 }
-
-@Composable
-private fun sampleCard(): CardUiModel =
-    CardUiModel(
-        id = UNASSIGNED_ID,
-        cardCompany = CardCompanyType.BC.toUiModel(),
-        cardNumberRaw = "11112222********",
-        expirationDateRaw = "1226",
-        userName = "JOY",
-        password = "1234",
-    )
