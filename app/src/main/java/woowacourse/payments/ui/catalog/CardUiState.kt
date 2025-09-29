@@ -38,15 +38,14 @@ sealed class CardUiState : Parcelable {
                 }
             }
             is Multiple -> {
-                val updated = paymentCards
-                    .map { if (it.order == newCard.order) newCard else it }
-                    .let { list ->
-                        if (list.any { it.order == newCard.order }) list else list + newCard
-                    }
-                    .sortedBy { it.order }
-                    .toImmutableList()
+                val index = paymentCards.indexOfFirst { it.order == newCard.order }
+                val updated = if (index >= 0) {
+                    paymentCards.toMutableList().apply { this[index] = newCard }
+                } else {
+                    paymentCards + newCard
+                }
 
-                Multiple(updated)
+                Multiple(updated.sortedBy { it.order }.toImmutableList())
             }
         }
 }
