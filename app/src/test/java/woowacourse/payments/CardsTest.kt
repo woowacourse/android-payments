@@ -22,6 +22,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when & then
@@ -41,6 +42,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when & then
@@ -59,6 +61,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when & then
@@ -77,6 +80,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "뭉치바보",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when & then
@@ -95,6 +99,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "12345",
                 bankType = BankType.BC,
+                id = 1L,
             )
 
         // when & then
@@ -114,6 +119,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = bankType,
+                id = 1L,
             )
 
         // when & then
@@ -130,6 +136,7 @@ class CardsTest {
                 cardOwner = "뭉치",
                 password = "1234",
                 bankType = BankType.NONE,
+                id = 1L,
             )
 
         // when & then

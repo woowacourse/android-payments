@@ -1,4 +1,4 @@
-package woowacourse.payments.registercard
+package woowacourse.payments.cardform
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.VisualTransformation
