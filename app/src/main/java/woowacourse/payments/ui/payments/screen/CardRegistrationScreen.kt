@@ -89,7 +89,7 @@ fun CardRegistrationScreen(
                                 expirationDate = uiState.cardExpirationDate,
                                 cardholderName = uiState.cardholderName,
                                 bankUiModel = cardRegistrationStateHolder.uiState,
-                                order = registrationState.paymentCardUiModel.order,
+                                id = registrationState.paymentCardUiModel.id,
                             )
                         } else{
                             PaymentCardUiModel(
@@ -97,7 +97,7 @@ fun CardRegistrationScreen(
                                 expirationDate = uiState.cardExpirationDate,
                                 cardholderName = uiState.cardholderName,
                                 bankUiModel = cardRegistrationStateHolder.uiState,
-                                order = System.currentTimeMillis(),
+                                id = System.currentTimeMillis(),
                             )
                         }
                     )
@@ -171,7 +171,7 @@ private fun CardRegistrationScreenContent(
                     expirationDate = uiState.cardExpirationDate,
                     cardholderName = uiState.cardholderName,
                     bankUiModel = cardRegistrationStateHolder.uiState,
-                    order = 0L,
+                    id = 0L,
                 ),
         )
 

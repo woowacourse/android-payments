@@ -143,14 +143,14 @@ private fun PaymentCardFieldPreview(
 private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
     override val values: Sequence<PaymentCardUiModel> =
         sequenceOf(
-            PaymentCardUiModel("", "", "", bankUiModel = BankUiModel.NOT_SELECTED,0L),
-            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiModel.SHINHAN,0L),
+            PaymentCardUiModel(0L,"", "", "", bankUiModel = BankUiModel.NOT_SELECTED),
+            PaymentCardUiModel(0L,"1111111111111111", "0421", "CREW", BankUiModel.SHINHAN),
             PaymentCardUiModel(
+                0L,
                 "2222222222222222",
                 "0522",
                 "ABCDEABCDEABCDEABCDEABCDEABCDE",
                 BankUiModel.KB,
-                0L,
             ),
         )
 }
