@@ -41,8 +41,6 @@ fun CardRegisterScreen(
     onBackClick: () -> Unit,
     onSaveClick: (card: CardUiModel) -> Unit,
     onEditingSaveClick: (card: CardUiModel) -> Unit,
-    isNotChangedInput: (card: CardUiModel) -> Unit,
-    isNotValidInput: () -> Unit,
     cardRegisterState: CardRegisterState = rememberCardRegisterState(),
 ) {
     val scope = rememberCoroutineScope()
@@ -59,16 +57,13 @@ fun CardRegisterScreen(
                 onSaveClick = {
                     val cardUiModel = cardRegisterState.cardUiModel
                     when {
-                        !cardRegisterState.isValidInput() -> isNotValidInput()
-
-                        !cardRegisterState.isChanged() -> isNotChangedInput(cardUiModel)
-
                         cardRegisterState.isChanged() && cardRegisterState.isEditingMode() ->
                             onEditingSaveClick(cardUiModel)
 
                         else -> onSaveClick(cardUiModel)
                     }
                 },
+                enabled = cardRegisterState.isValidInput() && cardRegisterState.isChanged(),
             )
         },
         modifier = Modifier.fillMaxSize(),
@@ -221,8 +216,6 @@ private fun CardRegisterScreenPreview() {
             {},
             {},
             {},
-            {},
-            { },
             cardRegisterState = rememberCardRegisterState(isShowingBottomSheet = false),
         )
     }

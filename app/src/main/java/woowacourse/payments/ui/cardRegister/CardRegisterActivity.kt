@@ -3,11 +3,9 @@ package woowacourse.payments.ui.cardRegister
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import woowacourse.payments.R
 import woowacourse.payments.ui.cardList.CardListActivity
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.common.parcelable
@@ -31,26 +29,10 @@ class CardRegisterActivity : ComponentActivity() {
                         setResult(NEW_CARD_SAVE_RESULT_OK, intent)
                         finish()
                     },
-                    isNotValidInput = {
-                        Toast
-                            .makeText(
-                                this,
-                                getString(R.string.card_input_not_valid_message),
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                    },
                     cardRegisterState =
                         rememberCardRegisterState(
                             card = intent.parcelable(EDIT_CARD_KEY),
                         ),
-                    isNotChangedInput = {
-                        Toast
-                            .makeText(
-                                this,
-                                getString(R.string.card_input_not_changed_message),
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                    },
                     onEditingSaveClick = { card: CardUiModel ->
                         val intent =
                             Intent().putExtra(

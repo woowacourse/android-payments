@@ -21,6 +21,7 @@ fun CardRegisterTopBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     editMode: Boolean,
+    enabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -42,7 +43,7 @@ fun CardRegisterTopBar(
             }
         },
         actions = {
-            IconButton(onClick = { onSaveClick() }) {
+            IconButton(enabled = enabled, onClick = { onSaveClick() }) {
                 Icon(
                     imageVector = Icons.Filled.Check,
                     contentDescription = stringResource(R.string.complete_button_description),
@@ -57,7 +58,7 @@ fun CardRegisterTopBar(
 @Composable
 private fun CardRegisterTopBarPreview_NotEditMode() {
     AndroidpaymentsTheme {
-        CardRegisterTopBar({}, {}, editMode = false)
+        CardRegisterTopBar({}, {}, enabled = true, editMode = false)
     }
 }
 
@@ -65,6 +66,6 @@ private fun CardRegisterTopBarPreview_NotEditMode() {
 @Composable
 private fun CardRegisterTopBarPreview_EditMode() {
     AndroidpaymentsTheme {
-        CardRegisterTopBar({}, {}, editMode = true)
+        CardRegisterTopBar({}, {}, enabled = true, editMode = true)
     }
 }

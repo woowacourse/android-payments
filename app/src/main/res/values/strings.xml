@@ -22,5 +22,5 @@
     <string name="card_number_supporting_text">카드 번호 16자리를 입력하세요</string>
     <string name="card_expired_date_supporting_text">올바른 일자를 입력하세요</string>
     <string name="card_password_supporting_text">4자리로 입력하세요</string>
-    <string name="card_input_not_changed_message">카드가 수정되지 않았습니다.</string>
+    <string name="edit_card_changed_message">카드가 수정되었습니다.</string>
 </resources>

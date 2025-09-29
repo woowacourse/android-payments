@@ -51,6 +51,12 @@ class CardListActivity : ComponentActivity() {
                                             card
                                         }
                                     }
+                                Toast
+                                    .makeText(
+                                        this,
+                                        getString(R.string.edit_card_changed_message),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
                             }
                         }
                     }
