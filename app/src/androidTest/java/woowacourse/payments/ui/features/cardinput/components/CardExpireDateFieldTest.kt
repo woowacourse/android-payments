@@ -1,5 +1,6 @@
-package woowacourse.payments.ui.features.addcard.components
+package woowacourse.payments.ui.features.cardinput.components
 
+import androidx.activity.ComponentActivity
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -9,11 +10,10 @@ import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.hasSetTextAction
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.text.AnnotatedString
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter
 
 class CardExpireDateFieldTest {
     @get:Rule
-    val compose = createComposeRule()
+    val compose = createAndroidComposeRule<ComponentActivity>()
     private lateinit var cardExpireDateField: SemanticsNodeInteraction
 
     @Before
@@ -104,9 +104,9 @@ class CardExpireDateFieldTest {
     @Test
     fun 카드_만료일_입력_필드에_잘못된_월_입력시_에러가_표시된다() {
         // given
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         val input = "1399"
-        val errorLabel = context.getString(R.string.add_card_expire_date_month_error_message)
+        val errorLabel =
+            compose.activity.getString(R.string.add_card_expire_date_month_error_message)
 
         // when
         cardExpireDateField.performTextInput(input)
@@ -118,9 +118,9 @@ class CardExpireDateFieldTest {
     @Test
     fun 카드_만료일_입력_필드에_과거의_연월_입력시_만료카드_에러가_표시된다() {
         // given
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
         val input = LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MMyy"))
-        val errorLabel = context.getString(R.string.add_card_expire_date_past_error_message)
+        val errorLabel =
+            compose.activity.getString(R.string.add_card_expire_date_past_error_message)
 
         // when
         cardExpireDateField.performTextInput(input)

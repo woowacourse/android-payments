@@ -9,16 +9,17 @@ import woowacourse.payments.domain.card.values.ExpireDate.Companion.create
 import woowacourse.payments.domain.card.values.OwnerName
 import woowacourse.payments.domain.card.values.Password
 import woowacourse.payments.ui.components.toMaskedString
-import woowacourse.payments.ui.features.addcard.CardUiState
-import woowacourse.payments.ui.features.addcard.ExpireDateUiState
-import woowacourse.payments.ui.features.addcard.components.CARD_NUMBER_CHUNK_SIZE
-import woowacourse.payments.ui.features.addcard.components.CARD_NUMBER_SEPARATOR
-import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_CHUNK_SIZE
-import woowacourse.payments.ui.features.addcard.components.EXPIRE_DATE_SEPARATOR
+import woowacourse.payments.ui.features.cardinput.CardUiState
+import woowacourse.payments.ui.features.cardinput.ExpireDateUiState
+import woowacourse.payments.ui.features.cardinput.components.CARD_NUMBER_CHUNK_SIZE
+import woowacourse.payments.ui.features.cardinput.components.CARD_NUMBER_SEPARATOR
+import woowacourse.payments.ui.features.cardinput.components.EXPIRE_DATE_CHUNK_SIZE
+import woowacourse.payments.ui.features.cardinput.components.EXPIRE_DATE_SEPARATOR
 import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.ExpireDateStatus
 import woowacourse.payments.ui.model.ExpireDateStatus.Invalid.ExpireDateInvalidReason
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.MAX_EXPIRE_DATE_INPUT_LENGTH
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -42,6 +43,7 @@ object CardMapper {
         val yearMonthFormatter = DateTimeFormatter.ofPattern("MM / yy")
 
         return PaymentCardUiModel(
+            dbId = EMPTY_DB_ID,
             cardCompanyUiModel = cardCompany.toUiModel(),
             formattedCardNumber = this.cardNumber.toMaskedString(),
             formattedExpireDate = this.expireDate.value.format(yearMonthFormatter),
@@ -51,9 +53,13 @@ object CardMapper {
 
     fun CardUiState.toPaymentCardUiModel(): PaymentCardUiModel =
         PaymentCardUiModel(
+            dbId = EMPTY_DB_ID,
             cardCompanyUiModel = cardCompanyUiModel,
             formattedCardNumber =
                 cardNumber
+                    .mapIndexed { index, char ->
+                        if (index < 8) char else '*'
+                    }.joinToString("")
                     .chunked(CARD_NUMBER_CHUNK_SIZE)
                     .joinToString(CARD_NUMBER_SEPARATOR),
             formattedExpireDate =

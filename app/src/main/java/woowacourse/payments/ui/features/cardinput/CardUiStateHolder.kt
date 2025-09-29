@@ -1,8 +1,9 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cardinput
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import woowacourse.payments.ui.mapper.CardMapper.getExpireDateUiState
 import woowacourse.payments.ui.mapper.CardMapper.toPaymentCardUiModel
 import woowacourse.payments.ui.model.CardCompanyUiModel
@@ -42,5 +43,13 @@ class CardUiStateHolder(
 
     fun updatePassword(newPassword: String) {
         _uiState.value = _uiState.value.copy(password = newPassword)
+    }
+
+    companion object {
+        val Saver: Saver<CardUiStateHolder, CardUiState> =
+            Saver(
+                save = { holder -> holder.uiState.value },
+                restore = { state -> CardUiStateHolder(initialUiState = state) },
+            )
     }
 }

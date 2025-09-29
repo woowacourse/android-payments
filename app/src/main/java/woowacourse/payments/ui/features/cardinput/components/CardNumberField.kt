@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard.components
+package woowacourse.payments.ui.features.cardinput.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
@@ -39,7 +39,8 @@ fun CardNumberField(
     val isIncomplete = value.isNotEmpty() && value.length < MAX_LENGTH_CARD_NUMBER
     val showError = isIncomplete && !isFocused
 
-    val visualTransformation = remember { SeparatorVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR) }
+    val visualTransformation =
+        remember { SeparatorVisualTransformation(CARD_NUMBER_CHUNK_SIZE, CARD_NUMBER_SEPARATOR) }
 
     AppTextField(
         value = value,

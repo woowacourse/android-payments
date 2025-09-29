@@ -1,13 +1,12 @@
 package woowacourse.payments.ui.features.cardlist
 
-import android.content.Context
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,30 +15,37 @@ import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
-val dummyPaymentCardUiModel =
+val dummyPaymentCardUiModel1 =
     PaymentCardUiModel(
+        1,
         CardCompanyUiModel.UNKNOWN,
         "1234 - 1234 - 1234 - 1234",
         "02 / 26",
         "CREW",
     )
-private val dummyPaymentCardList1 = listOf(dummyPaymentCardUiModel)
-private val dummyPaymentCardList2 = List(2) { dummyPaymentCardUiModel }
+
+val dummyPaymentCardUiModel2 =
+    PaymentCardUiModel(
+        2,
+        CardCompanyUiModel.UNKNOWN,
+        "1234 - 1234 - 1234 - 1234",
+        "02 / 26",
+        "CREW",
+    )
+private val dummyPaymentCardList1 = listOf(dummyPaymentCardUiModel1)
+private val dummyPaymentCardList2 = listOf(dummyPaymentCardUiModel1, dummyPaymentCardUiModel2)
 
 class CardListScreenTest {
     @get:Rule
-    val compose = createComposeRule()
-
-    private lateinit var context: Context
+    val compose = createAndroidComposeRule<ComponentActivity>()
     private lateinit var titleText: String
     private lateinit var addCardDescription: String
 
     @Before
     fun setUp() {
-        context = InstrumentationRegistry.getInstrumentation().targetContext
-        titleText = context.getString(R.string.card_list_add_payment_card_title)
+        titleText = compose.activity.getString(R.string.card_list_add_payment_card_title)
         addCardDescription =
-            context.getString(R.string.card_list_add_payment_card_panel_description)
+            compose.activity.getString(R.string.card_list_add_payment_card_panel_description)
     }
 
     @Test

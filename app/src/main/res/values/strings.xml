@@ -2,6 +2,10 @@
     <string name="app_name">android-payments</string>
 
     <!--    공통 컴포넌트-->
+    <!--    상단바(TopBqr)-->
+    <string name="top_bar_back_btn_description">뒤로 가기 버튼</string>
+    <string name="top_bar_save_btn_description">저장 버튼</string>
+
     <string name="payment_card_full_description">카드 플레이트 이미지. 카드 번호 %1$s, 소유자 이름 %2$s, 만료일 %3$s</string>
     <string name="payment_card_empty_description">빈 카드 플레이트 이미지</string>
     <string name="invalid_field_icon_description">유효하지 않은 입력폼 경고 아이콘</string>
@@ -40,8 +44,6 @@
 
     <!--    상단바(TopBar)-->
     <string name="add_card_top_bar_title">카드 추가</string>
-    <string name="add_card_top_bar_back_btn_description">뒤로 가기 버튼</string>
-    <string name="add_card_top_bar_save_btn_description">저장 버튼</string>
 
     <!--    카드 번호 입력 컴포넌트-->
     <string name="add_card_number_field_title">카드 번호</string>
@@ -65,5 +67,11 @@
     <string name="add_card_password_field_title">비밀번호</string>
     <string name="add_card_password_field_hint">0000</string>
     <string name="add_card_password_incomplete_error_message">4자리로 입력해 주세요</string>
+
+    <!--    카드 수정 컴포넌트-->
+    <string name="card_list_card_edited_alert">카드가 수정되었습니다</string>
+    <string name="edit_card_same_alert">변경된 정보가 없습니다.\n카드 정보를 수정해 주세요.</string>
+    <!--    상단바(TopBar)-->
+    <string name="edit_card_top_bar_title">카드 수정</string>
 
 </resources>

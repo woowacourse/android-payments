@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard.components
+package woowacourse.payments.ui.features.cardinput.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,17 +18,18 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewCardTopBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card_top_bar_title)) },
+        title = { Text(title) },
         navigationIcon = {
             IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.add_card_top_bar_back_btn_description),
+                    contentDescription = stringResource(R.string.top_bar_back_btn_description),
                 )
             }
         },
@@ -36,7 +37,7 @@ fun NewCardTopBar(
             IconButton(onClick = onSaveClick) {
                 Icon(
                     imageVector = Icons.Filled.Check,
-                    contentDescription = stringResource(R.string.add_card_top_bar_save_btn_description),
+                    contentDescription = stringResource(R.string.top_bar_save_btn_description),
                 )
             }
         },
@@ -49,6 +50,7 @@ fun NewCardTopBar(
 fun NewCardTopBarPreview() {
     AndroidpaymentsTheme {
         NewCardTopBar(
+            title = stringResource(R.string.add_card_top_bar_title),
             onBackClick = {},
             onSaveClick = {},
         )

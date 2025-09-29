@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.features.addcard
+package woowacourse.payments.ui.features.cardinput
 
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -17,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,17 +27,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.data.PaymentInMemoryRepository
 import woowacourse.payments.domain.card.PaymentCard
 import woowacourse.payments.ui.components.PaymentCardPlate
-import woowacourse.payments.ui.features.addcard.components.CardExpireDateField
-import woowacourse.payments.ui.features.addcard.components.CardNumberField
-import woowacourse.payments.ui.features.addcard.components.CardOwnerNameField
-import woowacourse.payments.ui.features.addcard.components.CardPasswordField
-import woowacourse.payments.ui.features.addcard.components.NewCardTopBar
-import woowacourse.payments.ui.features.addcard.components.bottomsheet.BottomSheetScreen
+import woowacourse.payments.ui.features.cardinput.components.CardExpireDateField
+import woowacourse.payments.ui.features.cardinput.components.CardNumberField
+import woowacourse.payments.ui.features.cardinput.components.CardOwnerNameField
+import woowacourse.payments.ui.features.cardinput.components.CardPasswordField
+import woowacourse.payments.ui.features.cardinput.components.NewCardTopBar
+import woowacourse.payments.ui.features.cardinput.components.bottomsheet.BottomSheetScreen
 import woowacourse.payments.ui.mapper.CardCreationResult
 import woowacourse.payments.ui.mapper.CardMapper.toDomainCard
 import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel.Companion.EMPTY_DB_ID
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 private val SupportingTextHeight = 20.dp
@@ -42,18 +47,19 @@ private val FormFieldSpacing = 30.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCardScreen(
+fun CardInputScreen(
+    dbId: Int = EMPTY_DB_ID,
+    cardUiStateHolder: CardUiStateHolder,
+    screenTitle: String,
     onNavigateBack: () -> Unit,
-    onNavigateSave: (PaymentCard) -> Unit,
+    onNavigateSave: (Int, PaymentCard) -> Unit,
 ) {
-    val cardUiStateHolder = remember { CardUiStateHolder() }
-
     val uiState by cardUiStateHolder.uiState
     val expireDateUiState by cardUiStateHolder.expireDateUiState
     val paymentCardUiModel by cardUiStateHolder.paymentCardUiModel
 
     val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember { mutableStateOf(true) }
+    var showBottomSheet by rememberSaveable { mutableStateOf(dbId == EMPTY_DB_ID) }
 
     var isSavingInProgress by remember { mutableStateOf(false) }
 
@@ -77,7 +83,20 @@ fun AddCardScreen(
 
             is CardCreationResult.Success -> {
                 isSavingInProgress = false
-                onNavigateSave(cardDomainResult.paymentCard)
+                if (dbId != EMPTY_DB_ID) {
+                    val dbState = PaymentInMemoryRepository.findById(dbId)
+
+                    if (dbState == cardUiStateHolder.uiState.value) {
+                        isSavingInProgress = false
+                        toastMessageResId = R.string.edit_card_same_alert
+                    } else {
+                        PaymentInMemoryRepository.update(dbId, uiState)
+                        onNavigateSave(dbId, cardDomainResult.paymentCard)
+                    }
+                } else {
+                    val savedDBId = PaymentInMemoryRepository.add(uiState)
+                    onNavigateSave(savedDBId, cardDomainResult.paymentCard)
+                }
             }
 
             else -> {
@@ -126,6 +145,7 @@ fun AddCardScreen(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                title = screenTitle,
                 onBackClick = onNavigateBack,
                 onSaveClick = attemptSave,
             )
@@ -136,7 +156,8 @@ fun AddCardScreen(
                 Modifier
                     .padding(innerPadding)
                     .padding(horizontal = 24.dp)
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
         ) {
             Spacer(modifier = Modifier.height(14.dp))
             PaymentCardPlate(
@@ -182,6 +203,12 @@ fun AddCardScreen(
 @Composable
 fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
-        AddCardScreen({}, {})
+        CardInputScreen(
+            1,
+            cardUiStateHolder = CardUiStateHolder(),
+            screenTitle = "카드 입력 화면",
+            {},
+            { _, _ -> },
+        )
     }
 }
