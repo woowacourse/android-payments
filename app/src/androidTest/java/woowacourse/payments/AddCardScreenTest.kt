@@ -115,7 +115,7 @@ class AddCardScreenTest {
             var uiState by remember { mutableStateOf(AddCardUiState(showCompanySheet = false)) }
             val cardPreview =
                 CardUiModel(
-                    id = 0L,
+                    id = "",
                     cardCompany = CardCompanyType.BC.toUiModel(),
                     cardNumberRaw = "1111222233334444",
                     expirationDateRaw = "1199",
