@@ -107,16 +107,3 @@ fun BankType.toPresentation(): BankUiModel =
                 logoRes = R.drawable.img_kb,
             )
     }
-
-fun BankUiModel.toDomain(): BankType =
-    when (this.name) {
-        "카카오뱅크" -> BankType.KAKAOBANK
-        "BC카드" -> BankType.BC
-        "롯데카드" -> BankType.LOTTE
-        "신한카드" -> BankType.SHINHAN
-        "하나카드" -> BankType.HANA
-        "KB카드" -> BankType.KB
-        "현대카드" -> BankType.HYUNDAI
-        "우리카드" -> BankType.WOORI
-        else -> throw IllegalArgumentException("Unknown bank: ${this.name}")
-    }
