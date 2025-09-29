@@ -72,10 +72,9 @@ fun AddPaymentCardScreen(
                         stateHolder.showSheet()
                     } else {
                         stateHolder.buildResult()?.let { card ->
-                            if (state.isEditing) {
-                                PaymentCardStore.update(card)
-                            } else {
-                                PaymentCardStore.add(card)
+                            when (state.mode) {
+                                is AddMode.Edit -> PaymentCardStore.update(card)
+                                AddMode.Create -> PaymentCardStore.add(card)
                             }
                             onSave()
                         }

@@ -12,5 +12,6 @@ data class AddPaymentCardUiState(
     val pin: String = "",
     val bank: BankType? = null,
     val isSheetVisible: Boolean = true,
-    val isEditing: Boolean = false,
+    val mode: AddMode = AddMode.Create,
+    val isEdited: Boolean = false,
 ) : Parcelable
