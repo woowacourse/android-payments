@@ -24,7 +24,7 @@ class CardUpdateActivity : ComponentActivity() {
         val updateType: CardUpdateType = card?.let(CardUpdateType::Edit) ?: CardUpdateType.Add
         setContent {
             AndroidpaymentsTheme {
-                NewCardScreen(
+                CardUpdateScreen(
                     updateType = updateType,
                     companies = CardCompany.entries.map(CardCompany::toUiModel),
                     onBackClick = { finish() },

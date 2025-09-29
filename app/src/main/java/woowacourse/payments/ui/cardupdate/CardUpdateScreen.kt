@@ -28,8 +28,8 @@ import woowacourse.payments.ui.cardupdate.components.CardExpirationDateTextField
 import woowacourse.payments.ui.cardupdate.components.CardHolderNameTextField
 import woowacourse.payments.ui.cardupdate.components.CardNumberTextField
 import woowacourse.payments.ui.cardupdate.components.CardPasswordTextField
+import woowacourse.payments.ui.cardupdate.components.CardUpdateTopBar
 import woowacourse.payments.ui.cardupdate.components.CompanySelectBottomSheet
-import woowacourse.payments.ui.cardupdate.components.NewCardTopBar
 import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.cardupdate.model.CardUpdateType
 import woowacourse.payments.ui.cardupdate.model.toUiModel
@@ -39,7 +39,7 @@ import woowacourse.payments.ui.common.model.toUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardScreen(
+fun CardUpdateScreen(
     updateType: CardUpdateType,
     companies: List<CardCompanyUiModel>,
     onBackClick: () -> Unit,
@@ -51,7 +51,7 @@ fun NewCardScreen(
             is CardUpdateType.Edit -> updateType.card.toUiState()
         }
     val stateHolder: CardUpdateStateHolder =
-        rememberNewCardState(initialUiState)
+        rememberCardUpdateState(initialUiState)
     val uiState: CardUpdateUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()
@@ -74,7 +74,7 @@ fun NewCardScreen(
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
-            NewCardTopBar(
+            CardUpdateTopBar(
                 updateType = updateType,
                 canSave = uiState != initialUiState && uiState.isCardValid,
                 onBackClick = onBackClick,
@@ -128,8 +128,8 @@ fun NewCardScreen(
 
 @Preview
 @Composable
-private fun NewCardScreenPreview() {
-    NewCardScreen(
+private fun CardUpdateScreenPreview() {
+    CardUpdateScreen(
         updateType = CardUpdateType.Add,
         companies = CardCompany.entries.map(CardCompany::toUiModel),
         onBackClick = {},

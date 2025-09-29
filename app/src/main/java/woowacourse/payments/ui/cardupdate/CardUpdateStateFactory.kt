@@ -5,7 +5,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 
 @Composable
-fun rememberNewCardState(initialUiState: CardUpdateUiState): CardUpdateStateHolder =
+fun rememberCardUpdateState(initialUiState: CardUpdateUiState): CardUpdateStateHolder =
     rememberSaveable(saver = CardUpdateStateHolderSaver) {
         CardUpdateStateHolder(initialUiState)
     }

@@ -29,7 +29,7 @@ class CardListActivity : ComponentActivity() {
                     mutableStateOf<CardUpdateType>(CardUpdateType.Add)
                 }
 
-                val newCardLauncher =
+                val cardUpdateLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                         if (result.resultCode == Activity.RESULT_OK) {
                             result.data
@@ -51,11 +51,11 @@ class CardListActivity : ComponentActivity() {
                 CardListScreen(
                     cards = cards,
                     onAddCardClick = {
-                        newCardLauncher.launch(CardUpdateActivity.newIntent(this, null))
+                        cardUpdateLauncher.launch(CardUpdateActivity.newIntent(this, null))
                         cardUpdateType = CardUpdateType.Add
                     },
                     onCardClick = { card: CardUiModel ->
-                        newCardLauncher.launch(CardUpdateActivity.newIntent(this, card))
+                        cardUpdateLauncher.launch(CardUpdateActivity.newIntent(this, card))
                         cardUpdateType = CardUpdateType.Edit(card)
                     },
                 )

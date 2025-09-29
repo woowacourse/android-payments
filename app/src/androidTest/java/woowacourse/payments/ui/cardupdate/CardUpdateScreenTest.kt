@@ -18,7 +18,7 @@ class CardUpdateScreenTest {
     @Before
     fun setup() {
         composeTestRule.setContent {
-            NewCardScreen(
+            CardUpdateScreen(
                 updateType = CardUpdateType.Add,
                 companies = CardCompany.entries.map(CardCompany::toUiModel),
                 onBackClick = {},
