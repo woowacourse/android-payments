@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.screen.addCard
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,9 +14,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -47,15 +48,9 @@ fun AddCardScreen(
     val uiState = stateHolder.uiState
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val bottomSheetState = rememberModalBottomSheetState(confirmValueChange = { false })
-    var showBottomSheetState by rememberSaveable { mutableStateOf(true) }
+    var showBottomSheet by remember { mutableStateOf(true) }
+    val bottomSheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val coroutineScope = rememberCoroutineScope()
-
-    LaunchedEffect(showBottomSheetState) {
-        if (showBottomSheetState) {
-            bottomSheetState.show()
-        }
-    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -102,7 +97,10 @@ fun AddCardScreen(
                         .padding(vertical = 12.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                PaymentCard(card = stateHolder.uiState.toCardUiModel())
+                PaymentCard(
+                    card = stateHolder.uiState.toCardUiModel(),
+                    modifier = Modifier.clickable { showBottomSheet = true },
+                )
             }
 
             CardNumberInputField(
@@ -135,17 +133,19 @@ fun AddCardScreen(
         }
     }
 
-    if (showBottomSheetState) {
+    if (showBottomSheet) {
         BankSelectBottomSheet(
             sheetState = bottomSheetState,
             banks = stateHolder.allBanks,
             onBankSelected = { bank ->
+                stateHolder.updateBank(bank)
                 coroutineScope.launch { bottomSheetState.hide() }.invokeOnCompletion {
-                    showBottomSheetState = false
-                    stateHolder.updateBank(bank)
+                    showBottomSheet = false
                 }
             },
-            onDismiss = { showBottomSheetState = false },
+            onDismiss = {
+                showBottomSheet = false
+            },
         )
     }
 }
