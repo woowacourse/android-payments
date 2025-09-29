@@ -40,11 +40,7 @@ fun PaymentCard(
                     color = card.cardCompany.color,
                     shape = RoundedCornerShape(5.dp),
                 ).then(
-                    if (onClick != null) {
-                        Modifier.clickable { onClick(card) }
-                    } else {
-                        Modifier
-                    },
+                    onClick?.let { Modifier.clickable { it(card) } } ?: Modifier,
                 ).padding(bottom = 16.dp)
                 .padding(horizontal = 14.dp),
     ) {
