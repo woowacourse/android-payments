@@ -7,10 +7,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class CardUiModel(
+    val id: Long? = null,
     val cardCompanyUiModel: CardCompanyUiModel = CardCompanyUiModel.NOT_SELECT,
     val cardholderNameUiModel: CardholderNameUiModel = CardholderNameUiModel(),
     val cardNumberUiModel: CardNumberUiModel = CardNumberUiModel(),
     val cardExpirationDateUiModel: CardExpirationDateUiModel = CardExpirationDateUiModel(),
+    val cardPasswordUiModel: CardPasswordUiModel = CardPasswordUiModel(),
 ) : Parcelable {
     @IgnoredOnParcel
     val cardholderName: String? get() = cardholderNameUiModel.nameOrNull()

@@ -8,11 +8,10 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.cards.state.CardsScreenUiState
-import woowacourse.payments.ui.model.CardExpirationDateUiModel
-import woowacourse.payments.ui.model.CardNumberUiModel
-import woowacourse.payments.ui.model.CardUiModel
-import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.cards.fixture.CARD_ONE
+import woowacourse.payments.ui.cards.fixture.CARD_TWO
+import woowacourse.payments.ui.cards.fixture.FakeCardsRepositoryFixture
+import woowacourse.payments.ui.cards.state.CardsViewModel
 
 class CardsScreenTest {
     @get:Rule
@@ -24,7 +23,8 @@ class CardsScreenTest {
         composeTestRule.setContent {
             CardsScreen(
                 onRegistrationClick = {},
-                uiState = CardsScreenUiState(emptyList()),
+                onCardClick = {},
+                viewModel = CardsViewModel(FakeCardsRepositoryFixture(emptyList())),
             )
         }
 
@@ -37,20 +37,15 @@ class CardsScreenTest {
 
     @Test
     fun `존재하는_카드가_1개라면_카드화면과_카드_추가_박스가_보여진다`() {
-        // given && when
+        // given
+        val viewModel = CardsViewModel(FakeCardsRepositoryFixture(listOf(CARD_ONE)))
+
+        // when
         composeTestRule.setContent {
             CardsScreen(
                 onRegistrationClick = {},
-                uiState =
-                    CardsScreenUiState(
-                        listOf(
-                            CardUiModel(
-                                cardholderNameUiModel = CardholderNameUiModel("ABC"),
-                                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                                cardExpirationDateUiModel = CardExpirationDateUiModel("0999"),
-                            ),
-                        ),
-                    ),
+                onCardClick = {},
+                viewModel = viewModel,
             )
         }
 
@@ -63,25 +58,15 @@ class CardsScreenTest {
 
     @Test
     fun `존재하는_카드가_2개_이상이라면_카드_추가_박스는_안보이고_카드화면과_앱바_추가_버튼이_보여진다`() {
-        // given && when
+        // given
+        val viewModel = CardsViewModel(FakeCardsRepositoryFixture(listOf(CARD_ONE, CARD_TWO)))
+
+        // when
         composeTestRule.setContent {
             CardsScreen(
                 onRegistrationClick = {},
-                uiState =
-                    CardsScreenUiState(
-                        listOf(
-                            CardUiModel(
-                                cardholderNameUiModel = CardholderNameUiModel("ABC"),
-                                cardNumberUiModel = CardNumberUiModel("1111222233334444"),
-                                cardExpirationDateUiModel = CardExpirationDateUiModel("0999"),
-                            ),
-                            CardUiModel(
-                                cardholderNameUiModel = CardholderNameUiModel("ABC2"),
-                                cardNumberUiModel = CardNumberUiModel("1111222233335555"),
-                                cardExpirationDateUiModel = CardExpirationDateUiModel("0888"),
-                            ),
-                        ),
-                    ),
+                onCardClick = {},
+                viewModel = viewModel,
             )
         }
 

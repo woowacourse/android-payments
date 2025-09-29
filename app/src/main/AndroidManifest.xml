@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Androidpayments">
         <activity
-            android:name=".ui.registration.CardRegistrationActivity"
+            android:name=".ui.cardform.CardFormActivity"
             android:exported="false"
             android:theme="@style/Theme.Androidpayments" />
         <activity

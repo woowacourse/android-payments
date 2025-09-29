@@ -8,13 +8,12 @@ import kotlinx.parcelize.Parcelize
 class CardholderNameUiModel(
     val value: String = "",
 ) : Parcelable {
-    val isValid: Boolean get() = value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() }
-
     @IgnoredOnParcel
     val maxNameLength: Int = MAXIMUM_NAME_LENGTH_VALUE
 
     init {
         require(value.length <= MAXIMUM_NAME_LENGTH_VALUE) { ERROR_INVALID_LENGTH }
+        require(value.all { it in 'a'..'z' || it in 'A'..'Z' || it.isWhitespace() })
     }
 
     fun nameOrNull(): String? = value.ifBlank { null }
