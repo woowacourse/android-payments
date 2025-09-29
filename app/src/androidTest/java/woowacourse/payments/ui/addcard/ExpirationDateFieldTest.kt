@@ -4,6 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performTextInput
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.CardExpirationDate
@@ -13,16 +14,16 @@ class ExpirationDateFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private fun setupExpirationDateField(
-        expirationDate: CardExpirationDateUiModel = CardExpirationDate.fromRawInput("").toUiModel(),
-        onValueChange: (String) -> Unit = {},
-        isValid: Boolean = true,
-    ) {
+    private var changedValue = ""
+
+    @Before
+    fun setup() {
+        changedValue = ""
         composeTestRule.setContent {
             ExpirationDateField(
-                expirationDate = expirationDate,
-                onValueChange = onValueChange,
-                isValid = isValid,
+                expirationDate = CardExpirationDate.fromRawInput("").toUiModel(),
+                onValueChange = { changedValue = it },
+                isValid = true,
             )
         }
     }
@@ -30,8 +31,6 @@ class ExpirationDateFieldTest {
     @Test
     fun `onValueChange가_올바른_값으로_호출된다`() {
         // given
-        var changedValue = ""
-        setupExpirationDateField(onValueChange = { changedValue = it })
         val inputField = composeTestRule.onNodeWithText("만료일")
 
         // when
@@ -45,7 +44,13 @@ class ExpirationDateFieldTest {
     @Test
     fun `isValid가_false이면_오류_메시지가_표시된다`() {
         // given + when
-        setupExpirationDateField(isValid = false)
+        composeTestRule.setContent { // Override setup for this specific test
+            ExpirationDateField(
+                expirationDate = CardExpirationDate.fromRawInput("").toUiModel(),
+                onValueChange = { changedValue = it },
+                isValid = false,
+            )
+        }
 
         // then
         composeTestRule.onNodeWithText("유효한 날짜가 아닙니다.").assertIsDisplayed()
