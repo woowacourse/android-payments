@@ -34,12 +34,13 @@ fun RegisterCardScreen(
     val context = LocalContext.current
 
     val stateHolder =
-        remember {
+        remember(cardToEdit, onCardSaved) {
             RegisterCardStateHolder(
                 onCardSaved = onCardSaved,
                 cardToEdit = cardToEdit,
             )
         }
+
     val uiState = stateHolder.uiState
     val cardPreview = uiState.toUiModel()
 
