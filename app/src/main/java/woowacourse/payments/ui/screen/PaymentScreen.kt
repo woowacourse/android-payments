@@ -38,7 +38,7 @@ fun PaymentScreen() {
             cardLauncher.launch(AddCardActivity.newIntent(context))
         },
         onCardClick = { id ->
-            val card = paymentStateHolder.uiCards.getOrNull(id) ?: return@PaymentContent
+            val card = paymentStateHolder.uiCards.find { it.id == id } ?: return@PaymentContent
             editId = card.id
             cardLauncher.launch(AddCardActivity.newIntent(context, card))
         },

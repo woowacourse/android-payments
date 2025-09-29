@@ -21,7 +21,7 @@ fun PaymentContent(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (Int) -> Unit,
+    onCardClick: (cardId: Long) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),

@@ -33,7 +33,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    onClick: (cardId: Long) -> Unit = {},
     card: CardUiModel = CardUiModel.EMPTY,
 ) {
     val cardCompany = card.cardCompany
@@ -43,7 +43,7 @@ fun PaymentCard(
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
-                .clickable(onClick = onClick)
+                .clickable { onClick(card.id) }
                 .background(
                     color = Color(cardCompany.background),
                     shape = RoundedCornerShape(5.dp),
