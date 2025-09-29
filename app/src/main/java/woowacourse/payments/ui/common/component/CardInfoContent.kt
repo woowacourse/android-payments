@@ -1,9 +1,12 @@
-package woowacourse.payments.ui.screen.cards.component
+package woowacourse.payments.ui.common.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +19,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.ui.model.CardUiModel
@@ -23,7 +27,21 @@ import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.theme.cardTextStyle
 
 @Composable
-fun CardInfo(
+fun CardInfoContent(
+    card: CardUiModel,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+    ) {
+        Spacer(modifier = Modifier.height(8.dp))
+        CardInfo(card)
+    }
+}
+
+@Composable
+private fun CardInfo(
     card: CardUiModel,
     modifier: Modifier = Modifier,
     textStyle: TextStyle = cardTextStyle,
@@ -74,14 +92,15 @@ fun CardInfo(
 
 @Preview
 @Composable
-private fun CardInfoPreview() {
-    CardInfo(
+private fun CardInfoContentPreview() {
+    CardInfoContent(
         card =
             CardUiModel(
-                "1234567812345678",
-                "0925",
-                "INHYEOP LEE",
-                IssuingBank.NOT_SELECTED,
+                number = "1234123412341234",
+                expiredDate = "0925",
+                ownerName = "MEEPLE",
+                password = "",
+                issuingBank = IssuingBank.KAKAO,
             ),
     )
 }

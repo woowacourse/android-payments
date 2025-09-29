@@ -1,14 +1,21 @@
 package woowacourse.payments.ui.model
 
 import android.os.Parcelable
+import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.domain.ExpiredDate
+import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiState
 import java.lang.Character.isDigit
 
 @Parcelize
+@Immutable
 data class CardUiModel(
     val number: String,
     val expiredDate: String,
     val ownerName: String,
+    val password: String,
     val issuingBank: IssuingBank,
 ) : Parcelable {
     fun formatCardNumber(
@@ -17,8 +24,10 @@ data class CardUiModel(
         groupSize: Int = CARD_NUMBER_GROUP_SIZE,
         delimiter: String = CARD_NUMBER_DELIMITER,
     ): String {
+        if (number.isBlank()) return ""
         val visiblePart = number.take(visibleLength)
-        val maskedPart = maskingSign.repeat(number.length - visibleLength)
+        val maskedCount = (number.length - visibleLength).coerceAtLeast(0)
+        val maskedPart = maskingSign.repeat(maskedCount)
         return (visiblePart + maskedPart)
             .chunked(groupSize)
             .joinToString(delimiter)
@@ -27,11 +36,11 @@ data class CardUiModel(
     fun formatExpiredDate(
         groupSize: Int = CARD_DATE_GROUP_SIZE,
         delimiter: String = CARD_DATE_DELIMITER,
-    ): String =
-        expiredDate
-            .filter(::isDigit)
-            .chunked(groupSize)
-            .joinToString(delimiter)
+    ): String {
+        val digits = expiredDate.filter(::isDigit)
+        if (digits.isBlank()) return ""
+        return digits.chunked(groupSize).joinToString(delimiter)
+    }
 
     fun formatOwnerName(maxLength: Int = CARD_OWNER_NAME_MAX_LENGTH): String = ownerName.take(maxLength)
 
@@ -45,3 +54,12 @@ data class CardUiModel(
         private const val CARD_OWNER_NAME_MAX_LENGTH = 15
     }
 }
+
+fun CardUiModel.toUiState(): CardAdditionUiState =
+    CardAdditionUiState(
+        cardNumber = CardNumber(number),
+        expiredDate = ExpiredDate(expiredDate),
+        ownerName = ownerName,
+        password = CardPassword(password),
+        issuingBank = issuingBank,
+    )

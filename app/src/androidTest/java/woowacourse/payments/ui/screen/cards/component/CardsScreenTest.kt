@@ -1,13 +1,18 @@
 package woowacourse.payments.ui.screen.cards.component
 
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertCountEquals
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.isNotDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.ui.screen.DEFAULT_CARD
@@ -72,5 +77,46 @@ class CardsScreenTest {
         composeRule
             .onAllNodesWithContentDescription("카드 번호")
             .assertCountEquals(MULTIPLE_CARD.size)
+    }
+
+    @Test
+    fun `추가_버튼을_클릭하면_화면이_이동된다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(
+                modifier = Modifier.testTag("카드 목록"),
+            )
+        }
+
+        // when
+        composeRule
+            .onNodeWithContentDescription("카드 추가")
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("카드 목록")
+            .isNotDisplayed()
+    }
+
+    @Test
+    fun `카드를_클릭하면_화면이_이동된다`() {
+        // given
+        composeRule.setContent {
+            CardsScreen(
+                modifier = Modifier.testTag("카드 목록"),
+                initialState = CardsUiState.MultipleCards(MULTIPLE_CARD),
+            )
+        }
+
+        // when
+        composeRule
+            .onNode(hasText("BEOMJUN HAM") and hasClickAction())
+            .performClick()
+
+        // then
+        composeRule
+            .onNodeWithTag("카드 목록")
+            .isNotDisplayed()
     }
 }

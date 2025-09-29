@@ -6,13 +6,6 @@ import woowacourse.payments.ui.model.CardUiModel
 
 @Parcelize
 sealed interface CardsUiState : Parcelable {
-    fun addCard(newCard: CardUiModel): CardsUiState =
-        when (this) {
-            is Empty -> SingleCard(newCard)
-            is SingleCard -> MultipleCards(listOf(card, newCard))
-            is MultipleCards -> MultipleCards(cards + newCard)
-        }
-
     data object Empty : CardsUiState
 
     data class SingleCard(
@@ -22,4 +15,26 @@ sealed interface CardsUiState : Parcelable {
     data class MultipleCards(
         val cards: List<CardUiModel>,
     ) : CardsUiState
+
+    fun addCard(newCard: CardUiModel): CardsUiState =
+        when (this) {
+            is Empty -> SingleCard(newCard)
+            is SingleCard -> MultipleCards(listOf(card, newCard))
+            is MultipleCards -> MultipleCards(cards + newCard)
+        }
+
+    fun replaceCard(
+        oldCard: CardUiModel,
+        newCard: CardUiModel,
+    ): CardsUiState =
+        when (this) {
+            is Empty -> this
+            is SingleCard -> if (card == oldCard) SingleCard(newCard) else this
+            is MultipleCards -> {
+                if (oldCard !in this.cards) this
+                MultipleCards(
+                    cards.map { card -> if (card == oldCard) newCard else card },
+                )
+            }
+        }
 }

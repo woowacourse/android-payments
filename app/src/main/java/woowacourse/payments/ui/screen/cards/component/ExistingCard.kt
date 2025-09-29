@@ -1,14 +1,9 @@
 package woowacourse.payments.ui.screen.cards.component
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import woowacourse.payments.ui.common.component.CardInfoContent
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.component.PaymentCard
@@ -17,19 +12,13 @@ import woowacourse.payments.ui.screen.cardAddition.component.PaymentCard
 fun ExistingCard(
     card: CardUiModel,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
 ) {
     PaymentCard(
         modifier = modifier,
+        onClick = onClick,
         issuingBank = card.issuingBank,
-        cardContent = {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Bottom,
-            ) {
-                Spacer(modifier = Modifier.height(8.dp))
-                CardInfo(card)
-            }
-        },
+        cardContent = { CardInfoContent(card) },
     )
 }
 
@@ -42,6 +31,7 @@ private fun ExistingCardPreview() {
                 number = "1234567812345678",
                 expiredDate = "0925",
                 ownerName = "INHYEOP LEE",
+                password = "",
                 issuingBank = IssuingBank.NOT_SELECTED,
             ),
     )

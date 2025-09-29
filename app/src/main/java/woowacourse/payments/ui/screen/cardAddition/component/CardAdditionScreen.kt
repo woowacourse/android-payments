@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen.cardAddition.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,8 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,21 +22,25 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
+import woowacourse.payments.ui.common.component.CardInfoContent
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.IssuingBank
 import woowacourse.payments.ui.screen.cardAddition.CardAdditionUiStateHolder
-import woowacourse.payments.ui.screen.cardAddition.toUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardAdditionScreen(
     modifier: Modifier = Modifier,
+    card: CardUiModel? = null,
     onBackClick: () -> Unit = {},
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
     val stateHolder =
-        rememberSaveable(saver = CardAdditionUiStateHolder.Saver) { CardAdditionUiStateHolder() }
-    val isCompletable = remember { derivedStateOf { stateHolder.uiState.isValidCard } }
+        rememberSaveable(card, saver = CardAdditionUiStateHolder.Saver) {
+            CardAdditionUiStateHolder(
+                card,
+            )
+        }
     val sheetState = rememberModalBottomSheetState { false }
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
@@ -54,10 +55,13 @@ fun CardAdditionScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
+            val titleRes =
+                if (card == null) R.string.card_addition_top_bar_title else R.string.card_edit_top_bar_title
             CardAdditionTopBar(
+                title = stringResource(titleRes),
                 onBackClick = onBackClick,
-                onSaveClick = { onSaveClick(stateHolder.uiState.toUiModel()) },
-                isCompletable = isCompletable.value,
+                onSaveClick = { onSaveClick(stateHolder.card) },
+                isCompletable = stateHolder.isCompletable,
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -67,6 +71,7 @@ fun CardAdditionScreen(
                 onBankSelected = { newIssuingBank ->
                     stateHolder.updateCardState(newIssuingBank = newIssuingBank)
                 },
+                onDismissRequest = stateHolder::updateSheetVisible,
             )
         }
         Column(
@@ -85,12 +90,13 @@ fun CardAdditionScreen(
                     Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 14.dp, bottom = 28.dp)
-                        .clickable { stateHolder.updateSheetVisible() }
                         .semantics {
                             contentDescription =
                                 context.getString(R.string.card_addition_card_description)
                         },
                 issuingBank = stateHolder.uiState.issuingBank,
+                onClick = stateHolder::updateSheetVisible,
+                cardContent = { CardInfoContent(stateHolder.card) },
             )
             CardNumberTextField(
                 value = stateHolder.uiState.cardNumber.value,

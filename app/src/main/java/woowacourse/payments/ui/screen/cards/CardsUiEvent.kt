@@ -10,4 +10,8 @@ sealed interface CardsUiEvent : Parcelable {
     data object AddCardSuccess : CardsUiEvent
 
     data object AddCardFailure : CardsUiEvent
+
+    data object EditCardSuccess : CardsUiEvent
+
+    data object EditCardFailure : CardsUiEvent
 }
