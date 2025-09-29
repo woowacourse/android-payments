@@ -11,9 +11,9 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.domain.Card
-import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.cardform.CardFormActivity
 import woowacourse.payments.ui.cardform.CardFormActivity.Companion.KEY_CARD_TO_SAVE
+import woowacourse.payments.ui.getParcelableExtraCompat
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 class CardsActivity : ComponentActivity() {
@@ -21,7 +21,8 @@ class CardsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val stateHolder = rememberSaveable { CardsStateHolder() }
+            val stateHolder =
+                rememberSaveable(saver = CardsStateHolder.Saver) { CardsStateHolder() }
 
             AndroidpaymentsTheme {
                 val launcher =

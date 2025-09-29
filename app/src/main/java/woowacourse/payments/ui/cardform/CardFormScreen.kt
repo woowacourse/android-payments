@@ -39,7 +39,7 @@ fun CardFormScreen(
 ) {
     val context = LocalContext.current
     val stateHolder =
-        rememberSaveable {
+        rememberSaveable(saver = CardInputFieldStateHolder.Saver) {
             CardInputFieldStateHolder().apply {
                 card?.let { setupRegisteredCardInfo(it) }
             }

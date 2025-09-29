@@ -1,62 +1,48 @@
 package woowacourse.payments.ui
 
-import android.os.Parcelable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import woowacourse.payments.domain.Card
 
-@Parcelize
-class CardInputFieldStateHolder : Parcelable {
-    @IgnoredOnParcel
+class CardInputFieldStateHolder {
     var cardNumber by mutableStateOf("")
         private set
 
-    @IgnoredOnParcel
     var expiryDate by mutableStateOf("")
         private set
 
-    @IgnoredOnParcel
     var cardOwner by mutableStateOf("")
         private set
 
-    @IgnoredOnParcel
     var password by mutableStateOf("")
         private set
 
-    @IgnoredOnParcel
     var selectedBankViewType by mutableStateOf(BankViewType.NONE)
         private set
 
-    @IgnoredOnParcel
     val isCardNumberError by derivedStateOf {
         cardNumber.isNotEmpty() && cardNumber.length != CARD_NUMBER_MAX_LENGTH
     }
 
-    @IgnoredOnParcel
     val isExpiryDateError by derivedStateOf {
         expiryDate.isNotEmpty() && (expiryDate.length != EXPIRY_DATE_MAX_LENGTH || expiryDate.toYearMonth() == null)
     }
 
-    @IgnoredOnParcel
     val isCardOwnerError by derivedStateOf {
         cardOwner.length > CARD_OWNER_MAX_LENGTH
     }
 
-    @IgnoredOnParcel
     val isPasswordError by derivedStateOf {
         password.isNotEmpty() && password.length != PASSWORD_MAX_LENGTH
     }
 
-    @IgnoredOnParcel
     val canSave by derivedStateOf {
         isEdited && !isCardNumberError && !isExpiryDateError && !isCardOwnerError && !isPasswordError
     }
 
-    @IgnoredOnParcel
     private val isEdited by derivedStateOf {
         cardBeforeEdit?.let { card ->
             cardNumber != card.cardNumber ||
@@ -67,7 +53,6 @@ class CardInputFieldStateHolder : Parcelable {
         } ?: true
     }
 
-    @IgnoredOnParcel
     private var cardBeforeEdit: Card? by mutableStateOf(null)
 
     fun onCardNumberChange(newValue: String) {
@@ -107,5 +92,27 @@ class CardInputFieldStateHolder : Parcelable {
         private const val EXPIRY_DATE_MAX_LENGTH: Int = 4
         private const val CARD_OWNER_MAX_LENGTH: Int = 30
         private const val PASSWORD_MAX_LENGTH: Int = 4
+
+        val Saver: Saver<CardInputFieldStateHolder, Map<String, Any>> =
+            Saver(
+                save = { state ->
+                    mapOf(
+                        "cardNumber" to state.cardNumber,
+                        "expiryDate" to state.expiryDate,
+                        "cardOwner" to state.cardOwner,
+                        "password" to state.password,
+                        "selectedBankViewType" to state.selectedBankViewType.name,
+                    )
+                },
+                restore = { map ->
+                    CardInputFieldStateHolder().apply {
+                        onCardNumberChange(map["cardNumber"] as String)
+                        onExpiryDateChange(map["expiryDate"] as String)
+                        onCardOwnerChange(map["cardOwner"] as String)
+                        onPasswordChange(map["password"] as String)
+                        onSelectedBankViewTypeChange(BankViewType.valueOf(map["selectedBankViewType"] as String))
+                    }
+                },
+            )
     }
 }

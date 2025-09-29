@@ -1,14 +1,13 @@
 package woowacourse.payments.ui.cards
 
-import android.os.Parcelable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import kotlinx.parcelize.Parcelize
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.listSaver
 import woowacourse.payments.domain.Card
 
-@Parcelize
-class CardsStateHolder : Parcelable {
+class CardsStateHolder {
     val cardsState = mutableStateListOf<Card>()
 
     val isNewCardVisible by derivedStateOf { cardsState.size <= 1 }
@@ -31,5 +30,11 @@ class CardsStateHolder : Parcelable {
 
     companion object {
         private const val INVALID_INDEX: Int = -1
+
+        val Saver: Saver<CardsStateHolder, Any> =
+            listSaver(
+                save = { stateHolder: CardsStateHolder -> stateHolder.cardsState.toList() },
+                restore = { list: List<Card> -> CardsStateHolder().apply { cardsState.addAll(list) } },
+            )
     }
 }
