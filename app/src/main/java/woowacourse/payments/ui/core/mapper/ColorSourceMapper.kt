@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cards.core.mapper
+package woowacourse.payments.ui.core.mapper
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color

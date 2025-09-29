@@ -17,21 +17,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.domain.BankType
-import woowacourse.payments.ui.cards.core.mapper.asPainter
+import woowacourse.payments.ui.core.mapper.asPainter
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.toLocalBankUiModel
 import woowacourse.payments.ui.newcard.banks.BanksTestTag.BANK_CONTAINER_TAG
 
 @Composable
 fun Bank(
-    bankType: BankType,
-    onSelectedCard: (BankType) -> Unit,
+    bankUiModel: BankUiModel,
+    onSelectBank: (BankUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bankUiModel = bankType.toLocalBankUiModel() ?: return
     Column(
         modifier =
             modifier
-                .clickable { onSelectedCard(bankType) }
+                .clickable { onSelectBank(bankUiModel) }
                 .testTag(BANK_CONTAINER_TAG),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -51,8 +51,8 @@ fun Bank(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun BankPreview() {
-    Bank(BankType.BC, {})
+    Bank(BankType.BC.toLocalBankUiModel(), {})
 }

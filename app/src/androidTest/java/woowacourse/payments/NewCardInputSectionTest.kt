@@ -14,23 +14,23 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import woowacourse.payments.ui.newcard.NewCardInputSection
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_EXPIRY_DATE_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_NUMBERS_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_OWNER_NAME_INPUT_TAG
 import woowacourse.payments.ui.newcard.NewCardTestTag.CARD_PASSWORD_INPUT_TAG
-import woowacourse.payments.ui.newcard.model.NewCardUiState
+import woowacourse.payments.ui.newcard.components.NewCardInputSection
+import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 
 @RunWith(AndroidJUnit4::class)
 class NewCardInputSectionTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private fun setContentWithState(initial: NewCardUiState = NewCardUiState()) {
+    private fun setContentWithState(initial: NewCardContentUiState = NewCardContentUiState()) {
         composeTestRule.setContent {
             var state by rememberSaveable { mutableStateOf(initial) }
             NewCardInputSection(
-                newCardUiState = state,
+                newCardContentUiState = state,
                 onCardNumbersChange = { state = state.copy(cardNumber = it) },
                 onCardExpiryDateChange = { state = state.copy(expiryDate = it) },
                 onCardOwnerNameChange = { state = state.copy(ownerName = it) },
@@ -48,7 +48,8 @@ class NewCardInputSectionTest {
             .onNodeWithTag(CARD_NUMBERS_INPUT_TAG)
             .performTextInput("1234567812345678")
 
-        this@NewCardInputSectionTest.composeTestRule
+        this@NewCardInputSectionTest
+            .composeTestRule
             .onNodeWithText("1234-5678-1234-5678")
             .assertIsDisplayed()
     }
@@ -67,7 +68,7 @@ class NewCardInputSectionTest {
     @Test
     fun `잘못된_만료일이면_에러메시지가_보인다`() {
         val initial =
-            NewCardUiState(
+            NewCardContentUiState(
                 cardNumber = "",
                 expiryDate = "13/22",
                 ownerName = "",

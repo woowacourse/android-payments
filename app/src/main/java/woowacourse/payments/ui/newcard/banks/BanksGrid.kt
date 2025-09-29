@@ -3,46 +3,48 @@ package woowacourse.payments.ui.newcard.banks
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.FlowRowScope
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.BankType
-
-private const val COLUMN_COUNT = 4
+import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.toLocalBankUiModel
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun Banks(
-    onSelectCard: (BankType) -> Unit,
+fun BanksGrid(
+    banks: List<BankUiModel>,
+    columnCount: Int,
     modifier: Modifier = Modifier,
+    item: @Composable FlowRowScope.(BankUiModel) -> Unit,
 ) {
-    val bankTypes by remember { mutableStateOf(BankType.entries) }
     FlowRow(
         modifier =
             modifier
-                .fillMaxWidth()
                 .testTag(BanksTestTag.BANK_BOARD_TAG),
         verticalArrangement = Arrangement.SpaceEvenly,
-        maxItemsInEachRow = COLUMN_COUNT,
+        maxItemsInEachRow = columnCount,
     ) {
-        bankTypes.forEach {
-            Bank(
-                it,
-                onSelectCard,
-                Modifier.weight(1f)
-            )
-        }
+        banks.forEach { bank -> item(bank) }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(heightDp = 250, showBackground = true)
 @Composable
 fun BanksPreview() {
-    Banks({})
+    val banks = BankType.entries.map { it.toLocalBankUiModel() }
+    BanksGrid(
+        banks,
+        4,
+    ) { bank ->
+        Bank(
+            bankUiModel = bank,
+            onSelectBank = {},
+            modifier =
+                Modifier
+                    .weight(1f, fill = true),
+        )
+    }
 }

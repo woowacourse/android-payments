@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.newcard.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -10,33 +10,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.newcard.model.NewCardUiState
+import woowacourse.payments.ui.newcard.state.NewCardContentUiState
 
 @Composable
 fun NewCardContent(
-    newCardUiState: NewCardUiState,
+    newCardContentUiState: NewCardContentUiState,
     onClickCardSample: () -> Unit,
     onCardNumbersChange: (String) -> Unit,
     onCardExpiryDateChange: (String) -> Unit,
     onCardOwnerNameChange: (String) -> Unit,
     onCardPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-
-    ) {
+) {
     Column(
         modifier =
-            modifier,
+        modifier,
     ) {
-        Spacer(modifier = Modifier.height(14.dp))
         CardSample(
-            newCardUiState.bankType,
+            newCardContentUiState.bankUiModel,
             Modifier
                 .align(Alignment.CenterHorizontally)
                 .clickable(onClick = onClickCardSample),
         )
         Spacer(modifier = Modifier.height(40.dp))
         NewCardInputSection(
-            newCardUiState = newCardUiState,
+            newCardContentUiState = newCardContentUiState,
             onCardNumbersChange = onCardNumbersChange,
             onCardExpiryDateChange = onCardExpiryDateChange,
             onCardOwnerNameChange = onCardOwnerNameChange,

@@ -4,11 +4,12 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PaymentCardUiModel(
+data class CardUiModel(
     val bankUiModel: BankUiModel,
     val cardNumbers: String,
     val cardExpiry: String,
     val ownerName: String,
+    val id: Long,
 ) : Parcelable {
     fun maskCardNumbersFromBack(
         visibleGroups: Int = 2,
