@@ -55,6 +55,7 @@ fun MultipleCardsScreenPreview() {
                 bankColor = 0xFFFBC02D,
                 maskedNumber = "1234 - 5678 - **** - ****",
                 formattedExpirationDate = "11/24",
+                password = "1243"
             ),
             CardUiModel(
                 id = 2,
@@ -65,6 +66,7 @@ fun MultipleCardsScreenPreview() {
                 bankColor = 0xFFFBC02D,
                 maskedNumber = "1234 - 5678 - **** - ****",
                 formattedExpirationDate = "11/24",
+                password = "1243"
             ),
             CardUiModel(
                 id = 3,
@@ -75,6 +77,7 @@ fun MultipleCardsScreenPreview() {
                 bankColor = 0xFFFBC02D,
                 maskedNumber = "1234 - 5678 - **** - ****",
                 formattedExpirationDate = "11/24",
+                password = "1243"
             ),
         )
     AndroidpaymentsTheme {

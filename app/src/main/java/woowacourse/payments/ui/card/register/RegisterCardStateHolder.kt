@@ -19,7 +19,7 @@ class RegisterCardStateHolder(
             cardNumber = cardToEdit?.number ?: "",
             expirationDate = cardToEdit?.expirationDate ?: "",
             cardHolderName = cardToEdit?.cardHolderName ?: "",
-            password = "",
+            password = cardToEdit?.password ?: "",
             selectedBank = cardToEdit?.bankName?.let { Bank.fromName(it) },
             showBottomSheet = !isEditMode,
         ),
@@ -51,13 +51,29 @@ class RegisterCardStateHolder(
     }
 
     fun saveCard() {
+        val modified =
+            if (isEditMode && cardToEdit != null) {
+                uiState.cardNumber != cardToEdit.number ||
+                    uiState.expirationDate != cardToEdit.expirationDate ||
+                    uiState.cardHolderName != cardToEdit.cardHolderName ||
+                    uiState.password != cardToEdit.password ||
+                    uiState.selectedBank?.name != cardToEdit.bankName
+            } else {
+                true
+            }
+
+        if (isEditMode && !modified) {
+            uiState = uiState.copy(toastMessage = "변경된 내용이 없습니다.")
+            return
+        }
+
         createCard()
             .onSuccess { newCard ->
                 onCardSaved(newCard.toUiModel())
                 val message = if (isEditMode) "카드가 수정되었습니다." else "카드 생성에 성공했습니다."
                 uiState = uiState.copy(toastMessage = message)
-            }.onFailure { errorMessage ->
-                uiState = uiState.copy(toastMessage = errorMessage.message ?: "카드 생성에 실패했습니다.")
+            }.onFailure { error ->
+                uiState = uiState.copy(toastMessage = error.message ?: "카드 생성에 실패했습니다.")
             }
     }
 

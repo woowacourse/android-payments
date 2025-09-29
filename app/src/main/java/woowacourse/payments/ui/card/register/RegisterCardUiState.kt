@@ -26,6 +26,7 @@ fun RegisterCardUiState.toUiModel(): CardUiModel =
         expirationDate = expirationDate,
         formattedExpirationDate = formatExpirationDate(expirationDate),
         cardHolderName = cardHolderName,
+        password = password,
         bankName = selectedBank?.name.orEmpty(),
         bankColor =
             selectedBank?.color()?.toArgb()?.toLong()

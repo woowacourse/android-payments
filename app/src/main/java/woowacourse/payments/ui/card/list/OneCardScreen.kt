@@ -53,7 +53,7 @@ fun OneCardScreenPreview() {
             cardHolderName = "TAMA ONE",
             bankName = "국민카드",
             bankColor = 0xFFFBC02D,
-
+            password = "1243"
         )
 
     AndroidpaymentsTheme {
