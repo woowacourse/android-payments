@@ -10,34 +10,29 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.toUiModel
 
 class PaymentStateHolder {
-    companion object {
-        private const val MIN_CARDS_FOR_TOP_ADD = 2
-    }
-
-    private val _cards = mutableStateListOf<Card>()
-    val cards: List<Card> get() = _cards
+    private val cards = mutableStateListOf<Card>()
 
     val uiCards by derivedStateOf { cards.map { it.toUiModel() } }
-    val showTopAdd by derivedStateOf { cards.size >= MIN_CARDS_FOR_TOP_ADD }
 
+    val showTopAdd by derivedStateOf { cards.size >= MIN_CARDS_FOR_TOP_ADD }
     private var nextId = 1L
 
     private fun assignIdIfNeeded(card: Card): Card = if (card.id == CardUiModel.UNASSIGNED_ID) card.copy(id = nextId++) else card
 
     private fun add(card: Card) {
-        _cards += assignIdIfNeeded(card)
+        cards += assignIdIfNeeded(card)
     }
 
     private fun updateIfChangedById(
         id: Long,
-        edited: Card,
-    ): Boolean {
-        val index = _cards.indexOfFirst { it.id == id }
-        if (index < 0) return false
-        val fixed = assignIdIfNeeded(edited).copy(id = id)
-        if (_cards[index] == fixed) return false
-        _cards[index] = fixed
-        return true
+        card: Card,
+    ) {
+        val index = cards.indexOfFirst { it.id == id }
+        if (index < 0) return
+        val fixed = card.copy(id = id)
+
+        if (cards[index] == fixed) return
+        cards[index] = fixed
     }
 
     fun applyById(
@@ -46,6 +41,10 @@ class PaymentStateHolder {
     ) {
         if (card == null) return
         if (id == null) add(card) else updateIfChangedById(id, card)
+    }
+
+    companion object {
+        private const val MIN_CARDS_FOR_TOP_ADD = 2
     }
 }
 
