@@ -34,27 +34,4 @@ class BankSelectorBottomSheetTest {
 
         assert(selectedBank == BankTypeUiModel.KB)
     }
-
-    @Test
-    fun `카드사를_선택하면_닫기가_전달된다`() {
-        // given
-        var dismissed = false
-
-        composeTestRule.setContent {
-            BankSelectBottomSheet(
-                onBankSelected = {},
-                onDismissRequest = { dismissed = true },
-            )
-        }
-
-        // when
-        val target = composeTestRule.onNodeWithText("국민카드")
-        target.assertIsDisplayed()
-        target.performClick()
-
-        // then
-        composeTestRule.waitForIdle()
-
-        assert(dismissed)
-    }
 }

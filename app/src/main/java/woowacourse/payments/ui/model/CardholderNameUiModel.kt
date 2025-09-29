@@ -7,13 +7,10 @@ import woowacourse.payments.domain.CardholderName
 
 @Parcelize
 data class CardholderNameUiModel(
-    private val name: String = "",
+    val name: String = "",
     val maxLength: Int = CardholderName.MAX_LENGTH,
     val state: State = State.VALID,
 ) : Parcelable {
-    @IgnoredOnParcel
-    val displayedName = name.uppercase()
-
     @IgnoredOnParcel
     val isValid: Boolean = state == State.VALID
 
@@ -25,7 +22,7 @@ data class CardholderNameUiModel(
     companion object {
         fun from(cardholderName: CardholderName): CardholderNameUiModel =
             CardholderNameUiModel(
-                name = cardholderName.value,
+                name = cardholderName.value.uppercase(),
                 maxLength = CardholderName.MAX_LENGTH,
                 state = State.VALID,
             )

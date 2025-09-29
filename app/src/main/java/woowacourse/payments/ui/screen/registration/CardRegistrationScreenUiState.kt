@@ -13,12 +13,13 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Parcelize
 data class CardRegistrationScreenUiState(
+    val cardId: Long? = null,
     val cardNumber: CardNumberUiModel = CardNumberUiModel(),
     val cardExpirationDate: CardExpirationDateUiModel = CardExpirationDateUiModel(),
     val cardholderName: CardholderNameUiModel = CardholderNameUiModel(),
     val cardPassword: CardPasswordUiModel = CardPasswordUiModel(),
     val bankType: BankTypeUiModel = BankTypeUiModel.NOT_SELECTED,
-    val shouldOpenBankSelector: Boolean = true,
+    val registrationState: CardRegistrationState = CardRegistrationState.Register,
 ) : Parcelable {
     @IgnoredOnParcel
     val canRegisterCard: Boolean =
@@ -26,7 +27,12 @@ data class CardRegistrationScreenUiState(
             cardExpirationDate.isValid &&
             cardholderName.isValid &&
             cardPassword.isValid &&
-            bankType != BankTypeUiModel.NOT_SELECTED
+            bankType != BankTypeUiModel.NOT_SELECTED &&
+            when (registrationState) {
+                is CardRegistrationState.Register -> true
+                is CardRegistrationState.Edit ->
+                    registrationState.isCardChanged(toPaymentCardUiModel())
+            }
 
     @IgnoredOnParcel
     val cardNumberErrorMessageResId: Int? =
@@ -69,5 +75,21 @@ data class CardRegistrationScreenUiState(
             number = cardNumber,
             expirationDate = cardExpirationDate,
             cardholderName = cardholderName,
+            password = cardPassword,
         )
+
+    companion object {
+        fun from(paymentCard: PaymentCardUiModel): CardRegistrationScreenUiState =
+            with(paymentCard) {
+                CardRegistrationScreenUiState(
+                    cardId = id,
+                    cardNumber = number,
+                    cardExpirationDate = paymentCard.expirationDate,
+                    cardholderName = paymentCard.cardholderName,
+                    cardPassword = paymentCard.password,
+                    bankType = paymentCard.bankType,
+                    registrationState = CardRegistrationState.from(paymentCard),
+                )
+            }
+    }
 }

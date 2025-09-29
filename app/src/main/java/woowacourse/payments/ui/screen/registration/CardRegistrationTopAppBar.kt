@@ -11,18 +11,20 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardRegistrationTopAppBar(
+    title: String,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
     isSaveButtonEnabled: Boolean = false,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.card_registration_bar_title)) },
+        title = { Text(text = title) },
         navigationIcon = {
             IconButton(
                 onClick = onBackClick,
@@ -45,5 +47,16 @@ fun CardRegistrationTopAppBar(
             }
         },
         modifier = modifier,
+    )
+}
+
+@Preview
+@Composable
+private fun CardRegistrationTopAppBarPreview() {
+    CardRegistrationTopAppBar(
+        title = "카드 추가",
+        onBackClick = {},
+        onSaveClick = {},
+        isSaveButtonEnabled = true,
     )
 }

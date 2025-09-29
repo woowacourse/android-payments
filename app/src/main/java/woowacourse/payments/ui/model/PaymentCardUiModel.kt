@@ -3,13 +3,16 @@ package woowacourse.payments.ui.model
 import android.os.Parcelable
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.domain.PaymentCard
 
 @Parcelize
 data class PaymentCardUiModel(
+    val id: Long = -1L,
     val bankType: BankTypeUiModel,
-    private val number: CardNumberUiModel,
-    private val expirationDate: CardExpirationDateUiModel,
-    private val cardholderName: CardholderNameUiModel,
+    val number: CardNumberUiModel,
+    val expirationDate: CardExpirationDateUiModel,
+    val cardholderName: CardholderNameUiModel,
+    val password: CardPasswordUiModel,
 ) : Parcelable {
     fun displayCardNumber(
         mask: String = DEFAULT_MASK,
@@ -26,7 +29,7 @@ data class PaymentCardUiModel(
         expirationDate.expirationDate.chunked(2).joinToString(separator)
 
     @IgnoredOnParcel
-    val upperCardholderName: String = cardholderName.displayedName.uppercase()
+    val upperCardholderName: String = cardholderName.name.uppercase()
 
     private fun IntRange.coerceInLength(length: Int): IntRange = (first.coerceAtMost(length)..last.coerceAtMost(length - 1))
 
@@ -35,5 +38,19 @@ data class PaymentCardUiModel(
         private const val DEFAULT_NUMBER_SEPARATOR = " - "
         private const val DEFAULT_MASK = "*"
         private val DEFAULT_MASKING_RANGE = 8..15
+
+        fun from(paymentCard: PaymentCard): PaymentCardUiModel =
+            with(paymentCard) {
+                PaymentCardUiModel(
+                    id = id,
+                    bankType =
+                        runCatching { BankTypeUiModel.valueOf(bankType.name) }
+                            .getOrDefault(BankTypeUiModel.NOT_SELECTED),
+                    number = CardNumberUiModel.from(number),
+                    expirationDate = CardExpirationDateUiModel.from(expirationDate),
+                    cardholderName = CardholderNameUiModel.from(cardholderName),
+                    password = CardPasswordUiModel.from(password),
+                )
+            }
     }
 }

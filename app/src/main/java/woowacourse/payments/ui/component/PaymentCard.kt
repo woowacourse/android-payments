@@ -28,6 +28,7 @@ import woowacourse.payments.ui.extension.semanticsContentDescription
 import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
+import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 
@@ -134,6 +135,7 @@ private fun PaymentCardPreview() {
             number = CardNumberUiModel("1234567812345678"),
             expirationDate = CardExpirationDateUiModel("1224"),
             cardholderName = CardholderNameUiModel("JOHN DOE", 30),
+            password = CardPasswordUiModel("1234"),
         )
 
     PaymentCard(

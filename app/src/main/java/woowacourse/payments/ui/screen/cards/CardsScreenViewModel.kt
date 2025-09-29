@@ -20,6 +20,11 @@ class CardsScreenViewModel(
         _uiEvent.value = CardsScreenUiEvent.RegisteredCard
     }
 
+    fun updateCard(updatedCard: PaymentCardUiModel) {
+        _uiState.update { addCard(updatedCard) }
+        _uiEvent.value = CardsScreenUiEvent.UpdatedCard
+    }
+
     companion object {
         val saver: Saver<CardsScreenViewModel, CardsUiState> =
             Saver(

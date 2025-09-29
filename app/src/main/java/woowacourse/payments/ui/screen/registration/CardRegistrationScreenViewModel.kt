@@ -3,16 +3,19 @@ package woowacourse.payments.ui.screen.registration
 import androidx.compose.runtime.saveable.Saver
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 import woowacourse.payments.domain.CardholderName
+import woowacourse.payments.domain.PaymentCards
 import woowacourse.payments.ui.extension.update
 import woowacourse.payments.ui.model.BankTypeUiModel
 import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.model.CardPasswordUiModel
 import woowacourse.payments.ui.model.CardholderNameUiModel
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 class CardRegistrationScreenViewModel(
     initialUiState: CardRegistrationScreenUiState =
@@ -30,15 +33,7 @@ class CardRegistrationScreenViewModel(
     val uiEvent: LiveData<CardRegistrationScreenUiEvent?> = _uiEvent.also { _uiEvent.value = null }
 
     fun updateBank(bankType: BankTypeUiModel) {
-        _uiState.update { copy(bankType = bankType, shouldOpenBankSelector = false) }
-    }
-
-    fun openBankSelectorBottomSheet() {
-        _uiState.update { copy(shouldOpenBankSelector = true) }
-    }
-
-    fun closeBankSelectorBottomSheet() {
-        _uiState.update { copy(shouldOpenBankSelector = false) }
+        _uiState.update { copy(bankType = bankType) }
     }
 
     fun updateCardNumber(cardNumber: String) {
@@ -83,12 +78,32 @@ class CardRegistrationScreenViewModel(
             }
     }
 
-    fun registerCard() {
-        val currentUiState = _uiState.value ?: return
-        if (!currentUiState.canRegisterCard) return
+    fun registerOrUpdateCard() {
+        val currentUiState = uiState.value ?: return
+        if (currentUiState.canRegisterCard.not()) return
 
-        val paymentCard = currentUiState.toPaymentCardUiModel()
-        _uiEvent.value = CardRegistrationScreenUiEvent.RegisteredCard(paymentCard)
+        runCatching {
+            PaymentCards
+                .registerOrUpdate(
+                    id = currentUiState.cardId,
+                    bankType = BankType.valueOf(currentUiState.bankType.name),
+                    number = CardNumber.from(currentUiState.cardNumber.number),
+                    expirationDate = CardExpirationDate.from(currentUiState.cardExpirationDate.expirationDate),
+                    cardholderName = CardholderName.from(currentUiState.cardholderName.name),
+                    password = CardPassword.from(currentUiState.cardPassword.password),
+                ).getOrThrow()
+        }.onSuccess { paymentCard ->
+            val paymentCardUiModel = PaymentCardUiModel.from(paymentCard)
+            when (uiState.value?.registrationState ?: return@onSuccess) {
+                is CardRegistrationState.Register ->
+                    CardRegistrationScreenUiEvent.RegisteredCard(paymentCardUiModel)
+
+                is CardRegistrationState.Edit ->
+                    CardRegistrationScreenUiEvent.UpdatedCard(paymentCardUiModel)
+            }.let(_uiEvent::setValue)
+        }.onFailure {
+            _uiEvent.value = CardRegistrationScreenUiEvent.RegisterCardFailure
+        }
     }
 
     private fun handleCardNumberError(

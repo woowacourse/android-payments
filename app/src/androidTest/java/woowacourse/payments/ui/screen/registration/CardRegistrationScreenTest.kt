@@ -1,24 +1,22 @@
 package woowacourse.payments.ui.screen.registration
 
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsEnabled
 import androidx.compose.ui.test.assertIsNotEnabled
 import androidx.compose.ui.test.assertTextContains
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import org.junit.Rule
 import org.junit.Test
 import org.junit.jupiter.api.assertAll
-import woowacourse.payments.ui.fixture.VALIDATED_CARD_EXPIRATION_DATE
-import woowacourse.payments.ui.fixture.VALIDATED_CARD_HOLDER_NAME
-import woowacourse.payments.ui.fixture.VALIDATED_CARD_NUMBER
-import woowacourse.payments.ui.fixture.VALIDATED_CARD_PASSWORD
+import woowacourse.payments.ui.fixture.PAYMENT_CARD
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.util.onNodeWithRoleAndContentDescription
 
 class CardRegistrationScreenTest {
@@ -69,56 +67,110 @@ class CardRegistrationScreenTest {
     }
 
     @Test
-    fun `카드정보가_모두_정상이면_카드_등록_버튼이_활성화된다`() {
+    fun `카드정보가_모두_정상으로_입력되면_카드_등록_버튼이_활성화된다`() {
         // given
-        setup(
-            CardRegistrationScreenUiState(
-                cardNumber = VALIDATED_CARD_NUMBER,
-                cardExpirationDate = VALIDATED_CARD_EXPIRATION_DATE,
-                cardholderName = VALIDATED_CARD_HOLDER_NAME,
-                cardPassword = VALIDATED_CARD_PASSWORD,
-            ),
-        )
-        val cardRegistrationButton =
-            composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "카드 등록")
+        setup()
+
+        // when
+        composeTestRule
+            .onNode(hasText("국민카드") and hasClickAction())
+            .performClick()
+        composeTestRule
+            .onNodeWithContentDescription("카드 번호 입력란", useUnmergedTree = true)
+            .performTextInput("1234123412341234")
+        composeTestRule
+            .onNodeWithContentDescription("카드 만료일 입력란", useUnmergedTree = true)
+            .performTextInput("1234")
+        composeTestRule
+            .onNodeWithContentDescription("카드 소유자 이름 입력란", useUnmergedTree = true)
+            .performTextInput("DICE")
+        composeTestRule
+            .onNodeWithContentDescription("카드 비밀번호 입력란", useUnmergedTree = true)
+            .performTextInput("1234")
+
         composeTestRule.waitForIdle()
+
+        // then
+        composeTestRule.onNodeWithRoleAndContentDescription(Role.Button, "카드 등록").assertIsEnabled()
+    }
+
+    @Test
+    fun `이미_생성된_카드_정보를_가지고_진입한_경우_화면에_정보가_보인다`() {
+        // given
+        setup(initialUiState = CardRegistrationScreenUiState.from(PAYMENT_CARD))
 
         // then
         assertAll(
             {
                 composeTestRule
+                    .onNode(hasText("국민카드") and hasClickAction())
+                    .assert(hasText("국민카드"))
+            },
+            {
+                composeTestRule
                     .onNodeWithContentDescription("카드 번호 입력란", useUnmergedTree = true)
-                    .assertTextEquals("1234 - 1234 - 1234 - 1234")
+                    .assert(hasText("1234 - 1234 - 1234 - 1234"))
             },
             {
                 composeTestRule
                     .onNodeWithContentDescription("카드 만료일 입력란", useUnmergedTree = true)
-                    .assertTextEquals("12 / 34")
+                    .assert(hasText("12 / 34"))
             },
             {
                 composeTestRule
                     .onNodeWithContentDescription("카드 소유자 이름 입력란", useUnmergedTree = true)
-                    .assertTextEquals("DICE")
+                    .assert(hasText("DICE"))
             },
             {
                 composeTestRule
-                    .onNodeWithText("••••")
-                    .assertIsDisplayed()
+                    .onNodeWithContentDescription("카드 비밀번호 입력란", useUnmergedTree = true)
+                    .assert(hasText("••••"))
             },
-            { cardRegistrationButton.assertIsDisplayed() },
-            { cardRegistrationButton.assertIsEnabled() },
         )
     }
 
-    private fun setup(initialUiState: CardRegistrationScreenUiState? = null) {
+    @Test
+    fun `이미_생성된_카드_정보를_가지고_진입한_경우_변경사항이_존재하지_않으면_버튼이_비활성화_된다`() {
+        // given
+        setup(initialUiState = CardRegistrationScreenUiState.from(PAYMENT_CARD))
+
+        // then
+        composeTestRule
+            .onNodeWithRoleAndContentDescription(Role.Button, "카드 등록")
+            .assertIsNotEnabled()
+    }
+
+    @Test
+    fun `이미_생성된_카드_정보를_가지고_진입한_경우_변경사항이_존재하면_버튼이_활성화_된다`() {
+        // given
+        setup(initialUiState = CardRegistrationScreenUiState.from(PAYMENT_CARD))
+
+        // when
+        composeTestRule
+            .onNodeWithContentDescription("카드 소유자 이름 입력란", useUnmergedTree = true)
+            .performTextInput("ICE")
+
+        // then
+        composeTestRule
+            .onNodeWithRoleAndContentDescription(Role.Button, "카드 등록")
+            .assertIsEnabled()
+    }
+
+    private fun setup(
+        initialUiState: CardRegistrationScreenUiState? = null,
+        onBackClick: () -> Unit = {},
+        onRegisteredCard: (PaymentCardUiModel) -> Unit = {},
+        onUpdatedCard: (PaymentCardUiModel) -> Unit = {},
+    ) {
         composeTestRule.setContent {
             val viewModel =
                 initialUiState?.let(::CardRegistrationScreenViewModel)
                     ?: CardRegistrationScreenViewModel()
             CardRegistrationScreen(
                 viewModel = viewModel,
-                onBackClick = {},
-                onRegistrationComplete = {},
+                onBackClick = onBackClick,
+                onRegisteredCard = onRegisteredCard,
+                onUpdatedCard = onUpdatedCard,
             )
         }
     }
