@@ -88,6 +88,7 @@ fun AddPaymentCardScreen(
                     }
                 },
                 saveEnabled = canSave,
+                mode = state.mode,
             )
         },
     ) { innerPadding ->

@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import woowacourse.payments.R
+import woowacourse.payments.ui.add.AddMode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,9 +21,17 @@ fun NewCardTopBar(
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
     saveEnabled: Boolean = true,
+    mode: AddMode,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.title_add_card)) },
+        title = {
+            Text(
+                when (mode) {
+                    is AddMode.Edit -> stringResource(R.string.title_edit_card)
+                    AddMode.Create -> stringResource(R.string.title_add_card)
+                },
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
