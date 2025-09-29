@@ -22,6 +22,9 @@ class CardRegisterScreenTest {
                 onBackClick = { backClicked = true },
                 onSaveClick = {},
                 isNotValidInput = {},
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
@@ -43,6 +46,9 @@ class CardRegisterScreenTest {
                 onBackClick = {},
                 onSaveClick = {},
                 isNotValidInput = { invalidInputCalled = true },
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
@@ -66,12 +72,15 @@ class CardRegisterScreenTest {
                     if (card.number == "1111222233334444") savedCard = true
                 },
                 isNotValidInput = {},
+                isNotChangedInput = {},
+                editMode = false,
+                onEditingSaveClick = {},
             )
         }
 
         // when:
         composeTestRule.onNodeWithText("카드 번호").performTextInput("1111222233334444")
-        composeTestRule.onNodeWithText("만료일").performTextInput("0421")
+        composeTestRule.onNodeWithText("만료일").performTextInput("0426")
         composeTestRule.onNodeWithText("비밀번호").performTextInput("1234")
 
         composeTestRule

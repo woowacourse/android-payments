@@ -93,12 +93,14 @@ private fun CardCompanyItem(
                 .fillMaxWidth(1f / MAX_ITEM_EACH_ROW_COUNT)
                 .clickable { onClickCardCompany(company) },
     ) {
-        Icon(
-            painter = painterResource(company.icon ?: return),
-            contentDescription = company.title,
-            tint = Color.Unspecified,
-            modifier = Modifier.size(37.dp),
-        )
+        if (company.icon != null) {
+            Icon(
+                painter = painterResource(company.icon),
+                contentDescription = company.title,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(37.dp),
+            )
+        }
         Spacer(modifier = Modifier.height(9.dp))
         Text(
             text = company.title.orEmpty(),

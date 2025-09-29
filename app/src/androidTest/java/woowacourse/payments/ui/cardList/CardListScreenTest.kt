@@ -23,6 +23,7 @@ class CardListScreenTest {
             CardListScreen(
                 cards = emptyList(),
                 onRegistrationClick = { clicked = true },
+                onCardClick = { },
             )
         }
 
@@ -58,6 +59,7 @@ class CardListScreenTest {
             CardListScreen(
                 cards = listOf(card),
                 onRegistrationClick = { clicked = true },
+                onCardClick = {},
             )
         }
 
@@ -84,6 +86,7 @@ class CardListScreenTest {
         val cards =
             listOf(
                 CardUiModel(
+                    id = "1",
                     "1111222233334444",
                     "0421",
                     "CREW",
@@ -91,6 +94,7 @@ class CardListScreenTest {
                     cardCompany = CardCompanyUiType.HANA,
                 ),
                 CardUiModel(
+                    id = "2",
                     "5555666677778888",
                     "0522",
                     "Moong",
@@ -99,7 +103,7 @@ class CardListScreenTest {
                 ),
             )
         composeTestRule.setContent {
-            CardListScreen(cards = cards, onRegistrationClick = {})
+            CardListScreen(cards = cards, onRegistrationClick = {}, onCardClick = {})
         }
 
         // then:

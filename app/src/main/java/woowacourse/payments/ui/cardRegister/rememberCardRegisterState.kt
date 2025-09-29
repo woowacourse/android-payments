@@ -3,9 +3,11 @@ package woowacourse.payments.ui.cardRegister
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import woowacourse.payments.ui.common.model.CardCompanyUiType
+import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
 fun rememberCardRegisterState(
+    card: CardUiModel? = null,
     cardNumber: String = "",
     expiredDate: String = "",
     ownerName: String = "",
@@ -15,11 +17,12 @@ fun rememberCardRegisterState(
 ): CardRegisterState =
     rememberSaveable(saver = CardRegisterState.Saver) {
         CardRegisterState(
-            initialCardNumber = cardNumber,
-            initialExpiredDate = expiredDate,
-            initialOwnerName = ownerName,
-            initialPassword = password,
+            initialCardNumber = card?.number ?: cardNumber,
+            initialExpiredDate = card?.expiredDate ?: expiredDate,
+            initialOwnerName = card?.ownerName ?: ownerName,
+            initialPassword = card?.password ?: password,
             initialIsShowingBottomSheet = isShowingBottomSheet,
-            initialSelectedCardCompany = selectedCardCompany,
+            initialSelectedCardCompany = card?.cardCompany ?: selectedCardCompany,
+            originalCardUiModel = card,
         )
     }

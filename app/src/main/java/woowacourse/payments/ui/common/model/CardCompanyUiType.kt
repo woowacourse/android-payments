@@ -34,16 +34,3 @@ fun CardCompany.toUiType(): CardCompanyUiType =
         CardCompany.HANA -> CardCompanyUiType.HANA
         CardCompany.KB -> CardCompanyUiType.KB
     }
-
-fun CardCompanyUiType.toDomain(): CardCompany =
-    when (this) {
-        CardCompanyUiType.NOT_SELECTED -> CardCompany.OTHER
-        CardCompanyUiType.BC -> CardCompany.BC
-        CardCompanyUiType.SHINHAN -> CardCompany.SHINHAN
-        CardCompanyUiType.KAKAO -> CardCompany.KAKAO
-        CardCompanyUiType.HYUNDAI -> CardCompany.HYUNDAI
-        CardCompanyUiType.WOORI -> CardCompany.WOORI
-        CardCompanyUiType.LOTTE -> CardCompany.LOTTE
-        CardCompanyUiType.HANA -> CardCompany.HANA
-        CardCompanyUiType.KB -> CardCompany.KB
-    }

@@ -37,9 +37,10 @@ import woowacourse.payments.ui.theme.RedFFFF0000
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardRegisterScreen(
+    editMode: Boolean,
     onBackClick: () -> Unit,
     onSaveClick: (card: CardUiModel) -> Unit,
-    isNotValidInput: () -> Unit,
+    onEditingSaveClick: (card: CardUiModel) -> Unit,
     cardRegisterState: CardRegisterState = rememberCardRegisterState(),
 ) {
     val scope = rememberCoroutineScope()
@@ -51,19 +52,23 @@ fun CardRegisterScreen(
     Scaffold(
         topBar = {
             CardRegisterTopBar(
+                editMode = editMode,
                 onBackClick = { onBackClick() },
                 onSaveClick = {
-                    if (cardRegisterState.isValid()) {
-                        onSaveClick(cardRegisterState.cardUiModel)
-                    } else {
-                        isNotValidInput()
+                    val cardUiModel = cardRegisterState.cardUiModel
+                    when {
+                        cardRegisterState.isChanged() && cardRegisterState.isEditingMode() ->
+                            onEditingSaveClick(cardUiModel)
+
+                        else -> onSaveClick(cardUiModel)
                     }
                 },
+                enabled = cardRegisterState.isValidInput() && cardRegisterState.isChanged(),
             )
         },
         modifier = Modifier.fillMaxSize(),
     ) { innerPadding ->
-        if (cardRegisterState.isShowingBottomSheet) {
+        if (cardRegisterState.isShowingBottomSheet && !editMode) {
             CardSelectionModal(
                 modalBottomSheetState = modalBottomSheetState,
                 onDismissRequest = {
@@ -99,9 +104,13 @@ fun CardRegisterScreen(
                         .padding(top = 14.dp)
                         .align(Alignment.CenterHorizontally),
                 card =
-                    CardUiModel(
-                        cardCompany = cardRegisterState.cardCompany,
-                    ),
+                    if (editMode) {
+                        cardRegisterState.cardUiModel
+                    } else {
+                        CardUiModel(
+                            cardCompany = cardRegisterState.cardCompany,
+                        )
+                    },
             )
             PaymentTextField(
                 text = cardRegisterState.cardNumber,
@@ -177,7 +186,7 @@ fun CardRegisterScreen(
                 label = stringResource(R.string.card_password_label),
                 supportingText =
                     {
-                        if (cardRegisterState.isShowingOwnerNameError()) {
+                        if (cardRegisterState.isShowingPasswordError()) {
                             Text(
                                 text = stringResource(R.string.card_password_supporting_text),
                                 color = RedFFFF0000,
@@ -203,6 +212,7 @@ fun CardRegisterScreen(
 private fun CardRegisterScreenPreview() {
     AndroidpaymentsTheme {
         CardRegisterScreen(
+            true,
             {},
             {},
             {},

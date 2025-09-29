@@ -2,10 +2,10 @@ package woowacourse.payments.ui.common.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.domain.model.Card
 
 @Parcelize
 data class CardUiModel(
+    val id: String = "",
     val number: String = "",
     val expiredDate: String = "",
     val ownerName: String? = null,
@@ -19,31 +19,24 @@ data class CardUiModel(
         get() = formatExpiredDate(expiredDate)
 
     private fun formatCardNumber(number: String): String {
-        val visibleNumber = number.take(8).chunked(4).joinToString(" - ")
         if (number.isEmpty()) return ""
-        return "$visibleNumber - **** - ****"
+
+        val visiblePart = number.take(8).chunked(4).joinToString(" - ")
+        val hiddenPart =
+            number
+                .drop(8)
+                .chunked(4) { "*".repeat(it.length) }
+                .joinToString(" - ")
+
+        return listOf(visiblePart, hiddenPart).filter { it.isNotEmpty() }.joinToString(" - ")
     }
 
     private fun formatExpiredDate(date: String): String {
         if (date.isEmpty()) return ""
-        return "${date.take(2)} / ${date.takeLast(2)}"
+
+        val month = date.take(2)
+        val year = date.drop(2)
+
+        return if (year.isEmpty()) month else "$month / $year"
     }
-
-    fun toDomain(): Card =
-        Card(
-            number = number,
-            expiredDate = expiredDate,
-            ownerName = ownerName,
-            password = password,
-            cardCompany = cardCompany.toDomain(),
-        )
 }
-
-fun Card.toUiModel(): CardUiModel =
-    CardUiModel(
-        number = number,
-        expiredDate = expiredDate,
-        ownerName = ownerName,
-        password = password,
-        cardCompany = cardCompany.toUiType(),
-    )

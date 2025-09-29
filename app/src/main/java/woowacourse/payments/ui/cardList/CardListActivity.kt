@@ -7,9 +7,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.platform.LocalContext
 import woowacourse.payments.R
 import woowacourse.payments.ui.cardRegister.CardRegisterActivity
 import woowacourse.payments.ui.common.model.CardUiModel
@@ -22,27 +21,52 @@ class CardListActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
-                val cards = rememberSaveable { mutableStateListOf<CardUiModel>() }
-                val context = LocalContext.current
+                val cards =
+                    rememberSaveable { mutableStateOf(emptyList<CardUiModel>()) }
                 val cardAddLauncher =
                     rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-                        if (activityResult.resultCode == RESULT_OK) {
-                            val newCard: CardUiModel =
-                                activityResult.data?.parcelable(NEW_CARD_KEY)
-                                    ?: return@rememberLauncherForActivityResult
-                            cards += newCard
-                            Toast
-                                .makeText(
-                                    context,
-                                    getString(R.string.registration_card_complete_message),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
+                        when (activityResult.resultCode) {
+                            CardRegisterActivity.NEW_CARD_SAVE_RESULT_OK -> {
+                                val newCard: CardUiModel =
+                                    activityResult.data?.parcelable(NEW_CARD_KEY)
+                                        ?: return@rememberLauncherForActivityResult
+                                cards.value = (cards.value.toMutableList() + newCard).toList()
+                                Toast
+                                    .makeText(
+                                        this,
+                                        getString(R.string.registration_card_complete_message),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                            }
+
+                            CardRegisterActivity.EDIT_CARD_SAVE_RESULT_OK -> {
+                                val newCard: CardUiModel =
+                                    activityResult.data?.parcelable(EDITED_CARD_KEY)
+                                        ?: return@rememberLauncherForActivityResult
+                                cards.value =
+                                    cards.value.map { card ->
+                                        if (card.id == newCard.id) {
+                                            newCard
+                                        } else {
+                                            card
+                                        }
+                                    }
+                                Toast
+                                    .makeText(
+                                        this,
+                                        getString(R.string.edit_card_changed_message),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                            }
                         }
                     }
                 CardListScreen(
-                    cards = cards,
+                    cards = cards.value,
+                    onCardClick = { card: CardUiModel ->
+                        cardAddLauncher.launch(CardRegisterActivity.newIntent(this, true, card))
+                    },
                     onRegistrationClick = {
-                        cardAddLauncher.launch(CardRegisterActivity.newIntent(context))
+                        cardAddLauncher.launch(CardRegisterActivity.newIntent(this))
                     },
                 )
             }
@@ -51,5 +75,6 @@ class CardListActivity : ComponentActivity() {
 
     companion object {
         const val NEW_CARD_KEY = "com.woowacourse.payments.ui.cardList.NEW_CARD_KEY"
+        const val EDITED_CARD_KEY = "com.woowacourse.payments.ui.cardList.EDITED_CARD_KEY"
     }
 }
