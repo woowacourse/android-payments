@@ -26,7 +26,7 @@ fun Card.toUiModel(): CardUiModel {
         id = this.id,
         number = this.cardNumber.number,
         maskedNumber = maskedNumber,
-        expirationDate = formattedExpirationDate,
+        expirationDate = this.expirationDate.expirationDate,
         formattedExpirationDate = formattedExpirationDate,
         cardHolderName = this.cardHolderName.cardHolderName,
         bankName = this.bank.name,
