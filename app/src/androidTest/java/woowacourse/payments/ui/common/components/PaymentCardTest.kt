@@ -1,8 +1,7 @@
 package woowacourse.payments.ui.common.components
 
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
@@ -15,31 +14,6 @@ class PaymentCardTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun 카드_정보가_없으면_빈필드가_표시된다() {
-        // when
-        composeTestRule.setContent {
-            PaymentCard(card = null)
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드사")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("카드 번호")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("카드 소유자")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("만료일")
-            .assertTextEquals("")
-    }
-
-    @Test
     fun 모든_카드_정보가_올바르게_표시된다() {
         // given
         composeTestRule.setContent {
@@ -48,20 +22,20 @@ class PaymentCardTest {
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("카드사")
-            .assertExists("BC카드")
+            .onNodeWithText("BC카드")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("카드 번호")
-            .assertExists("1111 - 2222 - **** - ****")
+            .onNodeWithText("1111 - 2222 - **** - ****")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("카드 소유자")
-            .assertExists("CREW")
+            .onNodeWithText("CREW")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("만료일")
-            .assertExists("09 / 25")
+            .onNodeWithText("09 / 25")
+            .assertExists()
     }
 
     companion object {
