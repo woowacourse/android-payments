@@ -1,12 +1,10 @@
 package woowacourse.payments.ui.screen
 
+import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.AddCardActivity
@@ -15,32 +13,31 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentScreen() {
-    val paymentStateHolder = rememberPaymentStateHolder()
+    val paymentStateHolder = remember { PaymentStateHolder() }
     val context = LocalContext.current
-
-    var editId by remember { mutableStateOf<Long?>(null) }
 
     val cardLauncher =
         rememberLauncherForActivityResult(
             ActivityResultContracts.StartActivityForResult(),
         ) { result ->
-            val id = editId
-            editId = null
-            val card = AddCardActivity.parseResult(result.data)?.toDomain()
-            paymentStateHolder.applyById(id, card)
+            if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
+
+            val cardUiModel =
+                AddCardActivity.parseResult(result.data) ?: return@rememberLauncherForActivityResult
+            val domain = cardUiModel.toDomain()
+
+            val exists = paymentStateHolder.uiCards.any { it.id == cardUiModel.id }
+            paymentStateHolder.addOrUpdateById(if (exists) cardUiModel.id else null, domain)
         }
 
     PaymentContent(
         cards = paymentStateHolder.uiCards,
         showTopAdd = paymentStateHolder.showTopAdd,
-        onAddCardClick = {
-            editId = null
-            cardLauncher.launch(AddCardActivity.newIntent(context))
-        },
-        onCardClick = { id ->
-            val card = paymentStateHolder.uiCards.find { it.id == id } ?: return@PaymentContent
-            editId = card.id
-            cardLauncher.launch(AddCardActivity.newIntent(context, card))
+        onAddCardClick = { cardLauncher.launch(AddCardActivity.newIntent(context)) },
+        onCardClick = { id: String ->
+            val selected =
+                paymentStateHolder.uiCards.firstOrNull { it.id == id } ?: return@PaymentContent
+            cardLauncher.launch(AddCardActivity.newIntent(context, selected))
         },
     )
 }

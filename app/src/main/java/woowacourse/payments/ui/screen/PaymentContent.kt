@@ -15,13 +15,14 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.util.UUID
 
 @Composable
 fun PaymentContent(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (cardId: Long) -> Unit,
+    onCardClick: (cardId: String) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -96,9 +97,9 @@ private fun PaymentScreenThreeCardsPreview() {
     AndroidpaymentsTheme {
         val cards =
             listOf(
-                sampleCard,
-                sampleCard,
-                sampleCard,
+                sampleCard.copy(id = UUID.randomUUID().toString()),
+                sampleCard.copy(id = UUID.randomUUID().toString()),
+                sampleCard.copy(id = UUID.randomUUID().toString()),
             )
         PaymentContent(
             cards = cards,

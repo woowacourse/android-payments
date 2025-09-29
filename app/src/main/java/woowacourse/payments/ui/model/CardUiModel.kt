@@ -7,10 +7,11 @@ import woowacourse.payments.domain.model.Card
 import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.text.CardNumberFormatter
 import woowacourse.payments.ui.text.ExpirationDateFormatter
+import java.util.UUID
 
 @Parcelize
 data class CardUiModel(
-    val id: Long,
+    val id: String,
     val cardCompany: CardCompanyUiModel,
     val cardNumberRaw: String,
     val expirationDateRaw: String,
@@ -24,7 +25,7 @@ data class CardUiModel(
         get() = ExpirationDateFormatter.format(expirationDateRaw)
 
     companion object {
-        const val UNASSIGNED_ID: Long = -1L
+        const val UNASSIGNED_ID: String = ""
         val EMPTY =
             CardUiModel(
                 id = UNASSIGNED_ID,
@@ -40,7 +41,7 @@ data class CardUiModel(
 @SuppressLint("DefaultLocale")
 fun Card.toUiModel(): CardUiModel =
     CardUiModel(
-        id = this.id,
+        id = UUID.randomUUID().toString(),
         cardCompany = type.toUiModel(),
         cardNumberRaw = cardNumber.value,
         expirationDateRaw =

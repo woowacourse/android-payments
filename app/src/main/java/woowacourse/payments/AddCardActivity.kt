@@ -32,26 +32,31 @@ class AddCardActivity : ComponentActivity() {
     }
 
     private fun setCardResultAndFinish(card: Card) {
-        val resultIntent =
-            Intent().apply {
-                putExtra(EXTRA_CARD_RESULT, card.toUiModel())
-            }
-        setResult(RESULT_OK, resultIntent)
+        val preservedId = intent?.getStringExtra(EXTRA_UI_ID)
+        val ui =
+            card
+                .toUiModel()
+                .let { if (!preservedId.isNullOrEmpty()) it.copy(id = preservedId) else it }
+        setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD_RESULT, ui))
         finish()
     }
 
     companion object {
         private const val EXTRA_CARD_RESULT = "EXTRA_CARD_RESULT"
         private const val EXTRA_INITIAL_CARD = "EXTRA_INITIAL_CARD"
+        private const val EXTRA_UI_ID = "EXTRA_UI_ID"
 
         fun newIntent(context: Context): Intent = Intent(context, AddCardActivity::class.java)
 
         fun newIntent(
             context: Context,
-            initial: CardUiModel,
+            initial: CardUiModel? = null,
         ): Intent =
             Intent(context, AddCardActivity::class.java).apply {
-                putExtra(EXTRA_INITIAL_CARD, initial)
+                initial?.let {
+                    putExtra(EXTRA_INITIAL_CARD, it)
+                    putExtra(EXTRA_UI_ID, it.id)
+                }
             }
 
         fun parseInitial(intent: Intent?): CardUiModel? =

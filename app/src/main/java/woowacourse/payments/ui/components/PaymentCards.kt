@@ -27,7 +27,7 @@ fun PaymentCards(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
     onAddCardClick: () -> Unit,
-    onCardClick: (cardId: Long) -> Unit,
+    onCardClick: (cardId: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(

@@ -33,7 +33,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    onClick: (cardId: Long) -> Unit = {},
+    onClick: (cardId: String) -> Unit = {},
     card: CardUiModel = CardUiModel.EMPTY,
 ) {
     val cardCompany = card.cardCompany
