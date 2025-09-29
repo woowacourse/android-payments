@@ -39,6 +39,8 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.util.PaymentCard
 import woowacourse.payments.util.parcelable
 
+private const val ADDABLE_THRESHOLD = 1
+
 @Composable
 fun CardsScreen(
     cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
@@ -68,7 +70,7 @@ fun CardsScreen(
             CardsTopBar(
                 onAddClick = { launchNewCardActivity(context, null, cardAddLauncher) },
                 modifier = Modifier.padding(),
-                isAddable = cardsStateHolder.cards.size > 1,
+                isAddable = cardsStateHolder.cards.size > ADDABLE_THRESHOLD,
             )
         },
     ) { innerPadding ->
