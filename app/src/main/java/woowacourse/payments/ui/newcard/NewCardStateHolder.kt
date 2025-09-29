@@ -2,10 +2,15 @@ package woowacourse.payments.ui.newcard
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
 import woowacourse.payments.domain.model.Bank
+import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.model.NewCardStateHolderSnapshot
 
-class NewCardStateHolder {
+class NewCardStateHolder(
+    val id: Int = UNINITIALIZED_ID,
+) {
     private var _cardNumber by mutableStateOf("")
     val cardNumber get() = _cardNumber
 
@@ -19,6 +24,13 @@ class NewCardStateHolder {
 
     private var _bank by mutableStateOf(Bank())
     val bank get() = _bank
+
+    fun updateInitialCard(initialCard: PaymentCardUiModel) {
+        _cardNumber = initialCard.cardNumber.value
+        _cardHolder = initialCard.cardHolder.value
+        expirationDateUiState.onValueChanged(initialCard.expirationDate.value)
+        _bank = Bank(initialCard.bankType)
+    }
 
     fun updateCardNumber(newCardNumber: String) {
         _cardNumber = newCardNumber
@@ -34,5 +46,42 @@ class NewCardStateHolder {
 
     fun updatePassword(newPassword: String) {
         _password = newPassword
+    }
+
+    fun isModified(initialCard: PaymentCardUiModel?): Boolean {
+        if (initialCard == null) return true
+
+        return cardNumber != initialCard.cardNumber.value ||
+            cardHolder != initialCard.cardHolder.value ||
+            expirationDateUiState.expirationDate.value != initialCard.expirationDate.value ||
+            bank.type != initialCard.bankType
+    }
+
+    companion object {
+        const val UNINITIALIZED_ID = 0
+
+        val NewCardStateHolderSaver: Saver<NewCardStateHolder, Any> =
+            Saver(
+                save = { holder ->
+                    NewCardStateHolderSnapshot(
+                        id = holder.id,
+                        cardNumber = holder.cardNumber,
+                        cardHolder = holder.cardHolder,
+                        rawExpirationDate = holder.expirationDateUiState.rawExpirationDate,
+                        password = holder.password,
+                        bank = holder.bank,
+                    )
+                },
+                restore = { restored ->
+                    val snapshot = restored as NewCardStateHolderSnapshot
+                    return@Saver NewCardStateHolder(snapshot.id).apply {
+                        updateCardNumber(snapshot.cardNumber)
+                        updateCardHolder(snapshot.cardHolder)
+                        expirationDateUiState.onValueChanged(snapshot.rawExpirationDate)
+                        updatePassword(snapshot.password)
+                        updateBank(snapshot.bank)
+                    }
+                },
+            )
     }
 }

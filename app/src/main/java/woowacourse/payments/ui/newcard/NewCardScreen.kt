@@ -11,7 +11,6 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -28,6 +27,8 @@ import woowacourse.payments.ui.model.CardNumberUiModel.Companion.CARD_NUMBER_LEN
 import woowacourse.payments.ui.model.ExpirationDateUiModel.Companion.EXPIRATION_DATE_LENGTH
 import woowacourse.payments.ui.model.PasswordUiModel.Companion.PASSWORD_LENGTH
 import woowacourse.payments.ui.model.PaymentCardUiModel
+import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.NewCardStateHolderSaver
+import woowacourse.payments.ui.newcard.NewCardStateHolder.Companion.UNINITIALIZED_ID
 import woowacourse.payments.ui.newcard.components.CardNumberTextField
 import woowacourse.payments.ui.newcard.components.ExpirationDateTextField
 import woowacourse.payments.ui.newcard.components.NameTextField
@@ -39,26 +40,35 @@ import woowacourse.payments.ui.newcard.dialog.BankBottomSheet
 @Composable
 fun NewCardScreen(
     banks: List<Bank>,
-    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
+    initialCard: PaymentCardUiModel? = null,
     onBackPress: () -> Unit = {},
     onSaved: (Result<PaymentCardUiModel>) -> Unit = {},
 ) {
-    var isShowBottomSheet by rememberSaveable { mutableStateOf(true) }
-
+    var isShowBottomSheet by rememberSaveable { mutableStateOf(initialCard == null) }
+    val newCardStateHolder: NewCardStateHolder =
+        rememberSaveable(saver = NewCardStateHolderSaver) {
+            NewCardStateHolder(initialCard?.id ?: UNINITIALIZED_ID)
+        }
     val modalBottomSheetState =
         rememberModalBottomSheetState(
             confirmValueChange = { false },
         )
 
+    initialCard?.let {
+        newCardStateHolder.updateInitialCard(it)
+    }
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
             NewCardTopBar(
+                isSavable = newCardStateHolder.isModified(initialCard),
                 onBackClick = { onBackPress() },
                 onSaveClick = {
                     onSaved(
                         runCatching {
                             PaymentCardUiModel(
+                                id = newCardStateHolder.id,
                                 bankType = newCardStateHolder.bank.type,
                                 cardNumber = CardNumberUiModel(newCardStateHolder.cardNumber),
                                 cardHolder = CardHolderUiModel(newCardStateHolder.cardHolder),

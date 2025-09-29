@@ -3,16 +3,10 @@ package woowacourse.payments.ui.util.extensions
 import android.content.Intent
 import android.os.Build
 
-inline fun <reified T> Intent.getSerializableCompat(key: String): T =
+inline fun <reified T> Intent.getParcelableCompat(key: String): T? =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getParcelableExtra(key, T::class.java) ?: throw IllegalArgumentException(ERROR_NO_EXTRA_DATA.format(key))
+        getParcelableExtra(key, T::class.java)
     } else {
-        val value = getParcelableExtra(key) as? T
-        if (value is T) {
-            value
-        } else {
-            throw IllegalArgumentException(ERROR_NO_EXTRA_DATA.format(key))
-        }
+        @Suppress("DEPRECATION")
+        getParcelableExtra(key) as? T
     }
-
-const val ERROR_NO_EXTRA_DATA = "[Key : %s] 부가 데이터를 찾을 수 없습니다"

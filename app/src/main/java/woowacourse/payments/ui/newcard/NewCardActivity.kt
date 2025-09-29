@@ -8,19 +8,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import woowacourse.payments.data.BankRepository
+import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.extensions.getParcelableCompat
 
 class NewCardActivity : ComponentActivity() {
-    private val newCardStateHolder = NewCardStateHolder()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val initialCard = intent.getParcelableCompat<PaymentCardUiModel>(EXTRA_NEW_CARD_INITIAL_CARD)
         setContent {
             AndroidpaymentsTheme {
                 NewCardScreen(
                     banks = BankRepository.getBanks(),
-                    newCardStateHolder = newCardStateHolder,
+                    initialCard = initialCard,
                     onBackPress = { finish() },
                     onSaved = { result ->
                         result
@@ -45,7 +46,14 @@ class NewCardActivity : ComponentActivity() {
 
     companion object {
         const val EXTRA_NEW_CARD = "EXTRA_NEW_CARD"
+        const val EXTRA_NEW_CARD_INITIAL_CARD = "EXTRA_NEW_CARD_INITIAL_CARD"
 
-        fun newIntent(context: Context): Intent = Intent(context, NewCardActivity::class.java)
+        fun newIntent(
+            context: Context,
+            paymentCard: PaymentCardUiModel? = null,
+        ): Intent =
+            Intent(context, NewCardActivity::class.java).apply {
+                putExtra(EXTRA_NEW_CARD_INITIAL_CARD, paymentCard)
+            }
     }
 }

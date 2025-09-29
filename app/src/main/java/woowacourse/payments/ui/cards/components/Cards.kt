@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.cards.components
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +29,7 @@ import woowacourse.payments.ui.model.PaymentCardUiModel
 fun Cards(
     scrollState: ScrollState,
     onAddClick: () -> Unit,
+    onEditClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
     cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
 ) {
@@ -46,6 +48,7 @@ fun Cards(
                 cardNumber = card.cardNumber.value,
                 cardHolder = card.cardHolder.value,
                 expirationDate = card.expirationDate.value,
+                modifier = Modifier.clickable { onEditClick(card) },
             )
         }
 
@@ -67,6 +70,7 @@ fun Cards(
 private fun CardsPreview_NoCards() {
     Cards(
         scrollState = rememberScrollState(),
+        onEditClick = {},
         onAddClick = {},
     )
 }
@@ -84,6 +88,7 @@ private fun CardsPreview_OneCard_AddButtonVisible() {
     Cards(
         scrollState = rememberScrollState(),
         onAddClick = {},
+        onEditClick = {},
         cardsStateHolder = CardsStateHolder(listOf(sampleCard)),
     )
 }
@@ -109,6 +114,7 @@ private fun CardsPreview_MultipleCards_AddButtonHidden() {
     Cards(
         scrollState = rememberScrollState(),
         onAddClick = {},
+        onEditClick = {},
         cardsStateHolder = CardsStateHolder(sampleCards),
     )
 }

@@ -10,7 +10,7 @@ import woowacourse.payments.ui.model.ExpirationDateUiModel
 
 @Parcelize
 class ExpirationDateUiState(
-    val rawExpirationDate: String,
+    var rawExpirationDate: String,
 ) : Parcelable {
     @IgnoredOnParcel
     var expirationDate by mutableStateOf(ExpirationDateUiModel(rawExpirationDate))
@@ -24,5 +24,6 @@ class ExpirationDateUiState(
         val newCardNumber = ExpirationDateUiModel(value)
         expirationDate = newCardNumber
         isValid = newCardNumber.isValidMonth()
+        rawExpirationDate = value
     }
 }

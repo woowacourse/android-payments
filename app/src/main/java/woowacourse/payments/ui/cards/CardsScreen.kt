@@ -5,16 +5,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.ui.cards.components.Cards
 import woowacourse.payments.ui.cards.components.CardsTopBar
+import woowacourse.payments.ui.model.PaymentCardUiModel
 
 @Composable
 fun CardsScreen(
-    cardsStateHolder: CardsStateHolder = remember { CardsStateHolder() },
+    cardsStateHolder: CardsStateHolder = CardsStateHolder(),
     onAddClick: () -> Unit = {},
+    onEditClick: (PaymentCardUiModel) -> Unit = {},
 ) {
     val scrollState = rememberScrollState()
 
@@ -31,6 +32,7 @@ fun CardsScreen(
             cardsStateHolder = cardsStateHolder,
             scrollState = scrollState,
             onAddClick = onAddClick,
+            onEditClick = onEditClick,
             modifier = Modifier.padding(innerPadding),
         )
     }
