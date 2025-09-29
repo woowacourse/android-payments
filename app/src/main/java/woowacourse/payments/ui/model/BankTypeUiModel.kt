@@ -1,11 +1,14 @@
 package woowacourse.payments.ui.model
 
+import android.os.Parcelable
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import kotlinx.parcelize.Parcelize
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
 
+@Parcelize
 enum class BankTypeUiModel(
     @StringRes
     val bankName: Int,
@@ -13,7 +16,7 @@ enum class BankTypeUiModel(
     val bankLogo: Int,
     @ColorInt
     val color: Int,
-) {
+) : Parcelable {
     NOT_SELECTED(R.string.bank_name_not_selected, R.drawable.bc_card_img, 0xFF333333.toInt()),
     BC(R.string.bank_name_bc, R.drawable.bc_card_img, 0xFFF04651.toInt()),
     SINHAN(R.string.bank_name_sinhan, R.drawable.sinhan_card_img, 0xFF0046FF.toInt()),

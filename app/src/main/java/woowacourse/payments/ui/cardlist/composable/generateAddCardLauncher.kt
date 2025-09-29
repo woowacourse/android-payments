@@ -7,14 +7,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import woowacourse.payments.R
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.addcard.AddCardActivity
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.util.getParcelableExtraCompat
 
 @Composable
 fun GenerateAddCardLauncher(
-    addCard: (Card) -> Unit,
+    addCard: (CardUiModel) -> Unit,
     context: Context,
 ) = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.StartActivityForResult(),
@@ -22,7 +21,7 @@ fun GenerateAddCardLauncher(
     if (result.resultCode == Activity.RESULT_OK) {
         val card = result.data?.getParcelableExtraCompat<CardUiModel>(AddCardActivity.EXTRA_CARD)
         if (card != null) {
-            addCard(card.toDomain())
+            addCard(card)
             Toast
                 .makeText(
                     context,
