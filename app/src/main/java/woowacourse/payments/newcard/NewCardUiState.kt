@@ -8,7 +8,6 @@ data class NewCardUiState(
     val expiredDate: String = "",
     val ownerName: String = "",
     val password: String = "",
-    val isCardCompanySelected: Boolean = false,
 )
 
 fun Card.toUiState(): NewCardUiState =
