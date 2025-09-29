@@ -44,13 +44,18 @@ class CardInputFieldStateHolder {
     }
 
     private val isEdited by derivedStateOf {
-        cardBeforeEdit?.let { card ->
-            cardNumber != card.cardNumber ||
-                expiryDate.toYearMonth() != card.expiryDate ||
-                cardOwner != (card.cardOwner ?: cardOwner) ||
-                password != card.password ||
-                selectedBankViewType != card.bankType.toBankViewType()
-        } ?: true
+        val originalCard = cardBeforeEdit
+        if (originalCard == null) {
+            true
+        } else {
+            val isCardNumberChanged = cardNumber != originalCard.cardNumber
+            val isExpiryDateChanged = expiryDate.toYearMonth() != originalCard.expiryDate
+            val isCardOwnerChanged = cardOwner != originalCard.cardOwner.orEmpty()
+            val isPasswordChanged = password != originalCard.password
+            val isBankTypeChanged = selectedBankViewType != originalCard.bankType.toBankViewType()
+
+            isCardNumberChanged || isExpiryDateChanged || isCardOwnerChanged || isPasswordChanged || isBankTypeChanged
+        }
     }
 
     private var cardBeforeEdit: Card? by mutableStateOf(null)
