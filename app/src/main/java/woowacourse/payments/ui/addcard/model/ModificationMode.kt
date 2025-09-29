@@ -16,7 +16,7 @@ sealed class ModificationMode : Parcelable {
     @Parcelize
     data class Modify(
         override val cardInfo: CardInfoUiState,
-        val index: Int,
+        val id: Long = cardInfo.id,
     ) : ModificationMode()
 
     companion object {

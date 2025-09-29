@@ -24,7 +24,7 @@ fun AllCardsScreen(
     allCards: AllCardsUiState,
     modifier: Modifier = Modifier,
     onPlusCardClick: () -> Unit = {},
-    onCardClick: (cardInfo: CardInfoUiState, idx: Int) -> Unit = { _, _ -> },
+    onCardClick: (cardInfo: CardInfoUiState) -> Unit = { _ -> },
 ) {
     val scrollState = rememberScrollState()
     Column(

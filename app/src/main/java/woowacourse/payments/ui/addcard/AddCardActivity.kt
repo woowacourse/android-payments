@@ -65,7 +65,7 @@ class AddCardActivity : ComponentActivity() {
                                 saveCard(
                                     ModificationMode.Modify(
                                         cardInfo,
-                                        modificationMode.index,
+                                        modificationMode.id,
                                     ),
                                 )
                             },

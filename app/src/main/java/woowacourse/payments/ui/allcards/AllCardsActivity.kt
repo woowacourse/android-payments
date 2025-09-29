@@ -44,7 +44,7 @@ class AllCardsActivity : ComponentActivity() {
                             is ModificationMode.Modify -> {
                                 allCards.modifyCard(
                                     modificationMode.cardInfo,
-                                    modificationMode.index,
+                                    modificationMode.id,
                                 )
                                 showToast(getString(R.string.allcards_card_modified))
                             }
@@ -84,13 +84,12 @@ class AllCardsActivity : ComponentActivity() {
                                 ),
                             )
                         },
-                        onCardClick = { cardInfo, index ->
+                        onCardClick = { cardInfo ->
                             launcher.launch(
                                 AddCardActivity.newIntent(
                                     this,
                                     ModificationMode.Modify(
                                         cardInfo,
-                                        index,
                                     ),
                                 ),
                             )
@@ -102,8 +101,6 @@ class AllCardsActivity : ComponentActivity() {
     }
 
     companion object {
-        const val CARD_INFO_KEY = "cardInfo"
         const val CARD_MODIFICATION_MODE_KEY = "cardAddMode"
-        const val CARD_MODIFICATION_INDEX_KEY = "cardIndex"
     }
 }

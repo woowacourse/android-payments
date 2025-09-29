@@ -11,6 +11,7 @@ import woowacourse.payments.domain.model.CardInfo
 data class CardInfoUiState(
     private var cardInfoUiModel: CardInfoUiModel = CardInfoUiModel(),
 ) : Parcelable {
+    val id: Long get() = cardInfoUiModel.id
     var cardNumber by mutableStateOf(CardInfo.formatCardNumber(cardInfoUiModel.cardNumber))
         private set
     var expireDate by mutableStateOf(CardInfo.formatExpireDate(cardInfoUiModel.expireDate))

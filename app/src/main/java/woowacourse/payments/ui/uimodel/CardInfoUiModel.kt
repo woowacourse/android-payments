@@ -10,4 +10,9 @@ data class CardInfoUiModel(
     val ownerName: String = "",
     val password: String = "",
     val vendor: VendorUiModel? = null,
-) : Parcelable
+    val id: Long = idx++,
+) : Parcelable {
+    companion object {
+        private var idx = 0L
+    }
+}

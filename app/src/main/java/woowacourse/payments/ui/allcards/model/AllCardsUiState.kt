@@ -27,11 +27,10 @@ data class AllCardsUiState(
 
     fun modifyCard(
         cardInfo: CardInfoUiState,
-        index: Int?,
+        id: Long,
     ) {
-        index?.let {
-            _cards[index] = cardInfo
-        }
+        val idx = _cards.indexOfFirst { it.id == id }
+        _cards[idx] = cardInfo
     }
 
     enum class ViewType {
