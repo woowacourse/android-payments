@@ -21,12 +21,7 @@ class NewCardStateHolder(
         get() = cardCompanyUiState.value != CardCompanyUiState.from(CardCompany.NONE)
 
     init {
-        card?.let {
-            val cardCompany = CardCompany.valueOf(card.cardCompany)
-            cardCompanyUiState.value = CardCompanyUiState.from(cardCompany)
-            newCardUiState.value = card.toUiStateOrNull() ?: NewCardUiState()
-            isEditMode.value = true
-        }
+        setupCardDetails(card)
     }
 
     fun updateCardNumber(value: String) {
@@ -57,4 +52,13 @@ class NewCardStateHolder(
             password = newCardUiState.value.password,
             cardCompany = cardCompanyUiState.value.toDomain(),
         )
+
+    private fun setupCardDetails(card: CardParcelable?) {
+        card?.let {
+            val cardCompany = CardCompany.valueOf(card.cardCompany)
+            cardCompanyUiState.value = CardCompanyUiState.from(cardCompany)
+            newCardUiState.value = card.toUiStateOrNull() ?: NewCardUiState()
+            isEditMode.value = true
+        }
+    }
 }
