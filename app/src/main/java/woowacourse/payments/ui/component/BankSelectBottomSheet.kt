@@ -14,14 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
     sheetState: SheetState,
-    banks: List<BankType>,
-    onBankSelected: (BankType) -> Unit,
+    banks: List<BankUiModel>,
+    onBankSelected: (BankUiModel) -> Unit,
     onDismiss: () -> Unit,
 ) {
     ModalBottomSheet(
@@ -43,7 +43,7 @@ fun BankSelectBottomSheet(
             ) {
                 banks.forEach { bank ->
                     BankItem(
-                        bankType = bank,
+                        bank = bank,
                         onClick = { onBankSelected(bank) },
                         modifier = Modifier,
                     )

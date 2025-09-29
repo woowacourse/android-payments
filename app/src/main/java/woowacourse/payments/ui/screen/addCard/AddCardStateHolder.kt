@@ -9,12 +9,14 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.toPresentation
 
 class AddCardStateHolder(
     initialState: AddCardUiState = AddCardUiState(),
     private val originalState: AddCardUiState = initialState,
 ) {
-    val allBanks: List<BankType> = BankType.entries
+    val allBanks: List<BankUiModel> = BankType.entries.map { it.toPresentation() }
 
     var uiState by mutableStateOf(initialState)
         private set
@@ -37,7 +39,7 @@ class AddCardStateHolder(
         uiState = uiState.copy(password = newPassword)
     }
 
-    fun updateBank(newBank: BankType) {
+    fun updateBank(newBank: BankUiModel) {
         uiState =
             uiState.copy(cardCompanySelectionState = CardCompanySelectionState.Selected(newBank))
     }
