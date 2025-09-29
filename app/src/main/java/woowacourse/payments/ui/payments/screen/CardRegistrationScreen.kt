@@ -127,13 +127,13 @@ fun CardRegistrationScreen(
 @Composable
 private fun CardRegistrationScreenContent(
     uiState: CardRegistrationScreenUiState,
+    onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     bottomSheetState: Boolean,
     cardRegistrationStateHolder: CardRegistrationStateHolder,
-    onBottomSheetStateChanged: (Boolean) -> Unit,
-    onUiStateChanged: (CardRegistrationScreenUiState) -> Unit,
     paymentCardValidator: PaymentCardValidator,
     expiredCardMessage: String,
     modifier: Modifier = Modifier,
+    onBottomSheetStateChanged: (Boolean) -> Unit,
 ) {
     if (bottomSheetState) {
         BankSelectBottomSheet(

@@ -97,9 +97,9 @@ fun CardCatalogScreen(
 @Composable
 fun CardCatalogScreenContent(
     uiState: CardUiState,
-    onAddNewCardClick: () -> Unit,
-    modifier: Modifier = Modifier,
     onModifyCardClick: (PaymentCardUiModel) -> Unit,
+    modifier: Modifier = Modifier,
+    onAddNewCardClick: () -> Unit,
 ) {
     Column(
         modifier =
@@ -131,8 +131,8 @@ fun CardCatalogScreenContent(
 
 @Composable
 private fun EmptyCardCatalogScreenContent(
-    onAddNewCardClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onAddNewCardClick: () -> Unit,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
@@ -152,9 +152,9 @@ private fun EmptyCardCatalogScreenContent(
 @Composable
 private fun SingleCardCatalogScreenContent(
     paymentCardUiModel: PaymentCardUiModel,
-    onAddNewCardClick: () -> Unit,
     onModifyCardClick: (PaymentCardUiModel) -> Unit,
     modifier: Modifier = Modifier,
+    onAddNewCardClick: () -> Unit,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         PaymentCardField(paymentCardUiModel = paymentCardUiModel, modifier = Modifier.clickable {
