@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import woowacourse.payments.edit.EditActivity
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.newCard.NewCardActivity
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -38,11 +39,33 @@ class ListActivity : ComponentActivity() {
                         }
                     }
 
+                val cardEditLauncher =
+                    rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                        if (activityResult.resultCode == RESULT_OK) {
+                            val updatedCard = activityResult.data?.parcelable<CardUiModel>("card")
+                            val index = activityResult.data?.getIntExtra("index", -1) ?: -1
+                            if (updatedCard != null && index != -1) {
+                                val newList = cardState.cards.toMutableList()
+                                newList[index] = updatedCard
+                                cardState = CardScreenUiState.from(newList)
+                            }
+                        }
+                    }
+
                 CardListScreen(
                     uiState = cardState,
                     onAddClick = {
                         val intent = Intent(this, NewCardActivity::class.java)
                         cardAddLauncher.launch(intent)
+                    },
+                    onClick = { card ->
+                        val index = cardState.cards.indexOf(card)
+                        val intent =
+                            Intent(this, EditActivity::class.java).apply {
+                                putExtra("card", card)
+                                putExtra("index", index)
+                            }
+                        cardEditLauncher.launch(intent)
                     },
                 )
             }
@@ -57,6 +80,7 @@ private fun EmptyCardListPreview() {
         CardListScreen(
             CardScreenUiState.from(emptyList()),
             onAddClick = {},
+            onClick = {},
         )
     }
 }
@@ -77,6 +101,7 @@ private fun AddOneCardListPreview() {
                 ),
             ),
             onAddClick = {},
+            onClick = {},
         )
     }
 }
@@ -103,6 +128,7 @@ private fun AddTwoOrMoreCardListPreview() {
                 ),
             ),
             onAddClick = {},
+            onClick = {},
         )
     }
 }

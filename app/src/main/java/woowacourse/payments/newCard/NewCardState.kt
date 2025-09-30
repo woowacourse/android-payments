@@ -3,7 +3,10 @@ package woowacourse.payments.newCard
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.Card
+import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.domain.CardExpiry
+import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
 
@@ -72,10 +75,17 @@ class NewCardState {
             passwordErrorMessage = ""
             isPasswordError = false
         }
-
     }
 
     fun onNameChange(new: String) {
         cardName = new
     }
+
+    fun toCard(company: CardCompany) = Card(
+        company = company,
+        number = CardNumber(cardNumber),
+        expiry = CardExpiry.fromString(cardExpiry),
+        password = CardPassword(cardPassword),
+        name = CardName(cardName),
+    )
 }

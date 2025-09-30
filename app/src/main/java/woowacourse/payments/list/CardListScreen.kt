@@ -1,5 +1,6 @@
 package woowacourse.payments.list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,12 +20,12 @@ import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.newCard.CardScreenUiState
 import woowacourse.payments.ui.PaymentCard
-import woowacourse.payments.ui.PaymentCardState
 
 @Composable
 fun CardListScreen(
     uiState: CardScreenUiState,
     onAddClick: () -> Unit,
+    onClick: (CardUiModel) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -68,7 +69,8 @@ fun CardListScreen(
                 is CardScreenUiState.SingleCard -> {
                     item {
                         PaymentCard(
-                            state = PaymentCardState.CardInfo(uiState.card),
+                            card = uiState.card,
+                            modifier = Modifier.clickable{ onClick(uiState.card) },
                         )
                     }
                     item {
@@ -79,7 +81,8 @@ fun CardListScreen(
                 is CardScreenUiState.MultipleCard -> {
                     items(uiState.cards) { card ->
                         PaymentCard(
-                            state = PaymentCardState.CardInfo(card),
+                            card = card,
+                            modifier = Modifier.clickable{ onClick(card) },
                         )
                     }
                 }

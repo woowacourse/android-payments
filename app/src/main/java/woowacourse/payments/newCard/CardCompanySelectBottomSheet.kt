@@ -22,18 +22,21 @@ fun CardCompanySelectBottomSheet(
     ModalBottomSheet(
         sheetState = modalBottomSheetState,
         onDismissRequest = { onDismissRequest() },
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     ) {
         CardCompanySelectRow(
             onClick = onClick,
-            companies = CardCompany.entries
-                .filter { it != CardCompany.NOT_SELECTED }
-                .map { it.toUiModel() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 40.dp, bottom = 70.dp)
-                .height(227.dp),
+            companies =
+                CardCompany.entries
+                    .filter { it != CardCompany.NOT_SELECTED }
+                    .map { it.toUiModel() },
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 40.dp, bottom = 70.dp)
+                    .height(227.dp),
         )
     }
 }

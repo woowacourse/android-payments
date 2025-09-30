@@ -15,4 +15,8 @@
     <string name="add_new_card_top_bar_title">카드 추가</string>
     <string name="add_new_card_top_bar_back_button">뒤로 가기</string>
     <string name="add_new_card_top_bar_check_button">완료</string>
+    <string name="title_activity_edit">EditActivity</string>
+    <string name="edit_card_top_bar_title">카드 수정</string>
+    <string name="error_card_not_found">카드 정보를 불러올 수 없습니다.</string>
+
 </resources>

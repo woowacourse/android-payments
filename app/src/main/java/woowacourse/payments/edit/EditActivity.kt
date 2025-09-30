@@ -1,7 +1,11 @@
-package woowacourse.payments.newCard
+@file:OptIn(ExperimentalMaterial3Api::class)
 
+package woowacourse.payments.edit
+
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -22,20 +26,42 @@ import woowacourse.payments.domain.CardExpiry
 import woowacourse.payments.domain.CardName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.list.toUiModel
+import woowacourse.payments.newCard.CardCompanySelectBottomSheet
+import woowacourse.payments.newCard.CardSelectionState
+import woowacourse.payments.newCard.NewCardState
+import woowacourse.payments.newCard.NewCardTopBar
 import woowacourse.payments.ui.CardInformationForm
 import woowacourse.payments.ui.CardMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.util.parcelable
 
-class NewCardActivity : ComponentActivity() {
-    @OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
+class EditActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AndroidpaymentsTheme {
+                val card =
+                    intent.parcelable<CardUiModel>("card")
+                        ?: run {
+                            Toast.makeText(this, stringResource(R.string.error_card_not_found), Toast.LENGTH_SHORT).show()
+                            finish()
+                            return@AndroidpaymentsTheme
+                        }
+
                 val newCardState = NewCardState()
-                val cardSelectionState = remember { CardSelectionState() }
+                newCardState.onNameChange(card.name ?: "")
+                newCardState.onNumberChange(card.number)
+                newCardState.onExpiryChange(card.expiry)
+                newCardState.onPasswordChange(card.password)
+
+                val cardSelectionState = CardSelectionState()
+                cardSelectionState.selectedCompany = card.company
+                cardSelectionState.isShowBottomSheet = false
                 val modalBottomSheetState =
                     rememberModalBottomSheetState(
                         confirmValueChange = { false },
@@ -58,29 +84,25 @@ class NewCardActivity : ComponentActivity() {
                 }
 
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
                     topBar = {
                         NewCardTopBar(
-                            title = { Text(text = stringResource(R.string.add_new_card_top_bar_title)) },
+                            title = { Text(text = stringResource(R.string.edit_card_top_bar_title)) },
                             onBackClick = {
                                 finish()
                             },
                             onSaveClick = {
-                                val data =
-                                    Intent().apply {
-                                        putExtra(
-                                            "card",
-                                            Card(
-                                                company = cardSelectionState.selectedCompany,
-                                                number = CardNumber(newCardState.cardNumber),
-                                                expiry = CardExpiry.fromString(newCardState.cardExpiry),
-                                                password = CardPassword(newCardState.cardPassword),
-                                                name = CardName(newCardState.cardName),
-                                            ).toUiModel(),
-                                        )
-                                    }
-                                setResult(RESULT_OK, data)
-                                finish()
+                                val updatedCard = newCardState.toCard(cardSelectionState.selectedCompany)
+
+                                if (updatedCard != card.toCard()) {
+                                    val index = intent.getIntExtra("index", -1)
+                                    val data =
+                                        Intent().apply {
+                                            putExtra("card", updatedCard.toUiModel())
+                                            putExtra("index", index)
+                                        }
+                                    setResult(RESULT_OK, data)
+                                    finish()
+                                }
                             },
                             isSaveEnabled =
                                 runCatching {
@@ -98,7 +120,7 @@ class NewCardActivity : ComponentActivity() {
                     CardInformationForm(
                         newCardState = newCardState,
                         cardSelectionState = cardSelectionState,
-                        mode = CardMode.ADD,
+                        mode = CardMode.EDIT,
                         modifier =
                             Modifier
                                 .fillMaxSize()

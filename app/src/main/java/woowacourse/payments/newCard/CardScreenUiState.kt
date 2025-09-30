@@ -2,20 +2,14 @@ package woowacourse.payments.newCard
 
 import woowacourse.payments.list.CardUiModel
 
-sealed class CardScreenUiState {
-    abstract val cards: List<CardUiModel>
+sealed class CardScreenUiState(
+    val cards: List<CardUiModel>,
+) {
+    data object Empty : CardScreenUiState(emptyList())
 
-    data object Empty : CardScreenUiState() {
-        override val cards = emptyList<CardUiModel>()
-    }
+    data class SingleCard(val card: CardUiModel) : CardScreenUiState(cards = listOf(card))
 
-    data class SingleCard(val card: CardUiModel) : CardScreenUiState() {
-        override val cards = listOf(card)
-    }
-
-    data class MultipleCard(val cardList: List<CardUiModel>) : CardScreenUiState() {
-        override val cards = cardList
-    }
+    data class MultipleCard(val cardList: List<CardUiModel>) : CardScreenUiState(cards = cardList)
 
     companion object {
         fun from(cards: List<CardUiModel>): CardScreenUiState {

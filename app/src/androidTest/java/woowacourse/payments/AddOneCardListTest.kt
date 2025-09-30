@@ -24,7 +24,7 @@ class AddOneCardListTest {
                     CardScreenUiState.from(
                         listOf(
                             CardUiModel(
-                                "1234 - 1234 - **** - ****",
+                                "1234123412341234",
                                 "12 / 34",
                                 "9999",
                                 "PARK JIWON",
@@ -32,6 +32,7 @@ class AddOneCardListTest {
                         ),
                     ),
                 onAddClick = {},
+                onClick = {},
             )
         }
     }

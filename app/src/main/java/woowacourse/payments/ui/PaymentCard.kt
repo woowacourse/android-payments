@@ -20,8 +20,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import woowacourse.payments.domain.CardCompany
 import woowacourse.payments.list.CardUiModel
 import woowacourse.payments.newCard.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -30,17 +28,6 @@ import woowacourse.payments.ui.theme.PaymentCardTextStyle
 
 @Composable
 fun PaymentCard(
-    state: PaymentCardState,
-    modifier: Modifier = Modifier,
-) {
-    when (state) {
-        PaymentCardState.Empty -> EmptyPaymentCard(modifier)
-        is PaymentCardState.CardInfo -> PaymentCardContent(card = state.card)
-    }
-}
-
-@Composable
-fun PaymentCardContent(
     card: CardUiModel,
     modifier: Modifier = Modifier,
 ) {
@@ -51,11 +38,10 @@ fun PaymentCardContent(
                 .size(208.dp, 124.dp)
                 .shadow(8.dp)
                 .background(
-                    color = card?.company?.toUiModel()?.color
-                        ?: CardCompany.NOT_SELECTED.toUiModel().color,
+                    color = card.company.toUiModel().color,
                     shape = RoundedCornerShape(5.dp),
                 )
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
     ) {
         Column(
             modifier =
@@ -86,7 +72,7 @@ fun PaymentCardContent(
                 ) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = card.number,
+                        text = card.maskedNumber,
                         style = PaymentCardTextStyle,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -99,7 +85,7 @@ fun PaymentCardContent(
                             style = PaymentCardTextStyle,
                         )
                         Text(
-                            text = card.expiry,
+                            text = card.maskedExpiry,
                             style = PaymentCardTextStyle,
                         )
                     }
@@ -110,9 +96,7 @@ fun PaymentCardContent(
 }
 
 @Composable
-fun EmptyPaymentCard(
-    modifier: Modifier = Modifier,
-) {
+fun PaymentCard(modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier =
@@ -141,7 +125,9 @@ fun EmptyPaymentCard(
 @Composable
 private fun PaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(state = PaymentCardState.CardInfo(CardUiModel("0000 - 0000 - **** - ****", "10 / 25", "1234", "CREW")))
+        PaymentCard(
+            card = CardUiModel("0000 - 0000 - **** - ****", "10 / 25", "1234", "CREW"),
+        )
     }
 }
 
@@ -149,6 +135,6 @@ private fun PaymentCardPreview() {
 @Composable
 private fun EmptyPaymentCardPreview() {
     AndroidpaymentsTheme {
-        PaymentCard(state = PaymentCardState.Empty)
+        PaymentCard()
     }
 }
