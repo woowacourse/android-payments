@@ -67,7 +67,8 @@ fun PaymentCardField(
                     .background(
                         color = Color(0xFFCBBA64),
                         shape = RoundedCornerShape(4.dp),
-                    ).align(Alignment.CenterStart),
+                    )
+                    .align(Alignment.CenterStart),
         )
 
         if (paymentCardUiModel.bankUiModel != BankUiModel.NOT_SELECTED) {
@@ -140,16 +141,25 @@ private fun PaymentCardFieldPreview(
     }
 }
 
-private class PaymentCardFieldPreviewParameterProvider : PreviewParameterProvider<PaymentCardUiModel?> {
+private class PaymentCardFieldPreviewParameterProvider :
+    PreviewParameterProvider<PaymentCardUiModel?> {
     override val values: Sequence<PaymentCardUiModel> =
         sequenceOf(
-            PaymentCardUiModel("", "", "", bankUiModel = BankUiModel.NOT_SELECTED),
-            PaymentCardUiModel("1111111111111111", "0421", "CREW", BankUiModel.SHINHAN),
             PaymentCardUiModel(
+                0L, "", "", "", bankUiModel = BankUiModel.NOT_SELECTED,
+                cardPassword = "1234"
+            ),
+            PaymentCardUiModel(
+                0L, "1111111111111111", "0421", "CREW", bankUiModel = BankUiModel.KB,
+                cardPassword = "1234"
+            ),
+            PaymentCardUiModel(
+                0L,
                 "2222222222222222",
                 "0522",
                 "ABCDEABCDEABCDEABCDEABCDEABCDE",
-                BankUiModel.KB,
+                bankUiModel = BankUiModel.SHINHAN,
+                cardPassword = "1234"
             ),
         )
 }

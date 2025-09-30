@@ -26,7 +26,25 @@ sealed class CardUiState : Parcelable {
     fun addCard(newCard: PaymentCardUiModel): CardUiState =
         when (this) {
             Empty -> Single(newCard)
-            is Single -> Multiple(persistentListOf(paymentCard, newCard))
-            is Multiple -> Multiple((paymentCards + newCard).toImmutableList())
+            is Single -> {
+                if (paymentCard.id == newCard.id) {
+                    Single(newCard)
+                } else {
+                    Multiple(
+                        persistentListOf(paymentCard, newCard)
+                            .toImmutableList()
+                    )
+                }
+            }
+            is Multiple -> {
+                val index = paymentCards.indexOfFirst { it.id == newCard.id }
+                val updated = if (index >= 0) {
+                    paymentCards.toMutableList().apply { this[index] = newCard }
+                } else {
+                    paymentCards + newCard
+                }
+
+                Multiple(updated.toImmutableList())
+            }
         }
 }

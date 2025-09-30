@@ -24,11 +24,12 @@ private const val CARD_REGISTRATION_TOP_BAR_REGISTRATION_BUTTON_TEST_TAG =
 fun CardRegistrationTopAppBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
+    topBarTitle: String,
     modifier: Modifier = Modifier,
     isSaveButtonEnabled: Boolean = false,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.card_registration_bar_title)) },
+        title = { Text(text = topBarTitle) },
         navigationIcon = {
             IconButton(
                 modifier = Modifier.testTag(CARD_REGISTRATION_TOP_BAR_PREVIOUS_BUTTON_TEST_TAG),

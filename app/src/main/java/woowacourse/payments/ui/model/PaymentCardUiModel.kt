@@ -6,9 +6,11 @@ import woowacourse.payments.ui.payments.model.BankUiModel
 
 @Parcelize
 data class PaymentCardUiModel(
+    val id: Long,
     val number: String,
     val expirationDate: String,
     val cardholderName: String,
+    val cardPassword: String,
     val bankUiModel: BankUiModel,
 ) : Parcelable {
     fun formatNumber(
