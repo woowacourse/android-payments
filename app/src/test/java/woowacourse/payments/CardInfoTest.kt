@@ -1,8 +1,8 @@
 package woowacourse.payments
 
 import org.junit.jupiter.api.Test
-import woowacourse.payments.model.CardInfo
-import woowacourse.payments.model.CardVendor
+import woowacourse.payments.domain.model.CardInfo
+import woowacourse.payments.domain.model.CardVendor
 
 class CardInfoTest {
     @Test

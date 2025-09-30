@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">android-payments</string>
     <string name="payments_addcard_topbar_add_card">카드 추가</string>
+    <string name="payments_addcard_topbar_modify_card">카드 수정</string>
     <string name="payments_allcards_topbar_all_cards">Payments</string>
     <string name="payments_allcards_topbar_add_cards">추가</string>
 
@@ -15,10 +16,12 @@
     <string name="addcard_password_label">비밀번호</string>
     <string name="addcard_password_placeholder">0000</string>
     <string name="addcard_failed_to_add_card">카드 정보를 전부 입력해주세요</string>
+    <string name="addcard_failed_to_modify_card">이전과 카드 정보가 동일합니다</string>
 
     <!--allcards-->
     <string name="allcards_request_add_card">새로운 카드를 등록해주세요</string>
     <string name="allcards_card_added">카드가 추가되었습니다</string>
+    <string name="allcards_card_modified">카드가 수정되었습니다</string>
 
     <!--vendors-->
     <string name="vendor_bc_card">BC카드</string>

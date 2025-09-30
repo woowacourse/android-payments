@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.model.CardVendor
+import woowacourse.payments.domain.model.CardVendor
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 import woowacourse.payments.ui.uimodel.VendorUiModel
@@ -22,7 +22,7 @@ import woowacourse.payments.ui.uimodel.toUiModel
 fun AddCardVendorModal(
     vendorModalUiState: VendorModalUiState,
     onDismissRequest: () -> Unit = {},
-    onVendorItemClick: (VendorUiModel) -> Unit = {},
+    onVendorItemClick: (uiModel: VendorUiModel) -> Unit = {},
 ) {
     if (vendorModalUiState.isVisible) {
         ModalBottomSheet(

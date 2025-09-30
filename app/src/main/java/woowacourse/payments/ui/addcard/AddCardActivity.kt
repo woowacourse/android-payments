@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -13,11 +14,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
+import woowacourse.payments.ui.addcard.model.ModificationMode
+import woowacourse.payments.ui.addcard.model.VendorModalUiModel
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
-import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_INFO_KEY
+import woowacourse.payments.ui.allcards.AllCardsActivity.Companion.CARD_MODIFICATION_MODE_KEY
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.uimodel.CardInfoUiState
 import woowacourse.payments.ui.uimodel.isComplete
+import woowacourse.payments.ui.util.getParcelableCompat
 
 class AddCardActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -25,15 +28,47 @@ class AddCardActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val cardInfo = rememberSaveable { CardInfoUiState() }
-            val vendorModal = rememberSaveable { VendorModalUiState() }
+            val modificationMode =
+                intent.getParcelableCompat<ModificationMode>(CARD_MODIFICATION_MODE_KEY)
+                    ?: return@setContent
+            val cardInfo =
+                rememberSaveable {
+                    modificationMode.cardInfo.copy()
+                }
+            val vendorModal =
+                rememberSaveable {
+                    VendorModalUiState(
+                        VendorModalUiModel(
+                            isVisible = modificationMode is ModificationMode.Add,
+                        ),
+                    )
+                }
 
             AndroidpaymentsTheme {
                 Scaffold(
                     topBar = {
                         AddCardTopbar(
+                            modificationMode = modificationMode,
                             isAddCardEnabled = cardInfo.isComplete(),
-                            onAddCardSuccess = { saveCard(cardInfo) },
+                            isModificationEnabled =
+                                ModificationMode.isModificationEnabled(
+                                    previous = modificationMode.cardInfo,
+                                    current = cardInfo,
+                                ),
+                            onAddCardSuccess = {
+                                saveCard(
+                                    ModificationMode.Add(cardInfo),
+                                )
+                            },
+                            onModifyCardSuccess = {
+                                if (modificationMode !is ModificationMode.Modify) return@AddCardTopbar
+                                saveCard(
+                                    ModificationMode.Modify(
+                                        cardInfo,
+                                        modificationMode.id,
+                                    ),
+                                )
+                            },
                             onBackClick = { finish() },
                         )
                     },
@@ -53,13 +88,22 @@ class AddCardActivity : ComponentActivity() {
         }
     }
 
-    private fun saveCard(cardInfo: CardInfoUiState) {
+    private fun saveCard(modificationMode: ModificationMode) {
         setResult(
             RESULT_OK,
             Intent().apply {
-                putExtra(CARD_INFO_KEY, cardInfo)
+                putExtra(CARD_MODIFICATION_MODE_KEY, modificationMode)
             },
         )
         finish()
+    }
+
+    companion object {
+        fun newIntent(
+            context: Context,
+            modificationMode: ModificationMode,
+        ) = Intent(context, AddCardActivity::class.java).apply {
+            putExtra(CARD_MODIFICATION_MODE_KEY, modificationMode)
+        }
     }
 }

@@ -24,6 +24,7 @@ fun AllCardsScreen(
     allCards: AllCardsUiState,
     modifier: Modifier = Modifier,
     onPlusCardClick: () -> Unit = {},
+    onCardClick: (cardInfo: CardInfoUiState) -> Unit = { _ -> },
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -32,8 +33,14 @@ fun AllCardsScreen(
     ) {
         when (allCards.viewType) {
             AllCardsUiState.ViewType.EMPTY -> EmptyCard(onPlusCardClick)
-            AllCardsUiState.ViewType.SINGLE -> SingleCard(allCards.cards, onPlusCardClick)
-            AllCardsUiState.ViewType.MULTIPLE -> MultipleCards(allCards.cards)
+            AllCardsUiState.ViewType.SINGLE ->
+                SingleCard(
+                    allCards.cards,
+                    onPlusCardClick,
+                    onCardClick,
+                )
+
+            AllCardsUiState.ViewType.MULTIPLE -> MultipleCards(allCards.cards, onCardClick)
         }
     }
 }

@@ -17,13 +17,16 @@ import androidx.compose.ui.test.performTextInput
 import androidx.compose.ui.test.pressKey
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.model.CardInfo
+import woowacourse.payments.domain.model.CardInfo
+import woowacourse.payments.ui.addcard.AddCardScreen
 import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField
 import woowacourse.payments.ui.addcard.component.PasswordTextField
+import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.uimodel.CardInfoUiModel
 import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.uimodel.VendorUiModel
 
 @OptIn(ExperimentalTestApi::class)
 class AddCardScreenTest {

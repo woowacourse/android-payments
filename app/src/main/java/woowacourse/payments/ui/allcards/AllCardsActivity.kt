@@ -1,9 +1,6 @@
 package woowacourse.payments.ui.allcards
 
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -12,16 +9,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.AddCardActivity
+import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.allcards.component.AllCardsTopbar
 import woowacourse.payments.ui.allcards.model.AllCardsUiState
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.uimodel.CardInfoUiState
+import woowacourse.payments.ui.util.getParcelableCompat
+import woowacourse.payments.ui.util.showToast
 
 class AllCardsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +30,24 @@ class AllCardsActivity : ComponentActivity() {
             val launcher =
                 rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                     if (result.resultCode == RESULT_OK) {
-                        result.data?.getCardInfoCompat()?.let {
-                            allCards.addCard(it)
+                        val modificationMode =
+                            result.data?.getParcelableCompat<ModificationMode>(
+                                CARD_MODIFICATION_MODE_KEY,
+                            ) ?: return@rememberLauncherForActivityResult
+
+                        when (modificationMode) {
+                            is ModificationMode.Add -> {
+                                allCards.addCard(modificationMode.cardInfo)
+                                showToast(getString(R.string.allcards_card_added))
+                            }
+
+                            is ModificationMode.Modify -> {
+                                allCards.modifyCard(
+                                    modificationMode.cardInfo,
+                                    modificationMode.id,
+                                )
+                                showToast(getString(R.string.allcards_card_modified))
+                            }
                         }
                     }
                 }
@@ -46,21 +60,16 @@ class AllCardsActivity : ComponentActivity() {
                                 Modifier
                                     .padding(horizontal = 20.dp),
                             onPlusCardClick = {
-                                launcher.launch(Intent(this, AddCardActivity::class.java))
+                                launcher.launch(
+                                    AddCardActivity.newIntent(
+                                        this,
+                                        ModificationMode.Add(),
+                                    ),
+                                )
                             },
                         )
                     },
                 ) { padding ->
-                    LaunchedEffect(allCards.cards.size) {
-                        if (allCards.viewType != AllCardsUiState.ViewType.EMPTY) {
-                            Toast
-                                .makeText(
-                                    this@AllCardsActivity,
-                                    getString(R.string.allcards_card_added),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                        }
-                    }
                     AllCardsScreen(
                         allCards = allCards,
                         modifier =
@@ -68,7 +77,22 @@ class AllCardsActivity : ComponentActivity() {
                                 .padding(padding)
                                 .fillMaxWidth(),
                         onPlusCardClick = {
-                            launcher.launch(Intent(this, AddCardActivity::class.java))
+                            launcher.launch(
+                                AddCardActivity.newIntent(
+                                    this,
+                                    ModificationMode.Add(),
+                                ),
+                            )
+                        },
+                        onCardClick = { cardInfo ->
+                            launcher.launch(
+                                AddCardActivity.newIntent(
+                                    this,
+                                    ModificationMode.Modify(
+                                        cardInfo,
+                                    ),
+                                ),
+                            )
                         },
                     )
                 }
@@ -76,14 +100,7 @@ class AllCardsActivity : ComponentActivity() {
         }
     }
 
-    private fun Intent.getCardInfoCompat() =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            getParcelableExtra(CARD_INFO_KEY, CardInfoUiState::class.java)
-        } else {
-            getParcelableExtra(CARD_INFO_KEY)
-        }
-
     companion object {
-        const val CARD_INFO_KEY = "cardInfo"
+        const val CARD_MODIFICATION_MODE_KEY = "cardAddMode"
     }
 }

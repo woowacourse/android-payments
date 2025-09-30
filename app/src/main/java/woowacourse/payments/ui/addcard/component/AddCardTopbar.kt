@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.addcard.component
 
-import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -14,19 +13,30 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
+import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.util.showToast
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun AddCardTopbar(
+    modificationMode: ModificationMode,
     isAddCardEnabled: Boolean = false,
+    isModificationEnabled: Boolean = false,
     onAddCardSuccess: () -> Unit = {},
+    onModifyCardSuccess: () -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
     TopAppBar(
         title = {
-            Text(text = stringResource(id = R.string.payments_addcard_topbar_add_card))
+            Text(
+                text =
+                    when (modificationMode) {
+                        is ModificationMode.Add -> stringResource(R.string.payments_addcard_topbar_add_card)
+                        is ModificationMode.Modify -> stringResource(R.string.payments_addcard_topbar_modify_card)
+                    },
+            )
         },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
@@ -38,15 +48,20 @@ fun AddCardTopbar(
         },
         actions = {
             IconButton(onClick = {
-                if (isAddCardEnabled) {
-                    onAddCardSuccess()
-                } else {
-                    Toast
-                        .makeText(
-                            context,
-                            context.getString(R.string.addcard_failed_to_add_card),
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                if (!isAddCardEnabled) {
+                    context.showToast(context.getString(R.string.addcard_failed_to_add_card))
+                    return@IconButton
+                }
+                when (modificationMode) {
+                    is ModificationMode.Add -> onAddCardSuccess()
+
+                    is ModificationMode.Modify -> {
+                        if (isModificationEnabled) {
+                            onModifyCardSuccess()
+                        } else {
+                            context.showToast(context.getString(R.string.addcard_failed_to_modify_card))
+                        }
+                    }
                 }
             }) {
                 Icon(
@@ -62,6 +77,8 @@ fun AddCardTopbar(
 @Composable
 private fun AddCardTopbarPreView() {
     AndroidpaymentsTheme {
-        AddCardTopbar()
+        AddCardTopbar(
+            modificationMode = ModificationMode.Add(),
+        )
     }
 }

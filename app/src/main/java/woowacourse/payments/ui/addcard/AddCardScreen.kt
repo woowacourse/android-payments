@@ -11,14 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import woowacourse.payments.R
 import woowacourse.payments.ui.addcard.component.AddCardTopbar
 import woowacourse.payments.ui.addcard.component.AddCardVendorModal
 import woowacourse.payments.ui.addcard.component.CardNumberTextField
 import woowacourse.payments.ui.addcard.component.ExpireDateTextField
 import woowacourse.payments.ui.addcard.component.OwnerNameTextField
 import woowacourse.payments.ui.addcard.component.PasswordTextField
+import woowacourse.payments.ui.addcard.model.ModificationMode
 import woowacourse.payments.ui.addcard.model.VendorModalUiState
 import woowacourse.payments.ui.component.Card
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -90,7 +93,9 @@ private fun AddCardScreenPreview() {
     AndroidpaymentsTheme {
         Scaffold(
             topBar = {
-                AddCardTopbar()
+                AddCardTopbar(
+                    ModificationMode.Add(),
+                )
             },
         ) { paddingValues ->
             AddCardScreen(
