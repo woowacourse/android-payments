@@ -1,5 +1,6 @@
 package woowacourse.payments.ui.addcard
 
+import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -16,14 +17,16 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCardTopBar(
+fun CardTopBar(
+    @StringRes
+    titleResId: Int,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     isOnSaveClickable: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.add_card_tool_bar_title)) },
+        title = { Text(stringResource(titleResId)) },
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {
                 Icon(
@@ -47,7 +50,8 @@ fun AddCardTopBar(
 @Preview(showBackground = true)
 @Composable
 private fun AddCardTopBarPreview() {
-    AddCardTopBar(
+    CardTopBar(
+        titleResId = R.string.add_card_tool_bar_title,
         onBackClick = {},
         onSaveClick = {},
         isOnSaveClickable = true,
@@ -57,7 +61,8 @@ private fun AddCardTopBarPreview() {
 @Preview(showBackground = true)
 @Composable
 private fun AddCardTopBarDisabledPreview() {
-    AddCardTopBar(
+    CardTopBar(
+        titleResId = R.string.add_card_tool_bar_title,
         onBackClick = {},
         onSaveClick = {},
         isOnSaveClickable = false,

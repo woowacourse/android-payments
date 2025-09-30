@@ -5,11 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankTypeUiModel
 
 @Composable
 fun BankImage(
-    bank: BankType,
+    bank: BankTypeUiModel,
     modifier: Modifier = Modifier,
 ) {
     Image(

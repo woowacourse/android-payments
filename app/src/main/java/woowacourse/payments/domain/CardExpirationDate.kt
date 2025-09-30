@@ -1,22 +1,16 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import java.time.YearMonth
 
-@Parcelize
 data class CardExpirationDate(
     val month: String = "",
     val year: String = "",
-) : Parcelable {
+) {
     init {
         require(month.length <= DATE_LENGTH)
         require(year.length <= DATE_LENGTH)
     }
-
-    fun toCombinedFormat(): String = month + year
-
-    fun toFormattedString(separator: String): String = month + separator + year
 
     fun isValid(): Boolean {
         if (month.isBlank() && year.isBlank()) return true
@@ -30,6 +24,12 @@ data class CardExpirationDate(
         val today = YearMonth.now()
         return !expirationMonth.isBefore(today)
     }
+
+    fun toUiModel() =
+        CardExpirationDateUiModel(
+            month = month,
+            year = year,
+        )
 
     companion object {
         const val DATE_INPUT_MAX_LENGTH = 4

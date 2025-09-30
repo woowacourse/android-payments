@@ -11,10 +11,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.OwnerName.Companion.CARD_OWNER_MAX_LENGTH
+import woowacourse.payments.ui.model.OwnerNameUiModel
 
 @Composable
 fun CardOwnerField(
-    cardOwner: OwnerName,
+    cardOwner: OwnerNameUiModel,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
@@ -43,6 +44,6 @@ fun CardOwnerField(
 @Composable
 private fun CardOwnerFieldPreview() {
     CardOwnerField(
-        cardOwner = OwnerName.fromRawInput(""),
+        cardOwner = OwnerName.fromRawInput("").toUiModel(),
     )
 }

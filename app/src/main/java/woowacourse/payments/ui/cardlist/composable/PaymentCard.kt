@@ -47,14 +47,15 @@ private fun PaymentCardPreview() {
     PaymentCard(
         content = {
             RegisterPaymentCard(
-                card = Card(
-                    bank = BankType.BC,
-                    number = CardNumber.fromRawInput("1234123412341234"),
-                    expirationDate = CardExpirationDate.fromRawInput("12/34"),
-                    ownerName = OwnerName.fromRawInput("Yerin"),
-                    password = Password.fromRawInput("12")
-                )
+                card =
+                    Card(
+                        bank = BankType.BC,
+                        number = CardNumber.fromRawInput("1234123412341234"),
+                        expirationDate = CardExpirationDate.fromRawInput("12/34"),
+                        ownerName = OwnerName.fromRawInput("Yerin"),
+                        password = Password.fromRawInput("12"),
+                    ).toUiModel(),
             )
-        }
+        },
     )
 }

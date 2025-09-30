@@ -3,6 +3,7 @@ package woowacourse.payments.domain
 import android.os.Parcelable
 import androidx.core.text.isDigitsOnly
 import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.model.PasswordUiModel
 
 @Parcelize
 data class Password(
@@ -13,9 +14,12 @@ data class Password(
         require(password.length <= CARD_PASSWORD_MAX_LENGTH)
     }
 
-    override fun toString(): String = password
-
     fun isValid(): Boolean = password.length == CARD_PASSWORD_MAX_LENGTH
+
+    fun toUiModel(): PasswordUiModel =
+        PasswordUiModel(
+            password = password,
+        )
 
     companion object {
         const val CARD_PASSWORD_MAX_LENGTH = 4

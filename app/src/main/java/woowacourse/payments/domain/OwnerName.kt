@@ -1,17 +1,18 @@
 package woowacourse.payments.domain
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import woowacourse.payments.ui.model.OwnerNameUiModel
 
-@Parcelize
 data class OwnerName(
     val name: String = "",
-) : Parcelable {
+) {
     init {
         require(name.length <= CARD_OWNER_MAX_LENGTH)
     }
 
-    override fun toString(): String = name
+    fun toUiModel(): OwnerNameUiModel =
+        OwnerNameUiModel(
+            name = name,
+        )
 
     companion object {
         const val CARD_OWNER_MAX_LENGTH = 30

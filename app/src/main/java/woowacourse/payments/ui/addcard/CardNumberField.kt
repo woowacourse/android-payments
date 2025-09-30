@@ -9,12 +9,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardNumber
+import woowacourse.payments.ui.model.CardNumberUiModel
 import woowacourse.payments.ui.util.CardNumberVisualTransformation
 
 @Composable
 fun CardNumberField(
-    cardNumber: CardNumber,
+    cardNumber: CardNumberUiModel,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
@@ -37,6 +37,6 @@ fun CardNumberField(
 @Composable
 private fun CardNumberFieldPreview() {
     CardNumberField(
-        cardNumber = CardNumber.fromRawInput(""),
+        cardNumber = CardNumberUiModel("0000", "0000", "0000", "0000"),
     )
 }

@@ -9,19 +9,21 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.model.CardScreenCategory
+import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.util.getParcelableExtraCompat
 
-class AddCardActivity : ComponentActivity() {
+class EditCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var card by remember { mutableStateOf(Card()) }
-            var isSheetVisible by remember { mutableStateOf(true) }
+            val initCard = requireNotNull(intent.getParcelableExtraCompat<CardUiModel>(EXTRA_CARD)).toDomain()
+            var card by remember { mutableStateOf(initCard) }
+            var isSheetVisible by remember { mutableStateOf(false) }
             CardScreen(
                 card = card,
-                cardScreenCategory = CardScreenCategory.Add,
+                cardScreenCategory = CardScreenCategory.Edit,
                 onBackClick = { finish() },
                 onSaveClick = {
                     val resultIntent = Intent()
@@ -30,14 +32,14 @@ class AddCardActivity : ComponentActivity() {
                     finish()
                 },
                 onCardChange = { newCard -> card = newCard },
-                isCardSavable = card.isValid(),
                 isSheetVisible = isSheetVisible,
                 onChangeSheetVisible = { isOpen -> isSheetVisible = isOpen },
+                isCardSavable = card.isValid() && card != initCard,
             )
         }
     }
 
     companion object {
-        const val EXTRA_CARD = "card"
+        const val EXTRA_CARD = "EXTRA_CARD"
     }
 }

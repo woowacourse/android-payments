@@ -10,13 +10,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.CardExpirationDate
+import woowacourse.payments.ui.model.CardExpirationDateUiModel
 import woowacourse.payments.ui.util.CardExpirationDateVisualTransformation
 
 @Composable
 fun ExpirationDateField(
-    expirationDate: CardExpirationDate,
-    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
+    isValid: Boolean,
+    expirationDate: CardExpirationDateUiModel,
+    modifier: Modifier = Modifier,
 ) {
     OutlinedTextField(
         value = expirationDate.toCombinedFormat(),
@@ -24,9 +26,9 @@ fun ExpirationDateField(
         modifier = modifier,
         placeholder = { Text(stringResource(R.string.add_card_expiration_date_placeholder_text)) },
         label = { Text(stringResource(R.string.add_card_expiration_date_label_text)) },
-        isError = expirationDate.isValid().not(),
+        isError = isValid.not(),
         supportingText = {
-            if (expirationDate.isValid().not()) {
+            if (isValid.not()) {
                 Text(
                     stringResource(R.string.add_card_expiration_date_supporting_error_text),
                 )
@@ -44,7 +46,8 @@ fun ExpirationDateField(
 @Composable
 private fun ExpirationDateFieldPreview() {
     ExpirationDateField(
-        expirationDate = CardExpirationDate.fromRawInput(""),
+        expirationDate = CardExpirationDate.fromRawInput("").toUiModel(),
         onValueChange = {},
+        isValid = true,
     )
 }

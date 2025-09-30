@@ -11,10 +11,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.domain.Password
+import woowacourse.payments.ui.model.PasswordUiModel
 
 @Composable
 fun PasswordField(
-    password: Password,
+    password: PasswordUiModel,
     modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit = {},
 ) {
@@ -34,6 +35,6 @@ fun PasswordField(
 @Composable
 private fun PasswordFieldPreview() {
     PasswordField(
-        password = Password.fromRawInput(""),
+        password = Password.fromRawInput("").toUiModel(),
     )
 }
