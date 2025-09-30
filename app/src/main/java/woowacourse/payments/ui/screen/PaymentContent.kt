@@ -1,6 +1,5 @@
 package woowacourse.payments.ui.screen
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,15 +12,17 @@ import woowacourse.payments.domain.model.CardCompanyType
 import woowacourse.payments.ui.components.PaymentCards
 import woowacourse.payments.ui.components.PaymentTopBar
 import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.model.CardUiModel.Companion.UNASSIGNED_ID
 import woowacourse.payments.ui.model.toUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
+import java.util.UUID
 
 @Composable
 fun PaymentContent(
     cards: List<CardUiModel>,
     showTopAdd: Boolean,
-    canAddMore: Boolean,
     onAddCardClick: () -> Unit,
+    onCardClick: (cardId: String) -> Unit,
 ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -34,8 +35,9 @@ fun PaymentContent(
     ) { innerPadding ->
         PaymentCards(
             cards = cards,
-            canAddMore = canAddMore,
             onAddCardClick = onAddCardClick,
+            onCardClick = onCardClick,
+            showTopAdd = showTopAdd,
             modifier =
                 Modifier
                     .padding(innerPadding)
@@ -52,8 +54,8 @@ private fun PaymentScreenEmptyPreview() {
         PaymentContent(
             cards = emptyList(),
             showTopAdd = false,
-            canAddMore = true,
             onAddCardClick = {},
+            onCardClick = {},
         )
     }
 }
@@ -64,17 +66,18 @@ private fun PaymentScreenOneCardPreview() {
     AndroidpaymentsTheme {
         val sampleCard =
             CardUiModel(
+                id = UNASSIGNED_ID,
                 cardCompany = CardCompanyType.BC.toUiModel(),
-                cardNumber = "1111 - 2222 - **** - ****",
-                expirationDate = "04 / 21",
+                cardNumberRaw = "1111222233334444",
+                expirationDateRaw = "0421",
                 userName = "GAHYUNKIM",
                 password = "1234",
             )
         PaymentContent(
             cards = listOf(sampleCard),
             showTopAdd = false,
-            canAddMore = true,
             onAddCardClick = {},
+            onCardClick = {},
         )
     }
 }
@@ -84,24 +87,25 @@ private fun PaymentScreenOneCardPreview() {
 private fun PaymentScreenThreeCardsPreview() {
     val sampleCard =
         CardUiModel(
+            id = UNASSIGNED_ID,
             cardCompany = CardCompanyType.BC.toUiModel(),
-            cardNumber = "1111 - 2222 - **** - ****",
-            expirationDate = "04 / 21",
+            cardNumberRaw = "1111222233334444",
+            expirationDateRaw = "0421",
             userName = "JOY",
             password = "1234",
         )
     AndroidpaymentsTheme {
         val cards =
             listOf(
-                sampleCard,
-                sampleCard,
-                sampleCard,
+                sampleCard.copy(id = UUID.randomUUID().toString()),
+                sampleCard.copy(id = UUID.randomUUID().toString()),
+                sampleCard.copy(id = UUID.randomUUID().toString()),
             )
         PaymentContent(
             cards = cards,
             showTopAdd = true,
-            canAddMore = false,
             onAddCardClick = {},
+            onCardClick = {},
         )
     }
 }

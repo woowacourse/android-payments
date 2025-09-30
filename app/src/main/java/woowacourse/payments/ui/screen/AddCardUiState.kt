@@ -14,10 +14,4 @@ data class AddCardUiState(
     val passwordError: ValidationErrorType? = null,
     val selectedCompany: CardCompanyType = CardCompanyType.NOT_SELECTED,
     val showCompanySheet: Boolean = true,
-) {
-    val isSaveEnabled: Boolean
-        get() =
-            selectedCompany != CardCompanyType.NOT_SELECTED &&
-                numberError == null && expirationError == null &&
-                userNameError == null && passwordError == null
-}
+)

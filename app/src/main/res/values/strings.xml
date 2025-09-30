@@ -37,6 +37,10 @@
     <string name="payment_add_new_card_prompt">새로운 카드를 등록해주세요</string>
     <string name="payment_toast_card_added">카드가 추가되었습니다</string>
 
+    <!--    AddCardScreen-->
+    <string name="add_card_toast_no_change">변경된 사항이 없어서 저장할 수 없습니다</string>
+
+
     <!--    BankTitle-->
     <string name="bank_bc">BC카드</string>
     <string name="bank_shinhan">신한카드</string>

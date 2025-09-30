@@ -1,54 +1,51 @@
 package woowacourse.payments.ui.screen
 
 import android.app.Activity
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.AddCardActivity
-import woowacourse.payments.R
-import woowacourse.payments.ui.model.CardUiModel
+import woowacourse.payments.ui.mapper.CardMapper.toDomain
+import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
 @Composable
 fun PaymentScreen() {
-    var cards by remember { mutableStateOf(emptyList<CardUiModel>()) }
+    val paymentStateHolder = remember { PaymentStateHolder() }
     val context = LocalContext.current
-    val canAddMore = cards.size < 2
-    val showTopAdd = cards.size >= 2
 
-    val cardAddLauncher =
+    val cardLauncher =
         rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult(),
-        ) { activityResult ->
-            if (activityResult.resultCode == Activity.RESULT_OK) {
-                val newCard = AddCardActivity.parseResult(activityResult.data)
-                if (newCard != null) {
-                    cards = cards + newCard
-                }
-            }
-        }
+            ActivityResultContracts.StartActivityForResult(),
+        ) { result ->
+            if (result.resultCode != Activity.RESULT_OK) return@rememberLauncherForActivityResult
 
-    LaunchedEffect(cards.size) {
-        if (cards.isNotEmpty()) {
-            Toast
-                .makeText(
-                    context,
-                    context.getString(R.string.payment_toast_card_added),
-                    Toast.LENGTH_SHORT,
-                ).show()
+            val cardUiModel =
+                AddCardActivity.parseResult(result.data) ?: return@rememberLauncherForActivityResult
+            val domain = cardUiModel.toDomain()
+
+            val exists = paymentStateHolder.uiCards.any { it.id == cardUiModel.id }
+            paymentStateHolder.addOrUpdateById(if (exists) cardUiModel.id else null, domain)
         }
-    }
 
     PaymentContent(
-        cards = cards,
-        showTopAdd = showTopAdd,
-        canAddMore = canAddMore,
-        onAddCardClick = { cardAddLauncher.launch(AddCardActivity.newIntent(context)) },
+        cards = paymentStateHolder.uiCards,
+        showTopAdd = paymentStateHolder.showTopAdd,
+        onAddCardClick = { cardLauncher.launch(AddCardActivity.newIntent(context)) },
+        onCardClick = { id: String ->
+            val selected =
+                paymentStateHolder.uiCards.firstOrNull { it.id == id } ?: return@PaymentContent
+            cardLauncher.launch(AddCardActivity.newIntent(context, selected))
+        },
     )
+}
+
+@Preview(name = "기본 화면")
+@Composable
+private fun PaymentScreenPreview() {
+    AndroidpaymentsTheme {
+        PaymentScreen()
+    }
 }
