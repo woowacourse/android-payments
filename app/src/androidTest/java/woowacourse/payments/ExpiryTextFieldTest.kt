@@ -16,7 +16,7 @@ import androidx.test.core.app.ApplicationProvider
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.ExpiryTextField
+import woowacourse.payments.ui.add.components.ExpiryTextField
 
 class ExpiryTextFieldTest {
     @get:Rule

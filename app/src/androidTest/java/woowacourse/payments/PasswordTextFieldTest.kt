@@ -15,7 +15,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.PinTextField
+import woowacourse.payments.ui.add.components.PinTextField
 
 class PasswordTextFieldTest {
     @get:Rule

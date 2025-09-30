@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.add.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,40 +11,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.R
-import woowacourse.payments.domain.model.CardNumber
-import woowacourse.payments.ui.transformation.NumberVisualTransformation
+import woowacourse.payments.domain.model.Pin
 
 @Composable
-fun CardNumberTextField(
+fun PinTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val separator = stringResource(R.string.card_number_separator)
-    val visualTransformation = remember(separator) { NumberVisualTransformation(4, separator) }
     val textState = remember(value) { TextFieldValue(value, selection = TextRange(value.length)) }
-
     val digitsOnly = value.filter(Char::isDigit)
-    val showError = digitsOnly.isNotEmpty() && CardNumber.from(digitsOnly) == null
+    val showError = digitsOnly.isNotEmpty() && Pin.from(digitsOnly) == null
 
     OutlinedTextField(
         value = textState,
         onValueChange = { input ->
-            val filtered = input.text.filter(Char::isDigit).take(16)
+            val filtered = input.text.filter(Char::isDigit).take(4)
             onValueChange(filtered)
         },
-        label = { Text(stringResource(R.string.label_card_number)) },
-        placeholder = { Text(stringResource(R.string.placeholder_card_number)) },
-        visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        label = { Text(stringResource(R.string.label_pin)) },
+        placeholder = { Text(stringResource(R.string.placeholder_pin)) },
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         isError = showError,
         supportingText = {
             if (showError) {
                 Text(
-                    text = stringResource(R.string.error_card_number_invalid),
+                    text = stringResource(R.string.error_pin_invalid),
                     color = MaterialTheme.colorScheme.error,
                 )
             }

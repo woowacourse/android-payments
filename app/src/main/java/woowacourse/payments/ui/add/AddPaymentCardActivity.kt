@@ -12,21 +12,36 @@ class AddPaymentCardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        val editingCardId = intent.getStringExtra(EXTRA_CARD_ID)
+        val isEditingFromIntent = editingCardId != null
+
         setContent {
             AndroidpaymentsTheme {
                 AddPaymentCardScreen(
                     onBack = { finish() },
-                    onSave = { paymentCard ->
-                        setResult(RESULT_OK, Intent().putExtra(EXTRA_CARD, paymentCard))
+                    onSave = {
+                        val resultIntent =
+                            intent.apply {
+                                putExtra(
+                                    EXTRA_RESULT_MODE,
+                                    if (isEditingFromIntent) RESULT_MODE_EDIT else RESULT_MODE_ADD,
+                                )
+                            }
+                        setResult(RESULT_OK, resultIntent)
                         finish()
                     },
+                    cardId = editingCardId,
                 )
             }
         }
     }
 
     companion object {
-        private const val EXTRA_CARD = "extra_card"
+        const val EXTRA_CARD_ID = "extra_card_id"
+        const val EXTRA_RESULT_MODE = "extra_result_mode"
+        const val RESULT_MODE_ADD = "add"
+        const val RESULT_MODE_EDIT = "edit"
 
         fun newIntent(context: Context): Intent = Intent(context, AddPaymentCardActivity::class.java)
     }

@@ -17,6 +17,7 @@ import woowacourse.payments.ui.theme.WOORI
 
 fun PaymentCard.toUiModel(): PaymentCardUiModel =
     PaymentCardUiModel(
+        id = id,
         cardNumber = cardNumber.value,
         expiry = expiry.value,
         owner = owner,

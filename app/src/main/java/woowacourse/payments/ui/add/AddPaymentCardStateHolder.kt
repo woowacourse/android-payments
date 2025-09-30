@@ -10,23 +10,21 @@ import woowacourse.payments.domain.model.CardNumber
 import woowacourse.payments.domain.model.Expiry
 import woowacourse.payments.domain.model.PaymentCard
 import woowacourse.payments.domain.model.Pin
-import woowacourse.payments.ui.model.PaymentCardUiModel
-import woowacourse.payments.ui.model.mapper.toUiModel
 
 class AddPaymentCardStateHolder private constructor(
     private val uiState: MutableState<AddPaymentCardUiState>,
 ) {
     val state: AddPaymentCardUiState get() = uiState.value
 
-    fun onCardNumberChange(new: String) = update { it.copy(cardNumber = new) }
+    fun onCardNumberChange(new: String) = update { it.copy(cardNumber = new, isEdited = true) }
 
-    fun onExpiryChange(new: String) = update { it.copy(expiry = new) }
+    fun onExpiryChange(new: String) = update { it.copy(expiry = new, isEdited = true) }
 
-    fun onOwnerChange(new: String) = update { it.copy(owner = new) }
+    fun onOwnerChange(new: String) = update { it.copy(owner = new, isEdited = true) }
 
-    fun onPinChange(new: String) = update { it.copy(pin = new) }
+    fun onPinChange(new: String) = update { it.copy(pin = new, isEdited = true) }
 
-    fun onBankChange(new: BankType) = update { it.copy(bank = new) }
+    fun onBankChange(new: BankType) = update { it.copy(bank = new, isEdited = true) }
 
     fun showSheet() = update { it.copy(isSheetVisible = true) }
 
@@ -39,13 +37,37 @@ class AddPaymentCardStateHolder private constructor(
     val isPinValid: Boolean
         get() = state.pin.isNotEmpty() && Pin.from(state.pin) != null
     val isBankValid: Boolean get() = (state.bank != null)
+    val canSave: Boolean
+        get() =
+            isCardNumberValid &&
+                isExpiryValid &&
+                isPinValid
 
-    fun buildResult(): PaymentCardUiModel? {
+    fun beginEdit(card: PaymentCard) {
+        update {
+            it.copy(
+                cardNumber = card.cardNumber.value,
+                expiry = card.expiry.value,
+                owner = card.owner,
+                pin = card.pin.value,
+                bank = card.bank,
+                mode = AddMode.Edit(card.id),
+                isEdited = false,
+            )
+        }
+    }
+
+    fun buildResult(): PaymentCard? {
         val bank = state.bank ?: return null
-        return PaymentCard
-            .create(state.cardNumber, state.expiry, state.owner, state.pin, bank)
-            .getOrNull()
-            ?.toUiModel()
+        val newCard =
+            PaymentCard
+                .create(state.cardNumber, state.expiry, state.owner, state.pin, bank)
+                .getOrNull() ?: return null
+
+        return when (val mode = state.mode) {
+            is AddMode.Edit -> newCard.copy(id = mode.cardId)
+            AddMode.Create -> newCard
+        }
     }
 
     private fun update(block: (AddPaymentCardUiState) -> AddPaymentCardUiState) {

@@ -10,7 +10,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.domain.model.BankType
-import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.cards.components.PaymentCard
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModel
 
@@ -25,10 +26,11 @@ class PaymentCardTest {
     fun setup() {
         val uiModel =
             PaymentCardUiModel(
+                id = "",
                 cardNumber = "1234567812345678",
                 expiry = "0511",
                 owner = "minjeong",
-                bank = BankType.NOT_SELECTED.toUiModel(),
+                bank = BankUiModel.PlaceHolder,
             )
         val cardSep = "\u00A0-\u00A0"
         val expirySep = "\u00A0/\u00A0"
@@ -41,6 +43,7 @@ class PaymentCardTest {
                 paymentCard = uiModel,
                 modifier = Modifier.testTag(Tags.PAYMENT_CARD),
                 onSelectBank = {},
+                onEditCard = {},
             )
         }
     }

@@ -1,8 +1,12 @@
-package woowacourse.payments.ui.component
+package woowacourse.payments.ui.cards.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,6 +27,7 @@ fun PaymentCardsContent(
     modifier: Modifier = Modifier,
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
+    onEditCard: (String) -> Unit,
 ) {
     when (paymentCards.size) {
         0 -> EmptyCard(modifier = modifier, onAddCard = onAddCard)
@@ -31,9 +36,15 @@ fun PaymentCardsContent(
                 modifier = modifier,
                 paymentCard = paymentCards.first(),
                 onAddCard = onAddCard,
+                onEditCard = onEditCard,
             )
 
-        else -> MultiCards(modifier = modifier, paymentCards = paymentCards)
+        else ->
+            MultiCards(
+                modifier = modifier,
+                paymentCards = paymentCards,
+                onEditCard = onEditCard,
+            )
     }
 }
 
@@ -60,6 +71,7 @@ private fun EmptyCard(
 private fun SingleCard(
     paymentCard: PaymentCardUiModel,
     onAddCard: () -> Unit,
+    onEditCard: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -69,6 +81,7 @@ private fun SingleCard(
         PaymentCard(
             paymentCard = paymentCard,
             onSelectBank = {},
+            onEditCard = { onEditCard(paymentCard.id) },
             modifier = Modifier.padding(top = 12.dp, bottom = 36.dp),
         )
         AddCard(onAddClick = onAddCard)
@@ -78,19 +91,23 @@ private fun SingleCard(
 @Composable
 private fun MultiCards(
     paymentCards: List<PaymentCardUiModel>,
+    onEditCard: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        contentPadding = PaddingValues(vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        paymentCards.forEach { card ->
+        items(
+            items = paymentCards,
+            key = { it.id },
+        ) { card ->
             PaymentCard(
                 paymentCard = card,
                 onSelectBank = {},
-                modifier =
-                    Modifier
-                        .padding(top = 16.dp),
+                onEditCard = { onEditCard(card.id) },
             )
         }
     }
@@ -107,8 +124,10 @@ private fun EmptyCardPreview() {
 private fun SingleCardPreview() {
     SingleCard(
         onAddCard = {},
+        onEditCard = {},
         paymentCard =
             PaymentCardUiModel(
+                "0",
                 "1234567812345678",
                 "0511",
                 "minjeong",
@@ -124,17 +143,20 @@ private fun MultiCardsPreview() {
         paymentCards =
             listOf(
                 PaymentCardUiModel(
+                    "1",
                     "1234123456785678",
                     "1215",
                     "minjeong",
                     BankType.SHINHAN.toUiModel(),
                 ),
                 PaymentCardUiModel(
+                    "2",
                     "1111222233334444",
                     "1234",
                     "junseo",
                     BankType.HYUNDAI.toUiModel(),
                 ),
             ),
+        {},
     )
 }

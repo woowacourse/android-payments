@@ -5,8 +5,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import woowacourse.payments.ui.component.PaymentCardsContent
-import woowacourse.payments.ui.component.PaymentCardsTopBar
+import woowacourse.payments.ui.cards.components.PaymentCardsContent
+import woowacourse.payments.ui.cards.components.PaymentCardsTopBar
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 
@@ -14,6 +14,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun PaymentCardsScreen(
     paymentCards: List<PaymentCardUiModel>,
     onAddCard: () -> Unit,
+    onEditCard: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -30,6 +31,7 @@ fun PaymentCardsScreen(
                     .padding(innerPadding),
             paymentCards = paymentCards,
             onAddCard = onAddCard,
+            onEditCard = onEditCard,
         )
     }
 }
@@ -38,6 +40,6 @@ fun PaymentCardsScreen(
 @Composable
 private fun PaymentCardsPreview() {
     AndroidpaymentsTheme {
-        PaymentCardsScreen(emptyList(), {})
+        PaymentCardsScreen(emptyList(), {}, {})
     }
 }

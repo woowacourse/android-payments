@@ -14,6 +14,7 @@
 
     <!-- AddPaymentCard-->
     <string name="title_add_card">카드 추가</string>
+    <string name="title_edit_card">카드 수정</string>
     <string name="label_card_number">카드 번호</string>
     <string name="placeholder_card_number">0000 – 0000 – 0000 – 0000</string>
     <string name="label_expiry">만료일</string>
@@ -38,4 +39,5 @@
     <string name="payment_card_top_bar_add_card">추가</string>
     <string name="desc_add">더하기</string>
     <string name="toast_card_add">카드가 추가되었습니다</string>
+    <string name="toast_card_edit">카드가 수정되었습니다</string>
 </resources>

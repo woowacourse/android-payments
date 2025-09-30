@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.component.preview
+package woowacourse.payments.ui.cards.components.preview
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import woowacourse.payments.domain.model.BankType
@@ -11,12 +11,14 @@ class PaymentCardPreviewProvider : PreviewParameterProvider<PaymentCardUiModel> 
         get() =
             sequenceOf(
                 PaymentCardUiModel(
+                    id = "",
                     cardNumber = "1234567812345678",
                     expiry = "0511",
                     owner = "minjeong",
                     bank = BankUiModel.PlaceHolder,
                 ),
                 PaymentCardUiModel(
+                    id = "",
                     cardNumber = "1234567812345678",
                     expiry = "0511",
                     owner = "junseo",

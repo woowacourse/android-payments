@@ -14,7 +14,7 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.ui.component.StringTextField
+import woowacourse.payments.ui.add.components.StringTextField
 
 class OwnerTextFieldTest {
     @get:Rule

@@ -8,20 +8,24 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import woowacourse.payments.ui.component.BankSelectBottomSheet
-import woowacourse.payments.ui.component.CardNumberTextField
-import woowacourse.payments.ui.component.ExpiryTextField
-import woowacourse.payments.ui.component.NewCardTopBar
-import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.component.PinTextField
-import woowacourse.payments.ui.component.StringTextField
+import woowacourse.payments.domain.PaymentCardStore
+import woowacourse.payments.ui.add.components.BankSelectBottomSheet
+import woowacourse.payments.ui.add.components.CardNumberTextField
+import woowacourse.payments.ui.add.components.ExpiryTextField
+import woowacourse.payments.ui.add.components.NewCardTopBar
+import woowacourse.payments.ui.add.components.PinTextField
+import woowacourse.payments.ui.add.components.StringTextField
+import woowacourse.payments.ui.cards.components.PaymentCard
 import woowacourse.payments.ui.model.PaymentCardUiModel
 import woowacourse.payments.ui.model.mapper.toUiModelOrPlaceholder
 import woowacourse.payments.ui.theme.AndroidpaymentsTheme
@@ -29,22 +33,35 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun AddPaymentCardScreen(
     onBack: () -> Unit,
-    onSave: (PaymentCardUiModel) -> Unit,
+    onSave: () -> Unit,
+    cardId: String? = null,
     stateHolder: AddPaymentCardStateHolder = rememberAddPaymentCardStateHolder(),
 ) {
+    val initialized = rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(cardId) {
+        if (!initialized.value && cardId != null) {
+            PaymentCardStore.findById(cardId)?.let { stateHolder.beginEdit(it) }
+            initialized.value = true
+        }
+    }
+
     val state = stateHolder.state
 
-    val canSave by remember(state.cardNumber, state.expiry, state.pin) {
-        derivedStateOf {
-            stateHolder.isCardNumberValid &&
-                stateHolder.isExpiryValid &&
-                stateHolder.isPinValid
-        }
+    val canSave by remember(
+        state.cardNumber,
+        state.expiry,
+        state.pin,
+        state.owner,
+        state.bank,
+    ) {
+        derivedStateOf { stateHolder.canSave }
     }
 
     val previewCard =
         remember(state.cardNumber, state.expiry, state.owner, state.bank) {
             PaymentCardUiModel(
+                id = cardId ?: "",
                 cardNumber = state.cardNumber,
                 expiry = state.expiry,
                 owner = state.owner,
@@ -61,10 +78,17 @@ fun AddPaymentCardScreen(
                     if (!stateHolder.isBankValid) {
                         stateHolder.showSheet()
                     } else {
-                        stateHolder.buildResult()?.let(onSave)
+                        stateHolder.buildResult()?.let { card ->
+                            when (state.mode) {
+                                is AddMode.Edit -> PaymentCardStore.update(card)
+                                AddMode.Create -> PaymentCardStore.add(card)
+                            }
+                            onSave()
+                        }
                     }
                 },
                 saveEnabled = canSave,
+                mode = state.mode,
             )
         },
     ) { innerPadding ->
@@ -77,6 +101,7 @@ fun AddPaymentCardScreen(
             PaymentCard(
                 paymentCard = previewCard,
                 onSelectBank = { stateHolder.showSheet() },
+                onEditCard = { stateHolder.showSheet() },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             )
 
