@@ -2,7 +2,7 @@ package woowacourse.payments.domain
 
 import java.time.LocalDate
 
-class ExpiredDate private constructor(
+data class ExpiredDate private constructor(
     val month: Int,
     val year: Int,
 ) {

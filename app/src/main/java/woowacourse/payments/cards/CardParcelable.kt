@@ -8,6 +8,8 @@ import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.ExpiredDate
 import woowacourse.payments.domain.OwnerName
 import woowacourse.payments.domain.Password
+import woowacourse.payments.newcard.NewCardUiState
+import woowacourse.payments.newcard.toUiState
 
 @Parcelize
 data class CardParcelable(
@@ -33,6 +35,8 @@ data class CardParcelable(
             cardCompany = CardCompany.valueOf(cardCompany),
         )
     }
+
+    fun toUiStateOrNull(): NewCardUiState? = toDomainOrNull()?.toUiState()
 }
 
 fun Card.toParcelable(): CardParcelable =

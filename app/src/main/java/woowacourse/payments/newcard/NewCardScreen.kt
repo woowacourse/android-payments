@@ -30,17 +30,16 @@ import woowacourse.payments.newcard.component.PasswordTextField
 import woowacourse.payments.util.PaymentCard
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
 fun NewCardScreen(
-    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder() },
-    sheetState: SheetState =
-        rememberModalBottomSheetState(confirmValueChange = { false }),
-    onBackClick: () -> Unit = {},
-    onSaveClick: (CardParcelable) -> Unit = {},
-    onCardSaveFailed: () -> Unit = {},
+    card: CardParcelable?,
+    onBackClick: () -> Unit,
+    onSaveClick: (CardParcelable, Boolean) -> Unit,
+    onCardSaveFailed: () -> Unit,
+    newCardStateHolder: NewCardStateHolder = remember { NewCardStateHolder(card) },
+    sheetState: SheetState = rememberModalBottomSheetState(confirmValueChange = { false }),
 ) {
-    if (!newCardStateHolder.newCardUiState.value.isCardCompanySelected) {
+    if (!newCardStateHolder.newCardUiState.value.shouldShowCardCompanySelection) {
         ModalBottomSheet(
             onDismissRequest = {},
             sheetState = sheetState,
@@ -61,10 +60,23 @@ fun NewCardScreen(
                 onBackClick = onBackClick,
                 onSaveClick = {
                     val cardResult: Result<Card> = newCardStateHolder.getCard()
+                    val originalCard: Card? = card?.toDomainOrNull()
 
                     cardResult
                         .onSuccess {
-                            onSaveClick(cardResult.getOrThrow().toParcelable())
+                            // 카드의 변경사항이 없을 경우 저장하지 못하도록 함
+                            val newCard: Card = cardResult.getOrThrow()
+                            originalCard?.let {
+                                if (it == newCard) {
+                                    onCardSaveFailed()
+                                    return@onSuccess
+                                }
+                            }
+
+                            onSaveClick(
+                                cardResult.getOrThrow().toParcelable(),
+                                newCardStateHolder.isEditMode.value,
+                            )
                         }.onFailure {
                             onCardSaveFailed()
                         }
@@ -80,8 +92,8 @@ fun NewCardScreen(
                     .padding(innerPadding),
         ) {
             PaymentCard(
-                modifier = Modifier.padding(top = 14.dp),
                 cardCompanyUiState = newCardStateHolder.cardCompanyUiState.value,
+                modifier = Modifier.padding(top = 14.dp),
             )
             Column(
                 verticalArrangement = Arrangement.spacedBy(30.dp),

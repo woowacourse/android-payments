@@ -1,6 +1,6 @@
 package woowacourse.payments.domain
 
-class Password(
+data class Password(
     val password: String,
 ) {
     init {

@@ -1,15 +1,25 @@
 package woowacourse.payments.newcard
 
 import androidx.compose.runtime.mutableStateOf
+import woowacourse.payments.cards.CardParcelable
 import woowacourse.payments.domain.Card
 import woowacourse.payments.domain.CardCompany
 
-class NewCardStateHolder {
+class NewCardStateHolder(
+    card: CardParcelable?,
+) {
     var newCardUiState = mutableStateOf(NewCardUiState())
         private set
 
     var cardCompanyUiState = mutableStateOf(CardCompanyUiState.from(CardCompany.NONE))
         private set
+
+    var isEditMode = mutableStateOf(false)
+        private set
+
+    init {
+        setupCardDetails(card)
+    }
 
     fun updateCardNumber(value: String) {
         newCardUiState.value = newCardUiState.value.copy(cardNumber = value)
@@ -34,10 +44,6 @@ class NewCardStateHolder {
         updateIsCardCompanySelected(isCardCompanySelected)
     }
 
-    private fun updateIsCardCompanySelected(value: Boolean) {
-        newCardUiState.value = newCardUiState.value.copy(isCardCompanySelected = value)
-    }
-
     fun getCard(): Result<Card> =
         Card.from(
             cardNumber = newCardUiState.value.cardNumber,
@@ -46,4 +52,17 @@ class NewCardStateHolder {
             password = newCardUiState.value.password,
             cardCompany = cardCompanyUiState.value.toDomain(),
         )
+
+    private fun setupCardDetails(card: CardParcelable?) {
+        card?.let {
+            val cardCompany = CardCompany.valueOf(card.cardCompany)
+            cardCompanyUiState.value = CardCompanyUiState.from(cardCompany)
+            newCardUiState.value = card.toUiStateOrNull() ?: NewCardUiState()
+            isEditMode.value = true
+        }
+    }
+
+    private fun updateIsCardCompanySelected(value: Boolean) {
+        newCardUiState.value = newCardUiState.value.copy(shouldShowCardCompanySelection = value)
+    }
 }
