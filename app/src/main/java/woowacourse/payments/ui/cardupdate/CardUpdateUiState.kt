@@ -1,18 +1,18 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 
 @Parcelize
-data class NewCardUiState(
+data class CardUpdateUiState(
     val cardCompany: CardCompanyUiModel? = null,
     val cardNumber: String = "",
     val isCardNumberValid: Boolean = false,
     val cardExpirationDate: String = "",
     val isCardExpirationDateValid: Boolean = false,
     val cardHolderName: String = "",
-    val isCardHolderNameValid: Boolean = false,
+    val isCardHolderNameValid: Boolean = true,
     val cardPassword: String = "",
     val isCardPasswordValid: Boolean = false,
 ) : Parcelable {

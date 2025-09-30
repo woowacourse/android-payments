@@ -1,42 +1,17 @@
 package woowacourse.payments.ui.common.components
 
-import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithText
 import org.junit.Rule
 import org.junit.Test
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Suppress("ktlint:standard:function-naming")
 class PaymentCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
-
-    @Test
-    fun 카드_정보가_없으면_빈필드가_표시된다() {
-        // when
-        composeTestRule.setContent {
-            PaymentCard(card = null)
-        }
-
-        // then
-        composeTestRule
-            .onNodeWithContentDescription("카드사")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("카드 번호")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("카드 소유자")
-            .assertTextEquals("")
-
-        composeTestRule
-            .onNodeWithContentDescription("만료일")
-            .assertTextEquals("")
-    }
 
     @Test
     fun 모든_카드_정보가_올바르게_표시된다() {
@@ -47,30 +22,36 @@ class PaymentCardTest {
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("카드사")
-            .assertTextEquals("BC카드")
+            .onNodeWithText("BC카드")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("카드 번호")
-            .assertTextEquals("1111 - 2222 - **** - ****")
+            .onNodeWithText("1111 - 2222 - **** - ****")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("카드 소유자")
-            .assertTextEquals("CREW")
+            .onNodeWithText("CREW")
+            .assertExists()
 
         composeTestRule
-            .onNodeWithContentDescription("만료일")
-            .assertTextEquals("09 / 25")
+            .onNodeWithText("09 / 25")
+            .assertExists()
     }
 
     companion object {
+        private val COMPANY =
+            CardCompanyUiModel(
+                name = R.string.bc_card,
+                logo = R.drawable.bc,
+                color = 0xFFF04651,
+            )
         private val CARD =
             CardUiModel(
-                companyName = R.string.bc_card,
-                color = 0xFFF04651,
+                cardCompany = COMPANY,
                 number = "1111222233334444",
                 expirationDate = "0925",
                 holderName = "CREW",
+                password = "1234",
             )
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @Suppress("ktlint:standard:function-naming")
-class CardPasswordTextFieldTest {
+class CardExpirationDateTextFieldTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -21,36 +21,37 @@ class CardPasswordTextFieldTest {
     fun setUp() {
         composeTestRule.setContent {
             var text by remember { mutableStateOf("") }
-            CardPasswordTextField(value = text, onValueChange = { text = it }, isValid = true)
+            CardExpirationDateTextField(value = text, onValueChange = { text = it }, isValid = true)
         }
     }
 
     @Test
-    fun 카드_비밀번호_필드에_값을_입력하면_입력값이_표시된다() {
+    fun 카드_만료일_필드에_값을_입력하면_자동으로_기호가_삽입된다() {
         // given
-        val input = "0000"
+        val input = "1234"
 
         // when
         composeTestRule
-            .onNodeWithText("카드 비밀번호")
+            .onNodeWithText("만료일")
             .performTextInput(input)
+        val expected = "12 / 34"
 
         // then
         composeTestRule
-            .onNodeWithText(input)
+            .onNodeWithText(expected)
             .assertIsDisplayed()
     }
 
     @Test
-    fun 카드_비밀번호_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
+    fun 카드_만료일_필드에_최대_길이를_초과하여_값을_입력하면_제한된_길이까지_표시된다() {
         // given
-        val input = "00000"
+        val input = "12345"
 
         // when
         composeTestRule
-            .onNodeWithText("카드 비밀번호")
+            .onNodeWithText("만료일")
             .performTextInput(input)
-        val expected = "0000"
+        val expected = "12 / 34"
 
         // then
         composeTestRule
@@ -65,26 +66,9 @@ class CardPasswordTextFieldTest {
 
         // when
         composeTestRule
-            .onNodeWithText("카드 비밀번호")
+            .onNodeWithText("만료일")
             .performTextInput(input)
         val expected = "12"
-
-        // then
-        composeTestRule
-            .onNodeWithText(expected)
-            .assertIsDisplayed()
-    }
-
-    @Test
-    fun 카드_비밀번호는_마스킹되어_표시된다() {
-        // given
-        val input = "0000"
-
-        // when
-        composeTestRule
-            .onNodeWithText("카드 비밀번호")
-            .performTextInput(input)
-        val expected = "••••"
 
         // then
         composeTestRule

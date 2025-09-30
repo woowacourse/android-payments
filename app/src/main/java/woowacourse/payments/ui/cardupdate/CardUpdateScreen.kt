@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,26 +24,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import woowacourse.payments.domain.CardCompany
+import woowacourse.payments.ui.cardupdate.components.CardExpirationDateTextField
+import woowacourse.payments.ui.cardupdate.components.CardHolderNameTextField
+import woowacourse.payments.ui.cardupdate.components.CardNumberTextField
+import woowacourse.payments.ui.cardupdate.components.CardPasswordTextField
+import woowacourse.payments.ui.cardupdate.components.CardUpdateTopBar
+import woowacourse.payments.ui.cardupdate.components.CompanySelectBottomSheet
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.model.CardUpdateType
+import woowacourse.payments.ui.cardupdate.model.toUiModel
 import woowacourse.payments.ui.common.components.PaymentCard
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.components.CardExpirationDateTextField
-import woowacourse.payments.ui.newcard.components.CardHolderNameTextField
-import woowacourse.payments.ui.newcard.components.CardNumberTextField
-import woowacourse.payments.ui.newcard.components.CardPasswordTextField
-import woowacourse.payments.ui.newcard.components.CompanySelectBottomSheet
-import woowacourse.payments.ui.newcard.components.NewCardTopBar
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
-import woowacourse.payments.ui.newcard.model.toUiModel
+import woowacourse.payments.ui.common.model.toUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardScreen(
-    companies: List<CardCompanyUiModel> = emptyList(),
-    onBackClick: () -> Unit = {},
-    onSaveClick: (CardUiModel) -> Unit = {},
-    stateHolder: NewCardStateHolder = rememberNewCardState(),
+fun CardUpdateScreen(
+    updateType: CardUpdateType,
+    companies: List<CardCompanyUiModel>,
+    onBackClick: () -> Unit,
+    onSaveClick: (CardUiModel) -> Unit,
 ) {
-    val uiState: NewCardUiState = stateHolder.uiState
+    val initialUiState: CardUpdateUiState =
+        when (updateType) {
+            CardUpdateType.Add -> CardUpdateUiState()
+            is CardUpdateType.Edit -> updateType.card.toUiState()
+        }
+    val stateHolder: CardUpdateStateHolder =
+        rememberCardUpdateState(initialUiState)
+    val uiState: CardUpdateUiState = stateHolder.uiState
     var showBottomSheet: Boolean by rememberSaveable { mutableStateOf(true) }
     val bottomSheetState = rememberModalBottomSheetState()
 
@@ -53,19 +62,21 @@ fun NewCardScreen(
         }
     }
 
-    CompanySelectBottomSheet(
-        companies = companies,
-        onCompanySelected = { stateHolder.onCompanySelected(it) },
-        sheetState = bottomSheetState,
-        showBottomSheet = showBottomSheet,
-        onDisMiss = onBackClick,
-    )
+    if (showBottomSheet) {
+        CompanySelectBottomSheet(
+            companies = companies,
+            onCompanySelected = { stateHolder.onCompanySelected(it) },
+            sheetState = bottomSheetState,
+            onDisMiss = { showBottomSheet = false },
+        )
+    }
 
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
-            NewCardTopBar(
-                canSave = uiState.isCardValid,
+            CardUpdateTopBar(
+                updateType = updateType,
+                canSave = uiState != initialUiState && uiState.isCardValid,
                 onBackClick = onBackClick,
                 onSaveClick = { stateHolder.card?.let { onSaveClick(it) } },
             )
@@ -83,6 +94,7 @@ fun NewCardScreen(
             PaymentCard(
                 card = stateHolder.card,
                 modifier = Modifier.align(Alignment.CenterHorizontally),
+                onClick = { showBottomSheet = true },
             )
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -116,6 +128,11 @@ fun NewCardScreen(
 
 @Preview
 @Composable
-private fun NewCardScreenPreview() {
-    NewCardScreen(companies = CardCompany.entries.map(CardCompany::toUiModel))
+private fun CardUpdateScreenPreview() {
+    CardUpdateScreen(
+        updateType = CardUpdateType.Add,
+        companies = CardCompany.entries.map(CardCompany::toUiModel),
+        onBackClick = {},
+        onSaveClick = {},
+    )
 }

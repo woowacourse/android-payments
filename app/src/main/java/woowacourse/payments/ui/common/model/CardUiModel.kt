@@ -1,28 +1,40 @@
 package woowacourse.payments.ui.common.model
 
 import android.os.Parcelable
-import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
-import woowacourse.payments.ui.newcard.NewCardUiState
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
+import woowacourse.payments.ui.cardupdate.CardUpdateUiState
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 
 @Parcelize
 data class CardUiModel(
-    @StringRes val companyName: Int,
-    val color: Long,
+    val cardCompany: CardCompanyUiModel,
     val number: String,
     val expirationDate: String,
     val holderName: String,
+    val password: String,
 ) : Parcelable
 
-fun NewCardUiState.toUiModel(): CardUiModel? =
+fun CardUpdateUiState.toUiModel(): CardUiModel? =
     cardCompany
         ?.let { company: CardCompanyUiModel ->
             CardUiModel(
-                companyName = company.name,
+                cardCompany = company,
                 number = cardNumber,
                 expirationDate = cardExpirationDate,
                 holderName = cardHolderName.trim(),
-                color = company.color,
+                password = cardPassword,
             )
         }
+
+fun CardUiModel.toUiState(): CardUpdateUiState =
+    CardUpdateUiState(
+        cardCompany = cardCompany,
+        cardNumber = number,
+        isCardNumberValid = true,
+        cardExpirationDate = expirationDate,
+        isCardExpirationDateValid = true,
+        cardHolderName = holderName,
+        isCardHolderNameValid = true,
+        cardPassword = password,
+        isCardPasswordValid = true,
+    )

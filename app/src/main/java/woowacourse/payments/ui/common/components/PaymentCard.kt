@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.common.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,18 +27,62 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
 
 @Composable
 fun PaymentCard(
+    card: CardUiModel?,
     modifier: Modifier = Modifier,
-    card: CardUiModel? = null,
+    onClick: () -> Unit = {},
 ) {
-    val cardCompanyDescription = stringResource(R.string.card_company_description)
-    val cardNumberDescription = stringResource(R.string.card_number_description)
-    val cardHolderNameDescription = stringResource(R.string.card_holder_name_description)
-    val cardExpirationDateDescription = stringResource(R.string.card_expiration_date_description)
+    if (card == null) {
+        CreditCard(modifier = modifier, onClick = onClick)
+    } else {
+        CreditCard(card = card, modifier = modifier, onClick = onClick)
+    }
+}
 
+@Composable
+private fun CreditCard(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    CardFrame(
+        modifier = modifier,
+        onClick = onClick,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start,
+        ) {
+            CardChip()
+        }
+    }
+}
+
+@Composable
+private fun CreditCard(
+    card: CardUiModel,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    CardFrame(
+        modifier = modifier,
+        cardColor = Color(card.cardCompany.color),
+        onClick = onClick,
+    ) {
+        CardDetails(card = card)
+    }
+}
+
+@Composable
+private fun CardFrame(
+    modifier: Modifier = Modifier,
+    cardColor: Color = Color(0xFF333333),
+    onClick: () -> Unit = {},
+    content: @Composable () -> Unit = {},
+) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -45,59 +90,79 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
                 .background(
-                    color = Color(card?.color ?: 0xFF333333),
+                    color = cardColor,
                     shape = RoundedCornerShape(5.dp),
                 )
+                .clickable(onClick = onClick)
                 .padding(horizontal = 12.dp),
     ) {
-        Column {
+        content()
+    }
+}
+
+@Composable
+private fun CardChip(modifier: Modifier = Modifier) {
+    Box(
+        modifier =
+            modifier
+                .size(width = 40.dp, height = 26.dp)
+                .background(
+                    color = Color(0xFFCBBA64),
+                    shape = RoundedCornerShape(4.dp),
+                ),
+    )
+}
+
+@Composable
+private fun CardDetails(
+    card: CardUiModel,
+    modifier: Modifier = Modifier,
+) {
+    val cardCompanyDescription = stringResource(R.string.card_company_description)
+    val cardNumberDescription = stringResource(R.string.card_number_description)
+    val cardHolderNameDescription = stringResource(R.string.card_holder_name_description)
+    val cardExpirationDateDescription = stringResource(R.string.card_expiration_date_description)
+
+    Column {
+        Text(
+            text = stringResource(card.cardCompany.name),
+            fontSize = 12.sp,
+            color = Color.White,
+            letterSpacing = 2.sp,
+            modifier = Modifier.semantics { contentDescription = cardCompanyDescription },
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        CardChip()
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = card.number.toMaskedString(),
+            fontSize = 12.sp,
+            letterSpacing = 2.sp,
+            color = Color.White,
+            modifier = Modifier.semantics { contentDescription = cardNumberDescription },
+        )
+        Spacer(modifier = Modifier.height(2.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Text(
-                text = card?.companyName?.let { stringResource(it) } ?: "",
+                text = card.holderName,
                 fontSize = 12.sp,
-                color = Color.White,
                 letterSpacing = 2.sp,
-                modifier = Modifier.semantics { contentDescription = cardCompanyDescription },
+                color = Color.White,
+                modifier = Modifier.semantics { contentDescription = cardHolderNameDescription },
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Box(
+            Text(
+                text = card.expirationDate.toDisplayString(),
+                fontSize = 12.sp,
+                letterSpacing = 2.sp,
+                color = Color.White,
                 modifier =
-                    Modifier
-                        .size(width = 40.dp, height = 26.dp)
-                        .background(
-                            color = Color(0xFFCBBA64),
-                            shape = RoundedCornerShape(4.dp),
-                        ),
+                    Modifier.semantics {
+                        contentDescription = cardExpirationDateDescription
+                    },
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = card?.number?.toMaskedString() ?: "",
-                fontSize = 12.sp,
-                letterSpacing = 2.sp,
-                color = Color.White,
-                modifier = Modifier.semantics { contentDescription = cardNumberDescription },
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(
-                    text = card?.holderName ?: "",
-                    fontSize = 12.sp,
-                    letterSpacing = 2.sp,
-                    color = Color.White,
-                    modifier =
-                        Modifier.semantics { contentDescription = cardHolderNameDescription },
-                )
-                Text(
-                    text = card?.expirationDate?.toDisplayString() ?: "",
-                    fontSize = 12.sp,
-                    letterSpacing = 2.sp,
-                    color = Color.White,
-                    modifier =
-                        Modifier.semantics { contentDescription = cardExpirationDateDescription },
-                )
-            }
         }
     }
 }
@@ -122,13 +187,19 @@ private fun PaymentCardPreview(
 }
 
 private class PaymentCardPreviewParameterProvider : PreviewParameterProvider<CardUiModel?> {
+    private val cardCompany: CardCompanyUiModel =
+        CardCompanyUiModel(
+            name = R.string.bc_card,
+            logo = R.drawable.bc,
+            color = 0xFFF04651,
+        )
     private val card: CardUiModel =
         CardUiModel(
-            companyName = R.string.bc_card,
-            color = 0xFFF04651,
+            cardCompany = cardCompany,
             number = "1111222233334444",
             expirationDate = "0925",
             holderName = "CREW",
+            password = "1234",
         )
 
     override val values: Sequence<CardUiModel?> =

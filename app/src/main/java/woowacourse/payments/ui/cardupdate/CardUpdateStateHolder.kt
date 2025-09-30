@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard
+package woowacourse.payments.ui.cardupdate
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,15 +7,15 @@ import woowacourse.payments.domain.CardExpirationDate
 import woowacourse.payments.domain.CardHolderName
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.ui.cardupdate.model.CardCompanyUiModel
 import woowacourse.payments.ui.common.model.CardUiModel
 import woowacourse.payments.ui.common.model.toUiModel
-import woowacourse.payments.ui.newcard.model.CardCompanyUiModel
 import java.time.format.DateTimeFormatter
 
-class NewCardStateHolder(
-    uiState: NewCardUiState = NewCardUiState(),
+class CardUpdateStateHolder(
+    uiState: CardUpdateUiState = CardUpdateUiState(),
 ) {
-    var uiState: NewCardUiState by mutableStateOf(uiState)
+    var uiState: CardUpdateUiState by mutableStateOf(uiState)
         private set
 
     val card: CardUiModel? get() = uiState.toUiModel()

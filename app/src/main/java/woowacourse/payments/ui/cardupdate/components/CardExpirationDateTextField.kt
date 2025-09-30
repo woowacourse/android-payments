@@ -1,18 +1,18 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardupdate.components
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import woowacourse.payments.R
-import woowacourse.payments.domain.CardPassword
+import woowacourse.payments.ui.transformation.GroupedVisualTransformation
 
 @Composable
-fun CardPasswordTextField(
+fun CardExpirationDateTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isValid: Boolean,
@@ -21,17 +21,23 @@ fun CardPasswordTextField(
     LimitedLengthOutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        maxLength = CardPassword.CARD_PASSWORD_LENGTH,
-        label = { Text(stringResource(R.string.card_password_label)) },
-        placeholder = { Text("0000") },
-        isError = value.isNotEmpty() && !isValid,
+        maxLength = 4,
+        label = { Text(stringResource(R.string.card_expiration_date_label)) },
+        placeholder = { Text("MM / YY") },
+        isError =
+            value.isNotEmpty() && !isValid,
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.Next,
             ),
-        visualTransformation = PasswordVisualTransformation(),
+        visualTransformation =
+            remember {
+                GroupedVisualTransformation(EXPIRATION_DATE_GROUPS, " / ")
+            },
         inputFilter = { it.filter(Char::isDigit) },
         modifier = modifier,
     )
 }
+
+private val EXPIRATION_DATE_GROUPS = listOf(2, 2)
