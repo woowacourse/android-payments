@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,26 +11,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
-import woowacourse.payments.ui.cardregister.CardNumberVisualTransformation
+import woowacourse.payments.ui.cardform.ExpiryDateVisualTransformation
 
 @Composable
-fun CardNumberInputField(
+fun ExpiryDateInputField(
     text: String,
     onValueChange: (String) -> Unit,
     isError: Boolean,
 ) {
     OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(0.5f),
         value = text,
         onValueChange = onValueChange,
-        label = { Text(stringResource(R.string.card_number_label)) },
+        label = { Text(stringResource(R.string.expiry_date_label)) },
         placeholder = {
             Text(
-                text = stringResource(R.string.card_number_place_holder),
+                text = stringResource(R.string.expiry_date_place_holder),
                 color = Color.Gray,
             )
         },
-        visualTransformation = CardNumberVisualTransformation(),
+        visualTransformation = ExpiryDateVisualTransformation(),
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         isError = isError,
@@ -39,8 +39,8 @@ fun CardNumberInputField(
 
 @Preview(showBackground = true)
 @Composable
-private fun CardNumberInputFieldPreview() {
-    CardNumberInputField(
+private fun ExpiryDateInputFieldPreview() {
+    ExpiryDateInputField(
         text = "",
         onValueChange = { },
         isError = false,

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,15 +17,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.R
 import woowacourse.payments.ui.BankViewType
 
 private const val COLUMN_COUNT: Int = 4
 
 @Composable
 fun BankSelectRow(
-    modifier: Modifier = Modifier,
     onBankClick: (BankViewType) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     FlowRow(
         modifier = modifier,
@@ -34,12 +32,10 @@ fun BankSelectRow(
         maxItemsInEachRow = COLUMN_COUNT,
     ) {
         BankViewType.entries.forEach { bankViewType ->
-            if (bankViewType.nameRes != null && bankViewType.imageRes != null) {
+            if (bankViewType != BankViewType.NONE) {
                 BankSelectionButton(
-                    imageRes = bankViewType.imageRes,
-                    nameRes = bankViewType.nameRes,
+                    bankViewType = bankViewType,
                     onClick = { onBankClick(bankViewType) },
-                    contentDescription = bankViewType.name,
                     modifier = Modifier.weight(1f),
                 )
             }
@@ -49,11 +45,9 @@ fun BankSelectRow(
 
 @Composable
 private fun BankSelectionButton(
-    modifier: Modifier = Modifier,
-    imageRes: Int,
-    nameRes: Int,
-    contentDescription: String,
+    bankViewType: BankViewType,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier =
@@ -61,13 +55,15 @@ private fun BankSelectionButton(
                 .clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Image(
-            modifier = Modifier.size(40.dp),
-            painter = painterResource(imageRes),
-            contentDescription = contentDescription,
-        )
-        Spacer(modifier = Modifier.height(9.dp))
-        Text(text = stringResource(nameRes), fontSize = 16.sp, lineHeight = 20.sp)
+        if (bankViewType.imageRes != null && bankViewType.nameRes != null) {
+            Image(
+                modifier = Modifier.size(40.dp),
+                painter = painterResource(bankViewType.imageRes),
+                contentDescription = bankViewType.name,
+            )
+            Spacer(modifier = Modifier.height(9.dp))
+            Text(text = stringResource(bankViewType.nameRes), fontSize = 16.sp, lineHeight = 20.sp)
+        }
     }
 }
 
@@ -75,10 +71,8 @@ private fun BankSelectionButton(
 @Composable
 private fun SelectCardButtonPreview() {
     BankSelectionButton(
-        imageRes = R.drawable.img_bc,
-        nameRes = R.string.bc_card,
+        bankViewType = BankViewType.BC,
         onClick = {},
-        contentDescription = "",
     )
 }
 

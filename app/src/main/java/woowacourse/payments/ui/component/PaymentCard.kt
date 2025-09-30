@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,19 +25,21 @@ import woowacourse.payments.domain.Card
 import woowacourse.payments.ui.BankViewType
 import woowacourse.payments.ui.theme.Black33
 import woowacourse.payments.ui.theme.Yellow64
-import java.time.format.DateTimeFormatter
+import woowacourse.payments.ui.toYearMonthString
 
 @Composable
 fun PaymentCard(
-    modifier: Modifier = Modifier,
-    card: Card? = null,
     bankViewType: BankViewType,
+    modifier: Modifier = Modifier,
+    onCardClick: () -> Unit = {},
+    card: Card? = null,
 ) {
     Box(
         modifier =
             modifier
                 .shadow(8.dp)
                 .size(width = 208.dp, height = 124.dp)
+                .clickable { onCardClick() }
                 .background(
                     color = bankViewType.color ?: Black33,
                     shape = RoundedCornerShape(5.dp),
@@ -94,7 +97,7 @@ private fun CardInfo(
                 color = Color.White,
             )
             Text(
-                text = card.expiryDate.format(DateTimeFormatter.ofPattern("MM/yy")),
+                text = card.expiryDate.toYearMonthString(),
                 lineHeight = 12.sp,
                 fontSize = 12.sp,
                 color = Color.White,

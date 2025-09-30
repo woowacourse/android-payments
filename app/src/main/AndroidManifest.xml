@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.cardregister.CardRegisterActivity"
+            android:name=".ui.cardform.CardFormActivity"
             android:exported="false"
             android:label="CardRegisterActivity"
             android:theme="@style/Theme.Androidpayments" />

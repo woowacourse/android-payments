@@ -16,19 +16,20 @@ import java.time.YearMonth
 
 @Composable
 fun RegisteredCards(
-    modifier: Modifier = Modifier,
     cards: List<Card>,
+    onCardClick: (Card) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         Spacer(modifier = Modifier.height(12.dp))
         cards.forEach { card ->
-
             PaymentCard(
                 bankViewType = card.bankType.toBankViewType(),
                 modifier = Modifier.padding(bottom = 36.dp),
                 card = card,
+                onCardClick = { onCardClick(card) },
             )
         }
     }
@@ -40,11 +41,15 @@ private fun RegisteredCardsPreview() {
     val card =
         Card
             .create(
+                id = -1L,
                 cardNumber = "1234123412341234",
                 expiryDate = YearMonth.of(2035, 12),
                 cardOwner = "쥐돌킹",
                 password = "1234",
                 bankType = BankType.BC,
             ).getOrNull()
-    RegisteredCards(cards = List(3) { card!! })
+    RegisteredCards(
+        cards = List(3) { card!! },
+        onCardClick = { },
+    )
 }

@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.cardregister.component
+package woowacourse.payments.ui.cardform.component
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

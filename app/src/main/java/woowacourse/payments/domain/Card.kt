@@ -6,6 +6,7 @@ import java.time.YearMonth
 
 @Parcelize
 class Card private constructor(
+    val id: Long,
     val cardNumber: String,
     val expiryDate: YearMonth,
     val cardOwner: String? = null,
@@ -28,6 +29,7 @@ class Card private constructor(
         private const val PASSWORD_LENGTH: Int = 4
 
         fun create(
+            id: Long?,
             cardNumber: String,
             expiryDate: YearMonth?,
             cardOwner: String?,
@@ -38,6 +40,7 @@ class Card private constructor(
                 expiryDate ?: throw IllegalArgumentException("만료일 날짜변환 오류")
 
                 Card(
+                    id = id ?: System.currentTimeMillis(),
                     cardNumber = cardNumber,
                     expiryDate = expiryDate,
                     cardOwner = cardOwner,

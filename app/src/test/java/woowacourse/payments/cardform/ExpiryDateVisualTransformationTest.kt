@@ -1,11 +1,11 @@
-package woowacourse.payments.cardregister
+package woowacourse.payments.cardform
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.VisualTransformation
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import woowacourse.payments.ui.cardregister.ExpiryDateVisualTransformation
+import woowacourse.payments.ui.cardform.ExpiryDateVisualTransformation
 
 class ExpiryDateVisualTransformationTest {
     private lateinit var visualTransformation: VisualTransformation

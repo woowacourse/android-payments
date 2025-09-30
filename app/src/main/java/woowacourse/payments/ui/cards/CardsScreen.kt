@@ -27,6 +27,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun CardsScreen(
     stateHolder: CardsStateHolder,
     onCardAddClick: () -> Unit,
+    onCardClick: (Card) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -46,6 +47,7 @@ fun CardsScreen(
                 isRegisteredCardsVisible = stateHolder.isRegisteredCardsVisible,
                 isNewCardVisible = stateHolder.isNewCardVisible,
                 cardsState = stateHolder.cardsState,
+                onCardClick = onCardClick,
             )
         },
     )
@@ -77,12 +79,13 @@ private fun CardsTopBar(
 
 @Composable
 private fun CardsScreenContent(
-    modifier: Modifier = Modifier,
     onCardAddClick: () -> Unit,
     isCardRegisterMessageVisible: Boolean,
     isRegisteredCardsVisible: Boolean,
     isNewCardVisible: Boolean,
     cardsState: SnapshotStateList<Card>,
+    onCardClick: (Card) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -97,7 +100,7 @@ private fun CardsScreenContent(
             )
         }
 
-        if (isRegisteredCardsVisible) RegisteredCards(cards = cardsState)
+        if (isRegisteredCardsVisible) RegisteredCards(cards = cardsState, onCardClick = onCardClick)
 
         if (isNewCardVisible) NewCard(onCardAddClick = onCardAddClick)
     }
@@ -107,6 +110,6 @@ private fun CardsScreenContent(
 @Composable
 private fun CardScreenPreview() {
     AndroidpaymentsTheme {
-        CardsScreen(stateHolder = CardsStateHolder(), onCardAddClick = {})
+        CardsScreen(stateHolder = CardsStateHolder(), onCardAddClick = {}, onCardClick = {})
     }
 }
