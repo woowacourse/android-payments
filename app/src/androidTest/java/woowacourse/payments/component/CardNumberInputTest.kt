@@ -13,7 +13,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.ui.component.CardNumberInputField
 
 class CardNumberInputTest {
@@ -26,8 +25,8 @@ class CardNumberInputTest {
             var cardNumber by remember { mutableStateOf("") }
 
             CardNumberInputField(
-                cardNumber = CardNumber(cardNumber),
-                onCardNumberChange = { cardNumber = it?.value ?: "" },
+                cardNumber = cardNumber,
+                onCardNumberChange = { cardNumber = it },
             )
         }
     }
@@ -36,7 +35,7 @@ class CardNumberInputTest {
     fun 초기_화면에_카드_번호_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("카드 번호 Input Field")
             .assertIsDisplayed()
     }
 
@@ -44,12 +43,12 @@ class CardNumberInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("카드 번호 Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("카드 번호 Input Field")
             .assertIsDisplayed()
 
         composeTestRule
@@ -61,7 +60,7 @@ class CardNumberInputTest {
     fun 카드_번호를_입력하면_4글자_기준으로_기호가_삽입된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Number Input Field")
+            .onNodeWithContentDescription("카드 번호 Input Field")
             .performTextInput("1234567887654321")
 
         // then

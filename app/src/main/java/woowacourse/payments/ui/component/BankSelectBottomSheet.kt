@@ -10,24 +10,20 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
-import woowacourse.payments.domain.BankType
-import woowacourse.payments.domain.BankType.NOT_SELECTED
+import woowacourse.payments.ui.model.BankUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BankSelectBottomSheet(
     sheetState: SheetState,
-    onBankSelected: (BankType) -> Unit,
+    banks: List<BankUiModel>,
+    onBankSelected: (BankUiModel) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
     ModalBottomSheet(
         onDismissRequest = { onDismiss() },
         sheetState = sheetState,
@@ -45,16 +41,10 @@ fun BankSelectBottomSheet(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalArrangement = Arrangement.spacedBy(32.dp),
             ) {
-                BankType.entries.filterNot { it == NOT_SELECTED }.forEach { bank ->
+                banks.forEach { bank ->
                     BankItem(
-                        bankType = bank,
-                        onClick = {
-                            onBankSelected(bank)
-                            coroutineScope.launch {
-                                sheetState.hide()
-                                onDismiss()
-                            }
-                        },
+                        bank = bank,
+                        onClick = { onBankSelected(bank) },
                         modifier = Modifier,
                     )
                 }
@@ -66,9 +56,10 @@ fun BankSelectBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
-fun BankSelectBottomSheetPreview() {
+private fun BankSelectBottomSheetPreview() {
     BankSelectBottomSheet(
         sheetState = rememberModalBottomSheetState(),
+        banks = emptyList(),
         onBankSelected = {},
         onDismiss = { },
     )

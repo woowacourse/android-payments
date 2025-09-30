@@ -1,5 +1,7 @@
 package woowacourse.payments.component
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -13,17 +15,20 @@ class BankSelectBottomSheetTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Test
     fun bottomSheet에_BankItem목록이_표시된다() {
         // given
         composeTestRule.setContent {
             BankSelectBottomSheet(
+                sheetState = rememberModalBottomSheetState(),
+                banks = BankType.entries,
                 onBankSelected = {},
                 onDismiss = {},
             )
         }
 
-        BankType.entries.filterNot { it == BankType.NOT_SELECTED }.forEach { bank ->
+        BankType.entries.forEach { bank ->
             composeTestRule
                 .onNodeWithText(bank.toPresentation().name)
                 .assertIsDisplayed()

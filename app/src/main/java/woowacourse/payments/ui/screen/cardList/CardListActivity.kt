@@ -30,24 +30,26 @@ class CardListActivity : ComponentActivity() {
                         contract = ActivityResultContracts.StartActivityForResult(),
                     ) { result ->
                         if (result.resultCode == RESULT_OK) {
-                            val newCard =
+                            val card =
                                 result.data?.getParcelableExtraCompat<CardUiModel>(NEW_CARD_KEY)
-                            newCard?.let {
-                                stateHolder.addCard(it)
-                                Toast
-                                    .makeText(
-                                        this,
-                                        R.string.card_list_add_card_toast,
-                                        Toast.LENGTH_SHORT,
-                                    ).show()
+                            card?.let {
+                                val isUpdate = stateHolder.upsertCard(it)
+                                val messageRes =
+                                    if (isUpdate) {
+                                        R.string.card_list_update_card_toast
+                                    } else {
+                                        R.string.card_list_add_card_toast
+                                    }
+                                Toast.makeText(this, messageRes, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
 
                 CardListScreen(
                     stateHolder = stateHolder,
-                    navigateToAddCard = {
+                    navigateToAddCard = { cardToEdit ->
                         val intent = Intent(this@CardListActivity, AddCardActivity::class.java)
+                        cardToEdit?.let { intent.putExtra(EDIT_CARD_KEY, it) }
                         addCardLauncher.launch(intent)
                     },
                 )
@@ -57,5 +59,6 @@ class CardListActivity : ComponentActivity() {
 
     companion object {
         const val NEW_CARD_KEY = "NEW_CARD"
+        const val EDIT_CARD_KEY = "EDIT_CARD"
     }
 }

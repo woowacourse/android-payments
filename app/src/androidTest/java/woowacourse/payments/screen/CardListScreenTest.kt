@@ -44,7 +44,7 @@ class CardListScreenTest {
         // then
         assertAll(
             { composeTestRule.onNodeWithText("새로운 카드를 등록해주세요").assertIsDisplayed() },
-            { composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed() },
+            { composeTestRule.onNodeWithContentDescription("카드 추가 버튼").assertIsDisplayed() },
         )
     }
 
@@ -67,7 +67,7 @@ class CardListScreenTest {
             { composeTestRule.onNodeWithText(card1.formattedNumber()).assertIsDisplayed() },
             { composeTestRule.onNodeWithText(card1.formattedExpired()).assertIsDisplayed() },
             { composeTestRule.onNodeWithText(card1.owner).assertIsDisplayed() },
-            { composeTestRule.onNodeWithContentDescription("카드 추가").assertIsDisplayed() },
+            { composeTestRule.onNodeWithContentDescription("카드 추가 버튼").assertIsDisplayed() },
         )
     }
 
@@ -93,7 +93,7 @@ class CardListScreenTest {
                 { composeTestRule.onNodeWithText(card.owner).assertIsDisplayed() },
             )
         }
-        composeTestRule.onNodeWithContentDescription("카드 추가").assertDoesNotExist()
+        composeTestRule.onNodeWithContentDescription("카드 추가 버튼").assertDoesNotExist()
         composeTestRule.onNodeWithContentDescription("카드 목록 상단 추가 텍스트").assertIsDisplayed()
     }
 }

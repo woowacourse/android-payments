@@ -92,7 +92,7 @@ fun PasswordInputField(
 
 @Composable
 @Preview(showBackground = true)
-fun PasswordInputPreview() {
+private fun PasswordInputPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
             password = "",
@@ -103,7 +103,7 @@ fun PasswordInputPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun PasswordInputErrorPreview() {
+private fun PasswordInputErrorPreview() {
     AndroidpaymentsTheme {
         PasswordInputField(
             password = "",

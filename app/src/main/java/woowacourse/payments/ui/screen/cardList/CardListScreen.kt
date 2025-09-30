@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Icon
@@ -42,7 +42,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 @Composable
 fun CardListScreen(
     stateHolder: CardListStateHolder,
-    navigateToAddCard: () -> Unit,
+    navigateToAddCard: (cardToEdit: CardUiModel?) -> Unit,
 ) {
     val uiState = stateHolder.uiState
 
@@ -50,20 +50,25 @@ fun CardListScreen(
         topBar = {
             CardListTopBar(
                 showAddButton = uiState.showAddButton,
-                onAddClick = navigateToAddCard,
+                onAddClick = { navigateToAddCard(null) },
             )
         },
     ) { innerPadding ->
         if (uiState.cards.isEmpty()) {
             EmptyCardListContent(
                 modifier = Modifier.padding(innerPadding),
-                onClick = navigateToAddCard,
+                onClick = { navigateToAddCard(null) },
             )
         } else {
             CardListContent(
                 cards = uiState.cards,
-                enableScroll = uiState.cards.size > 1,
-                onClick = navigateToAddCard,
+                enableScroll = uiState.enableScroll,
+                onCardClicked = { cardId ->
+                    val card =
+                        stateHolder.uiState.cards.find { it.id == cardId } ?: return@CardListContent
+                    navigateToAddCard(card)
+                },
+                onAddClicked = { navigateToAddCard(null) },
                 modifier = Modifier.padding(innerPadding),
             )
         }
@@ -74,27 +79,31 @@ fun CardListScreen(
 private fun CardListContent(
     cards: List<CardUiModel>,
     enableScroll: Boolean,
-    onClick: () -> Unit,
+    onCardClicked: (Long) -> Unit,
+    onAddClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-
-    Column(
+    LazyColumn(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp)
-                .then(if (enableScroll) Modifier.verticalScroll(scrollState) else Modifier),
+                .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        userScrollEnabled = enableScroll,
     ) {
-        cards.forEach { card ->
+        items(
+            items = cards,
+            key = { it.id },
+        ) { card ->
             Spacer(modifier = Modifier.height(20.dp))
-            PaymentCard(card = card)
+            PaymentCard(card = card, modifier = Modifier.clickable { onCardClicked(card.id) })
         }
 
         if (cards.size <= 1) {
-            Spacer(modifier = Modifier.height(32.dp))
-            AddCardBox(onClick = onClick)
+            item {
+                Spacer(modifier = Modifier.height(32.dp))
+                AddCardBox(onClick = onAddClicked)
+            }
         }
     }
 }
@@ -144,7 +153,8 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             emptyList(),
             listOf(
                 CardUiModel(
-                    bankUiModel = BankType.KAKAOBANK.toPresentation(),
+                    id = 0,
+                    bank = BankType.KAKAOBANK.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "HamBeomJoon",
@@ -152,13 +162,15 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
             ),
             listOf(
                 CardUiModel(
-                    bankUiModel = BankType.LOTTE.toPresentation(),
+                    id = 1,
+                    bank = BankType.LOTTE.toPresentation(),
                     number = "1234567887654321",
                     expired = "1221",
                     owner = "moondev03",
                 ),
                 CardUiModel(
-                    bankUiModel = BankType.HYUNDAI.toPresentation(),
+                    id = 2,
+                    bank = BankType.HYUNDAI.toPresentation(),
                     number = "8734578233123212",
                     expired = "0729",
                     owner = "meeple",
@@ -169,7 +181,7 @@ class CardListPreviewProvider : PreviewParameterProvider<List<CardUiModel>> {
 
 @Preview(showBackground = true)
 @Composable
-fun CardListScreenPreview(
+private fun CardListScreenPreview(
     @PreviewParameter(CardListPreviewProvider::class) cards: List<CardUiModel>,
 ) {
     AndroidpaymentsTheme {

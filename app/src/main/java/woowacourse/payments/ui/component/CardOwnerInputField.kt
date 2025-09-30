@@ -68,7 +68,7 @@ fun CardOwnerInputField(
 
 @Composable
 @Preview(showBackground = true)
-fun CardOwnerInputPreview() {
+private fun CardOwnerInputPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
             cardOwner = "",
@@ -79,7 +79,7 @@ fun CardOwnerInputPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun CardOwnerInputErrorPreview() {
+private fun CardOwnerInputErrorPreview() {
     AndroidpaymentsTheme {
         CardOwnerInputField(
             cardOwner = "",

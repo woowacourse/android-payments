@@ -13,7 +13,6 @@ import androidx.compose.ui.test.performTextInput
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.ui.component.CardOwnerInputField
 
 class CardOwnerInputTest {
@@ -26,8 +25,8 @@ class CardOwnerInputTest {
             var cardOwner by remember { mutableStateOf("") }
 
             CardOwnerInputField(
-                cardOwner = CardOwner(cardOwner),
-                onOwnerChange = { cardOwner = it?.value ?: "" },
+                cardOwner = cardOwner,
+                onOwnerChange = { cardOwner = it },
             )
         }
     }
@@ -36,7 +35,7 @@ class CardOwnerInputTest {
     fun 초기_화면에_카드_소유자_이름_텍스트가_표시된다() {
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Owner Input Field")
+            .onNodeWithContentDescription("카드 소유자 Input Field")
             .assertIsDisplayed()
     }
 
@@ -44,12 +43,12 @@ class CardOwnerInputTest {
     fun 입력창을_클릭하면_라벨과_함께_placeholder가_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Owner Input Field")
+            .onNodeWithContentDescription("카드 소유자 Input Field")
             .performClick()
 
         // then
         composeTestRule
-            .onNodeWithContentDescription("Card Owner Input Field")
+            .onNodeWithContentDescription("카드 소유자 Input Field")
             .assertIsDisplayed()
 
         composeTestRule
@@ -61,7 +60,7 @@ class CardOwnerInputTest {
     fun 카드_소유자를_입력하면_화면에_표시된다() {
         // when
         composeTestRule
-            .onNodeWithContentDescription("Card Owner Input Field")
+            .onNodeWithContentDescription("카드 소유자 Input Field")
             .performTextInput("Meeple")
 
         // then

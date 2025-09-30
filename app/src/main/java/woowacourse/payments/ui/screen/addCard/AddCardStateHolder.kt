@@ -4,17 +4,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.setValue
+import woowacourse.payments.domain.BankType
 import woowacourse.payments.domain.CardNumber
 import woowacourse.payments.domain.CardOwner
 import woowacourse.payments.domain.Expired
 import woowacourse.payments.domain.Password
 import woowacourse.payments.ui.model.BankUiModel
+import woowacourse.payments.ui.model.toPresentation
 
 class AddCardStateHolder(
     initialState: AddCardUiState = AddCardUiState(),
+    private val originalState: AddCardUiState = initialState,
 ) {
+    val allBanks: List<BankUiModel> = BankType.entries.map { it.toPresentation() }
+
     var uiState by mutableStateOf(initialState)
         private set
+
+    val isEditMode: Boolean = originalState != AddCardUiState()
 
     fun updateCardNumber(newNumber: String) {
         uiState = uiState.copy(cardNumber = newNumber)
@@ -33,7 +40,8 @@ class AddCardStateHolder(
     }
 
     fun updateBank(newBank: BankUiModel) {
-        uiState = uiState.copy(bankUiModel = newBank)
+        uiState =
+            uiState.copy(cardCompanySelectionState = CardCompanySelectionState.Selected(newBank))
     }
 
     fun validate(): Boolean {
@@ -51,6 +59,12 @@ class AddCardStateHolder(
         uiState = uiState.copy(errors = errors, submitted = true)
         return errors.isEmpty()
     }
+
+    fun hasChanges(): Boolean =
+        uiState.cardNumber != originalState.cardNumber ||
+            uiState.expired != originalState.expired ||
+            uiState.cardOwner != originalState.cardOwner ||
+            uiState.cardCompanySelectionState != originalState.cardCompanySelectionState
 
     companion object {
         val saver: Saver<AddCardStateHolder, AddCardUiState> =

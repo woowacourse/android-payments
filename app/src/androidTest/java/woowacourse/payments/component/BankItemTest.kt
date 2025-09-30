@@ -25,7 +25,7 @@ class BankItemTest {
         }
 
         composeTestRule
-            .onNodeWithContentDescription("은행 아이템 이미지")
+            .onNodeWithContentDescription("BC카드 아이콘")
             .assertIsDisplayed()
 
         composeTestRule

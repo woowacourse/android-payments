@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,16 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.payments.R
 import woowacourse.payments.domain.BankType
+import woowacourse.payments.ui.model.BankUiModel
 import woowacourse.payments.ui.model.toPresentation
 
 @Composable
 fun BankItem(
-    bankType: BankType,
+    bank: BankUiModel,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bank = remember(bankType) { bankType.toPresentation() }
-
     Column(
         modifier =
             modifier
@@ -57,9 +55,9 @@ fun BankItem(
 
 @Preview(showBackground = true)
 @Composable
-fun BankSelectItemPreview() {
+private fun BankSelectItemPreview() {
     BankItem(
-        bankType = BankType.KB,
+        bank = BankType.KB.toPresentation(),
         onClick = {},
     )
 }

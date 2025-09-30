@@ -38,12 +38,12 @@ fun PaymentCard(
                 .shadow(8.dp)
                 .size(width = 240.dp, height = 140.dp)
                 .background(
-                    color = card.bankUiModel.backgroundColor,
+                    color = card.bank.color,
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
         Text(
-            text = card.bankUiModel.name,
+            text = card.bank.name,
             modifier =
                 Modifier
                     .padding(start = 14.dp, top = 12.dp)
@@ -103,12 +103,13 @@ fun PaymentCard(
 
 @Composable
 @Preview(showBackground = true)
-fun BCCardPreview() {
+private fun BCCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.BC.toPresentation(),
+                    id = 0,
+                    bank = BankType.BC.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",
@@ -119,12 +120,13 @@ fun BCCardPreview() {
 
 @Composable
 @Preview(showBackground = true)
-fun WooriCardPreview() {
+private fun WooriCardPreview() {
     AndroidpaymentsTheme {
         PaymentCard(
             card =
                 CardUiModel(
-                    bankUiModel = BankType.WOORI.toPresentation(),
+                    id = 0,
+                    bank = BankType.WOORI.toPresentation(),
                     number = "1234567887654321",
                     expired = "0826",
                     owner = "으어 글씨가 너무 크다.",

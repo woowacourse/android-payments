@@ -56,7 +56,7 @@ class ShowAddButtonProvider : PreviewParameterProvider<Boolean> {
 
 @Composable
 @Preview(showBackground = true)
-fun CardListTopBarPreview(
+private fun CardListTopBarPreview(
     @PreviewParameter(ShowAddButtonProvider::class) showAddButton: Boolean,
 ) {
     AndroidpaymentsTheme {
