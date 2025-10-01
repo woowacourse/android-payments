@@ -69,9 +69,9 @@ class CardFormUiStateHolder(
                 (expiry.length == EXPIRY_MAX) &&
                 (pin.length == PIN_MAX) &&
                 (selectedBank != BankType.NOT_SELECTED) &&
-                isModified
+                hasInput
 
-    private val isModified: Boolean
+    private val hasInput: Boolean
         get() =
             originalCard == null ||
                 originalCard.numberDigits != cardNumber ||
