@@ -18,14 +18,14 @@ class CardWalletUiStateHolder(
     val cardWalletState: CardWalletState
         get() = CardWalletState.from(cardCount)
 
-    fun updateCard(card: CardUiModel): Boolean {
+    fun updateCard(card: CardUiModel): CardChangeResult {
         val index = _cards.indexOfFirst { it.id == card.id }
         return if (index != -1) {
             _cards[index] = card
-            true
+            CardChangeResult.Edited(card)
         } else {
             _cards.add(card)
-            false
+            CardChangeResult.Created(card)
         }
     }
 

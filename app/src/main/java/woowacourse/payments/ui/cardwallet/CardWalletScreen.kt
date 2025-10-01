@@ -23,12 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.cardform.CardFormActivity
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
+import woowacourse.payments.ui.cardwallet.model.CardChangeResult
 import woowacourse.payments.ui.cardwallet.model.rememberCardWalletState
 import woowacourse.payments.ui.common.extensions.getParcelableExtraCompat
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.cardform.CardFormActivity
 
 @Composable
 fun CardWalletScreen(modifier: Modifier = Modifier) {
@@ -44,9 +45,13 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
             if (result.resultCode == Activity.RESULT_OK) {
                 val saved = result.data?.getParcelableExtraCompat<CardUiModel>(CardFormActivity.EXTRA_CARD_RESULT)
                 if (saved != null) {
-                    val existed = holder.updateCard(saved)
-                    val msgRes = if (existed) R.string.edit_card_success else R.string.new_card_success
-                    Toast.makeText(context, getString(context, msgRes), Toast.LENGTH_SHORT).show()
+                    when (holder.updateCard(saved)) {
+                        is CardChangeResult.Created ->
+                            Toast.makeText(context, getString(context, R.string.new_card_success), Toast.LENGTH_SHORT).show()
+
+                        is CardChangeResult.Edited ->
+                            Toast.makeText(context, getString(context, R.string.edit_card_success), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
