@@ -27,6 +27,7 @@ class CardWalletContentTest {
                 cards = cards,
                 cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
+                navigateToEditCard = {},
             )
         }
 
@@ -41,7 +42,7 @@ class CardWalletContentTest {
         // given
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel(1L, "1234123412341234", "0511", "공백", BankType.HYUNDAI),
             )
 
         // when
@@ -50,6 +51,7 @@ class CardWalletContentTest {
                 cards = cards,
                 cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
+                navigateToEditCard = {},
             )
         }
 
@@ -64,8 +66,8 @@ class CardWalletContentTest {
         // given
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
-                CardUiModel("4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
+                CardUiModel(1L, "1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel(2L, "4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
             )
 
         // when
@@ -74,6 +76,7 @@ class CardWalletContentTest {
                 cards = cards,
                 cardWalletState = CardWalletState.from(cards.size),
                 navigateToNewCard = {},
+                navigateToEditCard = {},
             )
         }
 

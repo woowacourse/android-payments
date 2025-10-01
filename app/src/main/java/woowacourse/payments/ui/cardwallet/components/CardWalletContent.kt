@@ -18,16 +18,27 @@ fun CardWalletContent(
     cards: List<CardUiModel>,
     cardWalletState: CardWalletState,
     navigateToNewCard: () -> Unit,
+    navigateToEditCard: (CardUiModel) -> Unit,
 ) {
     when (cardWalletState) {
-        CardWalletState.EMPTY -> EmptyWallet(onAdd = navigateToNewCard)
-        CardWalletState.SINGLE -> SingleCardWallet(cards = cards, onAdd = navigateToNewCard)
-        CardWalletState.MULTIPLE -> MultipleCardWallet(cards = cards)
+        CardWalletState.EMPTY -> EmptyWallet(navigateToNewCard = navigateToNewCard)
+        CardWalletState.SINGLE ->
+            SingleCardWallet(
+                cards = cards,
+                navigateToNewCard = navigateToNewCard,
+                navigateToEditCard = navigateToEditCard,
+            )
+
+        CardWalletState.MULTIPLE ->
+            MultipleCardWallet(
+                cards = cards,
+                navigateToEditCard = navigateToEditCard,
+            )
     }
 }
 
 @Composable
-private fun EmptyWallet(onAdd: () -> Unit) {
+private fun EmptyWallet(navigateToNewCard: () -> Unit) {
     Column {
         Spacer(Modifier.height(32.dp))
         EmptyGuide()
@@ -37,7 +48,7 @@ private fun EmptyWallet(onAdd: () -> Unit) {
                 Modifier
                     .width(208.dp)
                     .height(124.dp),
-            onClick = onAdd,
+            onClick = navigateToNewCard,
         )
     }
 }
@@ -45,23 +56,27 @@ private fun EmptyWallet(onAdd: () -> Unit) {
 @Composable
 private fun SingleCardWallet(
     cards: List<CardUiModel>,
-    onAdd: () -> Unit,
+    navigateToNewCard: () -> Unit,
+    navigateToEditCard: (CardUiModel) -> Unit,
 ) {
     Column {
-        CardWalletCards(cards)
+        CardWalletCards(cards, navigateToEditCard)
         NewCardPlaceholder(
             modifier =
                 Modifier
                     .width(208.dp)
                     .height(124.dp),
-            onClick = onAdd,
+            onClick = navigateToNewCard,
         )
     }
 }
 
 @Composable
-private fun MultipleCardWallet(cards: List<CardUiModel>) {
-    CardWalletCards(cards)
+private fun MultipleCardWallet(
+    cards: List<CardUiModel>,
+    navigateToEditCard: (CardUiModel) -> Unit,
+) {
+    CardWalletCards(cards, navigateToEditCard)
 }
 
 @Preview(showBackground = true)
@@ -70,13 +85,14 @@ private fun CardWalletContentPreview() {
     AndroidpaymentsTheme {
         val cards =
             listOf(
-                CardUiModel("1234123412341234", "0511", "공백", BankType.HYUNDAI),
-                CardUiModel("4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
+                CardUiModel(1L, "1234123412341234", "0511", "공백", BankType.HYUNDAI),
+                CardUiModel(2L, "4321432143214321", "0928", "비비", BankType.KAKAO_BANK),
             )
         CardWalletContent(
             cards = cards,
             cardWalletState = CardWalletState.MULTIPLE,
             navigateToNewCard = {},
+            navigateToEditCard = {},
         )
     }
 }

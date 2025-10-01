@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardform.components
 
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -15,20 +15,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.cardform.model.EXPIRY_MAX
 import woowacourse.payments.ui.common.transformation.GroupedVisualTransformation
-import woowacourse.payments.ui.newcard.model.CARD_NUMBER_MAX
-import woowacourse.payments.ui.newcard.model.CARD_NUMBER_SEPARATOR
 
-private const val CARD_NUMBER_GROUP_SIZE: Int = 4
-
-private val groupedVisualTransformation: VisualTransformation =
-    GroupedVisualTransformation(
-        groupSize = CARD_NUMBER_GROUP_SIZE,
-        separator = CARD_NUMBER_SEPARATOR,
-    )
+private const val EXPIRY_GROUP_SIZE: Int = 2
+private const val EXPIRY_SEPARATOR: String = " / "
 
 @Composable
-fun CardNumberTextField(
+fun ExpiryTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -38,29 +32,35 @@ fun CardNumberTextField(
     OutlinedTextField(
         value = value,
         onValueChange = { input ->
-            val onlyDigits = input.filter { it.isDigit() }.take(CARD_NUMBER_MAX)
+            val onlyDigits = input.filter { it.isDigit() }.take(EXPIRY_MAX)
             onValueChange(onlyDigits)
         },
         modifier = modifier,
-        label = { Text(stringResource(id = R.string.new_card_number_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_number_hint)) },
+        label = { Text(stringResource(id = R.string.card_expiry_label)) },
+        placeholder = { Text(stringResource(id = R.string.card_expiry_hint)) },
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,
                 imeAction = ImeAction.Next,
             ),
         keyboardActions = KeyboardActions(onNext = { onImeAction() }),
-        visualTransformation = groupedVisualTransformation,
+        visualTransformation = expiryVisualTransformation,
         colors = colors,
     )
 }
 
+private val expiryVisualTransformation: VisualTransformation =
+    GroupedVisualTransformation(
+        groupSize = EXPIRY_GROUP_SIZE,
+        separator = EXPIRY_SEPARATOR,
+    )
+
 @Preview(showBackground = true)
 @Composable
-private fun CardNumberTextFieldPreview() {
+private fun ExpiryTextFieldPreview() {
     AndroidpaymentsTheme {
-        CardNumberTextField(
-            value = "1234 - 5678 - 9012 - 3456",
+        ExpiryTextField(
+            value = "1225",
             onValueChange = {},
             modifier = Modifier,
         )

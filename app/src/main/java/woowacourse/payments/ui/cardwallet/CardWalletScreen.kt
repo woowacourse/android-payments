@@ -23,12 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
+import woowacourse.payments.ui.cardform.CardFormActivity
 import woowacourse.payments.ui.cardwallet.components.CardWalletContent
 import woowacourse.payments.ui.cardwallet.components.CardWalletTopBar
+import woowacourse.payments.ui.cardwallet.model.CardChangeResult
 import woowacourse.payments.ui.cardwallet.model.rememberCardWalletState
 import woowacourse.payments.ui.common.extensions.getParcelableExtraCompat
 import woowacourse.payments.ui.common.model.CardUiModel
-import woowacourse.payments.ui.newcard.NewCardActivity
 
 @Composable
 fun CardWalletScreen(modifier: Modifier = Modifier) {
@@ -42,11 +43,15 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-                val newCard = data?.getParcelableExtraCompat<CardUiModel>(NewCardActivity.EXTRA_NEW_CARD_RESULT)
-                val added = holder.onCardAdded(newCard)
-                if (added) {
-                    Toast.makeText(context, getString(context, R.string.new_card_success), Toast.LENGTH_SHORT).show()
+                val saved = result.data?.getParcelableExtraCompat<CardUiModel>(CardFormActivity.EXTRA_CARD_RESULT)
+                if (saved != null) {
+                    when (holder.updateCard(saved)) {
+                        is CardChangeResult.Created ->
+                            Toast.makeText(context, getString(context, R.string.new_card_success), Toast.LENGTH_SHORT).show()
+
+                        is CardChangeResult.Edited ->
+                            Toast.makeText(context, getString(context, R.string.edit_card_success), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -76,6 +81,7 @@ fun CardWalletScreen(modifier: Modifier = Modifier) {
                 cards = holder.cards,
                 cardWalletState = holder.cardWalletState,
                 navigateToNewCard = { navigateToNewCard(launcher, context) },
+                navigateToEditCard = { card -> navigateToEditCard(launcher, context, card) },
             )
         }
     }
@@ -85,7 +91,15 @@ private fun navigateToNewCard(
     launcher: ActivityResultLauncher<Intent>,
     context: Context,
 ) {
-    launcher.launch(NewCardActivity.newIntent(context))
+    launcher.launch(CardFormActivity.newIntent(context))
+}
+
+private fun navigateToEditCard(
+    launcher: ActivityResultLauncher<Intent>,
+    context: Context,
+    card: CardUiModel,
+) {
+    launcher.launch(CardFormActivity.newIntent(context, card))
 }
 
 @Preview(showBackground = true)

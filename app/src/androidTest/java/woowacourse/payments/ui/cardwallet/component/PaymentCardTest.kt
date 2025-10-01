@@ -20,6 +20,7 @@ class PaymentCardTest {
         // given
         val card =
             CardUiModel(
+                id = 1L,
                 numberDigits = "1234123412341234",
                 expiry = "0511",
                 holder = "공백",

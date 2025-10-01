@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardform.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import woowacourse.payments.R
 import woowacourse.payments.designsystem.theme.AndroidpaymentsTheme
-import woowacourse.payments.ui.newcard.model.PIN_MAX
+import woowacourse.payments.ui.cardform.model.PIN_MAX
 
 @Composable
 fun PinTextField(
@@ -33,8 +33,8 @@ fun PinTextField(
             onValueChange(onlyDigits)
         },
         modifier = modifier.fillMaxWidth(),
-        label = { Text(stringResource(id = R.string.new_card_pin_label)) },
-        placeholder = { Text(stringResource(id = R.string.new_card_pin_hint)) },
+        label = { Text(stringResource(id = R.string.card_pin_label)) },
+        placeholder = { Text(stringResource(id = R.string.card_pin_hint)) },
         keyboardOptions =
             KeyboardOptions(
                 keyboardType = KeyboardType.NumberPassword,

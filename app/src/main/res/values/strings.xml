@@ -1,21 +1,23 @@
 <resources>
     <string name="app_name">android-payments</string>
 
-    <string name="new_card_add">카드 추가</string>
-    <string name="new_card_navigate_to_back">뒤로 가기</string>
-    <string name="new_card_save">저장</string>
-    <string name="new_card_number_label">카드 번호</string>
-    <string name="new_card_number_hint">0000 – 0000 – 0000 – 0000</string>
-    <string name="new_card_expiry_label">만료일</string>
-    <string name="new_card_expiry_hint">MM / YY</string>
-    <string name="new_card_holder_name_label">카드 소유자 이름(선택)</string>
-    <string name="new_card_holder_name_hint">카드에 표시된 이름을 입력하세요.</string>
-    <string name="new_card_pin_label">비밀번호</string>
-    <string name="new_card_pin_hint">0000</string>
+    <string name="new_card">카드 추가</string>
+    <string name="edit_card">카드 수정</string>
+    <string name="go_back">뒤로 가기</string>
+    <string name="save_card">저장</string>
+    <string name="card_number_label">카드 번호</string>
+    <string name="card_number_hint">0000 – 0000 – 0000 – 0000</string>
+    <string name="card_expiry_label">만료일</string>
+    <string name="card_expiry_hint">MM / YY</string>
+    <string name="card_holder_name_label">카드 소유자 이름(선택)</string>
+    <string name="card_holder_name_hint">카드에 표시된 이름을 입력하세요.</string>
+    <string name="card_pin_label">비밀번호</string>
+    <string name="card_pin_hint">0000</string>
 
     <string name="card_wallet">카드 지갑</string>
     <string name="new_card_guide">새로운 카드를 등록해주세요</string>
     <string name="new_card_success">카드가 추가되었습니다</string>
+    <string name="edit_card_success">카드가 수정되었습니다</string>
     <string name="card_wallet_add">추가</string>
 
     <string name="bank_not_selected">카드사를 선택해주세요</string>

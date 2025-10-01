@@ -1,4 +1,4 @@
-package woowacourse.payments.ui.newcard.components
+package woowacourse.payments.ui.cardform.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
