@@ -25,7 +25,7 @@ class CardTest {
 
         // then
         result.onSuccess { card ->
-            assertEquals(validNumber, card.number.number)
+            assertEquals(validNumber, card.cardNumber.number)
             assertEquals(validExpiration, card.expirationDate.expirationDate)
             assertEquals(validName, card.cardHolderName.cardHolderName)
             assertEquals(validPassword, card.password.password)

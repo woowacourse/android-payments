@@ -9,6 +9,7 @@
     <string name="register_card_password_text_field_label">비밀번호</string>
     <string name="register_card_password_text_field_placeholder">0000</string>
     <string name="register_title">카드 추가</string>
+    <string name="register_edit_title">카드 수정</string>
     <string name="register_back_content_description">뒤로 가기</string>
     <string name="register_check_content_description">완료</string>
 </resources>

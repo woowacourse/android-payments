@@ -10,8 +10,20 @@ import woowacourse.payments.ui.model.toUiModel
 
 class RegisterCardStateHolder(
     private val onCardSaved: (newCardUiModel: CardUiModel) -> Unit,
+    private val cardToEdit: CardUiModel? = null,
 ) {
-    var uiState by mutableStateOf(RegisterCardUiState())
+    private val isEditMode = cardToEdit != null
+
+    var uiState by mutableStateOf(
+        RegisterCardUiState(
+            cardNumber = cardToEdit?.number ?: "",
+            expirationDate = cardToEdit?.expirationDate ?: "",
+            cardHolderName = cardToEdit?.cardHolderName ?: "",
+            password = cardToEdit?.password ?: "",
+            selectedBank = cardToEdit?.bankName?.let { Bank.fromName(it) },
+            showBottomSheet = !isEditMode,
+        ),
+    )
         private set
 
     fun updateCardNumber(cardNumber: String) {
@@ -39,12 +51,29 @@ class RegisterCardStateHolder(
     }
 
     fun saveCard() {
+        val modified =
+            if (isEditMode && cardToEdit != null) {
+                uiState.cardNumber != cardToEdit.number ||
+                    uiState.expirationDate != cardToEdit.expirationDate ||
+                    uiState.cardHolderName != cardToEdit.cardHolderName ||
+                    uiState.password != cardToEdit.password ||
+                    uiState.selectedBank?.name != cardToEdit.bankName
+            } else {
+                true
+            }
+
+        if (isEditMode && !modified) {
+            uiState = uiState.copy(toastMessage = "변경된 내용이 없습니다.")
+            return
+        }
+
         createCard()
             .onSuccess { newCard ->
                 onCardSaved(newCard.toUiModel())
-                uiState = uiState.copy(toastMessage = "카드 생성에 성공했습니다.")
-            }.onFailure { errorMessage ->
-                uiState = uiState.copy(toastMessage = errorMessage.message ?: "카드 생성에 실패했습니다.")
+                val message = if (isEditMode) "카드가 수정되었습니다." else "카드 생성에 성공했습니다."
+                uiState = uiState.copy(toastMessage = message)
+            }.onFailure { error ->
+                uiState = uiState.copy(toastMessage = error.message ?: "카드 생성에 실패했습니다.")
             }
     }
 
@@ -53,6 +82,7 @@ class RegisterCardStateHolder(
 
         return Card
             .newCard(
+                id = cardToEdit?.id,
                 number = uiState.cardNumber,
                 expirationDate = uiState.expirationDate,
                 cardHolderName = uiState.cardHolderName,

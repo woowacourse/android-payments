@@ -14,8 +14,17 @@ class CardListStateHolder {
         updateUiState()
     }
 
+    fun contains(id: Long): Boolean {
+        return cards.any { it.id == id }
+    }
+
     fun addNewCard(newCard: CardUiModel) {
         cards = cards + newCard
+        updateUiState()
+    }
+
+    fun updateCard(updatedCard: CardUiModel) {
+        cards = cards.map { if (it.id == updatedCard.id) updatedCard else it }
         updateUiState()
     }
 

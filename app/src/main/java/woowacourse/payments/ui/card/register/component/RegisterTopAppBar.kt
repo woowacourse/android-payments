@@ -15,13 +15,14 @@ import woowacourse.payments.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewCardTopBar(
+fun RegisterTopAppBar(
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
     modifier: Modifier = Modifier,
+    isEditMode: Boolean = false,
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.register_title)) },
+        title = { if (isEditMode) Text(stringResource(R.string.register_edit_title)) else Text(stringResource(R.string.register_title)) },
         modifier = modifier,
         navigationIcon = {
             IconButton(onClick = { onBackClick() }) {

@@ -1,6 +1,7 @@
 package woowacourse.payments.ui.card.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ fun PaymentCard(
     ownerName: String? = null,
     bankName: String? = null,
     backgroundColor: Color,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier =
@@ -35,14 +37,14 @@ fun PaymentCard(
                 .background(
                     color = backgroundColor,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .padding(horizontal = 14.dp),
+                ).padding(horizontal = 14.dp)
+                .clickable { onClick() },
     ) {
         Text(
             text = bankName ?: "",
             color = Color.White,
             fontSize = 12.sp,
-            modifier = Modifier.padding(top = 12.dp)
+            modifier = Modifier.padding(top = 12.dp),
         )
         Box(
             modifier =
@@ -90,5 +92,6 @@ fun PaymentCardPreview() {
         ownerName = "TAMA SEO",
         bankName = "국민카드",
         backgroundColor = Color(0xFF333333),
+        onClick = {},
     )
 }

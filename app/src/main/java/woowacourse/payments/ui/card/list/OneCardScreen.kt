@@ -20,6 +20,7 @@ import woowacourse.payments.ui.theme.AndroidpaymentsTheme
 fun OneCardScreen(
     card: CardUiModel,
     onAddNewCardClick: () -> Unit,
+    onEditCardClick: (CardUiModel) -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -27,11 +28,12 @@ fun OneCardScreen(
     ) {
         Spacer(modifier = Modifier.padding(top = 36.dp))
         PaymentCard(
-            cardNumber = card.number,
-            expiredDate = card.expirationDate,
+            cardNumber = card.maskedNumber,
+            expiredDate = card.formattedExpirationDate,
             ownerName = card.cardHolderName,
             bankName = card.bankName,
             backgroundColor = Color(card.bankColor),
+            onClick = { onEditCardClick(card) },
         )
         Spacer(modifier = Modifier.padding(top = 36.dp))
         NewCard(onClick = onAddNewCardClick)
@@ -43,17 +45,22 @@ fun OneCardScreen(
 fun OneCardScreenPreview() {
     val card =
         CardUiModel(
-            number = "1234 - 5678 - **** - ****",
-            expirationDate = "11/24",
+            id = 1,
+            number = "1234567812345678",
+            maskedNumber = "1234 - 5678 - **** - ****",
+            expirationDate = "1124",
+            formattedExpirationDate = "11/24",
             cardHolderName = "TAMA ONE",
             bankName = "국민카드",
             bankColor = 0xFFFBC02D,
+            password = "1243"
         )
 
     AndroidpaymentsTheme {
         OneCardScreen(
             card = card,
             onAddNewCardClick = {},
+            onEditCardClick = {},
         )
     }
 }

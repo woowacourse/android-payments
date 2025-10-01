@@ -32,16 +32,26 @@ fun CardListScreen() {
             contract = ActivityResultContracts.StartActivityForResult(),
         ) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val newCard =
+                val card =
                     result.data?.getParcelableExtra<CardUiModel>(
                         CardRegisterActivity.EXTRA_NEW_CARD,
                     )
-                newCard?.let { stateHolder.addNewCard(it) }
+                card?.let {
+                    if (stateHolder.contains(it.id)) {
+                        stateHolder.updateCard(it)
+                    } else {
+                        stateHolder.addNewCard(it)
+                    }
+                }
             }
         }
 
     fun launchCardRegister() {
         launcher.launch(CardRegisterActivity.newIntent(context))
+    }
+
+    fun launchCardEdit(card: CardUiModel) {
+        launcher.launch(CardRegisterActivity.editCardIntent(context, card))
     }
 
     Scaffold(
@@ -78,11 +88,15 @@ fun CardListScreen() {
                     OneCardScreen(
                         card = (stateHolder.uiState as CardListUiState.Single).card,
                         onAddNewCardClick = { launchCardRegister() },
+                        onEditCardClick = { selectedCard -> launchCardEdit(selectedCard) },
                     )
                 }
 
                 is CardListUiState.Multiple -> {
-                    MultipleCardsScreen(cards = (stateHolder.uiState as CardListUiState.Multiple).cards)
+                    MultipleCardsScreen(
+                        cards = (stateHolder.uiState as CardListUiState.Multiple).cards,
+                        onEditCardClick = { selectedCard -> launchCardEdit(selectedCard) },
+                    )
                 }
             }
         }
