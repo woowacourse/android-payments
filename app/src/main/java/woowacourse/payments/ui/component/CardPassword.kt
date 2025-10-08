@@ -20,7 +20,7 @@ fun CardPassword(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = {
+        onValueChange = { it ->
             if (it.length <= CARD_PASSWORD_LENGTH && it.all { it.isDigit() }) {
                 onValueChange(
                     it,

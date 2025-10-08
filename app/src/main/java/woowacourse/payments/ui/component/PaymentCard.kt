@@ -17,7 +17,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Grey100
 import woowacourse.payments.ui.theme.Yellow80
@@ -85,5 +84,6 @@ private fun PaymentCardPreview() {
                 "12/25",
                 "1234",
                 cardCompanyUiModel = TODO(),
-            ))
+            ),
+    )
 }

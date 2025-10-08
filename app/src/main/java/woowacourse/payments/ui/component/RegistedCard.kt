@@ -27,7 +27,6 @@ import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Grey100
 import woowacourse.payments.ui.theme.Yellow80
 
-
 @Composable
 fun RegisteredCard(
     cardUiModel: CardUiModel,
@@ -45,8 +44,7 @@ fun RegisteredCard(
                 .background(
                     color = cardColor,
                     shape = RoundedCornerShape(5.dp),
-                )
-                .clickable { onClick() },
+                ).clickable { onClick() },
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),

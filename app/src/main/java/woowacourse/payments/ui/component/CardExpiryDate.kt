@@ -19,7 +19,7 @@ fun CardExpiryDate(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = {
+        onValueChange = { it ->
             if (it.length <= CARD_EXPIRY_DATE_MAX_LENGTH && it.all { it.isDigit() }) {
                 onValueChange(it)
             }
