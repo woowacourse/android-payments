@@ -26,7 +26,6 @@ import woowacourse.payments.ui.component.CardNumber
 import woowacourse.payments.ui.component.CardPassword
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
-import woowacourse.payments.ui.model.CardCompanyUiModel
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
@@ -42,7 +41,11 @@ fun NewCardScreen(
     var cardHolderName by rememberSaveable { mutableStateOf(existingCard?.cardHolderName ?: "") }
     var cardPassword by rememberSaveable { mutableStateOf(existingCard?.cardPassword ?: "") }
 
-    var selectedCardCompany by rememberSaveable { mutableStateOf<CardCompanyUiModel?>(null) }
+    var selectedCardCompany by rememberSaveable {
+        mutableStateOf(
+            existingCard?.cardCompanyUiModel,
+        )
+    }
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -52,14 +55,13 @@ fun NewCardScreen(
     }
 
     val isChanges =
-        !isEditMode ||
-            existingCard?.isDifferentFrom(
-                cardNumber,
-                cardExpiryDate,
-                cardHolderName,
-                cardPassword,
-                selectedCardCompany,
-            ) == true
+        existingCard?.isDifferentFrom(
+            cardNumber,
+            cardExpiryDate,
+            cardHolderName,
+            cardPassword,
+            selectedCardCompany,
+        ) == true
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -73,15 +75,29 @@ fun NewCardScreen(
                     },
                 onBackClick = { onBackClick() },
                 onSaveClick = {
-                    onSaveClick(
-                        CardUiModel(
-                            cardNumber = cardNumber,
-                            cardHolderName = cardHolderName,
-                            cardExpiryDate = cardExpiryDate,
-                            cardPassword = cardPassword,
-                            cardCompanyUiModel = selectedCardCompany,
-                        ),
-                    )
+                    if (isEditMode) {
+                        if (isChanges) {
+                            onSaveClick(
+                                CardUiModel(
+                                    cardNumber = cardNumber,
+                                    cardHolderName = cardHolderName,
+                                    cardExpiryDate = cardExpiryDate,
+                                    cardPassword = cardPassword,
+                                    cardCompanyUiModel = selectedCardCompany,
+                                ),
+                            )
+                        }
+                    } else {
+                        onSaveClick(
+                            CardUiModel(
+                                cardNumber = cardNumber,
+                                cardHolderName = cardHolderName,
+                                cardExpiryDate = cardExpiryDate,
+                                cardPassword = cardPassword,
+                                cardCompanyUiModel = selectedCardCompany,
+                            ),
+                        )
+                    }
                 },
                 isSaveEnabled = isChanges,
             )
