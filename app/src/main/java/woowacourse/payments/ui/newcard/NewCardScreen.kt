@@ -26,6 +26,7 @@ import woowacourse.payments.ui.component.CardNumber
 import woowacourse.payments.ui.component.CardPassword
 import woowacourse.payments.ui.component.NewCardTopBar
 import woowacourse.payments.ui.component.PaymentCard
+import woowacourse.payments.ui.component.RegisteredCard
 import woowacourse.payments.ui.model.CardUiModel
 
 @Composable
@@ -112,13 +113,23 @@ fun NewCardScreen(
                     .fillMaxWidth(),
         ) {
             Spacer(modifier = Modifier.height(14.dp))
-            PaymentCard(
-                modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally),
-                cardCompany = cardUiModel.cardCompanyUiModel,
-                onCompanyClick = { showBottomSheet = true },
-            )
+            if (isEditMode) {
+                RegisteredCard(
+                    cardUiModel = cardUiModel,
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally),
+                    onClick = { showBottomSheet = true },
+                )
+            } else {
+                PaymentCard(
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally),
+                    cardUiModel = cardUiModel,
+                    onCompanyClick = { showBottomSheet = true },
+                )
+            }
 
             Spacer(modifier = Modifier.height(40.dp))
             CardNumber(
@@ -150,17 +161,17 @@ fun NewCardScreen(
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
-        if (showBottomSheet) {
-            CardCompanySelectBottomSheet(
-                onCompanyClick = { company ->
-                    cardUiModel = cardUiModel.copy(cardCompanyUiModel = company)
-                    showBottomSheet = false
-                },
-                onDismissRequest = {
-                    showBottomSheet = false
-                },
-            )
-        }
+    }
+    if (showBottomSheet) {
+        CardCompanySelectBottomSheet(
+            onCompanyClick = { company ->
+                cardUiModel = cardUiModel.copy(cardCompanyUiModel = company)
+                showBottomSheet = false
+            },
+            onDismissRequest = {
+                showBottomSheet = false
+            },
+        )
     }
 }
 
