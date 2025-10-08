@@ -99,7 +99,6 @@ fun NewCardScreen(
                         )
                     }
                 },
-                isSaveEnabled = isChanges,
             )
         },
     ) { innerPadding ->
