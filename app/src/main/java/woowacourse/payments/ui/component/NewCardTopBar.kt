@@ -21,7 +21,6 @@ fun NewCardTopBar(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onSaveClick: () -> Unit,
-    isSaveEnabled: Boolean = true,
 ) {
     TopAppBar(
         title = { Text(text = title) },
