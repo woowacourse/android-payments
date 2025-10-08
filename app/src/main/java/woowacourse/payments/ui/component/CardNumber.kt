@@ -20,7 +20,7 @@ fun CardNumber(
 ) {
     OutlinedTextField(
         value = value,
-        onValueChange = {
+        onValueChange = { it ->
             if (it.length <= CARD_NUMBER_MAX_LENGTH && it.all { it.isDigit() }) {
                 onValueChange(
                     it,

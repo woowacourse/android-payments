@@ -29,7 +29,7 @@ import woowacourse.payments.ui.newcard.NewCardScreenActivity
 @Composable
 fun CardWalletScreen(
     cardList: List<CardUiModel>,
-    onCardAddResult: (CardUiModel) -> Unit,
+    onCardAddOrUpdate: (CardUiModel, Int?) -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -40,8 +40,13 @@ fun CardWalletScreen(
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data
                     ?.getParcelableExtra<CardUiModel>(NewCardScreenActivity.ADD_NEW_CARD)
-                    ?.let {
-                        onCardAddResult(it)
+                    ?.let { updatedCard ->
+                        val index =
+                            result.data?.getIntExtra(
+                                NewCardScreenActivity.EXISTING_CARD_INDEX,
+                                -1,
+                            )
+                        onCardAddOrUpdate(updatedCard, if (index == -1) null else index)
                     }
             }
         }
@@ -93,11 +98,25 @@ fun CardWalletScreen(
 
                 cardList.size == 1 -> {
                     Spacer(modifier = Modifier.height(12.dp))
-                    RegisteredCard(cardList.first())
+                    RegisteredCard(
+                        cardList.first(),
+                        onClick = {
+                            val intent =
+                                NewCardScreenActivity.newIntent(
+                                    context,
+                                    existingCard = cardList.first(),
+                                    index = 0,
+                                )
+                            cardAddLauncher.launch(intent)
+                        },
+                    )
                     Spacer(modifier = Modifier.height(36.dp))
                     EmptyCard(
                         onClick = {
-                            val intent = NewCardScreenActivity.newIntent(context)
+                            val intent =
+                                NewCardScreenActivity.newIntent(
+                                    context,
+                                )
                             cardAddLauncher.launch(intent)
                         },
                     )
@@ -105,8 +124,19 @@ fun CardWalletScreen(
 
                 else -> {
                     Spacer(modifier = Modifier.height(12.dp))
-                    repeat(cardList.size) {
-                        RegisteredCard(cardList[it])
+                    repeat(cardList.size) { index ->
+                        RegisteredCard(
+                            cardUiModel = cardList[index],
+                            onClick = {
+                                val intent =
+                                    NewCardScreenActivity.newIntent(
+                                        context,
+                                        existingCard = cardList[index],
+                                        index = index,
+                                    )
+                                cardAddLauncher.launch(intent)
+                            },
+                        )
                         Spacer(modifier = Modifier.height(36.dp))
                     }
                 }

@@ -17,17 +17,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.payments.ui.model.CardCompanyUiModel
+import woowacourse.payments.ui.model.CardUiModel
 import woowacourse.payments.ui.theme.Grey100
 import woowacourse.payments.ui.theme.Yellow80
 
 @Composable
 fun PaymentCard(
     modifier: Modifier = Modifier,
-    cardCompany: CardCompanyUiModel? = null,
+    cardUiModel: CardUiModel,
     onCompanyClick: (() -> Unit)? = null,
 ) {
-    val cardColor = cardCompany?.color ?: Grey100
+    val cardColor = cardUiModel.cardCompanyUiModel?.color ?: Grey100
     val clickableModifier =
         if (onCompanyClick != null) {
             Modifier.clickable { onCompanyClick() }
@@ -47,7 +47,7 @@ fun PaymentCard(
                     shape = RoundedCornerShape(5.dp),
                 ),
     ) {
-        cardCompany?.let { company ->
+        cardUiModel.cardCompanyUiModel?.let { company ->
             Text(
                 text = stringResource(id = company.companyName),
                 color = Color.White,
@@ -76,5 +76,14 @@ fun PaymentCard(
 @Preview
 @Composable
 private fun PaymentCardPreview() {
-    PaymentCard()
+    PaymentCard(
+        cardUiModel =
+            CardUiModel(
+                "1111-1111-1111-1111",
+                "홍길동",
+                "12/25",
+                "1234",
+                cardCompanyUiModel = TODO(),
+            ),
+    )
 }

@@ -25,4 +25,17 @@ data class CardUiModel(
         } else {
             cardExpiryDate
         }
+
+    fun isDifferentFrom(
+        number: String,
+        expiry: String,
+        holder: String,
+        password: String,
+        company: CardCompanyUiModel?,
+    ): Boolean =
+        cardNumber != number ||
+            cardExpiryDate != expiry ||
+            cardHolderName != holder ||
+            cardPassword != password ||
+            cardCompanyUiModel != company
 }
