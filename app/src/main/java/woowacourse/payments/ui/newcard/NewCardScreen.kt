@@ -35,17 +35,19 @@ fun NewCardScreen(
     onSaveClick: (CardUiModel) -> Unit = {},
 ) {
     val isEditMode = existingCard != null
+    var cardUiModel by
+        rememberSaveable {
+            mutableStateOf(
+                CardUiModel(
+                    cardNumber = existingCard?.cardNumber ?: "",
+                    cardHolderName = existingCard?.cardHolderName ?: "",
+                    cardExpiryDate = existingCard?.cardExpiryDate ?: "",
+                    cardPassword = existingCard?.cardPassword ?: "",
+                    cardCompanyUiModel = existingCard?.cardCompanyUiModel,
+                ),
+            )
+        }
 
-    var cardNumber by rememberSaveable { mutableStateOf(existingCard?.cardNumber ?: "") }
-    var cardExpiryDate by rememberSaveable { mutableStateOf(existingCard?.cardExpiryDate ?: "") }
-    var cardHolderName by rememberSaveable { mutableStateOf(existingCard?.cardHolderName ?: "") }
-    var cardPassword by rememberSaveable { mutableStateOf(existingCard?.cardPassword ?: "") }
-
-    var selectedCardCompany by rememberSaveable {
-        mutableStateOf(
-            existingCard?.cardCompanyUiModel,
-        )
-    }
     var showBottomSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -56,11 +58,11 @@ fun NewCardScreen(
 
     val isChanges =
         existingCard?.isDifferentFrom(
-            cardNumber,
-            cardExpiryDate,
-            cardHolderName,
-            cardPassword,
-            selectedCardCompany,
+            cardUiModel.cardNumber,
+            cardUiModel.cardExpiryDate,
+            cardUiModel.cardHolderName,
+            cardUiModel.cardPassword,
+            cardUiModel.cardCompanyUiModel,
         ) == true
 
     Scaffold(
@@ -79,22 +81,22 @@ fun NewCardScreen(
                         if (isChanges) {
                             onSaveClick(
                                 CardUiModel(
-                                    cardNumber = cardNumber,
-                                    cardHolderName = cardHolderName,
-                                    cardExpiryDate = cardExpiryDate,
-                                    cardPassword = cardPassword,
-                                    cardCompanyUiModel = selectedCardCompany,
+                                    cardNumber = cardUiModel.cardNumber,
+                                    cardHolderName = cardUiModel.cardHolderName,
+                                    cardExpiryDate = cardUiModel.cardExpiryDate,
+                                    cardPassword = cardUiModel.cardPassword,
+                                    cardCompanyUiModel = cardUiModel.cardCompanyUiModel,
                                 ),
                             )
                         }
                     } else {
                         onSaveClick(
                             CardUiModel(
-                                cardNumber = cardNumber,
-                                cardHolderName = cardHolderName,
-                                cardExpiryDate = cardExpiryDate,
-                                cardPassword = cardPassword,
-                                cardCompanyUiModel = selectedCardCompany,
+                                cardNumber = cardUiModel.cardNumber,
+                                cardHolderName = cardUiModel.cardHolderName,
+                                cardExpiryDate = cardUiModel.cardExpiryDate,
+                                cardPassword = cardUiModel.cardPassword,
+                                cardCompanyUiModel = cardUiModel.cardCompanyUiModel,
                             ),
                         )
                     }
@@ -114,14 +116,14 @@ fun NewCardScreen(
                 modifier =
                     Modifier
                         .align(Alignment.CenterHorizontally),
-                cardCompany = selectedCardCompany,
+                cardCompany = cardUiModel.cardCompanyUiModel,
                 onCompanyClick = { showBottomSheet = true },
             )
 
             Spacer(modifier = Modifier.height(40.dp))
             CardNumber(
-                value = cardNumber,
-                onValueChange = { cardNumber = it },
+                value = cardUiModel.cardNumber,
+                onValueChange = { cardUiModel = cardUiModel.copy(cardNumber = it) },
                 modifier =
                     Modifier
                         .fillMaxWidth(),
@@ -129,29 +131,29 @@ fun NewCardScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
             CardExpiryDate(
-                value = cardExpiryDate,
-                onValueChange = { cardExpiryDate = it },
+                value = cardUiModel.cardExpiryDate,
+                onValueChange = { cardUiModel = cardUiModel.copy(cardExpiryDate = it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
 
             Spacer(modifier = Modifier.height(30.dp))
             CardHolderName(
-                value = cardHolderName,
-                onValueChange = { cardHolderName = it },
+                value = cardUiModel.cardHolderName,
+                onValueChange = { cardUiModel = cardUiModel.copy(cardHolderName = it) },
                 modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(10.dp))
             CardPassword(
-                value = cardPassword,
-                onValueChange = { cardPassword = it },
+                value = cardUiModel.cardPassword,
+                onValueChange = { cardUiModel = cardUiModel.copy(cardPassword = it) },
                 modifier = Modifier.fillMaxWidth(0.5f),
             )
         }
         if (showBottomSheet) {
             CardCompanySelectBottomSheet(
                 onCompanyClick = { company ->
-                    selectedCardCompany = company
+                    cardUiModel = cardUiModel.copy(cardCompanyUiModel = company)
                     showBottomSheet = false
                 },
                 onDismissRequest = {
